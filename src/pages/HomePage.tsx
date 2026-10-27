@@ -7,6 +7,7 @@ import { Tbc } from "../components/Tbc.tsx";
 import { articles } from "../content/data.ts";
 import { siteConfig } from "../config/site.ts";
 import { ArrowRight, HelpCircle } from "lucide-react";
+import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
 
 export const HomePage: React.FC = () => {
   // 4 preview guides specified for home page
@@ -468,6 +469,17 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 7.5. Monthly Educational Briefing */}
+      <section className="section py-16 border-b border-[#d6cebd] bg-[#f7f3eb]">
+        <div className="wrap max-w-4xl">
+          <NewsletterSignup
+            source="homepage"
+            title="The Intentional Wealth Briefing"
+            description="Clear, plain-language breakdowns of Canadian tax rules, registered shelters (TFSA, RRSP, FHSA), and household liquidity delivered monthly. Zero sales pitches."
+          />
         </div>
       </section>
 

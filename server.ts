@@ -155,7 +155,7 @@ ${routes
 // --------------------------------------------------------------------------
 // 5. Hardened Contact API Endpoint: POST /api/contact
 // --------------------------------------------------------------------------
-app.post("/api/contact", async (req: Request, res: Response) => {
+app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response) => {
   const forwarded = req.headers["x-forwarded-for"];
   const clientIp = typeof forwarded === "string" ? forwarded.split(",")[0].trim() : req.socket.remoteAddress || "unknown";
 
@@ -167,10 +167,13 @@ app.post("/api/contact", async (req: Request, res: Response) => {
   }
 
   const rawBody = req.body || {};
-  const firstName = sanitizeText(rawBody.firstName);
+  const isNewsletter = req.path === "/api/subscribe" || rawBody.topic === "newsletter";
+  let firstName = sanitizeText(rawBody.firstName);
+  if (isNewsletter && !firstName) firstName = "Newsletter Subscriber";
+  let province = sanitizeText(rawBody.province);
+  if (isNewsletter && !province) province = "Canada (General)";
   const email = sanitizeText(rawBody.email);
   const phone = sanitizeText(rawBody.phone);
-  const province = sanitizeText(rawBody.province);
   const topic = sanitizeText(rawBody.topic);
   const message = sanitizeMultiline(rawBody.message);
   const consentPrivacy = Boolean(rawBody.consentPrivacy);
@@ -229,7 +232,7 @@ app.post("/api/contact", async (req: Request, res: Response) => {
     "Saskatchewan",
     "Yukon",
   ];
-  if (!province || !validProvinces.includes(province)) {
+  if (!isNewsletter && (!province || !validProvinces.includes(province))) {
     errors.province = "Please select a valid Canadian province or territory.";
   }
 
@@ -242,6 +245,7 @@ app.post("/api/contact", async (req: Request, res: Response) => {
     "retirement",
     "newcomer",
     "mentorship",
+    "newsletter",
     "other",
   ];
   if (!topic || !validTopics.includes(topic)) {
@@ -305,7 +309,7 @@ Origin: ${siteConfig.siteUrl}/contact`;
         from: CONTACT_FROM_EMAIL,
         to: rawRecipients,
         reply_to: email,
-        subject: `Financial Enquiry: ${topic} (${firstName})`,
+        subject: isNewsletter ? `New Newsletter Subscriber: ${email} (${firstName})` : `Financial Enquiry: ${topic} (${firstName})`,
         text: emailBody,
       }),
     });

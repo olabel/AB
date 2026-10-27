@@ -4,15 +4,18 @@ import { articles, categories } from "../content/data.ts";
 import { Tbc } from "../components/Tbc.tsx";
 import { siteConfig } from "../config/site.ts";
 import { ArrowRight, TrendingUp, Sparkles, BookOpen } from "lucide-react";
+import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
 
 export const InsightsPage: React.FC = () => {
   const featuredEssay = articles.find(
+    (a) => a.slug === "canadian-capital-gains-deemed-disposition-estate-trap"
+  ) || articles.find(
     (a) => a.slug === "canadian-mortgage-renewal-shock-liquidity-trap"
   );
   const otherEssays = articles.filter(
     (a) =>
       a.kind === "insight" &&
-      a.slug !== "canadian-mortgage-renewal-shock-liquidity-trap"
+      a.slug !== featuredEssay?.slug
   );
 
   const libraryPreviews = [
@@ -220,6 +223,17 @@ export const InsightsPage: React.FC = () => {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Educational Mailing List Signup */}
+      <section className="section py-16 border-b border-[#d6cebd] bg-[#f7f3eb]">
+        <div className="wrap max-w-4xl">
+          <NewsletterSignup
+            source="insights_page"
+            title="The Intentional Wealth Briefing"
+            description="Subscribe to receive our monthly research essays and Canadian financial architecture breakdowns directly in your inbox. In-depth analysis, zero sales pressure."
+          />
         </div>
       </section>
 

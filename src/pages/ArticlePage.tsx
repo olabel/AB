@@ -8,11 +8,26 @@ import { Check, Copy, ExternalLink, ArrowRight } from "lucide-react";
 export const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [copied, setCopied] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const article = articles.find((a) => a.slug === slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setScrollProgress(0);
+
+    const handleScroll = () => {
+      const el = document.documentElement;
+      const totalHeight = el.scrollHeight - el.clientHeight;
+      if (totalHeight > 0) {
+        const progress = Math.min(100, Math.max(0, (window.scrollY / totalHeight) * 100));
+        setScrollProgress(progress);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [slug]);
 
   if (!article) {
@@ -41,7 +56,21 @@ export const ArticlePage: React.FC = () => {
   ];
 
   return (
-    <article className="py-12 lg:py-16">
+    <article className="py-12 lg:py-16 relative">
+      {/* Scroll-Linked Reading Progress Bar (Fixed at top of viewport) */}
+      <div
+        role="progressbar"
+        aria-valuenow={Math.round(scrollProgress)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Reading progress"
+        className="fixed top-0 left-0 right-0 z-50 h-[3.5px] bg-[#d6cebd]/40 pointer-events-none"
+      >
+        <div
+          className="h-full bg-gradient-to-r from-[#75581f] via-[#2e4a3b] to-[#2e4a3b] transition-[width] duration-150 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
       {/* Article Schema JSON-LD (no dates per compliance rules) */}
       <script
         type="application/ld+json"
@@ -112,6 +141,18 @@ export const ArticlePage: React.FC = () => {
                 <div>
                   <span className="text-[#625d52] block mb-0.5 font-medium">Estimated Reading Time</span>
                   <span className="text-[#1c1b18] font-semibold">{article.readingMinutes} min read</span>
+                </div>
+                <div className="border-t border-[#ece6da] pt-3">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[#625d52] font-medium">Reading Progress</span>
+                    <span className="text-[#2e4a3b] font-bold">{Math.round(scrollProgress)}%</span>
+                  </div>
+                  <div className="w-full bg-[#ece6da] h-1.5 rounded-full overflow-hidden">
+                    <div
+                      className="bg-[#2e4a3b] h-full transition-[width] duration-150 ease-out rounded-full"
+                      style={{ width: `${scrollProgress}%` }}
+                    />
+                  </div>
                 </div>
 
                 {article.figuresAsOf && (

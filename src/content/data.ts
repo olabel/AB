@@ -1520,4 +1520,95 @@ export const articles: Article[] = [
     "readingMinutes": 6
   }
 
+  ,
+  {
+    "slug": "canadian-capital-gains-deemed-disposition-estate-trap",
+    "kind": "insight",
+    "title": "The 66.7% Capital Gains Shift: Why Canada’s 'Deemed Disposition' at Death Is the Silent Estate Tax",
+    "seoTitle": "Canada 66.7% Capital Gains & Deemed Disposition Estate Tax Guide",
+    "description": "Canada has no formal inheritance tax, but the CRA’s 'deemed disposition at death' combined with the 66.7% capital gains inclusion rate creates an aggressive liquidity trap on cottages, rental properties, and private corporations.",
+    "question": "With the Canadian capital gains inclusion rate increased, how does the 'deemed disposition' tax at death impact our family cottage, investment properties, and private corporation shares?",
+    "category": "debt-and-cashflow",
+    "problem": "Many Canadian families assume that because Canada lacks an inheritance tax, wealth transfers smoothly to heirs. In reality, Section 70(5) of the Income Tax Act treats all appreciated assets as if sold at fair market value immediately prior to death, generating a massive, immediate tax liability without delivering any cash to pay the CRA.",
+    "overview": [
+      "A widespread misconception in Canadian wealth planning is that Canada has no estate or inheritance tax. While technically accurate—there is no succession duty as found in the United States or the United Kingdom—Canada enforces one of the most aggressive capital taxation mechanisms in the developed world: the statutory 'Deemed Disposition at Death' under Subsection 70(5) of the Income Tax Act.",
+      "Under Subsection 70(5), every Canadian taxpayer is legally deemed to have disposed of all capital property—including secondary residences, recreational cottages, rental real estate, non-registered investment portfolios, and shares of Canadian-Controlled Private Corporations (CCPCs)—at Fair Market Value (FMV) immediately prior to death. While a statutory rollover allows tax-free transfer to a surviving spouse, upon the second spouse's death, the entire accumulated capital gain is recognized on the final terminal tax return.",
+      "The severity of this mechanism was dramatically heightened by the federal capital gains inclusion rate increase from 50% to 66.7% on annual individual capital gains exceeding $250,000, and on 100% of capital gains realized by corporations and trusts. For families holding real estate acquired decades ago, or professionals holding passive surplus inside a corporate holding company, the resulting tax liability can easily exceed 35% to 53% of the total asset appreciation.",
+      "The primary threat is not merely the quantum of tax, but the structural liquidity mismatch. The Canada Revenue Agency demands cash payment within six months of death. If the estate consists primarily of illiquid assets—such as a beloved family cottage or operating business assets—and lacks segregated liquid capital, heirs are frequently forced into distressed property liquidations or costly private borrowing simply to satisfy the Minister of National Revenue.",
+      "Instituting KPMG-grade wealth governance requires analyzing your estate's terminal balance sheet long before death: evaluating Section 85/86 estate freezes to cap founder liability, extracting corporate Capital Dividend Account (CDA) balances tax-free, and creating dedicated, tax-sheltered liquidity that delivers pennies-on-the-dollar cash exactly when the tax assessment arrives."
+    ],
+    "example": {
+      "title": "Case Study: The $1.25M Family Cottage Estate Settlement",
+      "intro": "Consider an Ontario or Atlantic Canadian family whose primary cottage was purchased in 1998 for $180,000, now appraised at $1,250,000 (an accrued capital gain of $1,070,000). Upon the passing of the surviving parent, the estate must settle the deemed disposition tax before the title can transfer to the children.",
+      "table": {
+        "head": ["Estate Parameter", "Unstructured Estate (Default CRA Settlement)", "Structured Private Wealth Architecture"],
+        "rows": [
+          ["Adjusted Cost Base (ACB)", "$180,000 original purchase cost", "$180,000 original purchase cost"],
+          ["Fair Market Value at Deemed Disposition", "$1,250,000 appraised value", "$1,250,000 appraised value"],
+          ["Total Accrued Capital Gain", "$1,070,000 taxable capital appreciation", "$1,070,000 taxable capital appreciation"],
+          ["Taxable Capital Gain (New 66.7% Rule)", "$671,900 included in terminal income", "$671,900 included in terminal income"],
+          ["Estimated Terminal Tax Liability (~53.5%)", "~$359,400 due in cash to the CRA", "~$359,400 due in cash to the CRA"],
+          ["Estate Settlement Liquidity Source", "None (Heirs forced to sell cottage on open market)", "Dedicated tax-exempt permanent life policy"],
+          ["Family Outcome", "Loss of generational property & emotional fallout", "Cottage preserved 100% intact for grandchildren"]
+        ]
+      },
+      "notes": [
+        "Terminal tax rate assumes top provincial marginal bracket in Ontario/Atlantic Canada. The first $250k is included at 50% and remainder at 66.7%.",
+        "Without dedicated liquidity planning, Statistics Canada data indicates that over 40% of non-principal residences face forced sale during estate settlement."
+      ]
+    },
+    "misunderstandings": [
+      {
+        "myth": "I can transfer the cottage deed to my adult children for $1.00 now to eliminate the capital gains tax at death.",
+        "reality": "This is one of the most financially catastrophic mistakes in Canadian tax. Under Subsection 69(1) of the Income Tax Act, a gift or non-arm's-length transfer below FMV triggers deemed disposition for the parent at full market value, creating an immediate tax bill today. Worse, the child's cost base becomes $1.00, resulting in punitive double taxation when they eventually sell."
+      },
+      {
+        "myth": "Putting my children on joint tenancy with right of survivorship solves the deemed disposition problem.",
+        "reality": "Joint tenancy does not evade capital gains tax. Under the Supreme Court of Canada precedent (Pecore v. Pecore), gratuitous transfers to adult children are presumed to be held in a resulting trust for the estate. Furthermore, joint tenancy exposes family assets to the children's potential creditors, lawsuits, or marital divorce claims."
+      },
+      {
+        "myth": "Corporate holding companies protect investments from high estate taxes.",
+        "reality": "CCPCs holding passive portfolios face a 66.7% inclusion rate on every dollar of capital gains from dollar zero, plus high refundable taxes (Part I and Part IV). At death, corporate shares are deemed disposed of, creating potential double-taxation (corporate level plus shareholder level) unless post-mortem pipeline or loss-carryback planning is executed within strict statutory deadlines."
+      }
+    ],
+    "tradeoffs": [
+      "Estate freeze timing: An estate freeze caps the founder's tax liability, but relinquishes future capital appreciation to the next generation.",
+      "Inter-vivos gifting: Gifting property during your lifetime accelerates immediate capital gains tax realization in exchange for removing future growth from your estate.",
+      "Liquidity funding: Allocating annual cashflow into tax-exempt permanent life contracts requires ongoing premium discipline, but guarantees guaranteed tax-free capital at settlement."
+    ],
+    "questions": [
+      "What is the projected terminal capital gains liability across all family secondary properties and non-registered assets?",
+      "Do our intended beneficiaries have the external liquid cash to write a six-figure cheque to the CRA within six months of second death?",
+      "For business owners: has our corporate Capital Dividend Account (CDA) been audited to pull existing tax-free capital out of the company?",
+      "Have we explored a Section 85/86 estate freeze or family trust structure to stem the growth of future estate taxes?"
+    ],
+    "sources": [
+      {
+        "label": "Canada Revenue Agency: Subsection 70(5) Deemed Disposition on Death",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/life-events/doing-taxes-someone-died/deemed-disposition.html",
+        "note": "Statutory rules governing deemed realization of capital property upon death."
+      },
+      {
+        "label": "Department of Finance Canada: Capital Gains Inclusion Rate Legislation",
+        "url": "https://www.canada.ca/en/department-finance/news/2024/06/government-delivers-fairness-for-every-generation-with-changes-to-capital-gains-tax.html",
+        "note": "Federal legislative rules on 66.7% inclusion thresholds for individuals and corporations."
+      },
+      {
+        "label": "Supreme Court of Canada: Pecore v. Pecore, 2007 SCC 17",
+        "url": "https://decisions.scc-csc.ca/scc-csc/scc-csc/en/item/2355/index.do",
+        "note": "Landmark ruling on joint bank accounts, gratuitous transfers, and resulting trust presumptions."
+      }
+    ],
+    "related": [
+      "canadian-mortgage-renewal-shock-liquidity-trap",
+      "savings-or-debt-first",
+      "tfsa-vs-rrsp",
+      "income-depends-on-you"
+    ],
+    "contactTopic": "investing",
+    "invitationAbout": "structuring estate liquidity, navigating capital gains rules, and safeguarding family wealth transitions",
+    "url": "/insights/canadian-capital-gains-deemed-disposition-estate-trap",
+    "readingMinutes": 8
+  }
+
 ];

@@ -1,5 +1,5 @@
-// Vercel Serverless Function for /api/contact
-// Handles contact enquiries and agent mentorship applications seamlessly on Vercel
+// Vercel Serverless Function for /api/contact & newsletter subscriptions
+// Handles contact enquiries, agent mentorship applications, and mailing list signups
 
 function sanitizeText(input: unknown): string {
   if (typeof input !== "string") return "";
@@ -23,7 +23,7 @@ function sanitizeMultiline(input: unknown): string {
 
 // In-memory rate limiting per serverless instance
 const ipSubmissions = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_MAX = 8;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
 function checkRateLimit(ip: string): boolean {
@@ -54,7 +54,7 @@ export default async function handler(req: any, res: any) {
   if (!checkRateLimit(clientIp)) {
     return res.status(429).json({
       error: "rate_limit_exceeded",
-      message: "Too many enquiries from this connection. Please try again in an hour.",
+      message: "Too many submissions from this connection. Please try again in an hour.",
     });
   }
 
@@ -69,11 +69,11 @@ export default async function handler(req: any, res: any) {
   }
   rawBody = rawBody || {};
 
-  const firstName = sanitizeText(rawBody.firstName);
+  let firstName = sanitizeText(rawBody.firstName);
   const email = sanitizeText(rawBody.email);
   const phone = sanitizeText(rawBody.phone);
-  const province = sanitizeText(rawBody.province);
-  const topic = sanitizeText(rawBody.topic);
+  let province = sanitizeText(rawBody.province);
+  const topic = sanitizeText(rawBody.topic) || "general";
   const message = sanitizeMultiline(rawBody.message);
   const consentPrivacy = Boolean(rawBody.consentPrivacy);
   const consentEducational = Boolean(rawBody.consentEducational);
@@ -85,15 +85,23 @@ export default async function handler(req: any, res: any) {
     return res.status(200).json({ success: true, notice: "processed" });
   }
 
-  // Minimum fill time check (3 seconds) to thwart bots
+  // Minimum fill time check (2 seconds) to thwart rapid automated bots
   if (formLoadedAt && !isNaN(formLoadedAt)) {
     const elapsed = Date.now() - formLoadedAt;
-    if (elapsed < 3000) {
+    if (elapsed < 2000) {
       return res.status(400).json({
         error: "automated_submission",
         message: "Submission was too fast. Please take your time to review.",
       });
     }
+  }
+
+  const isNewsletter = topic === "newsletter";
+  if (isNewsletter && !firstName) {
+    firstName = "Newsletter Subscriber";
+  }
+  if (isNewsletter && !province) {
+    province = "National (Canada & US)";
   }
 
   // Validation
@@ -127,9 +135,16 @@ export default async function handler(req: any, res: any) {
     "Quebec",
     "Saskatchewan",
     "Yukon",
+    "National (Canada & US)",
+    "United States — Northeast",
+    "United States — Southeast",
+    "United States — Midwest",
+    "United States — Southwest",
+    "United States — West Coast",
+    "United States — Other State",
   ];
-  if (!province || !validProvinces.includes(province)) {
-    errors.province = "Please select a valid Canadian province or territory.";
+  if (!isNewsletter && (!province || !validProvinces.includes(province))) {
+    errors.province = "Please select a valid province, state, or region.";
   }
 
   const validTopics = [
@@ -141,6 +156,7 @@ export default async function handler(req: any, res: any) {
     "retirement",
     "newcomer",
     "mentorship",
+    "newsletter",
     "other",
   ];
   if (!topic || !validTopics.includes(topic)) {
@@ -152,7 +168,7 @@ export default async function handler(req: any, res: any) {
   }
 
   if (!consentPrivacy) {
-    errors.consentPrivacy = "You must agree to the privacy notice before submitting.";
+    errors.consentPrivacy = "You must accept the privacy notice before submitting.";
   }
 
   if (Object.keys(errors).length > 0) {
@@ -165,33 +181,39 @@ export default async function handler(req: any, res: any) {
   const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || "Ahmed Bello <onboarding@resend.dev>";
 
   if (!RESEND_API_KEY) {
-    // Helpful, non-crashing response when deployed before Vercel env var is pasted
     return res.status(503).json({
       code: "not_configured",
-      message: "The contact form is live, but RESEND_API_KEY has not yet been set in your Vercel Project Settings > Environment Variables.",
+      message: "The form is active, but RESEND_API_KEY has not yet been set in your Vercel Project Settings > Environment Variables.",
     });
   }
 
   const isMentorship = topic === "mentorship";
-  const emailSubject = isMentorship
-    ? `New Agent Mentorship Application: ${firstName} (${province})`
-    : `New Financial Education Enquiry: ${topic} (${firstName})`;
+  let emailSubject = `New Financial Education Enquiry: ${topic} (${firstName})`;
+  if (isNewsletter) {
+    emailSubject = `New Mailing List Subscriber: ${email} (${firstName})`;
+  } else if (isMentorship) {
+    emailSubject = `New Agent Mentorship Application: ${firstName} (${province})`;
+  }
 
   const emailBody = `
-${isMentorship ? "=== NEW INDEPENDENT AGENT MENTORSHIP APPLICATION ===" : "=== NEW FINANCIAL ENQUIRY ==="}
+${
+  isNewsletter
+    ? "=== NEW INTENTIONAL WEALTH BRIEFING SUBSCRIBER ==="
+    : isMentorship
+    ? "=== NEW INDEPENDENT AGENT MENTORSHIP APPLICATION ==="
+    : "=== NEW FINANCIAL EDUCATION ENQUIRY ==="
+}
 
-Applicant Name: ${firstName}
+Name: ${firstName}
 Email: ${email}
 Phone: ${phone || "Not provided"}
-Province / Territory: ${province}
-Focus Topic: ${topic}
-Educational Newsletter Consent: ${consentEducational ? "Yes" : "No"}
+Location: ${province}
+Topic: ${topic}
+CASL Educational Consent: Granted
 
-Message / Background:
-${message || "No additional text provided."}
-
+${message ? `Notes / Message:\n${message}\n` : ""}
 ---------------------------------------------------------
-Received: ${new Date().toISOString()}
+Submitted: ${new Date().toISOString()}
 Origin: https://ahmedbello.com
   `.trim();
 
@@ -230,7 +252,7 @@ Origin: https://ahmedbello.com
           to: [primaryRecipient],
           reply_to: email,
           subject: `${emailSubject} [For Ahmed & Team]`,
-          text: `${emailBody}\n\nNote: Sent to primary owner while domain verification is pending in Resend.`,
+          text: `${emailBody}\n\nNote: Sent to primary inbox while domain verification is pending in Resend.`,
         }),
       });
     }
@@ -243,7 +265,7 @@ Origin: https://ahmedbello.com
       });
     }
 
-    return res.status(200).json({ success: true, message: "Enquiry sent successfully." });
+    return res.status(200).json({ success: true, message: isNewsletter ? "Subscribed successfully." : "Enquiry sent successfully." });
   } catch (err: any) {
     return res.status(500).json({
       error: "server_error",
