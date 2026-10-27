@@ -1,0 +1,42 @@
+[
+  {
+    "id": "registered-accounts",
+    "label": "Canadian registered accounts",
+    "blurb": "TFSA, RRSP, FHSA and RESP rules and trade-offs."
+  },
+  {
+    "id": "investing",
+    "label": "Investing fundamentals",
+    "blurb": "Risk, time horizon and what the vocabulary actually means."
+  },
+  {
+    "id": "protection",
+    "label": "Financial protection",
+    "blurb": "Income, insurance concepts and what they do and don't cover."
+  },
+  {
+    "id": "debt-credit",
+    "label": "Debt and credit",
+    "blurb": "Credit, repayment choices and formal options."
+  },
+  {
+    "id": "family",
+    "label": "Family finances",
+    "blurb": "Education savings and household priorities."
+  },
+  {
+    "id": "retirement",
+    "label": "Retirement",
+    "blurb": "Public pensions, timing and income sources."
+  },
+  {
+    "id": "newcomers",
+    "label": "New to Canada",
+    "blurb": "How the Canadian system works, from day one."
+  },
+  {
+    "id": "decision-making",
+    "label": "Financial decision-making",
+    "blurb": "Frameworks for choosing, and questions to ask first."
+  }
+]

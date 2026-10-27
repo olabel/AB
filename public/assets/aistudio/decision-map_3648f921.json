@@ -1,0 +1,110 @@
+{
+  "nodes": [
+    {
+      "id": "accounts",
+      "label": "Registered accounts",
+      "x": 280,
+      "y": 64,
+      "label_dx": 0,
+      "label_dy": -40,
+      "anchor": "middle"
+    },
+    {
+      "id": "retirement",
+      "label": "Retirement savings",
+      "x": 462,
+      "y": 150,
+      "label_dx": 0,
+      "label_dy": -40,
+      "anchor": "middle"
+    },
+    {
+      "id": "education",
+      "label": "Children’s education",
+      "x": 462,
+      "y": 290,
+      "label_dx": 0,
+      "label_dy": 50,
+      "anchor": "middle"
+    },
+    {
+      "id": "protection",
+      "label": "Protecting household income",
+      "x": 280,
+      "y": 356,
+      "label_dx": 0,
+      "label_dy": 50,
+      "anchor": "middle"
+    },
+    {
+      "id": "debt",
+      "label": "Saving vs. paying down debt",
+      "x": 98,
+      "y": 290,
+      "label_dx": 0,
+      "label_dy": 50,
+      "anchor": "middle"
+    },
+    {
+      "id": "risk",
+      "label": "Investment risk",
+      "x": 98,
+      "y": 150,
+      "label_dx": 0,
+      "label_dy": -40,
+      "anchor": "middle"
+    }
+  ],
+  "edges": [
+    {
+      "a": "debt",
+      "b": "accounts",
+      "text": "Whether to use available room before or after paying down a debt depends on the debt’s interest rate, the account’s tax treatment, and how soon you might need the money."
+    },
+    {
+      "a": "debt",
+      "b": "protection",
+      "text": "Debt payments and savings goals both assume income keeps arriving. If it stopped, which commitments would be hardest to keep?"
+    },
+    {
+      "a": "debt",
+      "b": "retirement",
+      "text": "A dollar sent to debt is a dollar not saved for retirement, and the reverse. The trade-off changes with the rate you pay and the years you have."
+    },
+    {
+      "a": "accounts",
+      "b": "education",
+      "text": "An RESP is one registered way to save for education, and it competes for cash with the RRSP, TFSA and FHSA."
+    },
+    {
+      "a": "accounts",
+      "b": "retirement",
+      "text": "The RRSP and TFSA are both common retirement vehicles, taxed at different moments. Which one comes first can change what you keep."
+    },
+    {
+      "a": "accounts",
+      "b": "risk",
+      "text": "An account is a container. The same account can hold cash or growth investments, so risk is a separate decision from the account."
+    },
+    {
+      "a": "risk",
+      "b": "retirement",
+      "text": "Time horizon changes how much short-term movement matters, but so does the risk of saving too little to meet the goal."
+    },
+    {
+      "a": "risk",
+      "b": "education",
+      "text": "A fixed date, like a first tuition payment, shortens the horizon and changes how much movement the plan can absorb."
+    },
+    {
+      "a": "protection",
+      "b": "retirement",
+      "text": "Retirement savings are usually funded from working income, so a long interruption to that income affects both the present and the future."
+    },
+    {
+      "a": "protection",
+      "b": "education",
+      "text": "If a parent’s income stopped, would education savings continue? Protection and savings goals depend on each other."
+    }
+  ]
+}

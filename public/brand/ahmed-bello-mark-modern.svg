@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="192" height="192" role="img" aria-label="Ahmed Bello Modern Mark">
+  <title>Ahmed Bello Modern Mark</title>
+  <!-- Architectural Keystone and Meridian Compass: Modern Financial Editorial Identity -->
+  <defs>
+    <style>
+      .forest { fill: #2e4a3b; }
+      .brass { fill: #75581f; }
+    </style>
+  </defs>
+  <!-- Left ascending structural pier -->
+  <path class="forest" d="M6.0 42.0 L10.5 42.0 L22.8 14.0 L18.2 14.0 Z" />
+  <!-- Right ascending structural pier -->
+  <path class="forest" d="M37.5 42.0 L42.0 42.0 L29.8 14.0 L25.2 14.0 Z" />
+  <!-- Keystone horizontal span with subtle optical notch -->
+  <path class="forest" d="M12.5 29.5 L35.5 29.5 L35.5 33.0 L12.5 33.0 Z" />
+  <!-- Apex Meridian Compass (the focal convergence where separate decisions connect) -->
+  <circle class="brass" cx="24.0" cy="8.0" r="3.6" />
+</svg>

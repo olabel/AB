@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none" role="img" aria-label="Ahmed Bello Monogram Reversed">
+  <title>Ahmed Bello Monogram Reversed</title>
+  
+  <!-- Left Diagonal of A in Ivory -->
+  <path
+    d="M 18,84 L 23,84 L 50,16 L 45,16 Z"
+    fill="#f7f3eb"
+  />
+
+  <!-- Shared Vertical Pillar in Warm Sand -->
+  <path
+    d="M 47.9,16 L 52.1,16 L 52.1,84 L 47.9,84 Z"
+    fill="#d6c298"
+  />
+
+  <!-- The Connecting Horizon Crossbar in Warm Sand -->
+  <path
+    d="M 33.8,44.9 L 63.5,44.9 L 63.5,49.1 L 33.8,49.1 Z"
+    fill="#d6c298"
+  />
+
+  <!-- Upper Vault of B in Warm Sand -->
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M 52.1,16 L 63.5,16 C 72.5,16 77,21.5 77,30.5 C 77,39.5 72.5,45 63.5,45 L 52.1,45 Z
+       M 52.1,20.2 L 63,20.2 C 69.5,20.2 72.8,24 72.8,30.5 C 72.8,37 69.5,40.8 63,40.8 L 52.1,40.8 Z"
+    fill="#d6c298"
+  />
+
+  <!-- Lower Vault of B in Warm Sand -->
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M 52.1,45 L 64.5,45 C 74.5,45 80,52 80,64.5 C 80,77 74.5,84 64.5,84 L 52.1,84 Z
+       M 52.1,49.1 L 64,49.1 C 71.5,49.1 75.8,55 75.8,64.5 C 75.8,74 71.5,79.8 64,79.8 L 52.1,79.8 Z"
+    fill="#d6c298"
+  />
+</svg>

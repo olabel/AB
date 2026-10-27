@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Ahmed Bello Keystone & Meridian Logo">
+  <title>Ahmed Bello Keystone & Meridian</title>
+  <!-- Left Ascender -->
+  <path d="M 5.0 42.0 L 9.8 42.0 L 21.6 15.2 L 17.4 15.2 Z" fill="#1e3328" />
+  <!-- Right Ascender -->
+  <path d="M 38.2 42.0 L 43.0 42.0 L 30.6 15.2 L 26.4 15.2 Z" fill="#1e3328" />
+  <!-- Horizon Tie-Beam -->
+  <path d="M 12.8 29.0 L 35.2 29.0 L 35.2 32.5 L 12.8 32.5 Z" fill="#1e3328" />
+  <!-- Central Keystone -->
+  <path d="M 21.0 14.4 L 27.0 14.4 L 25.4 10.6 L 22.6 10.6 Z" fill="#946f29" />
+  <!-- Meridian Compass -->
+  <circle cx="24.0" cy="5.8" r="3.2" fill="#946f29" />
+  <line x1="24.0" y1="9.0" x2="24.0" y2="10.6" stroke="#946f29" stroke-width="1.2" stroke-linecap="round" />
+</svg>

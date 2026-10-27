@@ -1,0 +1,21 @@
+{
+  "name": "Ahmed Bello",
+  "short_name": "Ahmed Bello",
+  "description": "Financial education and conversation-starting site for Ahmed Bello, Licensed Financial Solutions Professional in Canada.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f3eb",
+  "theme_color": "#2e4a3b",
+  "icons": [
+    {
+      "src": "/brand/ahmed-bello-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

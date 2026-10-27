@@ -1,0 +1,444 @@
+import React, { useState, useEffect } from "react";
+import { useParams, Link, Navigate } from "react-router-dom";
+import { articles, categories } from "../content/data.ts";
+import { Tbc } from "../components/Tbc.tsx";
+import { DRAFT_MODE } from "../config/site.ts";
+import { Check, Copy, ExternalLink, ArrowRight } from "lucide-react";
+
+export const ArticlePage: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const [copied, setCopied] = useState(false);
+
+  const article = articles.find((a) => a.slug === slug);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
+  if (!article) {
+    return <Navigate to="/education" replace />;
+  }
+
+  const category = categories.find((c) => c.id === article.category);
+  const kindLabel = article.kind === "guide" ? "Guide" : "Insight";
+  const relatedArticles = article.related
+    .map((relSlug) => articles.find((a) => a.slug === relSlug))
+    .filter(Boolean);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const sections = [
+    { id: "overview", label: "Overview" },
+    ...(article.example ? [{ id: "example", label: "Hypothetical example" }] : []),
+    { id: "misunderstandings", label: "Common misunderstandings" },
+    { id: "tradeoffs", label: "Trade-offs and limitations" },
+    { id: "questions", label: "Questions to consider" },
+    { id: "sources", label: `Sources (${article.sources.length})` },
+  ];
+
+  return (
+    <article className="py-12 lg:py-16">
+      {/* Article Schema JSON-LD (no dates per compliance rules) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": article.seoTitle || article.title,
+            "description": article.description,
+            "author": {
+              "@type": "Person",
+              "name": "Ahmed Bello",
+              "jobTitle": "Licensed Financial Solutions Professional",
+              "url": "https://ahmedbello.ca"
+            },
+            "publisher": {
+              "@type": "Person",
+              "name": "Ahmed Bello"
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `https://ahmedbello.ca${article.url}`
+            },
+            "citation": article.sources.map((s) => ({
+              "@type": "CreativeWork",
+              "name": s.label,
+              "url": s.url
+            }))
+          })
+        }}
+      />
+
+      <div className="wrap">
+        {/* Header Breadcrumbs / Eyebrow */}
+        <header className="max-w-4xl mb-12">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#2e4a3b] mb-4">
+            <Link
+              to={`/education?category=${article.category}`}
+              className="hover:underline text-[#2e4a3b]"
+            >
+              {category?.label || article.category}
+            </Link>
+            <span aria-hidden="true">&middot;</span>
+            <span className="text-[#625d52]">{kindLabel}</span>
+          </div>
+
+          <h1 className="h1 text-[#1c1b18] mb-6 font-normal leading-[1.12]">
+            {article.title}
+          </h1>
+
+          <div className="p-4 bg-[#fcfaf5] border-l-2 border-[#2e4a3b] text-[#1c1b18] rounded-r-[2px]">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#2e4a3b] block mb-1">
+              The Question:
+            </span>
+            <p className="text-lg font-serif italic text-[#1c1b18] leading-snug">
+              {article.question}
+            </p>
+          </div>
+        </header>
+
+        {/* 2-Column Editorial Grid: Meta + Sticky Index (Left) & Longform Content (Right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+          {/* Left Column: Metadata + Sticky "On this page" */}
+          <aside className="lg:col-span-4 order-2 lg:order-1 no-print">
+            <div className="lg:sticky lg:top-28 space-y-8">
+              {/* Meta Box */}
+              <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs space-y-3.5">
+                <div>
+                  <span className="text-[#625d52] block mb-0.5 font-medium">Estimated Reading Time</span>
+                  <span className="text-[#1c1b18] font-semibold">{article.readingMinutes} min read</span>
+                </div>
+
+                {article.figuresAsOf && (
+                  <div className="border-t border-[#ece6da] pt-3">
+                    <span className="text-[#625d52] block mb-0.5 font-medium">Figures as of</span>
+                    <span className="text-[#1c1b18]">{article.figuresAsOf}</span>
+                  </div>
+                )}
+
+                <div className="border-t border-[#ece6da] pt-3 flex items-center justify-between">
+                  <span className="text-[#625d52] font-medium">Official Sources</span>
+                  <a
+                    href="#sources"
+                    className="text-[#2e4a3b] font-semibold hover:underline"
+                  >
+                    {article.sources.length} cited
+                  </a>
+                </div>
+
+                <div className="border-t border-[#ece6da] pt-3">
+                  <span className="text-[#625d52] block mb-1 font-medium">Editorial Review</span>
+                  <Link
+                    to="/standards"
+                    className="text-[#2e4a3b] underline hover:text-[#1c1b18]"
+                  >
+                    How content is checked &rarr;
+                  </Link>
+                </div>
+
+                <div className="border-t border-[#ece6da] pt-3">
+                  <span className="text-[#625d52] block mb-0.5 font-medium">Publication Status</span>
+                  <span className="text-[#2e4a3b] font-semibold">Verified Educational Guide</span>
+                </div>
+              </div>
+
+              {/* Sticky "On this page" index */}
+              <nav aria-label="Table of contents" className="hidden lg:block border-t border-[#d6cebd] pt-6">
+                <h2 className="text-xs font-semibold tracking-wider uppercase text-[#46423a] mb-3">
+                  On this page
+                </h2>
+                <ul className="space-y-2 text-sm list-none p-0">
+                  {sections.map((sec) => (
+                    <li key={sec.id}>
+                      <a
+                        href={`#${sec.id}`}
+                        className="text-[#625d52] hover:text-[#2e4a3b] hover:underline transition-colors block py-1"
+                      >
+                        {sec.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              {/* Copy Link Button */}
+              <div>
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className="btn btn-ghost w-full py-2.5 text-xs flex items-center justify-center gap-2"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4 text-[#2e4a3b]" aria-hidden="true" />
+                      <span>Link copied to clipboard</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" aria-hidden="true" />
+                      <span>Copy article link</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </aside>
+
+          {/* Right Column: Editorial Longform Reading Body */}
+          <div className="lg:col-span-8 order-1 lg:order-2 space-y-12 max-w-prose measure">
+            {/* 1. Problem / Lead Paragraph */}
+            <section className="text-lg md:text-xl font-serif text-[#1c1b18] leading-relaxed border-b border-[#d6cebd] pb-8">
+              <p>{article.problem}</p>
+            </section>
+
+            {/* 2. Plain-language Overview */}
+            <section id="overview" className="space-y-5 prose-editorial">
+              <h2 className="h3 text-[#1c1b18] border-b border-[#ece6da] pb-2">
+                Overview
+              </h2>
+              {article.overview.map((para, idx) => (
+                <p key={`ov-${idx}`} className="leading-relaxed">
+                  {para}
+                </p>
+              ))}
+            </section>
+
+            {/* 3. Hypothetical Example */}
+            {article.example && (
+              <section
+                id="example"
+                className="bg-[#fcfaf5] border border-[#d6cebd] p-6 lg:p-8 rounded-[2px] space-y-5"
+              >
+                <div className="flex items-center justify-between gap-4 border-b border-[#d6cebd] pb-3">
+                  <h2 className="h3 text-[#1c1b18]">
+                    {article.example.title}
+                  </h2>
+                  <span className="text-[0.7rem] uppercase tracking-wider font-semibold bg-[#ece6da] text-[#46423a] px-2 py-0.5 rounded-[2px] shrink-0">
+                    Hypothetical figures
+                  </span>
+                </div>
+
+                <p className="text-sm text-[#46423a] leading-relaxed italic">
+                  {article.example.intro}
+                </p>
+
+                {article.example.table && (
+                  <div className="overflow-x-auto my-4">
+                    <table className="w-full text-left text-sm border-collapse">
+                      <thead>
+                        <tr className="border-b-2 border-[#2e4a3b]">
+                          {article.example.table.head.map((th, i) => (
+                            <th
+                              key={`th-${i}`}
+                              className="py-2.5 px-3 font-semibold text-[#1c1b18] text-xs uppercase tracking-wider"
+                            >
+                              {th}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#ece6da]">
+                        {article.example.table.rows.map((row, rIdx) => (
+                          <tr key={`row-${rIdx}`} className="hover:bg-[#f7f3eb]/60">
+                            {row.map((cell, cIdx) => (
+                              <td
+                                key={`cell-${cIdx}`}
+                                className={`py-3 px-3 ${
+                                  cIdx > 0 ? "font-mono tabular-nums text-[#2e4a3b] font-medium" : "text-[#1c1b18]"
+                                }`}
+                              >
+                                {cell}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {article.example.notes && (
+                  <div className="space-y-2 pt-2 border-t border-[#ece6da] text-xs text-[#625d52]">
+                    {article.example.notes.map((note, nIdx) => (
+                      <p key={`note-${nIdx}`}>&bull; {note}</p>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* 4. Common Misunderstandings (Myth / Reality) */}
+            <section id="misunderstandings" className="space-y-6">
+              <h2 className="h3 text-[#1c1b18] border-b border-[#ece6da] pb-2">
+                Common misunderstandings
+              </h2>
+              <div className="space-y-4">
+                {article.misunderstandings.map((m, mIdx) => (
+                  <div
+                    key={`m-${mIdx}`}
+                    className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2.5"
+                  >
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#8f2a1d] shrink-0">
+                        Myth:
+                      </span>
+                      <p className="font-serif text-[#1c1b18] font-medium text-lg leading-snug">
+                        “{m.myth}”
+                      </p>
+                    </div>
+                    <div className="flex items-baseline gap-2 border-t border-[#ece6da] pt-2">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#2e4a3b] shrink-0">
+                        Reality:
+                      </span>
+                      <p className="text-sm text-[#46423a] leading-relaxed">
+                        {m.reality}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 5. Trade-offs and Limitations */}
+            <section id="tradeoffs" className="space-y-5 prose-editorial">
+              <h2 className="h3 text-[#1c1b18] border-b border-[#ece6da] pb-2">
+                Trade-offs and limitations
+              </h2>
+              <ul className="space-y-3">
+                {article.tradeoffs.map((to, toIdx) => (
+                  <li key={`to-${toIdx}`} className="text-sm md:text-base leading-relaxed">
+                    {to}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            {/* 6. Questions to Consider */}
+            <section id="questions" className="space-y-5 prose-editorial">
+              <h2 className="h3 text-[#1c1b18] border-b border-[#ece6da] pb-2">
+                Questions to consider
+              </h2>
+              <ul className="space-y-3">
+                {article.questions.map((q, qIdx) => (
+                  <li key={`q-${qIdx}`} className="text-sm md:text-base leading-relaxed font-serif text-lg">
+                    {q}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            {/* 7. Official Sources */}
+            <section
+              id="sources"
+              className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4"
+            >
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-[#2e4a3b]">
+                Official Sources &amp; Verification
+              </h2>
+              <p className="text-xs text-[#625d52]">
+                Every figure and rule cited in this article is drawn directly from official Canadian authorities.
+                Read our full{" "}
+                <Link to="/standards" className="underline text-[#2e4a3b]">
+                  editorial standards
+                </Link>
+                .
+              </p>
+              <ul className="space-y-3.5 list-none p-0 text-sm">
+                {article.sources.map((s, sIdx) => (
+                  <li key={`source-${sIdx}`} className="border-t border-[#ece6da] pt-3">
+                    <a
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-medium text-[#2e4a3b] hover:underline"
+                    >
+                      <span>{s.label}</span>
+                      <ExternalLink className="w-3.5 h-3.5 shrink-0 opacity-70" aria-hidden="true" />
+                    </a>
+                    {s.note && (
+                      <p className="text-xs text-[#625d52] mt-1 leading-relaxed">
+                        {s.note}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            {/* 8. Educational Disclaimer */}
+            <div className="p-4 bg-[#ece6da]/50 border-l-2 border-[#8d8677] text-xs text-[#46423a] leading-relaxed">
+              <strong>Educational content, not advice.</strong> This guide offers general financial education.
+              It is not personalized financial, tax, legal, or investment advice, and is not an offer or
+              solicitation to buy or sell any product. Rules and limits change; confirm current details with official
+              sources and a qualified professional before acting.{" "}
+              <Link to="/disclosures" className="underline text-[#2e4a3b]">
+                Read full disclosures
+              </Link>
+              .
+            </div>
+
+            {/* 9. Gentle "Ask a related question" Invitation */}
+            <div className="p-8 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-4 on-dark no-print">
+              <span className="eyebrow text-xs text-[#d6c298]">Have a question on this topic?</span>
+              <h3 className="h3 text-white">
+                Have a financial question about {article.invitationAbout}?
+              </h3>
+              <p className="text-sm text-[#ece6da]/90 leading-relaxed">
+                If you are trying to understand how this applies to your situation or how it connects with your other
+                priorities, let&rsquo;s start with your question.
+              </p>
+              <div className="pt-2">
+                <Link
+                  to={`/contact?topic=${article.contactTopic}`}
+                  className="btn btn-primary bg-[#f7f3eb] text-[#2e4a3b] hover:bg-[#d6c298]"
+                >
+                  Ask a question about {article.invitationAbout} &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* 10. Related Articles */}
+            {relatedArticles.length > 0 && (
+              <section className="pt-8 border-t border-[#d6cebd] space-y-6 no-print">
+                <h3 className="h3 text-[#1c1b18]">Related reading</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {relatedArticles.map((rel) => {
+                    if (!rel) return null;
+                    const relCat = categories.find((c) => c.id === rel.category);
+                    return (
+                      <Link
+                        key={rel.slug}
+                        to={rel.url}
+                        className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all flex flex-col justify-between group"
+                      >
+                        <div>
+                          <span className="text-[0.7rem] uppercase tracking-wider font-semibold text-[#2e4a3b] block mb-2">
+                            {relCat?.label || rel.category}
+                          </span>
+                          <h4 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug mb-2">
+                            {rel.title}
+                          </h4>
+                          <p className="text-xs text-[#625d52] line-clamp-3 mb-4">
+                            {rel.question}
+                          </p>
+                        </div>
+                        <span className="text-xs font-semibold text-[#2e4a3b] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                          Read guide <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+};

@@ -1,0 +1,258 @@
+[
+  {
+    "id": "priorities",
+    "short": "Prioritizing goals",
+    "question": "How should I prioritize my financial goals?",
+    "why": "Money is finite and goals compete. Without an order, the urgent crowds out the important, and the choice of account or product gets made before the question it was meant to answer.",
+    "concepts": [
+      {
+        "term": "Cash flow",
+        "plain": "What comes in, what goes out, and what is left to direct."
+      },
+      {
+        "term": "Emergency buffer",
+        "plain": "Money set aside so a surprise does not turn into debt."
+      },
+      {
+        "term": "Cost of debt",
+        "plain": "The interest you pay, set against what saving could earn or save in tax."
+      },
+      {
+        "term": "Time horizon",
+        "plain": "When each goal needs the money, which changes how it should be held."
+      }
+    ],
+    "tradeoffs": [
+      "Repaying debt gives a certain result but reduces flexibility. Saving keeps cash available but may earn less than the interest you pay.",
+      "Sequencing goals means some of them wait. The trade-off is deciding which, and for how long.",
+      "A plan you will actually follow can matter more than one that looks optimal on paper."
+    ],
+    "next": [
+      {
+        "label": "Read: Pay down debt or save?",
+        "href": "/insights/savings-or-debt-first"
+      }
+    ],
+    "contactTopic": "education"
+  },
+  {
+    "id": "accounts",
+    "short": "Registered accounts",
+    "question": "What should I understand before choosing a registered account?",
+    "why": "The TFSA, RRSP, FHSA and RESP can each shelter investments from tax, but at different moments and under different rules. Choosing by habit, or by whatever was offered first, can cost flexibility or tax you did not intend to give up.",
+    "concepts": [
+      {
+        "term": "Contribution room",
+        "plain": "How much the rules allow you to put in, and how that room builds."
+      },
+      {
+        "term": "Deduction or tax-free growth",
+        "plain": "Tax relief now, or tax-free withdrawals later."
+      },
+      {
+        "term": "Qualifying withdrawals",
+        "plain": "What the money may be used for, and what happens if it is used for something else."
+      },
+      {
+        "term": "What you hold inside",
+        "plain": "An account is a container, not an investment."
+      }
+    ],
+    "tradeoffs": [
+      "Flexibility and tax treatment pull in different directions.",
+      "Your future tax rate is an estimate, so any comparison is an estimate too.",
+      "Several accounts compete for the same dollars."
+    ],
+    "next": [
+      {
+        "label": "Read: TFSA vs RRSP",
+        "href": "/education/tfsa-vs-rrsp"
+      },
+      {
+        "label": "Read: The FHSA explained",
+        "href": "/education/fhsa-explained"
+      }
+    ],
+    "contactTopic": "accounts"
+  },
+  {
+    "id": "income",
+    "short": "Protecting income",
+    "question": "How much of my household income depends on my ability to work?",
+    "why": "Savings plans, mortgages and education goals all assume your income continues. Illness, disability or death can interrupt it, and most households have never measured the gap.",
+    "concepts": [
+      {
+        "term": "Income gap",
+        "plain": "Essential expenses minus the income that would continue."
+      },
+      {
+        "term": "Existing coverage",
+        "plain": "Employer benefits, loan coverage and public programs, and when each one ends."
+      },
+      {
+        "term": "Types of coverage",
+        "plain": "Life, disability and critical illness insurance respond to different events."
+      },
+      {
+        "term": "Definitions",
+        "plain": "What counts as a disability or a covered condition varies from policy to policy."
+      }
+    ],
+    "tradeoffs": [
+      "Coverage costs money, and the right amount depends on the gap rather than a rule of thumb.",
+      "Term and permanent coverage serve different purposes at different costs.",
+      "Answers to health questions at application matter: incomplete answers can affect a claim."
+    ],
+    "next": [
+      {
+        "label": "Read: How much income depends on you?",
+        "href": "/education/income-depends-on-you"
+      }
+    ],
+    "contactTopic": "protection"
+  },
+  {
+    "id": "investing",
+    "short": "Before investing",
+    "question": "What should I know before making an investment decision?",
+    "why": "Investment decisions are easy to make on a good day and hard to live with on a bad one. Understanding risk, time horizon and cost first makes the decision, and your reaction to it, steadier.",
+    "concepts": [
+      {
+        "term": "Time horizon",
+        "plain": "When you will need the money."
+      },
+      {
+        "term": "Risk tolerance and capacity",
+        "plain": "How much movement you can accept, and how much your finances can absorb."
+      },
+      {
+        "term": "Diversification",
+        "plain": "Spreading money so that no single holding decides the outcome."
+      },
+      {
+        "term": "Fees",
+        "plain": "What you pay every year, and how that adds up over time."
+      }
+    ],
+    "tradeoffs": [
+      "Higher expected returns come with a wider range of outcomes.",
+      "Safe-looking choices carry a different risk: falling short of the goal.",
+      "Complexity can add features and cost. Make sure you need the feature."
+    ],
+    "next": [
+      {
+        "label": "Read: Investment risk vs goal risk",
+        "href": "/education/investment-risk-vs-goal-risk"
+      }
+    ],
+    "contactTopic": "investing"
+  },
+  {
+    "id": "education",
+    "short": "Children’s education",
+    "question": "How can I prepare for my children’s education?",
+    "why": "Education costs have a fixed date and a long runway, so the planning horizon is unusually clear. An RESP adds a government grant, but only if you understand how it works.",
+    "concepts": [
+      {
+        "term": "RESP",
+        "plain": "A registered account for post-secondary education savings."
+      },
+      {
+        "term": "Canada Education Savings Grant",
+        "plain": "A government contribution on eligible RESP deposits, with annual and lifetime limits."
+      },
+      {
+        "term": "Education assistance payments",
+        "plain": "How growth and grants are paid out and taxed."
+      },
+      {
+        "term": "If plans change",
+        "plain": "What happens when a child does not pursue further education."
+      }
+    ],
+    "tradeoffs": [
+      "The money is earmarked, so flexibility is lower.",
+      "Contributions are not deductible and compete with other goals.",
+      "Starting early helps, but so does contributing only what you can sustain."
+    ],
+    "next": [
+      {
+        "label": "Read: RESP basics",
+        "href": "/education/resp-basics"
+      }
+    ],
+    "contactTopic": "family"
+  },
+  {
+    "id": "retirement",
+    "short": "Approaching retirement",
+    "question": "What should I consider as retirement approaches?",
+    "why": "Retirement turns saving into spending, and several decisions interact: when to start CPP and OAS, and how to draw from an RRSP, a RRIF and a TFSA. Many are hard to undo.",
+    "concepts": [
+      {
+        "term": "Income sources",
+        "plain": "Public pensions, workplace plans, RRSP or RRIF, TFSA and other savings."
+      },
+      {
+        "term": "Start-age choices",
+        "plain": "CPP and OAS amounts change with when you start."
+      },
+      {
+        "term": "Longevity and inflation",
+        "plain": "A plan has to last, and costs rise over time."
+      },
+      {
+        "term": "Tax in retirement",
+        "plain": "How withdrawals are taxed and how they affect income-tested benefits."
+      }
+    ],
+    "tradeoffs": [
+      "Earlier income versus a larger monthly amount later.",
+      "Drawing from accounts in a different order changes taxes and benefits.",
+      "Longevity is uncertain, so every plan involves a bet on timing."
+    ],
+    "next": [
+      {
+        "label": "Read: CPP and OAS start age",
+        "href": "/education/cpp-oas-start-age"
+      }
+    ],
+    "contactTopic": "retirement"
+  },
+  {
+    "id": "newcomers",
+    "short": "New to Canada",
+    "question": "I’m new to Canada. What works differently here?",
+    "why": "Credit, tax and registered accounts follow Canadian rules, and some things start from zero when you arrive. Knowing which saves time and avoids avoidable mistakes.",
+    "concepts": [
+      {
+        "term": "Credit history",
+        "plain": "Canadian credit generally starts here, whatever your record elsewhere."
+      },
+      {
+        "term": "Social Insurance Number",
+        "plain": "Generally needed to work and to open registered accounts."
+      },
+      {
+        "term": "TFSA room",
+        "plain": "Starts when you become a resident, not before."
+      },
+      {
+        "term": "Tax residency",
+        "plain": "How it affects income and assets you hold abroad."
+      }
+    ],
+    "tradeoffs": [
+      "Building credit takes time, and credit costs money if it is misused.",
+      "Registered accounts help, but setup costs may come first.",
+      "Cross-border questions often need a tax professional."
+    ],
+    "next": [
+      {
+        "label": "Read: New to Canada money basics",
+        "href": "/education/new-to-canada-money-basics"
+      }
+    ],
+    "contactTopic": "newcomer"
+  }
+]
