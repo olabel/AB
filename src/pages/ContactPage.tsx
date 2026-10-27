@@ -213,6 +213,34 @@ export const ContactPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Context, What happens next, Don't send */}
           <aside className="lg:col-span-5 space-y-8 order-2 lg:order-1">
+            {/* Direct Advisor Reassurance Card */}
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4 shadow-2xs">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-20 shrink-0 border border-[#75581f]/30 bg-[#f7f3eb] p-0.5 rounded-[1px] overflow-hidden">
+                  <img
+                    src={siteConfig.headshotUrl}
+                    alt="Ahmed Bello"
+                    className="w-full h-full object-cover object-top rounded-[1px]"
+                    width={64}
+                    height={80}
+                  />
+                </div>
+                <div>
+                  <span className="eyebrow text-[0.65rem] text-[#75581f] block">Direct Consultation</span>
+                  <p className="font-serif text-lg text-[#1c1b18] leading-tight mt-0.5">Ahmed Bello</p>
+                  <p className="text-[0.72rem] text-[#46423a] font-medium leading-tight mt-0.5">
+                    {siteConfig.designation}
+                  </p>
+                  <p className="text-[0.7rem] text-[#2e4a3b] font-semibold mt-1">
+                    Independent Financial Practice &bull; Canada
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs text-[#46423a] leading-relaxed border-t border-[#d6cebd] pt-3">
+                “Every enquiry sent through this form is received and reviewed directly by me. You will receive an educational, evidence-based response without sales pressure or unsolicited pitches.”
+              </p>
+            </div>
+
             {/* What happens next - Detailed Journey */}
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-5">
               <div className="flex items-center gap-2">

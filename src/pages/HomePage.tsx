@@ -94,27 +94,86 @@ export const HomePage: React.FC = () => {
   return (
     <div>
       {/* 1. Hero Section */}
-      <section className="section pb-16 pt-12 md:pt-20 border-b border-[#d6cebd]">
+      <section className="section pb-16 pt-10 md:pt-16 border-b border-[#d6cebd]">
         <div className="wrap">
-          <div className="max-w-4xl space-y-6">
-            <span className="eyebrow text-xs">Financial clarity for real life</span>
-            <h1 className="display text-[#1c1b18] leading-[1.08] tracking-[-0.018em]">
-              Your money questions are connected.{" "}
-              <em className="italic font-serif font-normal text-[#2e4a3b]">
-                The answers should be, too.
-              </em>
-            </h1>
-            <p className="lede text-lg md:text-xl text-[#46423a] max-w-2xl leading-relaxed">
-              From protecting your family’s income to registered accounts, investing and retirement,
-              better decisions begin with seeing how the pieces fit together.
-            </p>
-            <div className="pt-4 flex flex-wrap items-center gap-4">
-              <Link to="/how-i-help" className="btn btn-primary text-base px-6 py-3">
-                Explore How I Help &rarr;
-              </Link>
-              <Link to="/education" className="btn btn-ghost text-base px-6 py-3">
-                Learn Before You Decide
-              </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            {/* Left Column: Core Message & Action */}
+            <div className="lg:col-span-7 space-y-6">
+              <span className="eyebrow text-xs">Financial clarity for real life</span>
+              <h1 className="display text-[#1c1b18] leading-[1.08] tracking-[-0.018em]">
+                Your money questions are connected.{" "}
+                <em className="italic font-serif font-normal text-[#2e4a3b]">
+                  The answers should be, too.
+                </em>
+              </h1>
+              <p className="lede text-lg md:text-xl text-[#46423a] max-w-2xl leading-relaxed">
+                From protecting your family’s income to registered accounts, investing and retirement,
+                better decisions begin with seeing how the pieces fit together.
+              </p>
+              <div className="pt-2 flex flex-wrap items-center gap-4">
+                <Link to="/how-i-help" className="btn btn-primary text-base px-6 py-3">
+                  Explore How I Help &rarr;
+                </Link>
+                <Link to="/education" className="btn btn-ghost text-base px-6 py-3">
+                  Learn Before You Decide
+                </Link>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="pt-4 border-t border-[#d6cebd]/70 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[#625d52]">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2e4a3b]" />
+                  <span>Independent Practice</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#75581f]" />
+                  <span>Licensed Across Canada</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2e4a3b]" />
+                  <span>Zero Sales Pressure</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Ahmed Bello Portrait Presentation */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end">
+              <div className="w-full max-w-sm bg-[#fcfaf5] border border-[#d6cebd] p-3 sm:p-4 rounded-[2px] shadow-sm relative group">
+                {/* Portrait Matte Frame */}
+                <div className="border border-[#75581f]/25 bg-[#ece6da]/40 p-1 rounded-[1px] relative overflow-hidden">
+                  <img
+                    src={siteConfig.headshotUrl}
+                    alt="Ahmed Bello, Licensed Financial Solutions Professional"
+                    className="w-full aspect-[4/5] object-cover object-top rounded-[1px] filter contrast-[1.02]"
+                    width={400}
+                    height={500}
+                    loading="eager"
+                  />
+                  {/* Subtle corner architectural accents */}
+                  <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#d6c298]" />
+                  <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-[#d6c298]" />
+                </div>
+
+                {/* Portrait Plaque / Caption */}
+                <div className="mt-3.5 pt-3 border-t border-[#d6cebd] flex items-center justify-between gap-3 text-left">
+                  <div className="flex items-center gap-2.5">
+                    <BrandMark size={28} className="w-7 h-7 shrink-0 text-[#2e4a3b]" />
+                    <div>
+                      <p className="font-serif text-lg text-[#1c1b18] leading-tight">Ahmed Bello</p>
+                      <p className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold">
+                        Licensed Financial Professional
+                      </p>
+                    </div>
+                  </div>
+                  <Link
+                    to="/about"
+                    className="text-xs text-[#2e4a3b] font-medium hover:underline shrink-0"
+                    title="Read more about Ahmed"
+                  >
+                    About &rarr;
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -358,17 +417,34 @@ export const HomePage: React.FC = () => {
       {/* 7. About Ahmed Preview */}
       <section className="section py-20 border-b border-[#d6cebd] bg-[#fcfaf5]">
         <div className="wrap">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Monogram Frame */}
-            <div className="lg:col-span-4 flex flex-col items-center justify-center p-8 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] text-center">
-              <div className="w-32 h-32 md:w-36 md:h-36 border border-[#2e4a3b]/30 bg-[#fcfaf5] flex items-center justify-center mb-3 shadow-2xs p-3">
-                <BrandMark size={84} className="w-20 h-20" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Portrait Frame */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="w-full max-w-xs sm:max-w-sm bg-[#f7f3eb] border border-[#d6cebd] p-3 sm:p-4 rounded-[2px] shadow-sm">
+                <div className="border border-[#75581f]/25 bg-[#fcfaf5] p-1 rounded-[1px] overflow-hidden">
+                  <img
+                    src={siteConfig.headshotUrl}
+                    alt="Ahmed Bello, Licensed Financial Solutions Professional"
+                    className="w-full aspect-[4/5] object-cover object-top rounded-[1px]"
+                    width={360}
+                    height={450}
+                    loading="lazy"
+                  />
+                </div>
+                <div className="mt-3.5 pt-3 border-t border-[#d6cebd] text-center">
+                  <p className="font-serif text-lg text-[#1c1b18] leading-tight">Ahmed Bello</p>
+                  <p className="text-[0.72rem] uppercase tracking-wider text-[#75581f] font-semibold mt-0.5">
+                    {siteConfig.designation}
+                  </p>
+                  <p className="text-[0.75rem] text-[#625d52] mt-1">
+                    Independent Financial Practice &bull; Canada
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-[#2e4a3b] font-medium tracking-wide">Ahmed Bello</p>
             </div>
 
             {/* Copy */}
-            <div className="lg:col-span-8 space-y-5">
+            <div className="lg:col-span-7 space-y-5">
               <span className="eyebrow text-xs">About Ahmed</span>
               <h2 className="h2 text-[#1c1b18]">A financial educator first.</h2>
               <p className="text-base md:text-lg text-[#46423a] leading-relaxed">

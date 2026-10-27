@@ -15,6 +15,7 @@ export const siteConfig = {
   privacyEmail: "privacy@ahmedbello.ca",
   tagline: "Your money questions are connected. The answers should be, too.",
   footerBrandLine: "Understand your money. Make informed decisions. Build with intention.",
+  headshotUrl: "/assets/aistudio/headshot1_0b740ccc.png",
   
   // Independent financial professional credentials
   affiliationWording: "Independent Financial Practice",

@@ -414,10 +414,10 @@ export const howIHelpTopics: HowIHelpTopic[] = [
 ];
 
 export const aboutData: AboutData = {
-  "portrait": null,
-  "portraitWidth": 0,
-  "portraitHeight": 0,
-  "portraitAlt": "Portrait of Ahmed Bello",
+  "portrait": "/assets/aistudio/headshot1_0b740ccc.png",
+  "portraitWidth": 800,
+  "portraitHeight": 1000,
+  "portraitAlt": "Official portrait of Ahmed Bello, Licensed Financial Solutions Professional",
   "background": [],
   "credentials": [],
   "scopeStatement": null,

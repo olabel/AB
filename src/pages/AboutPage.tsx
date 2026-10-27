@@ -7,21 +7,33 @@ import { BrandMark } from "../components/BrandMark.tsx";
 export const AboutPage: React.FC = () => {
   return (
     <div className="py-12 md:py-16">
-      {/* 1. Header & Monogram Frame */}
+      {/* 1. Header & Portrait Frame */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            {/* Monogram Frame with luxury mark */}
-            <div className="md:col-span-4 flex flex-col items-center justify-center p-8 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-center">
-              <div className="w-36 h-36 border border-[#2e4a3b]/30 bg-[#f7f3eb] flex items-center justify-center mb-4 shadow-2xs p-4">
-                <BrandMark size={88} className="w-22 h-22" />
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Portrait Frame with bespoke matte */}
+            <div className="md:col-span-5 flex flex-col items-center justify-center p-4 sm:p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-center shadow-sm">
+              <div className="w-full max-w-xs border border-[#75581f]/25 bg-[#f7f3eb] p-1.5 rounded-[1px] shadow-2xs mb-3 overflow-hidden">
+                <img
+                  src={siteConfig.headshotUrl}
+                  alt="Ahmed Bello, Licensed Financial Solutions Professional"
+                  className="w-full aspect-[4/5] object-cover object-top rounded-[1px]"
+                  width={360}
+                  height={450}
+                  loading="eager"
+                />
               </div>
-              <p className="text-xs text-[#2e4a3b] font-medium tracking-wide">Ahmed Bello</p>
-              <p className="text-[0.7rem] uppercase tracking-wider text-[#75581f] font-semibold mt-0.5">Licensed Professional</p>
+              <div className="flex items-center gap-2 mt-1">
+                <BrandMark size={24} className="w-6 h-6 text-[#2e4a3b]" />
+                <p className="font-serif text-lg text-[#1c1b18] leading-tight">Ahmed Bello</p>
+              </div>
+              <p className="text-[0.7rem] uppercase tracking-wider text-[#75581f] font-semibold mt-1">
+                {siteConfig.designation}
+              </p>
             </div>
 
             {/* Title & Headline */}
-            <div className="md:col-span-8 space-y-4">
+            <div className="md:col-span-7 space-y-4">
               <span className="eyebrow text-xs">About Ahmed</span>
               <h1 className="h1 text-[#1c1b18] leading-tight">
                 I would rather you understand than agree.
