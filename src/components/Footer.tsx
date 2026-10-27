@@ -105,10 +105,10 @@ export const Footer: React.FC = () => {
               <p>
                 Privacy enquiries:{" "}
                 <a
-                  href="mailto:privacy@ahmedbello.ca"
+                  href={`mailto:${siteConfig.privacyEmail}`}
                   className="underline hover:text-white transition-colors"
                 >
-                  privacy@ahmedbello.ca
+                  {siteConfig.privacyEmail}
                 </a>
               </p>
             </div>

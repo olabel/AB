@@ -284,10 +284,16 @@ ${message || "No message text provided."}
 
 --
 Enquiry received at ${new Date().toISOString()}
-Origin: https://ahmedbello.ca/contact`;
+Origin: ${siteConfig.siteUrl}/contact`;
+
+  const rawRecipients = CONTACT_TO_EMAIL.split(/[,;\s]+/)
+    .map((e) => e.trim())
+    .filter((e) => e.includes("@"));
+  const primaryRecipient = rawRecipients[0] || "olabel@gmail.com";
 
   try {
-    const resendResponse = await fetch("https://api.resend.com/emails", {
+    // Attempt sending to all configured recipients
+    let resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${RESEND_API_KEY}`,
@@ -295,21 +301,49 @@ Origin: https://ahmedbello.ca/contact`;
       },
       body: JSON.stringify({
         from: CONTACT_FROM_EMAIL,
-        to: [CONTACT_TO_EMAIL],
+        to: rawRecipients,
         reply_to: email,
         subject: `Financial Enquiry: ${topic} (${firstName})`,
         text: emailBody,
       }),
     });
 
+    // If Resend limits unverified sandbox domains to the account owner, fallback to primary recipient
+    if (!resendResponse.ok && rawRecipients.length > 1) {
+      const errData = await resendResponse.clone().json().catch(() => ({}));
+      if (
+        resendResponse.status === 403 ||
+        (typeof errData.message === "string" && errData.message.includes("testing emails"))
+      ) {
+        console.warn(
+          "[Resend Notice] Multi-recipient restricted on sandbox domain. Retrying with primary account owner:",
+          primaryRecipient
+        );
+        resendResponse = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${RESEND_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: CONTACT_FROM_EMAIL,
+            to: [primaryRecipient],
+            reply_to: email,
+            subject: `Financial Enquiry: ${topic} (${firstName}) [For Ahmed & Team]`,
+            text: `${emailBody}\n\nNote: Sent to primary owner while domain verification is pending in Resend.`,
+          }),
+        });
+      }
+    }
+
     if (!resendResponse.ok) {
       const errData = await resendResponse.json().catch(() => ({}));
       console.error(
-        `[Contact Delivery Error] Status: ${resendResponse.status}, ErrorName: ${errData.name || "ResendError"}`
+        `[Contact Delivery Error] Status: ${resendResponse.status}, ErrorMsg: ${errData.message || "Unknown error"}`
       );
       return res.status(502).json({
         error: "delivery_failed",
-        message: "Failed to deliver email enquiry. Please try again later.",
+        message: errData.message || "Failed to deliver email enquiry. Please try again later.",
       });
     }
 
@@ -618,7 +652,8 @@ function getRouteMetadata(pathname: string): RouteMeta {
             url: `${siteConfig.siteUrl}/contact`,
             contactPoint: {
               "@type": "ContactPoint",
-              email: "enquiries@ahmedbello.ca",
+              email: siteConfig.publicEmail,
+              telephone: siteConfig.publicPhone,
               contactType: "customer service",
               areaServed: "CA",
               availableLanguage: ["English", "French"],

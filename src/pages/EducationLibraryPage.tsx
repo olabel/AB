@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
+import { siteConfig } from "../config/site.ts";
 import { Search, X, ArrowRight } from "lucide-react";
 
 export const EducationLibraryPage: React.FC = () => {
@@ -73,7 +74,7 @@ export const EducationLibraryPage: React.FC = () => {
             "@type": "CollectionPage",
             "name": "Financial Education Library | Ahmed Bello",
             "description": "Plain-language explanations of Canadian registered accounts, risk, debt, protection, and retirement rules.",
-            "url": "https://ahmedbello.ca/education"
+            "url": `${siteConfig.siteUrl}/education`
           })
         }}
       />

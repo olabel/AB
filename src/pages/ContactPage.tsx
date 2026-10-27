@@ -311,10 +311,18 @@ export const ContactPage: React.FC = () => {
               </h3>
               <p>
                 Email:{" "}
-                <a href="mailto:enquiries@ahmedbello.ca" className="underline text-[#2e4a3b] font-medium">
-                  enquiries@ahmedbello.ca
+                <a href={`mailto:${siteConfig.publicEmail}`} className="underline text-[#2e4a3b] font-medium">
+                  {siteConfig.publicEmail}
                 </a>
               </p>
+              {siteConfig.publicPhone && (
+                <p>
+                  Telephone:{" "}
+                  <a href={`tel:${siteConfig.publicPhone.replace(/\s+/g, "")}`} className="underline text-[#2e4a3b] font-medium">
+                    {siteConfig.publicPhone}
+                  </a>
+                </p>
+              )}
 
               {/* Optional scheduling link: hidden until supplied */}
               {siteConfig.schedulingUrl && (

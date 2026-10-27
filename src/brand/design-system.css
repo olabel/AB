@@ -428,7 +428,7 @@
 
   /* Header banner context on printed page */
   body::before {
-    content: "Ahmed Bello — Licensed Financial Solutions Professional | Canadian Financial Education | ahmedbello.ca";
+    content: "Ahmed Bello — Licensed Financial Solutions Professional | Canadian Financial Education | ahmedbello.com";
     display: block;
     font-size: 8.5pt;
     color: #444444 !important;

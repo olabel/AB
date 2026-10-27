@@ -101,7 +101,7 @@ export const privacyData: LegalPageData = {
       title: "Who is responsible",
       content: [
         "This website is operated by Ahmed Bello, an independent Licensed Financial Solutions Professional in Canada. I am directly responsible for personal information collected through this website and serve as the privacy officer accountable for its management.",
-        "Privacy contact: Ahmed Bello, privacy@ahmedbello.ca. Write to this address with any enquiry regarding your data, to request access or correction, or to withdraw consent."
+        "Privacy contact: Ahmed Bello, privacy@ahmedbello.com. Write to this address with any enquiry regarding your data, to request access or correction, or to withdraw consent."
       ]
     },
     {
@@ -121,7 +121,7 @@ export const privacyData: LegalPageData = {
       title: "Consent",
       content: [
         "By submitting an enquiry, you consent to my using your submitted details to formulate an appropriate educational response.",
-        "Consent for educational newsletters is completely separate, optional, and unticked by default. You may withdraw consent at any time by contacting privacy@ahmedbello.ca or clicking the unsubscribe link in any message.",
+        "Consent for educational newsletters is completely separate, optional, and unticked by default. You may withdraw consent at any time by contacting privacy@ahmedbello.com or clicking the unsubscribe link in any message.",
         "Submitting an enquiry does not establish an advisory agreement. Any future formal advisory relationship involves separate regulatory consent documentation."
       ]
     },
@@ -166,7 +166,7 @@ export const privacyData: LegalPageData = {
       title: "Your rights",
       content: [
         "Under Canadian federal and provincial privacy laws (including PIPEDA), you have the right to request access to the personal data held about you, correct inaccuracies, or request data deletion.",
-        "To exercise these rights, email privacy@ahmedbello.ca. Requests receive a written response within 30 days. You may also contact the Office of the Privacy Commissioner of Canada (priv.gc.ca)."
+        "To exercise these rights, email privacy@ahmedbello.com. Requests receive a written response within 30 days. You may also contact the Office of the Privacy Commissioner of Canada (priv.gc.ca)."
       ]
     },
     {

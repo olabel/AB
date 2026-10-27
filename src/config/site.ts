@@ -10,9 +10,9 @@ export const siteConfig = {
   name: "Ahmed Bello",
   legalName: "Ahmed Bello",
   designation: "Licensed Financial Solutions Professional",
-  siteUrl: "https://ahmedbello.ca",
-  privacyContact: "Ahmed Bello, privacy@ahmedbello.ca",
-  privacyEmail: "privacy@ahmedbello.ca",
+  siteUrl: "https://ahmedbello.com",
+  privacyContact: "Ahmed Bello, privacy@ahmedbello.com",
+  privacyEmail: "privacy@ahmedbello.com",
   tagline: "Your money questions are connected. The answers should be, too.",
   footerBrandLine: "Understand your money. Make informed decisions. Build with intention.",
   headshotUrl: "/assets/aistudio/headshot1_0b740ccc.png",
@@ -34,11 +34,11 @@ export const siteConfig = {
     "Saskatchewan",
     "Yukon"
   ],
-  publicEmail: "enquiries@ahmedbello.ca",
-  publicPhone: null as string | null,
+  publicEmail: "enquiries@ahmedbello.com",
+  publicPhone: "+1-506-899-4941",
   schedulingUrl: null as string | null,
   socialLinks: null as Record<string, string> | null,
   newsletterWebhookUrl: null as string | null,
 
-  defaultFromEmail: "Ahmed Bello <enquiries@ahmedbello.ca>",
+  defaultFromEmail: "Ahmed Bello <onboarding@resend.dev>",
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
 import { Tbc } from "../components/Tbc.tsx";
-import { DRAFT_MODE } from "../config/site.ts";
+import { DRAFT_MODE, siteConfig } from "../config/site.ts";
 import { Check, Copy, ExternalLink, ArrowRight } from "lucide-react";
 
 export const ArticlePage: React.FC = () => {
@@ -55,7 +55,7 @@ export const ArticlePage: React.FC = () => {
               "@type": "Person",
               "name": "Ahmed Bello",
               "jobTitle": "Licensed Financial Solutions Professional",
-              "url": "https://ahmedbello.ca"
+              "url": siteConfig.siteUrl
             },
             "publisher": {
               "@type": "Person",
@@ -63,7 +63,7 @@ export const ArticlePage: React.FC = () => {
             },
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://ahmedbello.ca${article.url}`
+              "@id": `${siteConfig.siteUrl}${article.url}`
             },
             "citation": article.sources.map((s) => ({
               "@type": "CreativeWork",
