@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { Tbc } from "../components/Tbc.tsx";
 import { siteConfig } from "../config/site.ts";
-import { AlertCircle, CheckCircle2, Info } from "lucide-react";
+import { AlertCircle, CheckCircle2, Info, Calendar, ArrowUpRight } from "lucide-react";
 
 const PROVINCES_AND_TERRITORIES = [
   "Alberta",
@@ -324,11 +324,18 @@ export const ContactPage: React.FC = () => {
                 </p>
               )}
 
-              {/* Optional scheduling link: hidden until supplied */}
+              {/* Optional scheduling link: active on Calendly */}
               {siteConfig.schedulingUrl && (
                 <p>
-                  <a href={siteConfig.schedulingUrl} className="underline text-[#2e4a3b]">
-                    Schedule a time directly &rarr;
+                  Calendar:{" "}
+                  <a
+                    href={siteConfig.schedulingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-[#2e4a3b] font-medium inline-flex items-center gap-1"
+                  >
+                    <span>Schedule 30-min call</span>
+                    <ArrowUpRight className="w-3 h-3 text-[#75581f]" aria-hidden="true" />
                   </a>
                 </p>
               )}
@@ -341,13 +348,31 @@ export const ContactPage: React.FC = () => {
 
           {/* Right Column: Interactive Form */}
           <div className="lg:col-span-7 order-1 lg:order-2">
-            {/* Development Placeholder Banner (only shown while in pre-launch draft mode) */}
+            {/* Direct Calendly Booking Invitation Banner */}
             {siteConfig.schedulingUrl && (
-              <div className="mb-6 p-4 bg-[#fbe7a1]/70 border border-[#e5cf85] rounded-[2px] text-xs text-[#4a3a00] flex items-start gap-2.5">
-                <Info className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
-                <div>
-                  <strong>Direct booking:</strong> An online scheduling link is active.
+              <div className="mb-6 p-4 sm:p-5 bg-[#2e4a3b]/5 border border-[#2e4a3b]/25 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+                    <Calendar className="w-4 h-4" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-[#1c1b18]">
+                      Prefer to book a time directly?
+                    </h3>
+                    <p className="text-xs text-[#46423a] mt-0.5">
+                      Schedule a 30-minute introductory conversation directly on Ahmed's calendar.
+                    </p>
+                  </div>
                 </div>
+                <a
+                  href={siteConfig.schedulingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary text-xs py-2 px-4 whitespace-nowrap self-stretch sm:self-auto text-center inline-flex items-center justify-center gap-1.5"
+                >
+                  <span>Book on Calendly</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </a>
               </div>
             )}
 
@@ -365,6 +390,24 @@ export const ContactPage: React.FC = () => {
                   Thank you, {firstName}. I have received your enquiry regarding {topic}. I will review your message
                   and reply to <strong>{email}</strong> with an appropriate next step.
                 </p>
+
+                {siteConfig.schedulingUrl && (
+                  <div className="p-4 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] my-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="text-xs text-[#46423a]">
+                      <strong>Prefer to reserve a time right now?</strong> You can schedule your 30-minute introductory meeting on Calendly.
+                    </div>
+                    <a
+                      href={siteConfig.schedulingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary text-xs py-2 px-3 whitespace-nowrap shrink-0 inline-flex items-center justify-center gap-1"
+                    >
+                      <span>Book on Calendly</span>
+                      <ArrowUpRight className="w-3 h-3 text-[#75581f]" aria-hidden="true" />
+                    </a>
+                  </div>
+                )}
+
                 <div className="pt-4 border-t border-[#d6cebd] flex flex-wrap gap-4">
                   <Link to="/education" className="btn btn-primary text-xs py-2 px-4">
                     Browse the education library &rarr;
@@ -620,7 +663,7 @@ export const ContactPage: React.FC = () => {
                     />
                     <label htmlFor="field-consentPrivacy" className="text-xs text-[#46423a] leading-relaxed">
                       I have read and consent to the{" "}
-                      <Link to="/privacy" target="_blank" className="underline text-[#2e4a3b]">
+                      <Link to="/privacy" target="_blank" rel="noopener noreferrer" className="underline text-[#2e4a3b]">
                         privacy notice
                       </Link>
                       . I understand that submitting this message does not create an advisory relationship or

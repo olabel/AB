@@ -1,1 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48.00 48" width="192" height="192" role="img" aria-label="Ahmed Bello"><title>Ahmed Bello</title><rect width="48.00" height="48" fill="#2e4a3b"/><g transform="translate(7.2 7.2) scale(0.7)"><path d="M4.25 42.00 L8.75 42.00 L22.99 14.50 L18.49 14.50Z" fill="#f7f3eb"/><path d="M39.25 42.00 L43.75 42.00 L29.51 14.50 L25.01 14.50Z" fill="#f7f3eb"/><path d="M12.71 28.00 H35.29 V32.00 H12.71Z" fill="#f7f3eb"/><circle cx="24" cy="8.2" r="3.9" fill="#d6c298"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="192" height="192" fill="none" role="img" aria-label="Ahmed Bello">
+  <title>Ahmed Bello</title>
+  <rect width="100" height="100" rx="20" fill="#f7f3eb" />
+  <g transform="translate(10, 10) scale(0.8)">
+    <path
+      d="M 29,84 L 29,38 A 21,21 0 0,1 71,38 L 71,84"
+      stroke="#2e4a3b"
+      stroke-width="4.5"
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M 35.5,84 L 35.5,38 A 14.5,14.5 0 0,1 64.5,38 L 64.5,84"
+      stroke="#75581f"
+      stroke-width="2.2"
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M 41.5,84 A 8.5,8.5 0 0,1 58.5,84 Z"
+      fill="#75581f"
+    />
+  </g>
+</svg>

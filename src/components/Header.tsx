@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { BrandMark } from "./BrandMark.tsx";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Calendar, ArrowUpRight, Phone, Mail } from "lucide-react";
+import { siteConfig } from "../config/site.ts";
 
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
@@ -14,23 +15,76 @@ const NAV_ITEMS = [
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMenuMounted, setIsMenuMounted] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const location = useLocation();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const firstFocusableRef = useRef<HTMLButtonElement>(null);
 
+  // Smooth open animation: mount DOM first, then trigger slide-in on next frame
+  const openMobileMenu = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setIsMenuMounted(true);
+    setMobileMenuOpen(true);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsMenuVisible(true);
+      });
+    });
+  };
+
+  // Smooth close animation: reverse slide-out and backdrop fade, then unmount
+  const closeMobileMenu = () => {
+    setIsMenuVisible(false);
+    setMobileMenuOpen(false);
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsMenuMounted(false);
+    }, 320);
+  };
+
   // Close mobile menu on route change
   useEffect(() => {
-    setMobileMenuOpen(false);
+    if (mobileMenuOpen || isMenuMounted) {
+      closeMobileMenu();
+    }
   }, [location.pathname, location.search]);
 
-  // Focus trap and Escape key listener for mobile menu
+  // Close mobile menu if screen resizes to >= 1280px (xl breakpoint)
   useEffect(() => {
-    if (!mobileMenuOpen) return;
+    const handleResize = () => {
+      if (window.innerWidth >= 1280 && (mobileMenuOpen || isMenuMounted)) {
+        closeMobileMenu();
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [mobileMenuOpen, isMenuMounted]);
+
+  // Clean up timers on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Focus trap, Escape key listener, and body scroll lock for mobile menu
+  useEffect(() => {
+    if (!isMenuMounted) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setMobileMenuOpen(false);
+        closeMobileMenu();
         triggerRef.current?.focus();
         return;
       }
@@ -58,19 +112,21 @@ export const Header: React.FC = () => {
       }
     };
 
-    // Lock body scroll when mobile menu is open
+    // Lock body scroll when mobile menu is active
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", handleKeyDown);
 
-    // Initial focus on close button
-    firstFocusableRef.current?.focus();
+    // Initial focus on close button once visible
+    if (isMenuVisible) {
+      firstFocusableRef.current?.focus();
+    }
 
     return () => {
       document.body.style.overflow = originalOverflow;
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [mobileMenuOpen]);
+  }, [isMenuMounted, isMenuVisible]);
 
   return (
     <>
@@ -127,7 +183,7 @@ export const Header: React.FC = () => {
             </nav>
 
             {/* CTA + Mobile Menu Button */}
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
               <Link
                 to="/contact"
                 className="hidden sm:inline-flex btn btn-primary text-sm whitespace-nowrap px-4 py-2"
@@ -139,7 +195,7 @@ export const Header: React.FC = () => {
               <button
                 ref={triggerRef}
                 type="button"
-                onClick={() => setMobileMenuOpen(true)}
+                onClick={openMobileMenu}
                 aria-expanded={mobileMenuOpen}
                 aria-controls="mobile-navigation-menu"
                 aria-label="Open main navigation menu"
@@ -152,84 +208,155 @@ export const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Full-screen Mobile Menu with focus trap */}
-      {mobileMenuOpen && (
+      {/* Full-screen Mobile Menu with Smooth Slide-in Transition (< 1280px) */}
+      {isMenuMounted && (
         <div
           id="mobile-navigation-menu"
           ref={menuRef}
           role="dialog"
           aria-modal="true"
           aria-label="Mobile Navigation"
-          className="fixed inset-0 z-50 bg-[#f7f3eb] flex flex-col xl:hidden overflow-y-auto"
+          className="fixed inset-0 z-50 xl:hidden overflow-hidden"
         >
-          {/* Mobile Header Bar */}
-          <div className="wrap">
-            <div className="flex items-center justify-between h-20 border-b border-[#d6cebd]">
-              <Link
-                to="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3.5 text-decoration-none"
-              >
-                <BrandMark size={34} className="w-[34px] h-[34px]" />
-                <span
-                  className="font-serif text-[1.55rem] text-[#1c1b18]"
-                  style={{ fontFamily: 'var(--font-serif)' }}
-                >
-                  Ahmed Bello
-                </span>
-              </Link>
-              <button
-                ref={firstFocusableRef}
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  triggerRef.current?.focus();
-                }}
-                aria-label="Close navigation menu"
-                className="p-2.5 text-[#1c1b18] hover:text-[#2e4a3b] focus-visible:outline-2 focus-visible:outline-[#2e4a3b] rounded"
-              >
-                <X className="w-7 h-7" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
+          {/* Backdrop with fade transition */}
+          <div
+            onClick={() => {
+              closeMobileMenu();
+              triggerRef.current?.focus();
+            }}
+            className={`fixed inset-0 bg-[#1c1b18]/45 backdrop-blur-[2px] transition-opacity duration-300 ease-out ${
+              isMenuVisible ? "opacity-100" : "opacity-0"
+            }`}
+            aria-hidden="true"
+          />
 
-          {/* Navigation Links */}
-          <div className="wrap py-8 flex-1 flex flex-col justify-between">
-            <nav className="flex flex-col gap-5 text-xl font-serif">
-              {NAV_ITEMS.map((item) => {
-                const isActive =
-                  item.href === "/"
-                    ? location.pathname === "/"
-                    : location.pathname.startsWith(item.href);
-
-                return (
+          {/* Full-Screen Drawer Panel with Slide-in from Right */}
+          <div
+            className={`relative w-full h-full bg-[#f7f3eb] flex flex-col justify-between overflow-y-auto transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] transform ${
+              isMenuVisible ? "translate-x-0" : "translate-x-full"
+            } motion-reduce:transition-none motion-reduce:transform-none shadow-2xl`}
+          >
+            <div>
+              {/* Mobile Header Bar */}
+              <div className="wrap">
+                <div className="flex items-center justify-between h-20 border-b border-[#d6cebd]">
                   <Link
-                    key={item.href}
-                    to={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`py-2 text-2xl transition-colors border-b border-[#ece6da] ${
-                      isActive
-                        ? "text-[#2e4a3b] font-medium"
-                        : "text-[#1c1b18] hover:text-[#2e4a3b]"
-                    }`}
+                    to="/"
+                    onClick={closeMobileMenu}
+                    className="flex items-center gap-3.5 text-decoration-none"
                   >
-                    {item.label}
+                    <BrandMark size={34} className="w-[34px] h-[34px]" />
+                    <span
+                      className="font-serif text-[1.55rem] text-[#1c1b18]"
+                      style={{ fontFamily: 'var(--font-serif)' }}
+                    >
+                      Ahmed Bello
+                    </span>
                   </Link>
-                );
-              })}
-            </nav>
+                  <button
+                    ref={firstFocusableRef}
+                    type="button"
+                    onClick={() => {
+                      closeMobileMenu();
+                      triggerRef.current?.focus();
+                    }}
+                    aria-label="Close navigation menu"
+                    className="p-2.5 text-[#1c1b18] hover:text-[#2e4a3b] focus-visible:outline-2 focus-visible:outline-[#2e4a3b] rounded transition-colors"
+                  >
+                    <X className="w-7 h-7" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
 
-            <div className="pt-8 mt-6 border-t border-[#d6cebd] flex flex-col gap-4">
+              {/* Navigation Links */}
+              <div className="wrap py-6">
+                <nav className="flex flex-col gap-2 font-serif" aria-label="Mobile menu navigation">
+                  {NAV_ITEMS.map((item) => {
+                    const isActive =
+                      item.href === "/"
+                        ? location.pathname === "/"
+                        : location.pathname.startsWith(item.href);
+
+                    return (
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        onClick={closeMobileMenu}
+                        className={`py-3 text-2xl tracking-tight transition-colors border-b border-[#ece6da] flex items-center justify-between ${
+                          isActive
+                            ? "text-[#2e4a3b] font-semibold"
+                            : "text-[#1c1b18] hover:text-[#2e4a3b]"
+                        }`}
+                      >
+                        <span>{item.label}</span>
+                        {isActive && (
+                          <span className="w-2 h-2 rounded-full bg-[#2e4a3b]" aria-hidden="true" />
+                        )}
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+            </div>
+
+            {/* Bottom Actions & Calendly Integration */}
+            <div className="wrap py-6 bg-[#f2ecdf]/60 border-t border-[#d6cebd] flex flex-col gap-4">
+              {/* Calendly Booking Card */}
+              {siteConfig.schedulingUrl && (
+                <a
+                  href={siteConfig.schedulingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3.5 bg-[#fcfaf5] border border-[#2e4a3b]/30 hover:border-[#2e4a3b] rounded-[2px] flex items-center justify-between gap-3 text-left transition-colors group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center shrink-0">
+                      <Calendar className="w-4 h-4" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-[#1c1b18] flex items-center gap-1.5">
+                        <span>Book 30-Min Consultation</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 text-[#75581f] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" aria-hidden="true" />
+                      </div>
+                      <div className="text-xs text-[#625d52]">
+                        Direct reservation on Calendly
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              )}
+
+              {/* Start a Conversation CTA */}
               <Link
                 to="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="btn btn-primary w-full text-center py-3 text-base"
+                onClick={closeMobileMenu}
+                className="btn btn-primary w-full text-center py-3 text-base shadow-sm"
               >
                 Start a Conversation
               </Link>
-              <p className="text-xs text-[#625d52] leading-relaxed">
-                Licensed Financial Solutions Professional. Financial education and
-                clarity for Canadians.
+
+              {/* Direct Phone & Email info */}
+              <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-[#46423a]">
+                {siteConfig.publicPhone && (
+                  <a
+                    href={`tel:${siteConfig.publicPhone.replace(/\s+/g, "")}`}
+                    className="inline-flex items-center gap-1.5 text-[#2e4a3b] hover:underline"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-[#75581f]" aria-hidden="true" />
+                    <span>{siteConfig.publicPhone}</span>
+                  </a>
+                )}
+                <a
+                  href={`mailto:${siteConfig.publicEmail}`}
+                  className="inline-flex items-center gap-1.5 text-[#2e4a3b] hover:underline"
+                >
+                  <Mail className="w-3.5 h-3.5 text-[#75581f]" aria-hidden="true" />
+                  <span>{siteConfig.publicEmail}</span>
+                </a>
+              </div>
+
+              <p className="text-[0.75rem] text-[#625d52] leading-relaxed pt-1">
+                Licensed Financial Solutions Professional. Independent financial education and clarity for Canadians across 13 provinces and territories.
               </p>
             </div>
           </div>
@@ -238,3 +365,4 @@ export const Header: React.FC = () => {
     </>
   );
 };
+

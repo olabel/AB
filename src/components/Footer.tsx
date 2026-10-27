@@ -71,6 +71,18 @@ export const Footer: React.FC = () => {
                   Start a Conversation
                 </Link>
               </li>
+              {siteConfig.schedulingUrl && (
+                <li>
+                  <a
+                    href={siteConfig.schedulingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#d6c298] hover:text-white transition-colors inline-flex items-center gap-1 font-medium"
+                  >
+                    <span>Schedule 30-Min Call &rarr;</span>
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
 

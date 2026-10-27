@@ -6,6 +6,7 @@ import { MoneyStructureStudio } from "../components/MoneyStructureStudio.tsx";
 import { StructuralCaseStudies } from "../components/StructuralCaseStudies.tsx";
 import { StructureDiagnostic } from "../components/StructureDiagnostic.tsx";
 import { ArrowRight, HelpCircle } from "lucide-react";
+import { siteConfig } from "../config/site.ts";
 
 export const HowIHelpPage: React.FC = () => {
   const location = useLocation();
@@ -258,10 +259,21 @@ export const HowIHelpPage: React.FC = () => {
           <p className="lede text-base md:text-lg text-[#46423a] max-w-xl mx-auto">
             If there is a financial decision you are trying to understand, let’s start with the question that matters most to you.
           </p>
-          <div className="pt-2 flex justify-center">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
               Start a Conversation &rarr;
             </Link>
+            {siteConfig.schedulingUrl && (
+              <a
+                href={siteConfig.schedulingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
+              >
+                <span>Book 30 Min on Calendly</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            )}
           </div>
           <p className="text-xs text-[#625d52]">
             No obligation. No sales pressure.

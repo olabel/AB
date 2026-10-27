@@ -484,6 +484,17 @@ export const HomePage: React.FC = () => {
             <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
               Start a Conversation &rarr;
             </Link>
+            {siteConfig.schedulingUrl && (
+              <a
+                href={siteConfig.schedulingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
+              >
+                <span>Book 30 Min on Calendly</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            )}
           </div>
           <p className="text-xs text-[#625d52] tracking-wide">
             No obligation. No sales pressure.

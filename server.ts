@@ -260,7 +260,7 @@ app.post("/api/contact", async (req: Request, res: Response) => {
 
   // Secrets verification
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL;
+  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "olabel@gmail.com, abello24trdc@wfgmail.ca";
   const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || siteConfig.defaultFromEmail;
 
   if (!RESEND_API_KEY || !CONTACT_TO_EMAIL) {
