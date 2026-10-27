@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "./components/Header.tsx";
 import { Footer } from "./components/Footer.tsx";
 import { DraftBanner } from "./components/Tbc.tsx";
-
 import { HomePage } from "./pages/HomePage.tsx";
 import { HowIHelpPage } from "./pages/HowIHelpPage.tsx";
 import { EducationLibraryPage } from "./pages/EducationLibraryPage.tsx";
@@ -11,9 +10,9 @@ import { ArticlePage } from "./pages/ArticlePage.tsx";
 import { InsightsPage } from "./pages/InsightsPage.tsx";
 import { AboutPage } from "./pages/AboutPage.tsx";
 import { ContactPage } from "./pages/ContactPage.tsx";
+import { CareersPage } from "./pages/CareersPage.tsx";
 import { LegalPage } from "./pages/LegalPage.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
-
 import { disclosuresData, privacyData, standardsData, termsData } from "./content/legal.ts";
 
 function ScrollToTop() {
@@ -44,6 +43,8 @@ export default function App() {
             <Route path="/insights/:slug" element={<ArticlePage />} />
             <Route path="/insights" element={<InsightsPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/become-an-agent" element={<CareersPage />} />
             <Route path="/contact" element={<ContactPage />} />
 
             {/* Legal and standards routes */}

@@ -8,9 +8,8 @@ const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "How I Help", href: "/how-i-help" },
   { label: "Financial Education", href: "/education" },
-  { label: "About Ahmed", href: "/about" },
   { label: "Insights", href: "/insights" },
-  { label: "Contact", href: "/contact" },
+  { label: "Become an Agent", href: "/careers" },
 ];
 
 export const Header: React.FC = () => {

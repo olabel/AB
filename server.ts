@@ -127,6 +127,7 @@ app.get("/sitemap.xml", (_req: Request, res: Response) => {
     })),
     { loc: "/insights", priority: "0.8", changefreq: "monthly" },
     { loc: "/about", priority: "0.75", changefreq: "monthly" },
+    { loc: "/careers", priority: "0.85", changefreq: "weekly" },
     { loc: "/contact", priority: "0.8", changefreq: "monthly" },
     { loc: "/disclosures", priority: "0.5", changefreq: "quarterly" },
     { loc: "/standards", priority: "0.6", changefreq: "quarterly" },
@@ -240,6 +241,7 @@ app.post("/api/contact", async (req: Request, res: Response) => {
     "family",
     "retirement",
     "newcomer",
+    "mentorship",
     "other",
   ];
   if (!topic || !validTopics.includes(topic)) {
@@ -635,6 +637,42 @@ function getRouteMetadata(pathname: string): RouteMeta {
         ],
       };
 
+    case "/careers":
+    case "/become-an-agent":
+      return {
+        title: "Become an Independent Financial Agent | Free Mentorship | Ahmed Bello",
+        description:
+          "Launch your independent Canadian financial advisory career. 100% free training, provincial LLQP licensing sponsorship, and direct 1-on-1 mentorship with Ahmed Bello.",
+        ogType: "website",
+        url: `${siteConfig.siteUrl}/careers`,
+        jsonLd: [
+          siteWideWebSite,
+          siteWideFinancialService,
+          siteWidePerson,
+          {
+            "@context": "https://schema.org",
+            "@type": "EducationalOccupationalProgram",
+            name: "Independent Financial Agent Mentorship Program",
+            description:
+              "Comprehensive zero-tuition Canadian financial practice training, provincial LLQP licensing sponsorship, and 1-on-1 mentorship with Ahmed Bello.",
+            provider: siteWidePerson,
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "CAD",
+              category: "Free Training & Mentorship",
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
+              { "@type": "ListItem", position: 2, name: "Careers & Mentorship", item: `${siteConfig.siteUrl}/careers` },
+            ],
+          },
+        ],
+      };
     case "/contact":
       return {
         title: "Start a Conversation | Financial Guidance | Ahmed Bello",

@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
 import { Tbc } from "../components/Tbc.tsx";
 import { siteConfig } from "../config/site.ts";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, TrendingUp, Sparkles, BookOpen } from "lucide-react";
 
 export const InsightsPage: React.FC = () => {
-  const featuredEssay = articles.find((a) => a.slug === "savings-or-debt-first");
-  const secondEssay = articles.find((a) => a.slug === "questions-before-any-financial-product");
+  const featuredEssay = articles.find(
+    (a) => a.slug === "canadian-mortgage-renewal-shock-liquidity-trap"
+  );
+  const otherEssays = articles.filter(
+    (a) =>
+      a.kind === "insight" &&
+      a.slug !== "canadian-mortgage-renewal-shock-liquidity-trap"
+  );
 
   const libraryPreviews = [
     articles.find((a) => a.slug === "tfsa-vs-rrsp"),
@@ -20,33 +26,46 @@ export const InsightsPage: React.FC = () => {
       {/* Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-5">
-          <span className="eyebrow text-xs">Insights</span>
+          <span className="eyebrow text-xs">Insights & Strategic Essays</span>
           <h1 className="h1 text-[#1c1b18] leading-tight">
-            How to think about a money decision.
+            How to think about high-stakes money decisions.
           </h1>
           <p className="lede text-lg md:text-xl text-[#46423a] leading-relaxed">
-            The library explains the rules. These essays are about the thinking around them: what to ask first,
-            how trade-offs really work and how to tell useful advice from a pitch.
+            The education library explains statutory rules and limits. These essays provide institutional-grade analysis on the economics behind them: balance-sheet liquidity, cost of capital, and distinguishing genuine fiduciary advice from a sales pitch.
           </p>
         </div>
       </section>
 
-      {/* Featured Essay */}
+      {/* Featured Flagship Essay */}
       {featuredEssay && (
         <section className="section py-16 border-b border-[#d6cebd] bg-[#fcfaf5]">
           <div className="wrap max-w-4xl">
-            <span className="eyebrow text-xs mb-3 block">Featured essay</span>
-            <div className="p-8 md:p-10 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] space-y-5 hover:border-[#2e4a3b] transition-all">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#75581f] text-[#f7f3eb] text-[0.7rem] font-bold uppercase tracking-wider rounded-[2px]">
+                <TrendingUp className="w-3 h-3" />
+                <span>Trending Strategic Analysis</span>
+              </span>
+              <span className="text-xs text-[#625d52] font-medium">
+                Canadian Personal Finance
+              </span>
+            </div>
+
+            <div className="p-8 md:p-10 bg-[#f7f3eb] border-2 border-[#2e4a3b] rounded-[2px] space-y-5 shadow-sm hover:border-[#1c1b18] transition-all">
               <div className="flex items-center gap-2 text-xs text-[#625d52]">
                 <span className="font-semibold text-[#2e4a3b] uppercase tracking-wider text-[0.7rem]">
-                  Financial decision-making
+                  Balance-Sheet & Debt Strategy
                 </span>
-                <span>&middot;</span>
+                <span>&bull;</span>
                 <span>{featuredEssay.readingMinutes} min read</span>
+                <span>&bull;</span>
+                <span className="text-[#75581f] font-semibold">Institutional Grade</span>
               </div>
 
-              <h2 className="h2 text-[#1c1b18] leading-tight">
-                <Link to={featuredEssay.url} className="hover:text-[#2e4a3b] transition-colors">
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1c1b18] leading-tight">
+                <Link
+                  to={featuredEssay.url}
+                  className="hover:text-[#2e4a3b] transition-colors"
+                >
                   {featuredEssay.title}
                 </Link>
               </h2>
@@ -55,49 +74,75 @@ export const InsightsPage: React.FC = () => {
                 {featuredEssay.description}
               </p>
 
-              <div className="pt-2">
+              <div className="p-4 bg-[#fcfaf5] border-l-2 border-[#75581f] text-xs sm:text-sm text-[#46423a]">
+                <strong className="text-[#1c1b18]">The Core Dilemma:</strong> &ldquo;{featuredEssay.question}&rdquo;
+              </div>
+
+              <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <Link
                   to={featuredEssay.url}
-                  className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center gap-1.5"
+                  className="btn btn-primary text-xs py-3 px-5 inline-flex items-center gap-2 shadow-sm"
                 >
-                  <span>Read the essay</span>
+                  <span>Read Full Strategic Analysis</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
+                <span className="text-xs text-[#625d52]">
+                  Includes 15-Year Numerical Case Study & Model
+                </span>
               </div>
             </div>
           </div>
         </section>
       )}
 
-      {/* More Essays */}
-      {secondEssay && (
+      {/* More Essays & Strategic Perspectives */}
+      {otherEssays.length > 0 && (
         <section className="section py-16 border-b border-[#d6cebd]">
           <div className="wrap max-w-4xl space-y-8">
-            <h2 className="h3 text-[#1c1b18]">More essays</h2>
-            <div className="p-8 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4 hover:border-[#2e4a3b] transition-all">
-              <div className="flex items-center gap-2 text-xs text-[#625d52]">
-                <span className="font-semibold text-[#2e4a3b] uppercase tracking-wider text-[0.7rem]">
-                  Financial decision-making
-                </span>
-                <span>&middot;</span>
-                <span>{secondEssay.readingMinutes} min read</span>
-              </div>
+            <div>
+              <span className="eyebrow text-xs">Further Reading</span>
+              <h2 className="h2 text-[#1c1b18] mt-1">Foundational Frameworks</h2>
+              <p className="text-sm text-[#625d52] mt-1">
+                Timeless mental models for evaluating debt, investments, and professional advisory incentives.
+              </p>
+            </div>
 
-              <h3 className="h3 text-[#1c1b18] leading-tight">
-                <Link to={secondEssay.url} className="hover:text-[#2e4a3b] transition-colors">
-                  {secondEssay.title}
-                </Link>
-              </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {otherEssays.map((essay) => (
+                <div
+                  key={essay.slug}
+                  className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col justify-between space-y-4 hover:border-[#2e4a3b] transition-all"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-xs text-[#625d52]">
+                      <span className="font-semibold text-[#2e4a3b] uppercase tracking-wider text-[0.7rem]">
+                        Financial decision-making
+                      </span>
+                      <span>&bull;</span>
+                      <span>{essay.readingMinutes} min read</span>
+                    </div>
 
-              <div className="p-3 bg-[#f7f3eb] border-l border-[#8d8677] text-xs text-[#46423a]">
-                <strong>The question:</strong> {secondEssay.question}
-              </div>
+                    <h3 className="font-serif text-xl text-[#1c1b18] leading-snug">
+                      <Link
+                        to={essay.url}
+                        className="hover:text-[#2e4a3b] transition-colors"
+                      >
+                        {essay.title}
+                      </Link>
+                    </h3>
 
-              <div className="pt-2">
-                <Link to={secondEssay.url} className="arrow-link text-xs">
-                  Read the article &rarr;
-                </Link>
-              </div>
+                    <p className="text-xs text-[#46423a] leading-relaxed line-clamp-3">
+                      {essay.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-[#ece6da]">
+                    <Link to={essay.url} className="arrow-link text-xs">
+                      Read the essay &rarr;
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -110,7 +155,7 @@ export const InsightsPage: React.FC = () => {
             <span className="eyebrow text-xs">Library navigation</span>
             <h2 className="h2 text-[#1c1b18] mt-1">Browse by topic</h2>
             <p className="text-sm text-[#625d52] mt-1">
-              Topics open the education library, filtered.
+              Explore the educational guides behind the strategic frameworks.
             </p>
           </div>
 
@@ -140,7 +185,7 @@ export const InsightsPage: React.FC = () => {
       <section className="section py-16 border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-8">
           <div className="flex items-center justify-between">
-            <h2 className="h2 text-[#1c1b18]">From the library</h2>
+            <h2 className="h2 text-[#1c1b18]">From the education library</h2>
             <Link to="/education" className="arrow-link text-xs">
               All guides &rarr;
             </Link>
@@ -175,15 +220,6 @@ export const InsightsPage: React.FC = () => {
               );
             })}
           </div>
-
-          {/* Newsletter Box (hidden unless configured) */}
-          {siteConfig.newsletterWebhookUrl && (
-            <div className="pt-8">
-              <div className="p-6 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
-                {/* Form when configured */}
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
@@ -191,10 +227,10 @@ export const InsightsPage: React.FC = () => {
       <section className="section py-20 text-center">
         <div className="wrap max-w-3xl space-y-6">
           <h2 className="display text-[#1c1b18]">
-            A better financial decision often starts with a better question.
+            A better financial decision starts with a better question.
           </h2>
           <p className="lede text-base md:text-lg text-[#46423a] max-w-xl mx-auto">
-            If there is a financial decision you are trying to understand, let’s start with the question that matters most to you.
+            Whether navigating an upcoming mortgage renewal, optimizing registered tax shelters, or structuring family income protection, let’s start with an honest conversation.
           </p>
           <div className="pt-2 flex justify-center">
             <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
@@ -202,7 +238,7 @@ export const InsightsPage: React.FC = () => {
             </Link>
           </div>
           <p className="text-xs text-[#625d52]">
-            No obligation. No sales pressure.
+            No obligation. No sales pressure. Independent guidance across Canada and the US.
           </p>
         </div>
       </section>

@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
                 {siteConfig.designation}
               </p>
               <p>
-                Independent financial professional providing education and financial solutions across Canada.
+                Independent financial professional providing education and financial solutions across Canada and the United States.
               </p>
             </div>
           </div>
@@ -64,6 +64,11 @@ export const Footer: React.FC = () => {
               <li>
                 <Link to="/insights" className="hover:text-white transition-colors">
                   Insights & Essays
+                </Link>
+              </li>
+              <li>
+                <Link to="/careers" className="text-[#d6c298] hover:text-white transition-colors font-medium">
+                  Become an Agent (Free Mentorship)
                 </Link>
               </li>
               <li>
@@ -128,14 +133,25 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Disclaimer & Copyright */}
-        <div className="pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-xs text-[#ece6da]/65 leading-relaxed">
+        <div className="pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-xs text-[#ece6da]/70 leading-relaxed">
           <p className="max-w-3xl">
-            <strong>Important notice:</strong> This website is an educational resource intended to
-            explain general Canadian financial concepts and rules. It does not provide personalized
-            financial, investment, tax, or legal advice, and does not constitute an offer or solicitation.
-            Services and products are offered only where licensed and authorized.
+            <strong>Important regulatory notice:</strong> This website is an educational resource
+            providing general financial concepts, strategic frameworks, and professional mentorship
+            across Canada and the United States. Content published here does not constitute
+            individualized financial, investment, tax, or legal advice, nor an offer or
+            solicitation to purchase any specific product or security. Regulated solutions,
+            protection plans, and financial products are arranged exclusively through licensed
+            professionals in their authorized provincial or state jurisdictions. Please review the{" "}
+            <Link to="/disclosures" className="underline hover:text-white transition-colors">
+              regulatory disclosures
+            </Link>{" "}
+            and{" "}
+            <Link to="/standards" className="underline hover:text-white transition-colors">
+              editorial standards
+            </Link>
+            .
           </p>
-          <p className="whitespace-nowrap shrink-0">
+          <p className="whitespace-nowrap shrink-0 text-[#ece6da]/60">
             &copy; {currentYear} Ahmed Bello. All rights reserved.
           </p>
         </div>
