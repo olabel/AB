@@ -69,6 +69,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/news" className="hover:text-white transition-colors">
+                  {t("nav_news")}
+                </Link>
+              </li>
+              <li>
                 <Link to="/careers" className="text-[#d6c298] hover:text-white transition-colors font-medium">
                   {isFr ? "Devenir conseiller indépendant" : "Become an Agent (Free Mentorship)"}
                 </Link>

@@ -9,6 +9,7 @@ import { HowIHelpPage } from "./pages/HowIHelpPage.tsx";
 import { EducationLibraryPage } from "./pages/EducationLibraryPage.tsx";
 import { ArticlePage } from "./pages/ArticlePage.tsx";
 import { InsightsPage } from "./pages/InsightsPage.tsx";
+import { NewsPage } from "./pages/NewsPage.tsx";
 import { AboutPage } from "./pages/AboutPage.tsx";
 import { ContactPage } from "./pages/ContactPage.tsx";
 import { CareersPage } from "./pages/CareersPage.tsx";
@@ -45,6 +46,8 @@ export default function App() {
               <Route path="/education/:slug" element={<ArticlePage />} />
               <Route path="/insights/:slug" element={<ArticlePage />} />
               <Route path="/insights" element={<InsightsPage />} />
+              <Route path="/news" element={<NewsPage />} />
+              <Route path="/financial-news" element={<NewsPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/careers" element={<CareersPage />} />
               <Route path="/become-an-agent" element={<CareersPage />} />

@@ -590,28 +590,32 @@ export const HomePage: React.FC = () => {
       <section className="section py-20 border-b border-[#d6cebd] bg-[#fcfaf5]">
         <div className="wrap">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Portrait Frame */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-xs sm:max-w-sm bg-[#f7f3eb] border border-[#d6cebd] p-3 sm:p-4 rounded-[2px] shadow-sm">
-                <div className="border border-[#75581f]/25 bg-[#fcfaf5] p-1 rounded-[1px] overflow-hidden">
+            {/* Smaller, Round Portrait Presentation */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center">
+              <div className="relative p-2 rounded-full bg-gradient-to-tr from-[#2e4a3b] via-[#d6c298] to-[#2e4a3b] shadow-md">
+                <div className="p-1 rounded-full bg-[#f7f3eb]">
                   <img
                     src={siteConfig.headshotUrl}
                     alt="Ahmed Bello, Licensed Financial Solutions Professional"
-                    className="w-full aspect-[4/5] object-cover object-top rounded-[1px]"
-                    width={360}
-                    height={450}
+                    className="w-44 h-44 sm:w-52 sm:h-52 object-cover object-top rounded-full filter contrast-[1.02]"
+                    width={208}
+                    height={208}
                     loading="lazy"
                   />
                 </div>
-                <div className="mt-3.5 pt-3 border-t border-[#d6cebd] text-center">
-                  <p className="font-serif text-lg text-[#1c1b18] leading-tight">Ahmed Bello</p>
-                  <p className="text-[0.72rem] uppercase tracking-wider text-[#75581f] font-semibold mt-0.5">
-                    {siteConfig.designation}
-                  </p>
-                  <p className="text-[0.75rem] text-[#625d52] mt-1">
-                    Independent Financial Practice &bull; Canada
-                  </p>
+                {/* Subtle Keystone Badge */}
+                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-[#2e4a3b] text-[#f7f3eb] border border-[#d6c298] rounded-full text-[0.68rem] uppercase tracking-wider font-semibold shadow-xs whitespace-nowrap">
+                  Ahmed Bello
                 </div>
+              </div>
+
+              <div className="mt-5 text-center space-y-0.5">
+                <p className="text-xs uppercase tracking-wider text-[#75581f] font-semibold">
+                  {siteConfig.designation}
+                </p>
+                <p className="text-[0.72rem] text-[#625d52]">
+                  Independent Financial Practice &bull; Licensed Across Canada
+                </p>
               </div>
             </div>
 

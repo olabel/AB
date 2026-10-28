@@ -1,3 +1,45 @@
+
+function getSemanticFallbackHtml(pathname: string): string {
+  const p = pathname.toLowerCase().split("?")[0].replace(/\/$/, "") || "/";
+  if (p === "/about") {
+    return `
+      <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
+        <h1>About Ahmed Bello — Licensed Financial Solutions Professional</h1>
+        <p>I am an independent financial professional helping individuals and families across Canada make intentional, well-grounded money decisions. Rather than starting with a product or sales pitch, I start with education: clarifying how Canadian registered accounts (TFSA, RRSP, FHSA), debt repayment, and income protection interact.</p>
+        <h2>Professional Background & Licensing</h2>
+        <p>Headquartered in Moncton, New Brunswick, and licensed to provide financial solutions and protection planning across Canada (Alberta, British Columbia, Manitoba, New Brunswick, Newfoundland and Labrador, Northwest Territories, Nova Scotia, Nunavut, Ontario, Prince Edward Island, Quebec, Saskatchewan, Yukon) and the United States.</p>
+        <h2>Get in Touch</h2>
+        <p>Email: enquiries@ahmedbello.com | Phone: +1-506-899-4941 | Schedule: https://calendly.com/olabel/30min</p>
+      </main>
+    `;
+  }
+  if (p === "/contact") {
+    return `
+      <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
+        <h1>Start a Conversation with Ahmed Bello</h1>
+        <p>Ask a question about your Canadian mortgage renewal, registered accounts (TFSA, RRSP, FHSA), income protection, or newcomer finances with zero obligation and zero sales pressure.</p>
+        <h2>Contact Details</h2>
+        <ul>
+          <li><strong>Email:</strong> enquiries@ahmedbello.com</li>
+          <li><strong>Direct Telephone:</strong> +1-506-899-4941</li>
+          <li><strong>Direct Calendar Booking:</strong> <a href="https://calendly.com/olabel/30min">Schedule 30-Minute Intro Call</a></li>
+          <li><strong>Location:</strong> Moncton, NB, Canada</li>
+        </ul>
+      </main>
+    `;
+  }
+  if (p === "/news") {
+    return `
+      <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
+        <h1>Live Canadian & US Financial News Desk</h1>
+        <p>Real-time institutional intelligence tracking the Bank of Canada policy rate, Federal Reserve FOMC decisions, inflation CPI indices, and CRA regulatory updates.</p>
+        <p>Auto-updated every 15 minutes from official central bank releases and verified financial journalism.</p>
+      </main>
+    `;
+  }
+  return "";
+}
+import { getLatestFinancialNews } from "./src/services/newsService.ts";
 import express, { Request, Response, NextFunction } from "express";
 import fs from "fs";
 import path from "path";
@@ -39,6 +81,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=(), payment=(), usb=(), vr=()"
   );
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
 
   if (isProduction || req.secure || req.headers["x-forwarded-proto"] === "https") {
     res.setHeader(
@@ -104,21 +153,63 @@ function checkRateLimit(ip: string): boolean {
 // 4. Live Launch Robots.txt & Dynamic High-Value Sitemap.xml
 // --------------------------------------------------------------------------
 app.get("/robots.txt", (_req: Request, res: Response) => {
-  res.type("text/plain");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cache-Control", "public, max-age=86400");
+  res.type("text/plain; charset=utf-8");
   if (DRAFT_MODE) {
     res.send("User-agent: *\nDisallow: /\n");
   } else {
     res.send(
-      `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${siteConfig.siteUrl}/sitemap.xml\n`
+`# Allow all search engines, web crawlers, and AI platforms
+User-agent: *
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: ${siteConfig.siteUrl}/sitemap.xml
+`
     );
   }
 });
 
 app.get("/sitemap.xml", (_req: Request, res: Response) => {
-  res.type("application/xml");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.type("application/xml; charset=utf-8");
   const routes = [
     { loc: "", priority: "1.0", changefreq: "weekly" },
     { loc: "/how-i-help", priority: "0.9", changefreq: "monthly" },
+    { loc: "/news", priority: "0.9", changefreq: "hourly" },
     { loc: "/education", priority: "0.9", changefreq: "weekly" },
     ...articles.map((a) => ({
       loc: a.url,
@@ -363,6 +454,30 @@ Origin: ${siteConfig.siteUrl}/contact`;
     return res.status(500).json({
       error: "server_error",
       message: "An internal error occurred. Please try again later.",
+    });
+  }
+});
+
+// --------------------------------------------------------------------------
+// 5b. Live Financial News Aggregation Endpoint: GET /api/news
+// --------------------------------------------------------------------------
+app.get("/api/news", async (_req: Request, res: Response) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cache-Control", "public, max-age=300, stale-while-revalidate=900");
+  try {
+    const items = await getLatestFinancialNews();
+    return res.json({
+      success: true,
+      count: items.length,
+      lastUpdated: new Date().toISOString(),
+      items,
+    });
+  } catch (err: any) {
+    console.error("[News Feed API Error]:", err?.message || err);
+    return res.status(500).json({
+      success: false,
+      error: "news_fetch_failed",
+      items: [],
     });
   }
 });
@@ -651,6 +766,24 @@ function getRouteMetadata(pathname: string): RouteMeta {
         ],
       };
 
+        case "/news":
+      return {
+        title: "Live Canadian & US Financial News Desk | Ahmed Bello",
+        description:
+          "Real-time central bank interest rate decisions, Bank of Canada monetary policy, Federal Reserve updates, and verified North American economic news.",
+        ogType: "website",
+        url: `${siteConfig.siteUrl}/news`,
+        jsonLd: [
+          siteWideWebSite,
+          siteWideFinancialService,
+          {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Live Financial News Desk",
+            url: `${siteConfig.siteUrl}/news`,
+          },
+        ],
+      };
     case "/about":
       return {
         title: "About Ahmed Bello | Licensed Financial Solutions Professional",
@@ -911,6 +1044,10 @@ function injectHeadMetadata(html: string, pathname: string): string {
   });
 
   transformed = transformed.replace("</head>", `${extraTags}\n  </head>`);
+  const semanticFallback = getSemanticFallbackHtml(pathname);
+  if (semanticFallback) {
+    transformed = transformed.replace('<div id="root"></div>', `<div id="root">${semanticFallback}</div>`);
+  }
 
   return transformed;
 }

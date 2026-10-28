@@ -1,5 +1,46 @@
+# Allow all search engines, web crawlers, and AI platforms
 User-agent: *
 Allow: /
 
-# Canonical XML Sitemap for Google Search Console and Bing Webmaster Tools
+# Explicit permissions for Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Explicit permissions for OpenAI / ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Explicit permissions for Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Explicit permissions for Google
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Explicit permissions for Microsoft Bing
+User-agent: Bingbot
+Allow: /
+
+# Explicit permissions for Apple
+User-agent: Applebot
+Allow: /
+
+# Explicit permissions for Common Crawl
+User-agent: CCBot
+Allow: /
+
+# Canonical XML Sitemap
 Sitemap: https://www.ahmedbello.com/sitemap.xml
