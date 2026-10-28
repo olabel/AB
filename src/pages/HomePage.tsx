@@ -8,14 +8,17 @@ import { articles } from "../content/data.ts";
 import { siteConfig } from "../config/site.ts";
 import { ArrowRight, HelpCircle } from "lucide-react";
 import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
+import { useLanguage } from "../context/LanguageContext.tsx";
 
 export const HomePage: React.FC = () => {
-  // 4 preview guides specified for home page
+  const { language, t } = useLanguage();
+
+  // Targeted low-competition Canadian financial guides
   const previewSlugs = [
-    "tfsa-vs-rrsp",
+    "new-to-canada-money-basics",
     "fhsa-explained",
-    "consumer-proposals-explained",
-    "investment-risk-vs-goal-risk",
+    "term-vs-permanent-life-insurance",
+    "tfsa-vs-rrsp",
   ];
   const previewGuides = previewSlugs
     .map((s) => articles.find((a) => a.slug === s))
@@ -100,39 +103,52 @@ export const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Left Column: Core Message & Action */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="eyebrow text-xs">Financial clarity for real life</span>
+              <span className="eyebrow text-xs">
+                {language === "fr" ? "Clarté financière au quotidien" : "Financial clarity for real life"}
+              </span>
               <h1 className="display text-[#1c1b18] leading-[1.08] tracking-[-0.018em]">
-                Your money questions are connected.{" "}
-                <em className="italic font-serif font-normal text-[#2e4a3b]">
-                  The answers should be, too.
-                </em>
+                {language === "fr" ? (
+                  <>
+                    Vos décisions financières sont liées.{" "}
+                    <em className="italic font-serif font-normal text-[#2e4a3b]">
+                      Les réponses devraient l'être aussi.
+                    </em>
+                  </>
+                ) : (
+                  <>
+                    Your money questions are connected.{" "}
+                    <em className="italic font-serif font-normal text-[#2e4a3b]">
+                      The answers should be, too.
+                    </em>
+                  </>
+                )}
               </h1>
               <p className="lede text-lg md:text-xl text-[#46423a] max-w-2xl leading-relaxed">
-                From protecting your family’s income to registered accounts, investing and retirement,
-                better decisions begin with seeing how the pieces fit together.
+                {language === "fr"
+                  ? "De la protection du revenu familial aux régimes enregistrés (CELI, REER, CELIAPP) et à la gestion des dettes, de meilleures décisions commencent par une vue d'ensemble."
+                  : "From protecting your family’s income to registered accounts, debt choices and family priorities, better decisions begin with seeing how the pieces fit together."}
               </p>
               <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link to="/how-i-help" className="btn btn-primary text-base px-6 py-3">
-                  Explore How I Help &rarr;
+                  {language === "fr" ? "Explorer comment j'aide →" : "Explore How I Help →"}
                 </Link>
                 <Link to="/education" className="btn btn-ghost text-base px-6 py-3">
-                  Learn Before You Decide
+                  {language === "fr" ? "Apprendre avant de décider" : "Learn Before You Decide"}
                 </Link>
               </div>
-
               {/* Trust Indicators */}
               <div className="pt-4 border-t border-[#d6cebd]/70 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[#625d52]">
                 <div className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#2e4a3b]" />
-                  <span>Independent Practice</span>
+                  <span>{language === "fr" ? "Pratique indépendante" : "Independent Practice"}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#75581f]" />
-                  <span>Licensed Across Canada</span>
+                  <span>{language === "fr" ? "Agréé partout au Canada" : "Licensed Across Canada"}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#2e4a3b]" />
-                  <span>Zero Sales Pressure</span>
+                  <span>{language === "fr" ? "Zéro pression commerciale" : "Zero Sales Pressure"}</span>
                 </div>
               </div>
             </div>
@@ -175,6 +191,47 @@ export const HomePage: React.FC = () => {
                   </Link>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Targeted High-Intent Questions Strip (Low-Competition Search Targets) */}
+      <section className="bg-[#fcfaf5] border-b border-[#d6cebd] py-6">
+        <div className="wrap">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#75581f] shrink-0">
+              {language === "fr" ? "Questions financières ciblées :" : "Targeted Canadian Questions:"}
+            </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 flex-1">
+              <Link
+                to="/education/new-to-canada-money-basics"
+                className="p-2.5 bg-[#f7f3eb] hover:bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] text-xs text-[#1c1b18] font-medium transition-colors flex items-center justify-between group"
+              >
+                <span>{language === "fr" ? "Nouveaux arrivants : 1re année" : "Newcomers' First-Year Steps"}</span>
+                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+              </Link>
+              <Link
+                to="/education/fhsa-explained"
+                className="p-2.5 bg-[#f7f3eb] hover:bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] text-xs text-[#1c1b18] font-medium transition-colors flex items-center justify-between group"
+              >
+                <span>{language === "fr" ? "CELIAPP + RAP (100k$ non taxé)" : "FHSA + Home Buyers' Plan"}</span>
+                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+              </Link>
+              <Link
+                to="/education/new-to-canada-money-basics"
+                className="p-2.5 bg-[#f7f3eb] hover:bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] text-xs text-[#1c1b18] font-medium transition-colors flex items-center justify-between group"
+              >
+                <span>{language === "fr" ? "Bâtir son crédit au Canada" : "Building Canadian Credit"}</span>
+                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+              </Link>
+              <Link
+                to="/education/term-vs-permanent-life-insurance"
+                className="p-2.5 bg-[#f7f3eb] hover:bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] text-xs text-[#1c1b18] font-medium transition-colors flex items-center justify-between group"
+              >
+                <span>{language === "fr" ? "Assurance temporaire vs perm." : "Term vs Permanent Insurance"}</span>
+                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+              </Link>
             </div>
           </div>
         </div>

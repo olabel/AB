@@ -4,9 +4,11 @@ import { articles, categories } from "../content/data.ts";
 import { Tbc } from "../components/Tbc.tsx";
 import { DRAFT_MODE, siteConfig } from "../config/site.ts";
 import { Check, Copy, ExternalLink, ArrowRight } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext.tsx";
 
 export const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
+  const { isFr, t } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -47,12 +49,12 @@ export const ArticlePage: React.FC = () => {
   };
 
   const sections = [
-    { id: "overview", label: "Overview" },
-    ...(article.example ? [{ id: "example", label: "Hypothetical example" }] : []),
-    { id: "misunderstandings", label: "Common misunderstandings" },
-    { id: "tradeoffs", label: "Trade-offs and limitations" },
-    { id: "questions", label: "Questions to consider" },
-    { id: "sources", label: `Sources (${article.sources.length})` },
+    { id: "overview", label: isFr ? "Vue d'ensemble" : "Overview" },
+    ...(article.example ? [{ id: "example", label: isFr ? "Exemple hypothétique" : "Hypothetical example" }] : []),
+    { id: "misunderstandings", label: isFr ? "Idées reçues fréquentes" : "Common misunderstandings" },
+    { id: "tradeoffs", label: isFr ? "Compromis et limites" : "Trade-offs and limitations" },
+    { id: "questions", label: isFr ? "Questions à considérer" : "Questions to consider" },
+    { id: "sources", label: isFr ? `Sources officielles (${article.sources.length})` : `Sources (${article.sources.length})` },
   ];
 
   return (
@@ -123,7 +125,7 @@ export const ArticlePage: React.FC = () => {
 
           <div className="p-4 bg-[#fcfaf5] border-l-2 border-[#2e4a3b] text-[#1c1b18] rounded-r-[2px]">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#2e4a3b] block mb-1">
-              The Question:
+              {t("meta_the_question")}
             </span>
             <p className="text-lg font-serif italic text-[#1c1b18] leading-snug">
               {article.question}
@@ -139,12 +141,12 @@ export const ArticlePage: React.FC = () => {
               {/* Meta Box */}
               <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs space-y-3.5">
                 <div>
-                  <span className="text-[#625d52] block mb-0.5 font-medium">Estimated Reading Time</span>
-                  <span className="text-[#1c1b18] font-semibold">{article.readingMinutes} min read</span>
+                  <span className="text-[#625d52] block mb-0.5 font-medium">{t("meta_reading_time")}</span>
+                  <span className="text-[#1c1b18] font-semibold">{article.readingMinutes} {t("meta_min_read")}</span>
                 </div>
                 <div className="border-t border-[#ece6da] pt-3">
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[#625d52] font-medium">Reading Progress</span>
+                    <span className="text-[#625d52] font-medium">{t("meta_reading_progress")}</span>
                     <span className="text-[#2e4a3b] font-bold">{Math.round(scrollProgress)}%</span>
                   </div>
                   <div className="w-full bg-[#ece6da] h-1.5 rounded-full overflow-hidden">
@@ -163,7 +165,7 @@ export const ArticlePage: React.FC = () => {
                 )}
 
                 <div className="border-t border-[#ece6da] pt-3 flex items-center justify-between">
-                  <span className="text-[#625d52] font-medium">Official Sources</span>
+                  <span className="text-[#625d52] font-medium">{t("meta_sources")}</span>
                   <a
                     href="#sources"
                     className="text-[#2e4a3b] font-semibold hover:underline"

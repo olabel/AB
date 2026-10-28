@@ -128,6 +128,10 @@ app.get("/sitemap.xml", (_req: Request, res: Response) => {
     { loc: "/insights", priority: "0.8", changefreq: "monthly" },
     { loc: "/about", priority: "0.75", changefreq: "monthly" },
     { loc: "/careers", priority: "0.85", changefreq: "weekly" },
+    { loc: "/for/healthcare", priority: "0.85", changefreq: "weekly" },
+    { loc: "/for/business-owners", priority: "0.85", changefreq: "weekly" },
+    { loc: "/for/families", priority: "0.85", changefreq: "weekly" },
+    { loc: "/for/newcomers", priority: "0.85", changefreq: "weekly" },
     { loc: "/contact", priority: "0.8", changefreq: "monthly" },
     { loc: "/disclosures", priority: "0.5", changefreq: "quarterly" },
     { loc: "/standards", priority: "0.6", changefreq: "quarterly" },
@@ -381,10 +385,10 @@ const siteWideFinancialService = {
   name: "Ahmed Bello Financial Education",
   legalName: "Ahmed Bello",
   url: siteConfig.siteUrl,
-  logo: `${siteConfig.siteUrl}/brand/icon-512.png`,
-  image: `${siteConfig.siteUrl}/brand/icon-512.png`,
+  logo: `${siteConfig.siteUrl}/brand/og-share.png`,
+  image: `${siteConfig.siteUrl}/brand/og-share.png`,
   description:
-    "Independent Canadian financial education on registered accounts (TFSA, RRSP, FHSA, RESP), household income protection, debt-versus-savings frameworks, and retirement public pensions.",
+    "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA, RESP), insurance solutions, and family money decisions.",
   priceRange: "$$",
   areaServed: {
     "@type": "Country",
@@ -415,7 +419,7 @@ const siteWidePerson = {
   jobTitle: siteConfig.designation,
   url: siteConfig.siteUrl,
   description:
-    "Canadian Licensed Financial Solutions Professional helping Canadians connect income, savings, protection, and retirement decisions.",
+    "Licensed Financial Solutions Professional providing plain-language financial education for Canadians.",
   worksFor: {
     "@id": `${siteConfig.siteUrl}/#financialservice`,
   },
@@ -427,7 +431,7 @@ const siteWideWebSite = {
   "@id": `${siteConfig.siteUrl}/#website`,
   name: "Ahmed Bello",
   url: siteConfig.siteUrl,
-  description: "Canadian financial education, registered accounts, protection, and retirement guidance.",
+  description: "Plain-language Canadian financial education on registered accounts, insurance, and family money decisions.",
   publisher: {
     "@id": `${siteConfig.siteUrl}/#person`,
   },
@@ -528,6 +532,34 @@ function getRouteMetadata(pathname: string): RouteMeta {
         ],
       };
     }
+  }
+
+  // Audience Hub pages (/for/:audience)
+  const forMatch = cleanPath.match(/^\/for\/([^\/]+)$/);
+  if (forMatch) {
+    const aud = forMatch[1];
+    let title = "Financial Guidance & Topic Clusters | Ahmed Bello";
+    let desc = "Curated Canadian financial guides tailored for specific professions and situations.";
+    if (aud === "healthcare" || aud === "health-workers" || aud === "doctors-nurses") {
+      title = "Financial Guidance for Healthcare Workers, Doctors & Nurses | Ahmed Bello";
+      desc = "Licensing gap planning, newcomer cashflow runway, and income protection for internationally trained healthcare professionals.";
+    } else if (aud === "business-owners" || aud === "incorporated") {
+      title = "Financial Guidance for Canadian Business Owners & CCPCs | Ahmed Bello";
+      desc = "Corporate capital gains rules, Capital Dividend Account extraction, and private company estate planning.";
+    } else if (aud === "families" || aud === "parents") {
+      title = "Financial Guidance for Canadian Families & Homeowners | Ahmed Bello";
+      desc = "Mortgage renewal planning, FHSA and Home Buyers' Plan coordination, RESP education savings, and family protection.";
+    } else if (aud === "newcomers" || aud === "immigrants") {
+      title = "First-Year Financial Essentials for Newcomers to Canada | Ahmed Bello";
+      desc = "Credit score building, first-year savings runway calculator, tax residency timing, and foreign asset reporting.";
+    }
+    return {
+      title,
+      description: desc,
+      ogType: "website",
+      url: `${siteConfig.siteUrl}${cleanPath}`,
+      jsonLd: [siteWideWebSite, siteWideFinancialService],
+    };
   }
 
   switch (cleanPath) {
@@ -787,9 +819,9 @@ function getRouteMetadata(pathname: string): RouteMeta {
     default:
       // Home page
       return {
-        title: "Ahmed Bello | Licensed Financial Solutions Professional",
+        title: "Ahmed Bello | Financial Education for Canadians",
         description:
-          "Canadian financial education, registered accounts, protection, and retirement guidance. Connect your money decisions with intention.",
+          "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.",
         ogType: "website",
         url: siteConfig.siteUrl,
         jsonLd: [
@@ -869,8 +901,8 @@ function injectHeadMetadata(html: string, pathname: string): string {
   } else {
     extraTags += `\n    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`;
     extraTags += `\n    <meta property="og:locale" content="en_CA" />`;
-    extraTags += `\n    <meta property="og:image" content="${siteConfig.siteUrl}/brand/icon-512.png" />`;
-    extraTags += `\n    <meta name="twitter:image" content="${siteConfig.siteUrl}/brand/icon-512.png" />`;
+    extraTags += `\n    <meta property="og:image" content="${siteConfig.siteUrl}/brand/og-share.png" />`;
+    extraTags += `\n    <meta name="twitter:image" content="${siteConfig.siteUrl}/brand/og-share.png" />`;
   }
 
   // Inject Rich JSON-LD Schemas

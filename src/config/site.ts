@@ -10,7 +10,7 @@ export const siteConfig = {
   name: "Ahmed Bello",
   legalName: "Ahmed Bello",
   designation: "Licensed Financial Solutions Professional",
-  siteUrl: "https://ahmedbello.com",
+  siteUrl: "https://www.ahmedbello.com",
   privacyContact: "Ahmed Bello, privacy@ahmedbello.com",
   privacyEmail: "privacy@ahmedbello.com",
   tagline: "Your money questions are connected. The answers should be, too.",
@@ -39,6 +39,5 @@ export const siteConfig = {
   schedulingUrl: "https://calendly.com/olabel/30min",
   socialLinks: null as Record<string, string> | null,
   newsletterWebhookUrl: null as string | null,
-
   defaultFromEmail: "Ahmed Bello <onboarding@resend.dev>",
 };

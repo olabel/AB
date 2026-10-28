@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { BrandMark } from "./BrandMark.tsx";
 import { Tbc } from "./Tbc.tsx";
 import { siteConfig } from "../config/site.ts";
+import { useLanguage } from "../context/LanguageContext.tsx";
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const { isFr, t } = useLanguage();
 
   return (
     <footer className="bg-[#14211a] text-[#f7f3eb] on-dark pt-16 pb-12 mt-auto border-t border-[#2e4a3b]/40">
@@ -43,17 +45,17 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2.5 text-sm list-none p-0 text-[#ece6da]/90">
               <li>
                 <Link to="/" className="hover:text-white transition-colors">
-                  Home
+                  {t("nav_home")}
                 </Link>
               </li>
               <li>
                 <Link to="/how-i-help" className="hover:text-white transition-colors">
-                  How I Help
+                  {t("nav_how_i_help")}
                 </Link>
               </li>
               <li>
                 <Link to="/education" className="hover:text-white transition-colors">
-                  Financial Education Library
+                  {t("nav_education")}
                 </Link>
               </li>
               <li>
@@ -63,17 +65,17 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/insights" className="hover:text-white transition-colors">
-                  Insights & Essays
+                  {t("nav_insights")}
                 </Link>
               </li>
               <li>
                 <Link to="/careers" className="text-[#d6c298] hover:text-white transition-colors font-medium">
-                  Become an Agent (Free Mentorship)
+                  {isFr ? "Devenir conseiller indépendant" : "Become an Agent (Free Mentorship)"}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-white transition-colors">
-                  Start a Conversation
+                  {t("nav_contact")}
                 </Link>
               </li>
               {siteConfig.schedulingUrl && (
@@ -135,13 +137,7 @@ export const Footer: React.FC = () => {
         {/* Disclaimer & Copyright */}
         <div className="pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-xs text-[#ece6da]/70 leading-relaxed">
           <p className="max-w-3xl">
-            <strong>Important regulatory notice:</strong> This website is an educational resource
-            providing general financial concepts, strategic frameworks, and professional mentorship
-            across Canada and the United States. Content published here does not constitute
-            individualized financial, investment, tax, or legal advice, nor an offer or
-            solicitation to purchase any specific product or security. Regulated solutions,
-            protection plans, and financial products are arranged exclusively through licensed
-            professionals in their authorized provincial or state jurisdictions. Please review the{" "}
+            <strong>{isFr ? "Avis réglementaire important :" : "Important regulatory notice:"}</strong> {isFr ? "Ce site web est une ressource éducative fournissant des concepts financiers généraux, des cadres stratégiques et du mentorat professionnel au Canada et aux États-Unis. Le contenu publié ici ne constitue pas un conseil financier, d'investissement, fiscal ou juridique personnalisé, ni une offre ou sollicitation pour acheter un produit ou titre spécifique. Les solutions réglementées et plans de protection sont organisés exclusivement par des professionnels dûment autorisés dans leur province ou état." : "This website is an educational resource providing general financial concepts, strategic frameworks, and professional mentorship across Canada and the United States. Content published here does not constitute individualized financial, investment, tax, or legal advice, nor an offer or solicitation to purchase any specific product or security. Regulated solutions, protection plans, and financial products are arranged exclusively through licensed professionals in their authorized provincial or state jurisdictions."} {isFr ? "Veuillez consulter les" : "Please review the"}{" "}
             <Link to="/disclosures" className="underline hover:text-white transition-colors">
               regulatory disclosures
             </Link>{" "}

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Canonical XML Sitemap for Google Search Console and Bing Webmaster Tools
+Sitemap: https://www.ahmedbello.com/sitemap.xml

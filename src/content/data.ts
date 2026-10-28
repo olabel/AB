@@ -658,7 +658,8 @@ export const articles: Article[] = [
       "The First Home Savings Account (FHSA) is a registered account for saving toward a first home. Contributions are generally tax-deductible, and withdrawals used to buy a qualifying first home are not taxed, including the investment income earned in the account.",
       "The annual contribution limit is $8,000 and the lifetime limit is $40,000. Unused annual room can be carried forward to the next year, up to a maximum of $8,000. Transfers from an RRSP count toward the limits but are not deductible.",
       "To open one you generally need to be a resident of Canada, at least 18, and a first-time home buyer under CRA’s definition — broadly, that neither you nor your spouse or common-law partner lived in a home you owned during the year you open the account or the previous four calendar years. CRA publishes the precise test.",
-      "Withdrawals that do not go toward a qualifying home are included in your income. Your maximum participation period ends on December 31 of the earliest of: the 15th anniversary of opening your first FHSA, the year you turn 71, or the year after your first qualifying withdrawal. An unused balance can generally be transferred to an RRSP or RRIF on a tax-deferred basis."
+      "Withdrawals that do not go toward a qualifying home are included in your income. Your maximum participation period ends on December 31 of the earliest of: the 15th anniversary of opening your first FHSA, the year you turn 71, or the year after your first qualifying withdrawal. An unused balance can generally be transferred to an RRSP or RRIF on a tax-deferred basis.",
+      "Combining the FHSA with the Home Buyers' Plan (HBP): You can legally combine both the FHSA and the RRSP Home Buyers' Plan for the exact same qualifying home purchase. With the CRA HBP withdrawal limit at $60,000, a single first-time homebuyer can combine $40,000 from an FHSA and $60,000 from an RRSP for up to $100,000 in tax-free home purchase capital ($200,000 for a couple). Unlike the HBP, qualifying FHSA withdrawals never have to be repaid." 
     ],
     "example": {
       "title": "How the carry-forward cap works",
@@ -1611,4 +1612,254 @@ export const articles: Article[] = [
     "readingMinutes": 8
   }
 
+  ,
+  {
+    "slug": "term-vs-permanent-life-insurance",
+    "kind": "guide",
+    "title": "Term vs permanent life insurance: how to choose in Canada",
+    "seoTitle": "Term vs Permanent Life Insurance Canada Decision Guide",
+    "description": "Term insurance covers temporary liabilities like mortgages and child-rearing. Permanent insurance covers lifelong capital gains taxes and estate liquidity. How to choose.",
+    "question": "What is the difference between term and permanent life insurance in Canada, and when does each make sense?",
+    "category": "protection",
+    "figuresAsOf": "Industry standard contractual features across Canadian life insurance carriers",
+    "problem": "Life insurance is often presented as an ideological battle between 'Buy term and invest the difference' and 'Permanent whole life builds wealth.' In reality, they are two different tools designed for two fundamentally different financial problems.",
+    "overview": [
+      "Life insurance in Canada exists to solve one of two financial realities: temporary debt replacement during working years, or permanent liquidity needs upon death. Choosing between term and permanent insurance starts with understanding which of these two problems you are solving.",
+      "Term life insurance provides pure death benefit protection for a fixed period—typically 10, 20, or 30 years, or up to age 65. If you pass away during the term, your beneficiaries receive a tax-free lump sum. If you outlive the term, the policy expires with zero residual cash value. Because you are only paying for pure mortality risk during healthy working years, term premiums are highly affordable, making it the ideal tool to cover a mortgage, replace family income, and protect dependent children until they become financially self-sufficient.",
+      "Permanent life insurance (such as Whole Life or Universal Life) is designed to stay in force for your entire lifetime, guaranteed to pay out whenever death occurs, provided required premiums are maintained. Permanent policies also accumulate a tax-sheltered cash surrender value. In Canada, permanent insurance is primarily an estate planning and tax shelter tool: it is used to fund terminal capital gains taxes on family cottages and rental properties under Subsection 70(5), pass corporate retained earnings out of a private corporation tax-free through the Capital Dividend Account (CDA), or leave an equalized legacy among children.",
+      "A critical advantage in Canadian term policies is the Contractual Conversion Privilege. Most individual term policies permit you to convert all or part of your term coverage into permanent insurance at any point before age 65 or 70 without providing medical evidence or undergoing health underwriting. This allows young families to purchase high amounts of low-cost term protection today while preserving their option to lock in permanent estate coverage later in life regardless of future health changes."
+    ],
+    "example": {
+      "title": "Hypothetical Comparison: 35-Year-Old Canadian Non-Smoker ($500,000 Coverage)",
+      "intro": "A 35-year-old Canadian professional evaluates $500,000 in life insurance coverage. They compare a 20-Year Level Term policy against a Permanent Participating Whole Life policy.",
+      "table": {
+        "head": ["Feature", "20-Year Term Life Insurance", "Permanent Whole Life Insurance"],
+        "rows": [
+          ["Coverage Horizon", "Fixed 20 years (expires at age 55)", "Lifelong guarantee (pays at age 85, 95, etc.)"],
+          ["Initial Monthly Premium", "Low (~$30 to $45 / month)", "Higher (~$350 to $500 / month)"],
+          ["Primary Purpose", "Replace income, mortgage payoff, children's support", "Estate capital gains tax, business transfer, legacy"],
+          ["Cash Surrender Value", "None (pure insurance risk protection)", "Builds tax-sheltered cash value over time"],
+          ["Conversion Option", "Convertible to permanent without medical exam", "Already permanent; policy loan options available"],
+          ["Tax Treatment of Payout", "100% Tax-free to beneficiaries", "100% Tax-free to beneficiaries / CDA credit"]
+        ]
+      },
+      "notes": [
+        "Figures are hypothetical illustrations of Canadian standard risk classifications.",
+        "Many Canadian families combine both: large term coverage for temporary liabilities plus a modest permanent base for lifetime estate settlement."
+      ]
+    },
+    "misunderstandings": [
+      {
+        "myth": "Mortgage insurance through the bank is the same thing as individual term life insurance.",
+        "reality": "Bank mortgage life insurance is creditor insurance where the bank is the beneficiary, the payout declines as your mortgage balance decreases while premiums remain flat, and underwriting often happens post-claim. Individual term life insurance is underwritten upfront, maintains a level death benefit, and pays cash directly to your family to use as they choose."
+      },
+      {
+        "myth": "Permanent insurance is always better because term insurance 'wastes' money if you don't die.",
+        "reality": "Term insurance is not a waste; it is risk transfer, exactly like home or auto insurance. Paying a modest premium so your family doesn't lose their home if you pass away prematurely is efficient risk management. Buying permanent insurance when you actually need maximum temporary coverage often results in severe under-insurance because of the higher cost."
+      },
+      {
+        "myth": "You cannot change a term policy once you buy it.",
+        "reality": "Quality Canadian term policies include a conversion rider allowing you to convert your term coverage into permanent whole life or universal life without medical underwriting, protecting you against future uninsurability if your health deteriorates."
+      }
+    ],
+    "tradeoffs": [
+      "Cost vs. Coverage Quantum: Term insurance allows young families to purchase $1,000,000+ of protection on a modest budget, whereas permanent insurance requires higher capital commitments.",
+      "Temporary vs. Lifelong Need: Term insurance eventually expires or becomes prohibitively expensive upon renewal; permanent insurance guarantees a payout regardless of how long you live.",
+      "Simplicity vs. Tax Optimization: Term is straightforward pure insurance; permanent life involves contractual dividend scales, crediting rates, and complex tax legislation (Section 148 of the ITA)."
+    ],
+    "questions": [
+      "Is the need I am protecting temporary (mortgage, dependent children) or permanent (cottage capital gains tax, estate legacy)?",
+      "If I died tomorrow, what exact dollar amount would my family need to replace my net income and retire all joint debts?",
+      "Does my term policy include a guaranteed conversion privilege to permanent coverage without a medical exam?",
+      "For business owners: would corporate-owned life insurance allow us to extract retained earnings through the Capital Dividend Account tax-free?"
+    ],
+    "sources": [
+      {
+        "label": "Financial Consumer Agency of Canada — Life Insurance Explained",
+        "url": "https://www.canada.ca/en/financial-consumer-agency/services/insurance/life.html",
+        "note": "Official Canadian government guide on term vs permanent life insurance policies."
+      },
+      {
+        "label": "Canadian Life and Health Insurance Association (CLHIA) — Consumer Guide",
+        "url": "https://www.clhia.ca/",
+        "note": "Industry standards on policy underwriting, conversion privileges, and beneficiary protections."
+      },
+      {
+        "label": "Canada Revenue Agency — Subsection 148: Life Insurance Policies",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-3-property-investments-savings-plans/series-3-property-investments-savings-plan-folio-9-life-insurance/income-tax-folio-s3-f9-c1-lottery-winnings-miscellaneous-receipts-income-losses-life-insurance-policies.html",
+        "note": "Tax treatment of death benefits and cash surrender values under the Income Tax Act."
+      }
+    ],
+    "related": [
+      "income-depends-on-you",
+      "canadian-capital-gains-deemed-disposition-estate-trap",
+      "questions-before-any-financial-product",
+      "savings-or-debt-first"
+    ],
+    "contactTopic": "protection",
+    "invitationAbout": "evaluating term vs permanent insurance options and calculating family coverage requirements",
+    "url": "/education/term-vs-permanent-life-insurance",
+    "readingMinutes": 5
+  }
+
+  ,
+{
+  "slug": "internationally-trained-doctors-nurses-first-year",
+  "kind": "guide",
+  "title": "Internationally trained doctors and nurses: your first year of money in Canada",
+  "seoTitle": "Trained abroad: your first year of money in Canada",
+  "description": "Licensing takes time and your income may start late. How tax, credit, savings and benefits work in a first year while your credentials are being recognized.",
+  "question": "How should I plan my money in Canada while my licence and credentials are still being recognized?",
+  "category": "newcomers",
+  "figuresAsOf": "2026 TFSA limit and CRA and FCAC guidance as published on the pages listed under Sources",
+  "problem": "A physician or nurse trained abroad often arrives with years of experience and no Canadian licence yet. The risk is not a lack of skill. It is a gap between the day your costs start and the day your professional income does, and nobody can tell you exactly how long that gap will be.",
+  "overview": [
+    "Plan around the gap, not the salary. Your regulator sets the steps, fees and order for licensing in your province, and the timeline can change. A sensible first-year plan asks how many months your savings can cover if recognition takes longer than hoped.",
+    "Tax residency starts early. CRA says you become a resident for income tax purposes when you have enough residential ties in Canada, and that for most newcomers this starts the first day you live here. Your first return is due after the year you arrive. CRA\u2019s own example: someone who arrived in 2025 files that return by April 30, 2026. The deadline is June 15 if you or your spouse or common-law partner are self-employed. CRA also uses your return to work out benefits and credits, even if you have no income to report, and says you can apply for benefits and credits as soon as you arrive if you meet the eligibility criteria.",
+    "Savings you bring with you. A Canadian resident who holds specified foreign property with a total cost of more than CAD $100,000 at any time in the year files Form T1135 with their tax return. The test uses cost, not market value. You do not file it for the year you first become a resident. In later years, the cost of property you owned on arrival is its fair market value on the day you became a resident. The rules are technical, so a tax professional is the right person to confirm what applies to you.",
+    "Registered accounts start from zero. TFSA room begins on the day you become a resident, if you are 18 or older, and nothing accumulates for the years before. The 2026 limit is $7,000. RRSP room is generally built from 18% of your earned income in the previous year, up to the annual maximum, so it can be small in your first year. An FHSA requires you to be a resident, 18 or older, and a first-time home buyer as CRA defines it, and you give the issuer your Social Insurance Number.",
+    "Credit starts here too. The Financial Consumer Agency of Canada (FCAC) says Canadian credit scores usually range from 300 to 900 and come from reports kept by two main bureaus, Equifax and TransUnion. It notes that a limited credit history may make it harder to borrow, get a credit card or rent a home. Do not assume your history from home carries over; ask each lender what it will consider.",
+    "Banking and your SIN. Banks must confirm your identity with original identification, and foreign passports are on the approved list. Some institutions may ask you to visit a branch in person. A Social Insurance Number is a nine-digit number needed to work in Canada or access government programs and benefits. A temporary resident\u2019s SIN starts with 9 and expires with their immigration documents. It is private, and you are responsible for protecting it.",
+    "Help with licensing costs. The federal Foreign Credential Recognition program lists loans of up to $30,000, offered through participating organizations, to help with licensing and exam fees, additional training or tuition. Eligibility depends on your immigration status and province. A loan is still debt, so the terms matter as much as the amount.",
+    "Sending money home. FCAC says the real cost of sending money abroad includes transfer fees, exchange-rate costs and charges paid by the recipient, and that a low fee may be offset by a less favourable exchange rate. Compare the total, not just the headline fee."
+  ],
+  "example": {
+    "title": "How long recognition takes changes the whole plan",
+    "intro": "Hypothetical figures. A household arrives with CAD $30,000 in savings. Monthly living costs are $3,200, and exam, licensing and preparation costs are $6,000 in total. The table ignores any interim income to show the effect of timing alone.",
+    "table": {
+      "head": [
+        "Item",
+        "8 months to first professional pay",
+        "14 months to first professional pay"
+      ],
+      "rows": [
+        [
+          "Living costs ($3,200 \u00d7 months)",
+          "$25,600",
+          "$44,800"
+        ],
+        [
+          "Exam, licensing and preparation",
+          "$6,000",
+          "$6,000"
+        ],
+        [
+          "Total needed",
+          "$31,600",
+          "$50,800"
+        ],
+        [
+          "Savings on arrival",
+          "$30,000",
+          "$30,000"
+        ],
+        [
+          "Shortfall (our calculation)",
+          "$1,600",
+          "$20,800"
+        ]
+      ]
+    },
+    "notes": [
+      "All numbers here are invented to show how the arithmetic works. They are not typical costs and not a prediction of how long recognition takes.",
+      "Six more months of waiting turns a small shortfall into a large one. That is why the longer timeline, not the hopeful one, is the useful number to plan around.",
+      "Interim income, a partner\u2019s earnings, family support or a loan would change the picture. Each has its own trade-offs."
+    ]
+  },
+  "misunderstandings": [
+    {
+      "myth": "My credit history and my credentials come with me.",
+      "reality": "Credit generally starts from the beginning here, and professional licensing is a separate process run for your profession in your province or territory. The federal program describes recognition as verifying that foreign education, skills and experience are equivalent to Canadian standards."
+    },
+    {
+      "myth": "If I have no Canadian income yet, I do not need to think about a tax return.",
+      "reality": "CRA says it uses your return each year, even if you have no income to report, and that it works out benefits and credits from it. Your first return is due after the year you arrive."
+    },
+    {
+      "myth": "Money I keep abroad is not CRA\u2019s concern once I live here.",
+      "reality": "A Canadian resident whose specified foreign property cost more than CAD $100,000 at any time in a year generally files Form T1135 with that year\u2019s return, except for the year they first become a resident. Ask a tax professional what applies to you."
+    },
+    {
+      "myth": "I will have as much TFSA and RRSP room as colleagues who have lived here for years.",
+      "reality": "TFSA room starts on the day you become a resident, and RRSP room builds from earned income. Newcomers usually start with much less."
+    },
+    {
+      "myth": "A low transfer fee means sending money home is cheap.",
+      "reality": "FCAC warns that providers may make up for a low fee with a less favourable exchange rate. Compare the total cost, including what the recipient pays."
+    }
+  ],
+  "tradeoffs": [
+    "Money you commit to a registered account or send abroad is money not available for licensing fees and living costs while your income is uncertain. Think about how quickly you could reach it.",
+    "A credit card builds a Canadian record if you use it responsibly, but carries high interest if the balance is not paid in full.",
+    "A recognition loan can cover exam and training fees, but it adds a repayment you will carry before your professional income starts.",
+    "Taking interim work can protect your savings, but it may take time from exam preparation. The right balance differs for each person.",
+    "Rules differ by profession, province, immigration status and family situation. Treat this guide as a starting point and check with your regulator and the official sources below."
+  ],
+  "questions": [
+    "What are all the licensing steps, fees and realistic timelines for my profession in my province, according to the regulator?",
+    "How many months can my savings cover if recognition takes six months longer than I hope?",
+    "What work am I allowed to do in the meantime under my immigration status?",
+    "Do I hold foreign property whose total cost could exceed CAD $100,000 after my arrival year?",
+    "Which benefits and credits might my family qualify for, and have I applied?",
+    "Does my province\u2019s public health plan start right away, or is there a gap I need to plan for?",
+    "What is the total cost, including exchange rate, of sending money home?",
+    "Would I count as a first-time home buyer for an FHSA, and how does CRA treat a home I owned abroad?",
+    "Which of these questions should I ask a tax professional this year?"
+  ],
+  "sources": [
+    {
+      "label": "Canada Revenue Agency \u2014 Newcomers to Canada and the CRA",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/individuals-leaving-entering-canada-non-residents/newcomers-canada-immigrants.html",
+      "note": "Residency for tax purposes, first return, benefits and credits."
+    },
+    {
+      "label": "Canada Revenue Agency \u2014 Questions and answers about Form T1135",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/information-been-moved/foreign-reporting/questions-answers-about-form-t1135.html",
+      "note": "Foreign property over CAD $100,000, arrival-year rule, cost on arrival."
+    },
+    {
+      "label": "Canada Revenue Agency \u2014 Before you contribute to a TFSA",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account/contributing/before.html",
+      "note": "TFSA room for new residents; 2026 limit."
+    },
+    {
+      "label": "Canada Revenue Agency \u2014 How contributions affect your RRSP deduction limit",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/contributing-a-rrsp-prpp/contributions-affect-your-rrsp-prpp-deduction-limit.html"
+    },
+    {
+      "label": "Canada Revenue Agency \u2014 Opening and closing your FHSAs",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account/opening-closing-and-fhsa.html"
+    },
+    {
+      "label": "Government of Canada \u2014 Social Insurance Number",
+      "url": "https://www.canada.ca/en/employment-social-development/services/sin.html"
+    },
+    {
+      "label": "Government of Canada \u2014 Foreign Credential Recognition",
+      "url": "https://www.canada.ca/en/employment-social-development/programs/foreign-credential-recognition.html",
+      "note": "Recognition loans and participating organizations. Check current eligibility."
+    },
+    {
+      "label": "Financial Consumer Agency of Canada \u2014 Opening a bank account",
+      "url": "https://www.canada.ca/en/financial-consumer-agency/services/banking/opening-bank-account.html"
+    },
+    {
+      "label": "Financial Consumer Agency of Canada \u2014 Credit report and score basics",
+      "url": "https://www.canada.ca/en/financial-consumer-agency/services/credit-reports-score/credit-report-score-basics.html"
+    },
+    {
+      "label": "Financial Consumer Agency of Canada \u2014 Sending money to someone in another country",
+      "url": "https://www.canada.ca/en/financial-consumer-agency/services/payment/international-money-transfers.html"
+    }
+  ],
+  "related": [
+    "new-to-canada-money-basics",
+    "tfsa-vs-rrsp",
+    "fhsa-explained"
+  ],
+  "contactTopic": "newcomer",
+  "invitationAbout": "your first year of money in Canada",
+  "url": "/education/internationally-trained-doctors-nurses-first-year",
+  "readingMinutes": 6
+}
 ];

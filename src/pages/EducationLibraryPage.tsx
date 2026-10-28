@@ -2,7 +2,9 @@ import React, { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
 import { siteConfig } from "../config/site.ts";
-import { Search, X, ArrowRight } from "lucide-react";
+import { Search, X, ArrowRight, Calculator } from "lucide-react";
+import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
+import { useLanguage } from "../context/LanguageContext.tsx";
 
 export const EducationLibraryPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -262,6 +264,13 @@ export const EducationLibraryPage: React.FC = () => {
               })}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Interactive Tool: Newcomer Financial Planning Runway Calculator */}
+      <section id="runway-calculator" className="section py-16 bg-[#f7f3eb] border-t border-[#d6cebd]">
+        <div className="wrap max-w-5xl">
+          <NewcomerPlanningCalculator />
         </div>
       </section>
 
