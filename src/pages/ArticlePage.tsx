@@ -3,7 +3,8 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
 import { Tbc } from "../components/Tbc.tsx";
 import { DRAFT_MODE, siteConfig } from "../config/site.ts";
-import { Check, Copy, ExternalLink, ArrowRight } from "lucide-react";
+import { Check, Copy, ExternalLink, ArrowRight, Share2, Sparkles, CheckCircle2, Calculator, MessageSquare, Linkedin, Send } from "lucide-react";
+import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 
 export const ArticlePage: React.FC = () => {
@@ -47,6 +48,12 @@ export const ArticlePage: React.FC = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
+
+  const pageUrl = typeof window !== "undefined" ? window.location.href : `${siteConfig.siteUrl}${article.url}`;
+  const shareTitle = `${article.title} | Ahmed Bello`;
+  const shareLinkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+  const shareTwitter = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(pageUrl)}`;
+  const shareWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareTitle + " " + pageUrl)}`;
 
   const sections = [
     { id: "overview", label: isFr ? "Vue d'ensemble" : "Overview" },
@@ -234,6 +241,86 @@ export const ArticlePage: React.FC = () => {
 
           {/* Right Column: Editorial Longform Reading Body */}
           <div className="lg:col-span-8 order-1 lg:order-2 space-y-12 max-w-prose measure">
+            {/* 0. Executive 60-Second Briefing Box */}
+            <div className="p-6 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] shadow-xs space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#d6cebd]">
+                <div className="flex items-center gap-2">
+                  <span className="p-1 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px]">
+                    <Sparkles className="w-3.5 h-3.5 text-[#d6c298]" />
+                  </span>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#1c1b18]">
+                    {isFr ? "Synthèse exécutive en 60 secondes" : "60-Second Executive Summary"}
+                  </span>
+                </div>
+                <span className="text-[0.68rem] font-mono text-[#75581f] uppercase tracking-wider font-semibold">
+                  {article.kind === "insight" ? (isFr ? "Note stratégique" : "Strategic Briefing") : (isFr ? "Guide pratique" : "Core Guide")}
+                </span>
+              </div>
+
+              <div className="space-y-2 text-xs sm:text-sm text-[#46423a] leading-relaxed">
+                <div className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
+                  <p><strong>The Core Friction:</strong> {article.problem}</p>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#75581f] shrink-0 mt-0.5" />
+                  <p><strong>Key Strategic Rule:</strong> {article.tradeoffs[0] || article.overview[0]}</p>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
+                  <p><strong>Fiduciary Takeaway:</strong> {article.misunderstandings[0]?.reality || "Evaluate total balance-sheet impact before committing non-registered or registered capital."}</p>
+                </div>
+              </div>
+
+              {/* Social Share Strip */}
+              <div className="pt-3 border-t border-[#ece6da] flex flex-wrap items-center justify-between gap-3 text-xs">
+                <span className="text-[#625d52] font-medium">
+                  {isFr ? "Partager cette analyse :" : "Share this briefing:"}
+                </span>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={shareLinkedIn}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on LinkedIn"
+                    className="p-1.5 bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-white border border-[#d6cebd] rounded-[2px] text-[#46423a] transition-colors"
+                    title="Share on LinkedIn"
+                  >
+                    <Linkedin className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href={shareTwitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on X"
+                    className="p-1.5 bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-white border border-[#d6cebd] rounded-[2px] text-[#46423a] transition-colors"
+                    title="Share on X / Twitter"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href={shareWhatsApp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on WhatsApp"
+                    className="p-1.5 bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-white border border-[#d6cebd] rounded-[2px] text-[#46423a] transition-colors"
+                    title="Share via WhatsApp"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopyLink}
+                    aria-label="Copy link"
+                    className="p-1.5 bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-white border border-[#d6cebd] rounded-[2px] text-[#46423a] transition-colors inline-flex items-center gap-1 text-[0.7rem] font-semibold"
+                  >
+                    <Copy className="w-3 h-3" />
+                    <span>{copied ? (isFr ? "Copié !" : "Copied!") : (isFr ? "Copier" : "Copy")}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {/* 1. Problem / Lead Paragraph */}
             <section className="text-lg md:text-xl font-serif text-[#1c1b18] leading-relaxed border-b border-[#d6cebd] pb-8">
               <p>{article.problem}</p>
@@ -312,6 +399,20 @@ export const ArticlePage: React.FC = () => {
                     ))}
                   </div>
                 )}
+              </section>
+            )}
+
+            {/* Contextual Interactive Calculator Module */}
+            {(article.slug === "internationally-trained-doctors-nurses-first-year" ||
+              article.slug === "new-to-canada-money-basics") && (
+              <section className="pt-2">
+                <NewcomerPlanningCalculator
+                  defaultProfession={
+                    article.slug === "internationally-trained-doctors-nurses-first-year"
+                      ? "healthcare"
+                      : "general"
+                  }
+                />
               </section>
             )}
 

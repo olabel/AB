@@ -6,7 +6,7 @@ import { BrandMark } from "../components/BrandMark.tsx";
 import { Tbc } from "../components/Tbc.tsx";
 import { articles } from "../content/data.ts";
 import { siteConfig } from "../config/site.ts";
-import { ArrowRight, HelpCircle } from "lucide-react";
+import { ArrowRight, HelpCircle, Stethoscope, Briefcase, Users, Compass } from "lucide-react";
 import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 
@@ -409,6 +409,120 @@ export const HomePage: React.FC = () => {
             Not every conversation includes every stage, and a conversation is not a promise of a comprehensive
             plan, portfolio management, tax advice or ongoing service. What is available depends on what I am
             licensed and authorized to provide.
+          </div>
+        </div>
+      </section>
+
+      {/* 5.5. Audience Hubs: Browse by Situation & Profession */}
+      <section className="section py-16 border-b border-[#d6cebd] bg-[#fcfaf5]">
+        <div className="wrap space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f]">
+                {language === "fr" ? "Parcours personnalisés" : "Targeted Topic Clusters"}
+              </span>
+              <h2 className="h2 text-[#1c1b18] mt-1">
+                {language === "fr" ? "Trouvez des réponses adaptées à votre profil" : "Find Answers for Your Specific Situation"}
+              </h2>
+              <p className="text-sm text-[#46423a] mt-2 max-w-xl">
+                {language === "fr"
+                  ? "Explorez nos carrefours thématiques regroupant des règles statutaires, des guides et des simulateurs pour votre situation."
+                  : "Explore curated guides, statutory rules, and interactive tools specifically grouped for your stage of life or profession."}
+              </p>
+            </div>
+            <Link to="/education" className="arrow-link text-xs font-semibold shrink-0">
+              {language === "fr" ? "Toute la bibliothèque →" : "View all library topics &rarr;"}
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Link
+              to="/for/healthcare"
+              className="p-6 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
+                  <Stethoscope className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                  {language === "fr" ? "Santé & Médecins" : "Healthcare & Doctors"}
+                </h3>
+                <p className="text-xs text-[#625d52] mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Délai d'équivalence, trésorerie de transition et protection du revenu médical."
+                    : "Licensing gap planning, credential fees, and income protection."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
+                {language === "fr" ? "Explorer →" : "Explore hub &rarr;"}
+              </span>
+            </Link>
+
+            <Link
+              to="/for/business-owners"
+              className="p-6 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
+                  <Briefcase className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                  {language === "fr" ? "Entreprises & SPCC" : "Business Owners"}
+                </h3>
+                <p className="text-xs text-[#625d52] mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Taux d'inclusion à 66,7 %, dividendes en capital (CDC) et gel de société."
+                    : "66.7% corporate capital gains, CDA extraction, and estate freezes."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
+                {language === "fr" ? "Explorer →" : "Explore hub &rarr;"}
+              </span>
+            </Link>
+
+            <Link
+              to="/for/families"
+              className="p-6 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
+                  <Users className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                  {language === "fr" ? "Familles canadiennes" : "Canadian Families"}
+                </h3>
+                <p className="text-xs text-[#625d52] mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Choc hypothécaire, CELIAPP + RAP (100k$ non taxé) et épargne REEE."
+                    : "Mortgage renewal shock, FHSA + HBP pairing, and RESP grants."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
+                {language === "fr" ? "Explorer →" : "Explore hub &rarr;"}
+              </span>
+            </Link>
+
+            <Link
+              to="/for/newcomers"
+              className="p-6 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
+                  <Compass className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                  {language === "fr" ? "Nouveaux arrivants" : "New to Canada"}
+                </h3>
+                <p className="text-xs text-[#625d52] mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Bâtir son crédit de zéro, résidence fiscale et simulateur de survie."
+                    : "Credit building from scratch, tax residency, and runway calculator."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
+                {language === "fr" ? "Explorer →" : "Explore hub &rarr;"}
+              </span>
+            </Link>
           </div>
         </div>
       </section>
