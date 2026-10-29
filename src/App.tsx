@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext.tsx";
 import { Header } from "./components/Header.tsx";
 import { Footer } from "./components/Footer.tsx";
@@ -175,6 +176,7 @@ export default function App() {
             </Routes>
           </main>
           <Footer />
+          <SpeedInsights />
         </div>
       </BrowserRouter>
     </LanguageProvider>
