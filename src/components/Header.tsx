@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BrandMark } from "./BrandMark.tsx";
 import { Menu, X, Calendar, ArrowUpRight, Phone, Mail, Globe } from "lucide-react";
 import { siteConfig } from "../config/site.ts";
@@ -13,18 +13,31 @@ export const Header: React.FC = () => {
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const firstFocusableRef = useRef<HTMLButtonElement>(null);
 
+  const prefix = language === "fr" ? "/fr" : "";
+
   const navItems = [
-    { label: t("nav_home"), href: "/" },
-    { label: t("nav_how_i_help"), href: "/how-i-help" },
-    { label: t("nav_education"), href: "/education" },
-    { label: t("nav_insights"), href: "/insights" },
-    { label: t("nav_news"), href: "/news" },
-    { label: t("nav_careers"), href: "/careers" },
+    { label: t("nav_home"), href: prefix || "/" },
+    { label: t("nav_how_i_help"), href: `${prefix}/how-i-help` },
+    { label: t("nav_education"), href: `${prefix}/education` },
+    { label: t("nav_insights"), href: `${prefix}/insights` },
+    { label: t("nav_careers"), href: `${prefix}/careers` },
   ];
+
+  const handleLanguageToggle = () => {
+    const isCurrentlyFrench = location.pathname.startsWith("/fr");
+    if (isCurrentlyFrench) {
+      const target = location.pathname.replace(/^\/fr(\/|$)/, "$1") || "/";
+      navigate(target);
+    } else {
+      const target = location.pathname === "/" ? "/fr" : `/fr${location.pathname}`;
+      navigate(target);
+    }
+  };
 
   // Helper to cleanly open mobile menu with entrance animation
   const openMobileMenu = () => {
@@ -129,7 +142,7 @@ export const Header: React.FC = () => {
           <div className="flex items-center justify-between h-20">
             {/* Brand Logo & Name */}
             <Link
-              to="/"
+              to={prefix || "/"}
               className="flex items-center gap-3.5 group text-decoration-none"
               aria-label="Ahmed Bello - Home"
             >
@@ -149,8 +162,8 @@ export const Header: React.FC = () => {
             >
               {navItems.map((item) => {
                 const isActive =
-                  item.href === "/"
-                    ? location.pathname === "/"
+                  item.href === "/" || item.href === "/fr"
+                    ? location.pathname === item.href
                     : location.pathname.startsWith(item.href);
 
                 return (
@@ -174,7 +187,7 @@ export const Header: React.FC = () => {
               {/* Language Switcher Button */}
               <button
                 type="button"
-                onClick={toggleLanguage}
+                onClick={handleLanguageToggle}
                 aria-label={language === "en" ? "Passer au français" : "Switch to English"}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[2px] border border-[#d6cebd] hover:border-[#2e4a3b] bg-[#fcfaf5] text-xs font-semibold text-[#1c1b18] hover:text-[#2e4a3b] transition-colors shadow-2xs cursor-pointer"
                 title={language === "en" ? "Afficher le site en français" : "View site in English"}
@@ -184,7 +197,7 @@ export const Header: React.FC = () => {
               </button>
 
               <Link
-                to="/contact"
+                to={prefix ? `${prefix}/contact` : "/contact"}
                 className="hidden sm:inline-flex btn btn-primary text-sm whitespace-nowrap px-4 py-2"
               >
                 {t("btn_start_conversation")}
@@ -229,7 +242,7 @@ export const Header: React.FC = () => {
               <div className="wrap">
                 <div className="flex items-center justify-between h-20 border-b border-[#d6cebd]">
                   <Link
-                    to="/"
+                    to={prefix || "/"}
                     onClick={closeMobileMenu}
                     className="flex items-center gap-3.5 text-decoration-none"
                   >
@@ -246,7 +259,10 @@ export const Header: React.FC = () => {
                     {/* Language Switcher in Mobile Header */}
                     <button
                       type="button"
-                      onClick={toggleLanguage}
+                      onClick={() => {
+                        handleLanguageToggle();
+                        closeMobileMenu();
+                      }}
                       aria-label={language === "en" ? "Passer au français" : "Switch to English"}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[2px] border border-[#d6cebd] bg-[#fcfaf5] text-xs font-semibold text-[#1c1b18]"
                     >
@@ -275,8 +291,8 @@ export const Header: React.FC = () => {
                 <nav className="flex flex-col gap-2 font-serif" aria-label="Mobile menu navigation">
                   {navItems.map((item) => {
                     const isActive =
-                      item.href === "/"
-                        ? location.pathname === "/"
+                      item.href === "/" || item.href === "/fr"
+                        ? location.pathname === item.href
                         : location.pathname.startsWith(item.href);
 
                     return (
@@ -303,7 +319,7 @@ export const Header: React.FC = () => {
             <div className="wrap py-8 border-t border-[#d6cebd] bg-[#fcfaf5] space-y-4">
               <div className="flex flex-col gap-3">
                 <Link
-                  to="/contact"
+                  to={prefix ? `${prefix}/contact` : "/contact"}
                   onClick={closeMobileMenu}
                   className="btn btn-primary w-full text-center py-3 text-base font-medium shadow-sm"
                 >

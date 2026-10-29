@@ -156,12 +156,17 @@ app.get("/robots.txt", (_req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Cache-Control", "public, max-age=86400");
   res.type("text/plain; charset=utf-8");
+
+  const diskPath = path.resolve(process.cwd(), "public", "robots.txt");
+  if (fs.existsSync(diskPath)) {
+    return res.sendFile(diskPath);
+  }
+
   if (DRAFT_MODE) {
     res.send("User-agent: *\nDisallow: /\n");
   } else {
     res.send(
-`# Allow all search engines, web crawlers, and AI platforms
-User-agent: *
+`User-agent: *
 Allow: /
 
 User-agent: ClaudeBot
@@ -205,52 +210,49 @@ Sitemap: ${siteConfig.siteUrl}/sitemap.xml
 
 app.get("/sitemap.xml", (_req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cache-Control", "public, max-age=3600");
   res.type("application/xml; charset=utf-8");
-  const routes = [
-    { loc: "", priority: "1.0", changefreq: "weekly" },
-    { loc: "/how-i-help", priority: "0.9", changefreq: "monthly" },
-    { loc: "/news", priority: "0.9", changefreq: "hourly" },
-    { loc: "/education", priority: "0.9", changefreq: "weekly" },
-    ...articles.map((a) => ({
-      loc: a.url,
-      priority: a.kind === "guide" ? "0.85" : "0.8",
-      changefreq: "monthly",
-    })),
-    { loc: "/insights", priority: "0.8", changefreq: "monthly" },
-    { loc: "/about", priority: "0.75", changefreq: "monthly" },
-    { loc: "/careers", priority: "0.85", changefreq: "weekly" },
-    { loc: "/for/healthcare", priority: "0.85", changefreq: "weekly" },
-    { loc: "/for/business-owners", priority: "0.85", changefreq: "weekly" },
-    { loc: "/for/families", priority: "0.85", changefreq: "weekly" },
-    { loc: "/for/newcomers", priority: "0.85", changefreq: "weekly" },
-    { loc: "/contact", priority: "0.8", changefreq: "monthly" },
-    { loc: "/disclosures", priority: "0.5", changefreq: "quarterly" },
-    { loc: "/standards", priority: "0.6", changefreq: "quarterly" },
-    { loc: "/privacy", priority: "0.4", changefreq: "yearly" },
-    { loc: "/terms", priority: "0.4", changefreq: "yearly" },
-  ];
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-${routes
-  .map(
-    (r) => `  <url>
-    <loc>${siteConfig.siteUrl}${r.loc}</loc>
-    <changefreq>${r.changefreq}</changefreq>
-    <priority>${r.priority}</priority>
-  </url>`
-  )
-  .join("\n")}
-</urlset>`;
-  res.send(xml);
+  const diskPath = path.resolve(process.cwd(), "public", "sitemap.xml");
+  if (fs.existsSync(diskPath)) {
+    return res.sendFile(diskPath);
+  }
+
+  res.status(404).send("Sitemap not found");
+});
+
+app.get("/BingSiteAuth.xml", (_req: Request, res: Response) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.type("application/xml; charset=utf-8");
+  const diskPath = path.resolve(process.cwd(), "public", "BingSiteAuth.xml");
+  if (fs.existsSync(diskPath)) {
+    return res.sendFile(diskPath);
+  }
+  res.status(404).send("BingSiteAuth.xml not found");
 });
 
 // --------------------------------------------------------------------------
 // 5. Hardened Contact API Endpoint: POST /api/contact
 // --------------------------------------------------------------------------
 app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response) => {
+  // Origin / Referer Validation against CSRF
+  const origin = req.headers["origin"] as string | undefined;
+  if (origin) {
+    const isAllowedOrigin =
+      origin.includes("ahmedbello.com") ||
+      origin.includes("localhost") ||
+      origin.includes("127.0.0.1") ||
+      origin.includes(".aistudio-preview.net") ||
+      origin.includes(".run.app") ||
+      origin.includes(".vercel.app");
+    if (!isAllowedOrigin) {
+      return res.status(403).json({
+        error: "forbidden",
+        message: "Cross-origin submission rejected.",
+      });
+    }
+  }
+
   const forwarded = req.headers["x-forwarded-for"];
   const clientIp = typeof forwarded === "string" ? forwarded.split(",")[0].trim() : req.socket.remoteAddress || "unknown";
 
@@ -295,11 +297,12 @@ app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response)
   // Strict field validation
   const errors: Record<string, string> = {};
 
+  const unicodeNameRegex = /^[\p{L}\p{M}\s'’‘.-]{1,80}$/u;
   if (!firstName || firstName.length === 0) {
     errors.firstName = "First name is required.";
-  } else if (firstName.length > 60) {
-    errors.firstName = "First name must be 60 characters or fewer.";
-  } else if (!/^[A-Za-zÀ-ÿ\s'-]+$/.test(firstName)) {
+  } else if (firstName.length > 80) {
+    errors.firstName = "First name must be 80 characters or fewer.";
+  } else if (!unicodeNameRegex.test(firstName)) {
     errors.firstName = "First name contains invalid characters.";
   }
 
@@ -504,7 +507,6 @@ const siteWideFinancialService = {
   image: `${siteConfig.siteUrl}/brand/og-share.png`,
   description:
     "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA, RESP), insurance solutions, and family money decisions.",
-  priceRange: "$$",
   areaServed: {
     "@type": "Country",
     name: "Canada",

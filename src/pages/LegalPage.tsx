@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { LegalPageData } from "../content/legal.ts";
 import { Tbc } from "../components/Tbc.tsx";
+import { SEO } from "../components/SEO.tsx";
 
 interface LegalPageProps {
   pageType: "disclosures" | "privacy" | "standards" | "terms";
@@ -29,6 +30,11 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
 
   return (
     <div className="py-12 md:py-16">
+      <SEO
+        title={`${data.title} | Ahmed Bello`}
+        description={data.lede}
+        canonicalUrl={`/legal/${pageType}`}
+      />
       {/* Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-5">

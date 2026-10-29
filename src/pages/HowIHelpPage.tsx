@@ -7,8 +7,11 @@ import { StructuralCaseStudies } from "../components/StructuralCaseStudies.tsx";
 import { StructureDiagnostic } from "../components/StructureDiagnostic.tsx";
 import { ArrowRight, HelpCircle } from "lucide-react";
 import { siteConfig } from "../config/site.ts";
+import { SEO } from "../components/SEO.tsx";
+import { useLanguage } from "../context/LanguageContext.tsx";
 
 export const HowIHelpPage: React.FC = () => {
+  const { isFr } = useLanguage();
   const location = useLocation();
 
   // Scroll to hash on load or hash change
@@ -25,6 +28,15 @@ export const HowIHelpPage: React.FC = () => {
 
   return (
     <div className="py-12 md:py-16">
+      <SEO
+        title={isFr ? "Comment je vous aide | Démarche d'éducation financière" : "How I Help | Question-Led Financial Education"}
+        description={
+          isFr
+            ? "Découvrez notre approche fondée sur la clarté : où allouer votre prochain dollar, protection du revenu et préparation de vos objectifs familiaux."
+            : "Explore our education-first process: where the next dollar goes, income protection trade-offs, and family milestones without product sales push."
+        }
+        canonicalUrl="/how-i-help"
+      />
       {/* 1. Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-5">

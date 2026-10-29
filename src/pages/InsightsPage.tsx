@@ -5,6 +5,7 @@ import { Tbc } from "../components/Tbc.tsx";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
+import { SEO } from "../components/SEO.tsx";
 import {
   ArrowRight,
   TrendingUp,
@@ -70,6 +71,15 @@ export const InsightsPage: React.FC = () => {
 
   return (
     <div className="py-12 md:py-16">
+      <SEO
+        title={isFr ? "Perspectives & Analyses Stratégiques | Ahmed Bello" : "Strategic Financial Essays & Insights | Ahmed Bello"}
+        description={
+          isFr
+            ? "Analyses approfondies sur l'impôt sur les gains en capital au Canada, le choc des renouvellements hypothécaires et les cadres de décision fiduciaire."
+            : "Deep-dive strategic essays on Canadian capital gains rules, mortgage renewal shock, personal liquidity, and evaluating financial advice."
+        }
+        canonicalUrl="/insights"
+      />
       {/* 1. Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
         <div className="wrap max-w-5xl space-y-5">

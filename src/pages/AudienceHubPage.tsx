@@ -4,6 +4,7 @@ import { articles, categories } from "../content/data.ts";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
+import { SEO } from "../components/SEO.tsx";
 import {
   Stethoscope,
   Briefcase,
@@ -204,6 +205,11 @@ export const AudienceHubPage: React.FC = () => {
 
   return (
     <div className="py-12 md:py-16">
+      <SEO
+        title={isFr ? `${currentAudience.titleFr} | Ahmed Bello` : `${currentAudience.titleEn} | Ahmed Bello`}
+        description={isFr ? currentAudience.descriptionFr : currentAudience.descriptionEn}
+        canonicalUrl={`/for/${currentAudience.slug}`}
+      />
       <div className="wrap max-w-5xl">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="mb-6 text-xs text-[#625d52]">

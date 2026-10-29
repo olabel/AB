@@ -6,6 +6,7 @@ import { DRAFT_MODE, siteConfig } from "../config/site.ts";
 import { Check, Copy, ExternalLink, ArrowRight, Share2, Sparkles, CheckCircle2, Calculator, MessageSquare, Linkedin, Send } from "lucide-react";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { SEO } from "../components/SEO.tsx";
 
 export const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -80,6 +81,14 @@ export const ArticlePage: React.FC = () => {
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
+
+      <SEO
+        title={article.seoTitle || article.title}
+        description={article.description}
+        canonical={`${siteConfig.siteUrl}${article.url}`}
+        ogType="article"
+      />
+
       {/* Article Schema JSON-LD (no dates per compliance rules) */}
       <script
         type="application/ld+json"

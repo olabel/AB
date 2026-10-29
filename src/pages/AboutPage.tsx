@@ -3,10 +3,22 @@ import { Link } from "react-router-dom";
 import { aboutData } from "../content/data.ts";
 import { siteConfig } from "../config/site.ts";
 import { BrandMark } from "../components/BrandMark.tsx";
+import { SEO } from "../components/SEO.tsx";
+import { useLanguage } from "../context/LanguageContext.tsx";
 
 export const AboutPage: React.FC = () => {
+  const { isFr } = useLanguage();
+
   return (
     <div className="py-12 md:py-16">
+      <SEO
+        title={isFr ? "À Propos d'Ahmed Bello | Professionnel Agréé au Canada" : "About Ahmed Bello | Licensed Financial Solutions Professional"}
+        description={
+          isFr
+            ? "Éducateur financier indépendant aidant les familles et particuliers au Canada à comprendre les régimes enregistrés (CELI, REER) et la prévoyance."
+            : "Independent Canadian financial educator helping individuals and families understand registered accounts (TFSA, RRSP, FHSA), insurance, and money decisions."
+        }
+      />
       {/* 1. Header & Portrait Frame */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-8">

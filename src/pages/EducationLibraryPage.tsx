@@ -5,8 +5,10 @@ import { siteConfig } from "../config/site.ts";
 import { Search, X, ArrowRight, Calculator } from "lucide-react";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { SEO } from "../components/SEO.tsx";
 
 export const EducationLibraryPage: React.FC = () => {
+  const { language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const query = searchParams.get("q") || "";
@@ -67,6 +69,15 @@ export const EducationLibraryPage: React.FC = () => {
 
   return (
     <div className="py-12 md:py-16">
+      <SEO
+        title={language === "fr" ? "Bibliothèque d'éducation financière | Ahmed Bello" : "Financial Education Library | Ahmed Bello"}
+        description={
+          language === "fr"
+            ? "Guides éducatifs clairs sur le CELI, REER, CELIAPP, RESP, pensions publiques RPC/SV et stratégies d'endettement au Canada."
+            : "Plain-language explanations of Canadian registered accounts (TFSA, RRSP, FHSA), risk, debt, income protection, and public pensions."
+        }
+        canonicalUrl="/education"
+      />
       {/* CollectionPage Schema JSON-LD */}
       <script
         type="application/ld+json"

@@ -47,6 +47,24 @@ export default async function handler(req: any, res: any) {
     return res.status(405).json({ error: "Method not allowed. Use POST." });
   }
 
+  // Origin / Referer validation against cross-site exploitation
+  const origin = req.headers["origin"] as string | undefined;
+  if (origin) {
+    const isAllowedOrigin =
+      origin.includes("ahmedbello.com") ||
+      origin.includes("localhost") ||
+      origin.includes("127.0.0.1") ||
+      origin.includes(".aistudio-preview.net") ||
+      origin.includes(".run.app") ||
+      origin.includes(".vercel.app");
+    if (!isAllowedOrigin) {
+      return res.status(403).json({
+        error: "forbidden",
+        message: "Cross-origin submission rejected.",
+      });
+    }
+  }
+
   // Client IP rate limiting
   const forwarded = req.headers["x-forwarded-for"];
   const clientIp = typeof forwarded === "string" ? forwarded.split(",")[0].trim() : req.socket?.remoteAddress || "unknown";
@@ -106,10 +124,13 @@ export default async function handler(req: any, res: any) {
 
   // Validation
   const errors: Record<string, string> = {};
+  const unicodeNameRegex = /^[\p{L}\p{M}\s'’‘.-]{1,80}$/u;
   if (!firstName || firstName.length === 0) {
     errors.firstName = "First name is required.";
-  } else if (firstName.length > 60) {
-    errors.firstName = "First name must be 60 characters or fewer.";
+  } else if (firstName.length > 80) {
+    errors.firstName = "First name must be 80 characters or fewer.";
+  } else if (!unicodeNameRegex.test(firstName)) {
+    errors.firstName = "First name contains invalid characters.";
   }
 
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;

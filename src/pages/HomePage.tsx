@@ -9,6 +9,7 @@ import { siteConfig } from "../config/site.ts";
 import { ArrowRight, HelpCircle, Stethoscope, Briefcase, Users, Compass } from "lucide-react";
 import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { SEO } from "../components/SEO.tsx";
 
 export const HomePage: React.FC = () => {
   const { language, t } = useLanguage();
@@ -97,6 +98,14 @@ export const HomePage: React.FC = () => {
 
   return (
     <div>
+      <SEO
+        title={language === "fr" ? "Ahmed Bello | Éducation Financière pour Canadiens" : "Ahmed Bello | Financial Education for Canadians"}
+        description={
+          language === "fr"
+            ? "Éducation financière en langage clair sur les régimes enregistrés (CELI, REER, CELIAPP), l'assurance vie et les décisions budgétaires avec Ahmed Bello."
+            : "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello."
+        }
+      />
       {/* 1. Hero Section */}
       <section className="section pb-16 pt-10 md:pt-16 border-b border-[#d6cebd]">
         <div className="wrap">
@@ -621,25 +630,33 @@ export const HomePage: React.FC = () => {
 
             {/* Copy */}
             <div className="lg:col-span-7 space-y-5">
-              <span className="eyebrow text-xs">About Ahmed</span>
-              <h2 className="h2 text-[#1c1b18]">A financial educator first.</h2>
+              <span className="eyebrow text-xs">
+                {language === "fr" ? "À propos d'Ahmed" : "About Ahmed"}
+              </span>
+              <h2 className="h2 text-[#1c1b18]">
+                {language === "fr" ? "D'abord un éducateur financier." : "A financial educator first."}
+              </h2>
               <p className="text-base md:text-lg text-[#46423a] leading-relaxed">
-                I’m Ahmed Bello. What interests me most is helping people ask better financial questions &mdash;
-                and then understand the answers well enough to make their own decisions.
+                {language === "fr"
+                  ? "Je suis Ahmed Bello. Ce qui me passionne le plus, c'est d'aider les gens à poser de meilleures questions financières — et à en comprendre les réponses pour décider par eux-mêmes."
+                  : "I’m Ahmed Bello. What interests me most is helping people ask better financial questions — and then understand the answers well enough to make their own decisions."}
               </p>
               <p className="text-sm md:text-base text-[#46423a] leading-relaxed">
-                I believe a good explanation is worth more than a good pitch. If I can show you how the pieces fit together,
-                what each choice costs and what it cannot do, you are in a better position whatever you decide.
+                {language === "fr"
+                  ? "Je crois qu'une bonne explication a plus de valeur qu'un argumentaire commercial. Si je peux vous montrer comment s'articulent vos options, ce que chacune coûte et ce qu'elle ne peut pas faire, vous serez dans une bien meilleure posture, quelle que soit votre décision finale."
+                  : "I believe a good explanation is worth more than a good pitch. If I can show you how the pieces fit together, what each choice costs and what it cannot do, you are in a better position whatever you decide."}
               </p>
               <div className="pt-2 text-xs text-[#46423a] space-y-1">
                 <p className="font-semibold text-[#1c1b18]">{siteConfig.designation}.</p>
                 <p>
-                  Independent financial professional providing education and solutions across Canada.
+                  {language === "fr"
+                    ? "Professionnel financier indépendant offrant éducation et solutions partout au Canada."
+                    : "Independent financial professional providing education and solutions across Canada."}
                 </p>
               </div>
               <div className="pt-4">
                 <Link to="/about" className="arrow-link text-sm">
-                  More about Ahmed and how I work &rarr;
+                  {language === "fr" ? "En savoir plus sur Ahmed et ma méthode →" : "More about Ahmed and how I work →"}
                 </Link>
               </div>
             </div>
@@ -652,8 +669,12 @@ export const HomePage: React.FC = () => {
         <div className="wrap max-w-4xl">
           <NewsletterSignup
             source="homepage"
-            title="The Intentional Wealth Briefing"
-            description="Clear, plain-language breakdowns of Canadian tax rules, registered shelters (TFSA, RRSP, FHSA), and household liquidity delivered monthly. Zero sales pitches."
+            title={language === "fr" ? "Le Point d'Information Financière" : "The Intentional Wealth Briefing"}
+            description={
+              language === "fr"
+                ? "Analyses claires des règles fiscales canadiennes, des régimes enregistrés (CELI, REER, CELIAPP) et de la liquidité du foyer. Sans argumentaire de vente."
+                : "Clear, plain-language breakdowns of Canadian tax rules, registered shelters (TFSA, RRSP, FHSA), and household liquidity delivered monthly. Zero sales pitches."
+            }
           />
         </div>
       </section>
@@ -662,14 +683,18 @@ export const HomePage: React.FC = () => {
       <section className="section py-20 text-center bg-[#f7f3eb]">
         <div className="wrap max-w-3xl space-y-6">
           <h2 className="display text-[#1c1b18]">
-            A better financial decision often starts with a better question.
+            {language === "fr"
+              ? "Une meilleure décision financière commence toujours par une meilleure question."
+              : "A better financial decision often starts with a better question."}
           </h2>
           <p className="lede text-base md:text-lg text-[#46423a] max-w-xl mx-auto">
-            If there is a financial decision you are trying to understand, let’s start with the question that matters most to you.
+            {language === "fr"
+              ? "Si vous essayez de comprendre un enjeu financier, commençons par la question qui compte le plus pour vous."
+              : "If there is a financial decision you are trying to understand, let’s start with the question that matters most to you."}
           </p>
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
-              Start a Conversation &rarr;
+              {language === "fr" ? "Engager une conversation →" : "Start a Conversation →"}
             </Link>
             {siteConfig.schedulingUrl && (
               <a
@@ -678,13 +703,13 @@ export const HomePage: React.FC = () => {
                 rel="noopener noreferrer"
                 className="btn btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
               >
-                <span>Book 30 Min on Calendly</span>
+                <span>{language === "fr" ? "Réserver 30 min sur Calendly" : "Book 30 Min on Calendly"}</span>
                 <span aria-hidden="true">&rarr;</span>
               </a>
             )}
           </div>
           <p className="text-xs text-[#625d52] tracking-wide">
-            No obligation. No sales pressure.
+            {language === "fr" ? "Aucune obligation. Aucune pression commerciale." : "No obligation. No sales pressure."}
           </p>
         </div>
       </section>

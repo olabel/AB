@@ -3,6 +3,8 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Tbc } from "../components/Tbc.tsx";
 import { siteConfig } from "../config/site.ts";
 import { AlertCircle, CheckCircle2, Info, Calendar, ArrowUpRight } from "lucide-react";
+import { SEO } from "../components/SEO.tsx";
+import { useLanguage } from "../context/LanguageContext.tsx";
 
 const PROVINCES_AND_TERRITORIES = [
   "Alberta",
@@ -32,6 +34,7 @@ const TOPIC_OPTIONS: { id: string; label: string }[] = [
 ];
 
 export const ContactPage: React.FC = () => {
+  const { language } = useLanguage();
   const [searchParams] = useSearchParams();
   const topicParam = searchParams.get("topic") || "";
 
@@ -90,11 +93,12 @@ export const ContactPage: React.FC = () => {
     const cleanEmail = sanitizeInput(email);
     const cleanPhone = sanitizeInput(phone);
 
+    const unicodeNameRegex = /^[\p{L}\p{M}\s'’‘.-]{1,80}$/u;
     if (!cleanFirst) {
       errors.firstName = "Please provide your first name.";
-    } else if (cleanFirst.length > 60) {
-      errors.firstName = "First name must be under 60 characters.";
-    } else if (!/^[A-Za-zÀ-ÿ\s'-]+$/.test(cleanFirst)) {
+    } else if (cleanFirst.length > 80) {
+      errors.firstName = "First name must be under 80 characters.";
+    } else if (!unicodeNameRegex.test(cleanFirst)) {
       errors.firstName = "First name contains invalid characters.";
     }
 
@@ -195,6 +199,15 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="py-12 md:py-16">
+      <SEO
+        title={language === "fr" ? "Contactez Ahmed Bello | Éducation financière canadienne" : "Contact Ahmed Bello | Canadian Financial Education"}
+        description={
+          language === "fr"
+            ? "Posez vos questions sur la fiscalité canadienne, le CELI, REER, CELIAPP ou la protection financière sans pression commerciale."
+            : "Ask your financial questions about Canadian tax rules, TFSA, RRSP, FHSA, and household liquidity. Direct personal response without sales pressure."
+        }
+        canonicalUrl="/contact"
+      />
       {/* Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-4">

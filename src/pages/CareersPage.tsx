@@ -28,6 +28,8 @@ import {
 } from "lucide-react";
 import { siteConfig } from "../config/site.ts";
 import { BrandMark } from "../components/BrandMark.tsx";
+import { SEO } from "../components/SEO.tsx";
+import { useLanguage } from "../context/LanguageContext.tsx";
 
 interface FormData {
   firstName: string;
@@ -70,6 +72,9 @@ const US_REGIONS = [
 ];
 
 export const CareersPage: React.FC = () => {
+  const { language } = useLanguage();
+  const isFr = language === "fr";
+
   // Form State
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
@@ -198,20 +203,29 @@ Candidate Application Details:
     },
     {
       q: "Can I begin part-time while keeping my current career?",
-      a: "Absolutely. The vast majority of new professionals begin in a flexible part-time transition, dedicating 8 to 15 hours per week in the evenings and weekends. You can study for your licensing exam, obtain your credentials, and start co-planning client files with Ahmed without jeopardizing your current household income.",
+      a: "Yes. Many candidates begin by studying for their provincial licensing exams during evenings and weekends while maintaining their existing employment. Once provincially licensed, individuals can co-plan client cases with senior professionals as they develop their practice.",
     },
     {
       q: "How does compensation work for an independent agent?",
-      a: "Unlike salaried bank employees who work under fixed pay caps and aggressive monthly branch quotas, independent agents earn competitive top-tier commission contracts directly from premier Canadian and US financial carriers. Furthermore, you own your book of business—building lasting equity in a portable practice.",
+      a: "Independent financial professionals earn performance-based commissions directly from Canadian financial and insurance institutions upon product placement and policy servicing. There are no sales quotas or territory restrictions, but compensation is entirely performance-based and varies according to licensing, effort, and client decisions.",
     },
     {
       q: "How much do the regulatory licensing exams cost?",
-      a: "Exam fees vary slightly by province or state and are paid directly to the provincial regulatory authority (e.g. provincial insurance council in Canada, typically $150 to $300 CAD total) or state testing vendor in the US. Our team provides study roadmaps, exam practice sessions, and personal coaching to maximize your pass rate.",
+      a: "Exam fees vary slightly by province and are paid directly to the provincial regulatory authority or accredited testing provider (such as the provincial insurance councils in Canada, typically $150 to $300 CAD total). Our mentorship provides study guidance and practice sessions to help prepare you for your exams.",
     },
   ];
 
   return (
     <div className="py-10 lg:py-16">
+      <SEO
+        title={isFr ? "Devenir professionnel agréé au Canada | Ahmed Bello" : "Join Our Independent Practice & Mentorship | Ahmed Bello"}
+        description={
+          isFr
+            ? "Programme de mentorat pour le cours du PAAP/LLQP et formation pour professionnels indépendants en solutions financières au Canada."
+            : "Mentorship and licensing support for aspiring independent financial solutions professionals in Canada. LLQP preparation and practice development."
+        }
+        canonicalUrl="/careers"
+      />
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
@@ -222,9 +236,9 @@ Candidate Application Details:
               {
                 "@type": "EducationalOccupationalProgram",
                 "@id": `${siteConfig.siteUrl}/careers#program`,
-                name: "Independent Financial Agent Mentorship Program (Canada & USA)",
+                name: "Independent Financial Solutions Practice Mentorship",
                 description:
-                  "Comprehensive zero-tuition financial practice mentorship, provincial LLQP & US state licensing preparation support, and 1-on-1 career guidance with Ahmed Bello.",
+                  "Comprehensive study support for Canadian provincial LLQP exams, practical file co-planning, and career mentorship with Ahmed Bello.",
                 provider: {
                   "@type": "Person",
                   name: "Ahmed Bello",
@@ -235,9 +249,9 @@ Candidate Application Details:
                   "@type": "Offer",
                   price: "0",
                   priceCurrency: "CAD",
-                  category: "Free Training & Mentorship",
+                  category: "Educational Mentorship",
                 },
-                occupationalCategory: "Financial Solutions Professional / Wealth Advisor",
+                occupationalCategory: "Licensed Financial Solutions Professional",
                 educationalProgramMode: "Hybrid / Remote",
                 timeToComplete: "P3M",
               },
@@ -409,27 +423,27 @@ Candidate Application Details:
                       <ShieldCheck className="w-4 h-4 text-[#d6c298]" />
                     </div>
                     <p className="text-[#ece6da]/80 text-[0.75rem] leading-relaxed">
-                      Access Canada & US premier financial institutions. Provide customized solutions across life, living benefits, wealth accumulation, and retirement.
+                      Access major Canadian life insurers and financial institutions. Compare products objectively to match individual client requirements.
                     </p>
                   </div>
 
                   <div className="p-3 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px]">
                     <div className="flex items-center justify-between text-[#f7f3eb] font-semibold mb-1">
-                      <span>Zero Captive Quotas</span>
+                      <span>Client-Focused Autonomy</span>
                       <Target className="w-4 h-4 text-[#d6c298]" />
                     </div>
                     <p className="text-[#ece6da]/80 text-[0.75rem] leading-relaxed">
-                      No branch managers dictating monthly product pushing. You practice as an objective fiduciary educator focused on client needs.
+                      No arbitrary branch-mandated sales quotas. Build your practice on client education, comprehensive analysis, and ethical recommendations.
                     </p>
                   </div>
 
                   <div className="p-3 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px]">
                     <div className="flex items-center justify-between text-[#f7f3eb] font-semibold mb-1">
-                      <span>Cross-Border Reach</span>
+                      <span>National Scalability</span>
                       <Globe2 className="w-4 h-4 text-[#d6c298]" />
                     </div>
                     <p className="text-[#ece6da]/80 text-[0.75rem] leading-relaxed">
-                      13 Canadian provinces/territories and 50 US states. Build a location-independent practice without geographical limits.
+                      Expand your reach across Canadian provinces and territories as you obtain provincial regulatory licenses.
                     </p>
                   </div>
                 </div>
@@ -441,9 +455,9 @@ Candidate Application Details:
                   <div className="flex items-start gap-3 p-2.5 bg-[#1a2c22] border-l-2 border-[#d6c298] rounded-[1px]">
                     <span className="font-serif text-[#d6c298] font-bold text-sm">01</span>
                     <div>
-                      <div className="font-semibold text-[#f7f3eb]">Licensing Preparation (30–60 Days)</div>
+                      <div className="font-semibold text-[#f7f3eb]">Licensing Preparation (LLQP)</div>
                       <p className="text-[0.72rem] text-[#ece6da]/75 mt-0.5">
-                        Free study modules, mock exams, and regulatory sponsorship for provincial LLQP or US state exams.
+                        Structured study guidance, practice exam sessions, and provincial sponsorship for the Life License Qualification Program.
                       </p>
                     </div>
                   </div>
@@ -451,9 +465,9 @@ Candidate Application Details:
                   <div className="flex items-start gap-3 p-2.5 bg-[#1a2c22] border-l-2 border-[#d6c298] rounded-[1px]">
                     <span className="font-serif text-[#d6c298] font-bold text-sm">02</span>
                     <div>
-                      <div className="font-semibold text-[#f7f3eb]">Field Contracting & Co-Planning</div>
+                      <div className="font-semibold text-[#f7f3eb]">Carrier Appointments & Co-Planning</div>
                       <p className="text-[0.72rem] text-[#ece6da]/75 mt-0.5">
-                        Receive carrier appointments. Ahmed personally co-plans initial client sessions so you never feel alone.
+                        Receive institutional appointments. Ahmed co-plans initial client cases so recommendations are compliant, rigorous, and thorough.
                       </p>
                     </div>
                   </div>
@@ -461,34 +475,34 @@ Candidate Application Details:
                   <div className="flex items-start gap-3 p-2.5 bg-[#1a2c22] border-l-2 border-[#d6c298] rounded-[1px]">
                     <span className="font-serif text-[#d6c298] font-bold text-sm">03</span>
                     <div>
-                      <div className="font-semibold text-[#f7f3eb]">Sovereign Practice Scaling</div>
+                      <div className="font-semibold text-[#f7f3eb]">Independent Practice Growth</div>
                       <p className="text-[0.72rem] text-[#ece6da]/75 mt-0.5">
-                        Transition full-time when your earnings exceed your day job. Own your client book and mentor new leaders.
+                        Cultivate long-term client relationships and expand your practice sustainably with ongoing professional development.
                       </p>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Tab 3: Compensation & Equity */}
+              {/* Tab 3: Compensation & Independence */}
               {activeTab === "compensation" && (
                 <div className="space-y-3 pt-1 text-xs">
                   <div className="p-3 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-center">
-                    <div className="text-[0.7rem] uppercase tracking-wider text-[#d6c298]">Compensation Model</div>
-                    <div className="font-serif text-xl text-[#f7f3eb] mt-1">Direct Top-Tier Carrier Contracts</div>
+                    <div className="text-[0.7rem] uppercase tracking-wider text-[#d6c298]">Compensation Structure</div>
+                    <div className="font-serif text-xl text-[#f7f3eb] mt-1">Direct Institutional Contracts</div>
                     <p className="text-[0.72rem] text-[#ece6da]/75 mt-1">
-                      No corporate salary caps or branch deductions. Keep the full value of your production.
+                      Performance-based commission model without salary caps. Earnings reflect completed policy placements and ongoing servicing.
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2 text-center">
                     <div className="p-2.5 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px]">
-                      <div className="text-[0.65rem] text-[#d6c298]">Client Asset Ownership</div>
-                      <div className="font-bold text-xs text-[#f7f3eb] mt-0.5">100% Yours</div>
+                      <div className="text-[0.65rem] text-[#d6c298]">Practice Model</div>
+                      <div className="font-bold text-xs text-[#f7f3eb] mt-0.5">Independent Brokerage</div>
                     </div>
                     <div className="p-2.5 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px]">
-                      <div className="text-[0.65rem] text-[#d6c298]">Schedule Autonomy</div>
-                      <div className="font-bold text-xs text-[#f7f3eb] mt-0.5">Unrestricted</div>
+                      <div className="text-[0.65rem] text-[#d6c298]">Schedule Flexibility</div>
+                      <div className="font-bold text-xs text-[#f7f3eb] mt-0.5">Self-Directed</div>
                     </div>
                   </div>
                 </div>
@@ -498,11 +512,11 @@ Candidate Application Details:
               <div className="mt-4 pt-3 border-t border-[#d6c298]/20 flex items-center justify-between text-[0.7rem] text-[#ece6da]/70">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#d6c298]" />
-                  Zero Franchise Dues
+                  No Mentorship Fees
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#d6c298]" />
-                  Free 1-on-1 Coaching
+                  LLQP Exam Guidance
                 </span>
               </div>
             </div>
@@ -513,86 +527,86 @@ Candidate Application Details:
         <section className="py-16 border-b border-[#d6cebd]">
           <div className="max-w-3xl mb-10">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f]">
-              The Industry Contrast
+              Industry Models
             </span>
             <h2
               className="font-serif text-3xl sm:text-4xl text-[#1c1b18] mt-2 mb-3"
               style={{ fontFamily: "var(--font-serif)" }}
             >
-              Why Build an Independent Practice Instead of Working at a Captive Bank?
+              Understanding Independent Brokerage vs. Single-Carrier Representation
             </h2>
             <p className="text-[#46423a] text-base leading-relaxed">
-              Traditional financial institutions restrict advisors with narrow proprietary products, corporate branch quotas, and capped wages. Independent financial practice is built around fiduciary advocacy and true enterprise ownership.
+              In Canada, licensed insurance and financial professionals typically operate under one of two structures. Here is an objective overview of the two operational environments.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* The Bank / Captive Way */}
+            {/* Single-Carrier Model */}
             <div className="p-6 bg-[#f2ecdf]/50 border border-[#d6cebd] rounded-[2px] flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2.5 pb-3 border-b border-[#d6cebd]">
-                  <Building className="w-5 h-5 text-[#8a3324]" />
+                  <Building className="w-5 h-5 text-[#75581f]" />
                   <h3 className="font-serif text-xl text-[#1c1b18]">
-                    Traditional Bank / Captive Agency
+                    Single-Carrier / Proprietary Model
                   </h3>
                 </div>
                 <ul className="mt-5 space-y-3.5 text-sm text-[#46423a] list-none p-0">
                   <li className="flex items-start gap-2.5">
-                    <span className="text-[#8a3324] font-bold text-base leading-none">&times;</span>
-                    <span>Restricted to single-carrier or branch proprietary products that may not suit the client best.</span>
+                    <span className="text-[#75581f] font-bold text-base leading-none">&bull;</span>
+                    <span>Product availability is limited to the proprietary portfolio manufactured by that specific institution.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="text-[#8a3324] font-bold text-base leading-none">&times;</span>
-                    <span>Rigid 9-to-5 desk requirements, branch micromanagement, and arbitrary monthly sales quotas.</span>
+                    <span className="text-[#75581f] font-bold text-base leading-none">&bull;</span>
+                    <span>Operating hours and office attendance are set by local branch management.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="text-[#8a3324] font-bold text-base leading-none">&times;</span>
-                    <span>The institution owns your client book; if you leave, you leave behind all equity and renewals.</span>
+                    <span className="text-[#75581f] font-bold text-base leading-none">&bull;</span>
+                    <span>Client files and policy servicing generally remain property of the corporate institution upon departure.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="text-[#8a3324] font-bold text-base leading-none">&times;</span>
-                    <span>Compensation is capped by salaried ceilings and low internal commission tiers.</span>
+                    <span className="text-[#75581f] font-bold text-base leading-none">&bull;</span>
+                    <span>Compensation is typically salaried with defined corporate bonus structures and performance benchmarks.</span>
                   </li>
                 </ul>
               </div>
               <div className="mt-6 pt-4 border-t border-[#d6cebd] text-xs text-[#625d52]">
-                Result: High advisor burnout, misaligned client incentives, and limited long-term enterprise value.
+                Consideration: Ideal for professionals seeking structured corporate employment with defined internal supervision.
               </div>
             </div>
 
-            {/* The Independent Mentored Practice */}
+            {/* Independent Brokerage Model */}
             <div className="p-6 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] shadow-sm flex flex-col justify-between relative">
               <div className="absolute -top-3 right-5 bg-[#2e4a3b] text-[#f7f3eb] text-[0.7rem] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-[2px]">
-                The Ahmed Bello Framework
+                Independent Practice
               </div>
               <div>
                 <div className="flex items-center gap-2.5 pb-3 border-b border-[#2e4a3b]/20">
                   <ShieldCheck className="w-5 h-5 text-[#2e4a3b]" />
                   <h3 className="font-serif text-xl text-[#1c1b18]">
-                    Independent Financial Practice
+                    Independent Multi-Carrier Practice
                   </h3>
                 </div>
                 <ul className="mt-5 space-y-3.5 text-sm text-[#1c1b18] list-none p-0">
                   <li className="flex items-start gap-2.5">
                     <Check className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
-                    <span><strong>Unrestricted carrier access:</strong> Compare and deliver top Canadian and US insurance, living benefits, and wealth solutions.</span>
+                    <span><strong>Multi-carrier access:</strong> Objectively evaluate and present options across Canadian insurers to best fit client objectives.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <Check className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
-                    <span><strong>Total calendar autonomy:</strong> Work remotely, set your own appointment cadence, and scale part-time or full-time.</span>
+                    <span><strong>Calendar and location flexibility:</strong> Manage your consultation schedule and practice either virtually or locally.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <Check className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
-                    <span><strong>Portable client ownership:</strong> Your clients are yours. You build enterprise value in a practice you own.</span>
+                    <span><strong>Direct client relationships:</strong> Foster enduring professional relationships with families and business owners over decades.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <Check className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
-                    <span><strong>Direct 1-on-1 field mentoring:</strong> Ahmed personally co-plans your initial client files so your recommendations are airtight.</span>
+                    <span><strong>Mentorship & co-planning:</strong> Ahmed co-plans initial files with you to verify file suitability, compliance, and rigorous ethical standards.</span>
                   </li>
                 </ul>
               </div>
               <div className="mt-6 pt-4 border-t border-[#ece6da] text-xs font-semibold text-[#2e4a3b]">
-                Result: Fiduciary client trust, compounding enterprise value, and financial sovereignty.
+                Consideration: Ideal for self-directed entrepreneurs seeking autonomy, comprehensive carrier choice, and performance-based compensation.
               </div>
             </div>
           </div>
@@ -611,7 +625,7 @@ Candidate Application Details:
               The 5 Pillars of Our Mentorship Program
             </h2>
             <p className="text-[#46423a] text-base leading-relaxed">
-              We remove the financial and operational hurdles that prevent ambitious individuals from entering professional wealth advisory across Canada and the United States.
+              We provide structured educational blueprints and dedicated mentorship for motivated candidates entering independent financial solutions practice across Canada.
             </p>
           </div>
 
@@ -626,11 +640,11 @@ Candidate Application Details:
                   1. Zero Tuition or Coaching Dues
                 </h3>
                 <p className="text-sm text-[#46423a] leading-relaxed">
-                  No franchise startup fees, desk fees, or training invoices. You receive our complete practice curriculum, masterclasses, and ongoing 1-on-1 coaching at zero cost.
+                  No franchise startup fees, desk fees, or training invoices. You receive our complete practice curriculum, study frameworks, and ongoing 1-on-1 coaching at zero cost.
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#ece6da] text-xs text-[#2e4a3b] font-medium">
-                100% Free Coaching
+                100% Free Mentorship
               </div>
             </div>
 
@@ -644,7 +658,7 @@ Candidate Application Details:
                   2. Full Licensing Exam Support
                 </h3>
                 <p className="text-sm text-[#46423a] leading-relaxed">
-                  We sponsor your regulatory eligibility and provide comprehensive study blueprints, practice exams, and coaching so you pass your Canadian LLQP or US state exam with confidence.
+                  We sponsor your regulatory eligibility and provide comprehensive study blueprints, practice exams, and coaching so you pass your Canadian LLQP exam with confidence.
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#ece6da] text-xs text-[#75581f] font-medium">
@@ -662,11 +676,11 @@ Candidate Application Details:
                   3. Real Financial Architecture
                 </h3>
                 <p className="text-sm text-[#46423a] leading-relaxed">
-                  Master the mechanics of registered tax shelters (TFSA, RRSP, FHSA, RESP), disability & critical illness protection, debt restructuring, and intergenerational estate wealth transfer.
+                  Master the mechanics of registered tax shelters (TFSA, RRSP, FHSA, RESP), disability & critical illness protection, debt restructuring, and intergenerational estate transitions.
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#ece6da] text-xs text-[#2e4a3b] font-medium">
-                Fiduciary Wealth Engineering
+                Comprehensive Solutions Architecture
               </div>
             </div>
 
@@ -895,7 +909,7 @@ Candidate Application Details:
                 Mentored Launch
               </h3>
               <p className="text-xs text-[#46423a] leading-relaxed">
-                Ahmed co-plans your early client consultations. Master ethical planning, build your client equity, and earn uncapped commissions.
+                Ahmed co-plans your early client consultations. Master file suitability, build long-term relationships, and earn performance-based commissions in full regulatory compliance.
               </p>
             </div>
           </div>
@@ -914,10 +928,20 @@ Candidate Application Details:
                   className="font-serif text-3xl sm:text-4xl text-[#1c1b18] mt-2 mb-3"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  Apply for the Free Mentorship Program
+                  Apply for the Educational Mentorship
                 </h2>
                 <p className="text-[#46423a] text-sm leading-relaxed">
-                  Complete this brief questionnaire to connect with Ahmed. There are no coaching fees or obligations—just an honest evaluation of your potential in North American wealth services.
+                  Complete this brief questionnaire to connect with Ahmed. There are no coaching fees or obligations—just an honest conversation about the licensing process and whether independent financial practice aligns with your career goals.
+                </p>
+              </div>
+
+              {/* Regulatory & Compliance Disclosure Banner */}
+              <div className="mb-8 p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs text-[#625d52] leading-relaxed space-y-1.5">
+                <p className="font-semibold text-[#1c1b18]">
+                  Provincial Licensing & Regulatory Notice:
+                </p>
+                <p>
+                  In Canada, life insurance, living benefits, and segregated funds may only be recommended by individuals who have completed the Life License Qualification Program (LLQP) and hold active provincial registration (e.g., FSRA in Ontario, FCNB in New Brunswick, AIC in Alberta). Mentorship is educational and preparatory; candidates cannot advise or solicit clients until all regulatory approvals are active. Compensation is 100% performance-based on commissions from approved client business. No specific earnings are guaranteed.
                 </p>
               </div>
 

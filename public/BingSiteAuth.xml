@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <users>
-	<user>bing-webmaster-verification-token</user>
+	<!-- Replace YOUR_BING_VERIFICATION_CODE with the 32-character XML code from Bing Webmaster Tools -->
+	<user>YOUR_BING_VERIFICATION_CODE</user>
 </users>
