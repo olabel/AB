@@ -13,6 +13,7 @@ const currentDate = new Date().toISOString().split("T")[0];
 const coreRoutes = [
   { path: "", priority: "1.0", changefreq: "weekly" },
   { path: "/how-i-help", priority: "0.9", changefreq: "monthly" },
+  { path: "/investing/islamic-equity", priority: "0.95", changefreq: "weekly" },
   { path: "/education", priority: "0.9", changefreq: "weekly" },
   { path: "/news", priority: "0.9", changefreq: "hourly" },
   { path: "/insights", priority: "0.85", changefreq: "weekly" },

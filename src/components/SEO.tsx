@@ -14,6 +14,7 @@ export interface SEOProps {
   articlePublishedTime?: string;
   articleModifiedTime?: string;
   noIndex?: boolean;
+  keywords?: string | string[];
 }
 
 export const SEO: React.FC<SEOProps> = ({
@@ -27,6 +28,7 @@ export const SEO: React.FC<SEOProps> = ({
   articlePublishedTime,
   articleModifiedTime,
   noIndex = false,
+  keywords,
 }) => {
   const location = useLocation();
   const { language } = useLanguage();
@@ -54,8 +56,22 @@ export const SEO: React.FC<SEOProps> = ({
     ? "Éducation financière en langage clair sur les régimes enregistrés (CELI, REER, CELIAPP), l'assurance vie et les décisions budgétaires avec Ahmed Bello."
     : "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.";
 
-  const finalTitle = title ? `${title} | Ahmed Bello` : defaultTitle;
+  const finalTitle = title
+    ? title.includes("Ahmed Bello")
+      ? title
+      : `${title} | Ahmed Bello`
+    : defaultTitle;
   const finalDescription = description || defaultDescription;
+
+  const defaultKeywords = isFr
+    ? "éducation financière Canada, CELI vs REER, CELIAPP achat première maison, investissement islamique Canada, indice actions islamique ACWI BlackRock, assurance vie temporaire, crédit nouveaux arrivants, conseiller financier Moncton"
+    : "Canadian financial education, TFSA vs RRSP, FHSA Home Buyers Plan, Islamic investing Canada, Halal Equity Index ACWI BlackRock, term life insurance Canada, newcomer credit building, Bank of Canada rates, financial advisor Moncton NB";
+
+  const finalKeywords = keywords
+    ? Array.isArray(keywords)
+      ? keywords.join(", ")
+      : keywords
+    : defaultKeywords;
 
   useEffect(() => {
     // 1. Update Document Title
@@ -91,6 +107,7 @@ export const SEO: React.FC<SEOProps> = ({
 
     // Standard Meta
     setMetaTag("name", "description", finalDescription);
+    setMetaTag("name", "keywords", finalKeywords);
     setMetaTag(
       "name",
       "robots",
@@ -148,7 +165,7 @@ export const SEO: React.FC<SEOProps> = ({
       const tag = document.getElementById("route-jsonld");
       if (tag) tag.remove();
     };
-  }, [finalTitle, finalDescription, currentCanonical, englishUrl, frenchUrl, ogType, image, jsonLd, isFr, noIndex]);
+  }, [finalTitle, finalDescription, finalKeywords, currentCanonical, englishUrl, frenchUrl, ogType, image, jsonLd, isFr, noIndex]);
 
   return null;
 };

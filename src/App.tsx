@@ -15,6 +15,7 @@ import { AboutPage } from "./pages/AboutPage.tsx";
 import { ContactPage } from "./pages/ContactPage.tsx";
 import { CareersPage } from "./pages/CareersPage.tsx";
 import { AudienceHubPage } from "./pages/AudienceHubPage.tsx";
+import { IslamicInvestingPage } from "./pages/IslamicInvestingPage.tsx";
 import { LegalPage } from "./pages/LegalPage.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
 import { disclosuresData, privacyData, standardsData, termsData } from "./content/legal.ts";
@@ -71,6 +72,8 @@ export default function App() {
               <Route path="/careers" element={<CareersPage />} />
               <Route path="/become-an-agent" element={<CareersPage />} />
               <Route path="/for/:audience" element={<AudienceHubPage />} />
+              <Route path="/investing/islamic-equity" element={<IslamicInvestingPage />} />
+              <Route path="/for/muslim-investors" element={<IslamicInvestingPage />} />
               <Route path="/contact" element={<ContactPage />} />
 
               {/* French Indexable Routes */}
@@ -86,6 +89,8 @@ export default function App() {
               <Route path="/fr/careers" element={<CareersPage />} />
               <Route path="/fr/become-an-agent" element={<CareersPage />} />
               <Route path="/fr/for/:audience" element={<AudienceHubPage />} />
+              <Route path="/fr/investing/islamic-equity" element={<IslamicInvestingPage />} />
+              <Route path="/fr/for/muslim-investors" element={<IslamicInvestingPage />} />
               <Route path="/fr/contact" element={<ContactPage />} />
 
               {/* Legal and standards routes (EN & FR) */}

@@ -112,6 +112,14 @@ const routes = [
     heading: "First-Year Financial Roadmap for Newcomers to Canada",
     summary: "Step-by-step guidance on opening secured credit cards, understanding the Canadian credit bureau scoring system, and opening tax-free registered savings accounts."
   },
+  {
+    path: "/investing/islamic-equity",
+    title: "Islamic Equity Index ACWI (BlackRock) & Halal Investing | Ahmed Bello",
+    description: "Shari'ah-compliant global equity investing under AAOIFI standards sub-advised by BlackRock and administered by iA Financial Group. Eligible for TFSA, RRSP, FHSA, RESP, and Corporate accounts.",
+    lang: "en-CA",
+    heading: "Islamic Equity Index ACWI (BlackRock) & Halal Investing",
+    summary: "Replicating the MSCI ACWI Islamic Index under AAOIFI standards. Available inside Canadian registered tax shelters: TFSA, RRSP, FHSA, RESP, and Corporate holding companies."
+  },
 
   // Key Educational Articles
   {
@@ -251,6 +259,14 @@ const routes = [
     lang: "fr-CA",
     heading: "Feuille de Route Financière pour Nouveaux Arrivants",
     summary: "Guide pas à pas pour bâtir un dossier de crédit solide, ouvrir des comptes enregistrés libres d'impôt et comprendre la résidence fiscale."
+  },
+  {
+    path: "/fr/investing/islamic-equity",
+    title: "Indice Actions Islamiques ACWI BlackRock & Investissement Halal | Ahmed Bello",
+    description: "Fonds indiciel actions islamiques ACWI (BlackRock) chez iA Groupe financier. Filtrage rigoureux AAOIFI, 100 % conforme à la charia pour CELI, REER, CELIAPP et sociétés au Canada.",
+    lang: "fr-CA",
+    heading: "Indice Actions Islamiques ACWI (BlackRock) & Investissement Halal",
+    summary: "Réplication de l'indice MSCI ACWI Islamic sous la sous-gestion de BlackRock selon les normes AAOIFI. Intégré aux abris fiscaux canadiens : CELI, REER, CELIAPP, REEE et SPCC."
   },
   {
     path: "/legal/disclosures",

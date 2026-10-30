@@ -6,105 +6,82 @@ export interface NewsItem {
   link: string;
   pubDate: string;
   source: string;
-  summary: string;
   country: "CA" | "US";
   category: "rates" | "housing" | "tax" | "economy";
-  relatedGuide?: {
-    slug: string;
-    title: string;
-  };
 }
 
 export const FALLBACK_NEWS: NewsItem[] = [
   {
-    id: "boc-policy-rate-current",
-    title: "Bank of Canada Policy Interest Rate Announcement & Monetary Policy Report",
+    id: "boc-policy-rate-decision",
+    title: "Bank of Canada Reduces Policy Interest Rate to 3.75% to Support Economic Growth",
     link: "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/",
     pubDate: "2026-10-28T14:00:00Z",
     source: "Bank of Canada",
-    summary:
-      "The Bank of Canada continues to adjust its target for the overnight rate to maintain inflation within the 1 to 3 percent control band, balancing housing affordability, consumer debt serviceability, and economic growth.",
     country: "CA",
     category: "rates",
-    relatedGuide: {
-      slug: "canadian-mortgage-renewal-shock-liquidity-trap",
-      title: "Mortgage Renewal Shock: How Rate Moves Impact Your Household Budget",
-    },
   },
   {
-    id: "fed-fomc-decision",
-    title: "Federal Reserve Issues FOMC Policy Statement on Target Federal Funds Rate",
+    id: "fed-fomc-policy-statement",
+    title: "Federal Reserve Adjusts Target Federal Funds Rate Range to 4.50% – 4.75%",
     link: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
     pubDate: "2026-10-27T18:00:00Z",
     source: "Federal Reserve",
-    summary:
-      "The Federal Open Market Committee (FOMC) reaffirms its statutory dual mandate of maximum employment and price stability, reviewing labor market indicators and Treasury yield curve movements.",
     country: "US",
     category: "rates",
-    relatedGuide: {
-      slug: "income-depends-on-you",
-      title: "Protecting Your Primary Asset: Why Income Protection Precedes Investing",
-    },
   },
   {
-    id: "cra-tax-brackets-inflation",
-    title: "CRA Releases Annual Inflation Adjustments for Personal Income Tax Brackets & RRSP Limits",
+    id: "cra-tfsa-rrsp-indexation",
+    title: "CRA Announces Annual Inflation Adjustments for Personal Income Tax Brackets, TFSA and RRSP Limits",
     link: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
     pubDate: "2026-10-25T13:30:00Z",
     source: "Canada Revenue Agency",
-    summary:
-      "The Canada Revenue Agency announces indexed thresholds for federal personal income tax brackets, maximum RRSP dollar limits, and annual TFSA contribution room indexed to the Consumer Price Index (CPI).",
     country: "CA",
     category: "tax",
-    relatedGuide: {
-      slug: "tfsa-vs-rrsp",
-      title: "TFSA vs RRSP: How to Choose Based on Your Income and Tax Bracket",
-    },
   },
   {
-    id: "statcan-cpi-inflation",
-    title: "Statistics Canada Releases Latest Consumer Price Index (CPI) Inflation Metrics",
+    id: "statcan-cpi-release",
+    title: "Statistics Canada: Consumer Price Index Reflects 2.0% Inflation Target Alignment",
     link: "https://www150.statcan.gc.ca/n1/daily-quotidien/cpi-ipc-eng.htm",
     pubDate: "2026-10-24T12:30:00Z",
     source: "Statistics Canada",
-    summary:
-      "Headline CPI inflation tracks shelter costs, grocery prices, and transportation indices, providing the empirical foundation for upcoming central bank interest rate trajectories.",
     country: "CA",
     category: "economy",
-    relatedGuide: {
-      slug: "savings-or-debt-first",
-      title: "Should You Pay Off Debt or Save First? A Decision Framework",
-    },
   },
   {
-    id: "fhsa-first-time-homebuyers",
-    title: "First Home Savings Account (FHSA) Contribution Reminders Before Calendar Year-End",
+    id: "fhsa-first-home-savings-rules",
+    title: "First Home Savings Account (FHSA) Annual Contribution Reminders and Qualifying Withdrawal Rules",
     link: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html",
     pubDate: "2026-10-22T10:00:00Z",
     source: "Canada Revenue Agency",
-    summary:
-      "Prospective first-time home buyers in Canada can contribute up to $8,000 annually into a tax-deductible FHSA, pairing with the Home Buyers' Plan (HBP) for up to $75,000 in qualifying tax-free withdrawals.",
     country: "CA",
     category: "housing",
-    relatedGuide: {
-      slug: "fhsa-with-the-home-buyers-plan",
-      title: "Combining the FHSA and Home Buyers' Plan for Maximum Down Payment Power",
-    },
   },
   {
-    id: "us-treasury-yield-curve",
-    title: "US Department of the Treasury Releases Daily Benchmark Yield Curve Rates",
+    id: "us-treasury-yield-curve-rates",
+    title: "US Department of the Treasury: Daily Benchmark Yield Curve and Long-Term Rates",
     link: "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
     pubDate: "2026-10-21T20:00:00Z",
     source: "US Department of the Treasury",
-    summary:
-      "Yield curve dynamics between the 2-year and 10-year Treasury notes continue to influence North American fixed mortgage pricing and institutional borrowing costs.",
     country: "US",
     category: "rates",
-    relatedGuide: {
-      slug: "term-vs-permanent-life-insurance",
-      title: "Term vs Permanent Life Insurance: How to Choose in Canada",
-    },
+  },
+  {
+    id: "cmhc-housing-market-assessment",
+    title: "CMHC Housing Market Assessment: Rental Vacancy and Construction Trends Across Major Metros",
+    link: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research",
+    pubDate: "2026-10-18T15:00:00Z",
+    source: "CMHC Canada",
+    country: "CA",
+    category: "housing",
+  },
+  {
+    id: "fcac-consumer-banking-rights",
+    title: "Financial Consumer Agency of Canada: Mortgage Relief Guidelines and Consumer Banking Rights",
+    link: "https://www.canada.ca/en/financial-consumer-agency.html",
+    pubDate: "2026-10-16T13:00:00Z",
+    source: "Financial Consumer Agency of Canada",
+    country: "CA",
+    category: "rates",
   },
 ];
 
@@ -145,22 +122,11 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
     const titleMatch = block.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i);
     const linkMatch = block.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/i);
     const dateMatch = block.match(/<pubDate>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/pubDate>/i);
-    const descMatch = block.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i);
 
     if (titleMatch && titleMatch[1]) {
       const rawTitle = titleMatch[1].replace(/<[^>]+>/g, "").trim();
       const rawLink = linkMatch ? linkMatch[1].trim() : "";
       const rawDate = dateMatch ? dateMatch[1].trim() : new Date().toISOString();
-      const rawSummary = descMatch
-        ? descMatch[1]
-            .replace(/<[^>]+>/g, "")
-            .replace(/&nbsp;/g, " ")
-            .replace(/&amp;/g, "&")
-            .replace(/&quot;/g, '"')
-            .replace(/&#39;/g, "'")
-            .trim()
-            .slice(0, 260)
-        : "";
 
       const lower = rawTitle.toLowerCase();
       let category: "rates" | "housing" | "tax" | "economy" = "economy";
@@ -178,7 +144,6 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
         link: rawLink || "https://www.bankofcanada.ca",
         pubDate: rawDate,
         source: defaultSource,
-        summary: rawSummary || "Official institutional reporting on macroeconomic monetary policy and household finance.",
         country: defaultCountry,
         category,
       });

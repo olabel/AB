@@ -82,9 +82,9 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     eyebrowEn: "Audience Hub: Business Owners & CCPCs",
     eyebrowFr: "Carrefour thématique : Propriétaires d'entreprises",
     descriptionEn:
-      "From the 66.7% capital gains inclusion hike on private corporations to extracting tax-free capital via the Capital Dividend Account (CDA), understand how corporate wealth intersects with personal balance sheets.",
+      "From navigating passive investment income rules and the Small Business Deduction (SBD) grind to extracting tax-free capital via the Capital Dividend Account (CDA), understand how corporate wealth intersects with personal balance sheets.",
     descriptionFr:
-      "Du taux d'inclusion des gains en capital de 66,7 % pour les sociétés privées à l'extraction de capital non imposable via le Compte de dividendes en capital (CDC).",
+      "De la gestion des règles sur les revenus de placement passif et du plafond des petites entreprises à l'extraction de capital non imposable via le Compte de dividendes en capital (CDC).",
     icon: Briefcase,
     curatedSlugs: [
       "canadian-capital-gains-deemed-disposition-estate-trap",
@@ -95,13 +95,13 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     ],
     showCalculator: false,
     keyTakeawaysEn: [
-      "Canadian-Controlled Private Corporations (CCPCs) face 66.7% capital gains inclusion from dollar zero.",
+      "Passive corporate investment income exceeding $50,000 begins grinding down your federal Small Business Deduction limit.",
       "Permanent corporate-owned insurance provides tax-sheltered growth and credit to the Capital Dividend Account (CDA).",
       "Section 85/86 estate freezes prevent exponential tax liabilities upon deemed disposition at death.",
       "Distinguish corporate retained earnings liquidity from personal household emergency buffers.",
     ],
     keyTakeawaysFr: [
-      "Les SPCC font face à un taux d'inclusion de 66,7 % sur les gains en capital dès le premier dollar.",
+      "Les revenus de placement passif en société supérieurs à 50 000 $ réduisent progressivement la Déduction pour petite entreprise.",
       "L'assurance permanente détenue par la société alimente le Compte de dividendes en capital (CDC) en franchise d'impôt.",
       "Les gels successoraux (art. 85/86) plafonnent l'impôt terminal lors de la disposition présumée au décès.",
       "Distinguez la trésorerie de votre entreprise de vos coussins de sécurité personnels.",

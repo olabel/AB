@@ -786,6 +786,42 @@ function getRouteMetadata(pathname: string): RouteMeta {
           },
         ],
       };
+
+    case "/investing/islamic-equity":
+    case "/for/muslim-investors":
+    case "/fr/investing/islamic-equity":
+    case "/fr/for/muslim-investors":
+      return {
+        title: "Islamic Equity Index ACWI (BlackRock) & Halal Investing | Ahmed Bello",
+        description:
+          "Shari'ah-compliant global equity investing under AAOIFI standards sub-advised by BlackRock and offered by iA Financial Group. Eligible for TFSA, RRSP, FHSA, RESP, and Corporate accounts.",
+        ogType: "website",
+        url: `${siteConfig.siteUrl}/investing/islamic-equity`,
+        jsonLd: [
+          siteWideWebSite,
+          siteWideFinancialService,
+          {
+            "@context": "https://schema.org",
+            "@type": "FinancialProduct",
+            name: "Islamic Equity Index ACWI (BlackRock)",
+            description:
+              "Shari'ah-compliant global equity segregated fund tracking the MSCI ACWI Islamic Index under AAOIFI standards, sub-advised by BlackRock.",
+            provider: {
+              "@type": "FinancialService",
+              name: "iA Financial Group",
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
+              { "@type": "ListItem", position: 2, name: "Islamic Investing", item: `${siteConfig.siteUrl}/investing/islamic-equity` },
+            ],
+          },
+        ],
+      };
+
     case "/about":
       return {
         title: "About Ahmed Bello | Licensed Financial Solutions Professional",

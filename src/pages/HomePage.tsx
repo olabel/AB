@@ -25,76 +25,147 @@ export const HomePage: React.FC = () => {
     .map((s) => articles.find((a) => a.slug === s))
     .filter(Boolean);
 
-  const initialQuestions = [
-    {
-      num: "01",
-      question: "How should I prioritize my financial goals?",
-      href: "/how-i-help#priorities",
-    },
-    {
-      num: "02",
-      question: "What should I understand before choosing a registered account?",
-      href: "/how-i-help#accounts",
-    },
-    {
-      num: "03",
-      question: "How much of my household income depends on my ability to work?",
-      href: "/how-i-help#income",
-    },
-    {
-      num: "04",
-      question: "What should I know before making an investment decision?",
-      href: "/how-i-help#investing",
-    },
-    {
-      num: "05",
-      question: "How can I prepare for my children’s education?",
-      href: "/how-i-help#education",
-    },
-    {
-      num: "06",
-      question: "What should I consider as retirement approaches?",
-      href: "/how-i-help#retirement",
-    },
-  ];
+  const initialQuestions = language === "fr"
+    ? [
+        {
+          num: "01",
+          question: "Comment devrais-je prioriser mes objectifs financiers ?",
+          href: "/fr/how-i-help#priorities",
+        },
+        {
+          num: "02",
+          question: "Que dois-je comprendre avant de choisir un compte enregistré ?",
+          href: "/fr/how-i-help#accounts",
+        },
+        {
+          num: "03",
+          question: "Quelle part du revenu de mon foyer dépend de ma capacité à travailler ?",
+          href: "/fr/how-i-help#income",
+        },
+        {
+          num: "04",
+          question: "Que savoir avant de prendre une décision d'investissement ?",
+          href: "/fr/how-i-help#investing",
+        },
+        {
+          num: "05",
+          question: "Comment anticiper le financement des études de mes enfants ?",
+          href: "/fr/how-i-help#education",
+        },
+        {
+          num: "06",
+          question: "Que devrais-je considérer à l'approche de la retraite ?",
+          href: "/fr/how-i-help#retirement",
+        },
+      ]
+    : [
+        {
+          num: "01",
+          question: "How should I prioritize my financial goals?",
+          href: "/how-i-help#priorities",
+        },
+        {
+          num: "02",
+          question: "What should I understand before choosing a registered account?",
+          href: "/how-i-help#accounts",
+        },
+        {
+          num: "03",
+          question: "How much of my household income depends on my ability to work?",
+          href: "/how-i-help#income",
+        },
+        {
+          num: "04",
+          question: "What should I know before making an investment decision?",
+          href: "/how-i-help#investing",
+        },
+        {
+          num: "05",
+          question: "How can I prepare for my children’s education?",
+          href: "/how-i-help#education",
+        },
+        {
+          num: "06",
+          question: "What should I consider as retirement approaches?",
+          href: "/how-i-help#retirement",
+        },
+      ];
 
-  const helpAreas = [
-    {
-      num: "01",
-      title: "Financial foundations",
-      question: "Where is my money going, and what would a surprise cost me?",
-      desc: "Budgeting concepts, emergency savings, debt awareness and cash-flow decisions.",
-      href: "/how-i-help#priorities",
-    },
-    {
-      num: "02",
-      title: "Savings and investment education",
-      question: "Which account does my next dollar belong in, and how much risk is it taking?",
-      desc: "TFSA, RRSP, FHSA and RESP rules, risk, diversification and time horizon.",
-      href: "/how-i-help#accounts",
-    },
-    {
-      num: "03",
-      title: "Financial protection",
-      question: "How much of my household income depends on my ability to work?",
-      desc: "Income replacement, life and critical illness insurance, and other protection concepts.",
-      href: "/how-i-help#income",
-    },
-    {
-      num: "04",
-      title: "Family and long-term planning",
-      question: "How do education, retirement and everyday life fit together over time?",
-      desc: "Education savings, retirement preparation and coordinating priorities as life changes.",
-      href: "/how-i-help#education",
-    },
-    {
-      num: "05",
-      title: "Financial literacy for newcomers",
-      question: "What works differently in Canada, and what starts from zero?",
-      desc: "Canadian terminology, registered accounts, credit and the decisions newcomers meet first.",
-      href: "/how-i-help#newcomers",
-    },
-  ];
+  const helpAreas = language === "fr"
+    ? [
+        {
+          num: "01",
+          title: "Fondations financières",
+          question: "Où va mon argent et que me coûterait un imprévu ?",
+          desc: "Concepts budgétaires, épargne d'urgence, gestion des dettes et flux de trésorerie.",
+          href: "/fr/how-i-help#priorities",
+        },
+        {
+          num: "02",
+          title: "Éducation à l'épargne et l'investissement",
+          question: "Dans quel compte allouer mon prochain dollar, et avec quel niveau de risque ?",
+          desc: "Règles du CELI, REER, CELIAPP et REEE, diversification et horizon temporel.",
+          href: "/fr/how-i-help#accounts",
+        },
+        {
+          num: "03",
+          title: "Protection financière",
+          question: "Quelle part de notre revenu dépend de ma capacité de travail ?",
+          desc: "Remplacement du revenu, assurance vie, maladies graves et concepts de prévoyance.",
+          href: "/fr/how-i-help#income",
+        },
+        {
+          num: "04",
+          title: "Planification familiale et long terme",
+          question: "Comment concilier études, retraite et quotidien au fil des ans ?",
+          desc: "Épargne-études, préparation de la retraite et coordination des priorités familiales.",
+          href: "/fr/how-i-help#education",
+        },
+        {
+          num: "05",
+          title: "Littératie financière pour nouveaux arrivants",
+          question: "Qu'est-ce qui fonctionne différemment au Canada et démarre de zéro ?",
+          desc: "Terminologie canadienne, comptes enregistrés, dossier de crédit et premières démarches.",
+          href: "/fr/how-i-help#newcomers",
+        },
+      ]
+    : [
+        {
+          num: "01",
+          title: "Financial foundations",
+          question: "Where is my money going, and what would a surprise cost me?",
+          desc: "Budgeting concepts, emergency savings, debt awareness and cash-flow decisions.",
+          href: "/how-i-help#priorities",
+        },
+        {
+          num: "02",
+          title: "Savings and investment education",
+          question: "Which account does my next dollar belong in, and how much risk is it taking?",
+          desc: "TFSA, RRSP, FHSA and RESP rules, risk, diversification and time horizon.",
+          href: "/how-i-help#accounts",
+        },
+        {
+          num: "03",
+          title: "Financial protection",
+          question: "How much of my household income depends on my ability to work?",
+          desc: "Income replacement, life and critical illness insurance, and other protection concepts.",
+          href: "/how-i-help#income",
+        },
+        {
+          num: "04",
+          title: "Family and long-term planning",
+          question: "How do education, retirement and everyday life fit together over time?",
+          desc: "Education savings, retirement preparation and coordinating priorities as life changes.",
+          href: "/how-i-help#education",
+        },
+        {
+          num: "05",
+          title: "Financial literacy for newcomers",
+          question: "What works differently in Canada, and what starts from zero?",
+          desc: "Canadian terminology, registered accounts, credit and the decisions newcomers meet first.",
+          href: "/how-i-help#newcomers",
+        },
+      ];
 
   return (
     <div>
@@ -168,7 +239,7 @@ export const HomePage: React.FC = () => {
                 {/* Portrait Matte Frame */}
                 <div className="border border-[#75581f]/25 bg-[#ece6da]/40 p-1 rounded-[1px] relative overflow-hidden">
                   <img
-                    src={siteConfig.headshotUrl}
+                    src="/assets/aistudio/unnamed_dd5949a8.webp"
                     alt="Ahmed Bello, Licensed Financial Solutions Professional"
                     className="w-full aspect-[4/5] object-cover object-top rounded-[1px] filter contrast-[1.02]"
                     width={400}
@@ -251,11 +322,17 @@ export const HomePage: React.FC = () => {
         <div className="wrap">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
-              <span className="eyebrow text-xs">Starting points</span>
-              <h2 className="h2 text-[#1c1b18] mt-1">Questions worth asking first</h2>
+              <span className="eyebrow text-xs">
+                {language === "fr" ? "Points de départ" : "Starting points"}
+              </span>
+              <h2 className="h2 text-[#1c1b18] mt-1">
+                {language === "fr" ? "Questions prioritaires à se poser" : "Questions worth asking first"}
+              </h2>
             </div>
             <p className="text-sm text-[#625d52] max-w-md">
-              Most people start with a product. A better decision starts with the question behind it.
+              {language === "fr"
+                ? "La plupart des gens commencent par un produit. Une meilleure décision commence par la question sous-jacente."
+                : "Most people start with a product. A better decision starts with the question behind it."}
             </p>
           </div>
 
@@ -275,7 +352,7 @@ export const HomePage: React.FC = () => {
                   </p>
                 </div>
                 <div className="pt-6 flex items-center gap-1.5 text-xs font-semibold text-[#2e4a3b]">
-                  <span>Explore topic</span>
+                  <span>{language === "fr" ? "Explorer le sujet" : "Explore topic"}</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
@@ -284,10 +361,13 @@ export const HomePage: React.FC = () => {
 
           <div className="mt-8 p-4 bg-[#ece6da]/50 border-l-2 border-[#8d8677] text-xs text-[#46423a] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <p>
-              <strong>Education first.</strong> This site explains financial concepts; it is not personalized advice.
+              <strong>{language === "fr" ? "L'éducation d'abord." : "Education first."}</strong>{" "}
+              {language === "fr"
+                ? "Ce site explique des concepts financiers généraux ; il ne s'agit pas de conseils personnalisés."
+                : "This site explains financial concepts; it is not personalized advice."}
             </p>
-            <Link to="/disclosures" className="underline font-medium text-[#2e4a3b] shrink-0">
-              How this site works &rarr;
+            <Link to={language === "fr" ? "/fr/disclosures" : "/disclosures"} className="underline font-medium text-[#2e4a3b] shrink-0">
+              {language === "fr" ? "Fonctionnement du site →" : "How this site works →"}
             </Link>
           </div>
         </div>
@@ -297,13 +377,18 @@ export const HomePage: React.FC = () => {
       <section className="section py-20 border-b border-[#d6cebd]">
         <div className="wrap space-y-10">
           <div className="max-w-3xl">
-            <span className="eyebrow text-xs">How the pieces fit</span>
+            <span className="eyebrow text-xs">
+              {language === "fr" ? "L'articulation des choix" : "How the pieces fit"}
+            </span>
             <h2 className="h2 text-[#1c1b18] mt-1">
-              Most financial decisions don’t happen in isolation.
+              {language === "fr"
+                ? "La plupart des décisions financières ne se prennent pas isolément."
+                : "Most financial decisions don’t happen in isolation."}
             </h2>
             <p className="lede text-base md:text-lg text-[#46423a] mt-3">
-              Paying down a debt, choosing an account and protecting your income all pull on the same dollars
-              and the same years. Seeing the connections is often the first useful step.
+              {language === "fr"
+                ? "Rembourser une dette, choisir un compte enregistré et protéger votre revenu sollicitent les mêmes dollars et les mêmes années. Comprendre leurs liens est souvent la première étape utile."
+                : "Paying down a debt, choosing an account and protecting your income all pull on the same dollars and the same years. Seeing the connections is often the first useful step."}
             </p>
           </div>
 
@@ -322,17 +407,24 @@ export const HomePage: React.FC = () => {
       <section className="section py-20 border-b border-[#d6cebd] bg-[#fcfaf5]">
         <div className="wrap space-y-12">
           <div className="max-w-3xl space-y-3">
-            <span className="eyebrow text-xs">How I help</span>
+            <span className="eyebrow text-xs">
+              {language === "fr" ? "Comment j'accompagne" : "How I help"}
+            </span>
             <h2 className="h2 text-[#1c1b18]">
-              Five areas, each built around a real question.
+              {language === "fr"
+                ? "Cinq domaines, chacun articulé autour d'une vraie question."
+                : "Five areas, each built around a real question."}
             </h2>
             <p className="text-sm md:text-base text-[#46423a] leading-relaxed">
-              Everything below starts as education. What I can do beyond that depends on provincial licensing
-              and regulatory approvals, and some questions belong with other qualified professionals.
+              {language === "fr"
+                ? "Tout ce qui suit commence par de l'éducation. Les démarches complémentaires dépendent des autorisations provinciales et réglementaires, et certaines questions relèvent d'autres professionnels qualifiés."
+                : "Everything below starts as education. What I can do beyond that depends on provincial licensing and regulatory approvals, and some questions belong with other qualified professionals."}
             </p>
             <div className="pt-2">
-              <Link to="/how-i-help#scope" className="arrow-link text-sm">
-                What’s education, what’s a conversation, what’s a referral &rarr;
+              <Link to={language === "fr" ? "/fr/how-i-help#scope" : "/how-i-help#scope"} className="arrow-link text-sm">
+                {language === "fr"
+                  ? "Ce qui relève de l'éducation, d'un échange ou d'une recommandation externe →"
+                  : "What’s education, what’s a conversation, what’s a referral →"}
               </Link>
             </div>
           </div>
@@ -371,53 +463,75 @@ export const HomePage: React.FC = () => {
       <section className="section py-20 bg-[#14211a] text-[#f7f3eb] on-dark border-b border-[#2e4a3b]">
         <div className="wrap space-y-14">
           <div className="max-w-2xl space-y-3">
-            <span className="eyebrow text-xs text-[#d6c298]">The approach</span>
+            <span className="eyebrow text-xs text-[#d6c298]">
+              {language === "fr" ? "La démarche" : "The approach"}
+            </span>
             <h2 className="h2 text-white">
-              Clarity before complexity. Understanding before decisions.
+              {language === "fr"
+                ? "La clarté avant la complexité. Comprendre avant de décider."
+                : "Clarity before complexity. Understanding before decisions."}
             </h2>
             <p className="text-sm md:text-base text-[#ece6da]/80">
-              A structured four-step path designed to give you clarity and complete ownership over your financial choices.
+              {language === "fr"
+                ? "Un parcours structuré en quatre étapes conçu pour vous offrir une parfaite maîtrise de vos décisions financières."
+                : "A structured four-step path designed to give you clarity and complete ownership over your financial choices."}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="p-6 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-3">
               <span className="font-mono text-xs text-[#d6c298] font-semibold block">01</span>
-              <h3 className="h3 text-white">Understand</h3>
+              <h3 className="h3 text-white">
+                {language === "fr" ? "Comprendre" : "Understand"}
+              </h3>
               <p className="text-sm text-[#ece6da]/80 leading-relaxed">
-                We clarify your situation, your questions and what matters most to you, before anything is explained or suggested.
+                {language === "fr"
+                  ? "Nous clarifions votre situation, vos questions et ce qui compte le plus pour vous avant toute explication ou orientation."
+                  : "We clarify your situation, your questions and what matters most to you, before anything is explained or suggested."}
               </p>
             </div>
 
             <div className="p-6 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-3">
               <span className="font-mono text-xs text-[#d6c298] font-semibold block">02</span>
-              <h3 className="h3 text-white">Educate</h3>
+              <h3 className="h3 text-white">
+                {language === "fr" ? "Éduquer" : "Educate"}
+              </h3>
               <p className="text-sm text-[#ece6da]/80 leading-relaxed">
-                I explain the relevant concepts, the alternatives and the trade-offs in plain language, so you can judge them yourself.
+                {language === "fr"
+                  ? "J'explique les concepts pertinents, les alternatives et les compromis en langage clair, pour que vous puissiez en juger vous-même."
+                  : "I explain the relevant concepts, the alternatives and the trade-offs in plain language, so you can judge them yourself."}
               </p>
             </div>
 
             <div className="p-6 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-3">
               <span className="font-mono text-xs text-[#d6c298] font-semibold block">03</span>
-              <h3 className="h3 text-white">Explore</h3>
+              <h3 className="h3 text-white">
+                {language === "fr" ? "Explorer" : "Explore"}
+              </h3>
               <p className="text-sm text-[#ece6da]/80 leading-relaxed">
-                Where it is appropriate, and within the scope of the services I am authorized to offer, we discuss options that could fit.
+                {language === "fr"
+                  ? "Lorsque c'est pertinent, et dans le cadre des services autorisés par mes permis, nous analysons les solutions adaptées."
+                  : "Where it is appropriate, and within the scope of the services I am authorized to offer, we discuss options that could fit."}
               </p>
             </div>
 
             <div className="p-6 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-3">
               <span className="font-mono text-xs text-[#d6c298] font-semibold block">04</span>
-              <h3 className="h3 text-white">Review</h3>
+              <h3 className="h3 text-white">
+                {language === "fr" ? "Réviser" : "Review"}
+              </h3>
               <p className="text-sm text-[#ece6da]/80 leading-relaxed">
-                We identify next steps and revisit your priorities when your circumstances change.
+                {language === "fr"
+                  ? "Nous identifions les prochaines étapes et réexaminons vos priorités dès que votre situation personnelle ou familiale évolue."
+                  : "We identify next steps and revisit your priorities when your circumstances change."}
               </p>
             </div>
           </div>
 
           <div className="pt-4 border-t border-[#d6c298]/20 text-xs text-[#ece6da]/65 leading-relaxed max-w-3xl">
-            Not every conversation includes every stage, and a conversation is not a promise of a comprehensive
-            plan, portfolio management, tax advice or ongoing service. What is available depends on what I am
-            licensed and authorized to provide.
+            {language === "fr"
+              ? "Tous les échanges n'impliquent pas chacune de ces étapes. Une conversation ne constitue pas une promesse de plan complet, de gestion de portefeuille ou d'avis fiscal. Les services offerts dépendent des autorisations et permis réglementaires actifs."
+              : "Not every conversation includes every stage, and a conversation is not a promise of a comprehensive plan, portfolio management, tax advice or ongoing service. What is available depends on what I am licensed and authorized to provide."}
           </div>
         </div>
       </section>
@@ -439,15 +553,38 @@ export const HomePage: React.FC = () => {
                   : "Explore curated guides, statutory rules, and interactive tools specifically grouped for your stage of life or profession."}
               </p>
             </div>
-            <Link to="/education" className="arrow-link text-xs font-semibold shrink-0">
+            <Link to={language === "fr" ? "/fr/education" : "/education"} className="arrow-link text-xs font-semibold shrink-0">
               {language === "fr" ? "Toute la bibliothèque →" : "View all library topics &rarr;"}
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {/* Islamic Investing Campaign Feature */}
             <Link
-              to="/for/healthcare"
-              className="p-6 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+              to={language === "fr" ? "/fr/investing/islamic-equity" : "/investing/islamic-equity"}
+              className="p-5 bg-[#14211a] text-[#f7f3eb] border border-[#d6c298] hover:border-[#52b788] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-md"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#d6c298]/20 rounded-[2px] text-[#d6c298] mb-3">
+                  <span className="font-serif font-bold text-sm tracking-wider">HALAL</span>
+                </div>
+                <h3 className="font-serif text-lg font-medium text-white group-hover:text-[#d6c298] transition-colors leading-snug">
+                  {language === "fr" ? "Investissement Islamique" : "Islamic Investing"}
+                </h3>
+                <p className="text-xs text-[#ece6da]/80 mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Indice mondial MSCI ACWI Islamic (BlackRock & iA). 100% conforme Shari'ah dans CELI, REER et CELIAPP."
+                    : "MSCI ACWI Islamic Index (BlackRock & iA). 100% Shari'ah-compliant inside TFSA, RRSP & FHSA."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#d6c298] pt-4 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                {language === "fr" ? "Campagne Halal →" : "Explore Campaign →"}
+              </span>
+            </Link>
+
+            <Link
+              to={language === "fr" ? "/fr/for/healthcare" : "/for/healthcare"}
+              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
             >
               <div>
                 <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
@@ -468,8 +605,8 @@ export const HomePage: React.FC = () => {
             </Link>
 
             <Link
-              to="/for/business-owners"
-              className="p-6 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+              to={language === "fr" ? "/fr/for/business-owners" : "/for/business-owners"}
+              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
             >
               <div>
                 <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
@@ -480,8 +617,8 @@ export const HomePage: React.FC = () => {
                 </h3>
                 <p className="text-xs text-[#625d52] mt-2 leading-relaxed">
                   {language === "fr"
-                    ? "Taux d'inclusion à 66,7 %, dividendes en capital (CDC) et gel de société."
-                    : "66.7% corporate capital gains, CDA extraction, and estate freezes."}
+                    ? "Règles d'imposition du capital, dividendes en capital (CDC) et gel de société."
+                    : "Corporate capital gains rules, CDA extraction, and estate freezes."}
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
@@ -490,8 +627,8 @@ export const HomePage: React.FC = () => {
             </Link>
 
             <Link
-              to="/for/families"
-              className="p-6 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+              to={language === "fr" ? "/fr/for/families" : "/for/families"}
+              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
             >
               <div>
                 <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
@@ -512,8 +649,8 @@ export const HomePage: React.FC = () => {
             </Link>
 
             <Link
-              to="/for/newcomers"
-              className="p-6 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+              to={language === "fr" ? "/fr/for/newcomers" : "/for/newcomers"}
+              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
             >
               <div>
                 <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
@@ -541,21 +678,27 @@ export const HomePage: React.FC = () => {
         <div className="wrap space-y-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-              <span className="eyebrow text-xs">Financial education</span>
-              <h2 className="h2 text-[#1c1b18] mt-1">Learn before you decide.</h2>
+              <span className="eyebrow text-xs">
+                {language === "fr" ? "Éducation financière" : "Financial education"}
+              </span>
+              <h2 className="h2 text-[#1c1b18] mt-1">
+                {language === "fr" ? "Apprenez avant de décider." : "Learn before you decide."}
+              </h2>
               <p className="text-sm text-[#46423a] mt-2 max-w-xl">
-                Plain-language explainers on how Canadian accounts, debt, risk and protection really work &mdash;
-                with the trade-offs, sources and hypothetical examples included.
+                {language === "fr"
+                  ? "Des explications en langage clair sur le fonctionnement réel des régimes enregistrés canadiens, de l'endettement, du risque et de la protection — avec compromis, sources et exemples concrets."
+                  : "Plain-language explainers on how Canadian accounts, debt, risk and protection really work — with the trade-offs, sources and hypothetical examples included."}
               </p>
             </div>
-            <Link to="/education" className="btn btn-ghost text-sm shrink-0">
-              Browse the library &rarr;
+            <Link to={language === "fr" ? "/fr/education" : "/education"} className="btn btn-ghost text-sm shrink-0">
+              {language === "fr" ? "Consulter la bibliothèque →" : "Browse the library →"}
             </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {previewGuides.map((guide) => {
               if (!guide) return null;
+              const guideUrl = language === "fr" ? `/fr${guide.url}` : guide.url;
               return (
                 <article
                   key={guide.slug}
@@ -567,24 +710,26 @@ export const HomePage: React.FC = () => {
                         {guide.category.replace("-", " ")}
                       </span>
                       <span>/</span>
-                      <span>{guide.readingMinutes} min read</span>
+                      <span>
+                        {guide.readingMinutes} {language === "fr" ? "min de lecture" : "min read"}
+                      </span>
                     </div>
 
                     <h3 className="h3 text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
-                      <Link to={guide.url}>{guide.title}</Link>
+                      <Link to={guideUrl}>{guide.title}</Link>
                     </h3>
 
                     <div className="p-3 bg-[#f7f3eb] border-l border-[#8d8677] text-xs text-[#46423a]">
-                      <strong>The question:</strong> {guide.question}
+                      <strong>{language === "fr" ? "La question :" : "The question:"}</strong> {guide.question}
                     </div>
                   </div>
 
                   <div className="pt-6">
                     <Link
-                      to={guide.url}
+                      to={guideUrl}
                       className="text-xs font-semibold text-[#2e4a3b] flex items-center gap-1.5 group-hover:underline"
                     >
-                      <span>Read the article</span>
+                      <span>{language === "fr" ? "Lire l'article" : "Read the article"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
