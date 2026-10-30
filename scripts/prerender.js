@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { articles } from "../src/content/data.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,15 +15,15 @@ if (!fs.existsSync(templatePath)) {
 
 const template = fs.readFileSync(templatePath, "utf-8");
 
-const routes = [
-  // English Routes
+const coreRoutes = [
+  // English Core Routes
   {
     path: "/",
     title: "Ahmed Bello | Financial Education for Canadians",
     description: "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.",
     lang: "en-CA",
     heading: "Ahmed Bello — Licensed Financial Solutions Professional",
-    summary: "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), income protection, debt restructuring, and family financial decision-making."
+    summary: "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), income protection, debt restructuring, and family financial decision-making.",
   },
   {
     path: "/about",
@@ -30,7 +31,7 @@ const routes = [
     description: "Independent Canadian financial educator helping individuals and families understand registered accounts (TFSA, RRSP, FHSA), insurance, and money decisions.",
     lang: "en-CA",
     heading: "About Ahmed Bello — Financial Educator",
-    summary: "I am an independent financial professional helping individuals and families across Canada make intentional, well-grounded money decisions. Rather than starting with a product, I start with education: clarifying how Canadian registered accounts, debt repayment, and income protection interact."
+    summary: "Independent financial professional helping individuals and families across Canada make intentional, well-grounded money decisions through transparent education.",
   },
   {
     path: "/contact",
@@ -38,7 +39,7 @@ const routes = [
     description: "Start a plain-language financial conversation with Ahmed Bello, Licensed Financial Solutions Professional. Ask questions without sales pressure.",
     lang: "en-CA",
     heading: "Start a Conversation with Ahmed Bello",
-    summary: "Send your questions about Canadian registered accounts, income protection, debt repayment, or newcomer finances directly to Ahmed Bello. No obligation, no sales pitch."
+    summary: "Send your questions about Canadian registered accounts, income protection, debt repayment, or newcomer finances directly to Ahmed Bello.",
   },
   {
     path: "/education",
@@ -46,23 +47,23 @@ const routes = [
     description: "Plain-language decision guides on Canadian registered accounts (TFSA, RRSP, FHSA), insurance choices, credit building, and money fundamentals.",
     lang: "en-CA",
     heading: "Canadian Financial Education Library",
-    summary: "Explore plain-language guides on TFSA vs RRSP, First Home Savings Account (FHSA), Home Buyers' Plan, credit building for newcomers, and income protection."
+    summary: "Explore plain-language guides on TFSA vs RRSP, First Home Savings Account (FHSA), Home Buyers' Plan, credit building for newcomers, and income protection.",
   },
   {
     path: "/insights",
     title: "Financial Insights & Strategic Perspectives | Ahmed Bello",
-    description: "Deep-dive analytical essays on mortgage renewal shock, Canadian capital gains and deemed disposition at death, and family liquidity architecture.",
+    description: "Deep-dive analytical essays on mortgage renewal shock, Canadian capital gains, and family liquidity architecture.",
     lang: "en-CA",
     heading: "Financial Insights & Strategic Perspectives",
-    summary: "Comprehensive analytical articles examining the mechanics of Canadian mortgage renewals, statutory deemed disposition at death under Subsection 70(5), and structured family wealth transitions."
+    summary: "Comprehensive analytical articles examining the mechanics of Canadian mortgage renewals, statutory deemed disposition at death under Subsection 70(5), and structured family wealth transitions.",
   },
   {
     path: "/news",
-    title: "Live Canadian & US Financial News Desk | Ahmed Bello",
+    title: "Official Financial News & Monetary Policy Announcements | Ahmed Bello",
     description: "Real-time central bank interest rate decisions, Bank of Canada monetary policy, Federal Reserve updates, and verified North American economic news.",
     lang: "en-CA",
-    heading: "Live Macroeconomic Intelligence Desk",
-    summary: "Tracking the Bank of Canada policy rate, Federal Reserve FOMC decisions, Statistics Canada CPI inflation figures, and Canada Revenue Agency tax updates in real time."
+    heading: "Official Macroeconomic Intelligence Desk",
+    summary: "Direct tracking of the Bank of Canada policy rate, Federal Reserve FOMC decisions, Statistics Canada CPI inflation figures, and CRA regulatory updates.",
   },
   {
     path: "/careers",
@@ -70,7 +71,7 @@ const routes = [
     description: "Comprehensive Canadian provincial LLQP licensing support, practical case co-planning, and independent practice mentorship with Ahmed Bello.",
     lang: "en-CA",
     heading: "Independent Financial Solutions Practice Mentorship",
-    summary: "Learn how motivated candidates prepare for provincial LLQP licensing, receive carrier appointments, and build an independent multi-carrier financial practice across Canada."
+    summary: "Learn how motivated candidates prepare for provincial LLQP licensing, receive carrier appointments, and build an independent multi-carrier financial practice across Canada.",
   },
   {
     path: "/how-i-help",
@@ -78,23 +79,31 @@ const routes = [
     description: "Explore Ahmed Bello's educational framework: goal prioritization, registered shelter mechanics, family income protection, and debt repayment strategies.",
     lang: "en-CA",
     heading: "How I Help: Structured Financial Guidance",
-    summary: "A transparent framework for organizing family finances: prioritizing immediate liquidity, sheltering capital in registered accounts, and protecting against income disruption."
+    summary: "A transparent framework for organizing family finances: prioritizing immediate liquidity, sheltering capital in registered accounts, and protecting against income disruption.",
+  },
+  {
+    path: "/investing/islamic-equity",
+    title: "Shari'ah-Compliant Global Equity Index Investing | Canadian Educational Framework",
+    description: "Educational guide on Shari'ah-compliant global equity investing under AAOIFI standards. Benchmark index tracking (MSCI ACWI Islamic Index) and Canadian registered accounts (TFSA, RRSP, FHSA, RESP, Corporate).",
+    lang: "en-CA",
+    heading: "Shari'ah-Compliant Global Equity Index Investing in Canada",
+    summary: "Understanding Shari'ah screening principles, benchmark index tracking, and Canadian tax-sheltered accounts without commercial sales pitch.",
   },
   {
     path: "/for/healthcare",
-    title: "Financial Guidance for Healthcare Workers | Ahmed Bello",
-    description: "Tailored financial planning for Canadian doctors, nurses, and medical professionals managing incorporated medicine, licensing, and debt.",
+    title: "Financial Guidance for Healthcare Workers, Doctors & Nurses | Ahmed Bello",
+    description: "Tailored financial planning for Canadian doctors, nurses, and medical professionals managing licensing gaps, foreign credential costs, and income protection.",
     lang: "en-CA",
     heading: "Financial Planning for Healthcare Workers & Medical Professionals",
-    summary: "Strategies for incorporated physicians, registered nurses, and internationally trained medical graduates navigating Canadian taxation, insurance, and student debt."
+    summary: "Strategies for incorporated physicians, registered nurses, and internationally trained medical graduates navigating Canadian taxation, insurance, and licensing runway.",
   },
   {
     path: "/for/business-owners",
-    title: "Financial Strategy for Canadian Business Owners | Ahmed Bello",
-    description: "Strategies for Canadian-Controlled Private Corporations (CCPCs), corporate retained earnings extraction, and estate liquidity planning.",
+    title: "Financial Guidance for Canadian Business Owners & CCPCs | Ahmed Bello",
+    description: "Corporate financial architecture: passive investment income rules ($50k SBD limit), Capital Dividend Account (CDA) tax-free distributions, and estate liquidity.",
     lang: "en-CA",
     heading: "Financial Strategy for Business Owners & CCPCs",
-    summary: "Guidance on corporate holding companies, passive income thresholds, Capital Dividend Account (CDA) tax-free distributions, and succession liquidity."
+    summary: "Guidance on corporate holding companies, passive income thresholds, Capital Dividend Account (CDA) distributions, and succession liquidity.",
   },
   {
     path: "/for/families",
@@ -102,7 +111,7 @@ const routes = [
     description: "Practical financial planning for Canadian families: education savings (RESP grants), income protection, mortgage renewals, and estate transfer.",
     lang: "en-CA",
     heading: "Financial Decision-Making for Canadian Families",
-    summary: "Maximizing the Canada Education Savings Grant (CESG), calculating term insurance requirements, and balancing mortgage acceleration with registered retirement savings."
+    summary: "Maximizing the Canada Education Savings Grant (CESG), calculating term insurance requirements, and balancing mortgage acceleration with registered retirement savings.",
   },
   {
     path: "/for/newcomers",
@@ -110,75 +119,49 @@ const routes = [
     description: "First-year financial checklist for new permanent residents and work permit holders: credit establishment, SIN protection, banking, and FHSA.",
     lang: "en-CA",
     heading: "First-Year Financial Roadmap for Newcomers to Canada",
-    summary: "Step-by-step guidance on opening secured credit cards, understanding the Canadian credit bureau scoring system, and opening tax-free registered savings accounts."
+    summary: "Step-by-step guidance on opening secured credit cards, understanding the Canadian credit bureau scoring system, and opening tax-free registered savings accounts.",
   },
   {
-    path: "/investing/islamic-equity",
-    title: "Islamic Equity Index ACWI (BlackRock) & Halal Investing | Ahmed Bello",
-    description: "Shari'ah-compliant global equity investing under AAOIFI standards sub-advised by BlackRock and administered by iA Financial Group. Eligible for TFSA, RRSP, FHSA, RESP, and Corporate accounts.",
+    path: "/disclosures",
+    title: "Regulatory Disclosures & Professional Scope | Ahmed Bello",
+    description: "Canadian provincial insurance licensing disclosures, regulatory oversight, compensation transparency, and independent brokerage affiliations for Ahmed Bello.",
     lang: "en-CA",
-    heading: "Islamic Equity Index ACWI (BlackRock) & Halal Investing",
-    summary: "Replicating the MSCI ACWI Islamic Index under AAOIFI standards. Available inside Canadian registered tax shelters: TFSA, RRSP, FHSA, RESP, and Corporate holding companies."
+    heading: "Regulatory Disclosures & Professional Scope",
+    summary: "Full disclosure of provincial financial licensing across Canadian provinces and territories, compensation models, and educational scope boundaries.",
+  },
+  {
+    path: "/standards",
+    title: "Editorial Standards & Official Sources | Ahmed Bello",
+    description: "How financial guides on this website are researched, verified against official Canadian government sources, dated, and reviewed.",
+    lang: "en-CA",
+    heading: "Editorial Standards & Verification Framework",
+    summary: "Our commitment to accuracy, official regulatory citations, neutral calculations, and transparent correction policies.",
+  },
+  {
+    path: "/privacy",
+    title: "Privacy Notice & Data Protection | Ahmed Bello",
+    description: "How personal information from enquiries is handled, protected, and kept private under Canadian PIPEDA standards and CASL anti-spam regulations.",
+    lang: "en-CA",
+    heading: "Privacy Notice & Client Confidentiality",
+    summary: "PIPEDA-compliant privacy policy detailing how client personal information is collected, safeguarded, and handled with strict confidentiality.",
+  },
+  {
+    path: "/terms",
+    title: "Website Terms of Use | Ahmed Bello",
+    description: "Terms and ground rules for using this Canadian financial education website, intellectual property, and limitations of liability.",
+    lang: "en-CA",
+    heading: "Website Terms of Use",
+    summary: "Clear legal terms governing website access, educational copyright, and financial disclaimer boundaries.",
   },
 
-  // Key Educational Articles
-  {
-    path: "/education/new-to-canada-money-basics",
-    title: "New to Canada: Your First-Year Financial Checklist | Ahmed Bello",
-    description: "The essential first-year financial checklist for newcomers to Canada: SIN protection, banking packages, credit building, and tax return filing.",
-    lang: "en-CA",
-    heading: "New to Canada: Your First-Year Financial Checklist",
-    summary: "A practical guide for new permanent residents on establishing credit history, avoiding predatory loans, and leveraging Canadian government newcomer programs."
-  },
-  {
-    path: "/education/fhsa-with-the-home-buyers-plan",
-    title: "Combining the FHSA and Home Buyers' Plan (HBP) | Ahmed Bello",
-    description: "How Canadian first-time home buyers can combine the First Home Savings Account (FHSA) with the RRSP Home Buyers' Plan for maximum down payment savings.",
-    lang: "en-CA",
-    heading: "Combining the FHSA and Home Buyers' Plan for Maximum Down Payment Power",
-    summary: "Explaining how couples can withdraw up to $75,000 tax-free under the Home Buyers' Plan and add cumulative FHSA tax-deductible savings for a first home down payment."
-  },
-  {
-    path: "/education/tfsa-vs-rrsp",
-    title: "TFSA vs RRSP: How to Choose Based on Your Income | Ahmed Bello",
-    description: "A clear comparison between the Tax-Free Savings Account (TFSA) and Registered Retirement Savings Plan (RRSP) for Canadian income earners.",
-    lang: "en-CA",
-    heading: "TFSA vs RRSP: How to Choose Based on Your Income and Tax Bracket",
-    summary: "Detailed analysis of marginal tax rates, retirement clawbacks on GIS/OAS, and when TFSA contributions provide greater flexibility than RRSP deductions."
-  },
-  {
-    path: "/education/term-vs-permanent-life-insurance",
-    title: "Term vs Permanent Life Insurance: How to Choose | Ahmed Bello",
-    description: "Term insurance covers temporary liabilities like mortgages. Permanent insurance covers lifelong capital gains taxes and estate liquidity. How to choose.",
-    lang: "en-CA",
-    heading: "Term vs Permanent Life Insurance: How to Choose in Canada",
-    summary: "Comparing premium structures, conversion options, and underwriting criteria to protect family income versus creating tax-sheltered estate transfer."
-  },
-  {
-    path: "/insights/canadian-capital-gains-deemed-disposition-estate-trap",
-    title: "Capital Gains & Deemed Disposition at Death Guide | Ahmed Bello",
-    description: "Canada has no formal inheritance tax, but the CRA’s statutory 'deemed disposition at death' triggers capital gains tax on cottages and rental property. How the 50% rule works.",
-    lang: "en-CA",
-    heading: "Capital Gains & Deemed Disposition at Death: Navigating Canada's Silent Estate Tax",
-    summary: "Explaining Subsection 70(5) of the Income Tax Act, why the proposed 66.7% rate was cancelled, how the statutory 50% inclusion rate works, and case study numbers on cottage estate liquidity."
-  },
-  {
-    path: "/insights/canadian-mortgage-renewal-shock-liquidity-trap",
-    title: "Canadian Mortgage Renewal Shock & Liquidity Guide | Ahmed Bello",
-    description: "How Canadian homeowners face sharp mortgage payment renewals, the stress test impact, and how to restructure household liquidity before signing.",
-    lang: "en-CA",
-    heading: "Mortgage Renewal Shock: How Rate Moves Impact Your Household Budget",
-    summary: "Strategies for managing variable-to-fixed renewals, evaluating amortization adjustments, and preserving liquid emergency reserves."
-  },
-
-  // French Routes
+  // French Core Routes
   {
     path: "/fr",
     title: "Ahmed Bello | Éducation Financière pour Canadiens",
     description: "Éducation financière en langage clair sur les régimes enregistrés (CELI, REER, CELIAPP), l'assurance vie et les décisions budgétaires avec Ahmed Bello.",
     lang: "fr-CA",
-    heading: "Ahmed Bello — Professionnel en Solutions Financières",
-    summary: "Éducation financière accessible et indépendante au Canada : régimes enregistrés, protection du revenu familial, remboursement des dettes et investissement réfléchi."
+    heading: "Ahmed Bello — Professionnel en Solutions Financières Agréé",
+    summary: "Éducation financière accessible et indépendante au Canada : régimes enregistrés, protection du revenu familial, remboursement des dettes et investissement réfléchi.",
   },
   {
     path: "/fr/about",
@@ -186,7 +169,7 @@ const routes = [
     description: "Éducateur financier indépendant aidant les familles et particuliers au Canada à comprendre les régimes enregistrés (CELI, REER) et la prévoyance.",
     lang: "fr-CA",
     heading: "À Propos d'Ahmed Bello — Éducateur Financier",
-    summary: "Pratique financière indépendante axée sur l'éducation et la transparence, agréée dans toutes les provinces canadiennes."
+    summary: "Pratique financière indépendante axée sur l'éducation et la transparence, agréée dans toutes les provinces canadiennes.",
   },
   {
     path: "/fr/contact",
@@ -194,7 +177,7 @@ const routes = [
     description: "Échangez directement avec Ahmed Bello, professionnel agréé en solutions financières. Posez vos questions sans pression commerciale.",
     lang: "fr-CA",
     heading: "Démarrer une Conversation avec Ahmed Bello",
-    summary: "Posez vos questions sur les régimes enregistrés, la protection de votre revenu ou vos démarches financières au Canada en toute confidentialité."
+    summary: "Posez vos questions sur les régimes enregistrés, la protection de votre revenu ou vos démarches financières au Canada en toute confidentialité.",
   },
   {
     path: "/fr/education",
@@ -202,15 +185,23 @@ const routes = [
     description: "Guides pratiques et outils sur les comptes enregistrés (CELI, REER, CELIAPP), l'assurance vie, le crédit et les finances pour nouveaux arrivants.",
     lang: "fr-CA",
     heading: "Bibliothèque d'Éducation Financière pour Canadiens",
-    summary: "Consultez nos guides détaillés sur le CELI, le REER, le CELIAPP, le crédit canadien et les étapes financières des nouveaux arrivants."
+    summary: "Consultez nos guides détaillés sur le CELI, le REER, le CELIAPP, le crédit canadien et les étapes financières des nouveaux arrivants.",
+  },
+  {
+    path: "/fr/insights",
+    title: "Perspectives Financières & Analyses Stratégiques | Ahmed Bello",
+    description: "Essais analytiques approfondis sur le renouvellement hypothécaire canadien, les gains en capital et la disposition présumée au décès.",
+    lang: "fr-CA",
+    heading: "Perspectives Financières & Analyses Stratégiques",
+    summary: "Analyses complètes sur les renouvellements hypothécaires, la disposition présumée en vertu du paragraphe 70(5) de la Loi de l'impôt sur le revenu et la trésorerie familiale.",
   },
   {
     path: "/fr/news",
-    title: "Veille Économique & Décisions Monétaires | Ahmed Bello",
-    description: "Surveillance en temps réel des taux de la Banque du Canada, de la Réserve Fédérale, de l'inflation et des règles fiscales de l'ARC.",
+    title: "Veille Économique Officielle & Décisions Monétaires | Ahmed Bello",
+    description: "Surveillance officielle des taux de la Banque du Canada, de la Réserve Fédérale, de l'inflation de Statistique Canada et des avis de l'ARC.",
     lang: "fr-CA",
     heading: "Bureau d'Actualités Financières & Décisions Monétaires",
-    summary: "Suivi en direct des décisions de taux de la Banque du Canada, des annonces de l'Agence du Revenu du Canada et de l'indice des prix à la consommation."
+    summary: "Dépêches officielles issues des autorités de réglementation monétaire et fiscale avec liens directs vers les sources originales.",
   },
   {
     path: "/fr/careers",
@@ -218,7 +209,7 @@ const routes = [
     description: "Accompagnement éducatif et préparation aux examens provinciaux du PQAP pour bâtir un cabinet de solutions financières au Canada.",
     lang: "fr-CA",
     heading: "Mentorat en Solutions Financières Indépendantes",
-    summary: "Découvrez notre programme d'accompagnement gratuit pour la préparation aux examens du PQAP et le développement d'une pratique financière indépendante."
+    summary: "Découvrez notre programme d'accompagnement pour la préparation aux examens du PQAP et le développement d'une pratique financière indépendante.",
   },
   {
     path: "/fr/how-i-help",
@@ -226,31 +217,39 @@ const routes = [
     description: "L'approche d'Ahmed Bello : priorisation des objectifs, régimes enregistrés, protection du revenu familial et stratégies de dette.",
     lang: "fr-CA",
     heading: "Comment J'Accompagne Vos Décisions Financières",
-    summary: "Un cadre méthodique pour organiser vos finances personnelles, protéger votre foyer et optimiser vos régimes fiscaux canadiens."
+    summary: "Un cadre méthodique pour organiser vos finances personnelles, protéger votre foyer et optimiser vos régimes fiscaux canadiens.",
+  },
+  {
+    path: "/fr/investing/islamic-equity",
+    title: "Investissement en Actions Islamiques & Cadre Éducatif Canadien | Ahmed Bello",
+    description: "Guide éducatif sur l'investissement en actions mondiales conformes à la charia selon les normes de l'AAOIFI. Réplication d'indices (MSCI ACWI Islamic) et comptes enregistrés canadiens (CELI, REER, CELIAPP).",
+    lang: "fr-CA",
+    heading: "Investissement en Actions Islamiques au Canada : Cadre Éducatif",
+    summary: "Comprendre les principes de filtrage éthique islamique, la réplication indicielle et les régimes enregistrés canadiens sans démarche commerciale.",
   },
   {
     path: "/fr/for/healthcare",
-    title: "Planification Financière Professionnels de Santé | Ahmed Bello",
-    description: "Orientation financière pour médecins, infirmières et diplômés internationaux en santé au Canada.",
+    title: "Planification Financière Professionnels de Santé & Médecins | Ahmed Bello",
+    description: "Orientation financière pour médecins, infirmières et diplômés internationaux en santé au Canada : équivalences, fiscalité et subsistance.",
     lang: "fr-CA",
     heading: "Planification Financière pour Professionnels de la Santé",
-    summary: "Stratégies pour médecins incorporés, infirmières autorisées et professionnels formés à l'étranger : équivalences, fiscalité et protection du revenu."
+    summary: "Stratégies pour médecins incorporés, infirmières autorisées et professionnels formés à l'étranger : équivalences, fiscalité et protection du revenu.",
   },
   {
     path: "/fr/for/business-owners",
-    title: "Stratégie Financière pour Chefs d'Entreprise | Ahmed Bello",
-    description: "Conseils pour Sociétés Privées sous Contrôle Canadien (SPCC), surplus accumulés et fiscalité corporative.",
+    title: "Stratégie Financière pour Chefs d'Entreprise & SPCC | Ahmed Bello",
+    description: "Conseils pour Sociétés Privées sous Contrôle Canadien (SPCC), surplus accumulés, plafond de 50 000 $ de revenus passifs et compte de dividendes en capital (CDC).",
     lang: "fr-CA",
     heading: "Stratégie Financière pour Propriétaires d'Entreprise",
-    summary: "Gestion des sociétés de gestion, seuils de revenus passifs, compte de dividendes en capital (CDC) et relève d'entreprise."
+    summary: "Gestion des sociétés de gestion, seuils de revenus passifs, compte de dividendes en capital (CDC) et relève d'entreprise.",
   },
   {
     path: "/fr/for/families",
     title: "Guide Financier pour Familles Canadiennes | Ahmed Bello",
-    description: "Planification pour familles : épargne-études REEE, protection du revenu, renouvellement hypothécaire et succession.",
+    description: "Planification pour familles : épargne-études REEE, subvention SCEE de 20 %, protection du revenu, renouvellement hypothécaire et succession.",
     lang: "fr-CA",
     heading: "Décisions Financières pour les Familles au Canada",
-    summary: "Maximisation de la Subvention canadienne pour l'épargne-études (SCEE), assurance temporaire et équilibre entre hypothèque et retraite."
+    summary: "Maximisation de la Subvention canadienne pour l'épargne-études (SCEE), assurance temporaire et équilibre entre hypothèque et retraite.",
   },
   {
     path: "/fr/for/newcomers",
@@ -258,54 +257,77 @@ const routes = [
     description: "Liste de contrôle première année pour résidents permanents et permis de travail : crédit canadien, NAS et CELIAPP.",
     lang: "fr-CA",
     heading: "Feuille de Route Financière pour Nouveaux Arrivants",
-    summary: "Guide pas à pas pour bâtir un dossier de crédit solide, ouvrir des comptes enregistrés libres d'impôt et comprendre la résidence fiscale."
+    summary: "Guide pas à pas pour bâtir un dossier de crédit solide, ouvrir des comptes enregistrés libres d'impôt et comprendre la résidence fiscale.",
   },
   {
-    path: "/fr/investing/islamic-equity",
-    title: "Indice Actions Islamiques ACWI BlackRock & Investissement Halal | Ahmed Bello",
-    description: "Fonds indiciel actions islamiques ACWI (BlackRock) chez iA Groupe financier. Filtrage rigoureux AAOIFI, 100 % conforme à la charia pour CELI, REER, CELIAPP et sociétés au Canada.",
+    path: "/fr/disclosures",
+    title: "Divulgations Réglementaires & Portée Professionnelle | Ahmed Bello",
+    description: "Divulgations provinciales relatives aux permis d'exercice, portée des mandats éducatifs, modèles de rémunération et transparence réglementaire.",
     lang: "fr-CA",
-    heading: "Indice Actions Islamiques ACWI (BlackRock) & Investissement Halal",
-    summary: "Réplication de l'indice MSCI ACWI Islamic sous la sous-gestion de BlackRock selon les normes AAOIFI. Intégré aux abris fiscaux canadiens : CELI, REER, CELIAPP, REEE et SPCC."
+    heading: "Divulgations Réglementaires & Portée Professionnelle",
+    summary: "Divulgations complètes relatives aux permis d'assurance de personnes dans les provinces et territoires canadiens et limites du mandat éducatif.",
   },
   {
-    path: "/legal/disclosures",
-    title: "Regulatory Disclosures & Licensing Information | Ahmed Bello",
-    description: "Canadian provincial insurance licensing disclosures, regulatory oversight, and independent brokerage affiliations for Ahmed Bello.",
-    lang: "en-CA",
-    heading: "Regulatory Disclosures & Licensing Information",
-    summary: "Full disclosure of provincial financial licensing, regulatory adherence across Canadian provinces and territories, and product provider relationships."
+    path: "/fr/standards",
+    title: "Normes Éditoriales & Sources Officielles | Ahmed Bello",
+    description: "Processus rigoureux de recherche, de validation auprès des organismes gouvernementaux canadiens et de mise à jour de nos guides financiers.",
+    lang: "fr-CA",
+    heading: "Normes Éditoriales & Vérification des Faits",
+    summary: "Notre engagement envers la rigueur analytique, les sources officielles de l'ARC et des banques centrales, et la neutralité pédagogique.",
   },
   {
-    path: "/legal/privacy",
-    title: "Privacy Policy & Personal Data Protection | Ahmed Bello",
-    description: "PIPEDA-compliant privacy policy detailing how client personal information is collected, safeguarded, and handled with confidentiality.",
-    lang: "en-CA",
-    heading: "Privacy Policy & Data Protection",
-    summary: "Commitment to Canadian federal and provincial privacy legislation (PIPEDA). No data selling, no third-party tracking, and encrypted transmissions."
+    path: "/fr/privacy",
+    title: "Avis de Confidentialité & Protection des Données | Ahmed Bello",
+    description: "Traitement, sécurisation et confidentialité des renseignements personnels sous la législation canadienne LPRPDE et LCAP.",
+    lang: "fr-CA",
+    heading: "Avis de Confidentialité & Protection des Renseignements Personnels",
+    summary: "Politique de confidentialité conforme à la LPRPDE encadrant la collecte, l'utilisation et la protection des renseignements personnels.",
   },
   {
-    path: "/legal/standards",
-    title: "Professional Standards & Fiduciary Principles | Ahmed Bello",
-    description: "Our core professional code: objective client education, conflict-of-interest transparency, and suitability across all recommendations.",
-    lang: "en-CA",
-    heading: "Professional Standards & Conduct",
-    summary: "Guiding principles of education-first practice, transparent compensation disclosures, and rigorous statutory suitability reviews."
+    path: "/fr/terms",
+    title: "Conditions d'Utilisation du Site Web | Ahmed Bello",
+    description: "Règles, propriété intellectuelle, droits d'auteur et avis de non-responsabilité applicables à l'utilisation de cette ressource éducative canadienne.",
+    lang: "fr-CA",
+    heading: "Conditions d'Utilisation du Site Web",
+    summary: "Conditions juridiques régissant l'accès et l'utilisation de la plateforme d'éducation financière.",
   },
-  {
-    path: "/legal/terms",
-    title: "Terms of Website Use & Legal Notice | Ahmed Bello",
-    description: "Terms and conditions governing the educational materials, financial calculators, and content published on ahmedbello.com.",
-    lang: "en-CA",
-    heading: "Terms of Use & Legal Notices",
-    summary: "Clear legal boundaries: website materials are provided for general educational purposes and do not constitute individual legal, accounting, or tax advice."
-  }
 ];
+
+// DYNAMICALLY GENERATE ROUTES FOR EVERY ARTICLE (Doctors & Nurses, Capital Gains, TFSA, FHSA, etc.)
+const dynamicArticleRoutes = [];
+
+for (const art of articles) {
+  const enUrl = art.url; // e.g. "/education/internationally-trained-doctors-nurses-first-year"
+  const titleCandidate = `${art.seoTitle || art.title} | Ahmed Bello`;
+  const enTitle = titleCandidate.length > 65 ? `${titleCandidate.slice(0, 62)}...` : titleCandidate;
+
+  // English Article Route
+  dynamicArticleRoutes.push({
+    path: enUrl,
+    title: enTitle,
+    description: art.description,
+    lang: "en-CA",
+    heading: art.title,
+    summary: art.description,
+  });
+
+  // French Article Route
+  dynamicArticleRoutes.push({
+    path: `/fr${enUrl}`,
+    title: `${art.seoTitle || art.title} | Ahmed Bello`,
+    description: art.description,
+    lang: "fr-CA",
+    heading: art.title,
+    summary: art.description,
+  });
+}
+
+const allRoutes = [...coreRoutes, ...dynamicArticleRoutes];
 
 const siteUrl = "https://www.ahmedbello.com";
 
 let count = 0;
-for (const r of routes) {
+for (const r of allRoutes) {
   const isFrench = r.path.startsWith("/fr");
   const enPath = isFrench ? r.path.replace(/^\/fr(\/|$)/, "$1") || "/" : r.path;
   const frPath = isFrench ? r.path : (r.path === "/" ? "/fr" : `/fr${r.path}`);
@@ -314,7 +336,6 @@ for (const r of routes) {
   const enUrl = `${siteUrl}${enPath === "/" ? "" : enPath}`;
   const frUrl = `${siteUrl}${frPath}`;
 
-  // Semantic fallback HTML inserted inside <div id="root">
   const semanticBody = `
     <div style="max-width:800px;margin:2rem auto;padding:1.5rem;font-family:Georgia,serif;color:#1c1b18;line-height:1.6;">
       <header style="border-bottom:1px solid #d6cebd;padding-bottom:1rem;margin-bottom:1.5rem;">
@@ -349,7 +370,7 @@ for (const r of routes) {
     `<meta name="description" content="${r.description}" />`
   );
 
-  // Replace Canonical Link
+  // Replace Canonical Link & Alternates
   html = html.replace(
     /<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/?>/i,
     `<link rel="canonical" href="${canonicalUrl}" />\n    <link rel="alternate" hreflang="en-CA" href="${enUrl}" />\n    <link rel="alternate" hreflang="fr-CA" href="${frUrl}" />\n    <link rel="alternate" hreflang="x-default" href="${enUrl}" />`
@@ -394,4 +415,26 @@ for (const r of routes) {
   count++;
 }
 
-console.log(`[Static Pre-rendering Complete] Generated ${count} pre-rendered HTML routes for Vercel & CDNs.`);
+// -----------------------------------------------------------------------------
+// PRE-RENDER DEDICATED 404.HTML FOR VERCEL & STATIC CDNs
+// -----------------------------------------------------------------------------
+const notFoundHtml = template
+  .replace(/<title>[\s\S]*?<\/title>/i, `<title>Page Not Found (404) | Ahmed Bello</title>`)
+  .replace(
+    /<meta\s+name="description"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta name="description" content="The page you requested could not be found. Explore Canadian financial education guides or return to the homepage." />\n    <meta name="robots" content="noindex, follow" />`
+  )
+  .replace(
+    '<div id="root"></div>',
+    `<div id="root">
+      <main style="max-width:700px;margin:4rem auto;padding:2rem;font-family:Georgia,serif;text-align:center;color:#1c1b18;">
+        <h1 style="font-size:2.5rem;margin-bottom:1rem;">Page Not Found (404)</h1>
+        <p style="font-size:1.1rem;color:#46423a;margin-bottom:2rem;">The page you requested does not exist or may have moved.</p>
+        <p><a href="/" style="color:#2e4a3b;text-decoration:underline;font-weight:600;">Return to Ahmed Bello Financial Education &rarr;</a></p>
+      </main>
+    </div>`
+  );
+
+fs.writeFileSync(path.join(distDir, "404.html"), notFoundHtml, "utf-8");
+
+console.log(`[Static Pre-rendering Complete] Generated ${count} pre-rendered HTML routes and 404.html for Vercel & CDNs.`);

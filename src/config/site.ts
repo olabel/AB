@@ -39,5 +39,5 @@ export const siteConfig = {
   schedulingUrl: "https://calendly.com/olabel/30min",
   socialLinks: null as Record<string, string> | null,
   newsletterWebhookUrl: null as string | null,
-  defaultFromEmail: "Ahmed Bello <onboarding@resend.dev>",
+  defaultFromEmail: "Ahmed Bello <enquiries@ahmedbello.com>",
 };

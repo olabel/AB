@@ -198,8 +198,8 @@ export default async function handler(req: any, res: any) {
 
   // Environment variables from Vercel Project Settings
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "olabel@gmail.com, abello24trdc@wfgmail.ca";
-  const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || "Ahmed Bello <onboarding@resend.dev>";
+  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "enquiries@ahmedbello.com";
+  const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || "Ahmed Bello <enquiries@ahmedbello.com>";
 
   if (!RESEND_API_KEY) {
     return res.status(503).json({
@@ -242,7 +242,7 @@ Origin: https://ahmedbello.com
     .map((e) => e.trim())
     .filter((e) => e.includes("@"));
 
-  const primaryRecipient = rawRecipients[0] || "olabel@gmail.com";
+  const primaryRecipient = rawRecipients[0] || "enquiries@ahmedbello.com";
 
   try {
     let resendResponse = await fetch("https://api.resend.com/emails", {

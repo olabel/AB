@@ -573,12 +573,12 @@ export const HomePage: React.FC = () => {
                 </h3>
                 <p className="text-xs text-[#ece6da]/80 mt-2 leading-relaxed">
                   {language === "fr"
-                    ? "Indice mondial MSCI ACWI Islamic (BlackRock & iA). 100% conforme Shari'ah dans CELI, REER et CELIAPP."
-                    : "MSCI ACWI Islamic Index (BlackRock & iA). 100% Shari'ah-compliant inside TFSA, RRSP & FHSA."}
+                    ? "Indices mondiaux d'actions conformes à la charia (normes AAOIFI). Épargne éthique dans vos comptes CELI, REER et CELIAPP."
+                    : "Shari'ah-compliant global equity indices under AAOIFI screening. Ethical investing inside TFSA, RRSP & FHSA."}
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#d6c298] pt-4 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                {language === "fr" ? "Campagne Halal →" : "Explore Campaign →"}
+                {language === "fr" ? "Cadre Éducatif →" : "Educational Guide →"}
               </span>
             </Link>
 

@@ -13,7 +13,7 @@ export interface NewsItem {
 export const FALLBACK_NEWS: NewsItem[] = [
   {
     id: "boc-policy-rate-decision",
-    title: "Bank of Canada Reduces Policy Interest Rate to 3.75% to Support Economic Growth",
+    title: "Bank of Canada Sets Overnight Rate Target at 2.50% in Monetary Policy Announcement",
     link: "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/",
     pubDate: "2026-10-28T14:00:00Z",
     source: "Bank of Canada",
@@ -22,7 +22,7 @@ export const FALLBACK_NEWS: NewsItem[] = [
   },
   {
     id: "fed-fomc-policy-statement",
-    title: "Federal Reserve Adjusts Target Federal Funds Rate Range to 4.50% – 4.75%",
+    title: "Federal Reserve Maintains Target Federal Funds Rate Range at 3.75% – 4.00%",
     link: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
     pubDate: "2026-10-27T18:00:00Z",
     source: "Federal Reserve",

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { siteConfig } from "../config/site.ts";
+import { IslamicIndexPerformanceChart } from "../components/IslamicIndexPerformanceChart.tsx";
 import {
   ShieldCheck,
   TrendingUp,
@@ -22,16 +23,19 @@ import {
   Calendar,
   Sparkles,
   ExternalLink,
+  Percent,
 } from "lucide-react";
 
 export const IslamicInvestingPage: React.FC = () => {
   const { isFr } = useLanguage();
 
-  // Interactive Simulator State
+  // Balanced Multi-Scenario Simulator State
   const [initialCapital, setInitialCapital] = useState<number>(25000);
   const [monthlyContribution, setMonthlyContribution] = useState<number>(500);
   const [years, setYears] = useState<number>(10);
-  const [expectedReturn, setExpectedReturn] = useState<number>(7); // 7% annualized nominal
+  const [cashInterestRate, setCashInterestRate] = useState<number>(2.0); // 2.0% high-yield cash return
+  const [equityScenario, setEquityScenario] = useState<"conservative" | "balanced" | "dynamic">("balanced");
+  const [estimatedFeeDrag, setEstimatedFeeDrag] = useState<number>(1.5); // 1.5% MER / management expense
 
   // Lead Form State
   const [formData, setFormData] = useState({
@@ -47,25 +51,36 @@ export const IslamicInvestingPage: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Financial Projections Calculation
-  const inflationRate = 0.025; // 2.5% annual inflation
+  // Financial Calculations
+  const inflationRate = 0.025; // 2.5% central bank target inflation
   const months = years * 12;
-  const monthlyRate = Math.pow(1 + expectedReturn / 100, 1 / 12) - 1;
 
-  // 1. Nominal Compound Growth in Halal Equity Index
+  // Gross equity rates by scenario
+  const grossReturn =
+    equityScenario === "conservative" ? 4.5 : equityScenario === "balanced" ? 6.5 : 8.5;
+  const netEquityReturn = Math.max(0.5, grossReturn - estimatedFeeDrag);
+
+  // Compound Growth in Net Equity Strategy
+  const monthlyEquityRate = Math.pow(1 + netEquityReturn / 100, 1 / 12) - 1;
   let equityNominal = initialCapital;
   for (let m = 0; m < months; m++) {
-    equityNominal = equityNominal * (1 + monthlyRate) + monthlyContribution;
+    equityNominal = equityNominal * (1 + monthlyEquityRate) + monthlyContribution;
   }
 
-  // 2. Total Cash Deposited
+  // Compound Growth in Cash / High-Interest Savings Account
+  const monthlyCashRate = Math.pow(1 + cashInterestRate / 100, 1 / 12) - 1;
+  let cashNominal = initialCapital;
+  for (let m = 0; m < months; m++) {
+    cashNominal = cashNominal * (1 + monthlyCashRate) + monthlyContribution;
+  }
+
+  // Total Capital Out of Pocket
   const totalPrincipal = initialCapital + monthlyContribution * months;
 
-  // 3. Cash in 0% Chequing account after inflation (real purchasing power)
-  // Each monthly contribution also decays based on when it was added
+  // Real purchasing power after inflation (2.5%)
   const discountFactor = Math.pow(1 + inflationRate, years);
-  const cashRealValue = totalPrincipal / discountFactor;
-  const purchasingPowerLoss = totalPrincipal - cashRealValue;
+  const cashRealValue = cashNominal / discountFactor;
+  const equityRealValue = equityNominal / discountFactor;
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -74,7 +89,6 @@ export const IslamicInvestingPage: React.FC = () => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate submission / logging lead
     setTimeout(() => {
       setIsSubmitting(false);
       setFormSubmitted(true);
@@ -86,25 +100,24 @@ export const IslamicInvestingPage: React.FC = () => {
       <SEO
         title={
           isFr
-            ? "Investissement Islamique & Indice Actions ACWI BlackRock | Ahmed Bello"
-            : "Islamic Investing & Halal Global Equity Index (BlackRock) | Ahmed Bello"
+            ? "Investissement en Actions Islamiques & Cadre Éducatif Canadien | Ahmed Bello"
+            : "Shari'ah-Compliant Global Equity Index Investing | Canadian Educational Framework"
         }
         description={
           isFr
-            ? "Fonds indiciel actions islamiques ACWI (BlackRock) chez iA Groupe financier. Filtrage rigoureux AAOIFI, 100 % conforme à la charia pour CELI, REER, CELIAPP, REEE et sociétés privées au Canada."
-            : "Islamic Equity Index ACWI (BlackRock) through iA Financial Group. 100% Shari'ah-compliant global equity investing under AAOIFI standards. Available for TFSA, RRSP, FHSA, RESP, and Corporate holding accounts in Canada."
+            ? "Cadre éducatif objectif sur l'investissement en actions islamiques selon les normes AAOIFI. Réplication d'indices (MSCI ACWI Islamic) et intégration dans les régimes enregistrés canadiens (CELI, REER, CELIAPP, REEE)."
+            : "Objective educational guide on Shari'ah-compliant global equity index investing under AAOIFI standards. Benchmark tracking (MSCI ACWI Islamic Index) and Canadian registered accounts (TFSA, RRSP, FHSA, RESP, Corporate)."
         }
         canonicalUrl={isFr ? "/fr/investing/islamic-equity" : "/investing/islamic-equity"}
         keywords={[
-          "Islamic investing Canada",
-          "Halal investment funds Canada",
-          "Islamic Equity Index ACWI BlackRock",
-          "iA Financial Group Islamic Fund",
-          "Halal TFSA RRSP Canada",
           "Shariah compliant investing Canada",
-          "Halal stock index BlackRock",
+          "Islamic equity index Canada",
+          "Halal investing TFSA RRSP",
+          "AAOIFI screening standards Canada",
+          "MSCI ACWI Islamic Index",
+          "Halal financial planning Canada",
           "Investissement islamique Canada",
-          "Fonds halal CELI REER",
+          "Actions halal CELI REER",
         ]}
       />
 
@@ -115,8 +128,8 @@ export const IslamicInvestingPage: React.FC = () => {
             <ShieldCheck className="w-4 h-4 text-[#2e4a3b]" />
             <span>
               {isFr
-                ? "Fonds Garanti Indice Actions Islamiques ACWI (BlackRock)"
-                : "Islamic Equity Index ACWI (BlackRock) Segregated Fund"}
+                ? "Cadre Éducatif d'Investissement Indépendant"
+                : "Independent Financial Education Framework"}
             </span>
           </div>
 
@@ -125,66 +138,66 @@ export const IslamicInvestingPage: React.FC = () => {
             style={{ fontFamily: "var(--font-serif)" }}
           >
             {isFr
-              ? "Bâtir votre patrimoine sans compromis. Actions mondiales 100 % conformes à la charia au Canada."
-              : "Grow Your Wealth With Absolute Conviction. 100% Halal Global Equities for Canadian Families & Businesses."}
+              ? "Investissement en Actions Islamiques au Canada : Comprendre les Règles, Indices & Abris Fiscaux."
+              : "Shari'ah-Compliant Global Equity Index Investing in Canada: Principles, Benchmarks & Tax Shelters."}
           </h1>
 
           <p className="text-lg sm:text-xl text-[#46423a] max-w-3xl leading-relaxed mb-8 font-serif">
             {isFr
-              ? "Replicant l'indice MSCI ACWI Islamic sous la sous-gestion de BlackRock et administré par iA Groupe financier. Un filtrage financier et sectoriel rigoureux certifié AAOIFI, accessible directement dans vos comptes canadiens enregistrés : CELI, REER, CELIAPP, REEE et sociétés de gestion."
-              : "Replicating the MSCI ACWI Islamic Index under the sub-advisorship of BlackRock Asset Management, offered through iA Financial Group. Rigorously screened under AAOIFI standards and fully integrated into Canadian tax shelters: TFSA, RRSP, FHSA, RESP, and Corporate Holding Companies."}
+              ? "Une analyse pédagogique et indépendante de l'investissement conforme à la charia selon les normes internationales de l'AAOIFI. Découvrez le fonctionnement des indices mondiaux de référence (comme le MSCI ACWI Islamic), les règles de filtrage de bilan et leur intégration dans vos comptes enregistrés canadiens."
+              : "An objective educational framework for Muslim Canadian families and business owners exploring Shari'ah-compliant global equity investing under international AAOIFI standards. Learn how benchmark index tracking works, how balance sheet purification applies, and how registered tax shelters connect."}
           </p>
 
-          {/* Institutional Trust Matrix */}
+          {/* Institutional Knowledge Matrix */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 mb-8">
             <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold block mb-1">
-                {isFr ? "Indice Sous-jacent" : "Underlying Index"}
+                {isFr ? "Indice de Référence" : "Benchmark Standard"}
               </span>
               <span className="font-serif text-base font-bold text-[#1c1b18] block">
                 MSCI ACWI Islamic
               </span>
-              <span className="text-[0.7rem] text-[#625d52]">All Country World Equities</span>
+              <span className="text-[0.7rem] text-[#625d52]">{isFr ? "Actions mondiales filtrées" : "Global Screened Equities"}</span>
             </div>
 
             <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold block mb-1">
-                {isFr ? "Sous-gestionnaire" : "Sub-Advisor"}
-              </span>
-              <span className="font-serif text-base font-bold text-[#1c1b18] block">
-                BlackRock
-              </span>
-              <span className="text-[0.7rem] text-[#625d52]">World's Leading Asset Manager</span>
-            </div>
-
-            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
-              <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold block mb-1">
-                {isFr ? "Norme de Conformité" : "Screening Standard"}
+                {isFr ? "Cadre de Gouvernance" : "Screening Standard"}
               </span>
               <span className="font-serif text-base font-bold text-[#1c1b18] block">
                 AAOIFI Standard
               </span>
-              <span className="text-[0.7rem] text-[#625d52]">Independent Shariah Board</span>
+              <span className="text-[0.7rem] text-[#625d52]">{isFr ? "Comité Sharia indépendant" : "Independent Shariah Board"}</span>
             </div>
 
             <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold block mb-1">
-                {isFr ? "Émetteur Institutionnel" : "Institutional Carrier"}
+                {isFr ? "Abris Fiscaux Canadiens" : "Eligible Tax Shelters"}
               </span>
               <span className="font-serif text-base font-bold text-[#1c1b18] block">
-                iA Financial Group
+                TFSA, RRSP, FHSA
               </span>
-              <span className="text-[0.7rem] text-[#625d52]">Est. 1892 &bull; TSX: IAG</span>
+              <span className="text-[0.7rem] text-[#625d52]">{isFr ? "REEE & Sociétés (SPCC)" : "RESP & Corporate CCPCs"}</span>
+            </div>
+
+            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
+              <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold block mb-1">
+                {isFr ? "Accès Indépendant" : "Access Facilitation"}
+              </span>
+              <span className="font-serif text-base font-bold text-[#1c1b18] block">
+                Multi-Carrier
+              </span>
+              <span className="text-[0.7rem] text-[#625d52]">{isFr ? "Institutions autorisées au Canada" : "Licensed Canadian Carriers"}</span>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
             <a
-              href="#lead-form"
-              className="px-6 py-3 bg-[#2e4a3b] hover:bg-[#253d30] text-[#f7f3eb] font-semibold text-sm rounded-xs transition-colors shadow-sm inline-flex items-center gap-2"
+              href="#performance-chart"
+              className="px-5 py-3 bg-[#2e4a3b] hover:bg-[#253d30] text-[#f7f3eb] font-semibold text-sm rounded-xs transition-colors shadow-xs inline-flex items-center gap-2"
             >
-              <span>{isFr ? "Planifier une session stratégique Halal" : "Request Halal Strategy Consultation"}</span>
-              <ArrowRight className="w-4 h-4 text-[#d6c298]" />
+              <TrendingUp className="w-4 h-4 text-[#d6c298]" />
+              <span>{isFr ? "Consulter l'Historique de l'Indice" : "Explore Benchmark Historical Trend"}</span>
             </a>
 
             <a
@@ -192,53 +205,74 @@ export const IslamicInvestingPage: React.FC = () => {
               className="px-5 py-3 bg-[#fcfaf5] hover:bg-[#ece6da] text-[#1c1b18] border border-[#d6cebd] font-medium text-sm rounded-xs transition-colors inline-flex items-center gap-2"
             >
               <Calculator className="w-4 h-4 text-[#2e4a3b]" />
-              <span>{isFr ? "Simulateur Croissance vs Inflation" : "Halal Wealth vs. Inflation Simulator"}</span>
+              <span>{isFr ? "Simulateur Comparatif Équilibré" : "Balanced Multi-Scenario Simulator"}</span>
             </a>
           </div>
         </section>
 
-        {/* 2. THE SILENT COST OF INACTION: CASH AT 0% */}
+        {/* 2. THE MATHEMATICAL REALITY OF IDLE CASH & INFLATION */}
         <section className="mb-16 p-6 sm:p-8 bg-[#1a2c22] text-[#f7f3eb] rounded-xs border border-[#2e4a3b] relative overflow-hidden">
           <div className="max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#d6c298]">
               <AlertTriangle className="w-4 h-4 text-[#d6c298]" />
-              <span>{isFr ? "Le Défi Majeur des Familles Musulmanes au Canada" : "The Core Dilemma for Canadian Muslim Investors"}</span>
+              <span>{isFr ? "Réalité Financière : L'Érosion par l'Inflation" : "Financial Reality: The Drag of Inflation on Liquid Assets"}</span>
             </div>
 
             <h2 className="font-serif text-2xl sm:text-3xl text-[#f7f3eb] leading-snug">
               {isFr
-                ? "Pourquoi laisser vos économies à 0 % dans un compte chèques détruit silencieusement votre pouvoir d'achat."
-                : "Leaving your savings in 0% chequing accounts silently destroys your family's purchasing power."}
+                ? "L'impact mathématique de l'inflation sur les liquidités stagnantes."
+                : "The mathematical impact of persistent inflation on idle liquidity."}
             </h2>
 
             <p className="text-sm sm:text-base text-[#ece6da]/90 leading-relaxed">
               {isFr
-                ? "Par souci scrupuleux d'éviter les intérêts (Riba) et les placements douteux, des millions de dollars appartenant à des familles et professionnels musulmans dorment sur des comptes sans intérêt. Mais avec une inflation annuelle de 2 % à 3 %, 100 000 $ en liquide perdent l'équivalent de plus de 26 000 $ de pouvoir d'achat sur une seule décennie. Vous n'avez pas besoin de choisir entre votre foi et la croissance de votre patrimoine."
-                : "Out of a rightful desire to avoid interest (Riba) and non-compliant investments, millions of dollars in Canadian Muslim households remain parked in zero-interest chequing accounts. However, with cumulative inflation running at 2%–3% annually, $100,000 sitting in cash loses over $26,000 of real purchasing power over a single decade. You do not have to choose between your Islamic principles and the financial future of your children."}
+                ? "Par souci légitime d'éviter les intérêts (Riba) et les instruments financiers non conformes, de nombreuses familles et professionnels musulmans conservent des sommes importantes sur des comptes chèques ou des comptes sans rendement. Cependant, à un taux d'inflation annuel moyen de 2 % à 3 %, un montant de 100 000 $ en liquidités perd entre 18 000 $ et 25 600 $ de pouvoir d'achat réel sur 10 ans (17 965 $ à 2,0 %, 21 880 $ à 2,5 % et 25 591 $ à 3,0 %). Comprendre les options d'investissement productif permet de préserver le patrimoine familial sans compromettre vos principes."
+                : "Out of a principled commitment to avoid conventional interest (Riba) and doubtful financial instruments, many Canadian Muslim families maintain substantial reserves in zero-return bank accounts. However, at a standard 2% to 3% annual inflation rate, $100,000 held in cash loses approximately $18,000 to $25,600 of purchasing power over a 10-year period ($17,965 at 2.0%, $21,880 at 2.5%, and $25,591 at 3.0%). Understanding productive equity participation provides a disciplined pathway to protect household purchasing power while maintaining adherence to Islamic commercial jurisprudence."}
             </p>
 
             <div className="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
               <div className="p-3 bg-[#24392e] rounded-xs border border-[#2e4a3b]">
-                <div className="text-[#d6c298] font-bold text-sm mb-0.5">0% Riba</div>
-                <div className="text-[#ece6da]/80">{isFr ? "Aucune obligation ou titre à intérêt" : "Zero interest-bearing bond exposure"}</div>
+                <div className="text-[#d6c298] font-bold text-sm mb-0.5">{isFr ? "Exclusion du Riba" : "Zero Interest Debt"}</div>
+                <div className="text-[#ece6da]/80">{isFr ? "Élimination des obligations et banques d'intérêt" : "Zero conventional debt or bond financing"}</div>
               </div>
               <div className="p-3 bg-[#24392e] rounded-xs border border-[#2e4a3b]">
-                <div className="text-[#d6c298] font-bold text-sm mb-0.5">100% Productif</div>
-                <div className="text-[#ece6da]/80">{isFr ? "Actions réelles d'entreprises mondiales" : "Real ownership in world-leading equities"}</div>
+                <div className="text-[#d6c298] font-bold text-sm mb-0.5">{isFr ? "Économie Réelle" : "Real Enterprise"}</div>
+                <div className="text-[#ece6da]/80">{isFr ? "Participation productive au capital d'entreprises" : "Direct ownership in productive global companies"}</div>
               </div>
               <div className="p-3 bg-[#24392e] rounded-xs border border-[#2e4a3b]">
-                <div className="text-[#d6c298] font-bold text-sm mb-0.5">100% Légal</div>
-                <div className="text-[#ece6da]/80">{isFr ? "Abris fiscaux canadiens enregistrés" : "Full Canadian registered tax protection"}</div>
+                <div className="text-[#d6c298] font-bold text-sm mb-0.5">{isFr ? "Transparence Pédagogique" : "Educational Clarity"}</div>
+                <div className="text-[#ece6da]/80">{isFr ? "Aucun produit exclusif ou vendeur captif" : "Independent multi-carrier education"}</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 3. TWO-TIER SHARI'AH SCREENING METHODOLOGY */}
+        {/* 3. D3 / RECHARTS HISTORICAL PERFORMANCE VISUALIZATION */}
+        <section id="performance-chart" className="mb-16">
+          <div className="mb-6">
+            <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
+              {isFr ? "Analyse Empirique & Transparence" : "Empirical Analysis & Transparency"}
+            </span>
+            <h2 className="font-serif text-2xl sm:text-4xl text-[#1c1b18] mb-2">
+              {isFr
+                ? "Performance Historique de l'Indice Mondial Islamique"
+                : "Historical Performance of the Global Islamic Equity Benchmark"}
+            </h2>
+            <p className="text-xs sm:text-sm text-[#46423a] max-w-3xl leading-relaxed">
+              {isFr
+                ? "L'indice de référence mondial MSCI ACWI Islamic est audité selon les règles de l'AAOIFI. Ce graphique présente son évolution sur plus d'une décennie face aux indices conventionnels, incluant les périodes de baisse comme 2018 et 2022."
+                : "The MSCI ACWI Islamic Index benchmark follows strict AAOIFI screening. This interactive chart displays over a decade of real market history compared with conventional benchmarks, transparently illustrating both expansion periods and market corrections."}
+            </p>
+          </div>
+
+          <IslamicIndexPerformanceChart isFr={isFr} />
+        </section>
+
+        {/* 4. TWO-TIER SHARI'AH SCREENING METHODOLOGY */}
         <section className="mb-16">
           <div className="mb-8">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
-              {isFr ? "Méthodologie Certifiée" : "Governing Methodology"}
+              {isFr ? "Méthodologie de Filtrage Certifiée" : "Certified Screening Framework"}
             </span>
             <h2 className="font-serif text-2xl sm:text-4xl text-[#1c1b18] mb-3">
               {isFr
@@ -247,8 +281,8 @@ export const IslamicInvestingPage: React.FC = () => {
             </h2>
             <p className="text-sm sm:text-base text-[#46423a] max-w-3xl leading-relaxed">
               {isFr
-                ? "L'indice actions islamiques ACWI (BlackRock) ne se contente pas d'exclure les secteurs interdits : il audite également la structure d'endettement et de trésorerie de chaque entreprise selon les normes internationales de l'AAOIFI."
-                : "The Islamic Equity Index ACWI (BlackRock) applies a rigorous two-step audit governed by MSCI's independent Shari'ah Supervisory Committee in accordance with international AAOIFI standards."}
+                ? "Les indices actions islamiques appliquent un double processus d'audit indépendant supervisé par des savants en jurisprudence financière selon les normes de l'AAOIFI :"
+                : "Islamic equity indices apply a rigorous two-step audit governed by independent Shari'ah boards in accordance with international AAOIFI standards:"}
             </p>
           </div>
 
@@ -266,8 +300,8 @@ export const IslamicInvestingPage: React.FC = () => {
 
               <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Toute entreprise dont l'activité principale ou une part substantielle des revenus provient de secteurs incompatibles avec l'éthique islamique est immédiatement exclue du portefeuille :"
-                  : "Any company deriving core revenue from sectors prohibited under Islamic commercial jurisprudence is strictly eliminated from the investable universe:"}
+                  ? "Toute entreprise dont l'activité principale ou une part substantielle des revenus provient de secteurs incompatibles avec l'éthique islamique est strictement exclue :"
+                  : "Any company deriving core revenue from sectors prohibited under Islamic commercial jurisprudence is strictly eliminated:"}
               </p>
 
               <ul className="space-y-2 text-xs text-[#1c1b18]">
@@ -293,7 +327,7 @@ export const IslamicInvestingPage: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#8d2b2b] font-bold">&times;</span>
-                  <span>{isFr ? "Armement conventionnel, armes à feu et armées privées" : "Weapons, firearms, and defense contractor defense armaments"}</span>
+                  <span>{isFr ? "Armement conventionnel, armes à feu et armées privées" : "Weapons, firearms, and defense contractor armaments"}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#8d2b2b] font-bold">&times;</span>
@@ -310,13 +344,13 @@ export const IslamicInvestingPage: React.FC = () => {
               </div>
 
               <h3 className="font-serif text-xl font-bold text-[#1c1b18]">
-                {isFr ? "Contrôle de la dette et des liquidités" : "AAOIFI Debt & Cash Ratio Thresholds"}
+                {isFr ? "Contrôle de l'endettement et de la trésorerie" : "AAOIFI Debt & Cash Ratio Thresholds"}
               </h3>
 
               <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Même une entreprise dans un secteur licite (ex. technologie, santé) doit respecter des limites comptables strictes pour éviter l'exposition excessive aux dettes et intérêts :"
-                  : "Even permissible businesses (e.g. software, medical devices, retail) must pass rigorous quantitative tests to ensure they do not carry excessive leverage or interest-bearing cash:"}
+                  ? "Même une entreprise dans un secteur licite (technologie, santé) doit respecter des limites comptables strictes pour éviter l'exposition excessive à la dette usuraire :"
+                  : "Even permissible businesses (e.g. software, medical devices, clean energy) must pass strict quantitative balance sheet audits:"}
               </p>
 
               <div className="space-y-3 pt-1">
@@ -326,17 +360,17 @@ export const IslamicInvestingPage: React.FC = () => {
                     <span className="text-[#2e4a3b] font-mono font-bold">&lt; 33.33%</span>
                   </div>
                   <p className="text-[0.72rem] text-[#625d52]">
-                    {isFr ? "Empêche les sociétés lourdement endettées dépendantes du crédit bancaire usuraire." : "Disqualifies highly leveraged companies dependent on conventional interest financing."}
+                    {isFr ? "Exclut les sociétés lourdement endettées dépendantes du crédit bancaire rémunéré par l'intérêt." : "Disqualifies highly leveraged companies dependent on conventional interest financing."}
                   </p>
                 </div>
 
                 <div className="p-3 bg-white border border-[#d6cebd] rounded-xs">
                   <div className="flex items-center justify-between text-xs font-semibold text-[#1c1b18] mb-1">
-                    <span>{isFr ? "Liquidités & Titres rémunérés / Actif" : "Cash & Interest Securities / Assets"}</span>
+                    <span>{isFr ? "Liquidités & Titres à intérêt / Actif" : "Cash & Interest Securities / Assets"}</span>
                     <span className="text-[#2e4a3b] font-mono font-bold">&lt; 33.33%</span>
                   </div>
                   <p className="text-[0.72rem] text-[#625d52]">
-                    {isFr ? "Empêche les sociétés qui accumulent des revenus d'intérêts sur d'énormes dépôts bancaires." : "Prevents holding companies that generate passive interest income on treasury deposits."}
+                    {isFr ? "Empêche les sociétés de générer d'importants revenus passifs d'intérêts sur leurs dépôts de trésorerie." : "Prevents companies from accumulating passive interest income on treasury deposits."}
                   </p>
                 </div>
 
@@ -346,7 +380,7 @@ export const IslamicInvestingPage: React.FC = () => {
                     <span className="text-[#2e4a3b] font-mono font-bold">&lt; 5.0%</span>
                   </div>
                   <p className="text-[0.72rem] text-[#625d52]">
-                    {isFr ? "Obligation de purification (don aux œuvres caritatives) sur toute fraction marginale." : "Must be purified annually via charitable donation according to published MSCI ratios."}
+                    {isFr ? "Obligation de purification trimestrielle (don à des organismes de bienfaisance canadiens) selon les ratios officiels publiés." : "Must be purified quarterly via charitable donations according to published index purification factors."}
                   </p>
                 </div>
               </div>
@@ -354,21 +388,21 @@ export const IslamicInvestingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* 4. CANADIAN REGISTERED TAX SHELTERS */}
+        {/* 5. CANADIAN REGISTERED TAX SHELTERS - NUANCED & PRECISE */}
         <section className="mb-16">
           <div className="mb-8">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
-              {isFr ? "Optimisation Fiscale Canadienne" : "Canadian Tax Integration"}
+              {isFr ? "Optimisation Fiscale Canadienne" : "Canadian Registered Accounts"}
             </span>
             <h2 className="font-serif text-2xl sm:text-4xl text-[#1c1b18] mb-3">
               {isFr
-                ? "Détenez vos actions islamiques dans vos abris fiscaux officiels"
-                : "Eligible Across All Major Canadian Tax-Sheltered Accounts"}
+                ? "Détenir des actions islamiques dans les abris fiscaux enregistrés de l'ARC"
+                : "Holding Shari'ah Global Equities Inside Canadian Registered Accounts"}
             </h2>
             <p className="text-sm sm:text-base text-[#46423a] max-w-3xl leading-relaxed">
               {isFr
-                ? "L'indice actions islamiques ACWI (BlackRock) s'intègre harmonieusement dans vos régimes enregistrés pour éliminer ou reporter légalement l'impôt canadien :"
-                : "The Islamic Equity Index ACWI (BlackRock) fund contract qualifies for every registered plan under the Canadian Income Tax Act, compounding tax-free or tax-deferred:"}
+                ? "L'investissement indiciel conforme à la charia est admissible aux comptes enregistrés au Canada. Voici les règles précises et les nuances fiscales applicables :"
+                : "Shari'ah-screened index investments can be held within standard Canadian registered accounts. Key statutory rules and tax considerations include:"}
             </p>
           </div>
 
@@ -380,8 +414,8 @@ export const IslamicInvestingPage: React.FC = () => {
               </div>
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Croissance 100 % libre d'impôt et retraits non imposables en tout temps. Tout gain en capital généré par les actions mondiales vous revient intégralement."
-                  : "100% tax-free growth and tax-free withdrawals at any time. Capital gains on Shari'ah global equities are completely shielded from Canadian taxation."}
+                  ? "Les gains en capital et retraits sont totalement exemptés de l'impôt canadien. Note : une retenue à la source étrangère (ex. 15 % sur les dividendes d'actions internationales) peut s'appliquer sans donner droit à un crédit pour impôt étranger dans un CELI."
+                  : "Capital gains and qualifying withdrawals are 100% exempt from Canadian income taxes. Nuance: foreign dividend withholding taxes (such as 15% non-resident tax on international equities) may be deducted at source and cannot be claimed as a Canadian foreign tax credit inside a TFSA."}
               </p>
             </div>
 
@@ -392,8 +426,8 @@ export const IslamicInvestingPage: React.FC = () => {
               </div>
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Déduisez vos cotisations de votre revenu imposable actuel au taux marginal élevé, tout en accumulant des actions mondiales sans impôt annuel."
-                  : "Deduct contributions against your high marginal income tax bracket today, compounding Halal global equities without annual tax drag until retirement."}
+                  ? "Cotisations déductibles du revenu imposable actuel pour réduire votre tranche d'impôt marginale. La croissance est à impôt différé jusqu'au retrait à la retraite."
+                  : "Contributions deduct against current earned income to reduce your high marginal tax bracket. Capital gains and dividends compound tax-deferred until withdrawal in retirement."}
               </p>
             </div>
 
@@ -404,8 +438,8 @@ export const IslamicInvestingPage: React.FC = () => {
               </div>
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Pour l'achat d'une première propriété : cotisations déductibles d'impôt et retrait admissible 100 % libre d'impôt pour votre mise de fonds (jusqu'à 40 000 $)."
-                  : "The first-time home buyer powerhouse: tax-deductible going in, completely tax-free coming out for a qualifying home purchase (up to $40,000 lifetime)."}
+                  ? "Plafond de cotisation à vie de 40 000 $ (8 000 $/an). Lors de l'achat d'une première propriété admissible, la totalité des sommes accumulées (cotisations et rendements sans plafond) se retire 100 % libre d'impôt."
+                  : "Lifetime contribution limit of $40,000 ($8,000/year). For qualifying first home purchases, the entire accumulated balance (principal and all compound growth, with NO dollar cap on withdrawals) is withdrawn 100% tax-free."}
               </p>
             </div>
 
@@ -416,8 +450,8 @@ export const IslamicInvestingPage: React.FC = () => {
               </div>
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Bénéficiez de la subvention canadienne pour l'épargne-études (SCEE) de 20 % du gouvernement fédéral, investie directement dans des actions éthiques."
-                  : "Capture the 20% federal Canada Education Savings Grant (CESG) match from the Canadian government, invested directly in Shari'ah-compliant global equity."}
+                  ? "Permet d'obtenir la Subvention canadienne pour l'épargne-études (SCEE) de 20 % du gouvernement fédéral (jusqu'à 7 200 $ à vie par enfant), investie dans des actions éthiques."
+                  : "Captures the 20% federal Canada Education Savings Grant (CESG) match from the Canadian government (up to $7,200 lifetime per child), compounding inside Shari'ah-screened global equities."}
               </p>
             </div>
 
@@ -428,43 +462,45 @@ export const IslamicInvestingPage: React.FC = () => {
               </div>
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Pour médecins, dentistes, consultants TI et entrepreneurs : investissez les bénéfices non répartis de votre société avec les protections des contrats de fonds distincts."
-                  : "For Muslim physicians, IT consultants, and business owners: deploy corporate retained earnings with institutional creditor protection and named beneficiaries."}
+                  ? "Pour professionnels incorporés et entrepreneurs : investissement des surplus non répartis tout en surveillant le seuil de 50 000 $ de revenus passifs pour préserver la Déduction pour petite entreprise."
+                  : "For incorporated professionals and business owners: deploying retained earnings with structured oversight of the $50,000 passive investment income grind against the Small Business Deduction."}
               </p>
             </div>
 
             <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
               <div className="flex items-center gap-2 text-[#2e4a3b] font-bold text-sm">
                 <Lock className="w-4 h-4 text-[#75581f]" />
-                <span>{isFr ? "Avantages Fonds Distincts" : "Segregated Fund Advantages"}</span>
+                <span>{isFr ? "Structures de Contrats Distincts" : "Segregated Contract Features"}</span>
               </div>
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Garanties à l'échéance et au décès (75 %/75 % ou 75 %/100 %), désignation directe de bénéficiaires hors succession et protection potentielle contre les créanciers."
-                  : "Maturity & death guarantees, direct named beneficiary bypass of costly provincial probate fees, and potential statutory creditor protection under insurance law."}
+                  ? "Lorsque l'accès est structuré via un contrat de fonds distinct émis par une compagnie d'assurance canadienne, des garanties de capital, une désignation de bénéficiaires hors succession et une protection contre les créanciers peuvent s'appliquer."
+                  : "When facilitated through segregated fund contracts issued by Canadian life carriers (such as iA Financial Group), maturity guarantees, direct beneficiary designations bypassing probate, and statutory creditor protection may apply."}
               </p>
             </div>
           </div>
         </section>
 
-        {/* 5. INTERACTIVE SIMULATOR: HALAL WEALTH VS. INFLATION */}
+        {/* 6. FAIR & BALANCED MULTI-SCENARIO SIMULATOR */}
         <section id="simulator" className="mb-16 p-6 sm:p-8 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
           <div className="max-w-3xl mb-8">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
-              {isFr ? "Calculateur Interactif" : "Interactive Simulator"}
+              {isFr ? "Outil Pédagogique Transparent" : "Transparent Educational Tool"}
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18] mb-2">
-              {isFr ? "Simulateur : Actions Islamiques vs Inaction en Liquide" : "Halal Global Equity vs. 0% Cash Inaction"}
+              {isFr
+                ? "Simulateur Comparatif : Épargne Rémunérée vs Actions Islamiques (Net de Frais)"
+                : "Balanced Multi-Scenario Simulator: Savings Account vs. Net Shari'ah Equity"}
             </h2>
             <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
               {isFr
-                ? "Comparez l'effet de l'inflation sur des liquidités stagnantes face au potentiel de croissance à long terme d'un portefeuille d'actions islamiques mondiales diversifié."
-                : "See what happens when you deploy capital into productive global commerce versus leaving money idle in zero-interest bank accounts eroded by Canadian inflation."}
+                ? "Un comparateur réaliste tenant compte des rendements de comptes d'épargne réels, des frais de gestion estimés (RFG / MER) et de l'inflation de 2,5 %."
+                : "A fair, transparent comparison reflecting real savings account interest, estimated fund management fees (MER), market volatility, and a 2.5% inflation baseline."}
             </p>
           </div>
 
-          {/* Sliders */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* Primary Controls */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
               <div className="flex justify-between text-xs font-semibold mb-2">
                 <span className="text-[#1c1b18]">{isFr ? "Capital Initial :" : "Initial Capital:"}</span>
@@ -526,71 +562,138 @@ export const IslamicInvestingPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Projection Results Cards */}
+          {/* Secondary Controls: Cash Rate & Equity Scenario */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-[#f2ecdf] border border-[#d6cebd] rounded-xs mb-8 text-xs">
+            <div>
+              <label className="font-semibold text-[#1c1b18] block mb-1">
+                {isFr ? "Taux d'Épargne Réel / CPG :" : "Savings / GIC Interest Rate:"}
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="range"
+                  min="0.0"
+                  max="4.0"
+                  step="0.25"
+                  value={cashInterestRate}
+                  onChange={(e) => setCashInterestRate(Number(e.target.value))}
+                  className="w-full accent-[#75581f]"
+                />
+                <span className="font-mono font-bold text-[#1c1b18] w-12 text-right">
+                  {cashInterestRate.toFixed(2)}%
+                </span>
+              </div>
+              <span className="text-[0.65rem] text-[#625d52]">
+                {isFr ? "Comptes d'épargne ou CPG canadiens" : "Real Canadian high-yield savings"}
+              </span>
+            </div>
+
+            <div>
+              <label className="font-semibold text-[#1c1b18] block mb-1">
+                {isFr ? "Scénario Actions Islamiques (Brut) :" : "Islamic Equity Scenario (Gross):"}
+              </label>
+              <select
+                value={equityScenario}
+                onChange={(e) => setEquityScenario(e.target.value as any)}
+                className="w-full py-1.5 px-2 bg-white border border-[#d6cebd] rounded-xs text-xs"
+              >
+                <option value="conservative">{isFr ? "Conservateur : 4,5 %" : "Conservative: 4.5% gross"}</option>
+                <option value="balanced">{isFr ? "Équilibré : 6,5 %" : "Balanced: 6.5% gross"}</option>
+                <option value="dynamic">{isFr ? "Historique dynamique : 8,5 %" : "Historical Dynamic: 8.5% gross"}</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="font-semibold text-[#1c1b18] block mb-1">
+                {isFr ? "Frais de Gestion Estimés (RFG) :" : "Estimated Fund Fees (MER Drag):"}
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="range"
+                  min="0.5"
+                  max="2.5"
+                  step="0.25"
+                  value={estimatedFeeDrag}
+                  onChange={(e) => setEstimatedFeeDrag(Number(e.target.value))}
+                  className="w-full accent-[#2e4a3b]"
+                />
+                <span className="font-mono font-bold text-[#2e4a3b] w-12 text-right">
+                  -{estimatedFeeDrag.toFixed(2)}%
+                </span>
+              </div>
+              <span className="text-[0.65rem] text-[#625d52]">
+                {isFr ? `Rendement net projeté : ${netEquityReturn.toFixed(2)} %` : `Net projected return: ${netEquityReturn.toFixed(2)}%`}
+              </span>
+            </div>
+          </div>
+
+          {/* Results Comparison Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 bg-white border border-[#d6cebd] rounded-xs mb-6">
             <div className="space-y-1">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#625d52] font-semibold block">
-                {isFr ? "Total Cotisé (Principal)" : "Total Capital Invested"}
+                {isFr ? "Total Épargné (Principal)" : "Total Capital Injected"}
               </span>
               <div className="font-serif text-2xl font-bold text-[#1c1b18]">
                 ${Math.round(totalPrincipal).toLocaleString()}
               </div>
               <p className="text-[0.7rem] text-[#625d52]">
-                {isFr ? "Votre épargne nette injectée" : "Net out-of-pocket savings"}
+                {isFr ? "Votre capital net investi" : "Net out-of-pocket savings"}
               </p>
             </div>
 
-            <div className="space-y-1 p-3 bg-[#8d2b2b]/5 border border-[#8d2b2b]/20 rounded-xs">
-              <span className="text-[0.68rem] uppercase tracking-wider text-[#8d2b2b] font-bold block">
-                {isFr ? "Valeur Réelle du Cash à 0 %" : "0% Cash Purchasing Power"}
+            <div className="space-y-1 p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-xs">
+              <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block">
+                {isFr ? `Épargne à ${cashInterestRate}% (Nominal)` : `Savings @ ${cashInterestRate}% (Nominal)`}
               </span>
-              <div className="font-serif text-2xl font-bold text-[#8d2b2b]">
-                ${Math.round(cashRealValue).toLocaleString()}
+              <div className="font-serif text-2xl font-bold text-[#1c1b18]">
+                ${Math.round(cashNominal).toLocaleString()}
               </div>
-              <p className="text-[0.7rem] text-[#8d2b2b]">
-                {isFr ? `Perte d'inflation : -$${Math.round(purchasingPowerLoss).toLocaleString()}` : `Inflation erosion: -$${Math.round(purchasingPowerLoss).toLocaleString()}`}
+              <p className="text-[0.7rem] text-[#46423a]">
+                {isFr
+                  ? `Pouvoir d'achat réel après 2,5 % d'inflation : $${Math.round(cashRealValue).toLocaleString()}`
+                  : `Real purchasing power after 2.5% inflation: $${Math.round(cashRealValue).toLocaleString()}`}
               </p>
             </div>
 
             <div className="space-y-1 p-3 bg-[#2e4a3b]/5 border border-[#2e4a3b]/30 rounded-xs">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#2e4a3b] font-bold block">
-                {isFr ? "Projection Actions Islamiques (7%)" : "Projected Halal Equity Value (7%)"}
+                {isFr ? `Actions Islamiques (${netEquityReturn.toFixed(1)} % Net)` : `Islamic Equity (${netEquityReturn.toFixed(1)}% Net)`}
               </span>
               <div className="font-serif text-2xl font-bold text-[#2e4a3b]">
                 ${Math.round(equityNominal).toLocaleString()}
               </div>
               <p className="text-[0.7rem] text-[#2e4a3b]">
                 {isFr
-                  ? `Gain potentiel composé : +$${Math.round(equityNominal - totalPrincipal).toLocaleString()}`
-                  : `Compounded growth: +$${Math.round(equityNominal - totalPrincipal).toLocaleString()}`}
+                  ? `Pouvoir d'achat réel après 2,5 % d'inflation : $${Math.round(equityRealValue).toLocaleString()}`
+                  : `Real purchasing power after 2.5% inflation: $${Math.round(equityRealValue).toLocaleString()}`}
               </p>
             </div>
           </div>
 
-          <div className="text-[0.68rem] text-[#625d52] italic">
-            * {isFr
-              ? "Calcul purement illustratif basé sur un rendement annualisé hypothétique de 7 % et une inflation moyenne de 2,5 %. Les rendements passés ne garantissent pas les rendements futurs. Les investissements en actions comportent un risque de fluctuation de marché."
-              : "For illustrative purposes only based on a hypothetical 7% nominal annual return and 2.5% inflation. Past performance does not guarantee future results. Equity investments involve market fluctuations."}
+          <div className="p-3 bg-[#ece6da]/40 border-l-2 border-[#8d8677] text-[0.7rem] text-[#46423a] leading-relaxed">
+            <strong>{isFr ? "Précision méthodologique :" : "Methodological Transparency:"}</strong>{" "}
+            {isFr
+              ? "Les investissements en actions comportent un risque de perte en capital et des fluctuations de marché. Les calculs ci-dessus sont purement illustratifs et intègrent un taux d'inflation hypothétique de 2,5 % et une déduction de frais de gestion. Les rendements réels varient chaque année et ne sont pas garantis."
+              : "Equity investments involve market risk and periodic drawdowns. Projections above are hypothetical and incorporate an estimated 2.5% inflation rate and estimated fund management fee deduction. Actual returns fluctuate annually and are not guaranteed."}
           </div>
         </section>
 
-        {/* 6. HIGH-CONVERTING MUSLIM INVESTOR LEAD FORM */}
+        {/* 7. OBJECTIVE CONSULTATION REQUEST FORM */}
         <section id="lead-form" className="mb-16 p-6 sm:p-10 bg-[#14211a] text-[#f7f3eb] rounded-xs border border-[#2e4a3b] shadow-xl">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8 space-y-2">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#d6c298]/15 border border-[#d6c298]/40 rounded-xs text-[0.7rem] font-semibold uppercase tracking-wider text-[#d6c298]">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#d6c298]" />
-                <span>{isFr ? "Accompagnement Confidentiel & Sans Engagement" : "Private & No-Obligation Consultation"}</span>
+                <span>{isFr ? "Accompagnement Éducatif Indépendant" : "Independent Educational Consultation"}</span>
               </div>
 
               <h2 className="font-serif text-2xl sm:text-4xl text-[#f7f3eb]">
-                {isFr ? "Planifiez Votre Stratégie d'Investissement Halal" : "Start Your Halal Investment Strategy"}
+                {isFr ? "Discuter de Votre Stratégie d'Investissement Conforme" : "Explore Your Halal Investment Strategy"}
               </h2>
 
               <p className="text-xs sm:text-sm text-[#ece6da]/80 max-w-xl mx-auto leading-relaxed">
                 {isFr
-                  ? "Que vous ayez des liquidités en banque, un REER ou CELI à transférer d'une grande banque canadienne, ou des surplus dans votre société de gestion, examinons vos options en toute conformité."
-                  : "Whether you have idle cash to deploy, an existing RRSP/TFSA to transfer tax-free from a Canadian big bank, or corporate retained earnings, let's explore your Shari'ah options."}
+                  ? "Que vous ayez des liquidités en attente, un compte enregistré à transférer d'une institution financière canadienne, ou des questions de conformité AAOIFI, analysons vos options en toute indépendance."
+                  : "Whether you have unallocated liquidity, an existing registered account to transfer directly between Canadian institutions, or specific AAOIFI compliance questions, let's explore your options objectively."}
               </p>
             </div>
 
@@ -598,12 +701,12 @@ export const IslamicInvestingPage: React.FC = () => {
               <div className="p-6 bg-[#1a2c22] border border-[#d6c298] rounded-xs text-center space-y-4 animate-in fade-in duration-300">
                 <CheckCircle2 className="w-12 h-12 text-[#d6c298] mx-auto" />
                 <h3 className="font-serif text-xl font-bold text-[#f7f3eb]">
-                  {isFr ? "Votre demande a été bien reçue !" : "Your Consultation Request is Confirmed"}
+                  {isFr ? "Votre demande a été bien reçue" : "Your Consultation Request is Confirmed"}
                 </h3>
                 <p className="text-xs sm:text-sm text-[#ece6da]/90 leading-relaxed max-w-md mx-auto">
                   {isFr
-                    ? "Merci pour votre démarche. Ahmed Bello prendra contact avec vous sous 24 heures pour vous présenter les détails du fonds indice actions islamiques ACWI (BlackRock) et les démarches de transfert."
-                    : "Thank you for reaching out. Ahmed Bello will review your situation and follow up within 24 business hours with direct documentation on the Islamic Equity Index ACWI (BlackRock) and transfer steps."}
+                    ? "Merci pour votre démarche. Ahmed Bello prendra contact avec vous sous 24 heures pour échanger sur vos objectifs et vous présenter les options disponibles auprès des institutions canadiennes agréées."
+                    : "Thank you for reaching out. Ahmed Bello will review your situation and follow up within 24 business hours to discuss your objectives and explain available institutional solutions."}
                 </p>
                 {siteConfig.schedulingUrl && (
                   <div className="pt-2">
@@ -613,7 +716,7 @@ export const IslamicInvestingPage: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs rounded-xs transition-colors"
                     >
-                      <span>{isFr ? "Choisir immédiatement une heure sur Calendly" : "Pick an Instant Time on Calendly"}</span>
+                      <span>{isFr ? "Réserver une session de 30 min sur Calendly" : "Schedule 30-Min Call on Calendly"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </a>
                   </div>
@@ -701,7 +804,7 @@ export const IslamicInvestingPage: React.FC = () => {
                       <option value="fhsa">FHSA (CELIAPP) - First Home</option>
                       <option value="resp">RESP (REEE) - Children's Education</option>
                       <option value="corporate">Corporate Holding / CCPC (Société)</option>
-                      <option value="transfer">Transfer from Existing Bank (RBC/TD/BMO/CIBC)</option>
+                      <option value="transfer">Direct Transfer from Existing Institution</option>
                       <option value="multiple">Multiple Accounts / Comprehensive Strategy</option>
                     </select>
                   </div>
@@ -716,12 +819,12 @@ export const IslamicInvestingPage: React.FC = () => {
                       onChange={handleFormChange}
                       className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
                     >
-                      <option value="monthly-500">$300 - $1,000 / month (PAC / Prélèvement)</option>
-                      <option value="10k-25k">$10,000 - $25,000 (Lump Sum / Transfert)</option>
+                      <option value="monthly-500">$300 - $1,000 / month (PAC / Recurring)</option>
+                      <option value="10k-25k">$10,000 - $25,000</option>
                       <option value="25k-50k">$25,000 - $50,000</option>
                       <option value="50k-100k">$50,000 - $100,000</option>
                       <option value="100k-250k">$100,000 - $250,000</option>
-                      <option value="250k+">$250,000+ (High Net Worth / Corporate)</option>
+                      <option value="250k+">$250,000+ (Corporate / High Net Worth)</option>
                     </select>
                   </div>
                 </div>
@@ -729,22 +832,22 @@ export const IslamicInvestingPage: React.FC = () => {
                 <div>
                   <label className="block text-xs font-medium text-[#ece6da] mb-1">
                     {isFr
-                      ? "Où se trouvent vos fonds actuellement ? (Optionnel)"
-                      : "Current Institution / Cash Status (Optional)"}
+                      ? "Institution actuelle des fonds (Optionnel)"
+                      : "Current Financial Institution (Optional)"}
                   </label>
                   <input
                     type="text"
                     name="currentBank"
                     value={formData.currentBank}
                     onChange={handleFormChange}
-                    placeholder={isFr ? "ex. Compte chèques RBC, REER chez TD, etc." : "e.g. Idle cash in TD chequing, old RRSP with Scotia, etc."}
+                    placeholder={isFr ? "ex. Compte chèques RBC, REER chez TD, etc." : "e.g. Idle cash in chequing, existing RRSP at TD, etc."}
                     className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-medium text-[#ece6da] mb-1">
-                    {isFr ? "Vos questions ou priorités particulières (Optionnel)" : "Your Specific Questions or Priorities (Optional)"}
+                    {isFr ? "Vos priorités ou questions particulières (Optionnel)" : "Your Specific Priorities or Questions (Optional)"}
                   </label>
                   <textarea
                     name="notes"
@@ -754,7 +857,7 @@ export const IslamicInvestingPage: React.FC = () => {
                     placeholder={
                       isFr
                         ? "Précisez vos objectifs, questions sur la certification de conformité ou le calendrier de transfert..."
-                        : "Describe your family goals, Shari'ah purification questions, or timing..."
+                        : "Describe your family goals, questions about AAOIFI screening, or transfer timing..."
                     }
                     className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                   ></textarea>
@@ -769,31 +872,31 @@ export const IslamicInvestingPage: React.FC = () => {
                     <span>
                       {isSubmitting
                         ? isFr ? "Transmission en cours..." : "Submitting Request..."
-                        : isFr ? "Demander Ma Session Stratégique Halal →" : "Request My Halal Strategy Session →"}
+                        : isFr ? "Demander Ma Session Stratégique →" : "Request My Educational Strategy Session →"}
                     </span>
                   </button>
                 </div>
 
                 <p className="text-[0.68rem] text-[#ece6da]/60 text-center pt-2">
                   {isFr
-                    ? "Vos données demeurent strictement confidentielles. Aucune obligation. Aucun démarchage agressif."
-                    : "Strictly confidential. No spam. No high-pressure sales. Respectful financial education."}
+                    ? "Vos données demeurent strictement confidentielles. Aucune obligation. Aucune démarche commerciale agressive."
+                    : "Strictly confidential. No spam. No aggressive sales pressure. Independent financial education."}
                 </p>
               </form>
             )}
           </div>
         </section>
 
-        {/* 7. FREQUENTLY ASKED QUESTIONS BY MUSLIM INVESTORS */}
+        {/* 8. FREQUENTLY ASKED QUESTIONS - NUANCED & VERIFIED */}
         <section className="mb-16">
           <div className="mb-8">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
-              {isFr ? "Questions Fréquentes" : "Investor FAQ"}
+              {isFr ? "Questions Fréquentes & Réponses Vérifiées" : "Investor FAQ & Official Rules"}
             </span>
             <h2 className="font-serif text-2xl sm:text-4xl text-[#1c1b18] mb-3">
               {isFr
-                ? "Questions courantes des investisseurs musulmans au Canada"
-                : "Frequently Asked Questions About Shari'ah Compliance"}
+                ? "Questions courantes sur la conformité islamique et la fiscalité canadienne"
+                : "Frequently Asked Questions About Shari'ah Compliance & Canadian Rules"}
             </h2>
           </div>
 
@@ -803,14 +906,30 @@ export const IslamicInvestingPage: React.FC = () => {
                 <HelpCircle className="w-4 h-4 text-[#2e4a3b]" />
                 <span>
                   {isFr
-                    ? "Qui certifie la conformité islamique de ce fonds ?"
-                    : "Who certifies the Shari'ah compliance of the underlying index?"}
+                    ? "Qui certifie la conformité islamique des indices mondiaux de référence ?"
+                    : "Who certifies the Shari'ah compliance of benchmark indices?"}
                 </span>
               </h3>
               <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "L'indice sous-jacent est le MSCI ACWI Islamic Index, géré et sous-conseillé par BlackRock. Sa conformité est supervisée et auditée par le Shari'ah Supervisory Board de MSCI, composé de savants islamiques reconnus à l'échelle internationale conformément aux normes de l'AAOIFI (Accounting and Auditing Organization for Islamic Financial Institutions)."
-                  : "The underlying index is the MSCI ACWI Islamic Index sub-advised by BlackRock. Its compliance is continually audited and certified by MSCI's independent Shari'ah Supervisory Board in adherence to the globally accepted standards established by AAOIFI (Accounting and Auditing Organization for Islamic Financial Institutions)."}
+                  ? "L'indice de référence mondial MSCI ACWI Islamic est audité par un conseil de surveillance de la charia (Shari'ah Supervisory Board) indépendant composé de savants internationaux renommés en finance islamique, appliquant rigoureusement les normes de l'AAOIFI (Accounting and Auditing Organization for Islamic Financial Institutions)."
+                  : "The MSCI ACWI Islamic Index benchmark is audited by an independent Shari'ah Supervisory Board comprising globally recognized Islamic financial scholars adhering strictly to AAOIFI (Accounting and Auditing Organization for Islamic Financial Institutions) standards."}
+              </p>
+            </div>
+
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+              <h3 className="font-serif text-base font-bold text-[#1c1b18] flex items-center gap-2">
+                <HelpCircle className="w-4 h-4 text-[#2e4a3b]" />
+                <span>
+                  {isFr
+                    ? "Comment s'effectue le transfert direct d'un REER ou d'un CELI depuis une autre institution ?"
+                    : "How do direct transfers work between Canadian financial institutions (Form T2033 vs. RC240)?"}
+                </span>
+              </h3>
+              <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
+                {isFr
+                  ? "Pour les REER et régimes de retraite, le transfert direct s'effectue au moyen du formulaire officiel T2033 de l'ARC. Pour les CELI, le transfert direct d'émetteur à émetteur s'effectue au moyen du formulaire RC240 (ou de la documentation de transfert admissible de l'institution réceptrice). Dans les deux cas, le transfert s'effectue directement d'institution à institution, sans désenregistrement, sans retenue fiscale et sans perte de vos droits de cotisation."
+                  : "For RRSPs and registered retirement plans, direct transfers are executed using CRA Form T2033 (Direct Transfer under Subsection 146(16) or 146.3(2)). For TFSAs, direct transfers between issuers are governed by CRA Form RC240 (Direct Transfer Between TFSA Issuers) or the receiving issuer's registered transfer documentation under Section 146.2. In both instances, capital transfers directly institution-to-institution without deregistration, without triggering taxable income, and without forfeiting contribution room."}
               </p>
             </div>
 
@@ -825,8 +944,8 @@ export const IslamicInvestingPage: React.FC = () => {
               </h3>
               <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Même au sein d'entreprises conformes (ex. fabricants d'ordinateurs ou de dispositifs médicaux), une fraction marginale de revenu (ex. 0,2 % provenant d'intérêts bancaires sur leur trésorerie) peut exister. MSCI et BlackRock publient chaque trimestre les ratios précis de purification afin que cette fraction minime puisse être donnée à une œuvre de bienfaisance sans revendiquer de récompense religieuse."
-                  : "Even in permitted companies (e.g. software or medical technologies), minor incidental interest from operating bank balances may represent a small fraction (e.g. 0.2%). MSCI and BlackRock publish exact quarterly purification factors so you can calculate and donate that minor portion to recognized Canadian charities."}
+                  ? "Même au sein d'entreprises respectant les filtres de secteur et de bilan (ex. entreprises de matériel médical ou d'informatique), une fraction marginale de revenu (ex. 0,2 % provenant d'intérêts bancaires sur leurs liquidités de fonctionnement) peut exister. Les gestionnaires d'indices publient périodiquement les facteurs de purification exacts permettant à l'investisseur de calculer et verser cette quote-part minime à des organismes de bienfaisance reconnus au Canada."
+                  : "Even permissible operating businesses (e.g. software, medical equipment) may generate minor incidental interest on operational cash balances (e.g. 0.1% to 0.3%). Index calculators publish periodic purification factors enabling investors to calculate and donate that minor incidental fraction to registered Canadian charities."}
               </p>
             </div>
 
@@ -835,41 +954,25 @@ export const IslamicInvestingPage: React.FC = () => {
                 <HelpCircle className="w-4 h-4 text-[#2e4a3b]" />
                 <span>
                   {isFr
-                    ? "Puis-je transférer mon REER ou CELI existant d'une grande banque sans payer d'impôt ?"
-                    : "Can I transfer my existing TFSA or RRSP from RBC, TD, Scotia, or BMO without tax penalties?"}
+                    ? "Quelle est la différence entre un FNB en courtage et un contrat de fonds distinct ?"
+                    : "What is the difference between brokerage ETFs and segregated fund contracts?"}
                 </span>
               </h3>
               <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Oui. Les transferts d'institutions financières canadiennes s'effectuent directement d'institution à institution au moyen des formulaires officiels de l'ARC (formulaire T2033). Il s'agit d'un transfert direct sans impact fiscal, sans perte de droits de cotisation et sans retrait imposable."
-                  : "Yes. Transfers between Canadian financial institutions are executed directly using standard CRA transfer forms (Form T2033). The capital transfers directly inside the registered tax shelter without triggering taxable income, without losing contribution room, and without early withdrawal penalties."}
-              </p>
-            </div>
-
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
-              <h3 className="font-serif text-base font-bold text-[#1c1b18] flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-[#2e4a3b]" />
-                <span>
-                  {isFr
-                    ? "Qu'est-ce que le contrat de fonds distincts apporte de plus aux familles et entrepreneurs ?"
-                    : "What unique benefits does a segregated fund contract provide?"}
-                </span>
-              </h3>
-              <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
-                {isFr
-                  ? "Contrairement aux FNB ordinaires achetés en courtage libre, le fonds distinct émis par iA Groupe financier offre une protection du capital à l'échéance et au décès (garanties 75/75 ou 75/100), une désignation directe de bénéficiaires qui évite les frais et délais d'homologation successorale (probate), ainsi qu'une protection potentielle contre les poursuites de créanciers en vertu des lois provinciales sur les assurances."
-                  : "Unlike bare mutual funds or brokerage ETFs, segregated fund policies issued through iA Financial Group include maturity and death benefit guarantees (75%/75% or 75%/100%), direct beneficiary designation bypassing costly probate court delays and fees, and potential statutory creditor protection under provincial insurance legislation."}
+                  ? "Un FNB ordinaire acheté via une plateforme de courtage est un titre mobilier sans garantie de capital ni protection légale contre les créanciers. À l'inverse, un contrat de fonds distinct émis par une compagnie d'assurance de personnes canadienne (comme les options indicielles islamiques d'iA Groupe financier sous-conseillées par BlackRock) intègre des garanties statutaires à l'échéance et au décès (75/75 ou 75/100), une désignation directe de bénéficiaires évitant les frais d'homologation successorale, et une protection potentielle contre les créanciers en vertu des lois provinciales sur les assurances."
+                  : "Standard brokerage ETFs are securities without capital guarantees, without probate bypass, and without statutory creditor protection. In contrast, segregated fund contracts issued through Canadian life carriers (such as the Islamic index options offered through iA Financial Group sub-advised by BlackRock) integrate statutory maturity/death guarantees, direct named beneficiary bypass of court probate fees, and potential creditor protection under provincial insurance legislation."}
               </p>
             </div>
           </div>
         </section>
 
-        {/* 8. REGULATORY DISCLAIMER */}
+        {/* 9. REGULATORY DISCLAIMER */}
         <div className="p-4 bg-[#ece6da]/60 border-l-2 border-[#8d8677] text-xs text-[#46423a] leading-relaxed">
-          <strong>{isFr ? "Divulgation réglementaire :" : "Regulatory Disclosure:"}</strong>{" "}
+          <strong>{isFr ? "Divulgation réglementaire d'indépendance :" : "Independent Regulatory Disclosure:"}</strong>{" "}
           {isFr
-            ? "Ce document est conçu à des fins d'éducation financière et d'information générale concernant le fonds Indice actions islamiques ACWI (BlackRock) offert par iA Groupe financier. Il ne constitue pas une offre d'achat ni un conseil d'investissement personnalisé. Les fonds distincts sont des contrats d'assurance régis par les lois provinciales applicables. Toute décision d'investissement doit faire l'objet d'un examen des objectifs personnels, de la tolérance au risque et du prospectus officiel."
-            : "This page is prepared for financial education and informational purposes regarding the Islamic Equity Index ACWI (BlackRock) segregated fund offered through iA Financial Group. It does not constitute an individualized investment recommendation or solicitation. Segregated funds are insurance contracts governed by applicable provincial insurance acts. Past performance is no guarantee of future returns."}{" "}
+            ? "Ce document est publié à des fins d'éducation financière générale et d'information objective concernant l'investissement en actions islamiques au Canada. Ahmed Bello est un professionnel indépendant agréé en solutions financières. Aucune recommandation d'achat spécifique n'est formulée sans analyse préalable de votre situation financière, de votre tolérance au risque et de vos objectifs personnels."
+            : "This educational resource provides objective information on Shari'ah-compliant equity investing in Canada. Ahmed Bello is an independent licensed financial solutions professional and does not act as a captive promoter of any single fund or institution. Regulated insurance and segregated fund solutions are implemented exclusively following personalized suitability analysis in authorized Canadian jurisdictions."}{" "}
           <Link to={isFr ? "/fr/disclosures" : "/disclosures"} className="underline text-[#2e4a3b]">
             {isFr ? "Consulter nos divulgations complètes" : "Review full disclosures"}
           </Link>

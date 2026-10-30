@@ -364,7 +364,7 @@ app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response)
 
   // Secrets verification
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "olabel@gmail.com, abello24trdc@wfgmail.ca";
+  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || siteConfig.publicEmail;
   const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || siteConfig.defaultFromEmail;
 
   if (!RESEND_API_KEY || !CONTACT_TO_EMAIL) {
@@ -393,7 +393,7 @@ Origin: ${siteConfig.siteUrl}/contact`;
   const rawRecipients = CONTACT_TO_EMAIL.split(/[,;\s]+/)
     .map((e) => e.trim())
     .filter((e) => e.includes("@"));
-  const primaryRecipient = rawRecipients[0] || "olabel@gmail.com";
+  const primaryRecipient = rawRecipients[0] || siteConfig.publicEmail;
 
   try {
     // Attempt sending to all configured recipients
@@ -916,91 +916,113 @@ function getRouteMetadata(pathname: string): RouteMeta {
       };
 
     case "/disclosures":
+    case "/fr/disclosures":
       return {
-        title: "Disclosures & Regulatory Scope | Ahmed Bello",
+        title: cleanPath.startsWith("/fr") ? "Divulgations Réglementaires & Portée Professionnelle | Ahmed Bello" : "Disclosures & Regulatory Scope | Ahmed Bello",
         description:
-          "Plain-language disclosures on licensing, professional scope, compensation, education vs advice boundaries, and regulatory transparency.",
+          cleanPath.startsWith("/fr")
+            ? "Divulgations provinciales relatives aux permis d'exercice, portée des mandats éducatifs, modèles de rémunération et transparence réglementaire."
+            : "Plain-language disclosures on licensing, professional scope, compensation, education vs advice boundaries, and regulatory transparency.",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/disclosures`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Disclosures & Regulatory Transparency",
-            url: `${siteConfig.siteUrl}/disclosures`,
+            url: `${siteConfig.siteUrl}${cleanPath}`,
           },
         ],
       };
 
     case "/standards":
+    case "/fr/standards":
       return {
-        title: "Editorial Standards & Official Sources | Ahmed Bello",
+        title: cleanPath.startsWith("/fr") ? "Normes Éditoriales & Sources Officielles | Ahmed Bello" : "Editorial Standards & Official Sources | Ahmed Bello",
         description:
-          "How financial guides on this site are researched, verified against official Canadian government sources, dated, and reviewed.",
+          cleanPath.startsWith("/fr")
+            ? "Processus rigoureux de recherche, de validation auprès des organismes gouvernementaux canadiens et de mise à jour de nos guides financiers."
+            : "How financial guides on this site are researched, verified against official Canadian government sources, dated, and reviewed.",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/standards`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Editorial Standards & Sources",
-            url: `${siteConfig.siteUrl}/standards`,
+            url: `${siteConfig.siteUrl}${cleanPath}`,
           },
         ],
       };
 
     case "/privacy":
+    case "/fr/privacy":
       return {
-        title: "Privacy Notice & Data Protection | Ahmed Bello",
+        title: cleanPath.startsWith("/fr") ? "Avis de Confidentialité & Protection des Données | Ahmed Bello" : "Privacy Notice & Data Protection | Ahmed Bello",
         description:
-          "How personal information from enquiries is handled, protected, and kept private under Canadian privacy principles and CASL.",
+          cleanPath.startsWith("/fr")
+            ? "Traitement, sécurisation et confidentialité des renseignements personnels sous la législation canadienne LPRPDE et LCAP."
+            : "How personal information from enquiries is handled, protected, and kept private under Canadian privacy principles and CASL.",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/privacy`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Privacy Notice",
-            url: `${siteConfig.siteUrl}/privacy`,
+            url: `${siteConfig.siteUrl}${cleanPath}`,
           },
         ],
       };
 
     case "/terms":
+    case "/fr/terms":
       return {
-        title: "Website Terms of Use | Ahmed Bello",
+        title: cleanPath.startsWith("/fr") ? "Conditions d'Utilisation du Site Web | Ahmed Bello" : "Website Terms of Use | Ahmed Bello",
         description:
-          "Terms and ground rules for using this Canadian financial education website, intellectual property, and limitations of liability.",
+          cleanPath.startsWith("/fr")
+            ? "Règles, propriété intellectuelle, droits d'auteur et avis de non-responsabilité applicables à l'utilisation de cette ressource éducative canadienne."
+            : "Terms and ground rules for using this Canadian financial education website, intellectual property, and limitations of liability.",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/terms`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Website Terms of Use",
-            url: `${siteConfig.siteUrl}/terms`,
+            url: `${siteConfig.siteUrl}${cleanPath}`,
           },
         ],
       };
 
     default:
-      // Home page
+      if (cleanPath === "/" || cleanPath === "/fr") {
+        return {
+          title: cleanPath === "/fr" ? "Ahmed Bello | Éducation Financière pour Canadiens" : "Ahmed Bello | Financial Education for Canadians",
+          description:
+            "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.",
+          ogType: "website",
+          url: `${siteConfig.siteUrl}${cleanPath === "/fr" ? "/fr" : ""}`,
+          jsonLd: [
+            siteWideWebSite,
+            siteWideFinancialService,
+            siteWidePerson,
+            howIHelpFaqSchema,
+          ],
+        };
+      }
+
+      // Explicit 404 metadata for any unknown URL so it never displays the homepage title
       return {
-        title: "Ahmed Bello | Financial Education for Canadians",
-        description:
-          "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.",
+        title: cleanPath.startsWith("/fr") ? "Page non trouvée (404) | Ahmed Bello" : "Page Not Found (404) | Ahmed Bello",
+        description: "The page you requested could not be found.",
         ogType: "website",
-        url: siteConfig.siteUrl,
-        jsonLd: [
-          siteWideWebSite,
-          siteWideFinancialService,
-          siteWidePerson,
-          howIHelpFaqSchema,
-        ],
+        url: `${siteConfig.siteUrl}${cleanPath}`,
+        jsonLd: [siteWideWebSite],
       };
   }
 }
