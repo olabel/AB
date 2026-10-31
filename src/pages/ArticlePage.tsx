@@ -535,23 +535,61 @@ export const ArticlePage: React.FC = () => {
               .
             </div>
 
-            {/* 9. Gentle "Ask a related question" Invitation */}
-            <div className="p-8 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-4 on-dark no-print">
-              <span className="eyebrow text-xs text-[#d6c298]">Have a question on this topic?</span>
-              <h3 className="h3 text-white">
-                Have a financial question about {article.invitationAbout}?
-              </h3>
-              <p className="text-sm text-[#ece6da]/90 leading-relaxed">
-                If you are trying to understand how this applies to your situation or how it connects with your other
-                priorities, let&rsquo;s start with your question.
-              </p>
-              <div className="pt-2">
-                <Link
-                  to={`/contact?topic=${article.contactTopic}`}
-                  className="btn btn-primary bg-[#f7f3eb] text-[#2e4a3b] hover:bg-[#d6c298]"
-                >
-                  Ask a question about {article.invitationAbout} &rarr;
-                </Link>
+            {/* 9. Next Step: Interactive Question Box Under Every Guide */}
+            <div className="p-6 sm:p-8 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] space-y-5 shadow-sm no-print">
+              <div className="flex items-center gap-2">
+                <span className="p-1 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px]">
+                  <MessageSquare className="w-4 h-4 text-[#d6c298]" />
+                </span>
+                <span className="eyebrow text-xs text-[#75581f]">
+                  {isFr ? "Prochaine Étape Directe" : "Next Step: Direct Question"}
+                </span>
+              </div>
+
+              <div>
+                <h3 className="h3 text-[#1c1b18] text-xl sm:text-2xl font-serif">
+                  {isFr
+                    ? "Pas certain de la structure ou du compte adapté à votre situation ? Posez votre question ici."
+                    : "Not sure which account or strategy fits your situation? Ask here."}
+                </h3>
+                <p className="text-sm text-[#46423a] mt-2 leading-relaxed">
+                  {isFr
+                    ? `Les règles fiscales canadiennes et les plafonds de cotisation dépendent de votre situation précise. Posez votre question sur « ${article.invitationAbout} » — Ahmed vous répondra personnellement avec des explications claires et sans pression commerciale.`
+                    : `Canadian tax rules, registered shelters, and liquidity limits depend on your exact household situation. Ask your specific question about “${article.invitationAbout}” — Ahmed reviews and responds directly with evidence-based education and no sales pitch.`}
+                </p>
+              </div>
+
+              <div className="p-4 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="text-xs text-[#46423a]">
+                  <span className="block font-semibold text-[#1c1b18]">
+                    {isFr ? "Sujet pré-sélectionné :" : "Pre-selected Topic:"}
+                  </span>
+                  <span className="font-mono text-[#2e4a3b] font-bold">
+                    {article.contactTopic}
+                  </span>
+                  <span className="text-[#625d52] block mt-0.5">
+                    {isFr ? "Le formulaire s'ouvrira avec cette catégorie déjà choisie." : "Opens the contact form with this category already configured."}
+                  </span>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto shrink-0">
+                  <Link
+                    to={`/contact?topic=${article.contactTopic}`}
+                    className="btn btn-primary text-xs py-2.5 px-4 text-center whitespace-nowrap inline-flex items-center justify-center gap-1.5"
+                  >
+                    <span>{isFr ? "Poser ma question à Ahmed" : "Ask Ahmed about this"}</span>
+                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </Link>
+                  <a
+                    href={`https://wa.me/15068994941?text=Hello%20Ahmed,%20I%20am%20reading%20your%20guide%20on%20${encodeURIComponent(article.title)}%20and%20have%20a%20question`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-2.5 text-xs font-semibold text-white bg-[#25D366] hover:bg-[#20ba59] rounded-[2px] transition-colors inline-flex items-center justify-center gap-1.5 text-center shadow-xs"
+                    title="WhatsApp"
+                  >
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </div>
 

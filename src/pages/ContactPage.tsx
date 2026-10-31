@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { Tbc } from "../components/Tbc.tsx";
 import { siteConfig } from "../config/site.ts";
-import { AlertCircle, CheckCircle2, Info, Calendar, ArrowUpRight } from "lucide-react";
+import { AlertCircle, CheckCircle2, Info, Calendar, ArrowUpRight, MessageCircle, Clock, MailCheck, ShieldCheck } from "lucide-react";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 
@@ -393,37 +393,99 @@ export const ContactPage: React.FC = () => {
             {status === "success" ? (
               <div
                 tabIndex={-1}
-                className="p-8 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] space-y-4"
+                className="p-6 sm:p-8 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] space-y-6 shadow-sm"
               >
-                <div className="flex items-center gap-3 text-[#2e4a3b]">
-                  <CheckCircle2 className="w-7 h-7" aria-hidden="true" />
-                  <h2 className="h3 text-[#2e4a3b] text-2xl font-serif">Message received</h2>
+                <div className="flex items-center gap-3 text-[#2e4a3b] pb-4 border-b border-[#d6cebd]">
+                  <div className="w-10 h-10 rounded-full bg-[#2e4a3b]/10 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-6 h-6 text-[#2e4a3b]" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <span className="eyebrow text-[0.65rem] text-[#75581f] block">Enquiry Confirmed</span>
+                    <h2 className="h3 text-[#2e4a3b] text-xl sm:text-2xl font-serif">
+                      Thank You, {firstName} — Your Message Was Sent
+                    </h2>
+                  </div>
                 </div>
-                <p className="text-sm md:text-base text-[#1c1b18] leading-relaxed">
-                  Thank you, {firstName}. I have received your enquiry regarding {topic}. I will review your message
-                  and reply to <strong>{email}</strong> with an appropriate next step.
-                </p>
 
-                {siteConfig.schedulingUrl && (
-                  <div className="p-4 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] my-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="text-xs text-[#46423a]">
-                      <strong>Prefer to reserve a time right now?</strong> You can schedule your 30-minute introductory meeting on Calendly.
+                <div className="p-3.5 bg-[#2e4a3b]/5 border border-[#2e4a3b]/20 rounded-[2px] flex items-start gap-3">
+                  <MailCheck className="w-5 h-5 text-[#2e4a3b] shrink-0 mt-0.5" />
+                  <p className="text-xs sm:text-sm text-[#1c1b18] leading-relaxed">
+                    An automatic confirmation receipt has been sent to <strong>{email}</strong>. Please check your inbox (and spam folder if needed).
+                  </p>
+                </div>
+
+                {/* Clear What Happens Next Timeline */}
+                <div className="space-y-3">
+                  <h3 className="text-xs uppercase tracking-wider font-semibold text-[#1c1b18] flex items-center gap-2">
+                    <Clock className="w-3.5 h-3.5 text-[#75581f]" />
+                    <span>What happens next</span>
+                  </h3>
+                  <div className="space-y-3 text-xs sm:text-sm text-[#46423a]">
+                    <div className="flex items-start gap-3 p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
+                      <span className="font-mono text-xs font-bold text-[#2e4a3b] bg-white px-2 py-0.5 border border-[#d6cebd] rounded-[2px]">
+                        Step 1
+                      </span>
+                      <div>
+                        <strong className="text-[#1c1b18] block mb-0.5">Personal Review by Ahmed</strong>
+                        <span>I personally review your note regarding <strong>{topic}</strong> and evaluate the relevant Canadian rules or balance-sheet considerations.</span>
+                      </div>
                     </div>
+
+                    <div className="flex items-start gap-3 p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
+                      <span className="font-mono text-xs font-bold text-[#2e4a3b] bg-white px-2 py-0.5 border border-[#d6cebd] rounded-[2px]">
+                        Step 2
+                      </span>
+                      <div>
+                        <strong className="text-[#1c1b18] block mb-0.5">Direct Response Within 1–2 Business Days</strong>
+                        <span>You will receive an educational, factual answer by email without high-pressure sales pitches or commercial follow-up spam.</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
+                      <span className="font-mono text-xs font-bold text-[#2e4a3b] bg-white px-2 py-0.5 border border-[#d6cebd] rounded-[2px]">
+                        Step 3
+                      </span>
+                      <div>
+                        <strong className="text-[#1c1b18] block mb-0.5">Next Step Decision Is Yours</strong>
+                        <span>If you need an exploratory discussion, you can schedule a call; if your question is answered, you take no further action.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Direct Fast-Track Actions */}
+                <div className="pt-4 border-t border-[#d6cebd] space-y-3">
+                  <span className="text-xs font-semibold text-[#1c1b18] block">
+                    Prefer to speak directly right now?
+                  </span>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    {siteConfig.schedulingUrl && (
+                      <a
+                        href={siteConfig.schedulingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center justify-center gap-1.5"
+                      >
+                        <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
+                        <span>Book 20 minutes on Calendly</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                      </a>
+                    )}
                     <a
-                      href={siteConfig.schedulingUrl}
+                      href="https://wa.me/15068994941?text=Hello%20Ahmed,%20I%20have%20submitted%20a%20question%20on%20your%20website"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn btn-secondary text-xs py-2 px-3 whitespace-nowrap shrink-0 inline-flex items-center justify-center gap-1"
+                      className="px-4 py-2.5 text-xs font-semibold text-white bg-[#25D366] hover:bg-[#20ba59] rounded-[2px] transition-colors inline-flex items-center justify-center gap-1.5 shadow-xs"
                     >
-                      <span>Book on Calendly</span>
-                      <ArrowUpRight className="w-3 h-3 text-[#75581f]" aria-hidden="true" />
+                      <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span>Chat on WhatsApp (+1 506 899-4941)</span>
                     </a>
                   </div>
-                )}
+                </div>
 
-                <div className="pt-4 border-t border-[#d6cebd] flex flex-wrap gap-4">
-                  <Link to="/education" className="btn btn-primary text-xs py-2 px-4">
-                    Browse the education library &rarr;
+                <div className="pt-3 flex flex-wrap items-center gap-4 text-xs">
+                  <Link to="/education" className="text-[#2e4a3b] font-semibold hover:underline">
+                    &larr; Explore the Financial Education Library
                   </Link>
                   <button
                     type="button"
@@ -431,9 +493,9 @@ export const ContactPage: React.FC = () => {
                       setStatus("idle");
                       setMessage("");
                     }}
-                    className="btn btn-ghost text-xs py-2 px-4"
+                    className="text-[#625d52] hover:text-[#1c1b18] underline ml-auto"
                   >
-                    Send another question
+                    Send another message
                   </button>
                 </div>
               </div>

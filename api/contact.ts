@@ -230,7 +230,7 @@ Email: ${email}
 Phone: ${phone || "Not provided"}
 Location: ${province}
 Topic: ${topic}
-CASL Educational Consent: Granted
+CASL Educational Consent: ${consentEducational ? "Granted (Opted in)" : "Not granted (Did not opt in)"}
 
 ${message ? `Notes / Message:\n${message}\n` : ""}
 ---------------------------------------------------------
@@ -279,18 +279,60 @@ Origin: https://ahmedbello.com
     }
 
     if (!resendResponse.ok) {
-      const errData: any = await resendResponse.json().catch(() => ({}));
       return res.status(502).json({
         error: "delivery_failed",
-        message: errData.message || "Failed to deliver email through provider.",
+        message: "Your message could not be sent right now. Please reach out directly by email at enquiries@ahmedbello.com, call +1-506-899-4941, or schedule a conversation via Calendly.",
       });
     }
 
+    // Send automatic confirmation receipt to the visitor
+    try {
+      const confirmationSubject = isNewsletter
+        ? "Welcome to Intentional Wealth Briefing | Ahmed Bello"
+        : `Confirmation: We received your enquiry | Ahmed Bello`;
+
+      const confirmationBody = `Hello ${firstName},
+
+Thank you for reaching out through ahmedbello.com. This automated receipt confirms that we have safely received your ${isNewsletter ? "subscription" : "message regarding " + topic}.
+
+What happens next:
+1. Personal Review: Ahmed Bello personally reviews every enquiry within 1 to 2 business days.
+2. Direct, Educational Answer: You will receive an evidence-based response to your question—without high-pressure sales pitches or product pushes.
+3. Next Steps: If your situation calls for a deeper conversation, we will share available times for a 20-minute introductory call.
+
+If you would like to speak directly or reserve a spot right away:
+• Schedule 20 minutes on Calendly: https://calendly.com/ahmedbello
+• WhatsApp / Direct Phone: +1 (506) 899-4941
+• Direct Email: enquiries@ahmedbello.com
+
+Warm regards,
+Ahmed Bello
+Financial Security Advisor
+Moncton, New Brunswick, Canada
+https://ahmedbello.com`;
+
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: CONTACT_FROM_EMAIL,
+          to: [email],
+          subject: confirmationSubject,
+          text: confirmationBody,
+        }),
+      });
+    } catch {
+      // Non-blocking: Enquiry was successfully saved/sent to advisor
+    }
+
     return res.status(200).json({ success: true, message: isNewsletter ? "Subscribed successfully." : "Enquiry sent successfully." });
-  } catch (err: any) {
+  } catch {
     return res.status(500).json({
       error: "server_error",
-      message: "An internal server error occurred.",
+      message: "Your message could not be sent right now. Please reach out directly by email at enquiries@ahmedbello.com, call +1-506-899-4941, or schedule a conversation via Calendly.",
     });
   }
 }
