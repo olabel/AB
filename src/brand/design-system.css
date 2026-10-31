@@ -308,7 +308,7 @@
     color: var(--color-ink);
   }
 
-  /* Draft marker — shown only while DRAFT_MODE=true */
+  /* Draft marker: shown only while DRAFT_MODE=true */
   .tbc {
     background: var(--color-flag);
     color: var(--color-flag-ink);
@@ -322,7 +322,7 @@
     -webkit-box-decoration-break: clone;
   }
 
-  /* Hero entrance — subtle, disabled under reduced motion */
+  /* Hero entrance: subtle, disabled under reduced motion */
   .rise {
     animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
@@ -428,7 +428,7 @@
 
   /* Header banner context on printed page */
   body::before {
-    content: "Ahmed Bello — Licensed Financial Solutions Professional | Canadian Financial Education | ahmedbello.com";
+    content: "Ahmed Bello | Licensed Financial Solutions Professional | Canadian Financial Education | ahmedbello.com";
     display: block;
     font-size: 8.5pt;
     color: #444444 !important;

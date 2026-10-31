@@ -686,8 +686,8 @@ export const HomePage: React.FC = () => {
               </h2>
               <p className="text-sm text-[#46423a] mt-2 max-w-xl">
                 {language === "fr"
-                  ? "Des explications en langage clair sur le fonctionnement réel des régimes enregistrés canadiens, de l'endettement, du risque et de la protection — avec compromis, sources et exemples concrets."
-                  : "Plain-language explainers on how Canadian accounts, debt, risk and protection really work — with the trade-offs, sources and hypothetical examples included."}
+                  ? "Des explications en langage clair sur le fonctionnement réel des régimes enregistrés canadiens, de l'endettement, du risque et de la protection, avec compromis, sources et exemples concrets."
+                  : "Plain-language explainers on how Canadian accounts, debt, risk and protection really work, with the trade-offs, sources and hypothetical examples included."}
               </p>
             </div>
             <Link to={language === "fr" ? "/fr/education" : "/education"} className="btn btn-ghost text-sm shrink-0">
@@ -783,8 +783,8 @@ export const HomePage: React.FC = () => {
               </h2>
               <p className="text-base md:text-lg text-[#46423a] leading-relaxed">
                 {language === "fr"
-                  ? "Je suis Ahmed Bello. Ce qui me passionne le plus, c'est d'aider les gens à poser de meilleures questions financières — et à en comprendre les réponses pour décider par eux-mêmes."
-                  : "I’m Ahmed Bello. What interests me most is helping people ask better financial questions — and then understand the answers well enough to make their own decisions."}
+                  ? "Je suis Ahmed Bello. Ce qui me passionne le plus, c'est d'aider les gens à poser de meilleures questions financières, et à en comprendre les réponses pour décider par eux-mêmes."
+                  : "I’m Ahmed Bello. What interests me most is helping people ask better financial questions, and then understand the answers well enough to make their own decisions."}
               </p>
               <p className="text-sm md:text-base text-[#46423a] leading-relaxed">
                 {language === "fr"

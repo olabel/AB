@@ -6,6 +6,7 @@ import { Footer } from "./components/Footer.tsx";
 import { DraftBanner } from "./components/Tbc.tsx";
 import { FloatingNewsWidget } from "./components/FloatingNewsWidget.tsx";
 import { MobileBookingBar } from "./components/MobileBookingBar.tsx";
+import { AnalyticsProvider } from "./components/AnalyticsProvider.tsx";
 import { disclosuresData, privacyData, standardsData, termsData } from "./content/legal.ts";
 
 // Route-level code splitting to keep initial bundle size tiny
@@ -20,6 +21,7 @@ const CareersPage = React.lazy(() => import("./pages/CareersPage.tsx").then((m) 
 const AudienceHubPage = React.lazy(() => import("./pages/AudienceHubPage.tsx").then((m) => ({ default: m.AudienceHubPage })));
 const IslamicInvestingPage = React.lazy(() => import("./pages/IslamicInvestingPage.tsx").then((m) => ({ default: m.IslamicInvestingPage })));
 const ContactPage = React.lazy(() => import("./pages/ContactPage.tsx").then((m) => ({ default: m.ContactPage })));
+const AnalyticsDashboardPage = React.lazy(() => import("./pages/AnalyticsDashboardPage.tsx").then((m) => ({ default: m.AnalyticsDashboardPage })));
 const LegalPage = React.lazy(() => import("./pages/LegalPage.tsx").then((m) => ({ default: m.LegalPage })));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage.tsx").then((m) => ({ default: m.NotFoundPage })));
 
@@ -64,7 +66,8 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <LanguageRouteSync />
-        <div className="min-h-screen flex flex-col bg-[#f7f3eb] text-[#1c1b18] antialiased selection:bg-[#2e4a3b] selection:text-[#f7f3eb]">
+        <AnalyticsProvider>
+          <div className="min-h-screen flex flex-col bg-[#f7f3eb] text-[#1c1b18] antialiased selection:bg-[#2e4a3b] selection:text-[#f7f3eb]">
           <Header />
           <DraftBanner />
           <FloatingNewsWidget />
@@ -87,6 +90,8 @@ export default function App() {
               <Route path="/investing/islamic-equity" element={<IslamicInvestingPage />} />
               <Route path="/for/muslim-investors" element={<IslamicInvestingPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/analytics" element={<AnalyticsDashboardPage />} />
+              <Route path="/advisor-insights" element={<AnalyticsDashboardPage />} />
 
               {/* French Indexable Routes */}
               <Route path="/fr" element={<HomePage />} />
@@ -104,6 +109,8 @@ export default function App() {
               <Route path="/fr/investing/islamic-equity" element={<IslamicInvestingPage />} />
               <Route path="/fr/for/muslim-investors" element={<IslamicInvestingPage />} />
               <Route path="/fr/contact" element={<ContactPage />} />
+              <Route path="/fr/analytics" element={<AnalyticsDashboardPage />} />
+              <Route path="/fr/advisor-insights" element={<AnalyticsDashboardPage />} />
 
               {/* Legal and standards routes (EN & FR) */}
               <Route
@@ -195,7 +202,8 @@ export default function App() {
         <Footer />
         <MobileBookingBar />
       </div>
-    </BrowserRouter>
-  </LanguageProvider>
+    </AnalyticsProvider>
+  </BrowserRouter>
+</LanguageProvider>
 );
 }

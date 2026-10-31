@@ -442,7 +442,7 @@ export const articles: Article[] = [
     "title": "TFSA vs RRSP: the decision is about more than tax deductions",
     "seoTitle": "TFSA vs RRSP: how to compare the two accounts",
     "description": "Both accounts shelter investments from tax, but at opposite moments. How timing, flexibility and room rules shape the choice.",
-    "question": "Which account should my next dollar go into — and what should I actually be comparing?",
+    "question": "Which account should my next dollar go into, and what should I actually be comparing?",
     "category": "registered-accounts",
     "figuresAsOf": "2026 tax year, as published by the Canada Revenue Agency",
     "problem": "“Which one saves more tax?” is where most people start, and it is an incomplete question. The two accounts tax you at different moments, and they differ in flexibility, room rules and how they interact with benefits later in life.",
@@ -480,7 +480,7 @@ export const articles: Article[] = [
       },
       "notes": [
         "In this simplified case, the outcome turns on whether your tax rate in retirement is lower, equal to or higher than your rate today. If it is equal, the two come out the same.",
-        "Real returns are not constant, and the example ignores contribution limits, benefit clawbacks and the timing of withdrawals — all of which can change the result. It illustrates the logic; it is not a prediction."
+        "Real returns are not constant, and the example ignores contribution limits, benefit clawbacks and the timing of withdrawals, all of which can change the result. It illustrates the logic; it is not a prediction."
       ]
     },
     "misunderstandings": [
@@ -521,17 +521,17 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Canada Revenue Agency — Before you contribute to a TFSA",
+        "label": "Canada Revenue Agency: Before you contribute to a TFSA",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account/contributing/before.html",
         "note": "TFSA limits by year, room rules, withdrawals and over-contributions."
       },
       {
-        "label": "Canada Revenue Agency — MP, RRSP, DPSP, TFSA limits, YMPE and the YAMPE",
+        "label": "Canada Revenue Agency: MP, RRSP, DPSP, TFSA limits, YMPE and the YAMPE",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html",
         "note": "Annual RRSP and TFSA dollar limits."
       },
       {
-        "label": "Canada Revenue Agency — RRSPs and related plans",
+        "label": "Canada Revenue Agency: RRSPs and related plans",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans.html",
         "note": "Contribution rules, withdrawals and maturity at 71."
       }
@@ -558,7 +558,7 @@ export const articles: Article[] = [
     "overview": [
       "“Risk” means more than one thing. Volatility describes how much an investment’s value moves up and down. Shortfall risk is the chance that your savings end up below what a goal requires. A savings account has almost no volatility, but over long periods its returns may not keep pace with inflation or with the growth a goal assumes.",
       "Three ideas help separate the two. Time horizon is when you need the money. Risk tolerance is how much movement you can accept emotionally. Risk capacity is how much movement your finances can absorb without derailing the goal. Money needed in two years and money needed in twenty-five years usually deserve different answers, even for the same person.",
-      "Diversification — spreading money across many holdings — reduces the damage any single investment can do. It does not remove the risk that markets as a whole decline."
+      "Diversification (spreading money across many holdings) reduces the damage any single investment can do. It does not remove the risk that markets as a whole decline."
     ],
     "example": {
       "title": "Three steady paths toward the same goal",
@@ -588,7 +588,7 @@ export const articles: Article[] = [
         ]
       },
       "notes": [
-        "A steady 2% looks safe and still leaves the goal about $57,000 out of reach. A steady 6% clears it — but real returns are never steady, and a path that averages 6% can include years of large declines. Neither number is a prediction; each choice simply carries a different risk.",
+        "A steady 2% looks safe and still leaves the goal about $57,000 out of reach. A steady 6% clears it, but real returns are never steady, and a path that averages 6% can include years of large declines. Neither number is a prediction; each choice simply carries a different risk.",
         "Raising contributions, giving the goal more time, or revising the goal are also levers. The investment return is not the only one."
       ]
     },
@@ -620,11 +620,11 @@ export const articles: Article[] = [
       "When will I need this money, and what happens if I need it earlier?",
       "What return does my goal actually require, and how steady is that likely to be?",
       "How would I respond to a 30% decline in this account?",
-      "Could I change the plan — contribute more, wait longer, adjust the goal — instead of relying on a higher return?"
+      "Could I change the plan (contribute more, wait longer, or adjust the goal) instead of relying on a higher return?"
     ],
     "sources": [
       {
-        "label": "GetSmarterAboutMoney.ca — investor education from Canadian securities regulators",
+        "label": "GetSmarterAboutMoney.ca: investor education from Canadian securities regulators",
         "url": "https://www.getsmarteraboutmoney.ca",
         "note": "Plain-language material on risk, return and time horizon."
       },
@@ -653,11 +653,11 @@ export const articles: Article[] = [
     "question": "How does a First Home Savings Account work, and what are its limits?",
     "category": "registered-accounts",
     "figuresAsOf": "Limits as published by the Canada Revenue Agency; confirm current rules before acting",
-    "problem": "The FHSA borrows features from both the RRSP and the TFSA, which makes it easy to misread — particularly the carry-forward rule and the point at which the account has to close.",
+    "problem": "The FHSA borrows features from both the RRSP and the TFSA, which makes it easy to misread, particularly the carry-forward rule and the point at which the account has to close.",
     "overview": [
       "The First Home Savings Account (FHSA) is a registered account for saving toward a first home. Contributions are generally tax-deductible, and withdrawals used to buy a qualifying first home are not taxed, including the investment income earned in the account.",
       "The annual contribution limit is $8,000 and the lifetime limit is $40,000. Unused annual room can be carried forward to the next year, up to a maximum of $8,000. Transfers from an RRSP count toward the limits but are not deductible.",
-      "To open one you generally need to be a resident of Canada, at least 18, and a first-time home buyer under CRA’s definition — broadly, that neither you nor your spouse or common-law partner lived in a home you owned during the year you open the account or the previous four calendar years. CRA publishes the precise test.",
+      "To open one you generally need to be a resident of Canada, at least 18, and a first-time home buyer under CRA’s definition (broadly, that neither you nor your spouse or common-law partner lived in a home you owned during the year you open the account or the previous four calendar years). CRA publishes the precise test.",
       "Withdrawals that do not go toward a qualifying home are included in your income. Your maximum participation period ends on December 31 of the earliest of: the 15th anniversary of opening your first FHSA, the year you turn 71, or the year after your first qualifying withdrawal. An unused balance can generally be transferred to an RRSP or RRIF on a tax-deferred basis.",
       "Combining the FHSA with the Home Buyers' Plan (HBP): You can legally combine both the FHSA and the RRSP Home Buyers' Plan for the exact same qualifying home purchase. With the CRA HBP withdrawal limit at $60,000, a single first-time homebuyer can combine $40,000 from an FHSA and $60,000 from an RRSP for up to $100,000 in tax-free home purchase capital ($200,000 for a couple). Unlike the HBP, qualifying FHSA withdrawals never have to be repaid." 
     ],
@@ -687,8 +687,8 @@ export const articles: Article[] = [
           [
             "2028",
             "$16,000 ($8,000 + $8,000)",
-            "—",
-            "—"
+            "None",
+            "None"
           ]
         ]
       },
@@ -731,17 +731,17 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Canada Revenue Agency — Saving for your first home: how a First Home Savings Account can help",
+        "label": "Canada Revenue Agency: Saving for your first home: how a First Home Savings Account can help",
         "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2023/saving-first-home-find-out-how-first-home-savings-account-can-help.html",
         "note": "Limits, carry-forward, deductions, qualifying withdrawals and closing rules."
       },
       {
-        "label": "Canada Revenue Agency — First home savings account",
+        "label": "Canada Revenue Agency: First home savings account",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html",
         "note": "Eligibility and the first-time home buyer definition."
       },
       {
-        "label": "Canada Revenue Agency — Definitions for FHSAs",
+        "label": "Canada Revenue Agency: Definitions for FHSAs",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account/definitions.html",
         "note": "Carry-forward cap and the maximum participation period."
       }
@@ -765,7 +765,7 @@ export const articles: Article[] = [
     "question": "What is a consumer proposal, and how is it different from simply struggling on?",
     "category": "debt-credit",
     "figuresAsOf": "As described by the federal Office of the Superintendent of Bankruptcy; confirm current rules with a trustee",
-    "problem": "When debt becomes unmanageable, people hear about consumer proposals and bankruptcy without learning how either works. A proposal changes some things quickly — collection pressure, for example — and leaves others untouched.",
+    "problem": "When debt becomes unmanageable, people hear about consumer proposals and bankruptcy without learning how either works. A proposal changes some things quickly (collection pressure, for example) and leaves others untouched.",
     "overview": [
       "A consumer proposal is a formal process under federal insolvency law. You offer creditors a plan to repay a portion of what you owe, over a longer period, or both. It is arranged and administered by a Licensed Insolvency Trustee (LIT), who works with you to develop the proposal and handles the payments to creditors.",
       "It is available to individuals whose total debts do not exceed $250,000, not counting a mortgage secured by your principal residence. The term of a proposal cannot be longer than five years.",
@@ -799,7 +799,7 @@ export const articles: Article[] = [
         ]
       },
       "notes": [
-        "Real terms depend on your income, your assets, what creditors will accept, and the trustee’s fees — ask how those costs are handled before committing.",
+        "Real terms depend on your income, your assets, what creditors will accept, and the trustee’s fees; ask how those costs are handled before committing.",
         "These numbers only show how the parts relate. A Licensed Insolvency Trustee can explain what is realistic in a particular situation."
       ]
     },
@@ -836,12 +836,12 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Office of the Superintendent of Bankruptcy — You owe money",
+        "label": "Office of the Superintendent of Bankruptcy: You owe money",
         "url": "https://ised-isde.canada.ca/site/office-superintendent-bankruptcy/en/node/448",
         "note": "Consumer proposals: eligibility, term, effect on creditors and trustees."
       },
       {
-        "label": "Financial Consumer Agency of Canada — Getting help from a credit counsellor",
+        "label": "Financial Consumer Agency of Canada: Getting help from a credit counsellor",
         "url": "https://www.canada.ca/en/financial-consumer-agency/services/debt/debt-help.html",
         "note": "Alternatives and what to look for when getting help with debt."
       }
@@ -862,11 +862,11 @@ export const articles: Article[] = [
     "title": "How much of your household income depends on your ability to work?",
     "seoTitle": "How much household income depends on you working?",
     "description": "Savings plans and debts quietly assume your income continues. A way to size the gap if it stopped, and the main types of coverage that respond.",
-    "question": "If my income stopped, which commitments could I not meet — and for how long?",
+    "question": "If my income stopped, which commitments could I not meet, and for how long?",
     "category": "protection",
     "problem": "Plans for housing, education and retirement assume earnings continue. Illness, disability or death can interrupt them, and most households have never worked out how large the gap would be.",
     "overview": [
-      "Start with the household, not the product. List the expenses that would have to continue — housing, food, childcare, debt payments — then subtract the income that would continue, such as a partner’s earnings or benefits you would be entitled to. The gap, and how long it might last, is the starting point.",
+      "Start with the household, not the product. List the expenses that would have to continue (housing, food, childcare, debt payments) then subtract the income that would continue, such as a partner’s earnings or benefits you would be entitled to. The gap, and how long it might last, is the starting point.",
       "Different events call for different responses. Life insurance pays a benefit when the insured person dies. Disability insurance replaces part of your income if illness or injury prevents you from working. Critical illness insurance pays a lump sum if you are diagnosed with a condition covered by the policy, as the policy defines it. They respond to different events and are not interchangeable.",
       "Before considering new coverage, take stock of what already exists: employer group benefits, coverage attached to a mortgage or loan, and public programs such as the Canada Pension Plan disability benefit. Check how each one is defined, what it pays and when it ends. Group coverage often ends when the job does."
     ],
@@ -935,17 +935,17 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Financial Consumer Agency of Canada — Life insurance",
+        "label": "Financial Consumer Agency of Canada: Life insurance",
         "url": "https://www.canada.ca/en/financial-consumer-agency/services/insurance/life.html",
         "note": "Types of life insurance and what to consider."
       },
       {
-        "label": "Financial Consumer Agency of Canada — Disability insurance",
+        "label": "Financial Consumer Agency of Canada: Disability insurance",
         "url": "https://www.canada.ca/en/financial-consumer-agency/services/insurance/disability.html",
         "note": "How disability coverage works and what to check."
       },
       {
-        "label": "Government of Canada — Canada Pension Plan disability benefits",
+        "label": "Government of Canada: Canada Pension Plan disability benefits",
         "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp-disability-benefit.html",
         "note": "Public disability benefit and eligibility."
       }
@@ -971,7 +971,7 @@ export const articles: Article[] = [
     "figuresAsOf": "Grant rules as published by the Canada Revenue Agency; confirm current rules before acting",
     "problem": "Families often open an RESP to “get the grant” without knowing how much they need to contribute, what the limits are, or what happens if a child does not go on to further education.",
     "overview": [
-      "A Registered Education Savings Plan (RESP) is a registered account for a child’s post-secondary education. Contributions are not tax-deductible, but investment growth is not taxed while it stays in the plan. When money is paid out for education, the growth and grants are generally taxed in the student’s hands — often at a lower rate — while the original contributions come back tax-free.",
+      "A Registered Education Savings Plan (RESP) is a registered account for a child’s post-secondary education. Contributions are not tax-deductible, but investment growth is not taxed while it stays in the plan. When money is paid out for education, the growth and grants are generally taxed in the student’s hands (often at a lower rate) while the original contributions come back tax-free.",
       "The Canada Education Savings Grant (CESG) adds 20% on the first $2,500 contributed each year, up to $500 a year per child. If earlier years were missed, unused grant room carries forward, and up to $1,000 of basic grant can be paid in a single year. The lifetime maximum is $7,200 per child, and additional grant amounts apply for lower- and middle-income families. Grants are available on contributions made up to the end of the calendar year the child turns 17, with extra conditions for ages 16 and 17.",
       "A lifetime contribution limit per child also applies. CRA’s RESP contributions page has the current figure."
     ],
@@ -1039,12 +1039,12 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Canada Revenue Agency — Canada Education Savings Grant (CESG)",
+        "label": "Canada Revenue Agency: Canada Education Savings Grant (CESG)",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/registered-education-savings-plans-resps/canada-education-savings-programs-cesp/canada-education-savings-grant-cesg.html",
         "note": "Grant rate, annual and lifetime maximums, age rules and carry-forward."
       },
       {
-        "label": "Canada Revenue Agency — RESP contributions",
+        "label": "Canada Revenue Agency: RESP contributions",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/registered-education-savings-plans-resps/resp-contributions.html",
         "note": "Contribution limits and how contributions are treated."
       }
@@ -1138,22 +1138,22 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Government of Canada — CPP: When to start your retirement pension",
+        "label": "Government of Canada: CPP: When to start your retirement pension",
         "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/when-start.html",
         "note": "Earliest and latest start ages and the monthly adjustments."
       },
       {
-        "label": "Government of Canada — OAS: When to start your retirement pension",
+        "label": "Government of Canada: OAS: When to start your retirement pension",
         "url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/when-start.html",
         "note": "Deferral and the monthly increase."
       },
       {
-        "label": "Government of Canada — OAS benefit amount",
+        "label": "Government of Canada: OAS benefit amount",
         "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/old-age-security/benefit-amount.html",
         "note": "Eligibility, residency and current maximum payments."
       },
       {
-        "label": "Retirement Hub — Deciding when to start your public pensions",
+        "label": "Retirement Hub: Deciding when to start your public pensions",
         "url": "https://retraite-retirement.service.canada.ca/en/learn/deciding-when-to-start-your-public-pensions"
       }
     ],
@@ -1244,16 +1244,16 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Canada Revenue Agency — Before you contribute to a TFSA",
+        "label": "Canada Revenue Agency: Before you contribute to a TFSA",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account/contributing/before.html",
         "note": "TFSA room for new residents and over-contribution rules."
       },
       {
-        "label": "Financial Consumer Agency of Canada — Credit report and score basics",
+        "label": "Financial Consumer Agency of Canada: Credit report and score basics",
         "url": "https://www.canada.ca/en/financial-consumer-agency/services/credit-reports-score/credit-report-score-basics.html"
       },
       {
-        "label": "Financial Consumer Agency of Canada — Improving your credit score",
+        "label": "Financial Consumer Agency of Canada: Improving your credit score",
         "url": "https://www.canada.ca/en/financial-consumer-agency/services/credit-reports-score/improve-credit-score.html"
       }
     ],
@@ -1277,8 +1277,8 @@ export const articles: Article[] = [
     "category": "decision-making",
     "problem": "“Debt first or savings first?” is usually argued as a rule. A better approach is to compare what each dollar would actually do, and to protect against the surprise that would otherwise push you back into debt.",
     "overview": [
-      "Paying down a debt earns a return equal to the interest you stop paying. If a credit card charges 19.99%, each dollar repaid avoids that rate — a certain result, provided you would otherwise have carried the balance. A dollar invested has an expected return that is not guaranteed and varies from year to year.",
-      "That comparison changes with the type of debt. Interest on most personal debt is not tax-deductible, and lower-rate debt, such as some mortgages, makes the comparison much closer. Tax benefits — an RRSP deduction or an employer’s matching contribution, for example — may belong in the comparison too.",
+      "Paying down a debt earns a return equal to the interest you stop paying. If a credit card charges 19.99%, each dollar repaid avoids that rate, a certain result provided you would otherwise have carried the balance. A dollar invested has an expected return that is not guaranteed and varies from year to year.",
+      "That comparison changes with the type of debt. Interest on most personal debt is not tax-deductible, and lower-rate debt, such as some mortgages, makes the comparison much closer. Tax benefits (an RRSP deduction or an employer matching contribution, for example) may belong in the comparison too.",
       "Liquidity is the other half. Money used to pay down a debt can be hard to get back. A modest emergency buffer helps keep a car repair or a gap between jobs from landing on a credit card, which would undo the progress.",
       "Finally, a plan has to be one you will keep following. Some people do better with a visible repayment target; others with a visible savings balance. Behaviour is part of the arithmetic."
     ],
@@ -1339,7 +1339,7 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Financial Consumer Agency of Canada — Getting help from a credit counsellor",
+        "label": "Financial Consumer Agency of Canada: Getting help from a credit counsellor",
         "url": "https://www.canada.ca/en/financial-consumer-agency/services/debt/debt-help.html"
       },
       {
@@ -1361,14 +1361,14 @@ export const articles: Article[] = [
   {
     "slug": "questions-before-any-financial-product",
     "kind": "insight",
-    "title": "Eight questions to ask before you buy any financial product — including from me",
+    "title": "Eight questions to ask before you buy any financial product, including from me",
     "seoTitle": "Eight questions before you buy a financial product",
     "description": "How a professional is paid, what they are licensed to do, and what a product cannot do for you. Questions worth asking of anyone.",
     "question": "How can I judge a financial recommendation before I act on it?",
     "category": "decision-making",
     "problem": "Financial products are complicated, and the person explaining one may be paid when you buy it. That does not make the advice wrong, but it makes asking good questions part of your own due diligence.",
     "overview": [
-      "Whoever you speak with — a bank, an advisor, an insurance agent or a website — the same questions apply. Asking them is not rude; clear answers are part of good service.",
+      "Whoever you speak with (a bank, an advisor, an insurance agent, or a website), the same questions apply. Asking them is not rude; clear answers are part of good service.",
       "Registration and licensing depend on what is being sold. Investment advisors and dealers are registered with provincial securities regulators, and you can check registration through the Canadian Securities Administrators’ National Registration Search. Insurance sales are licensed by provincial insurance regulators. Ask which licence covers the specific product being discussed.",
       "Compensation matters too. Some professionals are paid fees you pay directly; others are paid commissions by the product provider; some receive both. None of these is automatically better, but each creates different incentives, and you are entitled to know which applies.",
       "Then ask about the product itself: what it does, what it costs over time, what happens if you stop, and what it does not do."
@@ -1409,12 +1409,12 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Canadian Securities Administrators — National Registration Search",
+        "label": "Canadian Securities Administrators: National Registration Search",
         "url": "https://www.securities-administrators.ca/nrs/nrsearchprep.aspx",
         "note": "Check whether an individual or firm is registered to sell securities. Insurance licences are separate: check with your provincial insurance regulator."
       },
       {
-        "label": "Financial Consumer Agency of Canada — Life insurance",
+        "label": "Financial Consumer Agency of Canada: Life insurance",
         "url": "https://www.canada.ca/en/financial-consumer-agency/services/insurance/life.html"
       },
       {
@@ -1440,7 +1440,7 @@ export const articles: Article[] = [
     "description": "With over $350B in Canadian mortgages confronting renewal payment shock, homeowners are liquidating registered accounts to prepay principal. Here is the balance-sheet analysis of why this often destroys family wealth.",
     "question": "As my Canadian mortgage rate spikes at renewal, should I withdraw from my TFSA or RRSP to pay down my mortgage principal?",
     "category": "debt-and-cashflow",
-    "problem": "The psychological anxiety of higher monthly mortgage payments tempts Canadian households to treat brick-and-mortar debt reduction as an absolute good—ignoring permanent tax-shelter destruction, structural illiquidity, and asymmetric balance-sheet risk.",
+    "problem": "The psychological anxiety of higher monthly mortgage payments tempts Canadian households to treat brick-and-mortar debt reduction as an absolute good, ignoring permanent tax-shelter destruction, structural illiquidity, and asymmetric balance-sheet risk.",
     "overview": [
       "Over $350 billion in Canadian residential mortgages originated during the historic sub-2.5% rate window are confronting renewal at rates 250 to 350 basis points higher. For an average Canadian household carrying a $500,000 balance, this translates to an immediate payment shock of $600 to $1,200 per month. The intuitive, emotionally seductive reaction advocated across mainstream internet forums is simple: \"Raid your investments, pay down the debt, and secure a guaranteed return equal to your mortgage rate.\"",
       "Yet from an institutional balance-sheet perspective, this conventional wisdom commits a critical error: it evaluates debt in a vacuum rather than assessing total household capital efficiency. A home is an illiquid asset. It cannot buy groceries, cover an unexpected medical emergency, or sustain mortgage service during a temporary career interruption. When a family liquidates liquid capital to prepay mortgage principal, they convert liquid sovereignty into illiquid drywall.",
@@ -1474,7 +1474,7 @@ export const articles: Article[] = [
       },
       {
         "myth": "I can tap my RRSP to make a lump-sum payment and lower my monthly burden.",
-        "reality": "RRSP withdrawals are treated as taxable income, pushing you into higher marginal brackets and triggering immediate withholding taxes. Crucially, RRSP contribution room is permanently lost upon withdrawal. The tax damage almost always dwarfs the mortgage interest saved."
+        "reality": "RRSP withdrawals are treated as taxable income, pushing you into higher marginal brackets and triggering immediate withholding taxes. Importantly, RRSP contribution room is permanently lost upon withdrawal. The tax damage almost always dwarfs the mortgage interest saved."
       },
       {
         "myth": "Having zero debt is always safer than having both mortgage debt and liquid savings.",
@@ -1516,7 +1516,7 @@ export const articles: Article[] = [
       "income-depends-on-you"
     ],
     "contactTopic": "investing",
-    "invitationAbout": "navigating your mortgage renewal strategy and evaluating your household liquidity balance sheet",
+    "invitationAbout": "managing your mortgage renewal strategy and evaluating your household liquidity balance sheet",
     "url": "/insights/canadian-mortgage-renewal-shock-liquidity-trap",
     "readingMinutes": 6
   }
@@ -1532,10 +1532,10 @@ export const articles: Article[] = [
     "category": "debt-and-cashflow",
     "problem": "Many Canadian families assume that because Canada lacks an inheritance tax, wealth transfers smoothly to heirs. In reality, Section 70(5) of the Income Tax Act treats all appreciated assets as if sold at fair market value immediately prior to death, generating a substantial, immediate tax liability without delivering any cash to pay the CRA.",
     "overview": [
-      "A widespread misconception in Canadian wealth planning is that Canada has no estate or inheritance tax. While technically accurate—there is no succession duty as found in the United States or the United Kingdom—Canada enforces one of the most significant capital taxation mechanisms in the developed world: the statutory 'Deemed Disposition at Death' under Subsection 70(5) of the Income Tax Act.",
-      "Under Subsection 70(5), every Canadian taxpayer is legally deemed to have disposed of all capital property—including secondary residences, recreational cottages, rental real estate, non-registered investment portfolios, and shares of Canadian-Controlled Private Corporations (CCPCs)—at Fair Market Value (FMV) immediately prior to death. While a statutory rollover allows tax-free transfer to a surviving spouse, upon the second spouse's death, the entire accumulated capital gain is recognized on the final terminal tax return.",
+      "A widespread misconception in Canadian wealth planning is that Canada has no estate or inheritance tax. While technically accurate (there is no succession duty as found in the United States or the United Kingdom), Canada enforces one of the most significant capital taxation mechanisms in the developed world: the statutory 'Deemed Disposition at Death' under Subsection 70(5) of the Income Tax Act.",
+      "Under Subsection 70(5), every Canadian taxpayer is legally deemed to have disposed of all capital property (including secondary residences, recreational cottages, rental real estate, non-registered investment portfolios, and shares of CCPCs) at Fair Market Value (FMV) immediately prior to death. While a statutory rollover allows tax-free transfer to a surviving spouse, upon the second spouse's death, the entire accumulated capital gain is recognized on the final terminal tax return.",
       "Although a federal proposal in Budget 2024 suggested raising the inclusion rate to 66.7%, that proposed increase was subsequently cancelled. The Canadian capital gains inclusion rate remains established at 50% under Section 38 of the Income Tax Act. However, even at a 50% inclusion rate, decades of compound appreciation on cottages, rental properties, and corporate shares result in massive tax bills.",
-      "The primary threat is not merely the quantum of tax, but the structural liquidity mismatch. The Canada Revenue Agency demands cash payment on the terminal return (typically due by April 30 of the following year, or six months after death, whichever is later). If the estate consists primarily of illiquid assets—such as a beloved family cottage or private operating shares—and lacks segregated liquid capital, heirs are frequently forced into distressed property liquidations or costly borrowing simply to satisfy the CRA.",
+      "The primary threat is not merely the quantum of tax, but the structural liquidity mismatch. The Canada Revenue Agency demands cash payment on the terminal return (typically due by April 30 of the following year, or six months after death, whichever is later). If the estate consists primarily of illiquid assets (such as a family cottage or private operating shares) and lacks segregated liquid capital, heirs are frequently forced into distressed property liquidations or costly borrowing simply to satisfy the CRA.",
       "Effective estate planning requires analyzing your estate's terminal balance sheet long before death: evaluating Section 85/86 estate freezes to cap founder tax liability, extracting corporate Capital Dividend Account (CDA) balances tax-free, and creating dedicated, tax-sheltered liquidity that delivers liquid cash exactly when the tax assessment arrives."
     ],
     "example": {
@@ -1565,7 +1565,7 @@ export const articles: Article[] = [
       },
       {
         "myth": "Putting my children on joint tenancy with right of survivorship solves the deemed disposition problem.",
-        "reality": "Joint tenancy does not evade capital gains tax. Under the Supreme Court of Canada precedent (Pecore v. Pecore), gratuitous transfers to adult children are presumed to be held in a resulting trust for the estate. Furthermore, joint tenancy exposes family assets to the children's potential creditors, lawsuits, or marital divorce claims."
+        "reality": "Joint tenancy does not evade capital gains tax. Under the Supreme Court of Canada precedent (Pecore v. Pecore), gratuitous transfers to adult children are presumed to be held in a resulting trust for the estate. In addition, joint tenancy exposes family assets to the children's potential creditors, lawsuits, or marital divorce claims."
       },
       {
         "myth": "Corporate holding companies protect investments from high estate taxes.",
@@ -1607,7 +1607,7 @@ export const articles: Article[] = [
       "income-depends-on-you"
     ],
     "contactTopic": "investing",
-    "invitationAbout": "structuring estate liquidity, navigating capital gains rules, and safeguarding family wealth transitions",
+    "invitationAbout": "structuring estate liquidity, evaluating capital gains rules, and safeguarding family wealth transitions",
     "url": "/insights/canadian-capital-gains-deemed-disposition-estate-trap",
     "readingMinutes": 8
   }
@@ -1625,7 +1625,7 @@ export const articles: Article[] = [
     "problem": "Life insurance is often presented as an ideological battle between 'Buy term and invest the difference' and 'Permanent whole life builds wealth.' In reality, they are two different tools designed for two fundamentally different financial problems.",
     "overview": [
       "Life insurance in Canada exists to solve one of two financial realities: temporary debt replacement during working years, or permanent liquidity needs upon death. Choosing between term and permanent insurance starts with understanding which of these two problems you are solving.",
-      "Term life insurance provides pure death benefit protection for a fixed period—typically 10, 20, or 30 years, or up to age 65. If you pass away during the term, your beneficiaries receive a tax-free lump sum. If you outlive the term, the policy expires with zero residual cash value. Because you are only paying for pure mortality risk during healthy working years, term premiums are highly affordable, making it the ideal tool to cover a mortgage, replace family income, and protect dependent children until they become financially self-sufficient.",
+      "Term life insurance provides pure death benefit protection for a fixed period (typically 10, 20, or 30 years, or up to age 65). If you pass away during the term, your beneficiaries receive a tax-free lump sum. If you outlive the term, the policy expires with zero residual cash value. Because you are only paying for pure mortality risk during healthy working years, term premiums are highly affordable, making it the ideal tool to cover a mortgage, replace family income, and protect dependent children until they become financially self-sufficient.",
       "Permanent life insurance (such as Whole Life or Universal Life) is designed to stay in force for your entire lifetime, guaranteed to pay out whenever death occurs, provided required premiums are maintained. Permanent policies also accumulate a tax-sheltered cash surrender value. In Canada, permanent insurance is primarily an estate planning and tax shelter tool: it is used to fund terminal capital gains taxes on family cottages and rental properties under Subsection 70(5), pass corporate retained earnings out of a private corporation tax-free through the Capital Dividend Account (CDA), or leave an equalized legacy among children.",
       "A critical advantage in Canadian term policies is the Contractual Conversion Privilege. Most individual term policies permit you to convert all or part of your term coverage into permanent insurance at any point before age 65 or 70 without providing medical evidence or undergoing health underwriting. This allows young families to purchase high amounts of low-cost term protection today while preserving their option to lock in permanent estate coverage later in life regardless of future health changes."
     ],
@@ -1675,17 +1675,17 @@ export const articles: Article[] = [
     ],
     "sources": [
       {
-        "label": "Financial Consumer Agency of Canada — Life Insurance Explained",
+        "label": "Financial Consumer Agency of Canada: Life Insurance Explained",
         "url": "https://www.canada.ca/en/financial-consumer-agency/services/insurance/life.html",
         "note": "Official Canadian government guide on term vs permanent life insurance policies."
       },
       {
-        "label": "Canadian Life and Health Insurance Association (CLHIA) — Consumer Guide",
+        "label": "Canadian Life and Health Insurance Association (CLHIA): Consumer Guide",
         "url": "https://www.clhia.ca/",
         "note": "Industry standards on policy underwriting, conversion privileges, and beneficiary protections."
       },
       {
-        "label": "Canada Revenue Agency — Subsection 148: Life Insurance Policies",
+        "label": "Canada Revenue Agency: Subsection 148: Life Insurance Policies",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-3-property-investments-savings-plans/series-3-property-investments-savings-plan-folio-9-life-insurance/income-tax-folio-s3-f9-c1-lottery-winnings-miscellaneous-receipts-income-losses-life-insurance-policies.html",
         "note": "Tax treatment of death benefits and cash surrender values under the Income Tax Act."
       }

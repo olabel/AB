@@ -554,8 +554,8 @@ export const ArticlePage: React.FC = () => {
                 </h3>
                 <p className="text-sm text-[#46423a] mt-2 leading-relaxed">
                   {isFr
-                    ? `Les règles fiscales canadiennes et les plafonds de cotisation dépendent de votre situation précise. Posez votre question sur « ${article.invitationAbout} » — Ahmed vous répondra personnellement avec des explications claires et sans pression commerciale.`
-                    : `Canadian tax rules, registered shelters, and liquidity limits depend on your exact household situation. Ask your specific question about “${article.invitationAbout}” — Ahmed reviews and responds directly with evidence-based education and no sales pitch.`}
+                    ? `Les règles fiscales canadiennes et les plafonds de cotisation dépendent de votre situation précise. Posez votre question sur « ${article.invitationAbout} » : Ahmed vous répondra personnellement avec des explications claires et sans pression commerciale.`
+                    : `Canadian tax rules, registered shelters, and liquidity limits depend on your exact household situation. Ask your specific question about “${article.invitationAbout}” : Ahmed reviews and responds directly with evidence-based education and no sales pitch.`}
                 </p>
               </div>
 

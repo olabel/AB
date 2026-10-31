@@ -63,12 +63,12 @@ const CANADIAN_PROVINCES = [
 ];
 
 const US_REGIONS = [
-  "United States — Northeast",
-  "United States — Southeast",
-  "United States — Midwest",
-  "United States — Southwest",
-  "United States — West Coast",
-  "United States — Other State",
+  "United States - Northeast",
+  "United States - Southeast",
+  "United States - Midwest",
+  "United States - Southwest",
+  "United States - West Coast",
+  "United States - Other State",
 ];
 
 export const CareersPage: React.FC = () => {
@@ -115,7 +115,7 @@ export const CareersPage: React.FC = () => {
       setFormData((prev) => {
         const next = { ...prev, [name]: value };
         if (name === "country") {
-          next.jurisdiction = value === "Canada" ? "New Brunswick" : "United States — Northeast";
+          next.jurisdiction = value === "Canada" ? "New Brunswick" : "United States - Northeast";
         }
         return next;
       });
@@ -931,7 +931,7 @@ Candidate Application Details:
                   Apply for the Educational Mentorship
                 </h2>
                 <p className="text-[#46423a] text-sm leading-relaxed">
-                  Complete this brief questionnaire to connect with Ahmed. There are no coaching fees or obligations—just an honest conversation about the licensing process and whether independent financial practice aligns with your career goals.
+                  Complete this brief questionnaire to connect with Ahmed. There are no coaching fees or obligations: just an honest conversation about the licensing process and whether independent financial practice aligns with your career goals.
                 </p>
               </div>
 

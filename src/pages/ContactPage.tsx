@@ -402,7 +402,7 @@ export const ContactPage: React.FC = () => {
                   <div>
                     <span className="eyebrow text-[0.65rem] text-[#75581f] block">Enquiry Confirmed</span>
                     <h2 className="h3 text-[#2e4a3b] text-xl sm:text-2xl font-serif">
-                      Thank You, {firstName} — Your Message Was Sent
+                      Thank You, {firstName}: Your Message Was Sent
                     </h2>
                   </div>
                 </div>

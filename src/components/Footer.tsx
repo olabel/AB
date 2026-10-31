@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { BrandMark } from "./BrandMark.tsx";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
-import { MapPin, Mail, Phone, Calendar, ArrowRight, ShieldCheck, ExternalLink } from "lucide-react";
+import { MapPin, Mail, Phone, Calendar, ArrowRight, ShieldCheck, ExternalLink, BarChart3 } from "lucide-react";
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -209,6 +209,12 @@ export const Footer: React.FC = () => {
               <li>
                 <Link to={`${prefix}/terms`} className="hover:text-white transition-colors">
                   {isFr ? "Conditions d'utilisation" : "Terms of Use"}
+                </Link>
+              </li>
+              <li>
+                <Link to={`${prefix}/analytics`} className="hover:text-white transition-colors flex items-center gap-1 opacity-80 hover:opacity-100">
+                  <BarChart3 className="w-3 h-3 text-[#d6c298]" />
+                  <span>{isFr ? "Analytique du site" : "Advisor Analytics"}</span>
                 </Link>
               </li>
             </ul>

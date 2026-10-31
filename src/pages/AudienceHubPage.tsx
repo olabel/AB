@@ -82,7 +82,7 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     eyebrowEn: "Audience Hub: Business Owners & CCPCs",
     eyebrowFr: "Carrefour thématique : Propriétaires d'entreprises",
     descriptionEn:
-      "From navigating passive investment income rules and the Small Business Deduction (SBD) grind to extracting tax-free capital via the Capital Dividend Account (CDA), understand how corporate wealth intersects with personal balance sheets.",
+      "From managing passive investment income rules and the Small Business Deduction (SBD) grind to extracting tax-free capital via the Capital Dividend Account (CDA), understand how corporate wealth intersects with personal balance sheets.",
     descriptionFr:
       "De la gestion des règles sur les revenus de placement passif et du plafond des petites entreprises à l'extraction de capital non imposable via le Compte de dividendes en capital (CDC).",
     icon: Briefcase,

@@ -5,7 +5,7 @@ export const NotFoundPage: React.FC = () => {
   return (
     <div className="section py-24 text-center">
       <div className="wrap max-w-xl space-y-6">
-        <span className="eyebrow text-xs">404 — Page Not Found</span>
+        <span className="eyebrow text-xs">404: Page Not Found</span>
         <h1 className="display text-[#1c1b18]">Page not found</h1>
         <p className="lede text-base md:text-lg text-[#46423a]">
           The page or article you were looking for doesn’t exist or has moved.

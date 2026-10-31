@@ -10,6 +10,8 @@ export interface NewsItem {
   category: "rates" | "housing" | "tax" | "economy";
 }
 
+const MAX_ITEM_AGE_MS = 21 * 24 * 60 * 60 * 1000; // 21 days
+
 export const FALLBACK_NEWS: NewsItem[] = [
   {
     id: "boc-policy-rate-decision",
@@ -22,7 +24,7 @@ export const FALLBACK_NEWS: NewsItem[] = [
   },
   {
     id: "fed-fomc-policy-statement",
-    title: "Federal Reserve Maintains Target Federal Funds Rate Range at 3.75% – 4.00%",
+    title: "Federal Reserve Maintains Target Federal Funds Rate Range at 3.75% - 4.00%",
     link: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
     pubDate: "2026-10-27T18:00:00Z",
     source: "Federal Reserve",
@@ -117,6 +119,7 @@ function fetchHttps(url: string, timeoutMs = 4000): Promise<string> {
 function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US"): NewsItem[] {
   const items: NewsItem[] = [];
   const itemMatches = xml.match(/<item[\s\S]*?<\/item>/gi) || [];
+  const now = Date.now();
 
   for (const block of itemMatches.slice(0, 8)) {
     const titleMatch = block.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i);
@@ -126,7 +129,20 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
     if (titleMatch && titleMatch[1]) {
       const rawTitle = titleMatch[1].replace(/<[^>]+>/g, "").trim();
       const rawLink = linkMatch ? linkMatch[1].trim() : "";
-      const rawDate = dateMatch ? dateMatch[1].trim() : new Date().toISOString();
+      const rawDate = dateMatch ? dateMatch[1].trim() : "";
+
+      let parsedTime = now;
+      if (rawDate) {
+        const t = new Date(rawDate).getTime();
+        if (!isNaN(t)) {
+          parsedTime = t;
+        }
+      }
+
+      // Filter out stale items older than 21 days
+      if (now - parsedTime > MAX_ITEM_AGE_MS) {
+        continue;
+      }
 
       const lower = rawTitle.toLowerCase();
       let category: "rates" | "housing" | "tax" | "economy" = "economy";
@@ -142,7 +158,7 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
         id: `news-${Buffer.from(rawTitle).toString("base64").slice(0, 16)}`,
         title: rawTitle,
         link: rawLink || "https://www.bankofcanada.ca",
-        pubDate: rawDate,
+        pubDate: new Date(parsedTime).toISOString(),
         source: defaultSource,
         country: defaultCountry,
         category,
@@ -197,7 +213,7 @@ export default async function handler(req: any, res: any) {
 
     const seen = new Set<string>();
     const deduplicated: NewsItem[] = [];
-    for (const item of aggregated) {
+    for (const item of [...aggregated, ...FALLBACK_NEWS]) {
       const key = item.title.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 30);
       if (!seen.has(key)) {
         seen.add(key);
@@ -205,15 +221,16 @@ export default async function handler(req: any, res: any) {
       }
     }
 
-    const items = deduplicated.length >= 3 ? deduplicated : [...deduplicated, ...FALLBACK_NEWS];
+    // Sort descending by date
+    deduplicated.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 
     return res.status(200).json({
       success: true,
-      count: items.length,
+      count: deduplicated.length,
       lastUpdated: new Date().toISOString(),
-      items,
+      items: deduplicated,
     });
-  } catch (err: any) {
+  } catch {
     return res.status(200).json({
       success: true,
       count: FALLBACK_NEWS.length,

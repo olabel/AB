@@ -22,7 +22,7 @@ const coreRoutes = [
     title: "Ahmed Bello | Financial Education for Canadians",
     description: "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.",
     lang: "en-CA",
-    heading: "Ahmed Bello — Licensed Financial Solutions Professional",
+    heading: "Ahmed Bello | Licensed Financial Solutions Professional",
     summary: "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), income protection, debt restructuring, and family financial decision-making.",
   },
   {
@@ -30,7 +30,7 @@ const coreRoutes = [
     title: "About Ahmed Bello | Licensed Financial Solutions Professional",
     description: "Independent Canadian financial educator helping individuals and families understand registered accounts (TFSA, RRSP, FHSA), insurance, and money decisions.",
     lang: "en-CA",
-    heading: "About Ahmed Bello — Financial Educator",
+    heading: "About Ahmed Bello | Financial Educator",
     summary: "Independent financial professional helping individuals and families across Canada make intentional, well-grounded money decisions through transparent education.",
   },
   {
@@ -153,6 +153,14 @@ const coreRoutes = [
     heading: "Website Terms of Use",
     summary: "Clear legal terms governing website access, educational copyright, and financial disclaimer boundaries.",
   },
+  {
+    path: "/analytics",
+    title: "Advisor Analytics & Engagement Insights | Ahmed Bello",
+    description: "Privacy-first metrics measuring Canadian educational guide readership, calculator usage, and consultation demand.",
+    lang: "en-CA",
+    heading: "Advisor Analytics & Insights Dashboard",
+    summary: "Privacy-compliant website analytics, audience insights, engagement tracking, and conversation conversion metrics.",
+  },
 
   // French Core Routes
   {
@@ -160,7 +168,7 @@ const coreRoutes = [
     title: "Ahmed Bello | Éducation Financière pour Canadiens",
     description: "Éducation financière en langage clair sur les régimes enregistrés (CELI, REER, CELIAPP), l'assurance vie et les décisions budgétaires avec Ahmed Bello.",
     lang: "fr-CA",
-    heading: "Ahmed Bello — Professionnel en Solutions Financières Agréé",
+    heading: "Ahmed Bello | Professionnel en Solutions Financières Agréé",
     summary: "Éducation financière accessible et indépendante au Canada : régimes enregistrés, protection du revenu familial, remboursement des dettes et investissement réfléchi.",
   },
   {
@@ -168,7 +176,7 @@ const coreRoutes = [
     title: "À Propos d'Ahmed Bello | Professionnel Agréé au Canada",
     description: "Éducateur financier indépendant aidant les familles et particuliers au Canada à comprendre les régimes enregistrés (CELI, REER) et la prévoyance.",
     lang: "fr-CA",
-    heading: "À Propos d'Ahmed Bello — Éducateur Financier",
+    heading: "À Propos d'Ahmed Bello | Éducateur Financier",
     summary: "Pratique financière indépendante axée sur l'éducation et la transparence, agréée dans toutes les provinces canadiennes.",
   },
   {
@@ -290,6 +298,14 @@ const coreRoutes = [
     lang: "fr-CA",
     heading: "Conditions d'Utilisation du Site Web",
     summary: "Conditions juridiques régissant l'accès et l'utilisation de la plateforme d'éducation financière.",
+  },
+  {
+    path: "/fr/analytics",
+    title: "Analytique & Engagement des Visiteurs | Ahmed Bello",
+    description: "Mesures d'audience respectueuses de la vie privée sur la consultation des guides financiers et des outils interactifs.",
+    lang: "fr-CA",
+    heading: "Tableau de Bord Analytique & Engagement",
+    summary: "Statistiques d'engagement respectueuses des normes de confidentialité LPRPDE et LCAP.",
   },
 ];
 

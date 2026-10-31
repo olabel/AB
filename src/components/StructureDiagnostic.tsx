@@ -23,7 +23,7 @@ const QUESTIONS: Question[] = [
     id: 2,
     title: "If illness or injury stopped your work for 6 months, how much of your net take-home pay would continue automatically?",
     options: [
-      { label: "0% — No private or group disability coverage", score: 0, feedback: "Critical exposure: your ability to earn is your single largest lifetime asset." },
+      { label: "0% (No private or group disability coverage", score: 0, feedback: "Critical exposure: your ability to earn is your single largest lifetime asset." },
       { label: "Only basic employer group coverage (often capped or taxable)", score: 1, feedback: "Group coverage is a start, but frequently has restrictive definitions or caps." },
       { label: "60% to 70% via comprehensive, portable disability coverage", score: 3, feedback: "Rock-solid Tier 2 Income Protection Wall." },
       { label: "Unsure of exact group terms and definitions", score: 1, feedback: "Reviewing your benefit booklet is a vital first step." },
@@ -43,9 +43,9 @@ const QUESTIONS: Question[] = [
     id: 4,
     title: "Have you modeled how your retirement withdrawals will interact with CPP and OAS start ages?",
     options: [
-      { label: "No — I plan to take government pensions as soon as I can", score: 0, feedback: "Taking CPP early permanently cuts payments by 36% without evaluating longevity." },
+      { label: "No, I plan to take government pensions as soon as I can", score: 0, feedback: "Taking CPP early permanently cuts payments by 36% without evaluating longevity." },
       { label: "I know my rough retirement date but haven't coordinated account drawdown order", score: 1, feedback: "Uncoordinated withdrawals risk higher tax brackets and OAS clawback." },
-      { label: "Yes — I have mapped tax-bracket smoothing and the +42% CPP age-70 deferral benefit", score: 3, feedback: "Mastery of Tier 4 Decumulation & Longevity Design." },
+      { label: "Yes, I have mapped tax-bracket smoothing and the +42% CPP age-70 deferral benefit", score: 3, feedback: "Mastery of Tier 4 Decumulation & Longevity Design." },
       { label: "Retirement is more than 20 years away; focusing on growth", score: 2, feedback: "Appropriate horizon; ensuring compounding works in proper tax containers is key." },
     ],
   },

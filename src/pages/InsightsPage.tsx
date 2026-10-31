@@ -288,11 +288,11 @@ export const InsightsPage: React.FC = () => {
           <Scale className="w-8 h-8 text-[#d6c298] mx-auto opacity-80" />
           <blockquote className="font-serif text-xl sm:text-2xl text-[#f7f3eb] italic leading-relaxed max-w-3xl mx-auto">
             {isFr
-              ? "« La finance personnelle conventionnelle évalue la dette en vase clos. La planification institutionnelle évalue l'ensemble du bilan patrimonial — reconnaissant que la liquidité possède une immense valeur d'option économique. »"
-              : "“Conventional personal finance evaluates debt in a vacuum. Institutional planning evaluates the total balance sheet — recognizing that liquid capital carries immense economic option value that simple interest arithmetic ignores.”"}
+              ? "« La finance personnelle conventionnelle évalue la dette en vase clos. La planification institutionnelle évalue l'ensemble du bilan patrimonial, reconnaissant que la liquidité possède une immense valeur d'option économique. »"
+              : "“Conventional personal finance evaluates debt in a vacuum. Institutional planning evaluates the total balance sheet, recognizing that liquid capital carries immense economic option value that simple interest arithmetic ignores.”"}
           </blockquote>
           <p className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold">
-            — Ahmed Bello, Licensed Financial Solutions Professional
+            - Ahmed Bello, Licensed Financial Solutions Professional
           </p>
         </div>
       </section>
@@ -494,7 +494,7 @@ export const InsightsPage: React.FC = () => {
           <p className="lede text-base md:text-lg text-[#46423a] max-w-xl mx-auto">
             {isFr
               ? "Qu'il s'agisse de renouvellement hypothécaire, d'optimisation fiscale de vos régimes enregistrés ou de protection du revenu familial, commençons par un échange sincère."
-              : "Whether navigating an upcoming mortgage renewal, optimizing registered tax shelters, or structuring family income protection, let’s start with an honest conversation."}
+              : "Whether preparing for an upcoming mortgage renewal, optimizing registered tax shelters, or structuring family income protection, let’s start with an honest conversation."}
           </p>
           <div className="pt-2 flex justify-center">
             <Link to="/contact" className="btn btn-primary text-base px-8 py-3">

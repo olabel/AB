@@ -4,7 +4,7 @@ function getSemanticFallbackHtml(pathname: string): string {
   if (p === "/about") {
     return `
       <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
-        <h1>About Ahmed Bello — Licensed Financial Solutions Professional</h1>
+        <h1>About Ahmed Bello | Licensed Financial Solutions Professional</h1>
         <p>I am an independent financial professional helping individuals and families across Canada make intentional, well-grounded money decisions. Rather than starting with a product or sales pitch, I start with education: clarifying how Canadian registered accounts (TFSA, RRSP, FHSA), debt repayment, and income protection interact.</p>
         <h2>Professional Background & Licensing</h2>
         <p>Headquartered in Moncton, New Brunswick, and licensed to provide financial solutions and protection planning across Canada (Alberta, British Columbia, Manitoba, New Brunswick, Newfoundland and Labrador, Northwest Territories, Nova Scotia, Nunavut, Ontario, Prince Edward Island, Quebec, Saskatchewan, Yukon) and the United States.</p>
@@ -96,11 +96,30 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     );
   }
 
+  if (req.method === "TRACE" || req.method === "TRACK") {
+    return res.status(405).send("Method Not Allowed");
+  }
+
   next();
 });
 
 // Reject bodies over 10 KB to prevent DoS payloads
 app.use(express.json({ limit: "10kb" }));
+
+// Reject prototype pollution attacks
+app.use((req: Request, res: Response, next: NextFunction) => {
+  if (req.body && typeof req.body === "object" && !Array.isArray(req.body)) {
+    const hasOwn = Object.prototype.hasOwnProperty;
+    if (
+      hasOwn.call(req.body, "__proto__") ||
+      hasOwn.call(req.body, "constructor") ||
+      hasOwn.call(req.body, "prototype")
+    ) {
+      return res.status(400).json({ error: "malformed_request" });
+    }
+  }
+  next();
+});
 
 // --------------------------------------------------------------------------
 // 2. Strict Input Sanitization Helpers
@@ -463,7 +482,7 @@ Thank you for reaching out through ahmedbello.com. This automated receipt confir
 
 What happens next:
 1. Personal Review: Ahmed Bello personally reviews every enquiry within 1 to 2 business days.
-2. Direct, Educational Answer: You will receive an evidence-based response to your question—without high-pressure sales pitches or product pushes.
+2. Direct, Educational Answer: You will receive an evidence-based response to your question without high-pressure sales pitches or product pushes.
 3. Next Steps: If your situation calls for a deeper conversation, we will share available times for a 20-minute introductory call.
 
 If you would like to speak directly or reserve a spot right away:
@@ -526,6 +545,66 @@ app.get("/api/news", async (_req: Request, res: Response) => {
       items: [],
     });
   }
+});
+
+// --------------------------------------------------------------------------
+// 5c. Privacy-First Analytics Aggregation Endpoints: /api/analytics
+// --------------------------------------------------------------------------
+const serverAnalytics = {
+  totalViews: 0,
+  uniqueSessions: new Set<string>(),
+  topPaths: new Map<string, number>(),
+  topEvents: new Map<string, number>(),
+};
+
+app.post("/api/analytics", (req: Request, res: Response) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  try {
+    const body = req.body || {};
+    const { name, path: evPath, properties } = body;
+
+    if (name === "page_view") {
+      serverAnalytics.totalViews++;
+      if (typeof evPath === "string") {
+        const cleanPath = evPath.slice(0, 80);
+        serverAnalytics.topPaths.set(cleanPath, (serverAnalytics.topPaths.get(cleanPath) || 0) + 1);
+      }
+    }
+
+    if (properties && typeof properties.sessionId === "string") {
+      serverAnalytics.uniqueSessions.add(properties.sessionId.slice(0, 32));
+    }
+
+    if (typeof name === "string") {
+      const cleanName = name.slice(0, 40);
+      serverAnalytics.topEvents.set(cleanName, (serverAnalytics.topEvents.get(cleanName) || 0) + 1);
+    }
+
+    return res.json({ ok: true });
+  } catch {
+    return res.status(400).json({ error: "invalid_payload" });
+  }
+});
+
+app.get("/api/analytics/summary", (_req: Request, res: Response) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cache-Control", "no-cache");
+
+  const topPages = Array.from(serverAnalytics.topPaths.entries())
+    .map(([path, count]) => ({ path, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 10);
+
+  const topEvents = Array.from(serverAnalytics.topEvents.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+
+  return res.json({
+    totalViews: serverAnalytics.totalViews,
+    uniqueSessions: serverAnalytics.uniqueSessions.size,
+    topPages,
+    topEvents,
+  });
 });
 
 // --------------------------------------------------------------------------

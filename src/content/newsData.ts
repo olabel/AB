@@ -28,7 +28,7 @@ export const MACRO_INDICATORS: MacroIndicator[] = [
   },
   {
     label: "US Fed Funds Target Range",
-    value: "3.75% – 4.00%",
+    value: "3.75% - 4.00%",
     change: "FOMC Policy Corridor",
     trend: "neutral",
     authority: "Federal Reserve",
@@ -40,7 +40,7 @@ export const MACRO_INDICATORS: MacroIndicator[] = [
     change: "Target Midpoint",
     trend: "neutral",
     authority: "Statistics Canada",
-    lastUpdated: "Control Band (1%–3%)",
+    lastUpdated: "Control Band (1% - 3%)",
   },
   {
     label: "5-Yr Fixed Mortgage Benchmark",
@@ -64,7 +64,7 @@ export const STATIC_NEWS: NewsItem[] = [
   },
   {
     id: "fed-fomc-policy-statement",
-    title: "Federal Reserve Maintains Target Federal Funds Rate Range at 3.75% – 4.00%",
+    title: "Federal Reserve Maintains Target Federal Funds Rate Range at 3.75% - 4.00%",
     link: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
     pubDate: "2026-10-27T18:00:00Z",
     source: "Federal Reserve",
