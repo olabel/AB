@@ -52,10 +52,10 @@ const coreRoutes = [
   {
     path: "/insights",
     title: "Financial Insights & Strategic Perspectives | Ahmed Bello",
-    description: "Deep-dive analytical essays on mortgage renewal shock, Canadian capital gains, and family liquidity architecture.",
+    description: "Deep-dive analytical essays on mortgage renewal shock, statutory liquidity traps, and family wealth architecture.",
     lang: "en-CA",
     heading: "Financial Insights & Strategic Perspectives",
-    summary: "Comprehensive analytical articles examining the mechanics of Canadian mortgage renewals, statutory deemed disposition at death under Subsection 70(5), and structured family wealth transitions.",
+    summary: "Comprehensive analytical articles examining the mechanics of Canadian mortgage renewals, statutory liquidity reserves, and structured family wealth transitions.",
   },
   {
     path: "/news",
@@ -83,10 +83,10 @@ const coreRoutes = [
   },
   {
     path: "/investing/islamic-equity",
-    title: "Shari'ah-Compliant Global Equity Index Investing | Canadian Educational Framework",
+    title: "Islamic Investing in Canada: An Education Guide | Ahmed Bello",
     description: "Educational guide on Shari'ah-compliant global equity investing under AAOIFI standards. Benchmark index tracking (MSCI ACWI Islamic Index) and Canadian registered accounts (TFSA, RRSP, FHSA, RESP, Corporate).",
     lang: "en-CA",
-    heading: "Shari'ah-Compliant Global Equity Index Investing in Canada",
+    heading: "Islamic Investing in Canada: Educational Framework",
     summary: "Understanding Shari'ah screening principles, benchmark index tracking, and Canadian tax-sheltered accounts without commercial sales pitch.",
   },
   {
@@ -198,10 +198,10 @@ const coreRoutes = [
   {
     path: "/fr/insights",
     title: "Perspectives Financières & Analyses Stratégiques | Ahmed Bello",
-    description: "Essais analytiques approfondis sur le renouvellement hypothécaire canadien, les gains en capital et la disposition présumée au décès.",
+    description: "Essais analytiques approfondis sur le renouvellement hypothécaire canadien, les pièges de liquidité et la transmission patrimoniale.",
     lang: "fr-CA",
     heading: "Perspectives Financières & Analyses Stratégiques",
-    summary: "Analyses complètes sur les renouvellements hypothécaires, la disposition présumée en vertu du paragraphe 70(5) de la Loi de l'impôt sur le revenu et la trésorerie familiale.",
+    summary: "Analyses complètes sur les renouvellements hypothécaires, les réserves de liquidité et la trésorerie familiale.",
   },
   {
     path: "/fr/news",
@@ -229,10 +229,10 @@ const coreRoutes = [
   },
   {
     path: "/fr/investing/islamic-equity",
-    title: "Investissement en Actions Islamiques & Cadre Éducatif Canadien | Ahmed Bello",
+    title: "Investissement Islamique au Canada | Ahmed Bello",
     description: "Guide éducatif sur l'investissement en actions mondiales conformes à la charia selon les normes de l'AAOIFI. Réplication d'indices (MSCI ACWI Islamic) et comptes enregistrés canadiens (CELI, REER, CELIAPP).",
     lang: "fr-CA",
-    heading: "Investissement en Actions Islamiques au Canada : Cadre Éducatif",
+    heading: "Investissement Islamique au Canada : Cadre Éducatif",
     summary: "Comprendre les principes de filtrage éthique islamique, la réplication indicielle et les régimes enregistrés canadiens sans démarche commerciale.",
   },
   {

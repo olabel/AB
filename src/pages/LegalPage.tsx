@@ -28,12 +28,37 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
     return text;
   };
 
+  const isFrench = location.pathname.startsWith("/fr");
+  const titlesByPage: Record<string, { en: string; fr: string }> = {
+    disclosures: {
+      en: "Regulatory Disclosures & Professional Scope | Ahmed Bello",
+      fr: "Divulgations Réglementaires & Portée Professionnelle | Ahmed Bello",
+    },
+    privacy: {
+      en: "Privacy Notice & Data Protection | Ahmed Bello",
+      fr: "Avis de Confidentialité & Protection des Données | Ahmed Bello",
+    },
+    standards: {
+      en: "Editorial Standards & Official Sources | Ahmed Bello",
+      fr: "Normes Éditoriales & Sources Officielles | Ahmed Bello",
+    },
+    terms: {
+      en: "Website Terms of Use | Ahmed Bello",
+      fr: "Conditions d'Utilisation du Site Web | Ahmed Bello",
+    },
+  };
+
+  const pageTitle = titlesByPage[pageType]
+    ? (isFrench ? titlesByPage[pageType].fr : titlesByPage[pageType].en)
+    : `${data.title} | Ahmed Bello`;
+  const canonicalPath = isFrench ? `/fr/${pageType}` : `/${pageType}`;
+
   return (
     <div className="py-12 md:py-16">
       <SEO
-        title={`${data.title} | Ahmed Bello`}
+        title={pageTitle}
         description={data.lede}
-        canonicalUrl={`/legal/${pageType}`}
+        canonical={canonicalPath}
       />
       {/* Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">

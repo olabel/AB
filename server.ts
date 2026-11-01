@@ -40,6 +40,7 @@ function getSemanticFallbackHtml(pathname: string): string {
   return "";
 }
 import { getLatestFinancialNews } from "./src/services/newsService.ts";
+import { processContactSubmission } from "./src/services/contactEmailService.ts";
 import express, { Request, Response, NextFunction } from "express";
 import fs from "fs";
 import path from "path";
@@ -275,252 +276,24 @@ app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response)
   const forwarded = req.headers["x-forwarded-for"];
   const clientIp = typeof forwarded === "string" ? forwarded.split(",")[0].trim() : req.socket.remoteAddress || "unknown";
 
-  if (!checkRateLimit(clientIp)) {
-    return res.status(429).json({
-      error: "rate_limit_exceeded",
-      message: "Too many requests. Please try again in an hour.",
-    });
-  }
-
   const rawBody = req.body || {};
-  const isNewsletter = req.path === "/api/subscribe" || rawBody.topic === "newsletter";
-  let firstName = sanitizeText(rawBody.firstName);
-  if (isNewsletter && !firstName) firstName = "Newsletter Subscriber";
-  let province = sanitizeText(rawBody.province);
-  if (isNewsletter && !province) province = "Canada (General)";
-  const email = sanitizeText(rawBody.email);
-  const phone = sanitizeText(rawBody.phone);
-  const topic = sanitizeText(rawBody.topic);
-  const message = sanitizeMultiline(rawBody.message);
-  const consentPrivacy = Boolean(rawBody.consentPrivacy);
-  const consentEducational = Boolean(rawBody.consentEducational);
-  const honeypot = sanitizeText(rawBody.honeypot);
-  const formLoadedAt = Number(rawBody.formLoadedAt);
-
-  // Honeypot check: silently drop bots
-  if (honeypot && honeypot.length > 0) {
-    return res.status(200).json({ success: true, notice: "processed" });
+  if (req.path === "/api/subscribe" && !rawBody.topic) {
+    rawBody.topic = "newsletter";
   }
 
-  // Minimum fill time check (3 seconds)
-  if (formLoadedAt && !isNaN(formLoadedAt)) {
-    const elapsed = Date.now() - formLoadedAt;
-    if (elapsed < 3000) {
-      return res.status(400).json({
-        error: "automated_submission",
-        message: "Submission was too fast. Please take your time to review.",
-      });
-    }
-  }
-
-  // Strict field validation
-  const errors: Record<string, string> = {};
-
-  const unicodeNameRegex = /^[\p{L}\p{M}\s'’‘.-]{1,80}$/u;
-  if (!firstName || firstName.length === 0) {
-    errors.firstName = "First name is required.";
-  } else if (firstName.length > 80) {
-    errors.firstName = "First name must be 80 characters or fewer.";
-  } else if (!unicodeNameRegex.test(firstName)) {
-    errors.firstName = "First name contains invalid characters.";
-  }
-
-  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-  if (!email || !emailRegex.test(email) || email.length > 100) {
-    errors.email = "A valid email address is required (under 100 characters).";
-  }
-
-  if (phone && (!/^[0-9+\-()\s]{7,25}$/.test(phone) || phone.length > 25)) {
-    errors.phone = "Invalid phone number format.";
-  }
-
-  const validProvinces = [
-    "Alberta",
-    "British Columbia",
-    "Manitoba",
-    "New Brunswick",
-    "Newfoundland and Labrador",
-    "Northwest Territories",
-    "Nova Scotia",
-    "Nunavut",
-    "Ontario",
-    "Prince Edward Island",
-    "Quebec",
-    "Saskatchewan",
-    "Yukon",
-  ];
-  if (!isNewsletter && (!province || !validProvinces.includes(province))) {
-    errors.province = "Please select a valid Canadian province or territory.";
-  }
-
-  const validTopics = [
-    "general",
-    "accounts",
-    "investing",
-    "protection",
-    "family",
-    "retirement",
-    "newcomer",
-    "mentorship",
-    "newsletter",
-    "other",
-  ];
-  if (!topic || !validTopics.includes(topic)) {
-    errors.topic = "Please select a valid financial topic.";
-  }
-
-  if (message.length > 1500) {
-    errors.message = "Message must not exceed 1,500 characters.";
-  }
-
-  if (!consentPrivacy) {
-    errors.consentPrivacy = "You must agree to the privacy notice before submitting.";
-  }
-
-  if (Object.keys(errors).length > 0) {
-    return res.status(400).json({ error: "validation_failed", errors });
-  }
-
-  // Secrets verification
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || siteConfig.publicEmail;
   const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || siteConfig.defaultFromEmail;
 
-  if (!RESEND_API_KEY || !CONTACT_TO_EMAIL) {
-    return res.status(503).json({
-      code: "not_configured",
-      message: "Not sent. This form isn’t connected to an inbox yet.",
-    });
-  }
+  const result = await processContactSubmission(
+    rawBody,
+    clientIp,
+    RESEND_API_KEY,
+    CONTACT_TO_EMAIL,
+    CONTACT_FROM_EMAIL
+  );
 
-  const emailBody = `New Canadian Financial Education Enquiry
-
-From: ${firstName}
-Email: ${email}
-Phone: ${phone || "Not provided"}
-Province/Territory: ${province}
-Main Topic: ${topic}
-CASL Educational Consent: ${consentEducational ? "Granted (Opted in)" : "Not granted (Did not opt in)"}
-
-Message:
-${message || "No message text provided."}
-
---
-Enquiry received at ${new Date().toISOString()}
-Origin: ${siteConfig.siteUrl}/contact`;
-
-  const rawRecipients = CONTACT_TO_EMAIL.split(/[,;\s]+/)
-    .map((e) => e.trim())
-    .filter((e) => e.includes("@"));
-  const primaryRecipient = rawRecipients[0] || siteConfig.publicEmail;
-
-  try {
-    // Attempt sending to all configured recipients
-    let resendResponse = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: CONTACT_FROM_EMAIL,
-        to: rawRecipients,
-        reply_to: email,
-        subject: isNewsletter ? `New Newsletter Subscriber: ${email} (${firstName})` : `Financial Enquiry: ${topic} (${firstName})`,
-        text: emailBody,
-      }),
-    });
-
-    // If Resend limits unverified sandbox domains to the account owner, fallback to primary recipient
-    if (!resendResponse.ok && rawRecipients.length > 1) {
-      const errData = await resendResponse.clone().json().catch(() => ({}));
-      if (
-        resendResponse.status === 403 ||
-        (typeof errData.message === "string" && errData.message.includes("testing emails"))
-      ) {
-        console.warn(
-          "[Resend Notice] Multi-recipient restricted on sandbox domain. Retrying with primary account owner:",
-          primaryRecipient
-        );
-        resendResponse = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${RESEND_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            from: CONTACT_FROM_EMAIL,
-            to: [primaryRecipient],
-            reply_to: email,
-            subject: `Financial Enquiry: ${topic} (${firstName}) [For Ahmed & Team]`,
-            text: `${emailBody}\n\nNote: Sent to primary owner while domain verification is pending in Resend.`,
-          }),
-        });
-      }
-    }
-
-    if (!resendResponse.ok) {
-      const errData = await resendResponse.json().catch(() => ({}));
-      console.error(
-        `[Contact Delivery Error] Status: ${resendResponse.status}, ErrorMsg: ${errData.message || "Unknown error"}`
-      );
-      return res.status(502).json({
-        error: "delivery_failed",
-        message: "Your message could not be sent right now. Please reach out directly by email at enquiries@ahmedbello.com, call +1-506-899-4941, or schedule a conversation via Calendly.",
-      });
-    }
-
-    // Send automatic confirmation receipt to the visitor
-    try {
-      const confirmationSubject = isNewsletter
-        ? "Welcome to Intentional Wealth Briefing | Ahmed Bello"
-        : `Confirmation: We received your enquiry | Ahmed Bello`;
-
-      const confirmationBody = `Hello ${firstName},
-
-Thank you for reaching out through ahmedbello.com. This automated receipt confirms that we have safely received your ${isNewsletter ? "subscription" : "message regarding " + topic}.
-
-What happens next:
-1. Personal Review: Ahmed Bello personally reviews every enquiry within 1 to 2 business days.
-2. Direct, Educational Answer: You will receive an evidence-based response to your question without high-pressure sales pitches or product pushes.
-3. Next Steps: If your situation calls for a deeper conversation, we will share available times for a 20-minute introductory call.
-
-If you would like to speak directly or reserve a spot right away:
-• Schedule 20 minutes on Calendly: https://calendly.com/ahmedbello
-• WhatsApp / Direct Phone: +1 (506) 899-4941
-• Direct Email: enquiries@ahmedbello.com
-
-Warm regards,
-Ahmed Bello
-Financial Security Advisor
-Moncton, New Brunswick, Canada
-https://ahmedbello.com`;
-
-      await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${RESEND_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: CONTACT_FROM_EMAIL,
-          to: [email],
-          subject: confirmationSubject,
-          text: confirmationBody,
-        }),
-      });
-    } catch (confErr) {
-      console.warn("[Confirmation Email Notice] Receipt to visitor could not be dispatched:", confErr);
-    }
-
-    return res.status(200).json({ success: true, message: "Enquiry sent successfully." });
-  } catch (err: any) {
-    console.error(`[Contact Exception] Status: 500, ErrorName: ${err?.name || "NetworkError"}`);
-    return res.status(500).json({
-      error: "server_error",
-      message: "Your message could not be sent right now. Please reach out directly by email at enquiries@ahmedbello.com, call +1-506-899-4941, or schedule a conversation via Calendly.",
-    });
-  }
+  return res.status(result.status).json(result.body);
 });
 
 // --------------------------------------------------------------------------
@@ -914,24 +687,23 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/fr/investing/islamic-equity":
     case "/fr/for/muslim-investors":
       return {
-        title: "Islamic Equity Index ACWI (BlackRock) & Halal Investing | Ahmed Bello",
-        description:
-          "Shari'ah-compliant global equity investing under AAOIFI standards sub-advised by BlackRock and offered by iA Financial Group. Eligible for TFSA, RRSP, FHSA, RESP, and Corporate accounts.",
+        title: cleanPath.startsWith("/fr")
+          ? "Investissement Islamique au Canada | Ahmed Bello"
+          : "Islamic Investing in Canada: An Education Guide | Ahmed Bello",
+        description: cleanPath.startsWith("/fr")
+          ? "Guide éducatif sur l'investissement en actions mondiales conformes à la charia selon les normes de l'AAOIFI et les comptes enregistrés canadiens."
+          : "Educational guide on Shari'ah-compliant global equity investing under AAOIFI standards. Benchmark index tracking and Canadian registered accounts (TFSA, RRSP, FHSA).",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/investing/islamic-equity`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           siteWideFinancialService,
           {
             "@context": "https://schema.org",
-            "@type": "FinancialProduct",
-            name: "Islamic Equity Index ACWI (BlackRock)",
+            "@type": "WebPage",
+            name: "Islamic Investing in Canada Educational Guide",
             description:
-              "Shari'ah-compliant global equity segregated fund tracking the MSCI ACWI Islamic Index under AAOIFI standards, sub-advised by BlackRock.",
-            provider: {
-              "@type": "FinancialService",
-              name: "iA Financial Group",
-            },
+              "Educational framework on Shari'ah-compliant global equity investing, ethical screening principles, and Canadian tax-sheltered accounts.",
           },
           {
             "@context": "https://schema.org",
@@ -969,9 +741,9 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/careers":
     case "/become-an-agent":
       return {
-        title: "Become an Independent Financial Agent | Free Mentorship | Ahmed Bello",
+        title: "Independent Financial Practice Mentorship | Ahmed Bello",
         description:
-          "Launch your independent Canadian financial advisory career. 100% free training, provincial LLQP licensing sponsorship, and direct 1-on-1 mentorship with Ahmed Bello.",
+          "Launch your independent Canadian financial advisory career. Comprehensive LLQP licensing support, case co-planning, and direct 1-on-1 mentorship with Ahmed Bello. No tuition or desk fees charged by our mentorship program.",
         ogType: "website",
         url: `${siteConfig.siteUrl}/careers`,
         jsonLd: [
@@ -981,16 +753,10 @@ function getRouteMetadata(pathname: string): RouteMeta {
           {
             "@context": "https://schema.org",
             "@type": "EducationalOccupationalProgram",
-            name: "Independent Financial Agent Mentorship Program",
+            name: "Independent Financial Solutions Practice Mentorship",
             description:
-              "Comprehensive zero-tuition Canadian financial practice training, provincial LLQP licensing sponsorship, and 1-on-1 mentorship with Ahmed Bello.",
+              "Comprehensive Canadian financial practice training, provincial LLQP licensing support, and 1-on-1 mentorship with Ahmed Bello. No tuition or desk fees charged by our mentorship program.",
             provider: siteWidePerson,
-            offers: {
-              "@type": "Offer",
-              price: "0",
-              priceCurrency: "CAD",
-              category: "Free Training & Mentorship",
-            },
           },
           {
             "@context": "https://schema.org",

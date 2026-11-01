@@ -55,7 +55,7 @@ const AUDIENCES: Record<string, AudienceConfig> = {
       "new-to-canada-money-basics",
       "income-depends-on-you",
       "term-vs-permanent-life-insurance",
-      "canadian-capital-gains-deemed-disposition-estate-trap",
+      "canadian-mortgage-renewal-shock-liquidity-trap",
     ],
     showCalculator: true,
     calculatorProfession: "healthcare",
@@ -87,7 +87,7 @@ const AUDIENCES: Record<string, AudienceConfig> = {
       "De la gestion des règles sur les revenus de placement passif et du plafond des petites entreprises à l'extraction de capital non imposable via le Compte de dividendes en capital (CDC).",
     icon: Briefcase,
     curatedSlugs: [
-      "canadian-capital-gains-deemed-disposition-estate-trap",
+      "tfsa-vs-rrsp",
       "term-vs-permanent-life-insurance",
       "savings-or-debt-first",
       "questions-before-any-financial-product",
@@ -393,21 +393,33 @@ export const AudienceHubPage: React.FC = () => {
               ? "Discutez directement avec Ahmed Bello pour examiner vos options fiscales, de protection ou d'épargne enregistrée au Canada sans aucune pression commerciale."
               : "Start an honest conversation with Ahmed Bello to review your Canadian tax, protection, and registered accounts strategy with zero sales pressure."}
           </p>
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link to="/contact" className="btn btn-primary px-6 py-3 text-sm">
-              {isFr ? "Démarrer une conversation →" : "Start a Conversation &rarr;"}
-            </Link>
-            {siteConfig.schedulingUrl && (
-              <a
-                href={siteConfig.schedulingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-secondary px-6 py-3 text-sm inline-flex items-center gap-2"
-              >
-                <Calendar className="w-4 h-4 text-[#75581f]" />
-                <span>{isFr ? "Réserver un appel de 30 min" : "Schedule 30-Min Call"}</span>
-              </a>
-            )}
+          <div className="pt-2 flex flex-col items-center justify-center gap-3">
+            <a
+              href={siteConfig.schedulingUrl || "/contact"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary px-8 py-3.5 text-base inline-flex items-center gap-2 shadow-sm"
+            >
+              <Calendar className="w-4 h-4 text-[#d6c298]" />
+              <span>{isFr ? "Réserver un appel de 30 min sur Calendly →" : "Schedule 30-Min Call on Calendly &rarr;"}</span>
+            </a>
+            <p className="text-xs text-[#625d52]">
+              {isFr ? (
+                <>
+                  Vous préférez poser votre question par écrit ?{" "}
+                  <Link to="/fr/contact" className="underline text-[#2e4a3b] font-medium">
+                    Envoyer un message sans engagement
+                  </Link>
+                </>
+              ) : (
+                <>
+                  Prefer to write first?{" "}
+                  <Link to="/contact" className="underline text-[#2e4a3b] font-medium">
+                    Send your questions directly through our contact form
+                  </Link>
+                </>
+              )}
+            </p>
           </div>
         </section>
       </div>

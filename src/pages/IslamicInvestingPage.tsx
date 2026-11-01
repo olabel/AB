@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { siteConfig } from "../config/site.ts";
-import { IslamicIndexPerformanceChart } from "../components/IslamicIndexPerformanceChart.tsx";
 import {
   ShieldCheck,
   TrendingUp,
@@ -24,7 +23,24 @@ import {
   Sparkles,
   ExternalLink,
   Percent,
+  Check,
 } from "lucide-react";
+
+const CANADIAN_PROVINCES = [
+  "Alberta",
+  "British Columbia",
+  "Manitoba",
+  "New Brunswick",
+  "Newfoundland and Labrador",
+  "Northwest Territories",
+  "Nova Scotia",
+  "Nunavut",
+  "Ontario",
+  "Prince Edward Island",
+  "Quebec",
+  "Saskatchewan",
+  "Yukon",
+];
 
 export const IslamicInvestingPage: React.FC = () => {
   const { isFr } = useLanguage();
@@ -42,14 +58,20 @@ export const IslamicInvestingPage: React.FC = () => {
     fullName: "",
     email: "",
     phone: "",
-    cityProvince: "",
+    province: "New Brunswick",
+    city: "",
     accountType: "tfsa",
     estimatedAmount: "25k-50k",
     currentBank: "",
     notes: "",
+    consentPrivacy: false,
+    consentEducational: false,
+    honeypot: "",
   });
+  const [formLoadedAt] = useState<number>(() => Date.now());
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   // Financial Calculations
   const inflationRate = 0.025; // 2.5% central bank target inflation
@@ -82,40 +104,80 @@ export const IslamicInvestingPage: React.FC = () => {
   const cashRealValue = cashNominal / discountFactor;
   const equityRealValue = equityNominal / discountFactor;
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData((prev) => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
+
+    if (!formData.fullName.trim()) {
+      setFormError(isFr ? "Veuillez indiquer votre nom complet." : "Please provide your full name.");
+      return;
+    }
+    if (!formData.email.trim() || !formData.email.includes("@")) {
+      setFormError(isFr ? "Veuillez indiquer une adresse courriel valide." : "Please provide a valid email address.");
+      return;
+    }
+    if (!formData.consentPrivacy) {
+      setFormError(
+        isFr
+          ? "Veuillez accepter l'avis de confidentialité pour continuer."
+          : "Please accept the privacy notice before submitting."
+      );
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      await fetch("/api/contact", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          province: formData.cityProvince.includes(",") ? formData.cityProvince.split(",")[1].trim() : "Other",
+          firstName: formData.fullName.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          province: formData.province,
           topic: "investing",
           message: `Islamic Investing Lead:
 Target Account: ${formData.accountType}
 Estimated Allocation: ${formData.estimatedAmount}
 Current Institution: ${formData.currentBank || "Not specified"}
-Location: ${formData.cityProvince}
+City: ${formData.city || "Not specified"}
+Province: ${formData.province}
 Notes: ${formData.notes || "None"}`,
-          consentPrivacy: true,
-          consentEducational: true,
-          honeypot: "",
-          formLoadedAt: Date.now() - 5000,
+          consentPrivacy: formData.consentPrivacy,
+          consentEducational: formData.consentEducational,
+          honeypot: formData.honeypot,
+          formLoadedAt,
         }),
       });
-    } catch {
-      // Continue to show confirmation
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message ||
+            (isFr
+              ? "Votre demande n'a pas pu être transmise. Veuillez vérifier vos informations ou réserver un appel directement sur Calendly."
+              : "Your request could not be submitted. Please review your entries or schedule a call directly on Calendly.")
+        );
+      }
+
+      setFormSubmitted(true);
+    } catch (err: any) {
+      setFormError(err.message || (isFr ? "Une erreur inattendue est survenue." : "An unexpected error occurred."));
     } finally {
       setIsSubmitting(false);
-      setFormSubmitted(true);
     }
   };
 
@@ -124,13 +186,13 @@ Notes: ${formData.notes || "None"}`,
       <SEO
         title={
           isFr
-            ? "Investissement en Actions Islamiques & Cadre Éducatif Canadien | Ahmed Bello"
-            : "Shari'ah-Compliant Global Equity Index Investing | Canadian Educational Framework"
+            ? "Investissement Islamique au Canada | Ahmed Bello"
+            : "Islamic Investing in Canada: An Education Guide | Ahmed Bello"
         }
         description={
           isFr
-            ? "Cadre éducatif objectif sur l'investissement en actions islamiques selon les normes AAOIFI. Réplication d'indices (MSCI ACWI Islamic) et intégration dans les régimes enregistrés canadiens (CELI, REER, CELIAPP, REEE)."
-            : "Objective educational guide on Shari'ah-compliant global equity index investing under AAOIFI standards. Benchmark tracking (MSCI ACWI Islamic Index) and Canadian registered accounts (TFSA, RRSP, FHSA, RESP, Corporate)."
+            ? "Guide éducatif objectif sur l'investissement en actions islamiques selon les normes AAOIFI, le filtrage des bilans et les régimes canadiens (CELI, REER, CELIAPP)."
+            : "Objective educational guide on Shari'ah-compliant global equity index investing under AAOIFI standards, balance sheet screening, and Canadian registered accounts (TFSA, RRSP, FHSA)."
         }
         canonicalUrl={isFr ? "/fr/investing/islamic-equity" : "/investing/islamic-equity"}
         keywords={[
@@ -217,11 +279,11 @@ Notes: ${formData.notes || "None"}`,
 
           <div className="flex flex-wrap items-center gap-4">
             <a
-              href="#performance-chart"
+              href="#screening-methodology"
               className="px-5 py-3 bg-[#2e4a3b] hover:bg-[#253d30] text-[#f7f3eb] font-semibold text-sm rounded-xs transition-colors shadow-xs inline-flex items-center gap-2"
             >
-              <TrendingUp className="w-4 h-4 text-[#d6c298]" />
-              <span>{isFr ? "Consulter l'Historique de l'Indice" : "Explore Benchmark Historical Trend"}</span>
+              <Scale className="w-4 h-4 text-[#d6c298]" />
+              <span>{isFr ? "Méthodologie de Filtrage de l'Indice" : "Explore Benchmark Screening Principles"}</span>
             </a>
 
             <a
@@ -271,29 +333,8 @@ Notes: ${formData.notes || "None"}`,
           </div>
         </section>
 
-        {/* 3. D3 / RECHARTS HISTORICAL PERFORMANCE VISUALIZATION */}
-        <section id="performance-chart" className="mb-16">
-          <div className="mb-6">
-            <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
-              {isFr ? "Analyse Empirique & Transparence" : "Empirical Analysis & Transparency"}
-            </span>
-            <h2 className="font-serif text-2xl sm:text-4xl text-[#1c1b18] mb-2">
-              {isFr
-                ? "Performance Historique de l'Indice Mondial Islamique"
-                : "Historical Performance of the Global Islamic Equity Benchmark"}
-            </h2>
-            <p className="text-xs sm:text-sm text-[#46423a] max-w-3xl leading-relaxed">
-              {isFr
-                ? "L'indice de référence mondial MSCI ACWI Islamic est audité selon les règles de l'AAOIFI. Ce graphique présente son évolution sur plus d'une décennie face aux indices conventionnels, incluant les périodes de baisse comme 2018 et 2022."
-                : "The MSCI ACWI Islamic Index benchmark follows strict AAOIFI screening. This interactive chart displays over a decade of real market history compared with conventional benchmarks, transparently illustrating both expansion periods and market corrections."}
-            </p>
-          </div>
-
-          <IslamicIndexPerformanceChart isFr={isFr} />
-        </section>
-
-        {/* 4. TWO-TIER SHARI'AH SCREENING METHODOLOGY */}
-        <section className="mb-16">
+        {/* 3. TWO-TIER SHARI'AH SCREENING METHODOLOGY */}
+        <section id="screening-methodology" className="mb-16">
           <div className="mb-8">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
               {isFr ? "Méthodologie de Filtrage Certifiée" : "Certified Screening Framework"}
@@ -748,6 +789,23 @@ Notes: ${formData.notes || "None"}`,
               </div>
             ) : (
               <form onSubmit={handleFormSubmit} className="space-y-4">
+                {/* Honeypot field for bot mitigation */}
+                <input
+                  type="text"
+                  name="honeypot"
+                  value={formData.honeypot}
+                  onChange={handleFormChange}
+                  className="hidden"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
+                {formError && (
+                  <div className="p-3 bg-[#8a2b1d]/20 border border-[#8a2b1d] rounded-xs text-xs text-[#f7c5be]">
+                    {formError}
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-[#ece6da] mb-1">
@@ -780,7 +838,7 @@ Notes: ${formData.notes || "None"}`,
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-[#ece6da] mb-1">
                       {isFr ? "Téléphone *" : "Phone Number *"}
@@ -798,15 +856,33 @@ Notes: ${formData.notes || "None"}`,
 
                   <div>
                     <label className="block text-xs font-medium text-[#ece6da] mb-1">
-                      {isFr ? "Ville et Province au Canada *" : "City & Province in Canada *"}
+                      {isFr ? "Province au Canada *" : "Province in Canada *"}
+                    </label>
+                    <select
+                      name="province"
+                      required
+                      value={formData.province}
+                      onChange={handleFormChange}
+                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
+                    >
+                      {CANADIAN_PROVINCES.map((p) => (
+                        <option key={p} value={p}>
+                          {p}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                      {isFr ? "Ville (Optionnel)" : "City (Optional)"}
                     </label>
                     <input
                       type="text"
-                      name="cityProvince"
-                      required
-                      value={formData.cityProvince}
+                      name="city"
+                      value={formData.city}
                       onChange={handleFormChange}
-                      placeholder={isFr ? "ex. Moncton, NB ou Toronto, ON" : "e.g. Moncton, NB or Calgary, AB"}
+                      placeholder={isFr ? "ex. Moncton" : "e.g. Moncton"}
                       className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                     />
                   </div>
@@ -823,9 +899,9 @@ Notes: ${formData.notes || "None"}`,
                       onChange={handleFormChange}
                       className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
                     >
-                      <option value="tfsa">TFSA (CELI) - Tax-Free</option>
+                      <option value="tfsa">TFSA (CELI) - Tax-Free Growth</option>
                       <option value="rrsp">RRSP (REER) - Tax-Deductible</option>
-                      <option value="fhsa">FHSA (CELIAPP) - First Home</option>
+                      <option value="fhsa">FHSA (CELIAPP) - First Home Savings</option>
                       <option value="resp">RESP (REEE) - Children's Education</option>
                       <option value="corporate">Corporate Holding / CCPC (Société)</option>
                       <option value="transfer">Direct Transfer from Existing Institution</option>
@@ -864,7 +940,7 @@ Notes: ${formData.notes || "None"}`,
                     name="currentBank"
                     value={formData.currentBank}
                     onChange={handleFormChange}
-                    placeholder={isFr ? "ex. Compte chèques RBC, REER chez TD, etc." : "e.g. Idle cash in chequing, existing RRSP at TD, etc."}
+                    placeholder={isFr ? "ex. Liquidités chez RBC, REER chez TD, etc." : "e.g. Idle cash in chequing, existing RRSP at TD, etc."}
                     className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                   />
                 </div>
@@ -885,6 +961,53 @@ Notes: ${formData.notes || "None"}`,
                     }
                     className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                   ></textarea>
+                </div>
+
+                {/* Real Consent Checkboxes */}
+                <div className="space-y-2 pt-1 text-xs">
+                  <label className="flex items-start gap-2.5 cursor-pointer text-[#ece6da]/90">
+                    <input
+                      type="checkbox"
+                      name="consentPrivacy"
+                      checked={formData.consentPrivacy}
+                      onChange={handleFormChange}
+                      className="mt-0.5 accent-[#d6c298] h-4 w-4 rounded-xs shrink-0"
+                    />
+                    <span>
+                      {isFr ? (
+                        <>
+                          J'accepte l'
+                          <Link to="/fr/privacy" className="underline text-[#d6c298] mx-1">
+                            avis de confidentialité
+                          </Link>
+                          . Mes renseignements demeurent strictement confidentiels et ne seront jamais partagés. *
+                        </>
+                      ) : (
+                        <>
+                          I agree to the{" "}
+                          <Link to="/privacy" className="underline text-[#d6c298] mx-1">
+                            privacy notice
+                          </Link>
+                          . My information remains strictly confidential and will never be shared. *
+                        </>
+                      )}
+                    </span>
+                  </label>
+
+                  <label className="flex items-start gap-2.5 cursor-pointer text-[#ece6da]/80">
+                    <input
+                      type="checkbox"
+                      name="consentEducational"
+                      checked={formData.consentEducational}
+                      onChange={handleFormChange}
+                      className="mt-0.5 accent-[#d6c298] h-4 w-4 rounded-xs shrink-0"
+                    />
+                    <span>
+                      {isFr
+                        ? "J'accepte de recevoir des analyses éducatives périodiques sur les règles financières canadiennes (retrait en tout temps en vertu de la LCAP)."
+                        : "I agree to receive occasional plain-language educational updates on Canadian tax rules (CASL compliant, unsubscribe at any time)."}
+                    </span>
+                  </label>
                 </div>
 
                 <div className="pt-2">

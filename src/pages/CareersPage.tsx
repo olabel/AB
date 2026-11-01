@@ -190,12 +190,12 @@ Candidate Application Details:
 
   const faqs = [
     {
-      q: "What does 'Free Mentorship & Training' mean? Are there hidden fees?",
-      a: "Our mentorship, coaching curriculum, weekly training webinars, practical case study reviews, and 1-on-1 field co-planning are 100% free with zero tuition, no franchise startup costs, and no monthly desk fees. You do not pay us a dime for training. The only out-of-pocket costs are the official regulatory licensing exam and registration fees, which you pay directly to the provincial regulator (LLQP in Canada) or state insurance department (in the US). We provide full study guidance and sponsorship to prepare you to pass on your first attempt.",
+      q: "What does 'Professional Practice Mentorship' mean? Are there hidden fees?",
+      a: "No tuition or desk fees are charged by our mentorship program. Our practice curriculum, study guidance, and 1-on-1 field co-planning are provided without franchise startup dues or monthly desk fees. You do not pay us fees for mentorship. The only out-of-pocket costs are the official regulatory licensing exam and registration fees, which candidates pay directly to the provincial regulator (LLQP in Canada) or state insurance department (in the US).",
     },
     {
       q: "Does this mentorship cover both Canada and the United States?",
-      a: "Yes! Our independent agency platform and professional mentorship infrastructure operate across Canada (all 10 provinces and 3 territories) and throughout the United States. Whether you are seeking Canadian LLQP licensing or US state Life & Health insurance credentials, we provide regulatory sponsorship, study modules, and carrier contracting.",
+      a: "Yes. Our independent agency platform and professional mentorship infrastructure operate across Canada (all 10 provinces and 3 territories) and throughout the United States. Whether you are seeking Canadian LLQP licensing or US state Life & Health insurance credentials, we provide regulatory sponsorship, study modules, and carrier contracting.",
     },
     {
       q: "Do I need a prior degree in finance, economics, or math?",
@@ -207,7 +207,7 @@ Candidate Application Details:
     },
     {
       q: "How does compensation work for an independent agent?",
-      a: "Independent financial professionals earn performance-based commissions directly from Canadian financial and insurance institutions upon product placement and policy servicing. There are no sales quotas or territory restrictions, but compensation is entirely performance-based and varies according to licensing, effort, and client decisions.",
+      a: "Independent financial solutions professionals operate under an independent carrier compensation structure upon active licensing, receiving compensation directly from Canadian financial and insurance institutions upon product placement and policy servicing. There are no arbitrary branch sales quotas, and compensation reflects licensing, professional effort, and client decisions.",
     },
     {
       q: "How much do the regulatory licensing exams cost?",
@@ -308,7 +308,7 @@ Candidate Application Details:
           <div className="lg:col-span-7 flex flex-col gap-5">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] w-fit text-xs font-semibold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5 text-[#75581f]" />
-              <span>Free Mentorship &bull; Canada & USA &bull; Full Licensing Support</span>
+              <span>Independent Practice Mentorship &bull; Canada & USA &bull; Full Licensing Support</span>
             </div>
 
             <h1
@@ -321,16 +321,16 @@ Candidate Application Details:
             <p className="text-lg sm:text-xl text-[#46423a] leading-relaxed">
               Build an authentic, high-impact financial practice you own. Receive{" "}
               <strong className="text-[#1c1b18] font-semibold">
-                free 1-on-1 mentorship, comprehensive training, and regulatory licensing support
+                1-on-1 mentorship, comprehensive training, and regulatory licensing support
               </strong>{" "}
-              with Ahmed Bello. Zero tuition, zero franchise fees, open-carrier solutions, and total autonomy over your calendar.
+              with Ahmed Bello. No tuition or desk fees charged by our mentorship program, open-carrier solutions, and total autonomy over your calendar.
             </p>
 
             {/* Quick Badges */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
               <div className="p-3 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-center">
-                <div className="text-xs text-[#625d52]">Mentorship Fee</div>
-                <div className="text-sm font-semibold text-[#2e4a3b] mt-0.5">$0 (Free Coaching)</div>
+                <div className="text-xs text-[#625d52]">Program Cost</div>
+                <div className="text-sm font-semibold text-[#2e4a3b] mt-0.5">No Tuition or Desk Fees</div>
               </div>
               <div className="p-3 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-center">
                 <div className="text-xs text-[#625d52]">Licensing Exam</div>
@@ -347,7 +347,7 @@ Candidate Application Details:
             </div>
 
             <p className="text-xs text-[#625d52] italic">
-              *Full transparency: Our coaching and agency onboarding are 100% free. Candidates pay their official provincial or state exam/registration fees directly to the regulatory body, and we provide study roadmaps, mock tests, and mentorship support.
+              *Full transparency: No tuition or desk fees are charged by our mentorship program. Candidates pay their official provincial or state exam/registration fees directly to the regulatory body, and we provide study roadmaps, mock tests, and mentorship support.
             </p>
 
             {/* Hero CTAs */}
@@ -491,7 +491,7 @@ Candidate Application Details:
                     <div className="text-[0.7rem] uppercase tracking-wider text-[#d6c298]">Compensation Structure</div>
                     <div className="font-serif text-xl text-[#f7f3eb] mt-1">Direct Institutional Contracts</div>
                     <p className="text-[0.72rem] text-[#ece6da]/75 mt-1">
-                      Performance-based commission model without salary caps. Earnings reflect completed policy placements and ongoing servicing.
+                      Independent carrier compensation structure upon active licensing. Earnings reflect completed policy placements and ongoing servicing according to regulatory schedules.
                     </p>
                   </div>
 
@@ -512,7 +512,7 @@ Candidate Application Details:
               <div className="mt-4 pt-3 border-t border-[#d6c298]/20 flex items-center justify-between text-[0.7rem] text-[#ece6da]/70">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#d6c298]" />
-                  No Mentorship Fees
+                  No Tuition or Desk Fees
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#d6c298]" />
@@ -637,14 +637,14 @@ Candidate Application Details:
                   <GraduationCap className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl text-[#1c1b18] mb-2">
-                  1. Zero Tuition or Coaching Dues
+                  1. No Tuition or Desk Fees
                 </h3>
                 <p className="text-sm text-[#46423a] leading-relaxed">
-                  No franchise startup fees, desk fees, or training invoices. You receive our complete practice curriculum, study frameworks, and ongoing 1-on-1 coaching at zero cost.
+                  No franchise startup fees, desk fees, or training invoices. You receive our complete practice curriculum, study frameworks, and ongoing 1-on-1 coaching with no tuition or desk fees charged by our mentorship program.
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#ece6da] text-xs text-[#2e4a3b] font-medium">
-                100% Free Mentorship
+                No Tuition or Desk Fees Charged
               </div>
             </div>
 
@@ -941,7 +941,7 @@ Candidate Application Details:
                   Provincial Licensing & Regulatory Notice:
                 </p>
                 <p>
-                  In Canada, life insurance, living benefits, and segregated funds may only be recommended by individuals who have completed the Life License Qualification Program (LLQP) and hold active provincial registration (e.g., FSRA in Ontario, FCNB in New Brunswick, AIC in Alberta). Mentorship is educational and preparatory; candidates cannot advise or solicit clients until all regulatory approvals are active. Compensation is 100% performance-based on commissions from approved client business. No specific earnings are guaranteed.
+                  In Canada, life insurance, living benefits, and segregated funds may only be recommended by individuals who have completed the Life License Qualification Program (LLQP) and hold active provincial registration (e.g., FSRA in Ontario, FCNB in New Brunswick, AIC in Alberta). Mentorship is educational and preparatory; candidates cannot advise or solicit clients until all regulatory approvals are active. Compensation is based on an independent carrier compensation structure upon active licensing. No specific earnings are guaranteed.
                 </p>
               </div>
 

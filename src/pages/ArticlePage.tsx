@@ -8,6 +8,18 @@ import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalcul
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 
+const TOPIC_LABELS: Record<string, { en: string; fr: string }> = {
+  accounts: { en: "Canadian Registered Accounts (TFSA / RRSP / FHSA)", fr: "Comptes enregistrés canadiens (CELI / REER / CELIAPP)" },
+  investing: { en: "Investing Fundamentals & Shari'ah Principles", fr: "Principes d'investissement & finance éthique" },
+  protection: { en: "Family Income Protection & Insurance", fr: "Protection du revenu familial & assurances" },
+  family: { en: "Family Financial Priorities & RESP", fr: "Finances familiales & REEE" },
+  retirement: { en: "Retirement & Pension Timing", fr: "Retraite & rentes publiques" },
+  newcomer: { en: "New to Canada Financial Fundamentals", fr: "Finances pour nouveaux arrivants" },
+  mentorship: { en: "Independent Practice Mentorship", fr: "Mentorat de pratique indépendante" },
+  general: { en: "General Financial Education", fr: "Éducation financière générale" },
+  education: { en: "Financial Decision Frameworks", fr: "Cadres de décision financière" },
+};
+
 export const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { isFr, t } = useLanguage();
@@ -338,7 +350,7 @@ export const ArticlePage: React.FC = () => {
             {/* 2. Plain-language Overview */}
             <section id="overview" className="space-y-5 prose-editorial">
               <h2 className="h3 text-[#1c1b18] border-b border-[#ece6da] pb-2">
-                Overview
+                {isFr ? "Vue d'ensemble" : "Overview"}
               </h2>
               {article.overview.map((para, idx) => (
                 <p key={`ov-${idx}`} className="leading-relaxed">
@@ -358,7 +370,7 @@ export const ArticlePage: React.FC = () => {
                     {article.example.title}
                   </h2>
                   <span className="text-[0.7rem] uppercase tracking-wider font-semibold bg-[#ece6da] text-[#46423a] px-2 py-0.5 rounded-[2px] shrink-0">
-                    Hypothetical figures
+                    {isFr ? "Chiffres hypothétiques" : "Hypothetical figures"}
                   </span>
                 </div>
 
@@ -428,7 +440,7 @@ export const ArticlePage: React.FC = () => {
             {/* 4. Common Misunderstandings (Myth / Reality) */}
             <section id="misunderstandings" className="space-y-6">
               <h2 className="h3 text-[#1c1b18] border-b border-[#ece6da] pb-2">
-                Common misunderstandings
+                {isFr ? "Idées reçues fréquentes" : "Common misunderstandings"}
               </h2>
               <div className="space-y-4">
                 {article.misunderstandings.map((m, mIdx) => (
@@ -438,7 +450,7 @@ export const ArticlePage: React.FC = () => {
                   >
                     <div className="flex items-baseline gap-2">
                       <span className="text-xs font-semibold uppercase tracking-wider text-[#8f2a1d] shrink-0">
-                        Myth:
+                        {isFr ? "Mythe :" : "Myth:"}
                       </span>
                       <p className="font-serif text-[#1c1b18] font-medium text-lg leading-snug">
                         “{m.myth}”
@@ -446,7 +458,7 @@ export const ArticlePage: React.FC = () => {
                     </div>
                     <div className="flex items-baseline gap-2 border-t border-[#ece6da] pt-2">
                       <span className="text-xs font-semibold uppercase tracking-wider text-[#2e4a3b] shrink-0">
-                        Reality:
+                        {isFr ? "Réalité :" : "Reality:"}
                       </span>
                       <p className="text-sm text-[#46423a] leading-relaxed">
                         {m.reality}
@@ -460,7 +472,7 @@ export const ArticlePage: React.FC = () => {
             {/* 5. Trade-offs and Limitations */}
             <section id="tradeoffs" className="space-y-5 prose-editorial">
               <h2 className="h3 text-[#1c1b18] border-b border-[#ece6da] pb-2">
-                Trade-offs and limitations
+                {isFr ? "Compromis et limites" : "Trade-offs and limitations"}
               </h2>
               <ul className="space-y-3">
                 {article.tradeoffs.map((to, toIdx) => (
@@ -474,7 +486,7 @@ export const ArticlePage: React.FC = () => {
             {/* 6. Questions to Consider */}
             <section id="questions" className="space-y-5 prose-editorial">
               <h2 className="h3 text-[#1c1b18] border-b border-[#ece6da] pb-2">
-                Questions to consider
+                {isFr ? "Questions à considérer" : "Questions to consider"}
               </h2>
               <ul className="space-y-3">
                 {article.questions.map((q, qIdx) => (
@@ -491,13 +503,14 @@ export const ArticlePage: React.FC = () => {
               className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4"
             >
               <h2 className="text-xs font-semibold uppercase tracking-wider text-[#2e4a3b]">
-                Official Sources &amp; Verification
+                {isFr ? "Sources officielles et vérification" : "Official Sources & Verification"}
               </h2>
               <p className="text-xs text-[#625d52]">
-                Every figure and rule cited in this article is drawn directly from official Canadian authorities.
-                Read our full{" "}
+                {isFr
+                  ? "Chaque chiffre et règle cités dans cet article proviennent directement des organismes canadiens officiels. Consultez nos "
+                  : "Every figure and rule cited in this article is drawn directly from official Canadian authorities. Read our full "}
                 <Link to="/standards" className="underline text-[#2e4a3b]">
-                  editorial standards
+                  {isFr ? "normes éditoriales" : "editorial standards"}
                 </Link>
                 .
               </p>
@@ -564,31 +577,22 @@ export const ArticlePage: React.FC = () => {
                   <span className="block font-semibold text-[#1c1b18]">
                     {isFr ? "Sujet pré-sélectionné :" : "Pre-selected Topic:"}
                   </span>
-                  <span className="font-mono text-[#2e4a3b] font-bold">
-                    {article.contactTopic}
+                  <span className="text-[#2e4a3b] font-semibold text-xs sm:text-sm">
+                    {TOPIC_LABELS[article.contactTopic]?.[isFr ? "fr" : "en"] || article.contactTopic}
                   </span>
                   <span className="text-[#625d52] block mt-0.5">
                     {isFr ? "Le formulaire s'ouvrira avec cette catégorie déjà choisie." : "Opens the contact form with this category already configured."}
                   </span>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto shrink-0">
+                <div className="flex items-center gap-2.5 w-full sm:w-auto shrink-0">
                   <Link
                     to={`/contact?topic=${article.contactTopic}`}
-                    className="btn btn-primary text-xs py-2.5 px-4 text-center whitespace-nowrap inline-flex items-center justify-center gap-1.5"
+                    className="btn btn-primary text-xs py-2.5 px-5 text-center whitespace-nowrap inline-flex items-center justify-center gap-1.5 w-full sm:w-auto"
                   >
                     <span>{isFr ? "Poser ma question à Ahmed" : "Ask Ahmed about this"}</span>
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                   </Link>
-                  <a
-                    href={`https://wa.me/15068994941?text=Hello%20Ahmed,%20I%20am%20reading%20your%20guide%20on%20${encodeURIComponent(article.title)}%20and%20have%20a%20question`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-2.5 text-xs font-semibold text-white bg-[#25D366] hover:bg-[#20ba59] rounded-[2px] transition-colors inline-flex items-center justify-center gap-1.5 text-center shadow-xs"
-                    title="WhatsApp"
-                  >
-                    <span>WhatsApp</span>
-                  </a>
                 </div>
               </div>
             </div>
@@ -596,7 +600,7 @@ export const ArticlePage: React.FC = () => {
             {/* 10. Related Articles */}
             {relatedArticles.length > 0 && (
               <section className="pt-8 border-t border-[#d6cebd] space-y-6 no-print">
-                <h3 className="h3 text-[#1c1b18]">Related reading</h3>
+                <h3 className="h3 text-[#1c1b18]">{isFr ? "Lectures recommandées" : "Related reading"}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {relatedArticles.map((rel) => {
                     if (!rel) return null;
@@ -619,7 +623,7 @@ export const ArticlePage: React.FC = () => {
                           </p>
                         </div>
                         <span className="text-xs font-semibold text-[#2e4a3b] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                          Read guide <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                          {isFr ? "Lire le guide" : "Read guide"} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                         </span>
                       </Link>
                     );

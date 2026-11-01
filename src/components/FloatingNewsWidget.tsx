@@ -11,22 +11,26 @@ export const FloatingNewsWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 
-  // If user is already on a news page, hide the floating widget
-  const isNewsPage =
+  // Hide on news pages and all article / reading guides to preserve reading focus
+  const isHiddenPage =
     location.pathname === "/news" ||
     location.pathname === "/financial-news" ||
-    location.pathname === "/fr/news";
+    location.pathname === "/fr/news" ||
+    location.pathname.startsWith("/education") ||
+    location.pathname.startsWith("/fr/education") ||
+    location.pathname.startsWith("/insights") ||
+    location.pathname.startsWith("/fr/insights");
 
   const topStory = STATIC_NEWS[0];
 
-  if (isNewsPage || isDismissed) {
+  if (isHiddenPage || isDismissed) {
     return null;
   }
 
   return (
     <aside
       aria-label={isFr ? "Actualités financières en direct" : "Live financial intelligence desk"}
-      className="fixed right-3 bottom-6 sm:bottom-8 z-40 select-none"
+      className="fixed right-3 bottom-20 sm:bottom-8 z-40 select-none"
     >
       {/* 1. Sleek, Small Hanging / Floating Trigger Button */}
       {!isOpen && (
