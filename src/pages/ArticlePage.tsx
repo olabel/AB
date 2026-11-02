@@ -20,6 +20,8 @@ const TOPIC_LABELS: Record<string, { en: string; fr: string }> = {
   education: { en: "Financial Decision Frameworks", fr: "Cadres de décision financière" },
 };
 
+import { NotFoundPage } from "./NotFoundPage.tsx";
+
 export const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { isFr, t } = useLanguage();
@@ -47,7 +49,7 @@ export const ArticlePage: React.FC = () => {
   }, [slug]);
 
   if (!article) {
-    return <Navigate to="/education" replace />;
+    return <NotFoundPage />;
   }
 
   const category = categories.find((c) => c.id === article.category);

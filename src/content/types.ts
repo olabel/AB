@@ -14,6 +14,7 @@ export interface ArticleExample {
   intro: string;
   table?: ArticleExampleTable;
   notes?: string[];
+  conclusion?: string;
 }
 
 export interface ArticleMisunderstanding {

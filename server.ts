@@ -40,7 +40,7 @@ function getSemanticFallbackHtml(pathname: string): string {
   return "";
 }
 import { getLatestFinancialNews } from "./src/services/newsService.ts";
-import { processContactSubmission } from "./src/services/contactEmailService.ts";
+import { processContactSubmission, recordConfirmedSubscriber } from "./src/services/contactEmailService.ts";
 import express, { Request, Response, NextFunction } from "express";
 import fs from "fs";
 import path from "path";
@@ -321,62 +321,21 @@ app.get("/api/news", async (_req: Request, res: Response) => {
 });
 
 // --------------------------------------------------------------------------
-// 5c. Privacy-First Analytics Aggregation Endpoints: /api/analytics
+// 5c. Double Opt-in Subscription Confirmation Endpoint: /api/confirm-subscription
 // --------------------------------------------------------------------------
-const serverAnalytics = {
-  totalViews: 0,
-  uniqueSessions: new Set<string>(),
-  topPaths: new Map<string, number>(),
-  topEvents: new Map<string, number>(),
-};
-
-app.post("/api/analytics", (req: Request, res: Response) => {
+app.all("/api/confirm-subscription", (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  try {
-    const body = req.body || {};
-    const { name, path: evPath, properties } = body;
-
-    if (name === "page_view") {
-      serverAnalytics.totalViews++;
-      if (typeof evPath === "string") {
-        const cleanPath = evPath.slice(0, 80);
-        serverAnalytics.topPaths.set(cleanPath, (serverAnalytics.topPaths.get(cleanPath) || 0) + 1);
-      }
-    }
-
-    if (properties && typeof properties.sessionId === "string") {
-      serverAnalytics.uniqueSessions.add(properties.sessionId.slice(0, 32));
-    }
-
-    if (typeof name === "string") {
-      const cleanName = name.slice(0, 40);
-      serverAnalytics.topEvents.set(cleanName, (serverAnalytics.topEvents.get(cleanName) || 0) + 1);
-    }
-
-    return res.json({ ok: true });
-  } catch {
-    return res.status(400).json({ error: "invalid_payload" });
+  const email = (req.query.email as string) || req.body?.email || "";
+  if (!email || !email.includes("@")) {
+    return res.status(400).json({ success: false, error: "invalid_email" });
   }
-});
 
-app.get("/api/analytics/summary", (_req: Request, res: Response) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Cache-Control", "no-cache");
-
-  const topPages = Array.from(serverAnalytics.topPaths.entries())
-    .map(([path, count]) => ({ path, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 10);
-
-  const topEvents = Array.from(serverAnalytics.topEvents.entries())
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count);
-
+  recordConfirmedSubscriber(email);
   return res.json({
-    totalViews: serverAnalytics.totalViews,
-    uniqueSessions: serverAnalytics.uniqueSessions.size,
-    topPages,
-    topEvents,
+    success: true,
+    confirmed: true,
+    email: email.trim().toLowerCase(),
+    confirmedAt: new Date().toISOString(),
   });
 });
 
@@ -471,7 +430,8 @@ const howIHelpFaqSchema = {
 };
 
 function getRouteMetadata(pathname: string): RouteMeta {
-  const cleanPath = pathname.replace(/\/+$/, "") || "/";
+  const pathOnly = pathname.split("?")[0].split("#")[0];
+  const cleanPath = pathOnly.replace(/\/+$/, "") || "/";
 
   // Article pages (/education/:slug or /insights/:slug)
   const articleMatch = cleanPath.match(/^\/(?:education|insights)\/([^/]+)$/);
@@ -887,6 +847,16 @@ function getRouteMetadata(pathname: string): RouteMeta {
         ],
       };
 
+    case "/confirm-subscription":
+    case "/fr/confirm-subscription":
+      return {
+        title: cleanPath.startsWith("/fr") ? "Abonnement Confirmé | Ahmed Bello" : "Subscription Confirmed | Ahmed Bello",
+        description: "Your educational newsletter subscription has been confirmed.",
+        ogType: "website",
+        url: `${siteConfig.siteUrl}${cleanPath}`,
+        jsonLd: [siteWideWebSite],
+      };
+
     default:
       if (cleanPath === "/" || cleanPath === "/fr") {
         return {
@@ -975,9 +945,9 @@ function injectHeadMetadata(html: string, pathname: string): string {
     `<meta name="twitter:description" content="${meta.description}" />`
   );
 
-  // Robots meta tag: Indexing enabled when DRAFT_MODE is false
+  // Robots meta tag: Indexing enabled when DRAFT_MODE is false and not 404
   let extraTags = "";
-  if (DRAFT_MODE) {
+  if (DRAFT_MODE || meta.title.includes("404")) {
     extraTags += `\n    <meta name="robots" content="noindex, nofollow" />`;
   } else {
     extraTags += `\n    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`;
@@ -1018,8 +988,10 @@ async function setupServer() {
       try {
         let template = fs.readFileSync(path.resolve(process.cwd(), "index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
+        const meta = getRouteMetadata(url);
         const html = injectHeadMetadata(template, url);
-        res.status(200).set({ "Content-Type": "text/html" }).end(html);
+        const statusCode = meta.title.includes("404") ? 404 : 200;
+        res.status(statusCode).set({ "Content-Type": "text/html" }).end(html);
       } catch (e: any) {
         vite.ssrFixStacktrace(e);
         next(e);
@@ -1035,8 +1007,10 @@ async function setupServer() {
         const indexPath = path.resolve(clientDist, "index.html");
         if (fs.existsSync(indexPath)) {
           const template = fs.readFileSync(indexPath, "utf-8");
+          const meta = getRouteMetadata(url);
           const html = injectHeadMetadata(template, url);
-          res.status(200).set({ "Content-Type": "text/html" }).end(html);
+          const statusCode = meta.title.includes("404") ? 404 : 200;
+          res.status(statusCode).set({ "Content-Type": "text/html" }).end(html);
         } else {
           res.status(404).send("Application build not found.");
         }

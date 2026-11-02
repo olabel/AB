@@ -6,7 +6,7 @@ import { Footer } from "./components/Footer.tsx";
 import { DraftBanner } from "./components/Tbc.tsx";
 import { FloatingNewsWidget } from "./components/FloatingNewsWidget.tsx";
 import { MobileBookingBar } from "./components/MobileBookingBar.tsx";
-import { AnalyticsProvider } from "./components/AnalyticsProvider.tsx";
+import { Analytics } from "@vercel/analytics/react";
 import { disclosuresData, privacyData, standardsData, termsData } from "./content/legal.ts";
 
 // Route-level code splitting to keep initial bundle size tiny
@@ -21,7 +21,7 @@ const CareersPage = React.lazy(() => import("./pages/CareersPage.tsx").then((m) 
 const AudienceHubPage = React.lazy(() => import("./pages/AudienceHubPage.tsx").then((m) => ({ default: m.AudienceHubPage })));
 const IslamicInvestingPage = React.lazy(() => import("./pages/IslamicInvestingPage.tsx").then((m) => ({ default: m.IslamicInvestingPage })));
 const ContactPage = React.lazy(() => import("./pages/ContactPage.tsx").then((m) => ({ default: m.ContactPage })));
-const AnalyticsDashboardPage = React.lazy(() => import("./pages/AnalyticsDashboardPage.tsx").then((m) => ({ default: m.AnalyticsDashboardPage })));
+const ConfirmSubscriptionPage = React.lazy(() => import("./pages/ConfirmSubscriptionPage.tsx").then((m) => ({ default: m.ConfirmSubscriptionPage })));
 const LegalPage = React.lazy(() => import("./pages/LegalPage.tsx").then((m) => ({ default: m.LegalPage })));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage.tsx").then((m) => ({ default: m.NotFoundPage })));
 
@@ -66,144 +66,141 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <LanguageRouteSync />
-        <AnalyticsProvider>
-          <div className="min-h-screen flex flex-col bg-[#f7f3eb] text-[#1c1b18] antialiased selection:bg-[#2e4a3b] selection:text-[#f7f3eb]">
+        <div className="min-h-screen flex flex-col bg-[#f7f3eb] text-[#1c1b18] antialiased selection:bg-[#2e4a3b] selection:text-[#f7f3eb]">
           <Header />
           <DraftBanner />
           <FloatingNewsWidget />
           <main id="main-content" className="flex-1 focus:outline-none pb-16 sm:pb-0" tabIndex={-1}>
             <Suspense fallback={<PageFallback />}>
               <Routes>
-              {/* English Canonical Routes */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/how-i-help" element={<HowIHelpPage />} />
-              <Route path="/education" element={<EducationLibraryPage />} />
-              <Route path="/education/:slug" element={<ArticlePage />} />
-              <Route path="/insights/:slug" element={<ArticlePage />} />
-              <Route path="/insights" element={<InsightsPage />} />
-              <Route path="/news" element={<NewsPage />} />
-              <Route path="/financial-news" element={<NewsPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/careers" element={<CareersPage />} />
-              <Route path="/become-an-agent" element={<CareersPage />} />
-              <Route path="/for/:audience" element={<AudienceHubPage />} />
-              <Route path="/investing/islamic-equity" element={<IslamicInvestingPage />} />
-              <Route path="/for/muslim-investors" element={<IslamicInvestingPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/analytics" element={<AnalyticsDashboardPage />} />
-              <Route path="/advisor-insights" element={<AnalyticsDashboardPage />} />
+                {/* English Canonical Routes */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/how-i-help" element={<HowIHelpPage />} />
+                <Route path="/education" element={<EducationLibraryPage />} />
+                <Route path="/education/:slug" element={<ArticlePage />} />
+                <Route path="/insights/:slug" element={<ArticlePage />} />
+                <Route path="/insights" element={<InsightsPage />} />
+                <Route path="/news" element={<NewsPage />} />
+                <Route path="/financial-news" element={<NewsPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/careers" element={<CareersPage />} />
+                <Route path="/become-an-agent" element={<CareersPage />} />
+                <Route path="/for/:audience" element={<AudienceHubPage />} />
+                <Route path="/investing/islamic-equity" element={<IslamicInvestingPage />} />
+                <Route path="/for/muslim-investors" element={<IslamicInvestingPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/confirm-subscription" element={<ConfirmSubscriptionPage />} />
 
-              {/* French Indexable Routes */}
-              <Route path="/fr" element={<HomePage />} />
-              <Route path="/fr/how-i-help" element={<HowIHelpPage />} />
-              <Route path="/fr/education" element={<EducationLibraryPage />} />
-              <Route path="/fr/education/:slug" element={<ArticlePage />} />
-              <Route path="/fr/insights/:slug" element={<ArticlePage />} />
-              <Route path="/fr/insights" element={<InsightsPage />} />
-              <Route path="/fr/news" element={<NewsPage />} />
-              <Route path="/fr/financial-news" element={<NewsPage />} />
-              <Route path="/fr/about" element={<AboutPage />} />
-              <Route path="/fr/careers" element={<CareersPage />} />
-              <Route path="/fr/become-an-agent" element={<CareersPage />} />
-              <Route path="/fr/for/:audience" element={<AudienceHubPage />} />
-              <Route path="/fr/investing/islamic-equity" element={<IslamicInvestingPage />} />
-              <Route path="/fr/for/muslim-investors" element={<IslamicInvestingPage />} />
-              <Route path="/fr/contact" element={<ContactPage />} />
-              <Route path="/fr/analytics" element={<AnalyticsDashboardPage />} />
-              <Route path="/fr/advisor-insights" element={<AnalyticsDashboardPage />} />
+                {/* French Indexable Routes */}
+                <Route path="/fr" element={<HomePage />} />
+                <Route path="/fr/how-i-help" element={<HowIHelpPage />} />
+                <Route path="/fr/education" element={<EducationLibraryPage />} />
+                <Route path="/fr/education/:slug" element={<ArticlePage />} />
+                <Route path="/fr/insights/:slug" element={<ArticlePage />} />
+                <Route path="/fr/insights" element={<InsightsPage />} />
+                <Route path="/fr/news" element={<NewsPage />} />
+                <Route path="/fr/financial-news" element={<NewsPage />} />
+                <Route path="/fr/about" element={<AboutPage />} />
+                <Route path="/fr/careers" element={<CareersPage />} />
+                <Route path="/fr/become-an-agent" element={<CareersPage />} />
+                <Route path="/fr/for/:audience" element={<AudienceHubPage />} />
+                <Route path="/fr/investing/islamic-equity" element={<IslamicInvestingPage />} />
+                <Route path="/fr/for/muslim-investors" element={<IslamicInvestingPage />} />
+                <Route path="/fr/contact" element={<ContactPage />} />
+                <Route path="/fr/confirm-subscription" element={<ConfirmSubscriptionPage />} />
 
-              {/* Legal and standards routes (EN & FR) */}
-              <Route
-                path="/disclosures"
-                element={
-                  <LegalPage
-                    pageType="disclosures"
-                    data={disclosuresData}
-                    eyebrow="Disclosures & Regulatory Transparency"
-                  />
-                }
-              />
-              <Route
-                path="/fr/disclosures"
-                element={
-                  <LegalPage
-                    pageType="disclosures"
-                    data={disclosuresData}
-                    eyebrow="Divulgations & Transparence Réglementaire"
-                  />
-                }
-              />
-              <Route
-                path="/privacy"
-                element={
-                  <LegalPage
-                    pageType="privacy"
-                    data={privacyData}
-                    eyebrow="Privacy Notice"
-                  />
-                }
-              />
-              <Route
-                path="/fr/privacy"
-                element={
-                  <LegalPage
-                    pageType="privacy"
-                    data={privacyData}
-                    eyebrow="Avis de Confidentialité"
-                  />
-                }
-              />
-              <Route
-                path="/standards"
-                element={
-                  <LegalPage
-                    pageType="standards"
-                    data={standardsData}
-                    eyebrow="Editorial Standards"
-                  />
-                }
-              />
-              <Route
-                path="/fr/standards"
-                element={
-                  <LegalPage
-                    pageType="standards"
-                    data={standardsData}
-                    eyebrow="Normes Éditoriales"
-                  />
-                }
-              />
-              <Route
-                path="/terms"
-                element={
-                  <LegalPage
-                    pageType="terms"
-                    data={termsData}
-                    eyebrow="Website Terms"
-                  />
-                }
-              />
-              <Route
-                path="/fr/terms"
-                element={
-                  <LegalPage
-                    pageType="terms"
-                    data={termsData}
-                    eyebrow="Conditions d'Utilisation"
-                  />
-                }
-              />
+                {/* Legal and standards routes (EN & FR) */}
+                <Route
+                  path="/disclosures"
+                  element={
+                    <LegalPage
+                      pageType="disclosures"
+                      data={disclosuresData}
+                      eyebrow="Disclosures & Regulatory Transparency"
+                    />
+                  }
+                />
+                <Route
+                  path="/fr/disclosures"
+                  element={
+                    <LegalPage
+                      pageType="disclosures"
+                      data={disclosuresData}
+                      eyebrow="Divulgations & Transparence Réglementaire"
+                    />
+                  }
+                />
+                <Route
+                  path="/privacy"
+                  element={
+                    <LegalPage
+                      pageType="privacy"
+                      data={privacyData}
+                      eyebrow="Privacy Notice"
+                    />
+                  }
+                />
+                <Route
+                  path="/fr/privacy"
+                  element={
+                    <LegalPage
+                      pageType="privacy"
+                      data={privacyData}
+                      eyebrow="Avis de Confidentialité"
+                    />
+                  }
+                />
+                <Route
+                  path="/standards"
+                  element={
+                    <LegalPage
+                      pageType="standards"
+                      data={standardsData}
+                      eyebrow="Editorial Standards"
+                    />
+                  }
+                />
+                <Route
+                  path="/fr/standards"
+                  element={
+                    <LegalPage
+                      pageType="standards"
+                      data={standardsData}
+                      eyebrow="Normes Éditoriales"
+                    />
+                  }
+                />
+                <Route
+                  path="/terms"
+                  element={
+                    <LegalPage
+                      pageType="terms"
+                      data={termsData}
+                      eyebrow="Terms of Use"
+                    />
+                  }
+                />
+                <Route
+                  path="/fr/terms"
+                  element={
+                    <LegalPage
+                      pageType="terms"
+                      data={termsData}
+                      eyebrow="Conditions d'Utilisation"
+                    />
+                  }
+                />
 
-              {/* Catch-all 404 */}
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
-        </main>
-        <Footer />
-        <MobileBookingBar />
-      </div>
-    </AnalyticsProvider>
-  </BrowserRouter>
-</LanguageProvider>
-);
+                {/* Catch-all 404 */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
+          </main>
+          <Footer />
+          <MobileBookingBar />
+        </div>
+        <Analytics />
+      </BrowserRouter>
+    </LanguageProvider>
+  );
 }

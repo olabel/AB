@@ -11,7 +11,7 @@ interface NewsletterSignupProps {
 
 export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
   title = "The Intentional Wealth Briefing",
-  description = "One plain-language breakdown per month on Canadian tax shelters, retirement mechanics, and personal finance strategy. Zero sales pitches. Unsubscribe anytime.",
+  description = "Occasional plain-language briefings when key Canadian tax rules, annual registered account limits (TFSA/RRSP/FHSA), or public pension policies are updated. Zero sales pitches. Unsubscribe anytime.",
   source = "general",
   className = "",
 }) => {
@@ -85,7 +85,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
       <div className="max-w-2xl mx-auto text-center space-y-3 mb-6">
         <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-[#2e4a3b]/10 text-[#2e4a3b] rounded-[2px] text-xs font-semibold uppercase tracking-wider">
           <Mail className="w-3.5 h-3.5 text-[#75581f]" />
-          <span>Monthly Educational Briefing</span>
+          <span>Occasional Educational Briefings</span>
         </div>
 
         <h3
@@ -105,10 +105,10 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
           <div className="w-10 h-10 rounded-full bg-[#f7f3eb] text-[#2e4a3b] flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-6 h-6" />
           </div>
-          <h4 className="font-serif text-xl text-[#f7f3eb]">You’re Subscribed!</h4>
+          <h4 className="font-serif text-xl text-[#f7f3eb]">Confirmation Request Sent</h4>
           <p className="text-xs text-[#ece6da] leading-relaxed">
-            Thank you for joining. You will receive our next monthly briefing directly at{" "}
-            <strong className="text-white">{email}</strong>. No clutter, only actionable Canadian financial analysis.
+            Thank you for requesting to subscribe. Please check your inbox at{" "}
+            <strong className="text-white">{email}</strong> and click the confirmation link to complete your subscription.
           </p>
         </div>
       ) : (
@@ -177,7 +177,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
               htmlFor={`consent-${source}`}
               className="text-[0.72rem] text-[#625d52] leading-tight cursor-pointer"
             >
-              I consent to receive monthly educational emails from Ahmed Bello under Canada’s Anti-Spam Legislation (CASL). I can unsubscribe anytime with one click. Read our{" "}
+              I consent to receive occasional educational emails from Ahmed Bello under Canada’s Anti-Spam Legislation (CASL). I can unsubscribe anytime with one click. Read the{" "}
               <Link to="/privacy" className="underline hover:text-[#2e4a3b]">
                 privacy notice
               </Link>

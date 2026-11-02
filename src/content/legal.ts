@@ -137,10 +137,11 @@ export const privacyData: LegalPageData = {
     {
       id: "analytics",
       number: "05",
-      title: "Analytics and cookies",
+      title: "Analytics and privacy",
       content: [
-        "This website does not set tracking cookies, behavioural profiling tags, or cross-site commercial trackers.",
-        "Server traffic metrics are monitored only in aggregate for performance and availability monitoring without capturing individual identities."
+        "This website prioritizes visitor privacy and does not use cross-site behavioural profiling cookies or advertising trackers.",
+        "To understand which educational guides and calculators visitors find most useful, this website utilizes privacy-friendly, aggregated web analytics (such as Vercel Web Analytics). If Google Analytics is enabled for performance monitoring, it operates strictly in privacy mode with IP anonymization enabled. No personally identifiable financial data, account values, or form contents are ever sent to analytics platforms, sold, or shared with third-party advertising brokers.",
+        "Visitors can browse with complete privacy and may opt out of analytical telemetry at any time by enabling Global Privacy Control (GPC) or 'Do Not Track' in their web browser."
       ]
     },
     {

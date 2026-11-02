@@ -1519,9 +1519,97 @@ export const articles: Article[] = [
     "invitationAbout": "managing your mortgage renewal strategy and evaluating your household liquidity balance sheet",
     "url": "/insights/canadian-mortgage-renewal-shock-liquidity-trap",
     "readingMinutes": 6
-  }
-
-  ,
+  },
+  {
+    "slug": "canadian-ccpc-passive-income-grind-sbd-tax-trap",
+    "kind": "insight",
+    "title": "The Canadian CCPC Passive Income Grind: How the $50,000 Limit Silently Erodes Small Business Deductions",
+    "seoTitle": "CCPC $50,000 Passive Income Limit & Small Business Deduction Guide",
+    "description": "For incorporated professionals and business owners, passive investment returns over $50,000 trigger a 5:1 clawback of Canada's preferential small business tax rate. Here is the mathematical mechanics and corporate treasury architecture to navigate it.",
+    "question": "How does passive investment income inside my corporation claw back my small business deduction, and how should I structure retained earnings?",
+    "category": "investing",
+    "figuresAsOf": "Income Tax Act Subsection 125(5.1) and CRA corporate taxation rules",
+    "problem": "Incorporated professionals and business owners often treat corporate retained earnings as a tax-deferred investment account, unaware that passive portfolio earnings exceeding $50,000 silently trigger the Subsection 125(5.1) grind, raising their operating tax rate from ~9%–12% to over 26%–31%.",
+    "overview": [
+      "For Canadian business owners, physicians, dentists, consultants, and contractors who operate through a Canadian-Controlled Private Corporation (CCPC), the Small Business Deduction (SBD) is one of the most powerful tax provisions in the Income Tax Act. Under federal rules and provincial coordination, the first $500,000 of active business income (ABI) is taxed at a combined small business rate of roughly 9% to 12.2% (depending on the province), compared to the general corporate tax rate of 26.5% to 31%. This creates an immediate annual tax savings of up to $90,000 to $100,000 on $500,000 of operating profit.",
+      "However, under statutory rules enacted in Subsection 125(5.1) of the Income Tax Act, that preferential tax shelter begins grinding down as soon as the corporation (and any associated corporations) earns more than $50,000 of Adjusted Aggregate Investment Income (AAII) in a taxation year. For every $1 of AAII earned above the $50,000 threshold, the corporation's $500,000 business limit is reduced by $5. By the time passive income reaches $150,000, the small business deduction is completely eliminated ($500,000 limit reduced to zero).",
+      "The practical consequence is severe. Consider a medical corporation or operating company that earns $500,000 in active operational profits and holds $2,000,000 in retained investment capital. If that portfolio generates a 5% yield ($100,000 in passive interest and dividends), the corporation has exceeded the threshold by $50,000. Under the 5:1 formula, its small business deduction limit is slashed by $250,000. The first $250,000 of operating income is taxed at the small business rate (12.2% in Ontario), while the remaining $250,000 is immediately pushed into the general corporate rate (26.5%). That single passive portfolio return adds an immediate $35,750 in extra corporate income taxes on business earnings.",
+      "Compounding this friction is the front-end taxation of corporate passive returns themselves. In Canada, passive investment income earned inside a CCPC is deliberately taxed at high initial rates (50.17% in Ontario, consisting of basic corporate tax plus additional refundable Part I tax and Part IV tax on portfolio dividends) to prevent wealthy individuals from deferring personal tax indefinitely inside holding companies. While a portion of this tax is refundable upon paying taxable dividends through the Refundable Dividend Tax on Hand (RDTOH) mechanism, when combined with the 5:1 active business income grind, the effective marginal tax drag on incremental passive earnings can exceed 70% to 80%.",
+      "Sophisticated corporate wealth architecture solves this through four recognized mechanisms: (1) Corporate-owned tax-exempt life insurance and segregated fund policies, where cash surrender values accumulate tax-sheltered without generating AAII and payout flows tax-free through the Capital Dividend Account (CDA); (2) Individual Pension Plans (IPPs) and Retirement Compensation Arrangements (RCAs) that deduct corporate contributions and shift capital into dedicated registered retirement trusts; (3) Capital Dividend Account crystallizations that extract historical non-taxable capital gains out of the corporation tax-free; and (4) Strategic asset location, holding growth-oriented equities rather than high-turnover interest or non-eligible dividend instruments inside the corporate holding company."
+    ],
+    "example": {
+      "title": "Corporate Balance-Sheet Comparison: Operating Company with $1.8M Retained Capital",
+      "intro": "Consider an incorporated engineering firm or medical practice in Ontario with $500,000 in active operating income and $1,800,000 in accumulated corporate surplus. We compare maintaining a conventional GIC/bond portfolio versus a structured corporate treasury framework.",
+      "table": {
+        "head": ["Metric", "Strategy A: Conventional GIC & Bond Portfolio", "Strategy B: Structured Corporate Treasury Framework"],
+        "rows": [
+          ["Corporate Retained Capital", "$1,800,000 invested in GICs/Bonds at 5.5%", "$1,800,000 in structured tax-sheltered & growth assets"],
+          ["Annual Passive Investment Income (AAII)", "$99,000 (exceeds $50,000 threshold by $49,000)", "$28,000 (kept comfortably below $50,000 threshold)"],
+          ["SBD Limit Reduction (5:1 Grind)", "$245,000 reduction ($49,000 × 5)", "$0 reduction (full $500,000 limit preserved)"],
+          ["Eligible Small Business Limit Remaining", "$255,000 eligible for 12.2% rate", "$500,000 eligible for 12.2% rate"],
+          ["Active Operating Income Tax", "$96,035 (partially taxed at 26.5% general rate)", "$61,000 (all $500k taxed at 12.2% small business rate)"],
+          ["Annual Corporate Tax Savings", "$0 baseline", "+$35,035 saved in corporate tax each year"]
+        ]
+      },
+      "conclusion": "By maintaining passive income under the statutory $50,000 threshold, Strategy B protects the entire small business deduction, preserving $35,035 in operating liquidity each year that can be reinvested into company growth or sheltered into executive pension and estate reserves."
+    },
+    "misunderstandings": [
+      {
+        "myth": "The small business deduction is only reduced if my operational business income exceeds $500,000.",
+        "reality": "Under Subsection 125(5.1), passive investment income alone can completely wipe out your $500,000 small business limit, even if your operating business only earns $200,000."
+      },
+      {
+        "myth": "Moving investments to a separate holding company protects my operating company from the grind.",
+        "reality": "Associated corporation rules under Subsection 256 of the Income Tax Act aggregate passive investment income across all associated corporate entities when calculating the AAII threshold."
+      },
+      {
+        "myth": "All corporate capital gains count toward the $50,000 threshold.",
+        "reality": "Only net taxable capital gains (the 50% taxable portion) from non-active assets count toward AAII. Capital gains from the disposition of property used primarily in an active business are statutorily excluded."
+      },
+      {
+        "myth": "Paying higher management salaries is the only way to avoid the passive income grind.",
+        "reality": "While paying salary generates personal income tax deductions for the corporation, it accelerates top-bracket personal taxation (up to 53.53%). Structured solutions like corporate-owned life insurance, IPPs, or corporate health trusts preserve capital without triggering personal tax spikes."
+      }
+    ],
+    "tradeoffs": [
+      "Corporate liquidity: Moving capital into corporate-owned life insurance policies or Individual Pension Plans reduces immediate short-term liquidity compared to high-interest savings accounts.",
+      "Complexity and governance: Corporate holding company restructuring, CDA elections (Form T2054), and pension trusts require coordinated planning with your corporate CPA and tax lawyer.",
+      "Personal vs corporate tax timing: Withdrawing passive income as taxable dividends purges the RDTOH pool but triggers immediate personal income tax liabilities for shareholders."
+    ],
+    "questions": [
+      "What was our corporation's exact Adjusted Aggregate Investment Income (AAII) on Schedule 7 of our latest T2 corporate return?",
+      "Are all of our family holding companies, operating companies, and real estate corporations associated under Subsection 256?",
+      "How close is our accumulated corporate portfolio to the $50,000 AAII threshold where the 5:1 grind begins?",
+      "Have we evaluated tax-exempt corporate asset classes—such as corporate-owned permanent insurance or an Individual Pension Plan (IPP)—to shelter surplus capital from passive income calculations?"
+    ],
+    "sources": [
+      {
+        "label": "Canada Revenue Agency: Small Business Deduction and Subsection 125(5.1)",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/corporations/corporation-tax-rates.html",
+        "note": "Official CRA guidance on the $50,000 AAII threshold and the 5:1 business limit reduction."
+      },
+      {
+        "label": "Canada Revenue Agency: Income Tax Folio S7-F1-C1, Small Business Deduction",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-7-corporate/folio-1-small-business-deduction/income-tax-folio-s7-f1-c1-small-business-deduction.html",
+        "note": "Technical interpretation of associated corporations, active business income, and aggregate investment income."
+      },
+      {
+        "label": "Department of Finance Canada: Taxation of Corporate Investment Income",
+        "url": "https://www.canada.ca/en/department-finance.html",
+        "note": "Federal legislative background on CCPC passive investment thresholds and refundable dividend tax mechanisms."
+      }
+    ],
+    "related": [
+      "canadian-mortgage-renewal-shock-liquidity-trap",
+      "term-vs-permanent-life-insurance",
+      "questions-before-any-financial-product",
+      "savings-or-debt-first"
+    ],
+    "contactTopic": "investing",
+    "invitationAbout": "navigating the $50,000 corporate passive income threshold and structuring corporate retained capital",
+    "url": "/insights/canadian-ccpc-passive-income-grind-sbd-tax-trap",
+    "readingMinutes": 6
+  },
   {
     "slug": "term-vs-permanent-life-insurance",
     "kind": "guide",

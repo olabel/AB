@@ -154,12 +154,12 @@ const coreRoutes = [
     summary: "Clear legal terms governing website access, educational copyright, and financial disclaimer boundaries.",
   },
   {
-    path: "/analytics",
-    title: "Advisor Analytics & Engagement Insights | Ahmed Bello",
-    description: "Privacy-first metrics measuring Canadian educational guide readership, calculator usage, and consultation demand.",
+    path: "/confirm-subscription",
+    title: "Subscription Confirmed | Ahmed Bello",
+    description: "Your educational newsletter subscription preference has been verified.",
     lang: "en-CA",
-    heading: "Advisor Analytics & Insights Dashboard",
-    summary: "Privacy-compliant website analytics, audience insights, engagement tracking, and conversation conversion metrics.",
+    heading: "Subscription Preferences Confirmed",
+    summary: "Your email address has been verified. You will receive occasional educational briefings on Canadian statutory tax and registered account policy.",
   },
 
   // French Core Routes
@@ -300,12 +300,12 @@ const coreRoutes = [
     summary: "Conditions juridiques régissant l'accès et l'utilisation de la plateforme d'éducation financière.",
   },
   {
-    path: "/fr/analytics",
-    title: "Analytique & Engagement des Visiteurs | Ahmed Bello",
-    description: "Mesures d'audience respectueuses de la vie privée sur la consultation des guides financiers et des outils interactifs.",
+    path: "/fr/confirm-subscription",
+    title: "Abonnement Confirmé | Ahmed Bello",
+    description: "Votre confirmation d'abonnement aux résumés éducatifs canadiens est enregistrée.",
     lang: "fr-CA",
-    heading: "Tableau de Bord Analytique & Engagement",
-    summary: "Statistiques d'engagement respectueuses des normes de confidentialité LPRPDE et LCAP.",
+    heading: "Préférences d'Abonnement Confirmées",
+    summary: "Votre adresse courriel a été vérifiée. Vous recevrez des analyses ponctuelles lors de modifications législatives importantes.",
   },
 ];
 

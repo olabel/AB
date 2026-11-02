@@ -1,6 +1,9 @@
 // Centralized Contact & Confirmation Email Service
-// Handles input validation, anti-abuse rate limiting per IP and per recipient email,
-// bot detection, and compliant email dispatch via Resend.
+// Handles input validation, durable anti-abuse rate limiting per IP and per recipient email,
+// disposable domain blocking, bot detection, and compliant email dispatch via Resend.
+
+import fs from "fs";
+import path from "path";
 
 export const VALID_PROVINCES = [
   "Alberta",
@@ -58,44 +61,141 @@ export function sanitizeMultiline(input: unknown): string {
     .trim();
 }
 
-// In-memory rate limiting per IP (max 8 requests / hour)
+// --------------------------------------------------------------------------
+// Multi-Tier Durable Rate Limiting (survives container cold starts via /tmp)
+// --------------------------------------------------------------------------
+const TMP_LIMITS_FILE = path.join("/tmp", "ahmed_rate_limits.json");
+const TMP_SUBSCRIBERS_FILE = path.join("/tmp", "ahmed_confirmed_subscribers.json");
+
+interface PersistedRateLimits {
+  ips: Record<string, { count: number; resetTime: number }>;
+  emails: Record<string, { count: number; resetTime: number }>;
+}
+
+function loadPersistedLimits(): PersistedRateLimits {
+  try {
+    if (fs.existsSync(TMP_LIMITS_FILE)) {
+      const raw = fs.readFileSync(TMP_LIMITS_FILE, "utf-8");
+      return JSON.parse(raw);
+    }
+  } catch {
+    // Non-blocking in ephemeral sandboxes
+  }
+  return { ips: {}, emails: {} };
+}
+
+function savePersistedLimits(data: PersistedRateLimits) {
+  try {
+    const now = Date.now();
+    const cleanIps: Record<string, { count: number; resetTime: number }> = {};
+    for (const [k, v] of Object.entries(data.ips || {})) {
+      if (v && v.resetTime > now) cleanIps[k] = v;
+    }
+    const cleanEmails: Record<string, { count: number; resetTime: number }> = {};
+    for (const [k, v] of Object.entries(data.emails || {})) {
+      if (v && v.resetTime > now) cleanEmails[k] = v;
+    }
+    fs.writeFileSync(
+      TMP_LIMITS_FILE,
+      JSON.stringify({ ips: cleanIps, emails: cleanEmails }),
+      "utf-8"
+    );
+  } catch {
+    // Non-blocking
+  }
+}
+
+// Memory cache for immediate hot lookups
 const ipSubmissions = new Map<string, { count: number; resetTime: number }>();
 const IP_RATE_LIMIT_MAX = 8;
 const IP_RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
 
 export function checkIpRateLimit(ip: string): boolean {
   const now = Date.now();
-  const entry = ipSubmissions.get(ip);
+  const state = loadPersistedLimits();
+  const entry = state.ips[ip] || ipSubmissions.get(ip);
+
   if (!entry || now > entry.resetTime) {
-    ipSubmissions.set(ip, { count: 1, resetTime: now + IP_RATE_LIMIT_WINDOW_MS });
+    const updated = { count: 1, resetTime: now + IP_RATE_LIMIT_WINDOW_MS };
+    ipSubmissions.set(ip, updated);
+    state.ips[ip] = updated;
+    savePersistedLimits(state);
     return true;
   }
+
   if (entry.count >= IP_RATE_LIMIT_MAX) {
     return false;
   }
+
   entry.count += 1;
+  ipSubmissions.set(ip, entry);
+  state.ips[ip] = entry;
+  savePersistedLimits(state);
   return true;
 }
 
-// In-memory rate limiting per target recipient email (anti-abuse spam protection)
-// Max 2 automated confirmation emails per recipient email per 2 hours
+// Disposable email provider blocklist to block automated bombing
+const DISPOSABLE_DOMAINS = new Set([
+  "mailinator.com",
+  "10minutemail.com",
+  "guerrillamail.com",
+  "tempmail.com",
+  "throwawaymail.com",
+  "trashmail.com",
+  "yopmail.com",
+  "sharklasers.com",
+  "dispostable.com",
+  "temp-mail.org",
+  "fakeinbox.com",
+]);
+
 const emailReceiptTracker = new Map<string, { count: number; resetTime: number }>();
 const EMAIL_RECEIPT_MAX = 2;
 const EMAIL_RECEIPT_WINDOW_MS = 2 * 60 * 60 * 1000;
 
 export function shouldSendReceiptToEmail(email: string): boolean {
   const normalized = email.toLowerCase().trim();
+  const domain = normalized.split("@")[1];
+  if (domain && DISPOSABLE_DOMAINS.has(domain)) {
+    return false;
+  }
+
   const now = Date.now();
-  const entry = emailReceiptTracker.get(normalized);
+  const state = loadPersistedLimits();
+  const entry = state.emails[normalized] || emailReceiptTracker.get(normalized);
+
   if (!entry || now > entry.resetTime) {
-    emailReceiptTracker.set(normalized, { count: 1, resetTime: now + EMAIL_RECEIPT_WINDOW_MS });
+    const updated = { count: 1, resetTime: now + EMAIL_RECEIPT_WINDOW_MS };
+    emailReceiptTracker.set(normalized, updated);
+    state.emails[normalized] = updated;
+    savePersistedLimits(state);
     return true;
   }
+
   if (entry.count >= EMAIL_RECEIPT_MAX) {
     return false;
   }
+
   entry.count += 1;
+  emailReceiptTracker.set(normalized, entry);
+  state.emails[normalized] = entry;
+  savePersistedLimits(state);
   return true;
+}
+
+export function recordConfirmedSubscriber(email: string): boolean {
+  try {
+    const normalized = email.toLowerCase().trim();
+    let subscribers: Record<string, string> = {};
+    if (fs.existsSync(TMP_SUBSCRIBERS_FILE)) {
+      subscribers = JSON.parse(fs.readFileSync(TMP_SUBSCRIBERS_FILE, "utf-8"));
+    }
+    subscribers[normalized] = new Date().toISOString();
+    fs.writeFileSync(TMP_SUBSCRIBERS_FILE, JSON.stringify(subscribers, null, 2), "utf-8");
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export interface ContactSubmissionPayload {
@@ -200,53 +300,54 @@ export async function processContactSubmission(
   }
 
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-  if (!email || !emailRegex.test(email) || email.length > 100) {
+  if (!email || email.length > 100 || !emailRegex.test(email)) {
     errors.email = "A valid email address is required (under 100 characters).";
   }
 
-  if (phone && (!/^[0-9+\-()\s]{7,25}$/.test(phone) || phone.length > 25)) {
-    errors.phone = "Invalid phone number format.";
-  }
+  if (!isNewsletter) {
+    if (!province || !VALID_PROVINCES.includes(province)) {
+      errors.province = "Please select a valid Canadian province or region from the dropdown.";
+    }
 
-  if (!isNewsletter && (!province || !VALID_PROVINCES.includes(province))) {
-    errors.province = "Please select a valid Canadian province or region from the dropdown.";
-  }
+    if (phone) {
+      const cleanPhone = phone.replace(/[\s().+-]/g, "");
+      if (cleanPhone.length < 10 || cleanPhone.length > 15 || !/^\d+$/.test(cleanPhone)) {
+        errors.phone = "Phone number format is invalid (10 to 15 digits expected).";
+      }
+    }
 
-  if (!topic || !VALID_TOPICS.includes(topic)) {
-    errors.topic = "Please select a valid financial topic.";
-  }
-
-  if (message.length > 2500) {
-    errors.message = "Message must not exceed 2,500 characters.";
-  }
-
-  if (!consentPrivacy) {
-    errors.consentPrivacy = "You must accept the privacy notice before submitting.";
+    if (!consentPrivacy) {
+      errors.consentPrivacy = "You must accept the privacy notice before submitting.";
+    }
   }
 
   if (Object.keys(errors).length > 0) {
     return {
       status: 400,
-      body: { error: "validation_failed", errors },
-    };
-  }
-
-  // 6. Check email delivery service credentials
-  if (!resendApiKey) {
-    return {
-      status: 503,
       body: {
-        code: "not_configured",
-        message: "The form is active, but email delivery is not yet configured on this deployment.",
+        error: "validation_failed",
+        errors,
       },
     };
   }
 
-  // 7. Compose Advisor Notification
+  // 6. If no Resend API key is present in environment, safely report failure
+  if (!resendApiKey) {
+    return {
+      status: 503,
+      body: {
+        error: "delivery_failed",
+        message:
+          "Your message could not be sent right now. Please reach out directly by email at enquiries@ahmedbello.com, call +1-506-899-4941, or schedule a conversation via Calendly.",
+      },
+    };
+  }
+
+  // 7. Dispatch to advisor
   const isMentorship = topic === "mentorship";
-  let emailSubject = `New Financial Education Enquiry: ${topic} (${firstName})`;
+  let emailSubject = `Financial Enquiry: ${firstName} (${province}) - ${topic}`;
   if (isNewsletter) {
-    emailSubject = `New Mailing List Subscriber: ${email} (${firstName})`;
+    emailSubject = `Intentional Wealth Briefing Subscriber: ${email}`;
   } else if (isMentorship) {
     emailSubject = `New Agent Mentorship Application: ${firstName} (${province})`;
   }
@@ -296,7 +397,6 @@ Origin: https://www.ahmedbello.com
       }),
     });
 
-    // Fallback to primary recipient if domain sandboxing restricts multiple addresses
     if (!resendResponse.ok && rawRecipients.length > 1) {
       resendResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -308,7 +408,7 @@ Origin: https://www.ahmedbello.com
           from: contactFromEmail,
           to: [primaryRecipient],
           reply_to: email,
-          subject: `${emailSubject} [For Ahmed & Team]`,
+          subject: `${emailSubject} [For Ahmed]`,
           text: `${advisorEmailBody}\n\nNote: Dispatched to primary address while domain verification completes.`,
         }),
       });
@@ -334,15 +434,15 @@ Origin: https://www.ahmedbello.com
 
         if (isNewsletter) {
           // Double opt-in / verification receipt to prevent third-party spamming
-          confirmationSubject = "Confirm your subscription to Intentional Wealth Briefing | Ahmed Bello";
+          confirmationSubject = "Confirm your subscription: Canadian Financial Education | Ahmed Bello";
           confirmationBody = `Hello ${firstName},
 
-Thank you for requesting to join the Intentional Wealth Briefing newsletter through ahmedbello.com.
+Thank you for requesting to join the Intentional Wealth Briefing through ahmedbello.com.
 
-To confirm your subscription and begin receiving our monthly plain-language breakdowns of Canadian tax rules, registered accounts, and family money strategies, please verify your interest:
+To confirm your email address and activate your subscription to receive occasional plain-language briefings when key Canadian tax rules, annual registered account limits (TFSA/RRSP/FHSA), or public pension policies are updated, please verify your interest:
 https://www.ahmedbello.com/confirm-subscription?email=${encodeURIComponent(email)}
 
-If you did not request this newsletter subscription, please ignore this email. You will not receive any further emails unless verified.
+If you did not request this educational briefing, please disregard this message. You will not receive any further emails unless confirmed.
 
 Warm regards,
 Ahmed Bello
@@ -350,15 +450,15 @@ Licensed Financial Solutions Professional
 Moncton, New Brunswick, Canada
 https://www.ahmedbello.com`;
         } else {
-          // Standard enquiry receipt
-          confirmationSubject = "Confirmation: We received your enquiry | Ahmed Bello";
+          // Standard enquiry receipt - Strictly single-practitioner wording ("I", not "we" or "our team")
+          confirmationSubject = "Confirmation: I received your enquiry | Ahmed Bello";
           confirmationBody = `Hello ${firstName},
 
-Thank you for reaching out through ahmedbello.com. This automated receipt confirms that we have safely received your enquiry regarding ${topic}.
+Thank you for reaching out through ahmedbello.com. This automated receipt confirms that I have safely received your enquiry regarding ${topic}.
 
 What happens next:
-1. Review: Our team reviews incoming enquiries in the order received and aims to follow up with evidence-based educational insights.
-2. Direct, Objective Discussion: We provide clear answers to your questions without aggressive sales pressure or proprietary product mandates.
+1. Review: I personally review incoming enquiries in the order received and aim to follow up with evidence-based educational insights.
+2. Direct, Objective Discussion: I provide clear answers to your questions without sales pressure or proprietary product mandates.
 3. Exploration: If your situation calls for a deeper conversation, we can review next steps during a 30-minute introductory call.
 
 If you would like to schedule a time right away:
@@ -397,7 +497,7 @@ https://www.ahmedbello.com`;
         success: true,
         message: isNewsletter
           ? "Subscription request received. Please check your inbox for confirmation."
-          : "Enquiry sent successfully. We will follow up shortly.",
+          : "Enquiry sent successfully. I will follow up shortly.",
       },
     };
   } catch {
