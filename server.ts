@@ -252,25 +252,42 @@ app.get("/BingSiteAuth.xml", (_req: Request, res: Response) => {
 });
 
 // --------------------------------------------------------------------------
-// 5. Hardened Contact API Endpoint: POST /api/contact
+// 5. Hardened Contact API Endpoint: POST /api/contact & OPTIONS preflight
 // --------------------------------------------------------------------------
+app.options(["/api/contact", "/api/subscribe"], (req: Request, res: Response) => {
+  const origin = (req.headers["origin"] as string) || "*";
+  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+  res.setHeader("Access-Control-Max-Age", "86400");
+  return res.sendStatus(204);
+});
+
 app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response) => {
   // Origin / Referer Validation against CSRF
   const origin = req.headers["origin"] as string | undefined;
   if (origin) {
     const isAllowedOrigin =
+      origin === "null" ||
+      origin === "" ||
       origin.includes("ahmedbello.com") ||
       origin.includes("localhost") ||
       origin.includes("127.0.0.1") ||
       origin.includes(".aistudio-preview.net") ||
       origin.includes(".run.app") ||
-      origin.includes(".vercel.app");
+      origin.includes(".vercel.app") ||
+      origin.includes("googleusercontent.com") ||
+      origin.includes("aistudio.google.com") ||
+      origin.includes("google.com");
     if (!isAllowedOrigin) {
       return res.status(403).json({
         error: "forbidden",
         message: "Cross-origin submission rejected.",
       });
     }
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
   }
 
   const forwarded = req.headers["x-forwarded-for"];

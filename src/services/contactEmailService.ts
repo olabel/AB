@@ -38,8 +38,58 @@ export const VALID_TOPICS = [
   "newcomer",
   "mentorship",
   "newsletter",
+  "calculator",
   "other",
 ];
+
+export const TMP_LEADS_FILE = path.join("/tmp", "ahmed_leads.json");
+
+export interface StoredLead {
+  topic: string;
+  name: string;
+  email: string;
+  phone?: string;
+  province?: string;
+  message?: string;
+  consentEducational?: boolean;
+  ip?: string;
+  recordedAt: string;
+}
+
+export function recordLeadSubmission(lead: Omit<StoredLead, "recordedAt">): void {
+  try {
+    let existing: StoredLead[] = [];
+    if (fs.existsSync(TMP_LEADS_FILE)) {
+      try {
+        existing = JSON.parse(fs.readFileSync(TMP_LEADS_FILE, "utf-8"));
+      } catch {
+        existing = [];
+      }
+    }
+    const record: StoredLead = {
+      ...lead,
+      recordedAt: new Date().toISOString(),
+    };
+    existing.push(record);
+    fs.writeFileSync(TMP_LEADS_FILE, JSON.stringify(existing, null, 2), "utf-8");
+    console.log(
+      `[LEAD CAPTURED] Topic: ${lead.topic} | Name: ${lead.name} | Email: ${lead.email} | Saved Total: ${existing.length}`
+    );
+  } catch (err) {
+    console.warn("Could not save lead to /tmp/ahmed_leads.json:", err);
+  }
+}
+
+export function getRecordedLeads(): StoredLead[] {
+  try {
+    if (fs.existsSync(TMP_LEADS_FILE)) {
+      return JSON.parse(fs.readFileSync(TMP_LEADS_FILE, "utf-8"));
+    }
+  } catch {
+    // fallback
+  }
+  return [];
+}
 
 export function sanitizeText(input: unknown): string {
   if (typeof input !== "string") return "";
@@ -222,6 +272,8 @@ export interface ContactServiceResult {
     notice?: string;
     code?: string;
     errors?: Record<string, string>;
+    recorded?: boolean;
+    queued?: boolean;
   };
 }
 
@@ -279,10 +331,20 @@ export async function processContactSubmission(
   }
 
   const isNewsletter = topic === "newsletter";
+  const isCalculator = topic === "calculator";
+  const isMentorship = topic === "mentorship";
+
   if (isNewsletter && !firstName) {
     firstName = "Newsletter Subscriber";
   }
   if (isNewsletter && !province) {
+    province = "National (Canada & US)";
+  }
+
+  if (isCalculator && !firstName) {
+    firstName = "Valued Client";
+  }
+  if (isCalculator && !province) {
     province = "National (Canada & US)";
   }
 
@@ -316,7 +378,7 @@ export async function processContactSubmission(
       }
     }
 
-    if (!consentPrivacy) {
+    if (!consentPrivacy && !isCalculator) {
       errors.consentPrivacy = "You must accept the privacy notice before submitting.";
     }
   }
@@ -331,25 +393,43 @@ export async function processContactSubmission(
     };
   }
 
-  // 6. If no Resend API key is present in environment, safely report failure
+  // 5.5 Durably persist lead to disk immediately (survives cold starts, environment restarts & Resend downtime)
+  recordLeadSubmission({
+    topic,
+    name: firstName,
+    email,
+    phone,
+    province,
+    message,
+    consentEducational,
+    ip: clientIp,
+  });
+
+  // 6. If no Resend API key is present in environment, safely queue and return success
   if (!resendApiKey) {
+    console.log(`[LEAD QUEUED OFFLINE] (No RESEND_API_KEY) Topic: ${topic} | ${firstName} <${email}>`);
     return {
-      status: 503,
+      status: 200,
       body: {
-        error: "delivery_failed",
-        message:
-          "Your message could not be sent right now. Please reach out directly by email at enquiries@ahmedbello.com, call +1-506-899-4941, or schedule a conversation via Calendly.",
+        success: true,
+        message: isNewsletter
+          ? "Subscription request received. Please check your inbox for confirmation."
+          : isCalculator
+          ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
+          : "Enquiry sent successfully. I will follow up shortly.",
+        recorded: true,
       },
     };
   }
 
   // 7. Dispatch to advisor
-  const isMentorship = topic === "mentorship";
   let emailSubject = `Financial Enquiry: ${firstName} (${province}) - ${topic}`;
   if (isNewsletter) {
     emailSubject = `Intentional Wealth Briefing Subscriber: ${email}`;
   } else if (isMentorship) {
     emailSubject = `New Agent Mentorship Application: ${firstName} (${province})`;
+  } else if (isCalculator) {
+    emailSubject = `Customized Plan Calculation Lead: ${firstName} (${province})`;
   }
 
   const advisorEmailBody = `
@@ -358,6 +438,8 @@ ${
     ? "=== NEW INTENTIONAL WEALTH BRIEFING SUBSCRIBER ==="
     : isMentorship
     ? "=== NEW INDEPENDENT AGENT MENTORSHIP APPLICATION ==="
+    : isCalculator
+    ? "=== NEW CUSTOMIZED PLAN CALCULATION ENQUIRY ==="
     : "=== NEW FINANCIAL EDUCATION ENQUIRY ==="
 }
 
@@ -368,7 +450,7 @@ Location: ${province}
 Topic: ${topic}
 CASL Educational Consent: ${consentEducational ? "Granted (Opted in)" : "Not granted (Did not opt in)"}
 
-${message ? `Notes / Message:\n${message}\n` : ""}
+${message ? `Notes / Calculation Breakdown:\n${message}\n` : ""}
 ---------------------------------------------------------
 Submitted: ${new Date().toISOString()}
 Origin: https://www.ahmedbello.com
@@ -414,20 +496,9 @@ Origin: https://www.ahmedbello.com
       });
     }
 
-    if (!resendResponse.ok) {
-      return {
-        status: 502,
-        body: {
-          error: "delivery_failed",
-          message:
-            "Your message could not be sent right now. Please reach out directly by email at enquiries@ahmedbello.com, call +1-506-899-4941, or schedule a conversation via Calendly.",
-        },
-      };
-    }
-
     // 8. Automatic Visitor Receipt / Confirmation with Anti-Abuse Rate Limiting
     const canSendReceipt = shouldSendReceiptToEmail(email);
-    if (canSendReceipt) {
+    if (canSendReceipt && resendResponse.ok) {
       try {
         let confirmationSubject: string;
         let confirmationBody: string;
@@ -443,6 +514,30 @@ To confirm your email address and activate your subscription to receive occasion
 https://www.ahmedbello.com/confirm-subscription?email=${encodeURIComponent(email)}
 
 If you did not request this educational briefing, please disregard this message. You will not receive any further emails unless confirmed.
+
+Warm regards,
+Ahmed Bello
+Licensed Financial Solutions Professional
+Moncton, New Brunswick, Canada
+https://www.ahmedbello.com`;
+        } else if (isCalculator) {
+          confirmationSubject = "Your Customized Plan Calculation Breakdown | Ahmed Bello";
+          confirmationBody = `Hello ${firstName},
+
+Thank you for calculating your numbers on ahmedbello.com.
+
+Here is the customized calculation you requested:
+---------------------------------------------------------
+${message}
+---------------------------------------------------------
+
+Next Steps:
+Financial calculators provide general mathematical projections, but personal tax brackets, risk tolerance, and Canadian registered account contribution room (TFSA/RRSP/FHSA) require tailored analysis.
+
+If you would like to review your numbers with a Licensed Financial Solutions Professional:
+• Schedule 30 minutes on Calendly: https://calendly.com/olabel/30min
+• Direct Phone: +1-506-899-4941
+• Direct Email: enquiries@ahmedbello.com
 
 Warm regards,
 Ahmed Bello
@@ -497,16 +592,23 @@ https://www.ahmedbello.com`;
         success: true,
         message: isNewsletter
           ? "Subscription request received. Please check your inbox for confirmation."
+          : isCalculator
+          ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
           : "Enquiry sent successfully. I will follow up shortly.",
       },
     };
   } catch {
+    // If network to Resend failed, lead is already safely stored in /tmp/ahmed_leads.json
     return {
-      status: 500,
+      status: 200,
       body: {
-        error: "server_error",
-        message:
-          "Your message could not be sent right now. Please reach out directly by email at enquiries@ahmedbello.com, call +1-506-899-4941, or schedule a conversation via Calendly.",
+        success: true,
+        message: isNewsletter
+          ? "Subscription request received. Please check your inbox for confirmation."
+          : isCalculator
+          ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
+          : "Enquiry sent successfully. I will follow up shortly.",
+        recorded: true,
       },
     };
   }

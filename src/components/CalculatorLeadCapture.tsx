@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, AlertCircle, RefreshCw } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
 
 interface CalculatorLeadCaptureProps {
@@ -26,7 +26,8 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
     e.preventDefault();
     setErrorMsg(null);
 
-    if (!email.trim() || !email.includes("@")) {
+    const cleanEmail = email.trim();
+    if (!cleanEmail || !cleanEmail.includes("@")) {
       setErrorMsg(isFr ? "Veuillez entrer une adresse courriel valide." : "Please enter a valid email address.");
       return;
     }
@@ -34,8 +35,8 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
     if (!consent) {
       setErrorMsg(
         isFr
-          ? "Veuillez cocher la case pour confirmer votre consentement selon la LCAP."
-          : "Please check the box to confirm your consent under Canadian anti-spam legislation."
+          ? "Veuillez cocher la case de consentement LCAP ci-dessous avant d'envoyer votre plan."
+          : "Please check the consent box below before submitting to receive your plan."
       );
       return;
     }
@@ -47,22 +48,22 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: firstName.trim() || "Client",
-          email: email.trim(),
+          firstName: firstName.trim() || "Valued Client",
+          email: cleanEmail,
           topic: "calculator",
           province: "National (Canada & US)",
           message: `Calculated Plan: ${calculatorName}\n\nSummary Breakdown:\n${summaryText}`,
           consentPrivacy: true,
-          consentEducational: true,
+          consentEducational: consent,
           formLoadedAt: Date.now() - 4000,
           honeypot: "",
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
-      if (!response.ok && data.error !== "delivery_failed") {
-        throw new Error(data.message || "Unable to send plan.");
+      if (!response.ok && data.error && data.error !== "delivery_failed") {
+        throw new Error(data.message || (isFr ? "Impossible d'envoyer le plan." : "Unable to record plan."));
       }
 
       setSubmitted(true);
@@ -70,23 +71,28 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
       setErrorMsg(
         err.message ||
           (isFr
-            ? "Impossible d'envoyer le plan pour le moment. Veuillez planifier un échange direct."
-            : "Could not send the plan right now. Please schedule a direct review call.")
+            ? "Impossible d'envoyer le plan pour le moment. Veuillez planifier un appel direct sur Calendly."
+            : "Could not send the plan right now. Please schedule a review call on Calendly.")
       );
     } finally {
       setSubmitting(false);
     }
   };
 
+  const handleReset = () => {
+    setSubmitted(false);
+    setErrorMsg(null);
+  };
+
   return (
     <div
-      className={`mt-6 p-6 sm:p-7 bg-[#fcfaf5] border-2 border-[#2e4a3b]/30 rounded-[2px] space-y-5 shadow-xs relative overflow-hidden ${className}`}
+      className={`mt-6 p-6 sm:p-7 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] space-y-5 shadow-xs relative overflow-hidden ${className}`}
     >
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#2e4a3b] via-[#75581f] to-[#2e4a3b]" />
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#2e4a3b] via-[#75581f] to-[#2e4a3b]" />
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#ece6da] pb-4">
         <div>
-          <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block">
+          <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block mb-0.5">
             {isFr ? "Conserver vos résultats" : "Save Your Calculations"}
           </span>
           <h4 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-medium leading-snug">
@@ -98,7 +104,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           href="https://calendly.com/olabel/30min"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center gap-1.5 whitespace-nowrap shadow-xs"
+          className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shadow-xs shrink-0"
         >
           <Calendar className="w-3.5 h-3.5 text-[#d6c298]" />
           <span>{isFr ? "Réserver une révision de 30 min" : "Book a 30-min review"}</span>
@@ -106,87 +112,163 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
       </div>
 
       {submitted ? (
-        <div className="p-4 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] flex items-center gap-3">
-          <CheckCircle2 className="w-5 h-5 text-[#d6c298] shrink-0" />
-          <div className="text-xs leading-relaxed">
-            <strong>{isFr ? "Plan envoyé avec succès !" : "Plan summary dispatched!"}</strong>{" "}
-            {isFr
-              ? `Une copie de vos résultats a été envoyée à ${email}. Ahmed Bello examinera également les paramètres avec vous si vous souhaitez approfondir.`
-              : `A record of your calculations has been dispatched to ${email}. If you’d like to stress-test your numbers, use the booking button to schedule a review.`}
+        <div className="p-5 sm:p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-4 shadow-sm animate-fadeIn">
+          <div className="flex items-start gap-3">
+            <CheckCircle2 className="w-6 h-6 text-[#d6c298] shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <h5 className="font-serif text-base sm:text-lg font-medium text-[#f7f3eb]">
+                {isFr ? "Plan personnalisé enregistré et envoyé !" : "Customized Plan Dispatched!"}
+              </h5>
+              <p className="text-xs text-[#ece6da] leading-relaxed">
+                {isFr ? (
+                  <>
+                    Une copie de votre calcul pour <strong>{calculatorName}</strong> a été enregistrée pour{" "}
+                    <strong>{email}</strong>. Ahmed Bello examinera vos paramètres pour vérifier la cohérence avec les règles fiscales canadiennes.
+                  </>
+                ) : (
+                  <>
+                    A detailed breakdown of your <strong>{calculatorName}</strong> calculation has been recorded for{" "}
+                    <strong>{email}</strong>. Ahmed Bello personally reviews client projections to verify regulatory registered account contribution room (TFSA/RRSP/FHSA).
+                  </>
+                )}
+              </p>
+            </div>
+          </div>
+
+          <div className="pt-3 border-t border-[#f7f3eb]/20 flex flex-wrap items-center gap-3">
+            <a
+              href="https://calendly.com/olabel/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2 px-3.5 inline-flex items-center gap-1.5 font-semibold transition-colors"
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              <span>{isFr ? "Planifier un échange de 30 min sur Calendly" : "Schedule 30-Min Discussion on Calendly"}</span>
+            </a>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="text-xs text-[#ece6da] hover:text-white underline inline-flex items-center gap-1 py-2 px-2"
+            >
+              <RefreshCw className="w-3 h-3" />
+              <span>{isFr ? "Calculer un autre scénario" : "Calculate another scenario"}</span>
+            </button>
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSendPlan} className="space-y-3.5">
+        <form onSubmit={handleSendPlan} className="space-y-4">
           {errorMsg && (
-            <div className="p-2.5 bg-[#fdf0ed] border border-[#d97768] text-[#8a3324] text-xs rounded-[2px]">
-              {errorMsg}
+            <div
+              role="alert"
+              className="p-3 bg-[#fdf0ed] border border-[#d97768] text-[#8a3324] text-xs rounded-[2px] flex items-start gap-2 animate-fadeIn"
+            >
+              <AlertCircle className="w-4 h-4 text-[#8a3324] shrink-0 mt-0.5" />
+              <div className="leading-relaxed font-medium">{errorMsg}</div>
             </div>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
-            <input
-              type="text"
-              name="firstName"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              placeholder={isFr ? "Prénom (optionnel)" : "First name (optional)"}
-              className="sm:col-span-4 text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
-            />
-            <input
-              type="email"
-              required
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={isFr ? "Votre adresse courriel *" : "Your email address *"}
-              className="sm:col-span-5 text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label
+                htmlFor={`calc-name-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                className="block text-[0.72rem] font-semibold text-[#46423a] mb-1"
+              >
+                {isFr ? "Prénom (optionnel)" : "First Name (optional)"}
+              </label>
+              <input
+                id={`calc-name-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                type="text"
+                name="firstName"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder={isFr ? "ex. Sarah" : "e.g., Sarah"}
+                className="w-full text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor={`calc-email-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                className="block text-[0.72rem] font-semibold text-[#1c1b18] mb-1"
+              >
+                {isFr ? "Adresse courriel" : "Email Address"} <span className="text-[#8a3324]">*</span>
+              </label>
+              <input
+                id={`calc-email-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                type="email"
+                required
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={isFr ? "sarah@exemple.ca" : "sarah@example.ca"}
+                className="w-full text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
+              />
+            </div>
+          </div>
+
+          {/* CASL Compliance Checkbox placed prominently before submit */}
+          <div
+            className={`p-3 rounded-[2px] border transition-colors ${
+              !consent && errorMsg
+                ? "bg-[#fdf0ed] border-[#d97768]"
+                : "bg-white/60 border-[#e3dccf]"
+            }`}
+          >
+            <div className="flex items-start gap-2.5">
+              <input
+                id={`calc-consent-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                type="checkbox"
+                required
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+                className="mt-0.5 accent-[#2e4a3b] w-4 h-4 cursor-pointer"
+              />
+              <label
+                htmlFor={`calc-consent-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                className="text-[0.72rem] text-[#46423a] leading-relaxed cursor-pointer select-none"
+              >
+                {isFr ? (
+                  <>
+                    <strong className="text-[#1c1b18]">Consentement LCAP :</strong> J'accepte de recevoir une copie de ce plan personnalisé et des résumés éducatifs ponctuels d'Ahmed Bello selon la législation canadienne contre les pourriels (LCAP). Désabonnement instantané en 1 clic. Consultez l'
+                    <Link to="/fr/privacy" className="underline hover:text-[#2e4a3b] font-medium">
+                      avis de confidentialité
+                    </Link>
+                    .
+                  </>
+                ) : (
+                  <>
+                    <strong className="text-[#1c1b18]">CASL Consent:</strong> I consent to receive a copy of this customized calculation plan and occasional educational briefings from Ahmed Bello under Canada’s Anti-Spam Legislation (CASL). Unsubscribe anytime with 1 click. Read the{" "}
+                    <Link to="/privacy" className="underline hover:text-[#2e4a3b] font-medium">
+                      privacy notice
+                    </Link>
+                    .
+                  </>
+                )}
+              </label>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
             <button
               type="submit"
               disabled={submitting}
-              className="sm:col-span-3 btn btn-secondary text-xs py-2.5 px-3 whitespace-nowrap flex items-center justify-center gap-1.5"
+              className="btn btn-primary text-xs py-2.5 px-5 whitespace-nowrap flex items-center justify-center gap-2 shadow-xs cursor-pointer font-medium"
             >
               {submitting ? (
-                <span>{isFr ? "Envoi..." : "Sending..."}</span>
+                <span>{isFr ? "Enregistrement et envoi..." : "Recording & Sending Plan..."}</span>
               ) : (
                 <>
-                  <Mail className="w-3.5 h-3.5 text-[#2e4a3b]" />
-                  <span>{isFr ? "M'envoyer ce plan" : "Email me this plan"}</span>
+                  <Mail className="w-3.5 h-3.5 text-[#d6c298]" />
+                  <span>{isFr ? "M'envoyer ce plan personnalisé" : "Email me this customized plan"}</span>
+                  <ArrowRight className="w-3.5 h-3.5 opacity-70" />
                 </>
               )}
             </button>
-          </div>
 
-          <div className="flex items-start gap-2 pt-0.5">
-            <input
-              id={`calc-consent-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
-              type="checkbox"
-              checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
-              className="mt-0.5 accent-[#2e4a3b]"
-            />
-            <label
-              htmlFor={`calc-consent-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
-              className="text-[0.7rem] text-[#625d52] leading-tight cursor-pointer"
-            >
-              {isFr ? (
-                <>
-                  J'accepte de recevoir une copie de ce plan personnalisé et des résumés éducatifs ponctuels d'Ahmed Bello selon la législation canadienne (LCAP). Désabonnement en un clic. Consultez l'
-                  <Link to="/fr/privacy" className="underline hover:text-[#2e4a3b]">
-                    avis de confidentialité
-                  </Link>
-                  .
-                </>
-              ) : (
-                <>
-                  I consent to receive a copy of this customized calculation plan and occasional educational briefings from Ahmed Bello under Canada’s Anti-Spam Legislation (CASL). Unsubscribe anytime with 1 click. Read the{" "}
-                  <Link to="/privacy" className="underline hover:text-[#2e4a3b]">
-                    privacy notice
-                  </Link>
-                  .
-                </>
-              )}
-            </label>
+            <span className="text-[0.68rem] text-[#75581f] flex items-center gap-1">
+              <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+              <span>{isFr ? "Strictement confidentiel • Zéro vente forcée" : "Strictly Confidential • Zero Sales Pressure"}</span>
+            </span>
           </div>
         </form>
       )}

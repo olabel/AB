@@ -3,6 +3,18 @@
 import { processContactSubmission } from "../src/services/contactEmailService.ts";
 
 export default async function handler(req: any, res: any) {
+  // Handle OPTIONS preflight
+  if (req.method === "OPTIONS") {
+    const origin = (req.headers["origin"] as string) || "*";
+    if (res.setHeader) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+      res.setHeader("Access-Control-Max-Age", "86400");
+    }
+    return res.status(204).end();
+  }
+
   // Only allow POST
   if (req.method !== "POST") {
     if (res.setHeader) res.setHeader("Allow", "POST");
@@ -13,17 +25,27 @@ export default async function handler(req: any, res: any) {
   const origin = req.headers["origin"] as string | undefined;
   if (origin) {
     const isAllowedOrigin =
+      origin === "null" ||
+      origin === "" ||
       origin.includes("ahmedbello.com") ||
       origin.includes("localhost") ||
       origin.includes("127.0.0.1") ||
       origin.includes(".aistudio-preview.net") ||
       origin.includes(".run.app") ||
-      origin.includes(".vercel.app");
+      origin.includes(".vercel.app") ||
+      origin.includes("googleusercontent.com") ||
+      origin.includes("aistudio.google.com") ||
+      origin.includes("google.com");
     if (!isAllowedOrigin) {
       return res.status(403).json({
         error: "forbidden",
         message: "Cross-origin submission rejected.",
       });
+    }
+    if (res.setHeader) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
     }
   }
 
