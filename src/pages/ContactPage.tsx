@@ -485,7 +485,7 @@ export const ContactPage: React.FC = () => {
 
                 <div className="pt-3 flex flex-wrap items-center gap-4 text-xs">
                   <Link to="/education" className="text-[#2e4a3b] font-semibold hover:underline">
-                    &larr; Explore the Financial Education Library
+                    ← Explore the Financial Education Library
                   </Link>
                   <button
                     type="button"

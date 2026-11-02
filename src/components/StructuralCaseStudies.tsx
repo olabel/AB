@@ -169,7 +169,7 @@ export const StructuralCaseStudies: React.FC = () => {
             to={`/contact?topic=${activeCase.contactTopic}`}
             className="btn btn-primary text-xs py-2 px-4 whitespace-nowrap shrink-0"
           >
-            Ask about this framework &rarr;
+            Ask about this framework →
           </Link>
         </div>
       </div>

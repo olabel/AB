@@ -152,7 +152,7 @@ export const StructureDiagnostic: React.FC = () => {
               onClick={() => setIsCompleted(true)}
               className="btn btn-primary text-xs py-2.5 px-6 disabled:opacity-50"
             >
-              Generate Structure Diagnostic &rarr;
+              Generate Structure Diagnostic →
             </button>
           </div>
         </div>
@@ -210,7 +210,7 @@ export const StructureDiagnostic: React.FC = () => {
               to={`/contact?topic=${assessment.topic}`}
               className="btn btn-primary text-xs py-2 px-5"
             >
-              Review these results with Ahmed &rarr;
+              Review these results with Ahmed →
             </Link>
           </div>
         </div>

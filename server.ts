@@ -433,20 +433,22 @@ function getRouteMetadata(pathname: string): RouteMeta {
   const pathOnly = pathname.split("?")[0].split("#")[0];
   const cleanPath = pathOnly.replace(/\/+$/, "") || "/";
 
-  // Article pages (/education/:slug or /insights/:slug)
-  const articleMatch = cleanPath.match(/^\/(?:education|insights)\/([^/]+)$/);
+  // Article pages (/education/:slug, /insights/:slug, /fr/education/:slug, /fr/insights/:slug)
+  const articleMatch = cleanPath.match(/^\/(?:fr\/)?(?:education|insights)\/([^/]+)$/);
   if (articleMatch) {
     const slug = articleMatch[1];
+    const isFrench = cleanPath.startsWith("/fr");
     const article = articles.find((a) => a.slug === slug);
     if (article) {
       const titleCandidate = `${article.seoTitle || article.title} | Ahmed Bello`;
       const title = titleCandidate.length > 65 ? `${titleCandidate.slice(0, 62)}...` : titleCandidate;
+      const articleUrl = isFrench ? `/fr${article.url}` : article.url;
 
       return {
         title,
         description: article.description,
         ogType: "article",
-        url: `${siteConfig.siteUrl}${article.url}`,
+        url: `${siteConfig.siteUrl}${articleUrl}`,
         jsonLd: [
           siteWideWebSite,
           siteWidePerson,
@@ -456,12 +458,12 @@ function getRouteMetadata(pathname: string): RouteMeta {
             headline: article.seoTitle || article.title,
             description: article.description,
             isAccessibleForFree: true,
-            inLanguage: "en-CA",
+            inLanguage: isFrench ? "fr-CA" : "en-CA",
             author: siteWidePerson,
             publisher: siteWideFinancialService,
             mainEntityOfPage: {
               "@type": "WebPage",
-              "@id": `${siteConfig.siteUrl}${article.url}`,
+              "@id": `${siteConfig.siteUrl}${articleUrl}`,
             },
             about: {
               "@type": "Thing",
@@ -484,20 +486,20 @@ function getRouteMetadata(pathname: string): RouteMeta {
               {
                 "@type": "ListItem",
                 position: 1,
-                name: "Home",
-                item: siteConfig.siteUrl,
+                name: isFrench ? "Accueil" : "Home",
+                item: isFrench ? `${siteConfig.siteUrl}/fr` : siteConfig.siteUrl,
               },
               {
                 "@type": "ListItem",
                 position: 2,
-                name: article.kind === "guide" ? "Financial Education" : "Insights",
-                item: `${siteConfig.siteUrl}/${article.kind === "guide" ? "education" : "insights"}`,
+                name: article.kind === "guide" ? (isFrench ? "Éducation Financière" : "Financial Education") : (isFrench ? "Perspectives" : "Insights"),
+                item: `${siteConfig.siteUrl}${isFrench ? "/fr" : ""}/${article.kind === "guide" ? "education" : "insights"}`,
               },
               {
                 "@type": "ListItem",
                 position: 3,
                 name: article.title,
-                item: `${siteConfig.siteUrl}${article.url}`,
+                item: `${siteConfig.siteUrl}${articleUrl}`,
               },
             ],
           },
@@ -506,8 +508,8 @@ function getRouteMetadata(pathname: string): RouteMeta {
     }
   }
 
-  // Audience Hub pages (/for/:audience)
-  const forMatch = cleanPath.match(/^\/for\/([^\/]+)$/);
+  // Audience Hub pages (/for/:audience and /fr/for/:audience)
+  const forMatch = cleanPath.match(/^\/(?:fr\/)?for\/([^\/]+)$/);
   if (forMatch) {
     const aud = forMatch[1];
     let title = "Financial Guidance & Topic Clusters | Ahmed Bello";
@@ -638,6 +640,41 @@ function getRouteMetadata(pathname: string): RouteMeta {
             "@type": "WebPage",
             name: "Live Financial News Desk",
             url: `${siteConfig.siteUrl}/news`,
+          },
+        ],
+      };
+
+    case "/calculators":
+    case "/financial-calculators":
+    case "/fr/calculators":
+    case "/fr/simulateurs":
+      return {
+        title: cleanPath.startsWith("/fr")
+          ? "Simulateurs Financiers Canadiens & Outils d'Analyse | Ahmed Bello"
+          : "Interactive Canadian Financial Calculators & Decision Simulators | Ahmed Bello",
+        description: cleanPath.startsWith("/fr")
+          ? "Simulateurs financiers canadiens interactifs : piste d'atterrissage pour nouveaux arrivants, choc de renouvellement hypothécaire, arbitrage CELI vs REER et plafond de revenu passif SPCC."
+          : "Interactive Canadian financial simulators: Newcomer financial runway, mortgage renewal shock analyzer, TFSA vs RRSP tax arbitrage, and CCPC passive income limit calculator.",
+        ogType: "website",
+        url: `${siteConfig.siteUrl}${cleanPath}`,
+        jsonLd: [
+          siteWideWebSite,
+          siteWideFinancialService,
+          {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Canadian Financial Decision Simulators",
+            url: `${siteConfig.siteUrl}/calculators`,
+            applicationCategory: "FinanceApplication",
+            operatingSystem: "All",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
+              { "@type": "ListItem", position: 2, name: "Financial Calculators", item: `${siteConfig.siteUrl}/calculators` },
+            ],
           },
         ],
       };

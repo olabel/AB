@@ -148,7 +148,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
                   you are always welcome to ask.
                 </p>
                 <Link to="/contact" className="btn btn-primary text-xs py-2 px-4">
-                  Start a Conversation &rarr;
+                  Start a Conversation →
                 </Link>
               </div>
             )}

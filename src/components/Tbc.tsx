@@ -37,7 +37,7 @@ export const DraftBanner: React.FC = () => {
           href="/standards"
           className="underline text-xs shrink-0 hover:text-black transition-colors"
         >
-          Editorial standards &rarr;
+          Editorial standards →
         </a>
       </div>
     </aside>

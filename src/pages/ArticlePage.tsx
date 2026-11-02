@@ -210,7 +210,7 @@ export const ArticlePage: React.FC = () => {
                     to="/standards"
                     className="text-[#2e4a3b] underline hover:text-[#1c1b18]"
                   >
-                    How content is checked &rarr;
+                    How content is checked →
                   </Link>
                 </div>
 

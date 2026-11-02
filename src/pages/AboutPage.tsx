@@ -94,7 +94,7 @@ export const AboutPage: React.FC = () => {
             <div className="p-4 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
               <span className="text-[#625d52] block mb-1">Content standards</span>
               <Link to="/standards" className="text-[#2e4a3b] underline font-medium block">
-                How content is sourced and reviewed &rarr;
+                How content is sourced and reviewed →
               </Link>
             </div>
           </div>
@@ -191,7 +191,7 @@ export const AboutPage: React.FC = () => {
 
           <div className="pt-2">
             <Link to="/how-i-help" className="arrow-link text-sm">
-              See how I help &rarr;
+              See how I help →
             </Link>
           </div>
         </div>
@@ -208,7 +208,7 @@ export const AboutPage: React.FC = () => {
           </p>
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
-              Start a Conversation &rarr;
+              Start a Conversation →
             </Link>
             {siteConfig.schedulingUrl && (
               <a
@@ -218,7 +218,7 @@ export const AboutPage: React.FC = () => {
                 className="btn btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
               >
                 <span>Book 30 Min on Calendly</span>
-                <span aria-hidden="true">&rarr;</span>
+                <span aria-hidden="true">→</span>
               </a>
             )}
           </div>

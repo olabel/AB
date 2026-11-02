@@ -311,7 +311,7 @@ export const HowIHelpPage: React.FC = () => {
                 className="btn btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
               >
                 <span>{isFr ? "Réserver 30 min sur Calendly" : "Book 30 Min on Calendly"}</span>
-                <span aria-hidden="true">&rarr;</span>
+                <span aria-hidden="true">→</span>
               </a>
             )}
           </div>

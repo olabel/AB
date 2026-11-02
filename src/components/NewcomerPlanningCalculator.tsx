@@ -17,6 +17,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { CalculatorLeadCapture } from "./CalculatorLeadCapture.tsx";
 
 interface NewcomerPlanningCalculatorProps {
   className?: string;
@@ -431,7 +432,7 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
             >
               {isFr
                 ? "Médecins et infirmiers formés à l'étranger : votre 1re année d'argent au Canada →"
-                : "Internationally trained doctors and nurses: your first year of money in Canada &rarr;"}
+                : "Internationally trained doctors and nurses: your first year of money in Canada →"}
             </Link>
             <p className="text-[0.7rem] text-[#625d52]">
               {isFr
@@ -441,6 +442,20 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
           </div>
         </div>
       </div>
+
+      {/* Lead Capture: Email Me This Plan & Book Review */}
+      <CalculatorLeadCapture
+        calculatorName="Newcomer First-Year Financial Runway"
+        summaryText={`Household Type: ${householdType}
+Profession Track: ${professionTrack}
+Licensing / Recognition Delay: ${monthsToLicense} months
+Total Capital Needed: $${calculations.totalTargetNeeded.toLocaleString()}
+Net Monthly Deficit (Burn): $${calculations.netMonthlyBurn.toLocaleString()}/month
+Current Liquid Savings: $${currentSavings.toLocaleString()}
+Estimated Runway: ${calculations.runwayMonths} months
+Financial Gap / Surplus: $${Math.abs(calculations.variance).toLocaleString()} (${calculations.isShortfall ? "Deficit" : "Surplus"})
+Recommended Emergency Buffer: $${calculations.recommendedBuffer.toLocaleString()}`}
+      />
     </div>
   );
 };

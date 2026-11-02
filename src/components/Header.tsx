@@ -24,6 +24,7 @@ export const Header: React.FC = () => {
     { label: t("nav_home"), href: prefix || "/" },
     { label: t("nav_how_i_help"), href: `${prefix}/how-i-help` },
     { label: t("nav_education"), href: `${prefix}/education` },
+    { label: t("nav_calculators"), href: `${prefix}/calculators` },
     { label: t("nav_insights"), href: `${prefix}/insights` },
     { label: t("nav_careers"), href: `${prefix}/careers` },
   ];
@@ -307,7 +308,7 @@ export const Header: React.FC = () => {
                         }`}
                       >
                         <span>{item.label}</span>
-                        <span className="text-xs font-mono text-[#75581f]">&rarr;</span>
+                        <span className="text-xs font-mono text-[#75581f]">→</span>
                       </Link>
                     );
                   })}

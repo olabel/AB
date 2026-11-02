@@ -1858,5 +1858,650 @@ export const articles: Article[] = [
   "invitationAbout": "your first year of money in Canada",
   "url": "/education/internationally-trained-doctors-nurses-first-year",
   "readingMinutes": 6
+},
+{
+  "slug": "fhsa-vs-hbp-first-time-home-buyer-stacking",
+  "kind": "guide",
+  "title": "FHSA vs Home Buyers' Plan: Stacking $100,000+ in Tax-Free Capital for Your First Home",
+  "seoTitle": "FHSA vs HBP Canada: Stacking $100k+ Tax-Free for First-Time Home Buyers",
+  "description": "A mathematical analysis of stacking the First Home Savings Account (FHSA) and the Home Buyers' Plan (HBP). Explore Budget 2024 $60,000 withdrawal limits, repayment deferrals, and tax arbitrage.",
+  "question": "Can I use both the FHSA and the RRSP Home Buyers' Plan together to buy a home in Canada, and what is the optimal sequence to maximize tax deductions?",
+  "category": "registered-accounts",
+  "figuresAsOf": "2025/2026 tax year (incorporating Budget 2024 Bill C-59 legislation)",
+  "problem": "Prospective Canadian home buyers frequently treat the First Home Savings Account (FHSA) and the Registered Retirement Savings Plan (RRSP) Home Buyers' Plan (HBP) as mutually exclusive options. In reality, Canadian tax law permits qualifying first-time home buyers to utilize both programs concurrently, unlocking unprecedented pre-tax purchasing power. Without a structured accumulation and withdrawal timeline, however, purchasers risk misallocating annual contribution limits, triggering avoidable tax clawbacks, or leaving tens of thousands of dollars in compounding tax refunds on the table.",
+  "overview": [
+    "Under Subsection 146.6 of the Income Tax Act, the First Home Savings Account (FHSA) allows qualifying Canadian residents to contribute up to $8,000 annually, to a lifetime ceiling of $40,000. Contributions generate a dollar-for-dollar deduction against personal taxable income, and qualifying withdrawals to purchase a first home are 100 percent tax-free, with zero mandatory repayment back into the plan. In contrast, Subsection 146.02 governs the Home Buyers' Plan (HBP), which allows individuals to withdraw funds from their RRSP to purchase or build a qualifying home. In Federal Budget 2024, the federal government officially expanded the HBP withdrawal limit from $35,000 to $60,000 per person, effective April 16, 2024.",
+    "Because the Income Tax Act contains no restriction preventing the concurrent use of both programs, a single first-time home buyer can deploy up to $100,000 of tax-sheltered capital toward a home purchase: $40,000 from an FHSA plus $60,000 from an RRSP via the HBP. For a married or common-law couple where both partners qualify as first-time home buyers, the combined available pre-tax purchasing pool expands to an astonishing $200,000 ($80,000 combined FHSA plus $120,000 combined HBP).",
+    "A crucial distinction between the two regimes lies in their post-purchase capital obligations. FHSA withdrawals are pure tax exemptions: once withdrawn for a qualifying property, the capital never needs to be repaid to the account, and the accumulated investment growth is permanently sheltered from Canadian taxation. By contrast, HBP withdrawals represent a zero-interest loan from your own retirement reserve. Every dollar drawn under the HBP must be repaid into an RRSP over a 15-year statutory period. To assist recent buyers, Budget 2024 introduced a temporary repayment deferral: individuals making an HBP withdrawal between January 1, 2022, and December 31, 2025, have their 15-year repayment window postponed to begin in the fifth year following the withdrawal year, rather than the second year.",
+    "The financial leverage of this dual-structure strategy is greatly enhanced by the reinvestment of tax refunds. Because contributions to both the FHSA and RRSP generate immediate marginal tax deductions, a taxpayer in a 40 percent marginal bracket who contributes $8,000 to an FHSA and $12,000 to an RRSP generates an immediate $8,000 tax refund ($20,000 total contributions multiplied by 40 percent). When that refund is systematically injected back into the subsequent year's contribution room, the compounding acceleration allows buyers to accumulate a full down payment significantly faster than through an ordinary non-registered high-interest savings account.",
+    "Finally, timing rules must be strictly observed. While FHSA funds can technically be contributed and withdrawn within the same tax year as long as the account was opened before purchase, RRSP funds must remain on deposit for at least 90 calendar days prior to an HBP withdrawal to remain tax-deductible under Subsection 146.02(2). Furthermore, unused annual FHSA room carries forward up to a maximum of $8,000 per year (for a maximum single-year contribution of $16,000), meaning individuals should open an FHSA immediately upon qualifying, even with a nominal initial deposit, to start accumulating annual room."
+  ],
+  "example": {
+    "title": "Three-Year Stacking Roadmap for a Professional Couple",
+    "intro": "Consider an Ontario couple where each partner earns $95,000 annually (approximate marginal tax rate of 37.91 percent). Over a three-year structured timeline, they prioritize maximizing both their individual FHSAs and funding their RRSPs toward the expanded $60,000 HBP ceiling, systematically reinvesting all tax refunds.",
+    "table": {
+      "head": [
+        "Year",
+        "Combined Contributions (FHSA + RRSP)",
+        "Tax Refund Generated (37.91% Rate)",
+        "Cumulative Down Payment Capital (Including Growth at 4%)",
+        "Net Out-of-Pocket Family Cost"
+      ],
+      "rows": [
+        [
+          "Year 1",
+          "$16,000 FHSA + $20,000 RRSP ($36,000 total)",
+          "$13,648",
+          "$36,720",
+          "$22,352"
+        ],
+        [
+          "Year 2",
+          "$16,000 FHSA + $20,000 RRSP (funded with prior refund)",
+          "$13,648",
+          "$76,188",
+          "$22,352"
+        ],
+        [
+          "Year 3",
+          "$16,000 FHSA + $20,000 RRSP",
+          "$13,648",
+          "$118,235",
+          "$22,352"
+        ],
+        [
+          "Closing Day Total",
+          "$48,000 FHSA + $60,000 RRSP ($108,000 principal)",
+          "$40,944 total refunds captured",
+          "$122,965 total cash down payment",
+          "$67,056 net after-tax cost"
+        ]
+      ]
+    },
+    "notes": [
+      "Assumes a conservative 4 percent annual return in high-interest capital preservation assets within the registered accounts.",
+      "By stacking both vehicles and recycling the $40,944 in tax refunds, the couple accumulated over $122,000 in liquid equity with only $67,056 of actual net after-tax cash outflow.",
+      "On closing, they make qualifying FHSA withdrawals with zero repayment liability and initiate HBP withdrawals of $30,000 each, leaving ample room up to the $60,000 per-person statutory cap."
+    ],
+    "conclusion": "Stacking the FHSA and HBP allows first-time buyers to capture thousands of dollars in government tax subsidies, drastically shortening the time required to meet down payment benchmarks."
+  },
+  "misunderstandings": [
+    {
+      "myth": "You must choose between using the FHSA or the RRSP Home Buyers' Plan for your down payment.",
+      "reality": "Both programs can be used simultaneously for the same qualifying home purchase. A single purchaser can combine $40,000 of FHSA capital with $60,000 of HBP capital for a $100,000 total tax-free withdrawal."
+    },
+    {
+      "myth": "You have to repay money withdrawn from an FHSA just like the Home Buyers' Plan.",
+      "reality": "FHSA qualifying withdrawals are completely tax-free and carry zero repayment requirement. Only the HBP requires 15-year statutory repayment into an RRSP."
+    },
+    {
+      "myth": "If you do not purchase a home within 15 years, you lose all the money saved in your FHSA.",
+      "reality": "If you do not buy a home, you can transfer your entire FHSA balance directly into an RRSP or RRIF on a tax-deferred basis without consuming any RRSP contribution room."
+    },
+    {
+      "myth": "You can deposit money into an RRSP the day before closing and immediately withdraw it under the HBP.",
+      "reality": "Contributions to an RRSP must remain in the account for at least 90 full calendar days prior to an HBP withdrawal to remain eligible for the tax deduction."
+    }
+  ],
+  "tradeoffs": [
+    "HBP creates a mandatory future cash-flow obligation of one-fifteenth of the withdrawn balance every year for 15 years, whereas FHSA withdrawals leave zero debt on your future balance sheet.",
+    "Making large RRSP contributions to maximize the HBP reduces the tax refund benefits available for future peak-earning years if your income is expected to surge shortly.",
+    "Over-concentrating down payment savings in volatile equities inside an FHSA or RRSP can force buyers to realize losses if purchase timing coincides with a market downturn.",
+    "Opening an FHSA late delays the accumulation of unused contribution carry-forward room, which is capped at a maximum of $8,000 of carry-forward per year."
+  ],
+  "questions": [
+    "What is my current marginal tax bracket, and will my income increase significantly over the next two to four years?",
+    "Do I have existing RRSP contribution room available to utilize the enhanced $60,000 HBP withdrawal limit?",
+    "Will our combined household monthly cash flow comfortably accommodate the mandatory HBP repayment alongside mortgage, property taxes, and insurance?",
+    "Have I opened an FHSA yet to begin accumulating the annual $8,000 contribution room, even if I cannot fully fund it today?",
+    "Are the funds currently intended for our down payment deposited in low-volatility, capital-preservation instruments to guarantee liquidity on closing day?"
+  ],
+  "sources": [
+    {
+      "label": "Canada Revenue Agency - First Home Savings Account (FHSA)",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html",
+      "note": "Official rules on opening, contributing, annual carry-forward, and qualifying tax-free withdrawals."
+    },
+    {
+      "label": "Canada Revenue Agency - What is the Home Buyers' Plan (HBP)?",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/what-home-buyers-plan.html",
+      "note": "Statutory requirements under Subsection 146.02, 90-day deposit rule, and 15-year repayment schedules."
+    },
+    {
+      "label": "Department of Finance Canada - Budget 2024: Enhancing the Home Buyers' Plan",
+      "url": "https://www.budget.canada.ca/2024/report-rapport/chap1-en.html",
+      "note": "Legislation increasing the HBP limit to $60,000 and the 5-year repayment deferral."
+    }
+  ],
+  "related": [
+    "fhsa-explained",
+    "tfsa-vs-rrsp",
+    "mortgage-renewal-cliff-canada"
+  ],
+  "contactTopic": "fhsa-hbp",
+  "invitationAbout": "coordinating your FHSA and HBP contribution timelines",
+  "url": "/education/fhsa-vs-hbp-first-time-home-buyer-stacking",
+  "readingMinutes": 9
+},
+{
+  "slug": "cpp-timing-age-60-vs-65-vs-70-mathematical-breakeven",
+  "kind": "insight",
+  "title": "Canada Pension Plan (CPP) Timing: The Mathematical Breakeven of Age 60 vs 65 vs 70",
+  "seoTitle": "CPP Timing Age 60 vs 65 vs 70: Actuarial Breakeven & RRSP Bridge Strategy",
+  "description": "An actuarial evaluation of taking the Canada Pension Plan (CPP) early at age 60 versus deferring to age 70. Detailed breakeven age analysis, inflation-indexing mechanics, and RRSP drawdown sequencing.",
+  "question": "At what exact age does deferring the Canada Pension Plan (CPP) to age 65 or age 70 break even, and when does taking it early make mathematical sense?",
+  "category": "retirement",
+  "figuresAsOf": "2025/2026 statutory rates (0.6% monthly pre-65 penalty, 0.7% monthly post-65 enhancement, YMPE and YAMPE benchmarks)",
+  "problem": "The prevailing default among Canadian retirees has historically been to claim Canada Pension Plan (CPP) benefits immediately upon turning 60, motivated by fear of leaving money on the table or distrust of government solvency. This decision permanently locks in a 36 percent reduction in baseline pension income. With life expectancies expanding and private defined benefit corporate pensions disappearing, CPP represents one of the only guaranteed, CPI-indexed, risk-free lifetime annuities available to Canadians. Treating CPP timing as an emotional choice rather than a balance-sheet asset allocation decision frequently costs households tens of thousands of dollars in guaranteed real income.",
+  "overview": [
+    "Under Section 46 of the Canada Pension Plan Act, an individual's retirement pension is calculated based on lifetime earnings relative to the Yearly Maximum Pensionable Earnings (YMPE). The statutory normal retirement age is 65. If a Canadian elects to begin receiving CPP benefits prior to age 65, their monthly payment is reduced by exactly 0.6 percent for each month before their 65th birthday. Claiming at the earliest permissible age of 60 translates to a permanent 36 percent lifetime reduction (60 months multiplied by 0.6 percent).",
+    "Conversely, if an individual defers taking CPP beyond age 65, their monthly pension increases by 0.7 percent for every month of delay up to age 70. Deferring to age 70 yields a permanent 42 percent lifetime increase (60 months multiplied by 0.7 percent). When comparing an age 70 start date against an age 60 start date, the ratio of guaranteed monthly cash flow is 1.42 divided by 0.64, which equals 2.21875. In simple terms: for every dollar received per month by claiming at 60, deferring to age 70 pays approximately $2.22 per month for life, fully indexed to inflation.",
+    "The central analytical question for any retiree is the actuarial breakeven age. In purely nominal, unindexed cash-flow terms, delaying CPP from age 60 to age 65 breaks even at approximately age 73 to 74. Delaying from age 65 to age 70 breaks even at age 81 to 82. However, these simplistic nominal comparisons severely understate the true value of delay. Because CPP benefits are legally adjusted each January based on the Consumer Price Index (CPI), the real purchasing power of the delayed benefit grows every year. When adjusting for inflation and incorporating a conservative real return of 2 to 3 percent on alternative portfolio capital, the real breakeven age for delaying to 70 sits between age 82 and 84.",
+    "According to the Office of the Chief Actuary of Canada, a 65-year-old Canadian male currently has a 50 percent probability of living past age 87, and a 65-year-old female has a 50 percent probability of living past age 89. For a couple both aged 65, there is a greater than 70 percent probability that at least one spouse will survive beyond age 90. Because actuarial life expectancies exceed the breakeven thresholds by several years, the vast majority of healthy Canadians receive substantially greater lifetime wealth by deferring CPP.",
+    "A sophisticated retirement architecture executes an RRSP bridge strategy. Rather than claiming CPP at 60 to preserve an investment portfolio, the retiree draws down their taxable RRSP or RRIF accounts between ages 60 and 70 to fund living expenses, while allowing their CPP entitlement to compound at the guaranteed 8.4 percent annual statutory enhancement rate. This maneuver burns down taxable retirement accounts at lower marginal rates, reduces the size of mandatory RRIF minimum withdrawals at age 71, and significantly mitigates the risk of Old Age Security (OAS) recovery tax (clawback) in later retirement."
+  ],
+  "example": {
+    "title": "Lifetime Income Comparison: Age 60 vs 65 vs 70 Start Dates",
+    "intro": "Consider an individual eligible for the 2025/2026 maximum monthly CPP entitlement of $1,400 at age 65. The table below illustrates their monthly benefit and cumulative lifetime receipts at various longevity milestones.",
+    "table": {
+      "head": [
+        "Pension Starting Age",
+        "Statutory Adjustment Factor",
+        "Initial Monthly Benefit",
+        "Cumulative Payout at Age 75",
+        "Cumulative Payout at Age 85",
+        "Cumulative Payout at Age 92"
+      ],
+      "rows": [
+        [
+          "Age 60 (Early Claim)",
+          "-36.0% reduction",
+          "$896 / month",
+          "$161,280",
+          "$268,800",
+          "$344,064"
+        ],
+        [
+          "Age 65 (Standard Claim)",
+          "0.0% baseline",
+          "$1,400 / month",
+          "$168,000",
+          "$336,000",
+          "$453,600"
+        ],
+        [
+          "Age 70 (Maximum Delay)",
+          "+42.0% enhancement",
+          "$1,988 / month",
+          "$119,280",
+          "$357,840",
+          "$524,832"
+        ]
+      ]
+    },
+    "notes": [
+      "Figures reflect baseline monthly entitlements without future CPI inflation compounding to demonstrate core mathematical divergence.",
+      "At age 75, the early claimant at age 60 appears comparable to the age 65 claimant due to 5 extra years of payments.",
+      "By age 85, the age 70 delay has fully overtaken both options, delivering $89,040 more cumulative cash than claiming at age 60.",
+      "By age 92, the retiree who delayed to age 70 has received $180,768 more cash than the retiree who claimed at age 60, with monthly income more than double."
+    ],
+    "conclusion": "Deferring CPP operates as government-backed, fully indexed longevity insurance that guarantees higher real income during the exact years when healthcare and assisted living expenses peak."
+  },
+  "misunderstandings": [
+    {
+      "myth": "Taking CPP at 60 is always better because you get five extra years of cash in your pocket.",
+      "reality": "Those five years of early cash come at the price of a permanent 36 percent cut to your monthly benefit for the rest of your life. If you live past age 77, claiming early results in a permanent net financial loss."
+    },
+    {
+      "myth": "The Canada Pension Plan is running out of money, so you should take what you can immediately.",
+      "reality": "The Chief Actuary of Canada performs a comprehensive statutory review every three years. The 31st Actuarial Report confirmed that the CPP is fully financially sustainable for at least the next 75 years under conservative demographic and investment projections."
+    },
+    {
+      "myth": "Delaying CPP means you must keep working until age 70.",
+      "reality": "You can retire from employment at age 60 and still choose to delay claiming CPP until age 70. You simply bridge your cash flow using personal savings, TFSAs, or corporate/RRSP accounts."
+    },
+    {
+      "myth": "If you die early, all your deferred CPP benefits are completely lost.",
+      "reality": "While the single individual forfeits payments upon death, surviving spouses are eligible for a CPP survivor pension (subject to statutory combined pension maximums)."
+    }
+  ],
+  "tradeoffs": [
+    "Individuals with verified chronic health conditions, severe genetic longevity risks, or shortened life expectancies can mathematically benefit from claiming early at age 60.",
+    "Retirees with zero personal liquid savings or registered accounts may have no operational choice but to claim CPP at 60 to meet baseline basic living expenses.",
+    "Delaying CPP requires spending down private portfolio capital earlier in retirement, which reduces the immediate estate liquid value passed to non-spousal heirs if death occurs prior to age 80.",
+    "Drawing down an RRSP to bridge CPP delay increases taxable income in your 60s, which must be carefully balanced against provincial tax brackets and benefit eligibility."
+  ],
+  "questions": [
+    "What does my family health history and personal medical profile suggest about my realistic longevity expectations?",
+    "Do I have sufficient liquid non-registered, TFSA, or RRSP assets to bridge my living costs if I defer CPP to age 65 or 70?",
+    "How will large mandatory RRIF minimum withdrawals at age 71 affect my future Old Age Security (OAS) recovery tax thresholds?",
+    "Have I logged into My Service Canada Account to review my exact CPP Statement of Contributions and estimate my baseline age 65 pension?",
+    "How does my spouse's pension timing interact with my own from a survivor benefit and joint household tax planning perspective?"
+  ],
+  "sources": [
+    {
+      "label": "Government of Canada - CPP Retirement Pension Rules and Amounts",
+      "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-benefit/amount.html",
+      "note": "Official statutory formulas for early and delayed retirement pension adjustments."
+    },
+    {
+      "label": "Office of the Chief Actuary of Canada - 31st Actuarial Report on the CPP",
+      "url": "https://www.osfi-bsif.gc.ca/en/reports-publications",
+      "note": "Independent actuarial valuation assessing the 75-year solvency and sustainability of the Canada Pension Plan."
+    },
+    {
+      "label": "Canada Revenue Agency - Old Age Security Recovery Tax (Clawback)",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-23500-social-benefits-repayment.html",
+      "note": "Income thresholds where mandatory RRIF and pension income trigger OAS clawbacks."
+    }
+  ],
+  "related": [
+    "statutory-liquidity-traps-canada",
+    "tfsa-vs-rrsp",
+    "how-to-choose-an-independent-financial-advisor-in-canada"
+  ],
+  "contactTopic": "cpp-timing",
+  "invitationAbout": "modeling your personal CPP breakeven and RRSP drawdown sequence",
+  "url": "/insights/cpp-timing-age-60-vs-65-vs-70-mathematical-breakeven",
+  "readingMinutes": 10
+},
+{
+  "slug": "canadian-alternative-minimum-tax-amt-high-earners-guide",
+  "kind": "insight",
+  "title": "The Canadian Alternative Minimum Tax (AMT): Navigating the Post-2024 Tax Reform",
+  "seoTitle": "Alternative Minimum Tax Canada (AMT) Guide: Rules, Rates & Planning",
+  "description": "A comprehensive breakdown of Canada's overhauled Alternative Minimum Tax (AMT) under Bill C-59. How 100% capital gains inclusion, higher exemption thresholds, and credit limits impact high earners.",
+  "question": "How does the post-2024 Alternative Minimum Tax (AMT) change tax liability on business exits, real estate sales, and major charitable donations in Canada?",
+  "category": "decision-making",
+  "figuresAsOf": "2025/2026 tax years (Section 127.5 Income Tax Act, Bill C-59 statutory amendments)",
+  "problem": "For over three decades, the Canadian Alternative Minimum Tax (AMT) operated quietly in the background, rarely affecting mainstream entrepreneurs or everyday investors. Effective for tax years 2024 and beyond, the federal government enacted sweeping structural reforms through Bill C-59. The flat AMT rate rose from 15 percent to 20.5 percent, the capital gains inclusion rate for AMT purposes was elevated to 100 percent, and non-refundable tax credits, including donation credits, were restricted to a 50 percent allowance. High-income Canadians selling incorporated businesses, realizing substantial capital gains on property, or executing legacy philanthropic gifts now face massive, unexpected upfront tax liabilities.",
+  "overview": [
+    "Under Section 127.5 of the Income Tax Act, the Alternative Minimum Tax (AMT) is a parallel tax calculation that runs alongside the ordinary Part I income tax computation. The taxpayer must calculate their liability under both systems and pay whichever amount is higher. Under the historical pre-2024 framework, AMT applied a 15 percent flat rate to adjusted taxable income exceeding a fixed $40,000 basic exemption, with capital gains included at 80 percent.",
+    "Bill C-59 fundamentally reconstructed this architecture with three simultaneous changes: First, the federal AMT rate was increased from 15 percent to 20.5 percent, aligning it directly with the second federal marginal tax bracket. Second, the basic AMT exemption was increased from $40,000 to the lower threshold of the fourth federal tax bracket (indexed annually, standing at $173,205 in 2024 and increasing in 2025 and 2026). While this large exemption protects modest middle-class taxpayers, it concentrates the entire burden on high-net-worth individuals and significant single-year liquidity events.",
+    "Third, the base of income subject to AMT was drastically broadened. Capital gains are now included at 100 percent under the AMT formula, compared to the standard regular inclusion rate. Furthermore, the capital gains deduction claimed under the Lifetime Capital Gains Exemption (LCGE) for Qualified Small Business Corporation (QSBC) shares is now subject to a 30 percent inclusion in the AMT base. Most critically, non-refundable tax credits, including the federal charitable donation tax credit, can only offset 50 percent of their standard value when computing AMT.",
+    "The interaction with charitable giving has created substantial friction for major donors. Under standard tax rules, donating publicly traded securities with accrued gains eliminates capital gains tax entirely and produces a full donation tax credit. Under the reformed AMT, 30 percent of the capital gains on donated publicly traded securities are brought into the AMT base, and the resulting donation credit is restricted to a 50 percent reduction against minimum tax. A donor executing a million-dollar gift can face a substantial six-figure cash tax bill in a year when they had zero taxable ordinary salary.",
+    "While AMT is theoretically not a permanent tax because it can be carried forward for up to seven subsequent tax years under Section 120.2 to offset regular Part I tax, recovery is far from guaranteed. To recover prior AMT paid, an individual must generate sufficient regular taxable income in those seven years where regular tax exceeds minimum tax. For entrepreneurs who retire immediately following the sale of their business, or investors whose subsequent income consists primarily of tax-sheltered dividends or capital returns, the AMT effectively becomes a permanent capital confiscation."
+  ],
+  "example": {
+    "title": "Tax Liability on a $1,500,000 Business Equity Liquidity Event",
+    "intro": "Consider an entrepreneur selling private corporate shares with an accrued capital gain of $1,500,000, claiming the Lifetime Capital Gains Exemption (LCGE) on approximately $1,016,836 of the gain, with standard deductions. The table contrasts their tax position under the old AMT regime versus the post-2024 reformed framework.",
+    "table": {
+      "head": [
+        "Component",
+        "Pre-2024 Framework",
+        "Reformed Post-2024 Framework (Bill C-59)",
+        "Strategic Impact"
+      ],
+      "rows": [
+        [
+          "Statutory AMT Flat Rate",
+          "15.0%",
+          "20.5%",
+          "+5.5% percentage point rate increase"
+        ],
+        [
+          "Basic Exemption Amount",
+          "$40,000 flat",
+          "$173,205+ (indexed to 4th bracket)",
+          "Higher basic shield, but concentrated on large events"
+        ],
+        [
+          "Capital Gains Inclusion (AMT)",
+          "80.0%",
+          "100.0%",
+          "Full inclusion of non-exempt capital gains"
+        ],
+        [
+          "LCGE Inclusion in AMT Base",
+          "0% direct inclusion",
+          "30.0% inclusion of exempt amount",
+          "Brings ~$305,000 of 'exempt' gains into AMT base"
+        ],
+        [
+          "Net Minimum Tax Due (Year of Sale)",
+          "Approx. $12,400",
+          "Approx. $78,500+",
+          "Substantial upfront cash liquidity requirement"
+        ],
+        [
+          "Seven-Year Recovery Feasibility",
+          "High (small balance)",
+          "Requires ~$200k/yr ordinary taxable income",
+          "Risk of unrecovered AMT if owner fully retires"
+        ]
+      ]
+    },
+    "notes": [
+      "Calculations represent federal tax components; provincial AMT applies in lockstep across most provinces.",
+      "The 30 percent inclusion of the LCGE represents a dramatic shift: business sales once thought to be completely tax-free now trigger significant initial cheques to the Receiver General.",
+      "Recovering the $78,500 in AMT credits requires structuring ordinary income distributions (such as corporate salary or taxable pension withdrawals) across the subsequent seven years."
+    ],
+    "conclusion": "Entrepreneurs planning a business sale must model AMT well before closing day to arrange liquidity and establish a multi-year post-sale income generation plan."
+  },
+  "misunderstandings": [
+    {
+      "myth": "The Alternative Minimum Tax only applies to corporations and holding companies.",
+      "reality": "AMT applies strictly to individuals and certain trusts. Regular Canadian corporations are exempt from AMT under the Income Tax Act."
+    },
+    {
+      "myth": "Because the Lifetime Capital Gains Exemption is federal law, using it means you pay zero tax on your business sale.",
+      "reality": "While regular Part I tax is sheltered by the LCGE, 30 percent of the exempt gain is incorporated into the AMT income base, often generating tens of thousands in alternative minimum tax."
+    },
+    {
+      "myth": "Charitable donations of shares are always 100 percent tax-free.",
+      "reality": "Under the reformed AMT, 30 percent of the gain on donated publicly traded shares is included in adjusted taxable income, and the donation credit is limited to a 50 percent offset."
+    },
+    {
+      "myth": "Any AMT you pay is guaranteed to be fully refunded by the CRA eventually.",
+      "reality": "AMT can only be carried forward for seven taxation years. If you do not have sufficient regular taxable income exceeding AMT in those seven years, the credit expires and the tax is permanently lost."
+    }
+  ],
+  "tradeoffs": [
+    "Structuring capital gain realizations across multiple calendar years using a capital gains reserve can significantly lower or eliminate AMT, but introduces buyer counterparty credit risk.",
+    "Extracting corporate retained earnings as taxable dividends rather than selling equity shares avoids the 30 percent LCGE inclusion, but incurs higher personal dividend taxes.",
+    "Making major charitable donations across several consecutive tax years preserves full credit efficiency, but requires advanced gift structuring with charitable foundations.",
+    "Generating artificial ordinary income post-sale to recover carried-forward AMT forces individuals to accelerate income that could otherwise remain invested or deferred."
+  ],
+  "questions": [
+    "Will our planned share sale, real estate transaction, or business exit trigger the post-2024 Alternative Minimum Tax?",
+    "Do we have a viable seven-year income projection that guarantees full recovery of any AMT paid on closing?",
+    "Can the transaction structure incorporate a Subsection 40(1) capital gains reserve to spread taxable realizations over up to five years?",
+    "If we are planning major philanthropic contributions, should we establish a donor-advised fund to stage gifts over multiple taxation years?",
+    "Has our corporate accountant modeled our Form T691 tax calculation under the amended 20.5 percent rate?"
+  ],
+  "sources": [
+    {
+      "label": "Department of Finance Canada - Explanatory Notes to Bill C-59 (Alternative Minimum Tax)",
+      "url": "https://www.canada.ca/en/department-finance/news/2023/11/government-releases-draft-legislation-to-modernize-the-alternative-minimum-tax.html",
+      "note": "Legislative background detailing the 20.5% rate, 100% capital gains inclusion, and credit restrictions."
+    },
+    {
+      "label": "Canada Revenue Agency - Form T691 Alternative Minimum Tax",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t691.html",
+      "note": "Official statutory worksheet for calculating federal and provincial minimum tax liability."
+    },
+    {
+      "label": "Income Tax Act - Section 127.5 (Alternative Minimum Tax Framework)",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-127.5.html",
+      "note": "Statutory codification of adjusted taxable income, basic exemption thresholds, and minimum tax rates."
+    }
+  ],
+  "related": [
+    "capital-gains-inclusion-rate-proposal-breakdown",
+    "statutory-liquidity-traps-canada",
+    "corporate-life-insurance-cda-extraction-ccpc"
+  ],
+  "contactTopic": "amt-planning",
+  "invitationAbout": "evaluating prospective AMT liability before major liquidity events",
+  "url": "/insights/canadian-alternative-minimum-tax-amt-high-earners-guide",
+  "readingMinutes": 10
+},
+{
+  "slug": "corporate-life-insurance-cda-extraction-ccpc",
+  "kind": "insight",
+  "title": "Corporate Life Insurance for CCPCs: Tax-Free Capital Extraction via the CDA",
+  "seoTitle": "Corporate Life Insurance & CDA: Tax-Free Retained Earnings for CCPCs",
+  "description": "How Canadian-Controlled Private Corporations (CCPCs) utilize exempt life insurance and segregated funds to bypass the 50.17% passive income tax and extract capital through the Capital Dividend Account.",
+  "question": "How can incorporated business owners and physicians in Canada shelter passive surplus and transfer corporate wealth to heirs tax-free using the Capital Dividend Account?",
+  "category": "investing",
+  "figuresAsOf": "2025/2026 corporate tax rates, Subsection 89(1) CDA definition, Subsection 125(5.1) SBD grind rules",
+  "problem": "Incorporated professionals and business owners operating through Canadian-Controlled Private Corporations (CCPCs) face a punishing tax landscape on passive investment growth. Corporate investment earnings (interest, foreign dividends, and realized capital gains) incur an upfront refundable tax rate exceeding 50 percent. Furthermore, passive investment income between $50,000 and $150,000 grinds down the small business deduction at a 5-to-1 ratio, exposing active corporate operating revenue to full general corporate tax rates. When retained profits are eventually distributed to shareholders as personal non-eligible dividends, combined personal tax rates can exceed 48 to 54 percent. Without proactive balance-sheet restructuring, corporate retained earnings suffer massive double-tax erosion.",
+  "overview": [
+    "Under Canadian tax law, retained earnings left inside a Canadian-Controlled Private Corporation (CCPC) after paying the active small business tax rate (ranging from 9 percent to 12.2 percent depending on the province) represent low-cost capital for business reinvestment. However, once those funds are allocated into passive investment portfolios (such as stocks, bonds, or high-interest accounts), they trigger Part I tax, additional refundable tax (ART), and refundable portion of Part I tax, resulting in an immediate aggregate tax rate of 50.17 percent (in Ontario, New Brunswick, and British Columbia) to over 54 percent in other jurisdictions.",
+    "Exacerbating this tax drag is Subsection 125(5.1) of the Income Tax Act, enacted to penalize CCPCs holding passive assets. If a corporation and its associated entities earn more than $50,000 of Adjusted Aggregate Investment Income (AAII) in a taxation year, the corporation's $500,000 Small Business Deduction (SBD) active income limit is reduced by $5 for every $1 of investment income over $50,000. Once AAII reaches $150,000, the small business limit is completely eliminated, causing the business's active operating income to be taxed at general corporate rates of 27 to 31 percent rather than the preferential 9 to 12.2 percent rate.",
+    "An established statutory solution utilized by experienced financial planners is corporate-owned exempt life insurance and segregated fund policies governed by Section 148 of the Income Tax Act. Under an exempt policy, the corporation is the policyholder, premium payor, and designated beneficiary. Capital deposited into the policy's cash accumulation fund grows on a completely tax-sheltered basis. Because earnings inside an exempt policy do not constitute taxable corporate income, they are excluded from the annual calculation of AAII, thereby completely insulating the company's Small Business Deduction from the 5-to-1 clawback.",
+    "The ultimate wealth transfer mechanism occurs upon the death of the insured business owner or key shareholder. Under Subsection 148(1), the entire death benefit is received by the corporation completely free of income tax. Even more powerful is paragraph (d) of the definition of 'capital dividend account' in Subsection 89(1) of the Income Tax Act. Under this provision, the corporation receives a credit to its Capital Dividend Account (CDA) equal to the total death benefit minus the policy's Adjusted Cost Base (ACB).",
+    "Because the Capital Dividend Account tracks non-taxable corporate receipts, directors can declare a capital dividend and distribute that entire CDA credit balance to the surviving shareholders or the deceased shareholder's estate completely tax-free. In contrast to paying standard taxable non-eligible dividends, which can trigger personal taxes exceeding 47 percent, corporate life insurance enables millions of dollars of corporate surplus to pass cleanly to the next generation without a single dollar of personal income tax."
+  ],
+  "example": {
+    "title": "20-Year Retained Earnings Accumulation: Taxable Portfolio vs Corporate Policy",
+    "intro": "Consider an incorporated business owner with $1,000,000 of excess corporate retained earnings. We compare leaving this capital in a taxable corporate investment portfolio (earning 6 percent average return before taxes) versus repositioning it into an exempt corporate-owned insurance policy over a 20-year horizon, assuming eventual estate distribution.",
+    "table": {
+      "head": [
+        "Metric (After 20 Years)",
+        "Taxable Corporate Investment Portfolio",
+        "Corporate-Owned Exempt Policy / Segregated Fund",
+        "Net Variance for Family Estate"
+      ],
+      "rows": [
+        [
+          "Gross Annual Pre-Tax Growth",
+          "6.0%",
+          "6.0%",
+          "Identical gross asset performance"
+        ],
+        [
+          "Annual Tax Drag Rate",
+          "~50.17% on passive yields",
+          "0.0% (exempt tax sheltering under ITA s. 148)",
+          "100% of yield retained within cash value"
+        ],
+        [
+          "Impact on Small Business Limit ($50k SBD)",
+          "Grinds active deduction by $5 per $1 above $50k",
+          "$0 impact on AAII (preserves full $500k SBD)",
+          "Saves tens of thousands in active business tax"
+        ],
+        [
+          "Total Corporate Value at Life Expectancy",
+          "Approx. $1,820,000 (after passive taxes)",
+          "Approx. $3,150,000 (guaranteed death benefit)",
+          "+$1,330,000 higher corporate capital"
+        ],
+        [
+          "Tax Mechanism on Estate Distribution",
+          "Taxable non-eligible dividend (~48% personal tax)",
+          "Tax-free capital dividend via Subsection 89(1) CDA",
+          "Eliminates personal dividend income tax"
+        ],
+        [
+          "Net Cash in Hands of Heirs",
+          "Approx. $946,400",
+          "Approx. $2,890,000",
+          "+$1,943,600 net cash delivered to heirs (+205%)"
+        ]
+      ]
+    },
+    "notes": [
+      "Taxable portfolio figures assume a balanced mix of Canadian equities, interest, and capital gains with regular turnover.",
+      "Corporate insurance numbers assume a standard permanent universal life or participating whole life contract issued to a healthy non-smoking business owner.",
+      "The estate of the business owner receives over three times more net cash after all corporate and personal taxes are satisfied."
+    ],
+    "conclusion": "Repositioning non-operational retained earnings from a taxable corporate account into an exempt insurance contract permanently eliminates passive tax drag and bypasses personal dividend taxation via the CDA."
+  },
+  "misunderstandings": [
+    {
+      "myth": "Premiums paid for corporate life insurance are always tax-deductible to the corporation.",
+      "reality": "In virtually all circumstances, corporate life insurance premiums are paid with after-tax corporate dollars and are not tax-deductible under paragraph 18(1)(l) of the Income Tax Act. The deduction is not the benefit; the tax-free growth and tax-free CDA extraction represent the true value."
+    },
+    {
+      "myth": "Holding passive investments inside your corporation does not affect your active operating business taxes.",
+      "reality": "Under Subsection 125(5.1), every dollar of investment income over $50,000 grinds down your small business deduction by $5, pushing active corporate revenue into higher general corporate tax brackets."
+    },
+    {
+      "myth": "When an incorporated owner dies, the entire death benefit can be paid out immediately tax-free.",
+      "reality": "The CDA credit is equal to the death benefit minus the policy's Adjusted Cost Base (ACB). Any remaining ACB is paid as a regular taxable dividend, though ACB typically amortizes toward zero as the insured ages."
+    },
+    {
+      "myth": "Corporate insurance locks up money so the company cannot access cash if needed for operations.",
+      "reality": "The corporation can access cash value during the owner's lifetime via policy loans, corporate collateral loans from major Canadian banks, or partial surrenders."
+    }
+  ],
+  "tradeoffs": [
+    "Corporate insurance is a long-term capital allocation; surrendering a policy in the first five to seven years can incur surrender charges and result in negative early returns.",
+    "Insurance underwriting requires medical insurability; owners with severe pre-existing medical conditions may face premium ratings or coverage exclusions.",
+    "The policy requires surplus corporate retained earnings that will not be needed for day-to-day operating working capital or near-term equipment purchases.",
+    "Collateral lending strategies to access policy cash values tax-free require ongoing bank relationship management and exposure to floating interest rate risk."
+  ],
+  "questions": [
+    "What is our corporation's current annual passive investment income, and is it grinding our $500,000 Small Business Deduction?",
+    "How much surplus retained capital does the corporation hold that is not required for operational payroll or capital expenditures?",
+    "What is our long-term succession strategy: will the operating company be sold, passed to family, or converted to an investment holding company?",
+    "Has our corporate accountant tracked our historical Capital Dividend Account (CDA) balance with CRA via Schedule 89?",
+    "Would a corporate collateral lending line of credit provide the liquidity our business needs while preserving tax-deferred policy growth?"
+  ],
+  "sources": [
+    {
+      "label": "Income Tax Act - Subsection 89(1) Definition of Capital Dividend Account",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-89.html",
+      "note": "Statutory rules for crediting life insurance proceeds minus ACB to the corporate CDA."
+    },
+    {
+      "label": "Canada Revenue Agency - Small Business Deduction & Passive Investment Income (s. 125(5.1))",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/corporations/corporation-tax-rates.html",
+      "note": "The 5-to-1 grind formula reducing active business limit from $50,000 to $150,000 AAII."
+    },
+    {
+      "label": "Canada Revenue Agency - Interpretation Bulletin IT-66R6: Capital Dividends",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/it66r6.html",
+      "note": "Filing requirements for Form T2054 when electing to pay tax-free capital dividends."
+    }
+  ],
+  "related": [
+    "statutory-liquidity-traps-canada",
+    "term-vs-permanent-life-insurance",
+    "canadian-alternative-minimum-tax-amt-high-earners-guide"
+  ],
+  "contactTopic": "corporate-cda",
+  "invitationAbout": "structuring corporate retained earnings and CDA extraction strategies",
+  "url": "/insights/corporate-life-insurance-cda-extraction-ccpc",
+  "readingMinutes": 11
+},
+{
+  "slug": "resp-withdrawal-strategy-eap-pse-grant-clawback",
+  "kind": "guide",
+  "title": "RESP Withdrawal Strategy: Maximizing EAPs, Protecting Grants, and Avoiding Tax Traps",
+  "seoTitle": "RESP Withdrawal Rules: EAP vs PSE Strategy & Grant Clawback Prevention",
+  "description": "Master the mechanics of Registered Education Savings Plan withdrawals. Understand the $8,000 13-week EAP statutory limit, post-secondary capital extraction, and how to avoid CESG clawbacks.",
+  "question": "What is the difference between an EAP and a PSE withdrawal from an RESP, and how do parents withdraw funds without paying unnecessary taxes or repaying grants?",
+  "category": "family",
+  "figuresAsOf": "2025/2026 statutory rules (Budget 2023 $8,000 13-week limit, Subsection 146.1 ITA)",
+  "problem": "Millions of Canadian parents diligently contribute to Registered Education Savings Plans (RESPs) to capture the Canada Education Savings Grant (CESG), yet a staggering number make costly mistakes when their child enters university or college. Conflating original capital contributions with government grant and investment growth money frequently leads to excessive taxable student income, accidental forfeiture of grant funds, or punitive penalty taxes on unused earnings. Establishing a clear distinction between Educational Assistance Payments (EAPs) and Post-Secondary Education Capital (PSE) is essential to legally eliminating taxes across the entire educational lifecycle.",
+  "overview": [
+    "Under Section 146.1 of the Income Tax Act, every Registered Education Savings Plan (RESP) contains two fundamentally distinct pools of money that follow entirely different tax and legal rules upon withdrawal. The first pool is Post-Secondary Education Capital (PSE), which consists entirely of the subscriber's original contributions. Because contributions were made with after-tax money, PSE capital belongs to the subscriber and can be returned to either the subscriber or the student at any time with zero Canadian income tax and zero reporting to the CRA.",
+    "The second pool is the Educational Assistance Payment (EAP), which comprises the Canada Education Savings Grant (CESG), the Canada Learning Bond (CLB), provincial educational incentives, and all accumulated investment growth earned across the plan's lifetime. When an EAP is withdrawn, it is legally taxable in the hands of the student beneficiary (reported on a T4A tax slip in Box 042). Because students typically have modest summer incomes and are entitled to the basic personal amount ($15,705+ federally in 2024/2025) plus substantial tuition tax credits, EAPs can almost always be absorbed completely tax-free if withdrawn strategically.",
+    "A key statutory restriction governs the timing of initial withdrawals. Under Subsection 146.1(2), effective since the Budget 2023 amendment, the maximum EAP withdrawal permitted during the first 13 consecutive weeks of full-time post-secondary enrollment is $8,000 (up from the previous historical limit of $5,000), or $4,000 for part-time studies. However, there is zero limit on how much PSE capital can be withdrawn during those first 13 weeks. Once the student successfully completes 13 consecutive weeks of enrollment, the $8,000 cap is permanently lifted, allowing parents to withdraw any remaining EAP balance up to the actual costs of their education.",
+    "The most critical operational rule is to aggressively draw down all EAP funds before touching PSE capital. If a student drops out, changes programs, or completes their degree early with remaining funds in the RESP, any unused CESG grant money must be refunded to the Government of Canada under the Canada Education Savings Regulations. Unused investment growth can only be extracted as an Accumulated Income Payment (AIP), which incurs regular marginal income tax plus an additional 20 percent statutory penalty tax under Part X.5 of the Act.",
+    "To avoid the punitive 20 percent AIP tax if a child does not pursue post-secondary education, Subsection 146.1(1.1) permits a subscriber to roll over up to $50,000 of accumulated income directly into their own or their spouse's RRSP, provided they have available RRSP contribution room and the RESP has been open for at least 10 years with all beneficiaries having reached age 21. By front-loading EAP withdrawals during the first two years of post-secondary studies, parents ensure that government grants and investment growth are completely exhausted while the student is in a near-zero tax bracket, leaving the safe, non-taxable PSE capital intact for later withdrawal."
+  ],
+  "example": {
+    "title": "Four-Year Undergraduate RESP Tax-Zero Withdrawal Plan",
+    "intro": "Consider a family with a $72,000 RESP balance for their child entering a 4-year degree program: $36,000 in subscriber PSE capital, $7,200 in CESG grants, and $28,800 in investment growth ($36,000 total EAP). The child works summer jobs earning $9,000 annually. The table shows the optimal multi-year withdrawal sequence.",
+    "table": {
+      "head": [
+        "Academic Year",
+        "EAP Withdrawal (Taxable to Student)",
+        "PSE Capital Withdrawal (Tax-Free)",
+        "Student Total Income (Summer + EAP)",
+        "Student Basic + Tuition Credits",
+        "Net Student Tax Payable"
+      ],
+      "rows": [
+        [
+          "Year 1 (Semesters 1 & 2)",
+          "$16,000 ($8,000 first 13 wks + $8,000 term 2)",
+          "$2,000 (housing setup)",
+          "$25,000 ($9k job + $16k EAP)",
+          "~$23,700 ($15.7k basic + $8k tuition)",
+          "~$130 (negligible)"
+        ],
+        [
+          "Year 2",
+          "$16,000 (unrestricted EAP)",
+          "$2,000",
+          "$25,000",
+          "~$23,700 credits",
+          "~$130"
+        ],
+        [
+          "Year 3",
+          "$4,000 (exhausts all remaining EAP & grants)",
+          "$14,000",
+          "$13,000 ($9k job + $4k EAP)",
+          "~$23,700 credits (accumulates carryover)",
+          "$0"
+        ],
+        [
+          "Year 4",
+          "$0 (all grants & growth fully spent)",
+          "$18,000 (final tuition & graduation)",
+          "$9,000 (summer job only)",
+          "~$23,700 credits (saves for post-grad career)",
+          "$0"
+        ],
+        [
+          "Four-Year Summary",
+          "$36,000 total EAP (100% extracted)",
+          "$36,000 total PSE (100% extracted)",
+          "$72,000 total educational funding",
+          "Zero grants forfeited / zero AIP penalties",
+          "Under $300 total tax across 4 years"
+        ]
+      ]
+    },
+    "notes": [
+      "By exhausting the $36,000 EAP in the first 2.5 years, the parents completely eliminated the risk of CESG grant clawback if the child decided not to complete Year 4.",
+      "The student absorbed $36,000 of taxable growth and grants while in their lowest lifetime tax brackets, offset by tuition tax credits.",
+      "The remaining $18,000 of PSE capital withdrawn in Year 4 is 100 percent tax-free, allowing the student to graduate without tax drag and carry forward unused tuition credits into their high-earning career."
+    ],
+    "conclusion": "Front-loading EAP withdrawals in the early college years maximizes the utility of tuition tax credits and permanently protects government grants against clawback."
+  },
+  "misunderstandings": [
+    {
+      "myth": "All withdrawals from an RESP are taxed at the parents' income tax rate.",
+      "reality": "Only Educational Assistance Payments (EAPs) are taxable, and they are taxed in the hands of the student beneficiary, who usually pays near-zero tax. Original contribution capital (PSE) is completely tax-free."
+    },
+    {
+      "myth": "You cannot withdraw more than $8,000 from an RESP during your child's entire first year.",
+      "reality": "The $8,000 statutory limit applies strictly to EAP withdrawals during the first 13 consecutive weeks of enrollment. There is no limit on PSE capital, and the EAP limit is completely lifted after week 13."
+    },
+    {
+      "myth": "You must submit receipts to the CRA or bank for every textbook and meal purchased with RESP funds.",
+      "reality": "Financial institutions only require official proof of enrollment (such as an official registrar letter or tuition bill). You do not need to provide itemized receipts for individual living expenses."
+    },
+    {
+      "myth": "If your child does not go to university, the government takes all the money in the RESP.",
+      "reality": "The government only takes back the grant money (CESG/CLB). Your original contributions belong to you 100% tax-free, and up to $50,000 of investment growth can be rolled into your RRSP under Subsection 146.1(1.1)."
+    }
+  ],
+  "tradeoffs": [
+    "Withdrawing too much EAP in a single year when the student also has a high-paying internship or co-op placement can push them into higher provincial tax brackets.",
+    "Withdrawing PSE capital first leaves large EAP balances exposed to clawback or the punitive 20 percent AIP tax if the student discontinues studies before graduation.",
+    "Rolling unused RESP growth into a parental RRSP requires having up to $50,000 of unused RRSP contribution room, which may require years of prior planning.",
+    "Family plans allow grant and earnings sharing among siblings, but individual lifetime CESG limits ($7,200 per child) cannot be exceeded."
+  ],
+  "questions": [
+    "What is the exact breakdown in our RESP between original contribution capital (PSE) and growth/grants (EAP)?",
+    "Has our child registered for full-time or part-time post-secondary courses, and have we obtained the official proof of enrollment letter?",
+    "Does our student have summer or co-op employment earnings this year that will impact their taxable income bracket?",
+    "Are we front-loading the EAP withdrawals to protect all CESG grants before touching the original capital?",
+    "If our child decides not to pursue higher education, do the parents have sufficient RRSP contribution room to execute a tax-free AIP rollover?"
+  ],
+  "sources": [
+    {
+      "label": "Canada Revenue Agency - Registered Education Savings Plans (RESP) Guide (RC4092)",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/registered-education-savings-plans-resps.html",
+      "note": "Comprehensive administrative guide covering EAP, PSE, and AIP statutory guidelines."
+    },
+    {
+      "label": "Employment and Social Development Canada - Canada Education Savings Grant (CESG)",
+      "url": "https://www.canada.ca/en/employment-social-development/services/student-financial-aid/education-savings/resp/info.html",
+      "note": "Grant rules, lifetime maximums, and clawback criteria upon post-secondary non-attendance."
+    },
+    {
+      "label": "Income Tax Act - Subsection 146.1 (Statutory RESP Rules)",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-146.1.html",
+      "note": "Codified definitions of EAP limits, 13-week rules, and $50,000 RRSP rollover provisions."
+    }
+  ],
+  "related": [
+    "fhsa-explained",
+    "tfsa-vs-rrsp",
+    "new-to-canada-money-basics"
+  ],
+  "contactTopic": "resp-withdrawals",
+  "invitationAbout": "designing a multi-year RESP tax-free withdrawal plan for your children",
+  "url": "/education/resp-withdrawal-strategy-eap-pse-grant-clawback",
+  "readingMinutes": 9
 }
 ];

@@ -161,6 +161,14 @@ const coreRoutes = [
     heading: "Subscription Preferences Confirmed",
     summary: "Your email address has been verified. You will receive occasional educational briefings on Canadian statutory tax and registered account policy.",
   },
+  {
+    path: "/calculators",
+    title: "Canadian Financial Calculators & Decision Simulators | Ahmed Bello",
+    description: "Interactive Canadian financial simulators: Newcomer financial runway, mortgage renewal shock analyzer, TFSA vs RRSP tax arbitrage, and CCPC passive income limit calculator.",
+    lang: "en-CA",
+    heading: "Interactive Canadian Financial Calculators",
+    summary: "Model real Canadian financial scenarios with exact tax rates, inflation parameters, and CRA rules. Includes instant lead capture and strategy review options.",
+  },
 
   // French Core Routes
   {
@@ -306,6 +314,14 @@ const coreRoutes = [
     lang: "fr-CA",
     heading: "Préférences d'Abonnement Confirmées",
     summary: "Votre adresse courriel a été vérifiée. Vous recevrez des analyses ponctuelles lors de modifications législatives importantes.",
+  },
+  {
+    path: "/fr/calculators",
+    title: "Simulateurs Financiers Canadiens & Outils d'Analyse | Ahmed Bello",
+    description: "Simulateurs financiers canadiens interactifs : piste d'atterrissage pour nouveaux arrivants, choc de renouvellement hypothécaire, arbitrage CELI vs REER et plafond SPCC.",
+    lang: "fr-CA",
+    heading: "Simulateurs Financiers Canadiens Interactifs",
+    summary: "Modélisez vos décisions financières canadiennes selon les règles fiscales officielles de l'ARC, avec options de réception de plan et consultation sans frais.",
   },
 ];
 

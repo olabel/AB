@@ -355,7 +355,7 @@ export const InsightsPage: React.FC = () => {
 
                   <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between">
                     <Link to={essay.url} className="arrow-link text-xs font-semibold">
-                      {isFr ? "Lire l'essai complet →" : "Read the essay &rarr;"}
+                      {isFr ? "Lire l'essai complet →" : "Read the essay →"}
                     </Link>
                     <span className="text-[0.7rem] text-[#625d52] inline-flex items-center gap-1">
                       <BadgeCheck className="w-3.5 h-3.5 text-[#2e4a3b]" />
@@ -405,7 +405,7 @@ export const InsightsPage: React.FC = () => {
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
-                {isFr ? "Voir le carrefour →" : "View hub &rarr;"}
+                {isFr ? "Voir le carrefour →" : "View hub →"}
               </span>
             </Link>
 
@@ -425,7 +425,7 @@ export const InsightsPage: React.FC = () => {
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
-                {isFr ? "Voir le carrefour →" : "View hub &rarr;"}
+                {isFr ? "Voir le carrefour →" : "View hub →"}
               </span>
             </Link>
 
@@ -445,7 +445,7 @@ export const InsightsPage: React.FC = () => {
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
-                {isFr ? "Voir le carrefour →" : "View hub &rarr;"}
+                {isFr ? "Voir le carrefour →" : "View hub →"}
               </span>
             </Link>
 
@@ -465,7 +465,7 @@ export const InsightsPage: React.FC = () => {
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
-                {isFr ? "Voir le carrefour →" : "View hub &rarr;"}
+                {isFr ? "Voir le carrefour →" : "View hub →"}
               </span>
             </Link>
           </div>
@@ -502,7 +502,7 @@ export const InsightsPage: React.FC = () => {
           </p>
           <div className="pt-2 flex justify-center">
             <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
-              {isFr ? "Démarrer une conversation →" : "Start a Conversation &rarr;"}
+              {isFr ? "Démarrer une conversation →" : "Start a Conversation →"}
             </Link>
           </div>
           <p className="text-xs text-[#625d52]">

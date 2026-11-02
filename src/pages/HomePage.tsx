@@ -6,7 +6,7 @@ import { BrandMark } from "../components/BrandMark.tsx";
 import { Tbc } from "../components/Tbc.tsx";
 import { articles } from "../content/data.ts";
 import { siteConfig } from "../config/site.ts";
-import { ArrowRight, HelpCircle, Stethoscope, Briefcase, Users, Compass } from "lucide-react";
+import { ArrowRight, HelpCircle, Stethoscope, Briefcase, Users, Compass, Calendar } from "lucide-react";
 import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
@@ -208,12 +208,21 @@ export const HomePage: React.FC = () => {
                   ? "De la protection du revenu familial aux régimes enregistrés (CELI, REER, CELIAPP) et à la gestion des dettes, de meilleures décisions commencent par une vue d'ensemble."
                   : "From protecting your family’s income to registered accounts, debt choices and family priorities, better decisions begin with seeing how the pieces fit together."}
               </p>
-              <div className="pt-2 flex flex-wrap items-center gap-4">
-                <Link to="/how-i-help" className="btn btn-primary text-base px-6 py-3">
-                  {language === "fr" ? "Explorer comment j'aide →" : "Explore How I Help →"}
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <a
+                  href="https://calendly.com/olabel/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary text-base px-7 py-3 shadow-sm inline-flex items-center gap-2"
+                >
+                  <Calendar className="w-4 h-4 text-[#d6c298]" />
+                  <span>{language === "fr" ? "Réserver un appel de 30 minutes" : "Book a 30-minute call"}</span>
+                </a>
+                <Link to={language === "fr" ? "/fr/how-i-help" : "/how-i-help"} className="btn btn-ghost text-sm px-4 py-3">
+                  {language === "fr" ? "Explorer comment j'aide" : "Explore How I Help"}
                 </Link>
-                <Link to="/education" className="btn btn-ghost text-base px-6 py-3">
-                  {language === "fr" ? "Apprendre avant de décider" : "Learn Before You Decide"}
+                <Link to={language === "fr" ? "/fr/education" : "/education"} className="btn btn-ghost text-sm px-4 py-3">
+                  {language === "fr" ? "Bibliothèque éducative" : "Learn Before You Decide"}
                 </Link>
               </div>
               {/* Trust Indicators */}
@@ -267,7 +276,7 @@ export const HomePage: React.FC = () => {
                     className="text-xs text-[#2e4a3b] font-medium hover:underline shrink-0"
                     title="Read more about Ahmed"
                   >
-                    About &rarr;
+                    About →
                   </Link>
                 </div>
               </div>
@@ -289,28 +298,28 @@ export const HomePage: React.FC = () => {
                 className="p-2.5 bg-[#f7f3eb] hover:bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] text-xs text-[#1c1b18] font-medium transition-colors flex items-center justify-between group"
               >
                 <span>{language === "fr" ? "Nouveaux arrivants : 1re année" : "Newcomers' First-Year Steps"}</span>
-                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">→</span>
               </Link>
               <Link
                 to="/education/fhsa-explained"
                 className="p-2.5 bg-[#f7f3eb] hover:bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] text-xs text-[#1c1b18] font-medium transition-colors flex items-center justify-between group"
               >
                 <span>{language === "fr" ? "CELIAPP + RAP (100k$ non taxé)" : "FHSA + Home Buyers' Plan"}</span>
-                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">→</span>
               </Link>
               <Link
                 to="/education/new-to-canada-money-basics"
                 className="p-2.5 bg-[#f7f3eb] hover:bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] text-xs text-[#1c1b18] font-medium transition-colors flex items-center justify-between group"
               >
                 <span>{language === "fr" ? "Bâtir son crédit au Canada" : "Building Canadian Credit"}</span>
-                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">→</span>
               </Link>
               <Link
                 to="/education/term-vs-permanent-life-insurance"
                 className="p-2.5 bg-[#f7f3eb] hover:bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] text-xs text-[#1c1b18] font-medium transition-colors flex items-center justify-between group"
               >
                 <span>{language === "fr" ? "Assurance temporaire vs perm." : "Term vs Permanent Insurance"}</span>
-                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                <span className="text-[#2e4a3b] font-mono group-hover:translate-x-0.5 transition-transform">→</span>
               </Link>
             </div>
           </div>
@@ -554,7 +563,7 @@ export const HomePage: React.FC = () => {
               </p>
             </div>
             <Link to={language === "fr" ? "/fr/education" : "/education"} className="arrow-link text-xs font-semibold shrink-0">
-              {language === "fr" ? "Toute la bibliothèque →" : "View all library topics &rarr;"}
+              {language === "fr" ? "Toute la bibliothèque →" : "View all library topics →"}
             </Link>
           </div>
 
@@ -600,7 +609,7 @@ export const HomePage: React.FC = () => {
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
-                {language === "fr" ? "Explorer →" : "Explore hub &rarr;"}
+                {language === "fr" ? "Explorer →" : "Explore hub →"}
               </span>
             </Link>
 
@@ -622,7 +631,7 @@ export const HomePage: React.FC = () => {
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
-                {language === "fr" ? "Explorer →" : "Explore hub &rarr;"}
+                {language === "fr" ? "Explorer →" : "Explore hub →"}
               </span>
             </Link>
 
@@ -644,7 +653,7 @@ export const HomePage: React.FC = () => {
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
-                {language === "fr" ? "Explorer →" : "Explore hub &rarr;"}
+                {language === "fr" ? "Explorer →" : "Explore hub →"}
               </span>
             </Link>
 
@@ -666,7 +675,7 @@ export const HomePage: React.FC = () => {
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
-                {language === "fr" ? "Explorer →" : "Explore hub &rarr;"}
+                {language === "fr" ? "Explorer →" : "Explore hub →"}
               </span>
             </Link>
           </div>
@@ -849,7 +858,7 @@ export const HomePage: React.FC = () => {
                 className="btn btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
               >
                 <span>{language === "fr" ? "Réserver 30 min sur Calendly" : "Book 30 Min on Calendly"}</span>
-                <span aria-hidden="true">&rarr;</span>
+                <span aria-hidden="true">→</span>
               </a>
             )}
           </div>

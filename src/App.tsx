@@ -23,6 +23,7 @@ const IslamicInvestingPage = React.lazy(() => import("./pages/IslamicInvestingPa
 const ContactPage = React.lazy(() => import("./pages/ContactPage.tsx").then((m) => ({ default: m.ContactPage })));
 const ConfirmSubscriptionPage = React.lazy(() => import("./pages/ConfirmSubscriptionPage.tsx").then((m) => ({ default: m.ConfirmSubscriptionPage })));
 const LegalPage = React.lazy(() => import("./pages/LegalPage.tsx").then((m) => ({ default: m.LegalPage })));
+const CalculatorsPage = React.lazy(() => import("./pages/CalculatorsPage.tsx").then((m) => ({ default: m.CalculatorsPage })));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage.tsx").then((m) => ({ default: m.NotFoundPage })));
 
 function PageFallback() {
@@ -88,6 +89,8 @@ export default function App() {
                 <Route path="/for/:audience" element={<AudienceHubPage />} />
                 <Route path="/investing/islamic-equity" element={<IslamicInvestingPage />} />
                 <Route path="/for/muslim-investors" element={<IslamicInvestingPage />} />
+                <Route path="/calculators" element={<CalculatorsPage />} />
+                <Route path="/financial-calculators" element={<CalculatorsPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/confirm-subscription" element={<ConfirmSubscriptionPage />} />
 
@@ -106,6 +109,8 @@ export default function App() {
                 <Route path="/fr/for/:audience" element={<AudienceHubPage />} />
                 <Route path="/fr/investing/islamic-equity" element={<IslamicInvestingPage />} />
                 <Route path="/fr/for/muslim-investors" element={<IslamicInvestingPage />} />
+                <Route path="/fr/calculators" element={<CalculatorsPage />} />
+                <Route path="/fr/simulateurs" element={<CalculatorsPage />} />
                 <Route path="/fr/contact" element={<ContactPage />} />
                 <Route path="/fr/confirm-subscription" element={<ConfirmSubscriptionPage />} />
 

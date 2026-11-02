@@ -110,7 +110,7 @@ export const EducationLibraryPage: React.FC = () => {
             sell any product. Your circumstances are different, rules and limits change, and examples use hypothetical
             figures. Confirm current details with the sources listed and with a qualified professional before acting.{" "}
             <Link to="/disclosures" className="underline text-[#2e4a3b]">
-              Read the full disclosures &rarr;
+              Read the full disclosures →
             </Link>
           </div>
         </div>
@@ -319,7 +319,7 @@ export const EducationLibraryPage: React.FC = () => {
           </p>
           <div className="pt-2 flex justify-center">
             <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
-              Start a Conversation &rarr;
+              Start a Conversation →
             </Link>
           </div>
           <p className="text-xs text-[#625d52]">

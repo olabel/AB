@@ -81,6 +81,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to={`${prefix}/calculators`} className="text-[#d6c298] font-medium hover:text-white transition-colors">
+                  {isFr ? "Simulateurs Financiers" : "Interactive Calculators"}
+                </Link>
+              </li>
+              <li>
                 <Link to={`${prefix}/education/tfsa-vs-rrsp`} className="hover:text-white transition-colors">
                   {isFr ? "CELI vs REER" : "TFSA vs RRSP Guide"}
                 </Link>

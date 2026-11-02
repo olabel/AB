@@ -848,7 +848,7 @@ Candidate Application Details:
                   href="#apply-form"
                   className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs font-semibold px-4 py-2.5 whitespace-nowrap shrink-0 transition-colors"
                 >
-                  Start This Pathway &rarr;
+                  Start This Pathway →
                 </a>
               </div>
             </div>
@@ -968,7 +968,7 @@ Candidate Application Details:
                         className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs font-semibold px-4 py-2.5 inline-flex items-center gap-2 transition-colors"
                       >
                         <Calendar className="w-4 h-4 text-[#75581f]" />
-                        <span>Book 30-Min Discovery Call &rarr;</span>
+                        <span>Book 30-Min Discovery Call →</span>
                       </a>
                     </div>
                   )}
@@ -1334,7 +1334,7 @@ Candidate Application Details:
                 <summary className="flex items-center justify-between cursor-pointer font-serif text-lg text-[#1c1b18] list-none select-none">
                   <span>{faq.q}</span>
                   <span className="text-[#75581f] text-sm group-open:rotate-90 transition-transform">
-                    &rarr;
+                    →
                   </span>
                 </summary>
                 <p className="mt-3 text-xs sm:text-sm text-[#46423a] leading-relaxed border-t border-[#ece6da] pt-3">

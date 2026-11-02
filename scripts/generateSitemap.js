@@ -21,6 +21,7 @@ const coreRoutes = [
   { path: "/for/business-owners", priority: "0.85", changefreq: "weekly" },
   { path: "/for/families", priority: "0.85", changefreq: "weekly" },
   { path: "/for/newcomers", priority: "0.85", changefreq: "weekly" },
+  { path: "/calculators", priority: "0.9", changefreq: "weekly" },
   { path: "/about", priority: "0.75", changefreq: "monthly" },
   { path: "/careers", priority: "0.85", changefreq: "weekly" },
   { path: "/contact", priority: "0.8", changefreq: "monthly" },

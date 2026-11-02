@@ -315,7 +315,7 @@ export const MoneyStructureStudio: React.FC = () => {
             Want to see how your own household pieces connect before a shock occurs?
           </p>
           <Link to="/contact" className="btn btn-primary text-xs py-2 px-5 shrink-0">
-            Start a Conversation with Ahmed &rarr;
+            Start a Conversation with Ahmed →
           </Link>
         </div>
       </div>
