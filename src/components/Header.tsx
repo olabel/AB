@@ -21,10 +21,8 @@ export const Header: React.FC = () => {
   const prefix = language === "fr" ? "/fr" : "";
 
   const navItems = [
-    { label: t("nav_home"), href: prefix || "/" },
     { label: t("nav_how_i_help"), href: `${prefix}/how-i-help` },
     { label: t("nav_education"), href: `${prefix}/education` },
-    { label: t("nav_calculators"), href: `${prefix}/calculators` },
     { label: t("nav_insights"), href: `${prefix}/insights` },
     { label: t("nav_careers"), href: `${prefix}/careers` },
   ];

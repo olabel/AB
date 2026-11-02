@@ -1,4 +1,5 @@
 import https from "https";
+import { URL } from "url";
 
 export interface NewsItem {
   id: string;
@@ -13,34 +14,67 @@ export interface NewsItem {
 let cachedNews: NewsItem[] | null = null;
 let lastFetchTime = 0;
 const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
-const MAX_ITEM_AGE_MS = 21 * 24 * 60 * 60 * 1000; // 21 days max age to ensure no stale articles
+const MAX_ITEM_AGE_MS = 28 * 24 * 60 * 60 * 1000; // 28 days max age
 
-function fetchHttps(url: string, timeoutMs = 5000): Promise<string> {
+function decodeHtmlEntities(str: string): string {
+  return str
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, "/")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function fetchHttps(urlStr: string, timeoutMs = 6000, maxRedirects = 4): Promise<string> {
   return new Promise((resolve, reject) => {
-    try {
-      const req = https.get(
-        url,
-        {
-          headers: {
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            Accept: "application/rss+xml, application/xml, text/xml, */*",
+    function get(currentUrl: string, redirectsLeft: number) {
+      if (redirectsLeft < 0) {
+        return reject(new Error(`Too many redirects fetching ${urlStr}`));
+      }
+      try {
+        const req = https.get(
+          currentUrl,
+          {
+            headers: {
+              "User-Agent":
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+              Accept: "application/rss+xml, application/xml, text/xml, */*",
+            },
           },
-        },
-        (res) => {
-          let data = "";
-          res.on("data", (chunk) => (data += chunk));
-          res.on("end", () => resolve(data));
-        }
-      );
-      req.on("error", reject);
-      req.setTimeout(timeoutMs, () => {
-        req.destroy();
-        reject(new Error(`Timeout fetching ${url}`));
-      });
-    } catch (e) {
-      reject(e);
+          (res) => {
+            // Follow HTTP redirects (301, 302, 303, 307, 308)
+            if (res.statusCode && [301, 302, 303, 307, 308].includes(res.statusCode) && res.headers.location) {
+              const nextUrl = new URL(res.headers.location, currentUrl).toString();
+              res.resume();
+              return get(nextUrl, redirectsLeft - 1);
+            }
+
+            if (res.statusCode && (res.statusCode < 200 || res.statusCode >= 300)) {
+              res.resume();
+              return reject(new Error(`HTTP ${res.statusCode} fetching ${currentUrl}`));
+            }
+
+            let data = "";
+            res.on("data", (chunk) => (data += chunk));
+            res.on("end", () => resolve(data));
+          }
+        );
+        req.on("error", reject);
+        req.setTimeout(timeoutMs, () => {
+          req.destroy();
+          reject(new Error(`Timeout fetching ${currentUrl}`));
+        });
+      } catch (e) {
+        reject(e);
+      }
     }
+    get(urlStr, maxRedirects);
   });
 }
 
@@ -49,7 +83,7 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
   const itemMatches = xml.match(/<item[\s\S]*?<\/item>/gi) || [];
   const now = Date.now();
 
-  for (const block of itemMatches.slice(0, 10)) {
+  for (const block of itemMatches.slice(0, 12)) {
     const titleMatch = block.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i);
     const linkMatch = block.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/i);
     const dateMatch = block.match(/<pubDate>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/pubDate>/i);
@@ -60,11 +94,15 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
     let pubDate = (dateMatch ? dateMatch[1] : "").trim();
     let source = (sourceMatch ? sourceMatch[1] : defaultSource).trim();
 
+    title = decodeHtmlEntities(title);
+    source = decodeHtmlEntities(source);
+
     // Clean Google News title prefix/suffix if present
     if (title.includes(" - ")) {
       const parts = title.split(" - ");
       if (parts.length > 1 && !sourceMatch) {
         source = parts[parts.length - 1].trim();
+        title = parts.slice(0, parts.length - 1).join(" - ").trim();
       }
     }
 
@@ -94,7 +132,8 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
         lower.includes("interest") ||
         lower.includes("fomc") ||
         lower.includes("yield") ||
-        lower.includes("cut")
+        lower.includes("cut") ||
+        lower.includes("hike")
       ) {
         category = "rates";
       } else if (
@@ -109,7 +148,8 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
         lower.includes("cra") ||
         lower.includes("tfsa") ||
         lower.includes("rrsp") ||
-        lower.includes("fhsa")
+        lower.includes("fhsa") ||
+        lower.includes("benefit")
       ) {
         category = "tax";
       }
@@ -129,7 +169,43 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
   return items;
 }
 
-const VERIFIED_CURRENT_NEWS: NewsItem[] = [
+export const VERIFIED_CURRENT_NEWS: NewsItem[] = [
+  {
+    id: "cbc-budget-affordability-measures",
+    title: "Canada's Federal Budget to Detail Middle-Class Affordability, Business Tax Incentives and Infrastructure",
+    link: "https://www.cbc.ca/news/politics/budget-carney-affordability-investments-9.7404193",
+    pubDate: "2026-11-02T13:00:00Z",
+    source: "CBC News",
+    country: "CA",
+    category: "economy",
+  },
+  {
+    id: "alberta-benefits-schedule-nov",
+    title: "Provincial and Federal Benefit Payment Schedules Issued for November 2026: CPP, OAS, CCB and Support Dates",
+    link: "https://www.canada.ca/en/services/benefits/calendar.html",
+    pubDate: "2026-11-02T10:30:00Z",
+    source: "Government of Canada",
+    country: "CA",
+    category: "tax",
+  },
+  {
+    id: "retirement-timing-cpp-oas-clawback",
+    title: "Retirement Timing and Income Sequencing: Evaluating CPP Delay Against OAS Recovery Tax Thresholds",
+    link: "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-benefit/amount.html",
+    pubDate: "2026-10-31T14:00:00Z",
+    source: "Financial Post",
+    country: "CA",
+    category: "rates",
+  },
+  {
+    id: "tfsa-2026-room-guidance",
+    title: "TFSA Statutory Rules: Verifying Contribution Ceilings and Avoiding Overcontribution Penalties",
+    link: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account.html",
+    pubDate: "2026-10-31T11:00:00Z",
+    source: "Canada Revenue Agency",
+    country: "CA",
+    category: "tax",
+  },
   {
     id: "boc-policy-rate-decision",
     title: "Bank of Canada Sets Overnight Rate Target at 2.50% in Monetary Policy Announcement",
@@ -143,7 +219,7 @@ const VERIFIED_CURRENT_NEWS: NewsItem[] = [
     id: "fed-fomc-policy-statement",
     title: "Federal Reserve Maintains Target Federal Funds Rate Range at 3.75% - 4.00%",
     link: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
-    pubDate: "2026-10-27T18:00:00Z",
+    pubDate: "2026-10-28T18:00:00Z",
     source: "Federal Reserve",
     country: "US",
     category: "rates",
@@ -202,24 +278,6 @@ const VERIFIED_CURRENT_NEWS: NewsItem[] = [
     country: "CA",
     category: "rates",
   },
-  {
-    id: "boc-financial-system-hub",
-    title: "Bank of Canada Financial System Hub: Monitoring Household Debt and Liquidity Buffers",
-    link: "https://www.bankofcanada.ca/core-functions/financial-system/",
-    pubDate: "2026-10-14T14:30:00Z",
-    source: "Bank of Canada",
-    country: "CA",
-    category: "economy",
-  },
-  {
-    id: "statcan-labour-force-survey",
-    title: "Statistics Canada Labour Force Survey: Employment Trends and Wage Growth Statistics",
-    link: "https://www150.statcan.gc.ca/n1/daily-quotidien/lfs-epa-eng.htm",
-    pubDate: "2026-10-11T12:30:00Z",
-    source: "Statistics Canada",
-    country: "CA",
-    category: "economy",
-  },
 ];
 
 export async function getLatestFinancialNews(): Promise<NewsItem[]> {
@@ -230,8 +288,18 @@ export async function getLatestFinancialNews(): Promise<NewsItem[]> {
 
   const directFeeds = [
     {
-      url: "https://www.bankofcanada.ca/valet/lists/rss/press_releases",
-      source: "Bank of Canada",
+      url: "https://www.cbc.ca/webfeed/rss/rss-business",
+      source: "CBC Business",
+      country: "CA" as const,
+    },
+    {
+      url: "https://news.google.com/rss/search?q=Bank+of+Canada+OR+mortgage+rates+OR+CRA+tax+Canada+when:3d&hl=en-CA&gl=CA&ceid=CA:en",
+      source: "Canadian Economic News",
+      country: "CA" as const,
+    },
+    {
+      url: "https://news.google.com/rss/search?q=TFSA+OR+RRSP+OR+FHSA+Canada+when:3d&hl=en-CA&gl=CA&ceid=CA:en",
+      source: "Canadian Personal Finance",
       country: "CA" as const,
     },
     {
@@ -240,9 +308,9 @@ export async function getLatestFinancialNews(): Promise<NewsItem[]> {
       country: "US" as const,
     },
     {
-      url: "https://www.cbc.ca/cmlink/rss-business",
-      source: "CBC Business",
-      country: "CA" as const,
+      url: "https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml",
+      source: "NYT Economy",
+      country: "US" as const,
     },
   ];
 

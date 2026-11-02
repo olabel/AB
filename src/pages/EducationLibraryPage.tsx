@@ -2,13 +2,14 @@ import React, { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
 import { siteConfig } from "../config/site.ts";
-import { Search, X, ArrowRight, Calculator } from "lucide-react";
+import { Search, X, ArrowRight, Calculator, Stethoscope, Briefcase, Users, Compass } from "lucide-react";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 
 export const EducationLibraryPage: React.FC = () => {
   const { language } = useLanguage();
+  const prefix = language === "fr" ? "/fr" : "";
   const [searchParams, setSearchParams] = useSearchParams();
 
   const query = searchParams.get("q") || "";
@@ -111,6 +112,144 @@ export const EducationLibraryPage: React.FC = () => {
             figures. Confirm current details with the sources listed and with a qualified professional before acting.{" "}
             <Link to="/disclosures" className="underline text-[#2e4a3b]">
               Read the full disclosures →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Targeted Topic Clusters: Specialized Situation & Profession Hubs */}
+      <section className="section py-12 bg-[#fcfaf5] border-b border-[#d6cebd]">
+        <div className="wrap max-w-6xl space-y-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f]">
+                {language === "fr" ? "Parcours Spécialisés" : "Targeted Topic Clusters"}
+              </span>
+              <h2 className="h2 text-[#1c1b18] mt-1 text-2xl md:text-3xl">
+                {language === "fr" ? "Guides groupés par situation et profession" : "Guides Grouped by Situation & Profession"}
+              </h2>
+              <p className="text-sm text-[#46423a] mt-1.5 max-w-2xl leading-relaxed">
+                {language === "fr"
+                  ? "Accédez directement à nos synthèses statutaires, règles de comptes et outils d'analyse conçus pour votre réalité financière."
+                  : "Explore curated statutory rules, registered account strategies, and simulators tailored for your specific stage of life or career."}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {/* Islamic Investing Feature */}
+            <Link
+              to={`${prefix}/investing/islamic-equity`}
+              className="p-5 bg-[#14211a] text-[#f7f3eb] border border-[#d6c298] hover:border-[#52b788] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-md"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#d6c298]/20 rounded-[2px] text-[#d6c298] mb-3">
+                  <span className="font-serif font-bold text-sm tracking-wider">HALAL</span>
+                </div>
+                <h3 className="font-serif text-lg font-medium text-white group-hover:text-[#d6c298] transition-colors leading-snug">
+                  {language === "fr" ? "Investissement Islamique" : "Islamic Investing"}
+                </h3>
+                <p className="text-xs text-[#ece6da]/80 mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Actions mondiales conformes à la charia (AAOIFI). Intégration CELI, REER et CELIAPP."
+                    : "Shari'ah-compliant global equities under AAOIFI screening inside TFSA, RRSP & FHSA."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#d6c298] pt-4 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                {language === "fr" ? "Cadre Éducatif →" : "Educational Guide →"}
+              </span>
+            </Link>
+
+            {/* Healthcare & Doctors */}
+            <Link
+              to={`${prefix}/for/healthcare`}
+              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
+                  <Stethoscope className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                  {language === "fr" ? "Santé & Médecins" : "Healthcare & Doctors"}
+                </h3>
+                <p className="text-xs text-[#625d52] mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Délai d'équivalence, trésorerie de transition et protection du revenu médical."
+                    : "Licensing gap planning, credential verification fees, and income protection."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
+                {language === "fr" ? "Explorer →" : "Explore hub →"}
+              </span>
+            </Link>
+
+            {/* Business Owners & CCPCs */}
+            <Link
+              to={`${prefix}/for/business-owners`}
+              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
+                  <Briefcase className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                  {language === "fr" ? "Entreprises & SPCC" : "Business Owners"}
+                </h3>
+                <p className="text-xs text-[#625d52] mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Règles fiscales de gains en capital, extraction CDC et plafond de 50k$ de revenu passif."
+                    : "Corporate capital gains rules, CDA extraction, and $50k passive income grind."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
+                {language === "fr" ? "Explorer →" : "Explore hub →"}
+              </span>
+            </Link>
+
+            {/* Canadian Families */}
+            <Link
+              to={`${prefix}/for/families`}
+              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
+                  <Users className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                  {language === "fr" ? "Familles canadiennes" : "Canadian Families"}
+                </h3>
+                <p className="text-xs text-[#625d52] mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Choc hypothécaire, cumul CELIAPP + RAP (100k$ non taxé) et retraits REEE."
+                    : "Mortgage renewal shock, FHSA + HBP stacking, and strategic RESP withdrawals."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
+                {language === "fr" ? "Explorer →" : "Explore hub →"}
+              </span>
+            </Link>
+
+            {/* Newcomers to Canada */}
+            <Link
+              to={`${prefix}/for/newcomers`}
+              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between hover:shadow-xs"
+            >
+              <div>
+                <div className="p-2 w-fit bg-[#2e4a3b]/10 rounded-[2px] text-[#2e4a3b] mb-3">
+                  <Compass className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                  {language === "fr" ? "Nouveaux arrivants" : "New to Canada"}
+                </h3>
+                <p className="text-xs text-[#625d52] mt-2 leading-relaxed">
+                  {language === "fr"
+                    ? "Bâtir son crédit de zéro, résidence fiscale et simulateur de survie financière."
+                    : "Credit building from scratch, tax residency timing, and financial runway simulator."}
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-[#2e4a3b] pt-4 flex items-center gap-1">
+                {language === "fr" ? "Explorer →" : "Explore hub →"}
+              </span>
             </Link>
           </div>
         </div>

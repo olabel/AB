@@ -54,6 +54,42 @@ export const MACRO_INDICATORS: MacroIndicator[] = [
 
 export const STATIC_NEWS: NewsItem[] = [
   {
+    id: "cbc-budget-affordability-measures",
+    title: "Canada's Federal Budget to Detail Middle-Class Affordability, Business Tax Incentives and Infrastructure",
+    link: "https://www.cbc.ca/news/politics/budget-carney-affordability-investments-9.7404193",
+    pubDate: "2026-11-02T13:00:00Z",
+    source: "CBC News",
+    country: "CA",
+    category: "economy",
+  },
+  {
+    id: "alberta-benefits-schedule-nov",
+    title: "Provincial and Federal Benefit Payment Schedules Issued for November 2026: CPP, OAS, CCB and Support Dates",
+    link: "https://www.canada.ca/en/services/benefits/calendar.html",
+    pubDate: "2026-11-02T10:30:00Z",
+    source: "Government of Canada",
+    country: "CA",
+    category: "tax",
+  },
+  {
+    id: "retirement-timing-cpp-oas-clawback",
+    title: "Retirement Timing and Income Sequencing: Evaluating CPP Delay Against OAS Recovery Tax Thresholds",
+    link: "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-benefit/amount.html",
+    pubDate: "2026-10-31T14:00:00Z",
+    source: "Financial Post",
+    country: "CA",
+    category: "rates",
+  },
+  {
+    id: "tfsa-2026-room-guidance",
+    title: "TFSA Statutory Rules: Verifying Contribution Ceilings and Avoiding Overcontribution Penalties",
+    link: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account.html",
+    pubDate: "2026-10-31T11:00:00Z",
+    source: "Canada Revenue Agency",
+    country: "CA",
+    category: "tax",
+  },
+  {
     id: "boc-policy-rate-decision",
     title: "Bank of Canada Sets Overnight Rate Target at 2.50% in Monetary Policy Announcement",
     link: "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/",

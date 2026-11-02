@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { BrandMark } from "./BrandMark.tsx";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
-import { MapPin, Mail, Phone, Calendar, ArrowRight, ShieldCheck, ExternalLink } from "lucide-react";
+import { MapPin, Mail, Phone, Calendar, ArrowRight, ShieldCheck, ExternalLink, Calculator } from "lucide-react";
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -81,8 +81,13 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to={`${prefix}/calculators`} className="text-[#d6c298] font-medium hover:text-white transition-colors">
-                  {isFr ? "Simulateurs Financiers" : "Interactive Calculators"}
+                <Link
+                  to={`${prefix}/calculators`}
+                  className="text-[#d6c298] font-medium hover:text-white transition-colors flex items-center gap-1.5"
+                >
+                  <Calculator className="w-3.5 h-3.5 text-[#d6c298]" />
+                  <span>{isFr ? "Simulateurs Financiers" : "Interactive Calculators"}</span>
+                  <span className="px-1.5 py-0.5 bg-[#d6c298]/20 text-[#d6c298] text-[10px] rounded font-mono font-semibold">NEW</span>
                 </Link>
               </li>
               <li>
