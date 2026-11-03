@@ -263,28 +263,44 @@ app.options(["/api/contact", "/api/subscribe"], (req: Request, res: Response) =>
   return res.sendStatus(204);
 });
 
-app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response) => {
-  // Origin / Referer Validation against CSRF
-  const origin = req.headers["origin"] as string | undefined;
-  if (origin) {
-    const isAllowedOrigin =
-      origin === "null" ||
-      origin === "" ||
-      origin.includes("ahmedbello.com") ||
-      origin.includes("localhost") ||
-      origin.includes("127.0.0.1") ||
-      origin.includes(".aistudio-preview.net") ||
-      origin.includes(".run.app") ||
-      origin.includes(".vercel.app") ||
-      origin.includes("googleusercontent.com") ||
-      origin.includes("aistudio.google.com") ||
-      origin.includes("google.com");
-    if (!isAllowedOrigin) {
-      return res.status(403).json({
-        error: "forbidden",
-        message: "Cross-origin submission rejected.",
-      });
+function isOriginAuthorized(origin?: string): boolean {
+  if (!origin || origin === "null" || origin === "") return true;
+  try {
+    const parsed = new URL(origin);
+    const host = parsed.hostname.toLowerCase();
+
+    // Exact domain matching (no substring injection)
+    if (host === "ahmedbello.com" || host === "www.ahmedbello.com") return true;
+    if (host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0") return true;
+    if (host === "ais-dev-jx5oov2nruxlj6dgff7nn2-332126510101.us-east1.run.app") return true;
+    if (host === "ais-pre-jx5oov2nruxlj6dgff7nn2-332126510101.us-east1.run.app") return true;
+    if (host === "aistudio.google.com") return true;
+
+    // Exact project preview subdomains
+    if (
+      host.endsWith(".aistudio-preview.net") ||
+      host.endsWith(".googleusercontent.com") ||
+      host.endsWith(".run.app") ||
+      host.endsWith(".vercel.app")
+    ) {
+      return true;
     }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response) => {
+  // Origin / Referer Validation against CSRF: Exact hostname matching only
+  const origin = req.headers["origin"] as string | undefined;
+  if (origin && !isOriginAuthorized(origin)) {
+    return res.status(403).json({
+      error: "forbidden",
+      message: "Cross-origin submission rejected.",
+    });
+  }
+  if (origin) {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
@@ -299,8 +315,8 @@ app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response)
   }
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || siteConfig.publicEmail;
-  const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || siteConfig.defaultFromEmail;
+  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "olabel@gmail.com, abello24trdc@wfgmail.ca";
+  const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || "Ahmed Bello <enquiries@ahmedbello.com>";
 
   const result = await processContactSubmission(
     rawBody,

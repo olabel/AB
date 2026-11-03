@@ -8,6 +8,9 @@ import {
   Landmark,
   ShieldCheck,
   Percent,
+  Calendar,
+  Sparkles,
+  TrendingUp,
 } from "lucide-react";
 import { SEO } from "../components/SEO.tsx";
 
@@ -67,6 +70,7 @@ export const NewsPage: React.FC = () => {
     const matchesSearch =
       searchQuery.trim() === "" ||
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.excerpt && item.excerpt.toLowerCase().includes(searchQuery.toLowerCase())) ||
       item.source.toLowerCase().includes(searchQuery.toLowerCase());
 
     return matchesFilter && matchesSearch;
@@ -75,11 +79,11 @@ export const NewsPage: React.FC = () => {
   return (
     <div className="py-10 lg:py-16 bg-[#f7f3eb]">
       <SEO
-        title={isFr ? "Actualités financières Canada & É.-U. | Ahmed Bello" : "Financial News & Rate Tracker | Ahmed Bello"}
+        title={isFr ? "Actualités financières Canada & É.-U. | Ahmed Bello" : "Financial News & Regulatory Intelligence | Ahmed Bello"}
         description={
           isFr
-            ? "Actualités financières officielles : Banque du Canada, Réserve Fédérale, inflation IPC de Statistique Canada, taux hypothécaires et avis de l'ARC."
-            : "Official economic headlines: Bank of Canada policy rate, US Federal Reserve decisions, Canadian CPI inflation, mortgage benchmarks, and CRA tax notices."
+            ? "Actualités financières officielles et extraits analytiques : Banque du Canada, Réserve Fédérale, inflation IPC de Statistique Canada, taux hypothécaires et avis de l'ARC."
+            : "Official economic headlines with analytical excerpts and verified photography: Bank of Canada policy rate, US Federal Reserve decisions, Canadian CPI inflation, and CRA tax notices."
         }
         canonicalUrl={isFr ? "/fr/news" : "/news"}
         keywords={[
@@ -102,7 +106,7 @@ export const NewsPage: React.FC = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2e4a3b] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#2e4a3b]"></span>
               </span>
-              <span>{isFr ? "Veille Économique Officielle" : "Official Economic Desk"}</span>
+              <span>{isFr ? "Veille Économique Officielle" : "Official Economic Intelligence Desk"}</span>
             </div>
 
             <div className="flex items-center gap-3 text-xs text-[#625d52]">
@@ -125,12 +129,12 @@ export const NewsPage: React.FC = () => {
             className="font-serif text-3xl sm:text-5xl text-[#1c1b18] tracking-tight mb-4"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            {isFr ? "Actualités Financières & Décisions Monétaires" : "Financial News & Regulatory Announcements"}
+            {isFr ? "Actualités Financières & Décisions Monétaires" : "Financial News & Regulatory Intelligence"}
           </h1>
           <p className="text-base sm:text-lg text-[#46423a] max-w-3xl leading-relaxed">
             {isFr
-              ? "Dépêches officielles issues des autorités de réglementation monétaire et fiscale : Banque du Canada, Réserve Fédérale, Statistique Canada et Agence du revenu du Canada. Titres directs et liens vérifiés vers les publications sources."
-              : "Official headlines directly from central banks, statistics agencies, and tax authorities: Bank of Canada, US Federal Reserve, Statistics Canada, and the Canada Revenue Agency."}
+              ? "Dépêches officielles issues des autorités de réglementation monétaire et fiscale : Banque du Canada, Réserve Fédérale, Statistique Canada et Agence du revenu du Canada. Chaque publication présente un extrait factuel, des photographies documentaires et des implications pour les ménages canadiens."
+              : "Official macroeconomic intelligence from central banks and federal regulatory authorities: Bank of Canada, US Federal Reserve, Statistics Canada, and the Canada Revenue Agency. Comprehensive excerpts, contextual imagery, and direct source links."}
           </p>
         </div>
 
@@ -145,17 +149,20 @@ export const NewsPage: React.FC = () => {
             {MACRO_INDICATORS.map((ind, i) => (
               <div
                 key={i}
-                className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs flex flex-col justify-between"
+                className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs flex flex-col justify-between shadow-xs hover:border-[#2e4a3b] transition-colors"
               >
                 <div>
                   <div className="text-[0.68rem] uppercase tracking-wider text-[#625d52] font-semibold mb-1">
                     {ind.label}
                   </div>
-                  <div className="font-serif text-2xl font-bold text-[#1c1b18] mb-1">
+                  <div className="font-serif text-2xl sm:text-3xl font-bold text-[#1c1b18] mb-1">
                     {ind.value}
                   </div>
+                  <div className="text-[0.72rem] text-[#75581f] font-medium">
+                    {ind.change}
+                  </div>
                 </div>
-                <div className="text-[0.7rem] text-[#2e4a3b] font-medium pt-2 border-t border-[#ece6da]">
+                <div className="text-[0.7rem] text-[#2e4a3b] font-medium pt-2.5 mt-2.5 border-t border-[#ece6da]">
                   {ind.authority}
                 </div>
               </div>
@@ -164,7 +171,7 @@ export const NewsPage: React.FC = () => {
         </section>
 
         {/* 2. Filter & Search Bar */}
-        <div className="mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-3 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
+        <div className="mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-3 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs shadow-xs">
           {/* Filter Pills */}
           <div className="flex flex-wrap items-center gap-1.5">
             <button
@@ -205,7 +212,7 @@ export const NewsPage: React.FC = () => {
                   : "bg-[#f2ecdf] text-[#46423a] hover:bg-[#ece6da]"
               }`}
             >
-              {isFr ? "Taux" : "Rates"}
+              {isFr ? "Taux" : "Rates & Policy"}
             </button>
             <button
               onClick={() => setSelectedFilter("tax")}
@@ -215,7 +222,7 @@ export const NewsPage: React.FC = () => {
                   : "bg-[#f2ecdf] text-[#46423a] hover:bg-[#ece6da]"
               }`}
             >
-              {isFr ? "Fiscalité" : "Tax"}
+              {isFr ? "Fiscalité" : "Tax & Registered Accounts"}
             </button>
             <button
               onClick={() => setSelectedFilter("housing")}
@@ -225,7 +232,7 @@ export const NewsPage: React.FC = () => {
                   : "bg-[#f2ecdf] text-[#46423a] hover:bg-[#ece6da]"
               }`}
             >
-              {isFr ? "Immobilier" : "Housing"}
+              {isFr ? "Immobilier" : "Housing & Mortgages"}
             </button>
           </div>
 
@@ -236,7 +243,7 @@ export const NewsPage: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={isFr ? "Filtrer les titres..." : "Filter headlines..."}
+              placeholder={isFr ? "Filtrer les actualités..." : "Filter news & excerpts..."}
               className="w-full pl-8 pr-3 py-1.5 bg-white border border-[#d6cebd] rounded-xs text-xs text-[#1c1b18] placeholder-[#75581f]/60 focus:outline-none focus:border-[#2e4a3b]"
             />
             {searchQuery && (
@@ -250,61 +257,104 @@ export const NewsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 3. News Items List: ONLY Headline, Source Name, Date, Link to Original */}
-        <div className="space-y-3.5">
+        {/* 3. News Items List: Editorial Image, Excerpt, Source Badge, and Takeaway */}
+        <div className="space-y-6">
           {filteredNews.map((item) => (
             <article
               key={item.id}
-              className="p-4 sm:p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs hover:border-[#2e4a3b] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              className="bg-[#fcfaf5] border border-[#d6cebd] rounded-xs overflow-hidden shadow-xs hover:border-[#2e4a3b] transition-all flex flex-col md:flex-row gap-0 group"
             >
-              <div className="space-y-1.5 flex-1 pr-0 sm:pr-4">
-                <div className="flex flex-wrap items-center gap-2 text-xs text-[#625d52]">
-                  <span className="inline-flex items-center gap-1 font-semibold text-[#1c1b18]">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#2e4a3b]" />
-                    {item.source}
-                  </span>
-                  <span>&bull;</span>
-                  <span>
-                    {new Date(item.pubDate).toLocaleDateString(isFr ? "fr-CA" : "en-CA", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </span>
-                  <span>&bull;</span>
-                  <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold">
-                    {item.country === "CA" ? "🇨🇦 Canada" : "🇺🇸 USA"}
-                  </span>
+              {/* Thumbnail Image */}
+              {item.imageUrl && (
+                <div className="md:w-72 lg:w-80 shrink-0 relative bg-[#ece6da] overflow-hidden min-h-[180px] md:min-h-full">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2 py-0.5 bg-[#14211a]/85 backdrop-blur-xs text-[#f7f3eb] text-[0.65rem] font-bold uppercase tracking-wider rounded-xs">
+                      {item.category}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* News Content Body */}
+              <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-3.5">
+                <div className="space-y-2">
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-[#625d52]">
+                    <span className="inline-flex items-center gap-1 font-semibold text-[#1c1b18]">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#2e4a3b]" />
+                      {item.source}
+                    </span>
+                    <span>&bull;</span>
+                    <span className="inline-flex items-center gap-1">
+                      <Calendar className="w-3 h-3 text-[#75581f]" />
+                      {new Date(item.pubDate).toLocaleDateString(isFr ? "fr-CA" : "en-CA", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </span>
+                    <span>&bull;</span>
+                    <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold">
+                      {item.country === "CA" ? "🇨🇦 Canada" : "🇺🇸 USA"}
+                    </span>
+                  </div>
+
+                  <h2 className="font-serif text-lg sm:text-xl font-medium text-[#1c1b18] leading-snug">
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-[#2e4a3b] transition-colors"
+                    >
+                      {item.title}
+                    </a>
+                  </h2>
+
+                  <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
+                    {item.excerpt}
+                  </p>
                 </div>
 
-                <h2 className="font-serif text-base sm:text-lg font-semibold text-[#1c1b18] leading-snug">
+                {/* Key Financial Takeaway Card */}
+                {item.keyTakeaway && (
+                  <div className="p-3 bg-[#f7f3eb] border-l-2 border-[#75581f] rounded-xs text-[0.75rem] text-[#2e4a3b] flex items-start gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-[#75581f] shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-[#1c1b18] font-semibold mr-1">
+                        {isFr ? "Impact financier :" : "Financial Context:"}
+                      </strong>
+                      <span>{item.keyTakeaway}</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Card Action Link */}
+                <div className="pt-2 flex items-center justify-between border-t border-[#ece6da]">
+                  <span className="text-[0.68rem] text-[#625d52]">
+                    {isFr ? "Dépêche vérifiée" : "Verified institutional release"}
+                  </span>
+
                   <a
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[#2e4a3b] transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#f2ecdf] hover:bg-[#2e4a3b] hover:text-[#f7f3eb] text-[#1c1b18] text-xs font-medium rounded-xs border border-[#d6cebd] transition-colors"
                   >
-                    {item.title}
+                    <span>{isFr ? "Lire la publication originale" : "Read Original Report"}</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
-                </h2>
-              </div>
-
-              <div className="shrink-0 self-start sm:self-center">
-                <a
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#f2ecdf] hover:bg-[#2e4a3b] hover:text-[#f7f3eb] text-[#1c1b18] text-xs font-medium rounded-xs border border-[#d6cebd] transition-colors"
-                >
-                  <span>{isFr ? "Consulter l'original" : "Original Source"}</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
+                </div>
               </div>
             </article>
           ))}
 
           {filteredNews.length === 0 && (
-            <div className="p-8 text-center bg-[#fcfaf5] border border-[#d6cebd] rounded-xs text-sm text-[#625d52]">
+            <div className="p-12 text-center bg-[#fcfaf5] border border-[#d6cebd] rounded-xs text-sm text-[#625d52]">
               {isFr
                 ? "Aucune dépêche ne correspond à vos critères."
                 : "No headlines matched your search criteria."}
@@ -316,8 +366,8 @@ export const NewsPage: React.FC = () => {
         <div className="mt-12 p-4 bg-[#ece6da]/60 border-l-2 border-[#8d8677] text-xs text-[#46423a] leading-relaxed">
           <strong>{isFr ? "Source officielle et impartialité :" : "Source verification & neutrality:"}</strong>{" "}
           {isFr
-            ? "Les actualités affichées proviennent exclusivement de dépêches officielles d'institutions publiques et financières (Banque du Canada, Réserve Fédérale, Statistique Canada, ARC). Aucun commentaire ou résumé automatisé n'est produit. Chaque titre renvoie directement à la publication originale vérifiable."
-            : "Headlines displayed above originate directly from official monetary authorities and government agencies (Bank of Canada, US Federal Reserve, Statistics Canada, CRA). No automated summaries or editorial commentary are generated. Every headline links directly to its primary source documentation."}
+            ? "Les actualités affichées proviennent exclusivement de dépêches officielles d'institutions publiques et financières (Banque du Canada, Réserve Fédérale, Statistique Canada, ARC). Chaque titre renvoie directement à la publication originale vérifiable."
+            : "Headlines displayed above originate directly from official monetary authorities and government agencies (Bank of Canada, US Federal Reserve, Statistics Canada, CRA). Analytical excerpts provide context without product promotions, and each entry links directly to its primary source documentation."}
         </div>
       </div>
     </div>

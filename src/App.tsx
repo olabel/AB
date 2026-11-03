@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext.tsx";
 import { Header } from "./components/Header.tsx";
@@ -9,30 +9,23 @@ import { MobileBookingBar } from "./components/MobileBookingBar.tsx";
 import { Analytics } from "@vercel/analytics/react";
 import { disclosuresData, privacyData, standardsData, termsData } from "./content/legal.ts";
 
-// Route-level code splitting to keep initial bundle size tiny
-const HomePage = React.lazy(() => import("./pages/HomePage.tsx").then((m) => ({ default: m.HomePage })));
-const HowIHelpPage = React.lazy(() => import("./pages/HowIHelpPage.tsx").then((m) => ({ default: m.HowIHelpPage })));
-const EducationLibraryPage = React.lazy(() => import("./pages/EducationLibraryPage.tsx").then((m) => ({ default: m.EducationLibraryPage })));
-const ArticlePage = React.lazy(() => import("./pages/ArticlePage.tsx").then((m) => ({ default: m.ArticlePage })));
-const InsightsPage = React.lazy(() => import("./pages/InsightsPage.tsx").then((m) => ({ default: m.InsightsPage })));
-const NewsPage = React.lazy(() => import("./pages/NewsPage.tsx").then((m) => ({ default: m.NewsPage })));
-const AboutPage = React.lazy(() => import("./pages/AboutPage.tsx").then((m) => ({ default: m.AboutPage })));
-const CareersPage = React.lazy(() => import("./pages/CareersPage.tsx").then((m) => ({ default: m.CareersPage })));
-const AudienceHubPage = React.lazy(() => import("./pages/AudienceHubPage.tsx").then((m) => ({ default: m.AudienceHubPage })));
-const IslamicInvestingPage = React.lazy(() => import("./pages/IslamicInvestingPage.tsx").then((m) => ({ default: m.IslamicInvestingPage })));
-const ContactPage = React.lazy(() => import("./pages/ContactPage.tsx").then((m) => ({ default: m.ContactPage })));
-const ConfirmSubscriptionPage = React.lazy(() => import("./pages/ConfirmSubscriptionPage.tsx").then((m) => ({ default: m.ConfirmSubscriptionPage })));
-const LegalPage = React.lazy(() => import("./pages/LegalPage.tsx").then((m) => ({ default: m.LegalPage })));
-const CalculatorsPage = React.lazy(() => import("./pages/CalculatorsPage.tsx").then((m) => ({ default: m.CalculatorsPage })));
-const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage.tsx").then((m) => ({ default: m.NotFoundPage })));
-
-function PageFallback() {
-  return (
-    <div className="min-h-[50vh] flex items-center justify-center py-24" aria-busy="true" aria-label="Loading page">
-      <div className="w-8 h-8 border-2 border-[#2e4a3b] border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
-}
+// Direct imports ensure the matching page's code is executed before first paint,
+// eliminating layout jump (CLS < 0.1) and preventing pre-rendered content from flashing a spinner.
+import { HomePage } from "./pages/HomePage.tsx";
+import { HowIHelpPage } from "./pages/HowIHelpPage.tsx";
+import { EducationLibraryPage } from "./pages/EducationLibraryPage.tsx";
+import { ArticlePage } from "./pages/ArticlePage.tsx";
+import { InsightsPage } from "./pages/InsightsPage.tsx";
+import { NewsPage } from "./pages/NewsPage.tsx";
+import { AboutPage } from "./pages/AboutPage.tsx";
+import { CareersPage } from "./pages/CareersPage.tsx";
+import { AudienceHubPage } from "./pages/AudienceHubPage.tsx";
+import { IslamicInvestingPage } from "./pages/IslamicInvestingPage.tsx";
+import { ContactPage } from "./pages/ContactPage.tsx";
+import { ConfirmSubscriptionPage } from "./pages/ConfirmSubscriptionPage.tsx";
+import { LegalPage } from "./pages/LegalPage.tsx";
+import { CalculatorsPage } from "./pages/CalculatorsPage.tsx";
+import { NotFoundPage } from "./pages/NotFoundPage.tsx";
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -72,8 +65,7 @@ export default function App() {
           <DraftBanner />
           <FloatingNewsWidget />
           <main id="main-content" className="flex-1 focus:outline-none pb-16 sm:pb-0" tabIndex={-1}>
-            <Suspense fallback={<PageFallback />}>
-              <Routes>
+            <Routes>
                 {/* English Canonical Routes */}
                 <Route path="/" element={<HomePage />} />
                 <Route path="/how-i-help" element={<HowIHelpPage />} />
@@ -199,7 +191,6 @@ export default function App() {
                 {/* Catch-all 404 */}
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
-            </Suspense>
           </main>
           <Footer />
           <MobileBookingBar />

@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { Tbc } from "../components/Tbc.tsx";
 import { siteConfig } from "../config/site.ts";
-import { AlertCircle, CheckCircle2, Info, Calendar, ArrowUpRight, MessageCircle, Clock, MailCheck, ShieldCheck } from "lucide-react";
+import { AlertCircle, CheckCircle2, Info, Calendar, ArrowUpRight, MessageCircle, Clock, MailCheck, ShieldCheck, Phone } from "lucide-react";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
 
 const PROVINCES_AND_TERRITORIES = [
   "Alberta",
@@ -55,6 +56,7 @@ export const ContactPage: React.FC = () => {
   const [consentPrivacy, setConsentPrivacy] = useState(false);
   const [consentEducational, setConsentEducational] = useState(false);
   const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error" | "not_configured">("idle");
@@ -161,6 +163,7 @@ export const ContactPage: React.FC = () => {
           consentPrivacy,
           consentEducational,
           honeypot: sanitizeInput(honeypot),
+          turnstileToken,
           formLoadedAt,
         }),
       });
@@ -293,7 +296,7 @@ export const ContactPage: React.FC = () => {
                   <div>
                     <strong className="text-[#1c1b18] block mb-0.5">Clarity-First Next Steps</strong>
                     <span>
-                      You receive a thoughtful response. If appropriate, Ahmed will invite you to an exploratory 25-minute conversation or refer you to an external specialist (e.g. CPA, LIT). You decide if you want to proceed.
+                      You receive a thoughtful response. If appropriate, Ahmed will invite you to an exploratory 30-minute conversation or refer you to an external specialist (e.g. CPA, LIT). You decide if you want to proceed.
                     </span>
                   </div>
                 </li>
@@ -467,7 +470,7 @@ export const ContactPage: React.FC = () => {
                         className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center justify-center gap-1.5"
                       >
                         <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
-                        <span>Book 20 minutes on Calendly</span>
+                        <span>Book 30 minutes on Calendly</span>
                         <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
                       </a>
                     )}
@@ -546,13 +549,29 @@ export const ContactPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* Server Error Message */}
+                {/* Server Error Message with Direct Phone & Calendly Fallback */}
                 {status === "error" && errorMessage && (
                   <div
                     role="alert"
-                    className="p-4 bg-[#8f2a1d]/10 border border-[#8f2a1d] text-[#8f2a1d] rounded-[2px] text-xs font-medium"
+                    className="p-4 bg-[#8f2a1d]/10 border border-[#8f2a1d] text-[#8f2a1d] rounded-[2px] text-xs font-medium space-y-2.5"
                   >
-                    {errorMessage}
+                    <div className="flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0 text-[#8f2a1d] mt-0.5" />
+                      <p className="leading-relaxed">{errorMessage}</p>
+                    </div>
+                    <div className="pt-2 border-t border-[#8f2a1d]/20 text-[#1c1b18] flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
+                      <span className="font-semibold">Reach Ahmed directly:</span>
+                      <a href="tel:+15068994941" className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1">
+                        <Phone className="w-3 h-3" />
+                        <span>+1 (506) 899-4941</span>
+                      </a>
+                      <span>•</span>
+                      <a href="https://calendly.com/olabel/30min" target="_blank" rel="noopener noreferrer" className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        <span>Schedule 30-min call on Calendly</span>
+                        <ArrowUpRight className="w-3 h-3" />
+                      </a>
+                    </div>
                   </div>
                 )}
 
@@ -765,6 +784,9 @@ export const ContactPage: React.FC = () => {
                     </label>
                   </div>
                 </div>
+
+                {/* Cloudflare Turnstile Bot Check */}
+                <TurnstileWidget onVerify={(token) => setTurnstileToken(token)} className="pt-1" />
 
                 {/* Submit Button */}
                 <div className="pt-4 border-t border-[#d6cebd]">

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, AlertCircle, RefreshCw } from "lucide-react";
+import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, AlertCircle, RefreshCw, Phone } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
 
 interface CalculatorLeadCaptureProps {
@@ -160,10 +160,29 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           {errorMsg && (
             <div
               role="alert"
-              className="p-3 bg-[#fdf0ed] border border-[#d97768] text-[#8a3324] text-xs rounded-[2px] flex items-start gap-2 animate-fadeIn"
+              className="p-3.5 bg-[#fdf0ed] border border-[#d97768] text-[#8a3324] text-xs rounded-[2px] space-y-2 animate-fadeIn"
             >
-              <AlertCircle className="w-4 h-4 text-[#8a3324] shrink-0 mt-0.5" />
-              <div className="leading-relaxed font-medium">{errorMsg}</div>
+              <div className="flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 text-[#8a3324] shrink-0 mt-0.5" />
+                <div className="leading-relaxed font-medium">{errorMsg}</div>
+              </div>
+              <div className="pt-2 border-t border-[#d97768]/30 flex flex-wrap items-center gap-2.5 text-[#1c1b18] text-xs">
+                <span className="font-semibold">{isFr ? "Contact direct :" : "Direct Contact:"}</span>
+                <a href="tel:+15068994941" className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1">
+                  <Phone className="w-3 h-3" />
+                  <span>+1 (506) 899-4941</span>
+                </a>
+                <span>•</span>
+                <a
+                  href="https://calendly.com/olabel/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1"
+                >
+                  <Calendar className="w-3 h-3" />
+                  <span>{isFr ? "Réserver 30 min sur Calendly" : "Schedule 30 min on Calendly"}</span>
+                </a>
+              </div>
             </div>
           )}
 

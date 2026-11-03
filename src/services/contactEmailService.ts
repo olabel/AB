@@ -4,6 +4,9 @@
 
 import fs from "fs";
 import path from "path";
+import { saveLeadToDatabase, recordEmailDeliveryStatus } from "./dbService.ts";
+
+export const DEFAULT_NOTIFICATION_RECIPIENTS = "olabel@gmail.com, abello24trdc@wfgmail.ca";
 
 export const VALID_PROVINCES = [
   "Alberta",
@@ -72,11 +75,8 @@ export function recordLeadSubmission(lead: Omit<StoredLead, "recordedAt">): void
     };
     existing.push(record);
     fs.writeFileSync(TMP_LEADS_FILE, JSON.stringify(existing, null, 2), "utf-8");
-    console.log(
-      `[LEAD CAPTURED] Topic: ${lead.topic} | Name: ${lead.name} | Email: ${lead.email} | Saved Total: ${existing.length}`
-    );
   } catch (err) {
-    console.warn("Could not save lead to /tmp/ahmed_leads.json:", err);
+    console.warn("Could not save lead to backup leads file:", err);
   }
 }
 
@@ -272,6 +272,9 @@ export interface ContactServiceResult {
     notice?: string;
     code?: string;
     errors?: Record<string, string>;
+    referenceNo?: string;
+    phone?: string;
+    calendly?: string;
     recorded?: boolean;
     queued?: boolean;
   };
@@ -281,7 +284,7 @@ export async function processContactSubmission(
   rawBody: any,
   clientIp: string,
   resendApiKey: string | undefined,
-  contactToEmail: string = "enquiries@ahmedbello.com",
+  contactToEmail: string = DEFAULT_NOTIFICATION_RECIPIENTS,
   contactFromEmail: string = "Ahmed Bello <enquiries@ahmedbello.com>"
 ): Promise<ContactServiceResult> {
   // 1. IP Rate Limiting
@@ -393,7 +396,27 @@ export async function processContactSubmission(
     };
   }
 
-  // 5.5 Durably persist lead to disk immediately (survives cold starts, environment restarts & Resend downtime)
+  // 5.5 Save each lead to a real database FIRST before attempting email dispatch
+  let dbRecord: { id: string; referenceNo: string } | null = null;
+  try {
+    dbRecord = saveLeadToDatabase({
+      topic,
+      firstName,
+      email,
+      phone,
+      province,
+      message,
+      consentPrivacy,
+      consentEducational,
+      ip: clientIp,
+    });
+    // Compliant logging: Log ONLY reference number (no PII: no names, no email addresses)
+    console.log(`[LEAD SAVED TO DB] Ref: #${dbRecord.referenceNo} | Topic: ${topic} | Stored in SQLite.`);
+  } catch (dbErr: any) {
+    console.error(`[DB ERROR] Database write failed:`, dbErr?.message || dbErr);
+  }
+
+  // Backup file persistence
   recordLeadSubmission({
     topic,
     name: firstName,
@@ -405,19 +428,41 @@ export async function processContactSubmission(
     ip: clientIp,
   });
 
-  // 6. If no Resend API key is present in environment, safely queue and return success
+  // 6. If no Resend API key is present in environment, record alert in DB and handle outcome
   if (!resendApiKey) {
-    console.log(`[LEAD QUEUED OFFLINE] (No RESEND_API_KEY) Topic: ${topic} | ${firstName} <${email}>`);
+    if (dbRecord) {
+      recordEmailDeliveryStatus({
+        leadId: dbRecord.id,
+        referenceNo: dbRecord.referenceNo,
+        status: "offline_saved",
+        errorMessage: "RESEND_API_KEY unconfigured; lead safely preserved in SQLite database",
+        recipients: "olabel@gmail.com, abello24trdc@wfgmail.ca",
+      });
+      console.warn(`[EMAIL ALERT] Ref: #${dbRecord.referenceNo} | Email unconfigured. Lead preserved in SQLite database.`);
+      return {
+        status: 200,
+        body: {
+          success: true,
+          referenceNo: dbRecord.referenceNo,
+          message: isNewsletter
+            ? "Subscription request received. Please check your inbox for confirmation."
+            : isCalculator
+            ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
+            : "Enquiry sent successfully. I will follow up shortly.",
+          recorded: true,
+        },
+      };
+    }
+
+    // Both database and email failed!
     return {
-      status: 200,
+      status: 500,
       body: {
-        success: true,
-        message: isNewsletter
-          ? "Subscription request received. Please check your inbox for confirmation."
-          : isCalculator
-          ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
-          : "Enquiry sent successfully. I will follow up shortly.",
-        recorded: true,
+        error: "submission_failed",
+        message:
+          "Your message could not be saved right now. Please reach out directly to Ahmed Bello by phone at +1-506-899-4941 or schedule a conversation via Calendly.",
+        phone: "+1-506-899-4941",
+        calendly: "https://calendly.com/olabel/30min",
       },
     };
   }
@@ -456,12 +501,22 @@ Submitted: ${new Date().toISOString()}
 Origin: https://www.ahmedbello.com
   `.trim();
 
-  const rawRecipients = contactToEmail
+  const rawRecipientsList = contactToEmail
     .split(/[,;\s]+/)
     .map((e) => e.trim())
     .filter((e) => e.includes("@"));
 
-  const primaryRecipient = rawRecipients[0] || "enquiries@ahmedbello.com";
+  // Ensure both designated advisor inboxes are always targeted
+  if (!rawRecipientsList.includes("olabel@gmail.com")) {
+    rawRecipientsList.push("olabel@gmail.com");
+  }
+  if (!rawRecipientsList.includes("abello24trdc@wfgmail.ca")) {
+    rawRecipientsList.push("abello24trdc@wfgmail.ca");
+  }
+  const rawRecipients = Array.from(new Set(rawRecipientsList));
+  const allRecipientsString = rawRecipients.join(", ");
+
+  const primaryRecipient = rawRecipients[0] || "olabel@gmail.com";
 
   try {
     let resendResponse = await fetch("https://api.resend.com/emails", {
@@ -496,6 +551,30 @@ Origin: https://www.ahmedbello.com
       });
     }
 
+    if (resendResponse.ok) {
+      if (dbRecord) {
+        recordEmailDeliveryStatus({
+          leadId: dbRecord.id,
+          referenceNo: dbRecord.referenceNo,
+          status: "delivered",
+          recipients: allRecipientsString,
+        });
+      }
+    } else {
+      if (dbRecord) {
+        recordEmailDeliveryStatus({
+          leadId: dbRecord.id,
+          referenceNo: dbRecord.referenceNo,
+          status: "failed",
+          errorMessage: `Resend API returned HTTP ${resendResponse.status}`,
+          recipients: allRecipientsString,
+        });
+        console.warn(
+          `[EMAIL ALERT] Ref: #${dbRecord.referenceNo} | Resend dispatch failed (HTTP ${resendResponse.status}) to [${allRecipientsString}]. Alert logged to database.`
+        );
+      }
+    }
+
     // 8. Automatic Visitor Receipt / Confirmation with Anti-Abuse Rate Limiting
     const canSendReceipt = shouldSendReceiptToEmail(email);
     if (canSendReceipt && resendResponse.ok) {
@@ -504,7 +583,6 @@ Origin: https://www.ahmedbello.com
         let confirmationBody: string;
 
         if (isNewsletter) {
-          // Double opt-in / verification receipt to prevent third-party spamming
           confirmationSubject = "Confirm your subscription: Canadian Financial Education | Ahmed Bello";
           confirmationBody = `Hello ${firstName},
 
@@ -545,7 +623,6 @@ Licensed Financial Solutions Professional
 Moncton, New Brunswick, Canada
 https://www.ahmedbello.com`;
         } else {
-          // Standard enquiry receipt - Strictly single-practitioner wording ("I", not "we" or "our team")
           confirmationSubject = "Confirmation: I received your enquiry | Ahmed Bello";
           confirmationBody = `Hello ${firstName},
 
@@ -582,8 +659,23 @@ https://www.ahmedbello.com`;
           }),
         });
       } catch {
-        // Non-blocking: Primary enquiry was already delivered to advisor
+        // Non-blocking: Primary enquiry was already handled
       }
+    }
+
+    if (dbRecord) {
+      return {
+        status: 200,
+        body: {
+          success: true,
+          referenceNo: dbRecord.referenceNo,
+          message: isNewsletter
+            ? "Subscription request received. Please check your inbox for confirmation."
+            : isCalculator
+            ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
+            : "Enquiry sent successfully. I will follow up shortly.",
+        },
+      };
     }
 
     return {
@@ -592,23 +684,45 @@ https://www.ahmedbello.com`;
         success: true,
         message: isNewsletter
           ? "Subscription request received. Please check your inbox for confirmation."
-          : isCalculator
-          ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
           : "Enquiry sent successfully. I will follow up shortly.",
       },
     };
-  } catch {
-    // If network to Resend failed, lead is already safely stored in /tmp/ahmed_leads.json
+  } catch (err: any) {
+    if (dbRecord) {
+      recordEmailDeliveryStatus({
+        leadId: dbRecord.id,
+        referenceNo: dbRecord.referenceNo,
+        status: "failed",
+        errorMessage: err?.message || "Network exception during email dispatch",
+        recipients: contactToEmail,
+      });
+      console.warn(
+        `[EMAIL ALERT] Ref: #${dbRecord.referenceNo} | Dispatch exception. Lead safely preserved in SQLite database.`
+      );
+      return {
+        status: 200,
+        body: {
+          success: true,
+          referenceNo: dbRecord.referenceNo,
+          message: isNewsletter
+            ? "Subscription request received. Please check your inbox for confirmation."
+            : isCalculator
+            ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
+            : "Enquiry sent successfully. I will follow up shortly.",
+          recorded: true,
+        },
+      };
+    }
+
+    // Both database and email failed!
     return {
-      status: 200,
+      status: 500,
       body: {
-        success: true,
-        message: isNewsletter
-          ? "Subscription request received. Please check your inbox for confirmation."
-          : isCalculator
-          ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
-          : "Enquiry sent successfully. I will follow up shortly.",
-        recorded: true,
+        error: "submission_failed",
+        message:
+          "Your message could not be sent right now. Please reach out directly to Ahmed Bello by phone at +1-506-899-4941 or schedule a conversation via Calendly.",
+        phone: "+1-506-899-4941",
+        calendly: "https://calendly.com/olabel/30min",
       },
     };
   }

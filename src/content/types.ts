@@ -43,6 +43,7 @@ export interface Article {
   invitationAbout: string;
   url: string;
   readingMinutes: number;
+  heldForReview?: boolean;
 }
 
 export interface Category {

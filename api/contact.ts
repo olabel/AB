@@ -21,27 +21,40 @@ export default async function handler(req: any, res: any) {
     return res.status(405).json({ error: "Method not allowed. Use POST." });
   }
 
-  // Origin / Referer validation against cross-site exploitation
+  // Origin / Referer validation against cross-site exploitation: exact hostnames only
   const origin = req.headers["origin"] as string | undefined;
-  if (origin) {
-    const isAllowedOrigin =
-      origin === "null" ||
-      origin === "" ||
-      origin.includes("ahmedbello.com") ||
-      origin.includes("localhost") ||
-      origin.includes("127.0.0.1") ||
-      origin.includes(".aistudio-preview.net") ||
-      origin.includes(".run.app") ||
-      origin.includes(".vercel.app") ||
-      origin.includes("googleusercontent.com") ||
-      origin.includes("aistudio.google.com") ||
-      origin.includes("google.com");
-    if (!isAllowedOrigin) {
+  if (origin && origin !== "null" && origin !== "") {
+    let isAllowed = false;
+    try {
+      const parsed = new URL(origin);
+      const host = parsed.hostname.toLowerCase();
+      if (
+        host === "ahmedbello.com" ||
+        host === "www.ahmedbello.com" ||
+        host === "localhost" ||
+        host === "127.0.0.1" ||
+        host === "0.0.0.0" ||
+        host === "ais-dev-jx5oov2nruxlj6dgff7nn2-332126510101.us-east1.run.app" ||
+        host === "ais-pre-jx5oov2nruxlj6dgff7nn2-332126510101.us-east1.run.app" ||
+        host === "aistudio.google.com" ||
+        host.endsWith(".aistudio-preview.net") ||
+        host.endsWith(".googleusercontent.com") ||
+        host.endsWith(".run.app") ||
+        host.endsWith(".vercel.app")
+      ) {
+        isAllowed = true;
+      }
+    } catch {
+      isAllowed = false;
+    }
+
+    if (!isAllowed) {
       return res.status(403).json({
         error: "forbidden",
         message: "Cross-origin submission rejected.",
       });
     }
+
     if (res.setHeader) {
       res.setHeader("Access-Control-Allow-Origin", origin);
       res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -66,7 +79,7 @@ export default async function handler(req: any, res: any) {
 
   // Environment variables from Vercel Project Settings
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "enquiries@ahmedbello.com";
+  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "olabel@gmail.com, abello24trdc@wfgmail.ca";
   const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || "Ahmed Bello <enquiries@ahmedbello.com>";
 
   const result = await processContactSubmission(

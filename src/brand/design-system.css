@@ -2,6 +2,31 @@
    Warm ivory ground, near-black ink, forest accent, restrained brass.
 */
 
+/* Self-hosted local fonts for instant first paint and zero CLS */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/instrument-serif-v5-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/instrument-serif-v5-latin-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-v20-latin-regular.woff2') format('woff2');
+}
+
 :root {
   --color-ivory: #f7f3eb;
   --color-paper: #fcfaf5;

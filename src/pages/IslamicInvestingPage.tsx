@@ -24,7 +24,9 @@ import {
   ExternalLink,
   Percent,
   Check,
+  Phone,
 } from "lucide-react";
+import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
 
 const CANADIAN_PROVINCES = [
   "Alberta",
@@ -68,6 +70,7 @@ export const IslamicInvestingPage: React.FC = () => {
     consentEducational: false,
     honeypot: "",
   });
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [formLoadedAt] = useState<number>(() => Date.now());
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -158,6 +161,7 @@ Notes: ${formData.notes || "None"}`,
           consentPrivacy: formData.consentPrivacy,
           consentEducational: formData.consentEducational,
           honeypot: formData.honeypot,
+          turnstileToken,
           formLoadedAt,
         }),
       });
@@ -801,8 +805,20 @@ Notes: ${formData.notes || "None"}`,
                 />
 
                 {formError && (
-                  <div className="p-3 bg-[#8a2b1d]/20 border border-[#8a2b1d] rounded-xs text-xs text-[#f7c5be]">
-                    {formError}
+                  <div className="p-4 bg-[#8a2b1d]/30 border border-[#8a2b1d] rounded-xs text-xs text-[#f7c5be] space-y-2">
+                    <p className="font-medium">{formError}</p>
+                    <div className="pt-2 border-t border-[#8a2b1d]/40 flex flex-wrap items-center gap-3 text-xs text-[#ece6da]">
+                      <span>{isFr ? "Contactez Ahmed directement :" : "Contact Ahmed directly:"}</span>
+                      <a href="tel:+15068994941" className="underline font-semibold text-[#d6c298] inline-flex items-center gap-1">
+                        <Phone className="w-3 h-3" />
+                        <span>+1 (506) 899-4941</span>
+                      </a>
+                      <span>•</span>
+                      <a href="https://calendly.com/olabel/30min" target="_blank" rel="noopener noreferrer" className="underline font-semibold text-[#d6c298] inline-flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        <span>{isFr ? "Réserver 30 min sur Calendly" : "Schedule 30 min on Calendly"}</span>
+                      </a>
+                    </div>
                   </div>
                 )}
 
@@ -1008,6 +1024,11 @@ Notes: ${formData.notes || "None"}`,
                         : "I agree to receive occasional plain-language educational updates on Canadian tax rules (CASL compliant, unsubscribe at any time)."}
                     </span>
                   </label>
+                </div>
+
+                {/* Cloudflare Turnstile Bot Check */}
+                <div className="pt-1">
+                  <TurnstileWidget onVerify={(token) => setTurnstileToken(token)} />
                 </div>
 
                 <div className="pt-2">
