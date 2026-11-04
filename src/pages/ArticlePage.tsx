@@ -18,6 +18,8 @@ const TOPIC_LABELS: Record<string, { en: string; fr: string }> = {
   mentorship: { en: "Independent Practice Mentorship", fr: "Mentorat de pratique indépendante" },
   general: { en: "General Financial Education", fr: "Éducation financière générale" },
   education: { en: "Financial Decision Frameworks", fr: "Cadres de décision financière" },
+  debt: { en: "Debt Strategy & Balance Sheet Restructuring", fr: "Stratégie d'endettement & restructuration de passif" },
+  mortgage: { en: "Mortgage Qualification & Amortization Strategy", fr: "Qualification hypothécaire & stratégie d'amortissement" },
 };
 
 import { NotFoundPage } from "./NotFoundPage.tsx";
