@@ -36,11 +36,13 @@ export default async function handler(req: any, res: any) {
         host === "0.0.0.0" ||
         host === "ais-dev-jx5oov2nruxlj6dgff7nn2-332126510101.us-east1.run.app" ||
         host === "ais-pre-jx5oov2nruxlj6dgff7nn2-332126510101.us-east1.run.app" ||
-        host === "aistudio.google.com" ||
         host.endsWith(".aistudio-preview.net") ||
         host.endsWith(".googleusercontent.com") ||
+        host.endsWith(".google.com") ||
         host.endsWith(".run.app") ||
-        host.endsWith(".vercel.app")
+        host.endsWith(".vercel.app") ||
+        host.endsWith(".web.app") ||
+        host.endsWith(".firebaseapp.com")
       ) {
         isAllowed = true;
       }

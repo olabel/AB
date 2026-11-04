@@ -319,10 +319,10 @@ export async function processContactSubmission(
     };
   }
 
-  // 4. Minimum fill time check (2 seconds)
+  // 4. Minimum fill time check (allow fast browser autofill, drop sub-800ms scripts)
   if (formLoadedAt && !isNaN(formLoadedAt)) {
     const elapsed = Date.now() - formLoadedAt;
-    if (elapsed < 2000) {
+    if (elapsed < 800) {
       return {
         status: 400,
         body: {

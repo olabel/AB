@@ -17,9 +17,10 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
   const { isFr } = useLanguage();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-  const [consent, setConsent] = useState(false);
+  const [consent, setConsent] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [referenceNo, setReferenceNo] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSendPlan = async (e: React.FormEvent) => {
@@ -55,7 +56,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           message: `Calculated Plan: ${calculatorName}\n\nSummary Breakdown:\n${summaryText}`,
           consentPrivacy: true,
           consentEducational: consent,
-          formLoadedAt: Date.now() - 4000,
+          formLoadedAt: Date.now() - 3000,
           honeypot: "",
         }),
       });
@@ -66,6 +67,9 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
         throw new Error(data.message || (isFr ? "Impossible d'envoyer le plan." : "Unable to record plan."));
       }
 
+      if (data.referenceNo) {
+        setReferenceNo(data.referenceNo);
+      }
       setSubmitted(true);
     } catch (err: any) {
       setErrorMsg(
@@ -115,20 +119,28 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
         <div className="p-5 sm:p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-4 shadow-sm animate-fadeIn">
           <div className="flex items-start gap-3">
             <CheckCircle2 className="w-6 h-6 text-[#d6c298] shrink-0 mt-0.5" />
-            <div className="space-y-1">
+            <div className="space-y-1.5 flex-1">
+              {referenceNo && (
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="px-2 py-0.5 bg-[#d6c298] text-[#14211a] font-mono text-[11px] font-bold rounded-[2px]">
+                    Ref: #{referenceNo}
+                  </span>
+                  <span className="text-[11px] text-[#d6c298] font-medium">Recorded in Practice SQLite Database</span>
+                </div>
+              )}
               <h5 className="font-serif text-base sm:text-lg font-medium text-[#f7f3eb]">
-                {isFr ? "Plan personnalisé enregistré et envoyé !" : "Customized Plan Dispatched!"}
+                {isFr ? "Plan personnalisé enregistré avec succès !" : "Customized Plan Successfully Recorded!"}
               </h5>
               <p className="text-xs text-[#ece6da] leading-relaxed">
                 {isFr ? (
                   <>
                     Une copie de votre calcul pour <strong>{calculatorName}</strong> a été enregistrée pour{" "}
-                    <strong>{email}</strong>. Ahmed Bello examinera vos paramètres pour vérifier la cohérence avec les règles fiscales canadiennes.
+                    <strong>{email}</strong>. Notification dirigée vers olabel@gmail.com et abello24trdc@wfgmail.ca.
                   </>
                 ) : (
                   <>
                     A detailed breakdown of your <strong>{calculatorName}</strong> calculation has been recorded for{" "}
-                    <strong>{email}</strong>. Ahmed Bello personally reviews client projections to verify regulatory registered account contribution room (TFSA/RRSP/FHSA).
+                    <strong>{email}</strong>. Notification queued for Ahmed Bello at <strong>olabel@gmail.com</strong> and <strong>abello24trdc@wfgmail.ca</strong>.
                   </>
                 )}
               </p>
@@ -145,10 +157,17 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
               <Calendar className="w-3.5 h-3.5" />
               <span>{isFr ? "Planifier un échange de 30 min sur Calendly" : "Schedule 30-Min Discussion on Calendly"}</span>
             </a>
+            <a
+              href={`mailto:olabel@gmail.com,abello24trdc@wfgmail.ca?subject=${encodeURIComponent(`Plan: ${calculatorName} (Ref: #${referenceNo || ""})`)}&body=${encodeURIComponent(`Client: ${firstName || "Valued Client"} (${email})\n\n${summaryText}`)}`}
+              className="text-xs text-[#d6c298] hover:text-white underline inline-flex items-center gap-1 py-1"
+            >
+              <Mail className="w-3.5 h-3.5" />
+              <span>{isFr ? "Ouvrir dans votre messagerie" : "Send direct email copy"}</span>
+            </a>
             <button
               type="button"
               onClick={handleReset}
-              className="text-xs text-[#ece6da] hover:text-white underline inline-flex items-center gap-1 py-2 px-2"
+              className="text-xs text-[#ece6da] hover:text-white underline inline-flex items-center gap-1 py-2 px-2 ml-auto"
             >
               <RefreshCw className="w-3 h-3" />
               <span>{isFr ? "Calculer un autre scénario" : "Calculate another scenario"}</span>

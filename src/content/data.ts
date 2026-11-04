@@ -2504,6 +2504,295 @@ const rawArticles: Article[] = [
   "invitationAbout": "designing a multi-year RESP tax-free withdrawal plan for your children",
   "url": "/education/resp-withdrawal-strategy-eap-pse-grant-clawback",
   "readingMinutes": 9
+},
+{
+  "slug": "prescribed-rate-loans-spousal-income-splitting",
+  "kind": "guide",
+  "title": "Prescribed Rate Loans: Familial Income Splitting Under Subsection 74.1(1)",
+  "seoTitle": "Prescribed Rate Loans in Canada | CRA Attribution Rules & Spousal Loans",
+  "description": "An educational guide to Canadian attribution rules, spousal loans under Subsection 74.5(2), CRA prescribed interest rate mechanics, and the mandatory January 30 annual payment deadline.",
+  "question": "How can married Canadian couples legally shift taxable investment returns to the lower-earning spouse without triggering CRA attribution penalties?",
+  "category": "investing",
+  "figuresAsOf": "Q1 2026",
+  "problem": "Directly gifting investment capital to a lower-earning spouse triggers Canada's anti-avoidance attribution rules, causing all interest, dividends, and capital gains to be taxed back to the higher earner at top marginal brackets.",
+  "overview": [
+    "Under Subsections 74.1(1) and 74.2(1) of the Income Tax Act (ITA), when an individual transfers or lends property directly or indirectly to a spouse or common-law partner, any income or capital gain generated from that property is attributed back to the transferor and taxed at the transferor's marginal tax rate. This statutory rule exists specifically to prevent high-income earners from arbitrarily shifting passive investment returns to lower-income household members.",
+    "Subsection 74.5(2) of the ITA establishes an explicit statutory safe harbor: the attribution rules do not apply if the property is transferred via a bona fide loan that charges interest at a rate at least equal to the CRA prescribed rate in effect at the time the loan was entered into.",
+    "The critical statutory advantage of a prescribed rate loan is that the interest rate is locked in for the life of the loan. Even if future CRA prescribed rates rise to 5 or 6 percent, a loan executed when the prescribed rate was lower remains locked at its original promissory rate indefinitely.",
+    "However, the administrative compliance burden under Section 74.5 is unforgiving: interest on the loan for each calendar year must be paid on or before January 30 of the following year. If this payment deadline is missed by even a single day, the loan permanently loses its safe-harbor status, and all income attributes back to the lender for that year and every subsequent year for the remainder of the loan's life."
+  ],
+  "example": {
+    "title": "Comparative Tax Efficiency: $500,000 Portfolio with 53.5% vs 20.0% Marginal Tax Spouses",
+    "intro": "Consider a household where Spouse A is in the highest combined federal and provincial tax bracket (53.5% on regular income, 39.3% on eligible Canadian dividends), while Spouse B has little income and sits in the lowest marginal bracket (20.05% on regular income, -0.03% effective dividend rate after dividend tax credit). Spouse A lends $500,000 to Spouse B via a documented promissory note at a 3.0% CRA prescribed rate ($15,000 annual interest). Spouse B invests the entire $500,000 in a diversified balanced portfolio generating an average annual return of 6.0% ($30,000 total return).",
+    "table": {
+      "head": [
+        "Financial Metric",
+        "Direct Holding by Spouse A (No Loan)",
+        "Prescribed Rate Loan to Spouse B",
+        "Annual Household Advantage"
+      ],
+      "rows": [
+        [
+          "Total Gross Annual Investment Return (6.0%)",
+          "$30,000",
+          "$30,000",
+          "$0"
+        ],
+        [
+          "Annual Prescribed Loan Interest (3.0%)",
+          "$0 (Not applicable)",
+          "$15,000 paid to Spouse A",
+          "Inter-spousal cash transfer"
+        ],
+        [
+          "Taxable Income in Spouse A's Hands",
+          "$30,000 (Taxed at 53.5%)",
+          "$15,000 interest income (Taxed at 53.5%)",
+          "-$15,000 taxable base"
+        ],
+        [
+          "Tax Paid by Spouse A",
+          "$16,050",
+          "$8,025",
+          "Spouse A pays $8,025 less tax"
+        ],
+        [
+          "Taxable Income in Spouse B's Hands",
+          "$0",
+          "$30,000 return - $15,000 interest deduction = $15,000 net",
+          "$15,000 taxed at low rate"
+        ],
+        [
+          "Tax Paid by Spouse B (20.05% marginal rate)",
+          "$0",
+          "$3,008",
+          "Spouse B pays $3,008"
+        ],
+        [
+          "Total Household Tax Burden",
+          "$16,050",
+          "$11,033 ($8,025 + $3,008)",
+          "$5,017 net annual cash tax saved"
+        ],
+        [
+          "10-Year Cumulative Household Tax Savings",
+          "$0",
+          "$50,170 + compound growth",
+          "Substantial capital retention"
+        ]
+      ]
+    },
+    "notes": [
+      "Spouse B is legally entitled to deduct the $15,000 interest payment on Line 22100 (Carrying charges and interest expenses) of their T1 return under Paragraph 20(1)(c) of the ITA, because the borrowed funds were used to produce taxable investment income.",
+      "Spouse A includes the $15,000 interest received as taxable income on Line 12100 (Interest and other investment income).",
+      "The net tax savings equals the rate differential between the spouses (53.5% - 20.05% = 33.45%) multiplied by the net profit earned above the prescribed interest rate ($15,000 x 33.45% = $5,017.50)."
+    ],
+    "conclusion": "By establishing a formal prescribed rate loan, the household legally diverts half of the portfolio's taxable income to the lower bracket, saving more than $5,000 every single year while remaining in strict compliance with CRA rules."
+  },
+  "misunderstandings": [
+    {
+      "myth": "You can execute a prescribed rate loan retroactively at the end of the tax year once you see how well the portfolio performed.",
+      "reality": "The CRA requires the loan and promissory note to be executed, and the funds actually transferred, before the investment income is generated. Retroactive agreements constitute tax evasion and are immediately invalidated upon audit."
+    },
+    {
+      "myth": "The annual interest payment can be satisfied with a promissory note or added to the principal balance.",
+      "reality": "Under Subsection 74.5(2), interest must be physically paid in cash or property. Capitalizing the interest (adding it to the loan balance) violates the statutory requirement and irrevocably voids the exemption."
+    },
+    {
+      "myth": "If you forget the January 30 deadline, you can pay a late fee or penalty to CRA to restore the loan.",
+      "reality": "There is zero statutory discretion or relief provision for a missed January 30 interest payment. Missing the deadline by even 24 hours causes attribution to apply for that calendar year and every subsequent year."
+    },
+    {
+      "myth": "Prescribed rate loans only work with cash, not in-kind transfers of existing equities.",
+      "reality": "You can transfer securities in-kind, but the transfer is treated as a deemed disposition at fair market value under Section 69, triggering capital gains in the transferor's hands on the date of transfer."
+    }
+  ],
+  "tradeoffs": [
+    "If investment returns in a given year fall below the prescribed interest rate, Spouse B must still pay the full prescribed interest to Spouse A, resulting in negative tax arbitrage.",
+    "Establishing the structure requires legal documentation (written promissory note with clear repayment terms) and separate bank/investment accounts to avoid commingling funds.",
+    "Spouse B must make the interest payment from their own independent funds (such as employment earnings, investment proceeds, or personal savings), not with money gifted from Spouse A.",
+    "Tracking interest deductions on Line 22100 and declaring interest income on Line 12100 requires meticulous annual tax filing and maintaining proof of payment for CRA review."
+  ],
+  "questions": [
+    "What is the current CRA prescribed interest rate under Regulation 4301 for the current quarter?",
+    "What is the exact marginal tax bracket differential between spouses in our province of residence?",
+    "Does the receiving spouse have an independent chequing account with sufficient liquidity to service the annual interest payment before January 30?",
+    "Have we prepared a formal written promissory note signed by both parties specifying loan principal, interest rate, and demand terms?",
+    "Are the investments generating enough predictable cash yield or growth to comfortably exceed the borrowing rate?"
+  ],
+  "sources": [
+    {
+      "label": "Canada Revenue Agency - Income Tax Folio S1-F5-C1: Related Persons and Dealing at Arm's Length",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-1-individuals/folio-5-transfer-income-property-rights-third-parties/income-tax-folio-s1-f5-c1-related-persons-dealing-at-arm-s-length.html",
+      "note": "Official CRA guidance on spousal attribution rules and Section 74.1 interpretation."
+    },
+    {
+      "label": "Income Tax Act - Subsection 74.5(2): Rules Relating to Spousal Transfers and Prescribed Loans",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-74.5.html",
+      "note": "Statutory exemption criteria, arm's-length interest requirements, and January 30 deadline."
+    },
+    {
+      "label": "Income Tax Regulations - Regulation 4301: Prescribed Rates of Interest",
+      "url": "https://laws-lois.justice.gc.ca/eng/regulations/C.R.C.,_c._945/section-4301.html",
+      "note": "Quarterly calculation formula based on 90-day Treasury Bill yields."
+    }
+  ],
+  "related": [
+    "canadian-ccpc-passive-income-grind-sbd-tax-trap",
+    "tfsa-vs-rrsp",
+    "savings-or-debt-first"
+  ],
+  "contactTopic": "prescribed-rate-loans",
+  "invitationAbout": "evaluating whether a prescribed rate loan makes sense for your household tax bracket split",
+  "url": "/education/prescribed-rate-loans-spousal-income-splitting",
+  "readingMinutes": 10
+},
+{
+  "slug": "oas-clawback-mitigation-threshold-canadian-retirees",
+  "kind": "guide",
+  "title": "OAS Recovery Tax: Threshold Mechanics & Clawback Mitigation Strategies",
+  "seoTitle": "OAS Clawback Thresholds & Mitigation Strategies in Canada",
+  "description": "An educational breakdown of the Old Age Security (OAS) recovery tax under Section 180.2 of the Income Tax Act, net world income calculations, deferral math, and pension income splitting.",
+  "question": "At what income level does the CRA claw back your Old Age Security pension, and how can retirees structure their withdrawals to preserve benefits?",
+  "category": "retirement",
+  "figuresAsOf": "2025/2026",
+  "problem": "Retirees who experience large mandatory RRIF minimums, capital gains, or non-registered dividend gross-ups inadvertently cross CRA's Net World Income threshold, losing 15 cents of OAS pension for every dollar earned above the ceiling.",
+  "overview": [
+    "The Old Age Security (OAS) recovery tax, colloquially known as the OAS clawback, is an additional tax levied under Part I.2 (Section 180.2) of the Income Tax Act. If a Canadian retiree's Net World Income (Line 23600 of the T1 personal return) exceeds the annual threshold—$90,997 for the 2024 tax year and $93,208 for the 2025 tax year—they must repay 15 percent of every dollar of income above the threshold, up to the full amount of OAS received.",
+    "Crucially, the clawback calculation is based strictly on individual Net World Income (Line 23600), not household income. A couple with $180,000 of evenly split income ($90,000 each) pays zero OAS recovery tax, whereas a couple where one spouse earns $150,000 and the other earns $30,000 experiences a near-total loss of the higher earner's OAS pension.",
+    "A widespread trap for retirees is the taxable gross-up on eligible Canadian dividends. For income tax calculation purposes, the CRA requires Canadian eligible dividends to be grossed up by 38 percent on Line 12000, which enters Line 23600. Even though the dividend tax credit reduces actual income tax payable on Line 42000, Line 23600 reflects the grossed-up figure, artificially accelerating OAS recovery tax.",
+    "Strategic mitigation relies on four non-speculative structural levers: pension income splitting under Section 60.03, voluntary deferral of OAS under Subsection 5(7.1) of the Old Age Security Act (delaying up to age 70 for a permanent 36 percent increase), tactical RRSP meltdown drawdowns between ages 60 and 71 before OAS begins, and utilizing TFSA withdrawals (which generate zero taxable income on Line 23600)."
+  ],
+  "example": {
+    "title": "Case Study: Restructuring Retirement Cash Flows for a $1.2M Household",
+    "intro": "Consider a retired 68-year-old couple (Pat and Morgan) in New Brunswick. Pat has a $700,000 RRIF and a $300,000 non-registered equity portfolio yielding 4% eligible dividends ($12,000 actual dividends). Morgan has a small $200,000 RRSP and receives modest CPP. Before tax optimization, Pat withdraws $95,000 from the RRIF to cover household lifestyle and mortgages, plus receives $16,560 of grossed-up dividends ($12,000 x 1.38) and $12,000 in CPP, pushing Pat's Line 23600 income to $123,560—well above the $93,208 threshold.",
+    "table": {
+      "head": [
+        "Income Component",
+        "Unplanned Drawdown (Pat Alone)",
+        "Structured Drawdown (Pension Splitting & TFSA)",
+        "OAS Recovery Impact"
+      ],
+      "rows": [
+        [
+          "Pat's RRIF Withdrawal",
+          "$95,000 (all reported on Pat's T1)",
+          "$55,000 ($27,500 split to Morgan under Sec 60.03)",
+          "Transfers $27,500 to low-income spouse"
+        ],
+        [
+          "Eligible Dividend Gross-Up (Line 23600)",
+          "$16,560 ($12,000 cash x 1.38)",
+          "$0 (reallocated to corporate or TFSA/balanced)",
+          "Eliminates phantom gross-up drag"
+        ],
+        [
+          "Pat's CPP Pension Income",
+          "$12,000",
+          "$12,000 (CPP pension sharing applied if eligible)",
+          "Shared pension base"
+        ],
+        [
+          "TFSA Capital Withdrawal",
+          "$0",
+          "$20,000 tax-free cash for living expenses",
+          "$0 entered on Line 23600"
+        ],
+        [
+          "Pat's Final Line 23600 Net World Income",
+          "$123,560",
+          "$67,000 (Well below the $93,208 threshold)",
+          "Under threshold by $26,208"
+        ],
+        [
+          "Excess Above $93,208 Threshold",
+          "$30,352 ($123,560 - $93,208)",
+          "$0",
+          "Zero excess"
+        ],
+        [
+          "Annual OAS Recovery Tax (15% of excess)",
+          "$4,552.80 clawed back from OAS pension",
+          "$0 clawback (100% of OAS pension retained)",
+          "Full OAS pension preserved"
+        ],
+        [
+          "Morgan's Net World Income Post-Split",
+          "$18,000 (CPP + small RRSP)",
+          "$45,500 ($18k + $27.5k split RRIF)",
+          "Morgan remains far below threshold"
+        ]
+      ]
+    },
+    "notes": [
+      "Under Section 60.03 of the ITA, eligible pension income (including RRIF and LIF payments after age 65) can be split up to 50 percent with a spouse, directly reducing the transferor's Line 23600 income and shifting it to the transferee's Line 11500.",
+      "Because Morgan's post-split income is $45,500, Morgan stays more than $47,000 below the OAS clawback threshold while also enjoying the $2,000 Pension Income Tax Credit.",
+      "By substituting $20,000 of taxable RRIF withdrawals with $20,000 of accumulated TFSA savings, Pat maintains the exact same $107,000 gross lifestyle cash flow while completely eliminating the $4,552 annual penalty."
+    ],
+    "conclusion": "Through pension income splitting, non-registered dividend reallocation, and strategic TFSA timing, the couple completely eliminated a $4,550+ annual penalty, preserving 100 percent of their Old Age Security benefits."
+  },
+  "misunderstandings": [
+    {
+      "myth": "The OAS clawback is based on household or family income, like the Canada Child Benefit.",
+      "reality": "The OAS recovery tax is strictly based on individual Net World Income on Line 23600. Even if your spouse earns zero income, you cannot pool or average income unless you execute eligible pension splitting under Section 60.03."
+    },
+    {
+      "myth": "Withdrawing money from a TFSA counts towards the OAS income threshold.",
+      "reality": "TFSA withdrawals are 100 percent exempt from income tax and do not appear anywhere on Line 23600. They have zero impact on OAS clawback or GIS eligibility."
+    },
+    {
+      "myth": "You can never recover OAS that is clawed back.",
+      "reality": "The recovery tax is calculated annually. If a high income spike in one year was caused by the one-time sale of a property, OAS recovery tax applies only to that year. You can file CRA Form T1213(OAS) to request reduced recovery tax withholdings for the following year."
+    },
+    {
+      "myth": "Eligible Canadian dividends are great for seniors because of the dividend tax credit.",
+      "reality": "While the dividend tax credit lowers net federal tax, the 38 percent statutory gross-up artificially inflates Line 23600 Net World Income, often triggering an unexpected 15 percent OAS clawback that wipes out the tax credit benefit."
+    }
+  ],
+  "tradeoffs": [
+    "Delaying OAS to age 70 increases your monthly benefit by 36% (0.6% per month), but requires sufficient non-OAS liquidity to fund your lifestyle between ages 65 and 70.",
+    "Melting down RRSPs between ages 60 and 65 reduces future mandatory RRIF minimums, but requires paying personal income taxes upfront during those early retirement years.",
+    "Splitting pension income requires both spouses to file Form T1032 annually with their T1 tax returns and agree on the election percentage.",
+    "Holding eligible dividend stocks in non-registered accounts requires careful modeling of the 38% gross-up impact against your margin of safety below Line 23600."
+  ],
+  "questions": [
+    "What was your exact Net World Income on Line 23600 on your most recent Notice of Assessment?",
+    "Are you currently receiving eligible pension income (RRIF, LIF, defined benefit pension) that qualifies for 50 percent spousal splitting under Section 60.03?",
+    "Have we calculated what your mandatory RRIF minimum annual withdrawal will be at age 72 based on CRA schedule factors?",
+    "Do your non-registered investment accounts hold Canadian equities that generate a 38 percent dividend gross-up on Line 12000?",
+    "Would deferring your OAS pension until age 70 protect your benefit while you draw down taxable RRSP balances at lower marginal rates?"
+  ],
+  "sources": [
+    {
+      "label": "Canada Revenue Agency - Old Age Security Recovery Tax (Line 23500 & Line 42200)",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-23500-social-benefits-repayment.html",
+      "note": "Official calculation rules, Line 23600 thresholds, and recovery tax worksheets."
+    },
+    {
+      "label": "Employment and Social Development Canada - Old Age Security Payment Amounts and Clawback Thresholds",
+      "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/old-age-security/recovery-tax.html",
+      "note": "Published annual threshold amounts and recovery periods."
+    },
+    {
+      "label": "Income Tax Act - Section 180.2: Tax on OAS Benefits (Part I.2 Tax)",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-180.2.html",
+      "note": "Statutory 15 percent recovery tax formula and definition of excess base."
+    },
+    {
+      "label": "Income Tax Act - Section 60.03: Joint Pension Splitting Rules",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-60.03.html",
+      "note": "Statutory authority for transferring up to 50% of eligible pension income between spouses."
+    }
+  ],
+  "related": [
+    "cpp-oas-start-age",
+    "tfsa-vs-rrsp",
+    "canadian-mortgage-renewal-shock-liquidity-trap"
+  ],
+  "contactTopic": "oas-clawback-planning",
+  "invitationAbout": "designing an integrated retirement drawdown schedule to protect your OAS and minimize Line 23600 tax drag",
+  "url": "/education/oas-clawback-mitigation-threshold-canadian-retirees",
+  "readingMinutes": 11
 }
 ];
 

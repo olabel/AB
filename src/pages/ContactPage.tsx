@@ -57,6 +57,7 @@ export const ContactPage: React.FC = () => {
   const [consentEducational, setConsentEducational] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [referenceNo, setReferenceNo] = useState<string | null>(null);
 
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error" | "not_configured">("idle");
@@ -143,6 +144,7 @@ export const ContactPage: React.FC = () => {
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       setStatus("error");
+      setErrorMessage("Please complete all required fields highlighted below before submitting.");
       return;
     }
 
@@ -193,6 +195,9 @@ export const ContactPage: React.FC = () => {
       }
 
       // Success
+      if (data.referenceNo) {
+        setReferenceNo(data.referenceNo);
+      }
       setStatus("success");
     } catch {
       setStatus("error");
@@ -410,10 +415,22 @@ export const ContactPage: React.FC = () => {
                   </div>
                 </div>
 
+                {referenceNo && (
+                  <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] flex items-center justify-between text-xs">
+                    <div>
+                      <span className="text-[#625d52] block text-[11px]">Database Confirmation Reference:</span>
+                      <span className="font-mono font-bold text-sm text-[#2e4a3b]">#{referenceNo}</span>
+                    </div>
+                    <span className="px-2 py-1 bg-[#2e4a3b] text-[#f7f3eb] text-[10px] uppercase font-bold rounded-[2px]">
+                      Saved to SQLite
+                    </span>
+                  </div>
+                )}
+
                 <div className="p-3.5 bg-[#2e4a3b]/5 border border-[#2e4a3b]/20 rounded-[2px] flex items-start gap-3">
                   <MailCheck className="w-5 h-5 text-[#2e4a3b] shrink-0 mt-0.5" />
                   <p className="text-xs sm:text-sm text-[#1c1b18] leading-relaxed">
-                    An automatic confirmation receipt has been sent to <strong>{email}</strong>. Please check your inbox (and spam folder if needed).
+                    Your enquiry has been securely saved. Notifications routed directly to Ahmed Bello at <strong>olabel@gmail.com</strong> and <strong>abello24trdc@wfgmail.ca</strong>.
                   </p>
                 </div>
 
@@ -475,13 +492,11 @@ export const ContactPage: React.FC = () => {
                       </a>
                     )}
                     <a
-                      href="https://wa.me/15068994941?text=Hello%20Ahmed,%20I%20have%20submitted%20a%20question%20on%20your%20website"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2.5 text-xs font-semibold text-white bg-[#25D366] hover:bg-[#20ba59] rounded-[2px] transition-colors inline-flex items-center justify-center gap-1.5 shadow-xs"
+                      href={`mailto:olabel@gmail.com,abello24trdc@wfgmail.ca?subject=${encodeURIComponent(`Enquiry from ${firstName} (#${referenceNo || ""})`)}&body=${encodeURIComponent(`Name: ${firstName}\nEmail: ${email}\nPhone: ${phone}\nProvince: ${province}\nTopic: ${topic}\n\nMessage:\n${message}`)}`}
+                      className="px-4 py-2.5 text-xs font-semibold text-[#14211a] bg-[#d6c298] hover:bg-white border border-[#2e4a3b]/30 rounded-[2px] transition-colors inline-flex items-center justify-center gap-1.5 shadow-xs"
                     >
-                      <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
-                      <span>Chat on WhatsApp (+1 506 899-4941)</span>
+                      <MailCheck className="w-3.5 h-3.5 text-[#2e4a3b]" />
+                      <span>Send Direct Email Copy</span>
                     </a>
                   </div>
                 </div>

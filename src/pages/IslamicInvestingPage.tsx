@@ -71,6 +71,7 @@ export const IslamicInvestingPage: React.FC = () => {
     honeypot: "",
   });
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [referenceNo, setReferenceNo] = useState<string | null>(null);
   const [formLoadedAt] = useState<number>(() => Date.now());
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -177,6 +178,9 @@ Notes: ${formData.notes || "None"}`,
         );
       }
 
+      if (data.referenceNo) {
+        setReferenceNo(data.referenceNo);
+      }
       setFormSubmitted(true);
     } catch (err: any) {
       setFormError(err.message || (isFr ? "Une erreur inattendue est survenue." : "An unexpected error occurred."));
@@ -772,13 +776,19 @@ Notes: ${formData.notes || "None"}`,
                 <h3 className="font-serif text-xl font-bold text-[#f7f3eb]">
                   {isFr ? "Votre demande a été bien reçue" : "Your Consultation Request is Confirmed"}
                 </h3>
+                {referenceNo && (
+                  <div className="p-2 bg-[#14211a] border border-[#d6c298]/40 rounded-xs inline-flex items-center gap-2">
+                    <span className="text-[11px] text-[#ece6da]">Reference:</span>
+                    <span className="font-mono font-bold text-xs text-[#d6c298]">#{referenceNo}</span>
+                  </div>
+                )}
                 <p className="text-xs sm:text-sm text-[#ece6da]/90 leading-relaxed max-w-md mx-auto">
                   {isFr
-                    ? "Merci pour votre démarche. Ahmed Bello prendra contact avec vous sous 24 heures pour échanger sur vos objectifs et vous présenter les options disponibles auprès des institutions canadiennes agréées."
-                    : "Thank you for reaching out. Ahmed Bello will review your situation and follow up within 24 business hours to discuss your objectives and explain available institutional solutions."}
+                    ? "Merci pour votre démarche. Votre demande est enregistrée. Une notification a été dirigée vers olabel@gmail.com et abello24trdc@wfgmail.ca. Ahmed Bello prendra contact avec vous sous 24 heures ouvrables."
+                    : "Thank you for reaching out. Your request is safely recorded in our practice database. Notification routed to olabel@gmail.com and abello24trdc@wfgmail.ca. Ahmed Bello will review your situation and follow up directly."}
                 </p>
-                {siteConfig.schedulingUrl && (
-                  <div className="pt-2">
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  {siteConfig.schedulingUrl && (
                     <a
                       href={siteConfig.schedulingUrl}
                       target="_blank"
@@ -788,8 +798,14 @@ Notes: ${formData.notes || "None"}`,
                       <span>{isFr ? "Réserver une session de 30 min sur Calendly" : "Schedule 30-Min Call on Calendly"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </a>
-                  </div>
-                )}
+                  )}
+                  <a
+                    href={`mailto:olabel@gmail.com,abello24trdc@wfgmail.ca?subject=${encodeURIComponent(`Islamic Investing Consultation (#${referenceNo || ""})`)}&body=${encodeURIComponent(`Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nProvince: ${formData.province}\nCity: ${formData.city}\nAccount: ${formData.accountType}\nAmount: ${formData.estimatedAmount}\nNotes: ${formData.notes}`)}`}
+                    className="text-xs text-[#d6c298] hover:underline py-2"
+                  >
+                    {isFr ? "Envoyer également par courriel direct" : "Send direct email copy"}
+                  </a>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleFormSubmit} className="space-y-4">

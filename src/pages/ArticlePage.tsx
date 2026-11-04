@@ -25,6 +25,7 @@ import { NotFoundPage } from "./NotFoundPage.tsx";
 export const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { isFr, t } = useLanguage();
+  const prefix = isFr ? "/fr" : "";
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -511,7 +512,7 @@ export const ArticlePage: React.FC = () => {
                 {isFr
                   ? "Chaque chiffre et règle cités dans cet article proviennent directement des organismes canadiens officiels. Consultez nos "
                   : "Every figure and rule cited in this article is drawn directly from official Canadian authorities. Read our full "}
-                <Link to="/standards" className="underline text-[#2e4a3b]">
+                <Link to={`${prefix}/standards`} className="underline text-[#2e4a3b]">
                   {isFr ? "normes éditoriales" : "editorial standards"}
                 </Link>
                 .
@@ -540,12 +541,12 @@ export const ArticlePage: React.FC = () => {
 
             {/* 8. Educational Disclaimer */}
             <div className="p-4 bg-[#ece6da]/50 border-l-2 border-[#8d8677] text-xs text-[#46423a] leading-relaxed">
-              <strong>Educational content, not advice.</strong> This guide offers general financial education.
-              It is not personalized financial, tax, legal, or investment advice, and is not an offer or
-              solicitation to buy or sell any product. Rules and limits change; confirm current details with official
-              sources and a qualified professional before acting.{" "}
-              <Link to="/disclosures" className="underline text-[#2e4a3b]">
-                Read full disclosures
+              <strong>{isFr ? "Contenu éducatif, pas un conseil." : "Educational content, not advice."}</strong>{" "}
+              {isFr
+                ? "Ce guide propose une formation financière générale. Il ne constitue pas un conseil financier, fiscal, juridique ou d'investissement personnalisé, ni une offre d'achat ou de vente d'un produit quelconque. Les règles et plafonds évoluent ; confirmez les données actuelles auprès des autorités officielles et d'un professionnel qualifié avant d'agir."
+                : "This guide offers general financial education. It is not personalized financial, tax, legal, or investment advice, and is not an offer or solicitation to buy or sell any product. Rules and limits change; confirm current details with official sources and a qualified professional before acting."}{" "}
+              <Link to={`${prefix}/disclosures`} className="underline text-[#2e4a3b]">
+                {isFr ? "Lire les divulgations complètes" : "Read full disclosures"}
               </Link>
               .
             </div>
@@ -589,7 +590,7 @@ export const ArticlePage: React.FC = () => {
 
                 <div className="flex items-center gap-2.5 w-full sm:w-auto shrink-0">
                   <Link
-                    to={`/contact?topic=${article.contactTopic}`}
+                    to={`${prefix}/contact?topic=${article.contactTopic}`}
                     className="btn btn-primary text-xs py-2.5 px-5 text-center whitespace-nowrap inline-flex items-center justify-center gap-1.5 w-full sm:w-auto"
                   >
                     <span>{isFr ? "Poser ma question à Ahmed" : "Ask Ahmed about this"}</span>
@@ -610,7 +611,7 @@ export const ArticlePage: React.FC = () => {
                     return (
                       <Link
                         key={rel.slug}
-                        to={rel.url}
+                        to={`${prefix}${rel.url}`}
                         className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all flex flex-col justify-between group"
                       >
                         <div>

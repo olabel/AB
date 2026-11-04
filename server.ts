@@ -280,8 +280,11 @@ function isOriginAuthorized(origin?: string): boolean {
     if (
       host.endsWith(".aistudio-preview.net") ||
       host.endsWith(".googleusercontent.com") ||
+      host.endsWith(".google.com") ||
       host.endsWith(".run.app") ||
-      host.endsWith(".vercel.app")
+      host.endsWith(".vercel.app") ||
+      host.endsWith(".web.app") ||
+      host.endsWith(".firebaseapp.com")
     ) {
       return true;
     }

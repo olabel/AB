@@ -96,22 +96,27 @@ export const EducationLibraryPage: React.FC = () => {
       {/* Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-5">
-          <span className="eyebrow text-xs">Financial education library</span>
+          <span className="eyebrow text-xs">
+            {language === "fr" ? "Bibliothèque d'éducation financière" : "Financial education library"}
+          </span>
           <h1 className="h1 text-[#1c1b18] leading-tight">
-            Understand the rules before you choose the account.
+            {language === "fr"
+              ? "Comprendre les règles avant de choisir le compte."
+              : "Understand the rules before you choose the account."}
           </h1>
           <p className="lede text-lg md:text-xl text-[#46423a] leading-relaxed">
-            Plain-language explanations of how Canadian money rules actually work, with the trade-offs,
-            the common misunderstandings and a link to the official source every time.
+            {language === "fr"
+              ? "Des explications claires et directes sur le fonctionnement réel des règles financières canadiennes, avec les arbitrages, les erreurs courantes et un lien officiel systématique."
+              : "Plain-language explanations of how Canadian money rules actually work, with the trade-offs, the common misunderstandings and a link to the official source every time."}
           </p>
 
           <div className="p-4 bg-[#ece6da]/60 border-l-2 border-[#8d8677] text-xs text-[#46423a] leading-relaxed">
-            <strong>Educational content, not advice.</strong> This page offers general financial education. It is not
-            personalized financial, tax, legal or investment advice, and it is not an offer or solicitation to buy or
-            sell any product. Your circumstances are different, rules and limits change, and examples use hypothetical
-            figures. Confirm current details with the sources listed and with a qualified professional before acting.{" "}
-            <Link to="/disclosures" className="underline text-[#2e4a3b]">
-              Read the full disclosures →
+            <strong>{language === "fr" ? "Contenu éducatif, pas un conseil." : "Educational content, not advice."}</strong>{" "}
+            {language === "fr"
+              ? "Cette page propose une formation financière générale. Elle ne constitue pas un conseil financier, fiscal, juridique ou d'investissement personnalisé, ni une offre d'achat ou de vente d'un produit quelconque. Vos circonstances sont uniques, les règles et plafonds évoluent, et les exemples utilisent des chiffres hypothétiques. Vérifiez les informations actuelles auprès des sources officielles et d'un professionnel qualifié avant d'agir."
+              : "This page offers general financial education. It is not personalized financial, tax, legal or investment advice, and it is not an offer or solicitation to buy or sell any product. Your circumstances are different, rules and limits change, and examples use hypothetical figures. Confirm current details with the sources listed and with a qualified professional before acting."}{" "}
+            <Link to={`${prefix}/disclosures`} className="underline text-[#2e4a3b]">
+              {language === "fr" ? "Lire les divulgations complètes →" : "Read the full disclosures →"}
             </Link>
           </div>
         </div>
@@ -271,14 +276,18 @@ export const EducationLibraryPage: React.FC = () => {
               type="text"
               value={query}
               onChange={(e) => handleSearchChange(e.target.value)}
-              placeholder="Search by topic, account, or question (e.g., TFSA, debt, pension)..."
+              placeholder={
+                language === "fr"
+                  ? "Rechercher par sujet, compte ou question (ex. CELI, REER, dette, pension)..."
+                  : "Search by topic, account, or question (e.g., TFSA, debt, pension)..."
+              }
               className="field pl-10 pr-9 text-sm w-full bg-white"
             />
             {query && (
               <button
                 type="button"
                 onClick={() => handleSearchChange("")}
-                aria-label="Clear search query"
+                aria-label={language === "fr" ? "Effacer la recherche" : "Clear search query"}
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#625d52] hover:text-[#1c1b18]"
               >
                 <X className="w-4 h-4" />
@@ -289,9 +298,9 @@ export const EducationLibraryPage: React.FC = () => {
           {/* Category Filter Buttons */}
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-[#75581f] mb-2.5">
-              Filter by topic:
+              {language === "fr" ? "Filtrer par sujet :" : "Filter by topic:"}
             </div>
-            <div className="flex flex-wrap gap-2" role="group" aria-label="Filter guides by topic">
+            <div className="flex flex-wrap gap-2" role="group" aria-label={language === "fr" ? "Filtrer les guides" : "Filter guides by topic"}>
               <button
                 type="button"
                 onClick={() => handleCategorySelect("all")}
@@ -302,7 +311,7 @@ export const EducationLibraryPage: React.FC = () => {
                     : "bg-[#f7f3eb] text-[#1c1b18] border-[#d6cebd] hover:border-[#8d8677]"
                 }`}
               >
-                All topics ({categoryCounts.all})
+                {language === "fr" ? "Tous les sujets" : "All topics"} ({categoryCounts.all})
               </button>
               {categories.map((cat) => {
                 const count = categoryCounts[cat.id] || 0;
@@ -331,8 +340,10 @@ export const EducationLibraryPage: React.FC = () => {
           {/* Results count */}
           <div className="flex items-center justify-between text-xs text-[#625d52] pt-2">
             <span>
-              Showing {filteredArticles.length} {filteredArticles.length === 1 ? "article" : "articles"}
-              {query && ` matching “${query}”`}
+              {language === "fr"
+                ? `Affichage de ${filteredArticles.length} guide${filteredArticles.length > 1 ? "s" : ""}`
+                : `Showing ${filteredArticles.length} ${filteredArticles.length === 1 ? "article" : "articles"}`}
+              {query && (language === "fr" ? ` correspondant à « ${query} »` : ` matching “${query}”`)}
             </span>
             {(query || selectedCategory !== "all") && (
               <button
@@ -342,7 +353,7 @@ export const EducationLibraryPage: React.FC = () => {
                 }}
                 className="underline text-[#2e4a3b] hover:text-[#1c1b18]"
               >
-                Reset filters
+                {language === "fr" ? "Réinitialiser les filtres" : "Reset filters"}
               </button>
             )}
           </div>
@@ -354,16 +365,20 @@ export const EducationLibraryPage: React.FC = () => {
         <div className="wrap max-w-5xl">
           {filteredArticles.length === 0 ? (
             <div className="p-12 text-center bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4">
-              <h3 className="h3 text-[#1c1b18]">No articles found</h3>
+              <h3 className="h3 text-[#1c1b18]">
+                {language === "fr" ? "Aucun article trouvé" : "No articles found"}
+              </h3>
               <p className="text-sm text-[#625d52] max-w-md mx-auto">
-                No guides matched your search criteria. Try a different search term or clear the filter.
+                {language === "fr"
+                  ? "Aucun guide ne correspond à vos critères de recherche. Essayez un autre terme ou réinitialisez le filtre."
+                  : "No guides matched your search criteria. Try a different search term or clear the filter."}
               </p>
               <button
                 type="button"
                 onClick={() => setSearchParams({})}
                 className="btn btn-primary text-xs py-2 px-4"
               >
-                Show all articles
+                {language === "fr" ? "Afficher tous les articles" : "Show all articles"}
               </button>
             </div>
           ) : (
@@ -381,11 +396,13 @@ export const EducationLibraryPage: React.FC = () => {
                           {cat?.label || art.category}
                         </span>
                         <span>/</span>
-                        <span>{art.readingMinutes} min read</span>
+                        <span>
+                          {art.readingMinutes} {language === "fr" ? "min de lecture" : "min read"}
+                        </span>
                       </div>
 
                       <h3 className="h3 text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
-                        <Link to={art.url}>{art.title}</Link>
+                        <Link to={`${prefix}${art.url}`}>{art.title}</Link>
                       </h3>
 
                       <p className="text-sm text-[#46423a] leading-relaxed">
@@ -393,20 +410,20 @@ export const EducationLibraryPage: React.FC = () => {
                       </p>
 
                       <div className="p-3 bg-[#f7f3eb] border-l-2 border-[#8d8677] text-xs text-[#46423a] italic">
-                        <strong>The question:</strong> {art.question}
+                        <strong>{language === "fr" ? "La question :" : "The question:"}</strong> {art.question}
                       </div>
                     </div>
 
                     <div className="pt-6 border-t border-[#ece6da] mt-6 flex items-center justify-between">
                       <Link
-                        to={art.url}
+                        to={`${prefix}${art.url}`}
                         className="text-xs font-semibold text-[#2e4a3b] flex items-center gap-1 group-hover:underline"
                       >
-                        <span>Read the article</span>
+                        <span>{language === "fr" ? "Lire l'article" : "Read the article"}</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                       </Link>
                       <span className="text-xs text-[#625d52]">
-                        {art.sources.length} sources
+                        {art.sources.length} {language === "fr" ? "sources officielles" : "sources"}
                       </span>
                     </div>
                   </article>
@@ -427,23 +444,43 @@ export const EducationLibraryPage: React.FC = () => {
       {/* How these guides are written */}
       <section className="section py-16 bg-[#fcfaf5] border-y border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-6">
-          <h2 className="h2 text-[#1c1b18]">How these guides are written</h2>
+          <h2 className="h2 text-[#1c1b18]">
+            {language === "fr" ? "Comment ces guides sont rédigés" : "How these guides are written"}
+          </h2>
           <ul className="space-y-3 prose-editorial text-sm md:text-base text-[#46423a]">
             <li>
-              Each one answers a single question, then explains the concept, a hypothetical example, common misunderstandings and the trade-offs.
+              {language === "fr"
+                ? "Chaque guide répond à une question unique, puis en détaille le cadre légal, un exemple chiffré réaliste, les erreurs courantes et les arbitrages."
+                : "Each one answers a single question, then explains the concept, a hypothetical example, common misunderstandings and the trade-offs."}
             </li>
             <li>
-              Figures come from the Canada Revenue Agency and other official sources, are dated, and are linked so you can check them.
+              {language === "fr"
+                ? "Tous les montants et plafonds proviennent de l'Agence du revenu du Canada et de sources officielles, sont datés et comportent des liens directs vérifiables."
+                : "Figures come from the Canada Revenue Agency and other official sources, are dated, and are linked so you can check them."}
             </li>
             <li>
-              Examples use hypothetical numbers and are labelled as such. Nothing here is a prediction or a promise.
+              {language === "fr"
+                ? "Les exemples utilisent des chiffres hypothétiques à vocation purement pédagogique. Rien ici ne constitue une prévision ou une promesse de rendement."
+                : "Examples use hypothetical numbers and are labelled as such. Nothing here is a prediction or a promise."}
             </li>
             <li>
-              Read the full{" "}
-              <Link to="/standards" className="underline text-[#2e4a3b]">
-                editorial standards
-              </Link>
-              , or tell me if a guide is missing the answer to your question. It may become the next one.
+              {language === "fr" ? (
+                <>
+                  Consultez nos{" "}
+                  <Link to={`${prefix}/standards`} className="underline text-[#2e4a3b]">
+                    normes éditoriales complètes
+                  </Link>
+                  , ou transmettez-moi votre question si un sujet manque à l'appel.
+                </>
+              ) : (
+                <>
+                  Read the full{" "}
+                  <Link to={`${prefix}/standards`} className="underline text-[#2e4a3b]">
+                    editorial standards
+                  </Link>
+                  , or tell me if a guide is missing the answer to your question. It may become the next one.
+                </>
+              )}
             </li>
           </ul>
         </div>
@@ -452,17 +489,21 @@ export const EducationLibraryPage: React.FC = () => {
       {/* Didn't find your question? CTA */}
       <section className="section py-20 text-center">
         <div className="wrap max-w-3xl space-y-6">
-          <h2 className="h2 text-[#1c1b18]">Didn’t find your question?</h2>
+          <h2 className="h2 text-[#1c1b18]">
+            {language === "fr" ? "Vous n'avez pas trouvé votre question ?" : "Didn’t find your question?"}
+          </h2>
           <p className="lede text-base md:text-lg text-[#46423a] max-w-xl mx-auto">
-            Tell me what you are trying to understand. Your question may become the next guide, and I can point you to the right source or professional.
+            {language === "fr"
+              ? "Dites-moi ce que vous essayez de comprendre. Votre question pourrait faire l'objet du prochain guide, et je pourrai vous orienter vers la bonne ressource statutaire."
+              : "Tell me what you are trying to understand. Your question may become the next guide, and I can point you to the right source or professional."}
           </p>
           <div className="pt-2 flex justify-center">
-            <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
-              Start a Conversation →
+            <Link to={`${prefix}/contact`} className="btn btn-primary text-base px-8 py-3">
+              {language === "fr" ? "Démarrer une conversation →" : "Start a Conversation →"}
             </Link>
           </div>
           <p className="text-xs text-[#625d52]">
-            No obligation. No sales pressure.
+            {language === "fr" ? "Aucune obligation. Zéro pression commerciale." : "No obligation. No sales pressure."}
           </p>
         </div>
       </section>

@@ -8,6 +8,24 @@ import { useLanguage } from "../context/LanguageContext.tsx";
 
 export const AboutPage: React.FC = () => {
   const { isFr } = useLanguage();
+  const prefix = isFr ? "/fr" : "";
+
+  const approachParas = isFr
+    ? [
+        "L'éducation financière doit précéder le choix d'un produit. Trop de personnes souscrivent un régime d'épargne ou une police d'assurance sans comprendre exactement comment leurs dollars sont déployés, ni quels compromis elles acceptent en retour.",
+        "Mon rôle consiste à traduire le jargon financier et les règles statutaires canadiennes (règles de l'ARC, régimes CELI, REER, CELIAPP, structures de prévoyance) en choix concrets et quantifiables. Lorsque vous comprenez la mécanique sous-jacente, vous décidez avec assurance.",
+        "Je ne commence jamais par un argumentaire commercial ou une solution préfabriquée. Nous partons de vos objectifs, de votre bilan familial et de vos contraintes de trésorerie pour poser les vraies questions d'abord."
+      ]
+    : aboutData.approachDraft;
+
+  const questionsList = isFr
+    ? [
+        "Devrais-je prioriser le remboursement de mon hypothèque ou maximiser mon CELI / REER ?",
+        "Comment les retraits de mes différents comptes influenceront-ils la récupération de ma pension de la Sécurité de la vieillesse (SV) ?",
+        "Quelle est la différence concrète entre une assurance temporaire et une assurance permanente pour ma famille ?",
+        "Comment puis-je transférer mon REER ou CELI d'une institution à l'autre sans impact fiscal ?"
+      ]
+    : aboutData.questionsEnjoyed;
 
   return (
     <div className="py-12 md:py-16">
@@ -18,6 +36,7 @@ export const AboutPage: React.FC = () => {
             ? "Éducateur financier indépendant aidant les familles et particuliers au Canada à comprendre les régimes enregistrés (CELI, REER) et la prévoyance."
             : "Independent Canadian financial educator helping individuals and families understand registered accounts (TFSA, RRSP, FHSA), insurance, and money decisions."
         }
+        canonicalUrl={isFr ? "/fr/about" : "/about"}
       />
       {/* 1. Header & Portrait Frame */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
@@ -46,17 +65,18 @@ export const AboutPage: React.FC = () => {
 
             {/* Title & Headline */}
             <div className="md:col-span-7 space-y-4">
-              <span className="eyebrow text-xs">About Ahmed</span>
+              <span className="eyebrow text-xs">{isFr ? "À propos d'Ahmed" : "About Ahmed"}</span>
               <h1 className="h1 text-[#1c1b18] leading-tight">
-                I would rather you understand than agree.
+                {isFr ? "Je préfère que vous compreniez plutôt que vous approuviez d'emblée." : "I would rather you understand than agree."}
               </h1>
               <p className="lede text-lg md:text-xl text-[#46423a] leading-relaxed">
-                I’m Ahmed Bello. I help Canadians see how their income, savings, protection and goals connect,
-                so the decisions they make are their own and make sense to them.
+                {isFr
+                  ? "Je suis Ahmed Bello. J'aide les résidents et familles au Canada à comprendre comment s'articulent leurs revenus, leur épargne, leur protection et leurs objectifs, pour qu'ils prennent des décisions qui leur appartiennent et qui font du sens."
+                  : "I’m Ahmed Bello. I help Canadians see how their income, savings, protection and goals connect, so the decisions they make are their own and make sense to them."}
               </p>
               <div className="text-xs text-[#46423a] pt-1">
                 <span className="font-semibold text-[#1c1b18]">{siteConfig.designation}.</span>{" "}
-                <span>Independent Financial Practice in Canada.</span>
+                <span>{isFr ? "Pratique financière indépendante au Canada." : "Independent Financial Practice in Canada."}</span>
               </div>
             </div>
           </div>
@@ -67,34 +87,34 @@ export const AboutPage: React.FC = () => {
       <section className="py-10 bg-[#fcfaf5] border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-[#75581f] mb-6">
-            Professional details
+            {isFr ? "Détails professionnels" : "Professional details"}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-xs">
             <div className="p-4 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
-              <span className="text-[#625d52] block mb-1">Professional title</span>
+              <span className="text-[#625d52] block mb-1">{isFr ? "Titre professionnel" : "Professional title"}</span>
               <p className="font-semibold text-[#1c1b18] leading-snug">
                 {siteConfig.designation}
               </p>
             </div>
 
             <div className="p-4 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
-              <span className="text-[#625d52] block mb-1">Affiliation</span>
+              <span className="text-[#625d52] block mb-1">{isFr ? "Affiliation" : "Affiliation"}</span>
               <p className="text-[#1c1b18] leading-snug">
-                Independent Financial Practice.
+                {isFr ? "Pratique financière indépendante." : "Independent Financial Practice."}
               </p>
             </div>
 
             <div className="p-4 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
-              <span className="text-[#625d52] block mb-1">Licensed in</span>
+              <span className="text-[#625d52] block mb-1">{isFr ? "Permis provinciaux" : "Licensed in"}</span>
               <p className="text-[#1c1b18] leading-snug">
-                Licensed across Canadian provinces.
+                {isFr ? "Agréé dans les provinces canadiennes." : "Licensed across Canadian provinces."}
               </p>
             </div>
 
             <div className="p-4 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
-              <span className="text-[#625d52] block mb-1">Content standards</span>
-              <Link to="/standards" className="text-[#2e4a3b] underline font-medium block">
-                How content is sourced and reviewed →
+              <span className="text-[#625d52] block mb-1">{isFr ? "Normes éditoriales" : "Content standards"}</span>
+              <Link to={`${prefix}/standards`} className="text-[#2e4a3b] underline font-medium block">
+                {isFr ? "Sources et méthodologie →" : "How content is sourced and reviewed →"}
               </Link>
             </div>
           </div>
@@ -104,13 +124,13 @@ export const AboutPage: React.FC = () => {
       {/* 3. My Approach to Financial Education */}
       <section className="section py-16 border-b border-[#d6cebd]">
         <div className="wrap max-w-3xl space-y-6">
-          <span className="eyebrow text-xs">How I work</span>
+          <span className="eyebrow text-xs">{isFr ? "Ma démarche" : "How I work"}</span>
           <h2 className="h2 text-[#1c1b18]">
-            My approach to financial education
+            {isFr ? "Mon approche de l'éducation financière" : "My approach to financial education"}
           </h2>
 
           <div className="space-y-4 prose-editorial text-base md:text-lg text-[#46423a] leading-relaxed">
-            {aboutData.approachDraft.map((para, idx) => (
+            {approachParas.map((para, idx) => (
               <p key={`app-${idx}`}>{para}</p>
             ))}
           </div>
@@ -120,13 +140,13 @@ export const AboutPage: React.FC = () => {
       {/* 4. Questions I Enjoy */}
       <section className="section py-16 bg-[#fcfaf5] border-b border-[#d6cebd]">
         <div className="wrap max-w-3xl space-y-6">
-          <span className="eyebrow text-xs">Questions I enjoy</span>
+          <span className="eyebrow text-xs">{isFr ? "Questions privilégiées" : "Questions I enjoy"}</span>
           <h2 className="h2 text-[#1c1b18]">
-            The kinds of questions I like to help people understand
+            {isFr ? "Les types de questions que j'aime aider à éclaircir" : "The kinds of questions I like to help people understand"}
           </h2>
 
           <div className="space-y-3 pt-2">
-            {aboutData.questionsEnjoyed.map((q, idx) => (
+            {questionsList.map((q, idx) => (
               <div
                 key={`q-${idx}`}
                 className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] flex items-start gap-4"
@@ -143,24 +163,28 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. Background and Credentials (Placeholders) */}
+      {/* 5. Background and Credentials */}
       <section className="section py-16 border-b border-[#d6cebd]">
         <div className="wrap max-w-3xl space-y-8">
-          <span className="eyebrow text-xs">Background</span>
-          <h2 className="h2 text-[#1c1b18]">Background and credentials</h2>
+          <span className="eyebrow text-xs">{isFr ? "Parcours" : "Background"}</span>
+          <h2 className="h2 text-[#1c1b18]">{isFr ? "Parcours et compétences" : "Background and credentials"}</h2>
 
           <div className="space-y-6">
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
-              <h3 className="h3 text-[#1c1b18] text-xl">Professional background</h3>
+              <h3 className="h3 text-[#1c1b18] text-xl">{isFr ? "Parcours professionnel" : "Professional background"}</h3>
               <p className="text-xs text-[#46423a] leading-relaxed">
-                Dedicated to evidence-based financial education and transparent client guidance. Specializing in Canadian registered accounts, household risk management, and retirement income strategies.
+                {isFr
+                  ? "Dédié à l'éducation financière fondée sur les faits et à l'orientation transparente des ménages. Spécialisé dans les régimes enregistrés canadiens, la gestion des risques du bilan familial et les stratégies de revenu de retraite."
+                  : "Dedicated to evidence-based financial education and transparent client guidance. Specializing in Canadian registered accounts, household risk management, and retirement income strategies."}
               </p>
             </div>
 
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
-              <h3 className="h3 text-[#1c1b18] text-xl">Designations and licences</h3>
+              <h3 className="h3 text-[#1c1b18] text-xl">{isFr ? "Titres et agréments" : "Designations and licences"}</h3>
               <p className="text-xs text-[#46423a] leading-relaxed">
-                Licensed Financial Solutions Professional, regulated under Canadian provincial insurance and financial services authorities.
+                {isFr
+                  ? "Professionnel agréé en solutions financières, réglementé auprès des autorités provinciales canadiennes d'assurance et de services financiers."
+                  : "Licensed Financial Solutions Professional, regulated under Canadian provincial insurance and financial services authorities."}
               </p>
             </div>
           </div>
@@ -170,28 +194,30 @@ export const AboutPage: React.FC = () => {
       {/* 6. Transparency */}
       <section className="section py-16 bg-[#fcfaf5] border-b border-[#d6cebd]">
         <div className="wrap max-w-3xl space-y-6">
-          <span className="eyebrow text-xs">Transparency</span>
+          <span className="eyebrow text-xs">{isFr ? "Transparence" : "Transparency"}</span>
           <h2 className="h2 text-[#1c1b18]">
-            Who I work with, and what I can and can’t do
+            {isFr ? "Avec qui je travaille, et les limites de mon champ d'action" : "Who I work with, and what I can and can’t do"}
           </h2>
 
           <p className="text-base text-[#46423a] leading-relaxed">
-            I am an independent financial professional.
-            Being independent means I work with you to understand your goals, while clearly recognizing the boundaries of my scope:
-            I do not hold myself out as a fee-only fiduciary planner, discretionary portfolio manager, chartered accountant, or tax lawyer.
+            {isFr
+              ? "Je suis un professionnel financier indépendant. Être indépendant signifie que je travaille avec vous pour comprendre vos objectifs, tout en reconnaissant clairement les limites de mon champ d'action : je ne prétends pas être un planificateur fiduciaire à honoraires stricts, un gestionnaire discrétionnaire de portefeuille, un comptable professionnel agréé (CPA) ou un fiscaliste."
+              : "I am an independent financial professional. Being independent means I work with you to understand your goals, while clearly recognizing the boundaries of my scope: I do not hold myself out as a fee-only fiduciary planner, discretionary portfolio manager, chartered accountant, or tax lawyer."}
           </p>
 
           <p className="text-base text-[#46423a] leading-relaxed">
-            When a question belongs with another professional, I’ll say so. Read more in the{" "}
-            <Link to="/disclosures" className="underline text-[#2e4a3b]">
-              disclosures
+            {isFr
+              ? "Lorsqu'une question relève des compétences d'un autre spécialiste, je vous le signale expressément. Pour en savoir plus, consultez nos "
+              : "When a question belongs with another professional, I’ll say so. Read more in the "}
+            <Link to={`${prefix}/disclosures`} className="underline text-[#2e4a3b]">
+              {isFr ? "divulgations complètes" : "disclosures"}
             </Link>
             .
           </p>
 
           <div className="pt-2">
-            <Link to="/how-i-help" className="arrow-link text-sm">
-              See how I help →
+            <Link to={`${prefix}/how-i-help`} className="arrow-link text-sm">
+              {isFr ? "Découvrir comment j'aide →" : "See how I help →"}
             </Link>
           </div>
         </div>
@@ -201,14 +227,18 @@ export const AboutPage: React.FC = () => {
       <section className="section py-20 text-center">
         <div className="wrap max-w-3xl space-y-6">
           <h2 className="display text-[#1c1b18]">
-            A better financial decision often starts with a better question.
+            {isFr
+              ? "Une meilleure décision financière commence toujours par une meilleure question."
+              : "A better financial decision often starts with a better question."}
           </h2>
           <p className="lede text-base md:text-lg text-[#46423a] max-w-xl mx-auto">
-            If there is a financial decision you are trying to understand, let’s start with the question that matters most to you.
+            {isFr
+              ? "Si vous essayez de comprendre un enjeu financier, commençons par la question qui compte le plus pour vous."
+              : "If there is a financial decision you are trying to understand, let’s start with the question that matters most to you."}
           </p>
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
-              Start a Conversation →
+            <Link to={`${prefix}/contact`} className="btn btn-primary text-base px-8 py-3">
+              {isFr ? "Démarrer une conversation →" : "Start a Conversation →"}
             </Link>
             {siteConfig.schedulingUrl && (
               <a
@@ -217,13 +247,13 @@ export const AboutPage: React.FC = () => {
                 rel="noopener noreferrer"
                 className="btn btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
               >
-                <span>Book 30 Min on Calendly</span>
+                <span>{isFr ? "Réserver 30 min sur Calendly" : "Book 30 Min on Calendly"}</span>
                 <span aria-hidden="true">→</span>
               </a>
             )}
           </div>
           <p className="text-xs text-[#625d52]">
-            No obligation. No sales pressure.
+            {isFr ? "Aucune obligation. Zéro pression commerciale." : "No obligation. No sales pressure."}
           </p>
         </div>
       </section>

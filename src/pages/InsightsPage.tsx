@@ -23,6 +23,7 @@ type InsightCategoryFilter = "all" | "corporate-tax" | "mortgages-liquidity" | "
 export const InsightsPage: React.FC = () => {
   const { language } = useLanguage();
   const isFr = language === "fr";
+  const prefix = isFr ? "/fr" : "";
   const [selectedTheme, setSelectedTheme] = useState<InsightCategoryFilter>("all");
 
   // Core Analytical Essays
@@ -194,7 +195,7 @@ export const InsightsPage: React.FC = () => {
 
                     <h3 className="font-serif text-2xl text-[#1c1b18] leading-tight">
                       <Link
-                        to={ccpcEssay.url}
+                        to={`${prefix}${ccpcEssay.url}`}
                         className="hover:text-[#2e4a3b] transition-colors"
                       >
                         {ccpcEssay.title}
@@ -206,20 +207,20 @@ export const InsightsPage: React.FC = () => {
                     </p>
 
                     <div className="p-3 bg-[#fcfaf5] border-l-2 border-[#75581f] text-xs text-[#46423a] italic">
-                      <strong>The Problem:</strong> &ldquo;{ccpcEssay.problem}&rdquo;
+                      <strong>{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{ccpcEssay.problem}&rdquo;
                     </div>
                   </div>
 
                   <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between">
                     <Link
-                      to={ccpcEssay.url}
+                      to={`${prefix}${ccpcEssay.url}`}
                       className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center gap-1.5"
                     >
                       <span>{isFr ? "Lire l'analyse complète" : "Read Strategic Analysis"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                     <span className="text-[0.7rem] font-mono text-[#625d52]">
-                      Case Study: $1.8M Retained Capital
+                      {isFr ? "Étude de cas : 1,8 M$ de capital conservé" : "Case Study: $1.8M Retained Capital"}
                     </span>
                   </div>
                 </div>
@@ -244,7 +245,7 @@ export const InsightsPage: React.FC = () => {
 
                     <h3 className="font-serif text-2xl text-[#1c1b18] leading-tight">
                       <Link
-                        to={mortgageEssay.url}
+                        to={`${prefix}${mortgageEssay.url}`}
                         className="hover:text-[#2e4a3b] transition-colors"
                       >
                         {mortgageEssay.title}
@@ -256,20 +257,20 @@ export const InsightsPage: React.FC = () => {
                     </p>
 
                     <div className="p-3 bg-[#fcfaf5] border-l-2 border-[#2e4a3b] text-xs text-[#46423a] italic">
-                      <strong>The Problem:</strong> &ldquo;{mortgageEssay.problem}&rdquo;
+                      <strong>{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{mortgageEssay.problem}&rdquo;
                     </div>
                   </div>
 
                   <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between">
                     <Link
-                      to={mortgageEssay.url}
+                      to={`${prefix}${mortgageEssay.url}`}
                       className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center gap-1.5"
                     >
                       <span>{isFr ? "Lire l'analyse complète" : "Read Strategic Analysis"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                     <span className="text-[0.7rem] font-mono text-[#625d52]">
-                      Case Study: $60k Prepayment Trap
+                      {isFr ? "Étude de cas : Piège de remboursement anticipé de 60k$" : "Case Study: $60k Prepayment Trap"}
                     </span>
                   </div>
                 </div>
@@ -339,7 +340,7 @@ export const InsightsPage: React.FC = () => {
                     </div>
 
                     <h3 className="font-serif text-xl text-[#1c1b18] leading-snug">
-                      <Link to={essay.url} className="hover:text-[#2e4a3b] transition-colors">
+                      <Link to={`${prefix}${essay.url}`} className="hover:text-[#2e4a3b] transition-colors">
                         {essay.title}
                       </Link>
                     </h3>
@@ -349,12 +350,12 @@ export const InsightsPage: React.FC = () => {
                     </p>
 
                     <div className="p-3 bg-[#f7f3eb] border-l-2 border-[#8d8677] text-xs text-[#46423a] italic">
-                      <strong>The Question:</strong> {essay.question}
+                      <strong>{isFr ? "La question :" : "The Question:"}</strong> {essay.question}
                     </div>
                   </div>
 
                   <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between">
-                    <Link to={essay.url} className="arrow-link text-xs font-semibold">
+                    <Link to={`${prefix}${essay.url}`} className="arrow-link text-xs font-semibold">
                       {isFr ? "Lire l'essai complet →" : "Read the essay →"}
                     </Link>
                     <span className="text-[0.7rem] text-[#625d52] inline-flex items-center gap-1">
@@ -390,7 +391,7 @@ export const InsightsPage: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
-              to="/for/healthcare"
+              to={`${prefix}/for/healthcare`}
               className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between"
             >
               <div>
@@ -410,7 +411,7 @@ export const InsightsPage: React.FC = () => {
             </Link>
 
             <Link
-              to="/for/business-owners"
+              to={`${prefix}/for/business-owners`}
               className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between"
             >
               <div>
@@ -430,7 +431,7 @@ export const InsightsPage: React.FC = () => {
             </Link>
 
             <Link
-              to="/for/families"
+              to={`${prefix}/for/families`}
               className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between"
             >
               <div>
@@ -450,7 +451,7 @@ export const InsightsPage: React.FC = () => {
             </Link>
 
             <Link
-              to="/for/newcomers"
+              to={`${prefix}/for/newcomers`}
               className="p-5 bg-[#f7f3eb] border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-all group flex flex-col justify-between"
             >
               <div>
@@ -501,7 +502,7 @@ export const InsightsPage: React.FC = () => {
               : "Whether managing your corporation's passive investment threshold, evaluating a mortgage renewal, or structuring family income protection, let’s start with a direct conversation."}
           </p>
           <div className="pt-2 flex justify-center">
-            <Link to="/contact" className="btn btn-primary text-base px-8 py-3">
+            <Link to={`${prefix}/contact`} className="btn btn-primary text-base px-8 py-3">
               {isFr ? "Démarrer une conversation →" : "Start a Conversation →"}
             </Link>
           </div>

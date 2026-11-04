@@ -76,6 +76,13 @@ export const NewsPage: React.FC = () => {
     return matchesFilter && matchesSearch;
   });
 
+  // Strictly arrange from latest date downwards
+  const sortedNews = [...filteredNews].sort((a, b) => {
+    const timeA = new Date(a.pubDate).getTime();
+    const timeB = new Date(b.pubDate).getTime();
+    return timeB - timeA;
+  });
+
   return (
     <div className="py-10 lg:py-16 bg-[#f7f3eb]">
       <SEO
@@ -257,9 +264,18 @@ export const NewsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 3. News Items List: Editorial Image, Excerpt, Source Badge, and Takeaway */}
+        {/* 3. News Items List: Arranged from latest date downwards */}
+        <div className="flex items-center justify-between pb-1 text-xs text-[#625d52]">
+          <span className="font-medium">
+            {isFr ? `${sortedNews.length} dépêches économiques` : `${sortedNews.length} economic intelligence items`}
+          </span>
+          <span className="text-[0.72rem] text-[#75581f] font-semibold">
+            {isFr ? "↓ Trié par date récente décroissante" : "↓ Latest date downwards (most recent first)"}
+          </span>
+        </div>
+
         <div className="space-y-6">
-          {filteredNews.map((item) => (
+          {sortedNews.map((item) => (
             <article
               key={item.id}
               className="bg-[#fcfaf5] border border-[#d6cebd] rounded-xs overflow-hidden shadow-xs hover:border-[#2e4a3b] transition-all flex flex-col md:flex-row gap-0 group"
