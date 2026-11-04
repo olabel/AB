@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, AlertCircle, RefreshCw, Phone } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { saveLeadToFirestore } from "../lib/firebase.ts";
 
 interface CalculatorLeadCaptureProps {
   calculatorName: string;
@@ -43,7 +44,28 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
     }
 
     setSubmitting(true);
+    const generatedRef = "CALC-" + Math.floor(100000 + Math.random() * 900000);
+    let firestoreSaved = false;
 
+    // 1. Direct Cloud Database Persistence (Firebase Firestore)
+    try {
+      await saveLeadToFirestore({
+        referenceNo: generatedRef,
+        topic: "calculator",
+        firstName: firstName.trim() || "Valued Client",
+        email: cleanEmail,
+        province: "National (Canada & US)",
+        message: `Calculated Plan: ${calculatorName}\n\nSummary Breakdown:\n${summaryText}`,
+        consentPrivacy: true,
+        consentEducational: consent,
+        source: `calculator_${calculatorName.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`,
+      });
+      firestoreSaved = true;
+    } catch (fbErr) {
+      console.warn("Client Firestore write deferred:", fbErr);
+    }
+
+    // 2. Dispatch to server for SQLite record and Resend notification delivery to olabel@gmail.com
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -58,25 +80,34 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           consentEducational: consent,
           formLoadedAt: Date.now() - 3000,
           honeypot: "",
+          referenceNo: generatedRef,
         }),
       });
 
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok && data.error && data.error !== "delivery_failed") {
+        if (firestoreSaved) {
+          setReferenceNo(generatedRef);
+          setSubmitted(true);
+          return;
+        }
         throw new Error(data.message || (isFr ? "Impossible d'envoyer le plan." : "Unable to record plan."));
       }
 
-      if (data.referenceNo) {
-        setReferenceNo(data.referenceNo);
-      }
+      setReferenceNo(data.referenceNo || generatedRef);
       setSubmitted(true);
     } catch (err: any) {
+      if (firestoreSaved) {
+        setReferenceNo(generatedRef);
+        setSubmitted(true);
+        return;
+      }
       setErrorMsg(
         err.message ||
           (isFr
-            ? "Impossible d'envoyer le plan pour le moment. Veuillez planifier un appel direct sur Calendly."
-            : "Could not send the plan right now. Please schedule a review call on Calendly.")
+            ? "Impossible d'envoyer le plan pour le moment. Veuillez joindre Ahmed Bello au +1-506-899-4941 ou planifier un appel direct sur Calendly."
+            : "Could not send the plan right now. Please reach out to Ahmed Bello directly at +1-506-899-4941 or schedule a review on Calendly: https://calendly.com/olabel/30min")
       );
     } finally {
       setSubmitting(false);

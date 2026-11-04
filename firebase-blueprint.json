@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Lead",
+      "description": "Financial consultation enquiry or calculation lead submitted by a visitor",
+      "type": "object",
+      "properties": {
+        "referenceNo": {
+          "type": "string",
+          "description": "Unique reference number for tracking"
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topic of interest or inquiry"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "Visitor's full or first name",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Visitor's email address",
+          "maxLength": 120
+        },
+        "phone": {
+          "type": "string",
+          "description": "Visitor's phone number",
+          "maxLength": 30
+        },
+        "province": {
+          "type": "string",
+          "description": "Visitor's province or region",
+          "maxLength": 50
+        },
+        "message": {
+          "type": "string",
+          "description": "Visitor's message or calculation breakdown",
+          "maxLength": 5000
+        },
+        "consentEducational": {
+          "type": "boolean",
+          "description": "Whether visitor opted in to educational correspondence"
+        },
+        "consentPrivacy": {
+          "type": "boolean",
+          "description": "Whether visitor accepted privacy policy"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp of submission"
+        },
+        "source": {
+          "type": "string",
+          "description": "Page or form source",
+          "maxLength": 50
+        }
+      },
+      "required": ["referenceNo", "topic", "firstName", "email", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Submitted client leads and inquiries"
+    }
+  }
+}

@@ -27,6 +27,7 @@ import {
   Phone,
 } from "lucide-react";
 import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
+import { saveLeadToFirestore } from "../lib/firebase.ts";
 
 const CANADIAN_PROVINCES = [
   "Alberta",
@@ -142,6 +143,37 @@ export const IslamicInvestingPage: React.FC = () => {
     }
 
     setIsSubmitting(true);
+    const generatedRef = "ISL-" + Math.floor(100000 + Math.random() * 900000);
+    let firestoreSaved = false;
+
+    const messageDetails = `Islamic Investing Lead:
+Target Account: ${formData.accountType}
+Estimated Allocation: ${formData.estimatedAmount}
+Current Institution: ${formData.currentBank || "Not specified"}
+City: ${formData.city || "Not specified"}
+Province: ${formData.province}
+Notes: ${formData.notes || "None"}`;
+
+    // 1. Direct Cloud Database Persistence (Firebase Firestore)
+    try {
+      await saveLeadToFirestore({
+        referenceNo: generatedRef,
+        topic: "investing",
+        firstName: formData.fullName.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        province: formData.province,
+        message: messageDetails,
+        consentPrivacy: formData.consentPrivacy,
+        consentEducational: formData.consentEducational,
+        source: "islamic_investing_page",
+      });
+      firestoreSaved = true;
+    } catch (fbErr) {
+      console.warn("Client Firestore write deferred:", fbErr);
+    }
+
+    // 2. Dispatch to server for SQLite record and Resend notification delivery to olabel@gmail.com
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -152,38 +184,46 @@ export const IslamicInvestingPage: React.FC = () => {
           phone: formData.phone.trim(),
           province: formData.province,
           topic: "investing",
-          message: `Islamic Investing Lead:
-Target Account: ${formData.accountType}
-Estimated Allocation: ${formData.estimatedAmount}
-Current Institution: ${formData.currentBank || "Not specified"}
-City: ${formData.city || "Not specified"}
-Province: ${formData.province}
-Notes: ${formData.notes || "None"}`,
+          message: messageDetails,
           consentPrivacy: formData.consentPrivacy,
           consentEducational: formData.consentEducational,
           honeypot: formData.honeypot,
           turnstileToken,
           formLoadedAt,
+          referenceNo: generatedRef,
         }),
       });
 
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok || !data.success) {
+        if (firestoreSaved) {
+          setReferenceNo(generatedRef);
+          setFormSubmitted(true);
+          return;
+        }
         throw new Error(
           data.message ||
             (isFr
-              ? "Votre demande n'a pas pu être transmise. Veuillez vérifier vos informations ou réserver un appel directement sur Calendly."
-              : "Your request could not be submitted. Please review your entries or schedule a call directly on Calendly.")
+              ? "Votre demande n'a pas pu être transmise. Veuillez contacter Ahmed Bello au +1-506-899-4941 ou réserver un appel directement sur Calendly : https://calendly.com/olabel/30min"
+              : "Your request could not be submitted. Please reach out to Ahmed Bello directly at +1-506-899-4941 or schedule on Calendly: https://calendly.com/olabel/30min")
         );
       }
 
-      if (data.referenceNo) {
-        setReferenceNo(data.referenceNo);
-      }
+      setReferenceNo(data.referenceNo || generatedRef);
       setFormSubmitted(true);
     } catch (err: any) {
-      setFormError(err.message || (isFr ? "Une erreur inattendue est survenue." : "An unexpected error occurred."));
+      if (firestoreSaved) {
+        setReferenceNo(generatedRef);
+        setFormSubmitted(true);
+        return;
+      }
+      setFormError(
+        err.message ||
+          (isFr
+            ? "Une erreur inattendue est survenue. Veuillez joindre Ahmed Bello au +1-506-899-4941 ou réserver sur Calendly."
+            : "An unexpected error occurred. Please contact Ahmed Bello directly at +1-506-899-4941 or book via Calendly.")
+      );
     } finally {
       setIsSubmitting(false);
     }

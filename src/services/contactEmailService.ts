@@ -79,6 +79,59 @@ export function recordLeadSubmission(lead: Omit<StoredLead, "recordedAt">): void
     console.warn("Could not save lead to backup leads file:", err);
   }
 }
+export async function saveLeadToFirestoreServer(lead: {
+  referenceNo: string;
+  topic: string;
+  firstName: string;
+  email: string;
+  phone?: string;
+  province?: string;
+  message?: string;
+  consentEducational?: boolean;
+  consentPrivacy?: boolean;
+  source?: string;
+}): Promise<boolean> {
+  try {
+    const configPath = path.join(process.cwd(), "firebase-applet-config.json");
+    if (!fs.existsSync(configPath)) return false;
+    const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+    const projectId = config.projectId;
+    const dbId = config.firestoreDatabaseId || "(default)";
+    const apiKey = config.apiKey;
+    const docId = `lead_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/${dbId}/documents/leads?documentId=${docId}&key=${apiKey}`;
+    const payload = {
+      fields: {
+        referenceNo: { stringValue: String(lead.referenceNo || "") },
+        topic: { stringValue: String(lead.topic || "general") },
+        firstName: { stringValue: String(lead.firstName || "") },
+        email: { stringValue: String(lead.email || "") },
+        phone: { stringValue: String(lead.phone || "") },
+        province: { stringValue: String(lead.province || "National (Canada & US)") },
+        message: { stringValue: String(lead.message || "") },
+        consentEducational: { booleanValue: Boolean(lead.consentEducational) },
+        consentPrivacy: { booleanValue: Boolean(lead.consentPrivacy) },
+        createdAt: { stringValue: new Date().toISOString() },
+        source: { stringValue: lead.source || "server_contact_api" },
+      },
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      console.log(`[FIRESTORE SAVED] Ref: #${lead.referenceNo} | Stored in Firebase Firestore.`);
+      return true;
+    }
+  } catch (err: any) {
+    console.warn(`[FIRESTORE WRITE NOTE]:`, err?.message || err);
+  }
+  return false;
+}
 
 export function getRecordedLeads(): StoredLead[] {
   try {
@@ -416,6 +469,21 @@ export async function processContactSubmission(
     console.error(`[DB ERROR] Database write failed:`, dbErr?.message || dbErr);
   }
 
+  // Dual Persistence: Also persist directly to Firebase Firestore
+  const referenceNo = dbRecord?.referenceNo || Math.random().toString(36).substring(2, 8).toUpperCase();
+  await saveLeadToFirestoreServer({
+    referenceNo,
+    topic,
+    firstName,
+    email,
+    phone,
+    province,
+    message,
+    consentPrivacy,
+    consentEducational,
+    source: isNewsletter ? "newsletter_form" : isCalculator ? "calculator_form" : "contact_form",
+  });
+
   // Backup file persistence
   recordLeadSubmission({
     topic,
@@ -549,6 +617,32 @@ Origin: https://www.ahmedbello.com
           text: `${advisorEmailBody}\n\nNote: Dispatched to primary address while domain verification completes.`,
         }),
       });
+    }
+
+    // Direct Notification Fallback: If custom domain is unverified, fallback to Resend's verified onboarding sender to olabel@gmail.com
+    if (!resendResponse.ok) {
+      try {
+        const fallbackResend = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "Ahmed Bello Notifications <onboarding@resend.dev>",
+            to: ["olabel@gmail.com"],
+            reply_to: email,
+            subject: `${emailSubject} [Notification]`,
+            text: advisorEmailBody,
+          }),
+        });
+        if (fallbackResend.ok) {
+          resendResponse = fallbackResend;
+          console.log(`[RESEND DELIVERED] Dispatched notification to olabel@gmail.com via onboarding@resend.dev`);
+        }
+      } catch (fbErr) {
+        // preserve original response
+      }
     }
 
     if (resendResponse.ok) {

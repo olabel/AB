@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper to check valid document IDs
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Lead validation helper
+    function isValidLead(data) {
+      return data.keys().hasAll(['referenceNo', 'topic', 'firstName', 'email', 'createdAt'])
+        && data.referenceNo is string && data.referenceNo.size() > 0 && data.referenceNo.size() <= 40
+        && data.topic is string && data.topic.size() > 0 && data.topic.size() <= 60
+        && data.firstName is string && data.firstName.size() > 0 && data.firstName.size() <= 100
+        && data.email is string && data.email.size() > 3 && data.email.size() <= 120
+        && data.createdAt is string && data.createdAt.size() > 0 && data.createdAt.size() <= 50;
+    }
+
+    // Public lead ingestion
+    match /leads/{leadId} {
+      allow create: if isValidId(leadId) && isValidLead(request.resource.data);
+      allow read, update, delete: if false;
+    }
+
+    // Default deny all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

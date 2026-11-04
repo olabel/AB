@@ -6,6 +6,7 @@ import { AlertCircle, CheckCircle2, Info, Calendar, ArrowUpRight, MessageCircle,
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
+import { saveLeadToFirestore } from "../lib/firebase.ts";
 
 const PROVINCES_AND_TERRITORIES = [
   "Alberta",
@@ -151,14 +152,41 @@ export const ContactPage: React.FC = () => {
     setFieldErrors({});
     setStatus("submitting");
 
+    const cleanFirst = sanitizeInput(firstName);
+    const cleanEmail = sanitizeInput(email);
+    const cleanPhone = sanitizeInput(phone);
+
+    const generatedRef = "AB-" + Math.floor(100000 + Math.random() * 900000);
+    let firestoreSaved = false;
+
+    // 1. Direct Cloud Database Persistence (Firebase Firestore)
+    try {
+      await saveLeadToFirestore({
+        referenceNo: generatedRef,
+        topic,
+        firstName: cleanFirst,
+        email: cleanEmail,
+        phone: cleanPhone,
+        province,
+        message: sanitizeInput(message),
+        consentPrivacy,
+        consentEducational,
+        source: "contact_page",
+      });
+      firestoreSaved = true;
+    } catch (fbErr) {
+      console.warn("Client Firestore write deferred:", fbErr);
+    }
+
+    // 2. Dispatch to server for SQLite record and Resend notification delivery to olabel@gmail.com
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: sanitizeInput(firstName),
-          email: sanitizeInput(email),
-          phone: sanitizeInput(phone),
+          firstName: cleanFirst,
+          email: cleanEmail,
+          phone: cleanPhone,
           province,
           topic,
           message: sanitizeInput(message),
@@ -167,41 +195,48 @@ export const ContactPage: React.FC = () => {
           honeypot: sanitizeInput(honeypot),
           turnstileToken,
           formLoadedAt,
+          referenceNo: generatedRef,
         }),
       });
 
       const data = await response.json().catch(() => ({}));
 
-      if (response.status === 503 || data.code === "not_configured") {
-        // Honest not configured state
-        setStatus("not_configured");
-        setErrorMessage(
-          data.message || "Not sent. This form isn’t connected to an inbox yet."
-        );
-        return;
-      }
-
       if (!response.ok) {
         if (response.status === 400 && data.errors) {
           setFieldErrors(data.errors);
           setStatus("error");
-        } else {
-          setStatus("error");
-          setErrorMessage(
-            data.message || "Something went wrong while sending your message. Please try again later."
-          );
+          return;
         }
+
+        // If server failed but client Firestore already saved the lead, confirm receipt
+        if (firestoreSaved) {
+          setReferenceNo(generatedRef);
+          setStatus("success");
+          return;
+        }
+
+        // Both failed: show honest error with phone and Calendly
+        setStatus("error");
+        setErrorMessage(
+          data.message ||
+            "Unable to submit right now. Please reach out directly to Ahmed Bello at +1-506-899-4941 or schedule via Calendly: https://calendly.com/olabel/30min"
+        );
         return;
       }
 
       // Success
-      if (data.referenceNo) {
-        setReferenceNo(data.referenceNo);
-      }
+      setReferenceNo(data.referenceNo || generatedRef);
       setStatus("success");
     } catch {
+      if (firestoreSaved) {
+        setReferenceNo(generatedRef);
+        setStatus("success");
+        return;
+      }
       setStatus("error");
-      setErrorMessage("Network error occurred. Your message could not be sent right now.");
+      setErrorMessage(
+        "Network connection issue. Please contact Ahmed Bello directly at +1-506-899-4941 or book directly at https://calendly.com/olabel/30min"
+      );
     }
   };
 

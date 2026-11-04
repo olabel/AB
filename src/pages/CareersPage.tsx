@@ -30,6 +30,7 @@ import { siteConfig } from "../config/site.ts";
 import { BrandMark } from "../components/BrandMark.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { saveLeadToFirestore } from "../lib/firebase.ts";
 
 interface FormData {
   firstName: string;
@@ -140,6 +141,8 @@ export const CareersPage: React.FC = () => {
     }
 
     setSubmitting(true);
+    const generatedRef = "APP-" + Math.floor(100000 + Math.random() * 900000);
+    let firestoreSaved = false;
 
     const detailedMessage = `
 Candidate Application Details:
@@ -152,6 +155,26 @@ Candidate Application Details:
 - Motivation & Goals: ${formData.message || "Ready to learn"}
     `.trim();
 
+    // 1. Direct Cloud Database Persistence (Firebase Firestore)
+    try {
+      await saveLeadToFirestore({
+        referenceNo: generatedRef,
+        topic: "mentorship",
+        firstName: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        province: formData.jurisdiction,
+        message: detailedMessage,
+        consentPrivacy: formData.consentPrivacy,
+        consentEducational: true,
+        source: "careers_mentorship_page",
+      });
+      firestoreSaved = true;
+    } catch (fbErr) {
+      console.warn("Client Firestore write deferred:", fbErr);
+    }
+
+    // 2. Dispatch to server for SQLite record and Resend notification delivery to olabel@gmail.com
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -169,19 +192,32 @@ Candidate Application Details:
           consentEducational: true,
           honeypot: formData.honeypot,
           formLoadedAt,
+          referenceNo: generatedRef,
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to submit application.");
+        if (firestoreSaved) {
+          setSubmitSuccess(true);
+          return;
+        }
+        throw new Error(
+          data.message ||
+            "Unable to submit application right now. Please reach out to Ahmed Bello directly at +1-506-899-4941 or book via Calendly: https://calendly.com/olabel/30min"
+        );
       }
 
       setSubmitSuccess(true);
     } catch (err: any) {
+      if (firestoreSaved) {
+        setSubmitSuccess(true);
+        return;
+      }
       setErrorMessage(
-        err.message || "An unexpected error occurred. Please try again or book directly via Calendly."
+        err.message ||
+          "An unexpected error occurred. Please contact Ahmed Bello directly at +1-506-899-4941 or schedule via Calendly: https://calendly.com/olabel/30min"
       );
     } finally {
       setSubmitting(false);
