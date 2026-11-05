@@ -303,6 +303,13 @@ app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response)
       message: "Cross-origin submission rejected.",
     });
   }
+  const referer = req.headers["referer"] as string | undefined;
+  if (referer && !isOriginAuthorized(referer)) {
+    return res.status(403).json({
+      error: "forbidden",
+      message: "Cross-origin submission rejected.",
+    });
+  }
   if (origin) {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");

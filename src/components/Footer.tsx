@@ -28,6 +28,11 @@ export const Footer: React.FC = () => {
               </span>
             </Link>
 
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#2e4a3b]/60 border border-[#d6c298]/30 rounded-xs text-[11px] text-[#d6c298] font-medium tracking-wide w-fit">
+              <ShieldCheck className="w-3 h-3 text-[#d6c298] shrink-0" />
+              <span>{isFr ? "Membre indépendant de World Financial Group (WFG)" : "Independent World Financial Group (WFG) Member"}</span>
+            </div>
+
             <p className="text-xs sm:text-sm text-[#d6c298] italic font-serif leading-relaxed">
               {isFr
                 ? "Éducation financière rigoureuse, clarté fiscale et solutions adaptées aux familles et professionnels au Canada."
@@ -233,8 +238,30 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
+        {/* WFG Membership Disclosure Note */}
+        <div className="pt-8 pb-4 border-b border-[#2e4a3b]/60">
+          <div className="p-3.5 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-[0.74rem] text-[#ece6da]/90 leading-relaxed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <strong className="text-[#d6c298] block sm:inline mb-1 sm:mb-0">
+                {isFr ? "Affiliation professionnelle :" : "Professional Affiliation:"}{" "}
+              </strong>
+              <span>
+                {isFr
+                  ? "Ahmed Bello est un membre indépendant de Groupe Financier Mondial (World Financial Group - WFG) et associé à l'Agence d'assurance World Financial Group du Canada inc. (WFGIA)."
+                  : "Ahmed Bello is an independent World Financial Group member associated with World Financial Group Insurance Agency of Canada Inc. (WFGIA)."}
+              </span>
+            </div>
+            <Link
+              to={`${prefix}/disclosures`}
+              className="text-[#d6c298] underline hover:text-white transition-colors text-[0.72rem] whitespace-nowrap shrink-0"
+            >
+              {isFr ? "Détails & permis provinciaux →" : "Licensing details →"}
+            </Link>
+          </div>
+        </div>
+
         {/* Regulatory Disclosure & Copyright */}
-        <div className="pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-xs text-[#ece6da]/70 leading-relaxed">
+        <div className="pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-xs text-[#ece6da]/70 leading-relaxed">
           <p className="max-w-4xl text-[0.72rem]">
             <strong>{isFr ? "Avis réglementaire important :" : "Important regulatory notice:"}</strong>{" "}
             {isFr

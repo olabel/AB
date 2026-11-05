@@ -816,16 +816,10 @@ Notes: ${formData.notes || "None"}`;
                 <h3 className="font-serif text-xl font-bold text-[#f7f3eb]">
                   {isFr ? "Votre demande a été bien reçue" : "Your Consultation Request is Confirmed"}
                 </h3>
-                {referenceNo && (
-                  <div className="p-2 bg-[#14211a] border border-[#d6c298]/40 rounded-xs inline-flex items-center gap-2">
-                    <span className="text-[11px] text-[#ece6da]">Reference:</span>
-                    <span className="font-mono font-bold text-xs text-[#d6c298]">#{referenceNo}</span>
-                  </div>
-                )}
                 <p className="text-xs sm:text-sm text-[#ece6da]/90 leading-relaxed max-w-md mx-auto">
                   {isFr
-                    ? "Merci pour votre démarche. Votre demande est enregistrée. Une notification a été dirigée vers olabel@gmail.com et abello24trdc@wfgmail.ca. Ahmed Bello prendra contact avec vous sous 24 heures ouvrables."
-                    : "Thank you for reaching out. Your request is safely recorded in our practice database. Notification routed to olabel@gmail.com and abello24trdc@wfgmail.ca. Ahmed Bello will review your situation and follow up directly."}
+                    ? "Merci pour votre démarche. Votre demande a bien été transmise. Ahmed Bello prendra contact avec vous sous 24 à 48 heures ouvrables pour analyser vos objectifs en toute indépendance."
+                    : "Thank you for reaching out. Your consultation request has been received securely. Ahmed Bello will review your situation and follow up directly within 1 to 2 business days."}
                 </p>
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                   {siteConfig.schedulingUrl && (
@@ -840,7 +834,7 @@ Notes: ${formData.notes || "None"}`;
                     </a>
                   )}
                   <a
-                    href={`mailto:olabel@gmail.com,abello24trdc@wfgmail.ca?subject=${encodeURIComponent(`Islamic Investing Consultation (#${referenceNo || ""})`)}&body=${encodeURIComponent(`Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nProvince: ${formData.province}\nCity: ${formData.city}\nAccount: ${formData.accountType}\nAmount: ${formData.estimatedAmount}\nNotes: ${formData.notes}`)}`}
+                    href={`mailto:${siteConfig.publicEmail}?subject=${encodeURIComponent(`Islamic Investing Consultation - ${formData.fullName}`)}&body=${encodeURIComponent(`Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nProvince: ${formData.province}\nCity: ${formData.city}\nAccount: ${formData.accountType}\nAmount: ${formData.estimatedAmount}\nNotes: ${formData.notes}`)}`}
                     className="text-xs text-[#d6c298] hover:underline py-2"
                   >
                     {isFr ? "Envoyer également par courriel direct" : "Send direct email copy"}

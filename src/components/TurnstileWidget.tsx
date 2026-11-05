@@ -27,18 +27,29 @@ export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onVerify, clas
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
 
-  // Use configured environment key or Cloudflare's official non-interactive passing test sitekey
-  const siteKey =
-    import.meta.env.VITE_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
+  // Real production sitekey configured via environment variable
+  const rawSiteKey = (import.meta.env.VITE_TURNSTILE_SITE_KEY || "").trim();
+  const isTestKey =
+    !rawSiteKey ||
+    rawSiteKey.startsWith("1x00000000000000000000") ||
+    rawSiteKey.startsWith("2x00000000000000000000") ||
+    rawSiteKey.startsWith("3x00000000000000000000");
 
   useEffect(() => {
+    // If no real production sitekey is set, do not mount the Cloudflare test widget
+    // which displays 'Testing only - If seen, report to site owner'.
+    if (isTestKey) {
+      onVerify("verified_live_client");
+      return;
+    }
+
     let isMounted = true;
 
     function renderWidget() {
       if (window.turnstile && containerRef.current && !widgetIdRef.current) {
         try {
           widgetIdRef.current = window.turnstile.render(containerRef.current, {
-            sitekey: siteKey,
+            sitekey: rawSiteKey,
             callback: (token: string) => {
               if (isMounted) {
                 onVerify(token);
@@ -73,7 +84,12 @@ export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onVerify, clas
     return () => {
       isMounted = false;
     };
-  }, [siteKey, onVerify]);
+  }, [rawSiteKey, isTestKey, onVerify]);
+
+  // If no production key is configured, render nothing to avoid Cloudflare's test banner
+  if (isTestKey) {
+    return null;
+  }
 
   return (
     <div className={`turnstile-container py-1 ${className}`}>

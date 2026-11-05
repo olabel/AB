@@ -151,27 +151,19 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           <div className="flex items-start gap-3">
             <CheckCircle2 className="w-6 h-6 text-[#d6c298] shrink-0 mt-0.5" />
             <div className="space-y-1.5 flex-1">
-              {referenceNo && (
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="px-2 py-0.5 bg-[#d6c298] text-[#14211a] font-mono text-[11px] font-bold rounded-[2px]">
-                    Ref: #{referenceNo}
-                  </span>
-                  <span className="text-[11px] text-[#d6c298] font-medium">Recorded in Practice SQLite Database</span>
-                </div>
-              )}
               <h5 className="font-serif text-base sm:text-lg font-medium text-[#f7f3eb]">
-                {isFr ? "Plan personnalisé enregistré avec succès !" : "Customized Plan Successfully Recorded!"}
+                {isFr ? "Plan personnalisé enregistré avec succès !" : "Customized Plan Successfully Saved!"}
               </h5>
               <p className="text-xs text-[#ece6da] leading-relaxed">
                 {isFr ? (
                   <>
                     Une copie de votre calcul pour <strong>{calculatorName}</strong> a été enregistrée pour{" "}
-                    <strong>{email}</strong>. Notification dirigée vers olabel@gmail.com et abello24trdc@wfgmail.ca.
+                    <strong>{email}</strong>. Ahmed Bello examinera vos calculs et prendra contact avec vous si vous souhaitez approfondir votre stratégie.
                   </>
                 ) : (
                   <>
-                    A detailed breakdown of your <strong>{calculatorName}</strong> calculation has been recorded for{" "}
-                    <strong>{email}</strong>. Notification queued for Ahmed Bello at <strong>olabel@gmail.com</strong> and <strong>abello24trdc@wfgmail.ca</strong>.
+                    A detailed breakdown of your <strong>{calculatorName}</strong> calculation has been saved for{" "}
+                    <strong>{email}</strong>. Ahmed Bello will review your calculation details and follow up if you would like to explore next steps.
                   </>
                 )}
               </p>
@@ -189,7 +181,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
               <span>{isFr ? "Planifier un échange de 30 min sur Calendly" : "Schedule 30-Min Discussion on Calendly"}</span>
             </a>
             <a
-              href={`mailto:olabel@gmail.com,abello24trdc@wfgmail.ca?subject=${encodeURIComponent(`Plan: ${calculatorName} (Ref: #${referenceNo || ""})`)}&body=${encodeURIComponent(`Client: ${firstName || "Valued Client"} (${email})\n\n${summaryText}`)}`}
+              href={`mailto:enquiries@ahmedbello.com?subject=${encodeURIComponent(`Plan: ${calculatorName}`)}&body=${encodeURIComponent(`Client: ${firstName || "Valued Client"} (${email})\n\n${summaryText}`)}`}
               className="text-xs text-[#d6c298] hover:text-white underline inline-flex items-center gap-1 py-1"
             >
               <Mail className="w-3.5 h-3.5" />
