@@ -27,25 +27,19 @@ export const NewsPage: React.FC = () => {
   const fetchLiveFeeds = async () => {
     setIsRefreshing(true);
     try {
-      const res = await fetch("/api/news");
+      const res = await fetch(`/api/news?_t=${Date.now()}`, {
+        cache: "no-store",
+        headers: { "Cache-Control": "no-cache" },
+      });
       if (res.ok) {
         const data = await res.json();
         if (Array.isArray(data.items) && data.items.length > 0) {
-          const seen = new Set<string>();
-          const combined: NewsItem[] = [];
-          for (const item of [...data.items, ...STATIC_NEWS]) {
-            const key = item.title.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 30);
-            if (!seen.has(key)) {
-              seen.add(key);
-              combined.push(item);
-            }
-          }
-          setNews(combined);
+          setNews(data.items);
           setLastRefreshed(new Date());
         }
       }
     } catch {
-      // Gracefully retain STATIC_NEWS
+      // Gracefully retain current news
     } finally {
       setIsRefreshing(false);
     }
@@ -53,8 +47,27 @@ export const NewsPage: React.FC = () => {
 
   useEffect(() => {
     fetchLiveFeeds();
-    const interval = setInterval(fetchLiveFeeds, 15 * 60 * 1000);
-    return () => clearInterval(interval);
+    // Auto-update every 2 minutes
+    const interval = setInterval(fetchLiveFeeds, 2 * 60 * 1000);
+
+    // Also auto-refresh whenever user switches back to this tab
+    const handleFocus = () => {
+      fetchLiveFeeds();
+    };
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        fetchLiveFeeds();
+      }
+    };
+
+    window.addEventListener("focus", handleFocus);
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("focus", handleFocus);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
   }, []);
 
   const filteredNews = news.filter((item) => {
@@ -118,7 +131,7 @@ export const NewsPage: React.FC = () => {
 
             <div className="flex items-center gap-3 text-xs text-[#625d52]">
               <span className="hidden sm:inline">
-                {isFr ? "Actualisé :" : "Updated:"} {lastRefreshed.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                {isFr ? "Actualisation automatique (2 min) • Mis à jour :" : "Auto-updating live (every 2 min) • Updated:"} {lastRefreshed.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
               </span>
               <button
                 onClick={fetchLiveFeeds}

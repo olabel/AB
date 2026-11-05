@@ -344,7 +344,9 @@ app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response)
 // --------------------------------------------------------------------------
 app.get("/api/news", async (_req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Cache-Control", "public, max-age=300, stale-while-revalidate=900");
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
   try {
     const items = await getLatestFinancialNews();
     return res.json({

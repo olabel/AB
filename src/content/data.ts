@@ -3424,6 +3424,487 @@ const rawArticles: Article[] = [
   "invitationAbout": "designing a customized account priority sequence for your monthly savings",
   "url": "/education/tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first",
   "readingMinutes": 10
+},
+{
+  "slug": "accidental-fhsa-over-contributions-non-resident-freezes",
+  "title": "Accidental FHSA Over-Contributions & Non-Resident Freezes: CRA Form RC727 & Tax Rules",
+  "kind": "guide",
+  "category": "registered-accounts",
+  "description": "Avoid the CRA 1% monthly penalty under ITA Section 207.02, rectify excess FHSA room with Form RC727, and protect accounts from non-resident freezes.",
+  "figuresAsOf": "2026 CRA Tax Rules",
+  "question": "What happens if you accidentally over-contribute to an FHSA or move out of Canada while holding an open account?",
+  "problem": "Many first-time Canadian home buyers treat the First Home Savings Account (FHSA) like a standard savings account. It is not. Under Section 207.02 (Part XI.01) of the Income Tax Act, the CRA levies a harsh 1% per month penalty on any excess contribution above your annual $8,000 limit or $40,000 lifetime ceiling. Worse, becoming a non-resident under Section 128.1 freezes your account: you cannot contribute, cannot accrue new contribution room, and completely forfeit the right to make a tax-free qualifying home purchase withdrawal. Any subsequent non-resident withdrawal is treated as taxable income subject to a mandatory 25% Part XIII withholding tax.",
+  "overview": [
+    "Understanding the $8,000 Annual and $40,000 Lifetime FHSA Limits: Unlike a TFSA where contribution room begins accumulating the year you turn 18 regardless of whether an account is open, FHSA room only begins accumulating once you officially open your very first FHSA. The statutory annual maximum is $8,000, and unused room carries forward up to a maximum of $8,000 in any single year (meaning the absolute highest contribution permissible in any single calendar year is $16,000). Many Canadians inadvertently trigger penalties by contributing $8,000 to two different financial institutions (e.g., $8,000 at a chartered bank and $8,000 in a self-directed brokerage), unaware that the limits are tied to their Social Insurance Number (SIN), not individual accounts.",
+    "The 1% Per Month Part XI.01 Tax Penalty: When an excess contribution occurs, Section 207.02 of the Income Tax Act applies a 1% penalty tax for each month (or part of a month) that the excess amount remains in your account. For example, if you over-contribute $5,000 on March 15 and do not rectify it until November 20, you face a 1% penalty for 9 months ($450 in direct non-deductible penalties). You are legally required to file Form RC725 (First Home Savings Account Return) and pay this penalty by April 30 of the following year.",
+    "Resolving Excess Contributions via CRA Form RC727: To stop the monthly 1% clock, you must remove the excess funds. You have two formal pathways: (1) A designated withdrawal using CRA Form RC727 (Designation of an Exempt Contribution to an FHSA and Return of Excess FHSA Amounts), which instructs your financial institution to refund the excess directly without withholding tax; or (2) A taxable withdrawal, where the excess is taken out as regular income, reported on a T4FHSA slip (Box 24), and included in your T1 return. If you have unused RRSP room, you can also designate a direct transfer of the excess FHSA amount to your RRSP on Form RC727, absorbing RRSP contribution room to cure the FHSA violation.",
+    "The Non-Resident Trap: Emigrating with an Open FHSA: When you cease to be a Canadian tax resident (such as accepting a foreign work contract in the U.S., UK, or UAE), your FHSA is immediately impaired under Section 146.6 of the Income Tax Act. First, you cannot make any contributions to your FHSA while non-resident—any contribution made as a non-resident is deemed a prohibited contribution and attracts an immediate 1% per month penalty. Second, and most critically, non-residents cannot make a qualifying tax-free withdrawal to purchase a home. Even if you purchase a home in Canada, you must be a tax resident of Canada at the time of withdrawal and through the acquisition date. If a non-resident liquidates an FHSA, the institution must withhold 25% Part XIII tax at source under Section 212 of the ITA, and the tax-free advantage of the account is permanently lost."
+  ],
+  "example": {
+    "title": "Case Study: Accidental $6,000 FHSA Over-Contribution Resolution",
+    "intro": "Sarah opened an FHSA with Bank A in January, contributing her $8,000 limit. In June, excited by an investment opportunity, she opened an FHSA with Brokerage B and deposited another $6,000, creating an immediate $6,000 excess FHSA amount under ITA Section 207.02.",
+    "table": {
+      "head": ["Timeline / Action", "Excess Amount", "Part XI.01 Penalty (1%)", "Cumulative Penalty", "CRA Compliance Action"],
+      "rows": [
+        ["June (Deposit at Bank B)", "$6,000", "$60.00", "$60.00", "Excess triggered immediately upon deposit"],
+        ["July (Account Unadjusted)", "$6,000", "$60.00", "$120.00", "1% per month non-deductible penalty accrues"],
+        ["August (Account Unadjusted)", "$6,000", "$60.00", "$180.00", "1% per month non-deductible penalty accrues"],
+        ["September (Discovery)", "$6,000", "$60.00", "$240.00", "Sarah identifies over-contribution error"],
+        ["October (Form RC727 Filed)", "$0", "$0.00", "$240.00", "Files Form RC727; bank refunds $6,000 without withholding"],
+        ["April 30 (Tax Filing)", "$0", "$0.00", "$240.00", "Files Form RC725 Return and remits $240 penalty to CRA"]
+      ]
+    },
+    "notes": [
+      "The $6,000 refund executed under Form RC727 stops the penalty clock on the exact date of withdrawal.",
+      "Sarah cannot deduct the $6,000 excess contribution on her T1 General income tax return; only the valid $8,000 contribution qualifies for an income tax deduction.",
+      "Failing to file Form RC725 by April 30 attracts late-filing penalties (5% plus 1% per month under Section 162(1)) in addition to the monthly 1% Part XI.01 tax."
+    ],
+    "conclusion": "Promptly submitting Form RC727 stops the 1% monthly penalty from compounding, saving hundreds of dollars in non-deductible CRA interest."
+  },
+  "misunderstandings": [
+    {
+      "myth": "You automatically accumulate $8,000 in FHSA room every year after turning 18.",
+      "reality": "FHSA room only begins accumulating in the calendar year you open your first FHSA. Unlike a TFSA, you cannot let room accumulate from age 18 to 30 without opening an account."
+    },
+    {
+      "myth": "If I move to the US, I can buy a home in Canada and use my FHSA tax-free.",
+      "reality": "You must be a Canadian tax resident both at the time of the withdrawal and at the time the qualifying home is acquired. Non-residents face mandatory 25% Part XIII withholding tax."
+    },
+    {
+      "myth": "You can fix an over-contribution simply by waiting until January 1st for new room to open.",
+      "reality": "While new room on January 1st absorbs prior excess amounts, you still owe 1% per month for every month the excess existed in the previous tax year, requiring Form RC725."
+    },
+    {
+      "myth": "The financial institution will block you if you deposit more than $8,000.",
+      "reality": "Institutions do not communicate real-time contribution data. You can deposit $8,000 at multiple banks without warning until the CRA runs its annual slip-matching program."
+    }
+  ],
+  "tradeoffs": [
+    "Filing Form RC727 immediately eliminates ongoing 1% monthly penalties, but requires coordinating with your financial institution before funds are released.",
+    "Transferring excess FHSA amounts to an RRSP cures the over-contribution without triggering immediate taxable income, but consumes valuable RRSP deduction room.",
+    "Liquidating an FHSA prior to departing Canada eliminates cross-border reporting friction, but converts tax-free growth into taxable income if not transferred to an RRSP."
+  ],
+  "questions": [
+    "Did you contribute to more than one financial institution's FHSA in the current tax calendar year?",
+    "Have you verified your official FHSA contribution room on your latest CRA Notice of Assessment?",
+    "Are you planning an international relocation or foreign employment assignment within the next 24 months?",
+    "Do you have sufficient unused RRSP deduction room to absorb an accidental FHSA excess via Form RC727 transfer?"
+  ],
+  "sources": [
+    {
+      "label": "Canada Revenue Agency - Guide RC4466: First Home Savings Account (FHSA)",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/rc4466.html",
+      "note": "Official administrative rules governing contribution limits, rollovers, and qualifying withdrawals."
+    },
+    {
+      "label": "Income Tax Act, Section 207.02 - Tax on Excess FHSA Amount (Part XI.01)",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/page-145.html",
+      "note": "Statutory 1% per month penalty calculation and liability definition."
+    },
+    {
+      "label": "CRA Form RC727 - Designation of an Exempt Contribution to an FHSA and Return of Excess FHSA Amounts",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/rc727.html",
+      "note": "Mandatory form for designating refunds and transfers to cure over-contributions without withholding tax."
+    },
+    {
+      "label": "CRA Form RC725 - First Home Savings Account (FHSA) Return",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/rc725.html",
+      "note": "Annual return required to report and pay Part XI.01 tax on excess FHSA contributions."
+    }
+  ],
+  "related": [
+    "fhsa-explained",
+    "fhsa-vs-hbp-first-time-home-buyer-stacking",
+    "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first",
+    "mortgages-home-buying-fixed-vs-variable-amortization-stress-test"
+  ],
+  "contactTopic": "accounts",
+  "invitationAbout": "resolving FHSA excess contribution notices or planning cross-border departures",
+  "url": "/education/accidental-fhsa-over-contributions-non-resident-freezes",
+  "readingMinutes": 9
+},
+{
+  "slug": "irs-foreign-trust-nightmare-moving-to-us-with-tfsa",
+  "title": "The IRS Foreign Trust Trap: Moving to the U.S. with a TFSA (Forms 3520, 3520-A & PFIC)",
+  "kind": "insight",
+  "category": "newcomers",
+  "description": "Moving to the U.S. with a Canadian TFSA triggers IRS foreign trust rules under Forms 3520 and 3520-A, $10,000 penalties, and PFIC reporting on Form 8621.",
+  "figuresAsOf": "2026 IRS / CRA Cross-Border Rules",
+  "question": "Why does the IRS treat Canadian TFSAs as foreign grantor trusts, and how can cross-border movers avoid crushing penalties under Forms 3520 and 3520-A?",
+  "problem": "Canadians moving to the United States on work visas (TN, H-1B, L-1) or obtaining Green Cards routinely bring their Tax-Free Savings Accounts (TFSAs), assuming they remain tax-sheltered. Under the Internal Revenue Code (IRC), the TFSA is completely unrecognized as a pension or retirement account under Article XVIII of the Canada-U.S. Tax Treaty. The IRS classifies the TFSA as a Foreign Grantor Trust under IRC Sections 671–679, triggering mandatory annual filings of Form 3520 and Form 3520-A. Missing the March 15 deadline for Form 3520-A carries an automatic minimum penalty of $10,000 or 5% of gross trust value, while Form 3520 carries penalties of up to 35% of gross assets.",
+  "overview": [
+    "Why the Canada-U.S. Tax Treaty Ignores the TFSA: Under Article XVIII of the Canada-U.S. Income Tax Convention, Canadian RRSPs and RRIFs receive explicit cross-border recognition; their tax-deferred status is preserved for U.S. federal tax purposes without requiring complex trust disclosures (formalized under IRS Revenue Procedure 2014-55). However, because the TFSA was created in 2009—long after the last treaty protocol—it was never incorporated. For U.S. tax purposes, a TFSA is treated as an ordinary, fully taxable foreign entity.",
+    "The Foreign Grantor Trust Classification (Forms 3520 & 3520-A): Because the Canadian resident created the TFSA and retains full control over contributions, investments, and distributions, the IRS classifies it as a foreign grantor trust under IRC Sections 671 through 679. This mandates two onerous informational filings: (1) Form 3520-A (Annual Information Return of Foreign Trust With a U.S. Owner), due on March 15—a full month before regular individual tax returns; and (2) Form 3520 (Annual Return To Report Transactions With Foreign Trusts and Receipt of Certain Foreign Gifts), filed alongside your Form 1040 by April 15. The penalties for non-compliance under IRC Section 6677 are confiscatory: $10,000 or 35% of the gross trust value for Form 3520, and $10,000 or 5% of gross assets for Form 3520-A.",
+    "The PFIC Double-Nightmare (Form 8621): If your TFSA holds Canadian mutual funds, segregated funds, or Canadian-domiciled ETFs (e.g., TSX:XIU, VCN, XEQT), the U.S. tax trap deepens dramatically. The IRS treats these foreign pooled vehicles as Passive Foreign Investment Companies (PFICs) under IRC Section 1291. PFIC gains are taxed at the highest ordinary income tax rates (up to 37%), combined with non-deductible compounded interest charges for every day the asset was held. Each Canadian ETF requires a separate IRS Form 8621, often costing $500 to $1,500 per fund in cross-border accounting fees.",
+    "FBAR (FinCEN Form 114) and Form 8938 (FATCA) Mandates: In addition to trust reporting, a TFSA must be reported on FinCEN Form 114 (FBAR) if your aggregate foreign financial accounts exceed $10,000 USD at any point during the calendar year. Willful failure to report an FBAR carries civil penalties of $100,000 or 50% of the account balance per violation. Depending on filing status and asset level, it must also be reported on IRS Form 8938 under FATCA.",
+    "The Practical Solution: Complete Liquidation Prior to Departure: Because Canadian tax law allows tax-free withdrawals from a TFSA without any departure tax (unlike non-registered assets which face deemed disposition under Section 128.1), the overwhelming consensus among cross-border CPAs is to completely liquidate the TFSA prior to establishing U.S. tax residency. The cash can then be transferred to a high-yield U.S. savings account, invested in U.S.-domiciled ETFs, or deployed into a 401(k) / IRA. If the Canadian emigrant returns to Canada in the future, their historical TFSA contribution room is fully restored on January 1st following their re-establishment of Canadian tax residency."
+  ],
+  "example": {
+    "title": "Cross-Border Matrix: Canadian Accounts Under IRS / CRA Tax Law",
+    "intro": "A Canadian software engineer with $65,000 in a TFSA, $90,000 in an RRSP, and $35,000 in an FHSA moves from Toronto to Seattle on an H-1B visa. Here is how the IRS and CRA treat each account.",
+    "table": {
+      "head": ["Canadian Account Type", "CRA Tax Status on Departure", "IRS Account Classification", "Mandatory IRS Tax Filings", "Recommended Cross-Border Strategy"],
+      "rows": [
+        ["TFSA (Tax-Free Savings Account)", "No departure tax; withdrawals tax-free", "Foreign Grantor Trust (IRC 671–679) & PFIC", "Form 3520, Form 3520-A, Form 8621, FBAR", "Liquidate 100% to cash prior to U.S. residency date"],
+        ["RRSP / RRIF (Retirement Accounts)", "Tax-sheltered; no deemed disposition", "Recognized Pension (Treaty Article XVIII)", "FBAR (FinCEN 114), Form 8938 (FATCA only)", "Maintain account; hold US-friendly single equities/ETFs"],
+        ["FHSA (First Home Savings Account)", "Contribution room frozen; no tax-free home buy", "Unrecognized Foreign Account / Trust", "Form 3520 / 3520-A (arguable), FBAR", "Roll over into RRSP or liquidate prior to departure"],
+        ["Non-Registered Taxable Brokerage", "Deemed disposition (departure tax ITA 128.1)", "Taxable Foreign Investment Account", "Form 1040 Schedule D, Form 8938, FBAR", "Consider triggering gains in Canada or holding cash"]
+      ]
+    },
+    "notes": [
+      "Revenue Procedure 2020-17 provided relief from Forms 3520/3520-A for certain tax-favored foreign retirement and non-retirement trusts (such as RESPs and RDSPs), but the IRS explicitly declined to extend this safe harbor to TFSAs.",
+      "TFSA contribution room is not lost upon liquidation: every dollar withdrawn is added back to your Canadian contribution room on January 1st of the following calendar year, ready to be re-contributed if you ever move back to Canada."
+    ],
+    "conclusion": "Holding a $50,000 TFSA in the United States can generate $3,000+ in annual cross-border tax preparation fees and risk $10,000 statutory IRS penalties. Clean liquidation prior to crossing the border is the standard fiduciary path."
+  },
+  "misunderstandings": [
+    {
+      "myth": "The Canada-U.S. Tax Treaty protects your TFSA just like your RRSP.",
+      "reality": "The Treaty explicitly protects RRSPs and RRIFs under Article XVIII, but does not recognize the TFSA. The IRS treats all TFSA interest, dividends, and realized capital gains as fully taxable U.S. income."
+    },
+    {
+      "myth": "You only have to report your TFSA to the IRS if you withdraw money from it.",
+      "reality": "As a Foreign Grantor Trust, you must report annual income and file Form 3520-A and Form 3520 every single year, regardless of whether you withdraw a single penny."
+    },
+    {
+      "myth": "Form 3520-A is filed alongside your regular tax return on April 15th.",
+      "reality": "Form 3520-A has a mandatory standalone filing deadline of March 15th. Missing this date triggers an immediate statutory $10,000 penalty notice from the IRS."
+    },
+    {
+      "myth": "Closing your TFSA permanently forfeits all your Canadian contribution room.",
+      "reality": "TFSA withdrawals are credited back to your Canadian contribution room on January 1st of the next year. You can re-contribute the entire amount tax-free if you return to Canada."
+    }
+  ],
+  "tradeoffs": [
+    "Liquidating your TFSA before moving eliminates all IRS trust reporting penalties and PFIC accounting costs, but forfeits Canadian tax-sheltered compounding while abroad.",
+    "Holding individual U.S. or Canadian stocks inside an RRSP preserves tax-deferred growth under the Treaty, but Canadian mutual funds inside non-registered accounts create severe PFIC friction.",
+    "Rolling an FHSA into an RRSP before departing Canada avoids the 25% non-resident withholding tax on liquidation, but permanently locks the capital into retirement rules."
+  ],
+  "questions": [
+    "What is your exact target date for establishing U.S. tax residency under the Substantial Presence Test or Green Card test?",
+    "Does your Canadian TFSA hold Canadian mutual funds or TSX-listed ETFs that trigger PFIC Form 8621 filings?",
+    "Have you aggregated the balances of all Canadian accounts (TFSA, RRSP, bank accounts) to confirm FBAR $10,000 reporting thresholds?",
+    "Have you evaluated liquidating your TFSA and moving cash into a high-yield U.S. brokerage prior to your departure?"
+  ],
+  "sources": [
+    {
+      "label": "Internal Revenue Service - Instructions for Form 3520 and Form 3520-A",
+      "url": "https://www.irs.gov/forms-pubs/about-form-3520-a",
+      "note": "Annual information reporting requirements for U.S. persons owning foreign grantor trusts."
+    },
+    {
+      "label": "IRS Revenue Procedure 2014-55: Canadian Retirement Plan Relief",
+      "url": "https://www.irs.gov/irb/2014-44_IRB#RP-2014-55",
+      "note": "Formal treaty procedure granting automatic relief to RRSPs while excluding TFSAs."
+    },
+    {
+      "label": "Internal Revenue Code Section 6677 - Failure to File Information with Respect to Certain Foreign Trusts",
+      "url": "https://www.law.cornell.edu/uscode/text/26/6677",
+      "note": "Statutory basis for the $10,000 minimum penalty and 35% gross valuation penalty."
+    },
+    {
+      "label": "FinCEN Form 114 - Report of Foreign Bank and Financial Accounts (FBAR)",
+      "url": "https://www.fincen.gov/report-foreign-bank-and-financial-accounts",
+      "note": "Bank Secrecy Act requirements for foreign accounts exceeding $10,000 aggregate."
+    }
+  ],
+  "related": [
+    "tfsa-vs-rrsp",
+    "accidental-fhsa-over-contributions-non-resident-freezes",
+    "internationally-trained-doctors-nurses-first-year",
+    "newcomers-first-year-financial-checklist"
+  ],
+  "contactTopic": "accounts",
+  "invitationAbout": "cross-border Canada-U.S. registered account coordination and departure tax planning",
+  "url": "/education/irs-foreign-trust-nightmare-moving-to-us-with-tfsa",
+  "readingMinutes": 11
+},
+{
+  "slug": "corporate-passive-income-trap-50000-clawback-rule",
+  "title": "The Corporate Passive Income Trap: CRA $50,000 AAII Clawback Rule & Form T2 Schedule 7",
+  "kind": "insight",
+  "category": "decision-making",
+  "description": "Understand the ITA Section 125(5.1) $50,000 passive income threshold that claws back the federal Small Business Deduction at a 5-for-1 rate up to $150,000 AAII.",
+  "figuresAsOf": "2026 Corporate Tax Framework",
+  "question": "How does earning more than $50,000 in passive investment income inside your Canadian corporation trigger a 5-to-1 grind on your Small Business Deduction (SBD)?",
+  "problem": "Incorporated Canadian business owners, physicians, consultants, and contractors who accumulate retained earnings inside their Canadian-Controlled Private Corporation (CCPC) face a steep tax cliff under Section 125(5.1) of the Income Tax Act. Once your corporation and associated entities generate more than $50,000 of Adjusted Aggregate Investment Income (AAII) in a tax year, the federal Small Business Deduction (SBD) limit ($500,000) is reduced by $5 for every $1 of investment income above $50,000. At $150,000 of passive income, your SBD is reduced to zero—pushing active business profits from the preferential 12.2% small business tax rate up to the 26.5% to 29% general corporate rate.",
+  "overview": [
+    "The Genesis of the Passive Income Clawback (ITA Section 125(5.1)): Under Canadian tax integration, CCPCs enjoy a low corporate tax rate (9% federal + 2.5% to 3.2% provincial) on the first $500,000 of active business income. In 2018, the federal government enacted Section 125(5.1) to curb what it viewed as an unfair tax deferral advantage: business owners retaining profits inside corporations to build substantial passive investment portfolios. The legislation introduced a statutory formula reducing the business limit based on 'Adjusted Aggregate Investment Income' (AAII).",
+    "Calculating Adjusted Aggregate Investment Income (AAII): AAII is reported on Schedule 7 of your T2 Corporation Income Tax Return. It includes: (1) Net taxable capital gains (excluding capital gains from the sale of active business property or shares of an active connected CCPC); (2) Net rental income; (3) Foreign investment income; and (4) Portfolio dividends from non-connected corporations. It specifically excludes capital gains from active business assets, eligible dividends from connected operating companies, and life insurance proceeds.",
+    "The 5-for-1 Grind Formula: For every $1 of AAII exceeding $50,000, your corporation's $500,000 small business limit is reduced by $5 in the following taxation year. For example, if your holding company or operating company generates $70,000 in passive investment income, the excess over $50,000 is $20,000. The clawback is $20,000 x 5 = $100,000. Your SBD limit drops from $500,000 to $400,000. The remaining $100,000 of active operating earnings is pushed into the general corporate tax bracket, triggering an immediate extra tax liability.",
+    "The Complete Elimination Point ($150,000 AAII): When AAII reaches $150,000, the total clawback is ($150,000 - $50,000) x 5 = $500,000. The Small Business Deduction is 100% eliminated. All active corporate earnings from dollar one are taxed at the general corporate rate (26.5% to 29% depending on province), stripping away roughly $70,000 to $84,000 in annual corporate working capital.",
+    "Associated Corporation Rules: You cannot evade the clawback by creating a separate holding company ('Holdco') or family trust. Under Section 256 of the Income Tax Act, passive investment income across all associated corporations is aggregated. If your Holdco earns $60,000 in investment income, it directly grinds down the Small Business Deduction of your operating company ('Opco').",
+    "Strategic Mitigations: Corporate-Owned Life Insurance & Alternative Allocations: Incorporated owners use several legitimate structural strategies to navigate the $50,000 threshold: (1) Corporate-Owned Permanent Life Insurance: Cash values accumulating inside an exempt life insurance policy under Section 148 of the ITA grow on a tax-deferred basis and are explicitly excluded from AAII calculations; (2) Individual Pension Plans (IPPs) or RCA structures which move retained earnings into registered corporate retirement trusts; and (3) Strategic capital dividend distributions via the Capital Dividend Account (CDA) to clear out historical balances."
+  ],
+  "example": {
+    "title": "The 5-for-1 Small Business Deduction (SBD) Grind Schedule",
+    "intro": "How increasing passive investment income (AAII) reduces the $500,000 SBD limit and increases corporate tax liabilities on $500,000 of active business income in Ontario/New Brunswick (12.2% small business rate vs 26.5% general rate).",
+    "table": {
+      "head": ["Adjusted Passive Income (AAII)", "Excess Over $50k", "SBD Grind ($5 per $1)", "Remaining SBD Limit", "Active Income at General Rate", "Extra Corporate Tax Drag"],
+      "rows": [
+        ["$50,000 or less", "$0", "$0", "$500,000", "$0", "$0 (Full 12.2% rate applied)"],
+        ["$60,000", "$10,000", "$50,000", "$450,000", "$50,000", "+$7,150 annual tax drag"],
+        ["$75,000", "$25,000", "$125,000", "$375,000", "$125,000", "+$17,875 annual tax drag"],
+        ["$100,000", "$50,000", "$250,000", "$250,000", "$250,000", "+$35,750 annual tax drag"],
+        ["$125,000", "$75,000", "$375,000", "$125,000", "$375,000", "+$53,625 annual tax drag"],
+        ["$150,000 or more", "$100,000", "$500,000", "$0 (Fully Wiped Out)", "$500,000", "+$71,500 annual tax drag"]
+      ]
+    },
+    "notes": [
+      "Calculated using a 14.3% rate differential between the small business rate (12.2%) and general corporate rate (26.5%).",
+      "AAII is calculated on a corporate group basis, combining Opco, Holdco, and all associated corporate entities under ITA Section 125(5.1).",
+      "Taxable capital gains from selling active business assets (such as commercial real estate used in active operations) are excluded from AAII."
+    ],
+    "conclusion": "Earning an extra $10,000 of passive income above the $50,000 threshold can trigger $7,150 in additional corporate tax—an effective marginal tax rate of over 70% on that marginal passive dollar."
+  },
+  "misunderstandings": [
+    {
+      "myth": "Moving investments to a separate Holding Company prevents the small business deduction clawback.",
+      "reality": "Under Section 256 associated corporation rules, the CRA aggregates AAII across all related operating and holding companies. A Holdco earning $60k grinds Opco's limit identically."
+    },
+    {
+      "myth": "Passive income only counts interest and dividends, not capital gains.",
+      "reality": "Net taxable capital gains (the taxable 50% or 66.7% portion) are fully included in AAII, meaning a single large portfolio rebalancing can trigger the full $500,000 SBD wipeout."
+    },
+    {
+      "myth": "The clawback applies in the same year the passive income is earned.",
+      "reality": "The SBD reduction takes effect in the taxation year following the year the AAII was earned, often catching business owners off-guard twelve months later."
+    },
+    {
+      "myth": "Corporate-owned life insurance cash values count toward the $50,000 passive income limit.",
+      "reality": "Cash value growth within an exempt life insurance policy under Section 148 of the ITA is explicitly excluded from AAII and does not reduce the SBD."
+    }
+  ],
+  "tradeoffs": [
+    "Holding passive equity portfolios in corporate accounts provides initial tax deferral, but triggers severe 5-for-1 SBD grind once portfolio income passes $50,000.",
+    "Distributing corporate earnings as personal dividends eliminates the corporate passive income grind, but triggers immediate personal income tax at top marginal rates.",
+    "Corporate-owned permanent life insurance shields investment growth from AAII and creates tax-free Capital Dividend Account (CDA) credits upon death, but requires multi-year premium commitments."
+  ],
+  "questions": [
+    "What was your combined corporate group's Adjusted Aggregate Investment Income (AAII) reported on Schedule 7 of last year's T2?",
+    "Are you planning any significant portfolio rebalancing or property dispositions that could trigger large taxable capital gains this year?",
+    "Has your CPA modeled the tax differential of paying corporate profits out as salary/dividends vs retaining them inside the business?",
+    "Have you evaluated corporate-exempt asset structures (such as corporate life insurance or IPPs) to shelter surplus liquidity from AAII?"
+  ],
+  "sources": [
+    {
+      "label": "Canada Revenue Agency - Small Business Deduction Limit Reduction (ITA Section 125(5.1))",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/corporations/corporation-tax-rates.html",
+      "note": "Statutory rules for the $50,000 AAII threshold and 5-for-1 business limit reduction."
+    },
+    {
+      "label": "CRA T2 Corporation Income Tax Guide - Schedule 7: Aggregate Investment Income",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4012.html",
+      "note": "Detailed calculation worksheet for determining AAII and passive investment income grind."
+    },
+    {
+      "label": "Income Tax Act, Section 148 - Disposition of an Interest in a Life Insurance Policy",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/page-102.html",
+      "note": "Statutory basis for exempt policy status and exclusion from corporate AAII."
+    }
+  ],
+  "related": [
+    "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first",
+    "66-percent-capital-gains-tax-family-cottage-trap",
+    "how-much-tax-do-i-save-with-a-10000-rrsp-contribution"
+  ],
+  "contactTopic": "investing",
+  "invitationAbout": "structuring corporate retained earnings and passive income mitigation strategies",
+  "url": "/education/corporate-passive-income-trap-50000-clawback-rule",
+  "readingMinutes": 12
+},
+{
+  "slug": "66-percent-capital-gains-tax-family-cottage-trap",
+  "title": "The 66.7% Capital Gains Inclusion Rate & The Family Cottage Tax Trap (Form T2091 & Bill C-69)",
+  "kind": "insight",
+  "category": "family",
+  "description": "How Canada's 66.7% capital gains inclusion rate and Section 70(5) deemed disposition at death trigger unexpected tax bills on family cottages and vacation homes.",
+  "figuresAsOf": "2026 Budget 2024 / Bill C-69 Rules",
+  "question": "How does Canada's 66.7% capital gains inclusion rate impact vacation properties, deemed disposition upon death, and Form T2091 designations?",
+  "problem": "For generations, Canadian families have passed down family cottages, vacation properties, and recreational lakefront parcels under the assumption that capital gains taxes could be managed with basic spousal rollovers. Following the passage of Bill C-69 (Budget 2024), any capital gain exceeding $250,000 for individuals—and from dollar one for personal trusts and corporations—faces a 66.67% inclusion rate rather than the historical 50%. Under Section 70(5) of the Income Tax Act, upon the death of the second spouse, the cottage is deemed disposed of at Fair Market Value (FMV). On a cottage purchased decades ago for $80,000 and now valued at $900,000, the terminal tax liability can exceed $300,000, forcing grieving heirs into an emergency fire-sale.",
+  "overview": [
+    "The New Two-Tier Capital Gains Framework (Bill C-69): Effective June 25, 2024, Canada transitioned from a uniform 50% capital gains inclusion rate to a tiered structure: (1) Individuals pay tax on 50% of the first $250,000 of annual net capital gains; (2) Individuals pay tax on 66.67% of net capital gains exceeding $250,000; and (3) Corporations and family trusts pay tax on 66.67% of all capital gains from the very first dollar. At top provincial tax brackets (e.g., 53.5% in Ontario, 54% in Nova Scotia, 53.3% in New Brunswick), the effective marginal tax rate on large capital gains jumps from ~26.7% to over 35.6%.",
+    "The Deemed Disposition at Death Trap (ITA Section 70(5)): Canadian tax law does not have an inheritance or estate tax, but it imposes something far more aggressive: Section 70(5) deemed disposition. When the second spouse passes away, the CRA treats every asset—including vacation homes, non-registered stocks, and real estate—as if it were sold at fair market value immediately prior to death. Because a recreational cottage has often appreciated by $500,000 to $1,500,000 over a 30-year family tenure, the deemed capital gain pushes the deceased's final tax return into the 66.7% inclusion tier.",
+    "Form T2091(IND) and the Principal Residence Exemption (PRE): Canadians can designate any property they 'ordinarily inhabit' at some point during the year as their Principal Residence under Section 54 of the ITA, sheltering gains from tax using Form T2091(IND) (Designation of a Property as a Principal Residence by an Individual). However, a family unit (spouses and minor children) can only designate one single property per calendar year for years after 1981. If you allocate the PRE to your cottage to eliminate a $600,000 cottage gain, you expose your primary city residence to capital gains tax for those exact same years.",
+    "Adjusted Cost Base (ACB) Tracking and Capital Improvements: Many cottage owners fail to maintain receipts for capital improvements made over decades (e.g., septic system installations, dock replacements, roof overhauls, electrical upgrades, additions). Under Section 53 of the ITA, legitimate capital additions increase your Adjusted Cost Base (ACB) and directly reduce taxable capital gains. Routine repairs and maintenance do not qualify. Without contemporaneous receipts and contractor invoices, the CRA will disallow ACB additions upon audit.",
+    "Estate Liquidity Solutions: Permanent Joint Last-to-Die Insurance: When heirs inherit a cottage, they face a tax deadline on April 30th (or six months after death) to pay the terminal tax bill in cash. Banks rarely lend to an estate without personal guarantees, leaving heirs with two choices: pay hundreds of thousands out of pocket or sell the family retreat. The classic wealth preservation solution is a Joint Last-to-Die Permanent Life Insurance policy. The tax-free death benefit pays out precisely when Section 70(5) deemed disposition occurs, providing immediate liquid cash to settle the CRA terminal liability while allowing the cottage to pass seamlessly to the next generation."
+  ],
+  "example": {
+    "title": "Cottage Capital Gains Tax Comparison: Pre-June 25, 2024 vs Post-June 25, 2024",
+    "intro": "A family cottage in the Muskokas/Shediac originally purchased for $150,000 (ACB) is valued at $950,000 upon the passing of the surviving parent, triggering an $800,000 capital gain on the terminal tax return (top marginal bracket of 53.5%).",
+    "table": {
+      "head": ["Capital Gain Breakdown", "Pre-June 25, 2024 (50% Flat)", "Post-June 25, 2024 (Tiered 66.7%)", "Tax Liability Difference"],
+      "rows": [
+        ["Total Fair Market Value (FMV)", "$950,000", "$950,000", "No change in property valuation"],
+        ["Adjusted Cost Base (ACB)", "$150,000", "$150,000", "Base acquisition plus additions"],
+        ["Total Capital Gain Triggered", "$800,000", "$800,000", "Deemed disposition under ITA 70(5)"],
+        ["Tier 1 Taxable Gain (First $250k)", "$125,000 (50% of $250k)", "$125,000 (50% of $250k)", "$0 difference on first tier"],
+        ["Tier 2 Taxable Gain (Excess $550k)", "$275,000 (50% of $550k)", "$366,685 (66.67% of $550k)", "+$91,685 added to taxable income"],
+        ["Total Taxable Capital Gain", "$400,000", "$491,685", "+$91,685 in taxable income"],
+        ["Estimated Estate Tax Bill (53.5%)", "$214,000", "$263,051", "+$49,051 cash tax increase (+22.9%)"]
+      ]
+    },
+    "notes": [
+      "The new 66.7% inclusion rate increases the estate's cash tax liability by $49,051 (+22.9%) on an $800,000 gain.",
+      "If the cottage were held in a Family Trust or Private Holding Company, the 66.67% inclusion rate would apply to the entire $800,000 gain from dollar one, generating $285,348 in immediate tax.",
+      "CRA Form T2091(IND) must be filed with the terminal T1 return even if the Principal Residence Exemption covers only a portion of the years owned."
+    ],
+    "conclusion": "Without a liquid funding mechanism (such as Joint Last-to-Die insurance), heirs must secure $263,000 in cash within months of a parent's death, or be forced to put the family cottage on the market."
+  },
+  "misunderstandings": [
+    {
+      "myth": "Canada has no estate tax, so children inherit the cottage completely tax-free.",
+      "reality": "Canada has no formal 'estate tax', but Section 70(5) deemed disposition taxes all accrued capital gains as if the property was sold the moment before death."
+    },
+    {
+      "myth": "You can avoid the tax by transferring the cottage to your children for $1 while you are alive.",
+      "reality": "Under Section 69 of the ITA (Non-Arm's Length Transactions), the CRA deems you to have sold the property at Fair Market Value, triggering immediate capital gains tax, while the child's ACB is set at $1, resulting in devastating double taxation."
+    },
+    {
+      "myth": "You can claim the Principal Residence Exemption on both your city home and your cottage.",
+      "reality": "A married couple can only designate one single property per calendar year between them for any year after 1981 under Section 54."
+    },
+    {
+      "myth": "All cottage renovations and repairs increase your Adjusted Cost Base.",
+      "reality": "Only capital additions (such as a new bunkie, septic tank, or drilled well) increase ACB. Routine maintenance, painting, and dock repairs do not qualify."
+    }
+  ],
+  "tradeoffs": [
+    "Allocating the Principal Residence Exemption to the cottage shelters its gains, but exposes your city home's future appreciation to full capital gains taxation.",
+    "Transferring the cottage to a family trust locks in future appreciation for the next generation, but triggers an immediate deemed disposition every 21 years under the 21-Year Rule.",
+    "Funding the estate tax through permanent Joint Last-to-Die life insurance guarantees cash liquidity for heirs, but requires ongoing annual premium payments during your lifetime."
+  ],
+  "questions": [
+    "What is your family cottage's documented Adjusted Cost Base (ACB), and do you possess receipts for major capital improvements?",
+    "Have you compared the historical and projected appreciation of your city residence versus your recreational property to evaluate Form T2091 PRE allocation?",
+    "Does your estate have sufficient liquid non-registered investments to cover a $250,000+ terminal tax liability without selling real estate?",
+    "Have you explored a Joint Last-to-Die life insurance policy structure to fund the deemed disposition liability under Bill C-69?"
+  ],
+  "sources": [
+    {
+      "label": "Canada Revenue Agency - Income Tax Folio S1-F3-C2: Principal Residence",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-1-individuals/folio-3-family-unit-issues/income-tax-folio-s1-f3-c2-principal-residence.html",
+      "note": "CRA interpretation rules governing the one-property-per-family-unit restriction."
+    },
+    {
+      "label": "CRA Form T2091(IND) - Designation of a Property as a Principal Residence by an Individual",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t2091ind.html",
+      "note": "Mandatory reporting form required when disposing of or deeming disposition of a residence."
+    },
+    {
+      "label": "Income Tax Act, Section 70(5) - Deemed Disposition at Death",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/page-48.html",
+      "note": "Statutory basis for terminal taxation of capital property at fair market value."
+    },
+    {
+      "label": "Department of Finance Canada - Bill C-69 Capital Gains Inclusion Rate Regulations",
+      "url": "https://www.canada.ca/en/department-finance/news/2024/06/capital-gains-inclusion-rate.html",
+      "note": "Statutory implementation of the two-tier 50% / 66.67% inclusion framework."
+    }
+  ],
+  "related": [
+    "corporate-passive-income-trap-50000-clawback-rule",
+    "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first",
+    "term-vs-permanent-life-insurance",
+    "how-much-tax-do-i-save-with-a-10000-rrsp-contribution"
+  ],
+  "contactTopic": "family",
+  "invitationAbout": "structuring estate liquidity and family cottage succession planning",
+  "url": "/education/66-percent-capital-gains-tax-family-cottage-trap",
+  "readingMinutes": 11
+},
+{
+  "slug": "switching-uninsured-mortgages-without-osfi-stress-test",
+  "title": "Switching Uninsured Mortgages Without the OSFI Stress Test: The Straight-Switch Exemption",
+  "kind": "guide",
+  "category": "debt-credit",
+  "description": "How OSFI Guideline B-20 enables straight switches of uninsured residential mortgages between financial institutions without the stress test at renewal.",
+  "figuresAsOf": "2026 OSFI Guideline B-20 Framework",
+  "question": "How does OSFI's uninsured straight-switch rule allow Canadian homeowners with 20%+ equity to switch lenders at renewal without facing the Minimum Qualifying Rate?",
+  "problem": "For years, Canadian mortgagors who made a 20% or greater down payment (uninsured mortgages) were trapped with their existing lender at renewal. Under OSFI Guideline B-20, switching to a new federally regulated financial institution (FRFI) required re-qualifying under the mortgage stress test—at the higher of the contract rate plus 2.00% or 5.25%. Because interest rates surged from 2% to over 5%, qualifying at 7%+ disqualified hundreds of thousands of creditworthy homeowners, leaving them captive to uncompetitive renewal rates. Following the Office of the Superintendent of Financial Institutions (OSFI) landmark November 2024 regulatory update, borrowers can now execute an 'uninsured straight switch' to a new bank without facing the stress test, provided specific statutory conditions are satisfied.",
+  "overview": [
+    "The Historical Underwriting Trap: Insured vs. Uninsured Portability: Under Canadian lending rules, high-ratio insured mortgages (down payments under 20% backed by CMHC, Sagen, or Canada Guaranty) have long enjoyed an exemption from the stress test when switching lenders at renewal. However, conventional borrowers who put 20% down or accumulated substantial home equity were arbitrarily penalized: transferring their mortgage balance to a competing bank mandated a full underwriting review and Guideline B-20 stress-testing. This stifled mortgage market competition and allowed incumbent banks to offer sub-optimal renewal rates knowing clients were trapped.",
+    "The OSFI Guideline B-20 Straight-Switch Announcement: Effective November 21, 2024, OSFI eliminated the Minimum Qualifying Rate (MQR) stress test requirement for straight switches of uninsured residential mortgages between federally regulated financial institutions. OSFI acknowledged that a borrower who has demonstrated an impeccable repayment history does not pose an elevated prudential credit risk simply by transferring their existing loan balance to a competing institution offering a lower interest rate.",
+    "The Three Mandatory Straight-Switch Conditions: To bypass the stress test, your switch must meet three strict criteria: (1) No Increase in Principal: You cannot borrow additional funds (refinancing equity or rolling debt into the mortgage requires a full stress test); (2) No Amortization Extension: The remaining amortization period cannot exceed the remaining amortization of the original loan schedule; and (3) Good Standing: The mortgage must be current, with no active defaults or 30-day arrears in the preceding 12 months.",
+    "Collateral Charges vs. Standard Charges: The Title Assignment Factor: While OSFI removed the underwriting stress test barrier, an operational hurdle remains: how your mortgage is registered on title. A 'Standard Charge' mortgage can be assigned to a new lender via a simple legal transfer document, often costing $200–$400 (frequently reimbursed by the incoming lender). A 'Collateral Charge' (the standard format used by TD, Scotiabank, and several major banks to allow lines of credit) cannot be assigned. It requires formal discharge from the old lender and new registration by a lawyer or title agency ($800–$1,200). Many competing lenders now provide promotional switch programs covering these discharge and registration legal costs to win prime conventional borrowers.",
+    "Strategic Renewal Playbook: 120 Days to Maturity: Do not wait for your existing lender's renewal letter to arrive 30 days before maturity. Begin shopping 120 days prior to term expiry. Obtain formal straight-switch quotes from independent mortgage brokers and competing Schedule I/II banks. With the stress test removed, you can use a verified competing rate offer as leverage to force your existing lender into a rate match, or execute the switch and save thousands in annual interest."
+  ],
+  "example": {
+    "title": "Straight-Switch Qualification Matrix: What Is Permitted vs What Triggers the Stress Test",
+    "intro": "A homeowner with an uninsured conventional mortgage of $480,000 (home value $800,000, 18 years remaining on original 25-year amortization) approaches maturity.",
+    "table": {
+      "head": ["Renewal / Switch Scenario", "Principal Balance", "Amortization Term", "OSFI Stress Test Required?", "Lender Underwriting Impact"],
+      "rows": [
+        ["Scenario A: Pure Straight Switch", "$480,000 (Exact match)", "18 years (Remaining)", "NO (Exemption Applies)", "Transfers to new bank at lower contract rate without MQR stress test"],
+        ["Scenario B: Switch + Equity Refinance", "$530,000 (+$50k cash-out)", "18 years", "YES (Full Stress Test)", "Treated as a refinance under B-20; must qualify at contract rate + 2.00%"],
+        ["Scenario C: Switch + Amortization Stretch", "$480,000", "25 years (+7 years added)", "YES (Full Stress Test)", "Extending amortization beyond contract schedule triggers full stress test"],
+        ["Scenario D: Switch + Collateral Discharge", "$480,000 (Exact match)", "18 years (Remaining)", "NO (Exemption Applies)", "No stress test; legal discharge/registration fees apply ($800–$1,200)"],
+        ["Scenario E: Incumbent Lender Renewal", "$480,000", "18 years", "NO (Internal Renewal)", "Incumbent bank offers renewal rate; borrower now has competitive leverage"]
+      ]
+    },
+    "notes": [
+      "Lenders still verify employment, income stability, property taxes, and conduct an automated property valuation (AVM) even when the stress test is waived.",
+      "The straight-switch exemption applies between federally regulated institutions (Schedule I, II, and III banks); provincial credit unions are governed by provincial regulators who have mirrored this policy.",
+      "Borrowers with non-standard income (self-employed business owners, commission earners) benefit most, as proving the stress test income ratio was previously their primary obstacle."
+    ],
+    "conclusion": "The removal of the B-20 stress test for uninsured straight switches levels the playing field for conventional homeowners, allowing millions in accumulated equity to be freely shopped across competitive lenders."
+  },
+  "misunderstandings": [
+    {
+      "myth": "The straight switch exemption means you can borrow extra cash against your home equity without a stress test.",
+      "reality": "The moment you add a single dollar of new debt to the principal balance, the transaction becomes an equity refinance and triggers the full B-20 stress test."
+    },
+    {
+      "myth": "You can use a straight switch to stretch your amortization back out to 25 or 30 years to lower monthly payments.",
+      "reality": "The remaining amortization cannot exceed the remaining contractual schedule. Extending the amortization triggers a complete underwriting stress test."
+    },
+    {
+      "myth": "All mortgages can be transferred to a new lender for free.",
+      "reality": "If your mortgage is registered as a Collateral Charge (very common with major banks), it cannot be assigned. It requires title discharge and new legal registration ($800–$1,200), though new lenders often cover this fee."
+    },
+    {
+      "myth": "The new bank does not check your income or credit score if the stress test is waived.",
+      "reality": "Lenders still perform standard due diligence: confirming active employment, credit bureau standing, and property value. Only the 2.00% interest rate stress test hurdle is removed."
+    }
+  ],
+  "tradeoffs": [
+    "Executing a straight switch can secure a 30 to 60 basis point interest discount over your bank's renewal letter, but requires gathering paystubs, mortgage statements, and property tax bills.",
+    "Sticking with your incumbent lender requires zero paperwork and no switch fees, but typically results in paying thousands in uncompetitive posted-rate markup over a 5-year term.",
+    "Switching a collateral charge mortgage requires legal registration fees, but competing banks frequently offer cash-back incentives ($1,000 to $2,500) that more than offset closing costs."
+  ],
+  "questions": [
+    "Is your current mortgage registered as a Standard Charge or a Collateral Charge on your provincial land title registry?",
+    "What is your exact remaining contractual amortization period and outstanding principal balance as of your renewal date?",
+    "Have you requested a formal payout statement from your current lender 90 to 120 days prior to maturity?",
+    "Has an independent mortgage professional compared your renewal letter against top tier uninsured straight-switch rates across multiple Schedule I lenders?"
+  ],
+  "sources": [
+    {
+      "label": "Office of the Superintendent of Financial Institutions (OSFI) - Guideline B-20 Straight Switch Exemption Announcement",
+      "url": "https://www.osfi-bsif.gc.ca/en/news/osfi-removes-underwriting-barriers-straight-switches-uninsured-mortgages",
+      "note": "Official OSFI policy directive removing the Minimum Qualifying Rate for straight switches of uninsured residential mortgages."
+    },
+    {
+      "label": "OSFI - Residential Mortgage Underwriting Practices and Procedures (Guideline B-20)",
+      "url": "https://www.osfi-bsif.gc.ca/eng/fi-if/rg-ro/gdn-ort/gl-ld/Pages/b20.aspx",
+      "note": "Foundational federal regulatory framework governing Canadian mortgage qualification and stress tests."
+    },
+    {
+      "label": "Financial Consumer Agency of Canada (FCAC) - Guideline on Existing Consumer Mortgage Loans in Exceptional Circumstances",
+      "url": "https://www.canada.ca/en/financial-consumer-agency.html",
+      "note": "Federal consumer protection standards governing mortgage renewals and early notice windows."
+    }
+  ],
+  "related": [
+    "mortgages-home-buying-fixed-vs-variable-amortization-stress-test",
+    "personal-line-of-credit-vs-heloc-canada",
+    "fhsa-vs-hbp-first-time-home-buyer-stacking",
+    "credit-cards-loans-lines-of-credit-repayment-strategies"
+  ],
+  "contactTopic": "mortgage",
+  "invitationAbout": "evaluating uninsured straight-switch options and renewal rate benchmarking",
+  "url": "/education/switching-uninsured-mortgages-without-osfi-stress-test",
+  "readingMinutes": 10
 }
 ];
 

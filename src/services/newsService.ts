@@ -16,8 +16,8 @@ export interface NewsItem {
 
 let cachedNews: NewsItem[] | null = null;
 let lastFetchTime = 0;
-const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
-const MAX_ITEM_AGE_MS = 28 * 24 * 60 * 60 * 1000; // 28 days max age
+const CACHE_TTL_MS = 2 * 60 * 1000; // 2 minutes auto-refresh window
+const MAX_ITEM_AGE_MS = 14 * 24 * 60 * 60 * 1000; // 14 days max age
 
 function decodeHtmlEntities(str: string): string {
   return str
@@ -85,12 +85,22 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
   const itemMatches = xml.match(/<item[\s\S]*?<\/item>/gi) || [];
   const now = Date.now();
 
-  for (const block of itemMatches.slice(0, 12)) {
+  for (const block of itemMatches.slice(0, 15)) {
     const titleMatch = block.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i);
     const linkMatch = block.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/i);
     const dateMatch = block.match(/<pubDate>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/pubDate>/i);
     const sourceMatch = block.match(/<source[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/source>/i);
     const descMatch = block.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i);
+
+    // Extract genuine thumbnail/image from feed if available
+    const imgMatch =
+      block.match(/<media:content[^>]+url=['"]([^'"]+)['"]/i) ||
+      block.match(/<enclosure[^>]+url=['"]([^'"]+)['"]/i) ||
+      block.match(/<media:thumbnail[^>]+url=['"]([^'"]+)['"]/i) ||
+      block.match(/<img[^>]+src=['"]([^'"]+)['"]/i) ||
+      (descMatch ? descMatch[1].match(/src=['"]([^'"]+)['"]/i) : null);
+
+    let extractedImgUrl = imgMatch && imgMatch[1] && imgMatch[1].startsWith("http") ? imgMatch[1] : undefined;
 
     let title = (titleMatch ? titleMatch[1] : "").replace(/<[^>]+>/g, "").trim();
     let link = (linkMatch ? linkMatch[1] : "").trim();
@@ -126,7 +136,7 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
       const lower = title.toLowerCase();
 
       let category: "rates" | "housing" | "tax" | "economy" = "economy";
-      let imageUrl = "/images/news/statcan_economy.jpg";
+      let fallbackImageUrl = "/images/news/statcan_economy.jpg";
 
       if (
         lower.includes("rate") ||
@@ -139,7 +149,7 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
         lower.includes("hike")
       ) {
         category = "rates";
-        imageUrl = "/images/news/boc_policy.jpg";
+        fallbackImageUrl = "/images/news/boc_policy.jpg";
       } else if (
         lower.includes("mortgage") ||
         lower.includes("housing") ||
@@ -147,7 +157,7 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
         lower.includes("real estate")
       ) {
         category = "housing";
-        imageUrl = "/images/news/housing_growth.jpg";
+        fallbackImageUrl = "/images/news/housing_growth.jpg";
       } else if (
         lower.includes("tax") ||
         lower.includes("cra") ||
@@ -157,7 +167,7 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
         lower.includes("benefit")
       ) {
         category = "tax";
-        imageUrl = "/images/news/cra_tax.jpg";
+        fallbackImageUrl = "/images/news/cra_tax.jpg";
       }
 
       if (!excerpt || excerpt.length < 20) {
@@ -170,7 +180,7 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
         id: Buffer.from(title.slice(0, 40)).toString("base64").replace(/[^a-zA-Z0-9]/g, "").slice(0, 16),
         title,
         excerpt,
-        imageUrl,
+        imageUrl: extractedImgUrl || fallbackImageUrl,
         link,
         pubDate: new Date(parsedTime).toISOString(),
         source,
