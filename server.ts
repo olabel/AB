@@ -39,7 +39,7 @@ function getSemanticFallbackHtml(pathname: string): string {
   return "";
 }
 import { getLatestFinancialNews } from "./src/services/newsService.ts";
-import { processContactSubmission, recordConfirmedSubscriber } from "./src/services/contactEmailService.ts";
+import { processContactSubmission, recordConfirmedSubscriber, verifySubscriptionToken } from "./src/services/contactEmailService.ts";
 import express, { Request, Response, NextFunction } from "express";
 import fs from "fs";
 import path from "path";
@@ -52,6 +52,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === "production";
+
+// Enable reverse-proxy trust for accurate IP resolution in Cloud Run / hosting environments
+app.set("trust proxy", 1);
 
 // Disable fingerprinting header
 app.disable("x-powered-by");
@@ -262,63 +265,92 @@ app.options(["/api/contact", "/api/subscribe"], (req: Request, res: Response) =>
   return res.sendStatus(204);
 });
 
-function isOriginAuthorized(origin?: string): boolean {
-  if (!origin || origin === "null" || origin === "") return true;
+function isOriginAuthorized(originOrReferer?: string, reqHost?: string): boolean {
+  if (!originOrReferer || originOrReferer === "null") return false;
   try {
-    const parsed = new URL(origin);
+    const parsed = new URL(originOrReferer);
     const host = parsed.hostname.toLowerCase();
 
-    // Exact domain matching (no substring injection)
+    // Exact domain matching only (strictly no wildcard *.vercel.app, *.run.app, *.web.app)
     if (host === "ahmedbello.com" || host === "www.ahmedbello.com") return true;
-    if (host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0") return true;
-    if (host === "ais-dev-jx5oov2nruxlj6dgff7nn2-332126510101.us-east1.run.app") return true;
-    if (host === "ais-pre-jx5oov2nruxlj6dgff7nn2-332126510101.us-east1.run.app") return true;
-    if (host === "aistudio.google.com") return true;
+    if (host === "localhost" || host === "127.0.0.1") return true;
 
-    // Exact project preview subdomains
-    if (
-      host.endsWith(".aistudio-preview.net") ||
-      host.endsWith(".googleusercontent.com") ||
-      host.endsWith(".google.com") ||
-      host.endsWith(".run.app") ||
-      host.endsWith(".vercel.app") ||
-      host.endsWith(".web.app") ||
-      host.endsWith(".firebaseapp.com")
-    ) {
-      return true;
+    // Strict host header match for local dev / specific preview container
+    if (reqHost) {
+      const cleanReqHost = reqHost.split(":")[0].toLowerCase();
+      if (host === cleanReqHost) return true;
     }
+
     return false;
   } catch {
     return false;
   }
 }
 
+async function verifyTurnstileToken(token: string, clientIp: string): Promise<boolean> {
+  const secretKey = (process.env.TURNSTILE_SECRET_KEY || "").trim();
+  // If no secret key is configured, do not block users in dev / local environment
+  if (!secretKey) return true;
+  if (!token) return false;
+
+  try {
+    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret: secretKey,
+        response: token,
+        remoteip: clientIp,
+      }),
+    });
+    const outcome = await res.json() as any;
+    return Boolean(outcome?.success);
+  } catch (err) {
+    console.warn("[TURNSTILE VERIFY EXCEPTION]:", err);
+    return false;
+  }
+}
+
 app.post(["/api/contact", "/api/subscribe"], async (req: Request, res: Response) => {
-  // Origin / Referer Validation against CSRF: Exact hostname matching only
+  const reqHost = req.get("host");
   const origin = req.headers["origin"] as string | undefined;
-  if (origin && !isOriginAuthorized(origin)) {
-    return res.status(403).json({
-      error: "forbidden",
-      message: "Cross-origin submission rejected.",
-    });
-  }
   const referer = req.headers["referer"] as string | undefined;
-  if (referer && !isOriginAuthorized(referer)) {
+
+  // Strict origin/referer check: Reject requests with invalid or missing origin on POST
+  const isAuthorized = (origin && isOriginAuthorized(origin, reqHost)) ||
+                       (referer && isOriginAuthorized(referer, reqHost));
+
+  if (!isAuthorized) {
     return res.status(403).json({
       error: "forbidden",
-      message: "Cross-origin submission rejected.",
+      message: "Cross-origin submission rejected. Submissions must originate directly from ahmedbello.com.",
     });
   }
-  if (origin) {
+
+  if (origin && isOriginAuthorized(origin, reqHost)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
   }
 
-  const forwarded = req.headers["x-forwarded-for"];
-  const clientIp = typeof forwarded === "string" ? forwarded.split(",")[0].trim() : req.socket.remoteAddress || "unknown";
+  const clientIp = req.ip || (typeof req.headers["x-forwarded-for"] === "string"
+    ? req.headers["x-forwarded-for"].split(",")[0].trim()
+    : req.socket.remoteAddress) || "127.0.0.1";
 
   const rawBody = req.body || {};
+
+  // Cloudflare Turnstile token validation if configured
+  const turnstileToken = rawBody.turnstileToken || rawBody["cf-turnstile-response"];
+  if (process.env.TURNSTILE_SECRET_KEY) {
+    const isHuman = await verifyTurnstileToken(turnstileToken, clientIp);
+    if (!isHuman) {
+      return res.status(403).json({
+        error: "captcha_failed",
+        message: "Bot verification challenge was unsuccessful. Please refresh and try again.",
+      });
+    }
+  }
+
   if (req.path === "/api/subscribe" && !rawBody.topic) {
     rawBody.topic = "newsletter";
   }
@@ -365,20 +397,47 @@ app.get("/api/news", async (_req: Request, res: Response) => {
 });
 
 // --------------------------------------------------------------------------
-// 5c. Double Opt-in Subscription Confirmation Endpoint: /api/confirm-subscription
+// 5c. Cryptographically Verified CASL Double Opt-in Confirmation Endpoint
 // --------------------------------------------------------------------------
-app.all("/api/confirm-subscription", (req: Request, res: Response) => {
+app.all("/api/confirm-subscription", async (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  const email = (req.query.email as string) || req.body?.email || "";
-  if (!email || !email.includes("@")) {
-    return res.status(400).json({ success: false, error: "invalid_email" });
+  const token = (req.query.token as string) || req.body?.token;
+
+  // Enforce signed token verification
+  if (!token) {
+    return res.status(400).json({
+      success: false,
+      error: "missing_token",
+      message: "A cryptographically signed confirmation token is required for CASL double opt-in.",
+    });
   }
 
-  recordConfirmedSubscriber(email);
+  const verification = verifySubscriptionToken(token);
+  if (!verification.valid || !verification.email) {
+    return res.status(400).json({
+      success: false,
+      error: verification.error || "invalid_token",
+      message: "This confirmation link is invalid or has expired (48-hour limit). Please subscribe again to receive a fresh verification link.",
+    });
+  }
+
+  const clientIp = req.ip || (typeof req.headers["x-forwarded-for"] === "string"
+    ? req.headers["x-forwarded-for"].split(",")[0].trim()
+    : req.socket.remoteAddress) || "127.0.0.1";
+
+  const userAgent = (req.headers["user-agent"] as string) || "Unknown User-Agent";
+
+  await recordConfirmedSubscriber({
+    email: verification.email,
+    ip: clientIp,
+    userAgent,
+    source: "double_opt_in_signed_token",
+  });
+
   return res.json({
     success: true,
     confirmed: true,
-    email: email.trim().toLowerCase(),
+    email: verification.email,
     confirmedAt: new Date().toISOString(),
   });
 });

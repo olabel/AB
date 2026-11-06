@@ -333,3 +333,188 @@ export const termsData: LegalPageData = {
     }
   ]
 };
+
+export const disclosuresDataFr: LegalPageData = {
+  title: "Fonctionnement du site web et champ professionnel.",
+  lede: "La version en langage clair : mon champ de pratique agréé, ma rémunération et la frontière déontologique où s'arrête l'éducation financière générale.",
+  sections: [
+    {
+      id: "education",
+      number: "01",
+      title: "Éducation financière, non un conseil personnalisé",
+      content: [
+        "L'ensemble du contenu publié sur ce site web constitue une information générale ayant pour but de vulgariser les concepts financiers canadiens. Il ne prend en compte aucune circonstance individuelle et ne constitue en aucun cas un conseil financier, fiscal, juridique ou d'investissement personnalisé, ni une offre de souscription ou de vente de produit quelconque.",
+        "Les règles fiscales, les plafonds et les programmes gouvernementaux évoluent régulièrement. Lorsque des chiffres et des barèmes sont présentés, ils sont rigoureusement datés et renvoient directement aux sources officielles (ARC, ministères, organismes de réglementation). Confirmez toujours les détails en vigueur auprès des sources officielles et d'un conseiller qualifié avant d'agir."
+      ]
+    },
+    {
+      id: "affiliation",
+      number: "02",
+      title: "Identité et portée professionnelle",
+      content: [
+        "Professionnel agréé en solutions financières au Canada.",
+        "J'exerce en tant que conseiller indépendant fournissant de l'éducation patrimoniale, des stratégies relatives aux comptes enregistrés et des solutions financières adaptées aux familles et entreprises à travers le Canada.",
+        "Je ne prétends pas agir à titre de gestionnaire de portefeuille discrétionnaire, d'expert-comptable agréé, d'avocat fiscaliste ou de planificateur à honoraires exclusifs. Lorsqu'une situation nécessite ces compétences spécialisées, je vous oriente systématiquement vers les professionnels dûment qualifiés et membres de leurs ordres respectifs."
+      ]
+    },
+    {
+      id: "licences",
+      number: "03",
+      title: "Agréments et juridictions autorisées",
+      content: [
+        "Les produits et services financiers ne peuvent être proposés que dans les provinces et territoires canadiens où le professionnel est titulaire d'un permis d'exercice en règle auprès du régulateur provincial concerné (par exemple la FCSC au Nouveau-Brunswick, l'ARSF en Ontario, l'AIC en Alberta, ou l'AMF au Québec).",
+        "Les ressources éducatives de ce site sont librement accessibles à tous, mais la disponibilité des consultations individuelles et des solutions dépend des autorisations provinciales en vigueur. Si je ne suis pas habilité à intervenir dans votre juridiction, je vous en informerai avec une totale transparence."
+      ]
+    },
+    {
+      id: "compensation",
+      number: "04",
+      title: "Structure de rémunération",
+      content: [
+        "La transparence déontologique concernant la rémunération est primordiale. Les guides éducatifs, articles d'analyse et entretiens exploratoires initiaux proposés sur ce site web sont entièrement gratuits.",
+        "Si vous choisissez de mettre en place une solution financière ou d'assurance par le biais de mon cabinet, la rémunération prend généralement la forme de commissions institutionnelles versées par les assureurs partenaires selon les barèmes réglementés. Toute structure de rémunération vous est intégralement exposée par écrit avant la mise en œuvre de la moindre recommandation."
+      ]
+    },
+    {
+      id: "referrals",
+      number: "05",
+      title: "Orientation vers d'autres professionnels",
+      content: [
+        "Lorsque la complexité d'un dossier requiert la rédaction d'un testament notarié, un audit comptable d'entreprise ou la constitution d'une fiducie familiale, je vous oriente vers des notaires, avocats ou comptables professionnels agréés (CPA) indépendants.",
+        "Aucune commission d'intermédiation occulte ne m'est versée pour ces recommandations déontologiques."
+      ]
+    }
+  ]
+};
+
+export const privacyDataFr: LegalPageData = {
+  title: "Avis de confidentialité et protection des renseignements personnels.",
+  lede: "Transparence absolue sur la collecte, l'utilisation et la conservation de vos données, en stricte conformité avec la LPRPDE et les normes canadiennes de protection de la vie privée.",
+  sections: [
+    {
+      id: "collection",
+      number: "01",
+      title: "Renseignements recueillis",
+      content: [
+        "Nous ne recueillons que les informations strictement nécessaires que vous fournissez volontairement lors de l'envoi d'un formulaire de contact ou d'inscription à l'infolettre éducative : prénom, adresse courriel, numéro de téléphone (optionnel), province de résidence et objet de votre question.",
+        "Ne transmettez jamais par le biais de ces formulaires des données sensibles comme votre numéro d'assurance sociale (NAS), vos numéros de comptes bancaires ou vos bilans médicaux."
+      ]
+    },
+    {
+      id: "usage",
+      number: "02",
+      title: "Utilisation des données",
+      content: [
+        "Vos coordonnées sont utilisées exclusivement par Ahmed Bello pour répondre à votre demande d'information, organiser un entretien d'orientation ou vous acheminer notre veille réglementaire mensuelle si vous avez confirmé votre abonnement (double opt-in CASL).",
+        "Vos données personnelles ne sont jamais vendues, louées, cédées ni partagées avec des tiers publicitaires."
+      ]
+    },
+    {
+      id: "security",
+      number: "03",
+      title: "Mesures de sécurité et chiffrement",
+      content: [
+        "Toutes les communications sur ce site web sont sécurisées par un chiffrement de niveau bancaire TLS/HTTPS. Les soumissions de formulaires font l'objet d'une validation rigoureuse côté serveur, de contrôles anti-robots et de limites de débit strictes.",
+        "Les enregistrements de consentement CASL sont authentifiés par jeton cryptographique horodaté et conservés dans une base de données sécurisée."
+      ]
+    },
+    {
+      id: "rights",
+      number: "04",
+      title: "Vos droits d'accès et de rectification",
+      content: [
+        "Conformément à la Loi sur la protection des renseignements personnels et les documents électroniques (LPRPDE), vous disposez du droit d'accéder aux données vous concernant, d'exiger leur rectification ou de demander leur suppression définitive.",
+        "Pour exercer ce droit ou pour toute question déontologique, écrivez directement à privacy@ahmedbello.com. Une réponse écrite vous sera apportée sous 30 jours."
+      ]
+    }
+  ]
+};
+
+export const standardsDataFr: LegalPageData = {
+  title: "Normes éditoriales et vérification des sources officielles.",
+  lede: "Une éducation financière de premier plan doit être vérifiable à la source. Cette page détaille comment nos analyses sont rédigées, vérifiées, datées et actualisées.",
+  sections: [
+    {
+      id: "purpose",
+      number: "01",
+      title: "Vocation pédagogique",
+      content: [
+        "Les guides et analyses de ce site expliquent le fonctionnement réel de la fiscalité et des instruments financiers canadiens. Ils constituent une formation générale et ne remplacent pas une consultation personnalisée.",
+        "Un guide expose la mécanique d'un CELI, REER, CELIAPP ou REEE avec ses arbitrages mathématiques, mais ne saurait préconiser une allocation unique, chaque situation familiale comportant des paramètres fiscaux propres."
+      ]
+    },
+    {
+      id: "sources",
+      number: "02",
+      title: "Origine des données et rigueur factuelle",
+      content: [
+        "Les règles, barèmes et seuils cités proviennent exclusivement des instances officielles : Agence du revenu du Canada (ARC), Bureau du surintendant des institutions financières (BSIF), Banque du Canada et organismes provinciaux de réglementation des marchés financiers.",
+        "Chaque guide se conclut par la liste explicite des sources officielles consultées avec liens directs permettant au lecteur de valider lui-même chaque point de droit."
+      ]
+    },
+    {
+      id: "dates",
+      number: "03",
+      title: "Actualisation et indexation réglementaire",
+      content: [
+        "Les plafonds de cotisation et les tranches d'imposition sont indexés annuellement par l'ARC. Nos dossiers analytiques portent la mention claire de l'année d'imposition à laquelle ils s'appliquent.",
+        "Toute modification réglementaire majeure (ex. : révision des critères du BSIF, taux préscrits de l'ARC, projet de loi C-69) entraîne une mise à jour immédiate de nos articles avec horodatage de révision."
+      ]
+    },
+    {
+      id: "corrections",
+      number: "04",
+      title: "Signalement d'erreur et rectifications",
+      content: [
+        "Si vous relevez une inexactitude, une formulation ambiguë ou un changement de barème non encore reflété, veuillez nous en faire part via notre formulaire de contact. Toute correction confirmée fait l'objet d'une mention éditoriale transparente."
+      ]
+    }
+  ]
+};
+
+export const termsDataFr: LegalPageData = {
+  title: "Conditions d'utilisation du site web.",
+  lede: "Règles simples et essentielles. La plus importante : ce site informe et éduque, il ne dispense pas de conseils financiers personnalisés sans mandat écrit préalable.",
+  sections: [
+    {
+      id: "purpose",
+      number: "01",
+      title: "Objet du site web",
+      content: [
+        "Ce site diffuse des ressources d'éducation financière destinées aux résidents canadiens. Aucun élément publié ne constitue une sollicitation, une incitation ou une offre contractuelle d'achat ou de vente de produits financiers."
+      ]
+    },
+    {
+      id: "relationship",
+      number: "02",
+      title: "Absence de relation de conseil automatique",
+      content: [
+        "La navigation sur ce site, la lecture d'articles ou l'envoi d'un message via un formulaire ne créent aucune relation contractuelle ou professionnelle de conseil. Une telle relation n'est établie qu'après signature d'une convention écrite bilatérale et vérification des critères réglementaires de convenance."
+      ]
+    },
+    {
+      id: "accuracy",
+      number: "03",
+      title: "Exactitude des informations",
+      content: [
+        "Bien que nous apportions le plus grand soin à la rigueur de nos contenus et à leur adossement aux sources étatiques, les lois et programmes évoluent. Les exemples chiffrés sont strictement hypothétiques et n'ont aucune valeur de prédiction."
+      ]
+    },
+    {
+      id: "content",
+      number: "04",
+      title: "Propriété intellectuelle",
+      content: [
+        "Les textes, guides d'analyse, simulateurs et éléments graphiques de ce site sont la propriété exclusive d'Ahmed Bello, sauf indication contraire. Les citations courtes accompagnées d'un lien d'attribution sont autorisées. Toute reproduction intégrale sans autorisation préalable écrite est formellement prohibée."
+      ]
+    },
+    {
+      id: "liability",
+      number: "05",
+      title: "Limitation de responsabilité",
+      content: [
+        "Dans toute la mesure permise par les lois canadiennes en vigueur, l'éditeur ne saurait être tenu responsable des décisions prises ou des pertes directes ou indirectes résultant de l'utilisation des informations générales contenues sur ce site."
+      ]
+    }
+  ]
+};

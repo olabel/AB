@@ -38,10 +38,13 @@ export const CalculatorsPage: React.FC = () => {
   const [registeredSavings, setRegisteredSavings] = useState<number>(50000);
 
   // Mortgage calculations
+  // Mortgage calculations: Canadian standard semi-annual compounding
   const calcMonthlyPayment = (balance: number, annualRatePct: number, years: number) => {
-    const monthlyRate = annualRatePct / 100 / 12;
+    if (balance <= 0 || years <= 0) return 0;
+    if (annualRatePct <= 0) return balance / (years * 12);
+    // Canadian conventional mortgage semi-annual compounding formula:
+    const monthlyRate = Math.pow(1 + annualRatePct / 200, 2 / 12) - 1;
     const numPayments = years * 12;
-    if (monthlyRate === 0) return balance / numPayments;
     return (
       (balance * (monthlyRate * Math.pow(1 + monthlyRate, numPayments))) /
       (Math.pow(1 + monthlyRate, numPayments) - 1)
@@ -80,13 +83,17 @@ export const CalculatorsPage: React.FC = () => {
 
   const currentMarginalRate = estimateTaxRate(currentIncome);
   const retirementMarginalRate = estimateTaxRate(retirementIncome);
-  const rrspTaxRefundPerYear = Math.round(annualContribution * currentMarginalRate);
+  const r = assumedReturn / 100;
+  const growthFactor = Math.pow(1 + r, yearsToRetirement);
+  const annuityFactor = r === 0 ? yearsToRetirement : (growthFactor - 1) / r;
 
-  // Future Value of TFSA vs RRSP (with refund reinvested)
-  const growthFactor = Math.pow(1 + assumedReturn / 100, yearsToRetirement);
-  const tfsaTerminal = Math.round(annualContribution * ((growthFactor - 1) / (assumedReturn / 100)));
-  const totalRrspAnnual = annualContribution + rrspTaxRefundPerYear;
-  const rrspPreTaxTerminal = Math.round(totalRrspAnnual * ((growthFactor - 1) / (assumedReturn / 100)));
+  // TFSA Terminal: Out-of-pocket after-tax cash invested tax-free
+  const tfsaTerminal = Math.round(annualContribution * annuityFactor);
+
+  // RRSP Terminal with tax refund reinvestment:
+  // Contributing pre-tax amount that equals annualContribution after-tax
+  const rrspPreTaxDeposit = annualContribution / Math.max(0.01, 1 - currentMarginalRate);
+  const rrspPreTaxTerminal = Math.round(rrspPreTaxDeposit * annuityFactor);
   const rrspAfterTaxTerminal = Math.round(rrspPreTaxTerminal * (1 - retirementMarginalRate));
   const rrspArbitrageDelta = rrspAfterTaxTerminal - tfsaTerminal;
 
@@ -104,7 +111,10 @@ export const CalculatorsPage: React.FC = () => {
   // Tax rates (e.g. Ontario: Small Business 12.2%, General Corporate 26.5%)
   const eligibleAbi = Math.min(activeBusinessIncome, remainingSbdLimit);
   const regularTaxedAbi = Math.max(0, activeBusinessIncome - eligibleAbi);
-  const standardTax = activeBusinessIncome * 0.122;
+  // Baseline without passive drag: eligible up to full 500k limit
+  const standardEligible = Math.min(activeBusinessIncome, 500000);
+  const standardIneligible = Math.max(0, activeBusinessIncome - 500000);
+  const standardTax = standardEligible * 0.122 + standardIneligible * 0.265;
   const actualTax = eligibleAbi * 0.122 + regularTaxedAbi * 0.265;
   const extraCorporateTaxOwing = Math.round(Math.max(0, actualTax - standardTax));
 
@@ -546,15 +556,23 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
 
                     <div className="p-3 bg-[#2e4a3b]/40 border border-[#d6c298]/30 rounded-[2px]">
                       <span className="text-[0.68rem] uppercase tracking-wider text-[#d6c298] block">
-                        {rrspArbitrageDelta >= 0 ? "Avantage REER" : "Avantage CELI"}
+                        {rrspArbitrageDelta >= 0
+                          ? isFr ? "Avantage REER" : "RRSP Advantage"
+                          : isFr ? "Avantage CELI" : "TFSA Advantage"}
                       </span>
                       <span className="text-lg font-mono font-bold text-white">
-                        {rrspArbitrageDelta >= 0 ? `+${rrspArbitrageDelta.toLocaleString()} $ net` : `+${Math.abs(rrspArbitrageDelta).toLocaleString()} $ net`}
+                        {rrspArbitrageDelta >= 0
+                          ? isFr ? `+${rrspArbitrageDelta.toLocaleString()} $ net` : `+$${rrspArbitrageDelta.toLocaleString()} Net`
+                          : isFr ? `+${Math.abs(rrspArbitrageDelta).toLocaleString()} $ net` : `+$${Math.abs(rrspArbitrageDelta).toLocaleString()} Net`}
                       </span>
                       <p className="text-[0.7rem] text-[#ece6da]/80 mt-1">
                         {currentMarginalRate > retirementMarginalRate
-                          ? "Le REER profite d'un arbitrage fiscal favorable car votre taux marginal actuel dépasse celui à la retraite."
-                          : "Le CELI est supérieur ou équivalent, et offre une liquidité totale sans risque de récupération de la SV (OAS)."}
+                          ? isFr
+                            ? "Le REER profite d'un arbitrage fiscal favorable car votre taux marginal actuel dépasse celui prévu à la retraite."
+                            : "The RRSP creates positive tax arbitrage because your current marginal tax bracket exceeds your expected retirement bracket."
+                          : isFr
+                            ? "Le CELI est supérieur ou équivalent, et offre une liquidité totale sans risque de récupération de la SV (OAS)."
+                            : "The TFSA matches or exceeds the RRSP, providing full liquidity without triggering OAS clawbacks."}
                       </p>
                     </div>
                   </div>

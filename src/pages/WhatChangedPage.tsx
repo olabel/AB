@@ -42,6 +42,38 @@ interface RuleChangeItem {
 
 const RULE_CHANGES: RuleChangeItem[] = [
   {
+    id: "nov-2026-cra-indexation-limits",
+    month: "November",
+    year: 2026,
+    category: "tax",
+    categoryLabelEn: "Registered Shelters & Indexation",
+    categoryLabelFr: "Régimes enregistrés & Indexation",
+    titleEn: "CRA Announces 2027 Indexation: TFSA $7,000, RRSP Limit Rises to $33,810",
+    titleFr: "L'ARC confirme l'indexation 2027 : le CELI maintenu à 7 000 $, le plafond REER monte à 33 810 $",
+    summaryEn:
+      "The Canada Revenue Agency (CRA) has released the official indexation factor for the 2027 taxation year calculated under Subsection 117.1(2) of the Income Tax Act. The 2027 annual TFSA dollar limit remains at $7,000, pushing cumulative lifetime TFSA room to $109,000 on January 1, 2027. The RRSP money purchase limit rises to $33,810, requiring $187,833 in 2026 earned income to maximize.",
+    summaryFr:
+      "L'Agence du revenu du Canada (ARC) a publié le facteur officiel d'indexation pour l'année d'imposition 2027 en vertu du paragraphe 117.1(2) de la Loi de l'impôt sur le revenu. Le plafond annuel du CELI pour 2027 est fixé à 7 000 $, portant les droits cumulatifs totaux à 109 000 $ au 1er janvier 2027. Le plafond REER grimpe quant à lui à 33 810 $.",
+    ahmedAnalysisEn:
+      "My Take: Total lifetime TFSA room crossing $109,000 is a milestone for Canadian household wealth architecture. If you plan to make a withdrawal from your TFSA to fund a down payment or business equipment, execute the withdrawal in December rather than January. Under CRA rules, withdrawal amounts are re-added to your contribution room on January 1st of the following calendar year. Withdrawing before December 31st gives you your room back in weeks; withdrawing in January locks you out of that room for 12 months.",
+    ahmedAnalysisFr:
+      "Mon analyse : Les droits cumulatifs à vie du CELI atteignent désormais 109 000 $, ce qui constitue un puissant levier d'enrichissement à l'abri de l'impôt. Si vous envisagez un retrait pour financer une dépense ou un projet, effectuez-le avant le 31 décembre : vos droits de cotisation vous seront automatiquement réattribués dès le 1er janvier.",
+    actionItemsEn: [
+      "Review earned income on your 2025 Notice of Assessment to calculate your available 2026 RRSP deduction limit before the March deadline.",
+      "Time year-end registered withdrawals before December 31st to regenerate TFSA room on January 1st.",
+      "Coordinate family contributions across TFSA ($7,000) and FHSA ($8,000) for $15,000 in combined tax-advantaged shelter per adult.",
+    ],
+    actionItemsFr: [
+      "Vérifiez votre avis de cotisation pour connaître vos droits de déduction REER avant la date limite de début 2027.",
+      "Planifiez vos retraits de CELI avant le 31 décembre pour récupérer les droits correspondants dès le 1er janvier.",
+      "Coordonnez les cotisations familiales CELI (7 000 $) et CELIAPP (8 000 $) pour cumuler 15 000 $ d'abri fiscal par adulte admissible.",
+    ],
+    officialSource: {
+      label: "Canada Revenue Agency - Indexation Adjustments for Personal Income Tax",
+      url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
+    },
+  },
+  {
     id: "nov-2026-boc-rate-cut",
     month: "November",
     year: 2026,
@@ -308,7 +340,7 @@ export const WhatChangedPage: React.FC = () => {
             <span aria-hidden="true">&bull;</span>
             <span>{isFr ? "Édition de novembre 2026" : "November 2026 Edition"}</span>
             <span aria-hidden="true">&bull;</span>
-            <span>{isFr ? "6 mises à jour majeures analysées" : "6 major regulatory updates analyzed"}</span>
+            <span>{isFr ? "7 mises à jour majeures analysées" : "7 major regulatory updates analyzed"}</span>
           </div>
         </header>
 

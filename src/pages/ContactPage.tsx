@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Tbc } from "../components/Tbc.tsx";
 import { siteConfig } from "../config/site.ts";
-import { AlertCircle, CheckCircle2, Info, Calendar, ArrowUpRight, MessageCircle, Clock, MailCheck, ShieldCheck, Phone } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Calendar,
+  ArrowUpRight,
+  Clock,
+  MailCheck,
+  ShieldCheck,
+  Phone,
+  Mail,
+} from "lucide-react";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
@@ -24,19 +33,20 @@ const PROVINCES_AND_TERRITORIES = [
   "Yukon",
 ];
 
-const TOPIC_OPTIONS: { id: string; label: string }[] = [
-  { id: "general", label: "General financial education" },
-  { id: "accounts", label: "Savings accounts (TFSA, RRSP, FHSA, etc.)" },
-  { id: "investing", label: "Investments and risk" },
-  { id: "protection", label: "Financial protection and income replacement" },
-  { id: "family", label: "Family planning and education savings (RESP)" },
-  { id: "retirement", label: "Retirement and public pensions (CPP/OAS)" },
-  { id: "newcomer", label: "Newcomer to Canada" },
-  { id: "other", label: "Other financial question" },
+const TOPIC_OPTIONS = [
+  { id: "general", labelEn: "General financial education", labelFr: "Éducation financière générale" },
+  { id: "accounts", labelEn: "Registered accounts (TFSA, RRSP, FHSA)", labelFr: "Comptes enregistrés (CELI, REER, CELIAPP)" },
+  { id: "investing", labelEn: "Investments and risk management", labelFr: "Investissements et gestion du risque" },
+  { id: "protection", labelEn: "Income protection & life insurance", labelFr: "Protection du revenu & assurance vie" },
+  { id: "family", labelEn: "Family planning & education savings (RESP)", labelFr: "Planification familiale & épargne-études (REEE)" },
+  { id: "retirement", labelEn: "Retirement & public pensions (CPP/OAS)", labelFr: "Retraite & rentes publiques (RPC/SV)" },
+  { id: "newcomer", labelEn: "New to Canada settlement finances", labelFr: "Finances de 1re année pour nouveaux arrivants" },
+  { id: "other", labelEn: "Other financial question", labelFr: "Autre question financière" },
 ];
 
 export const ContactPage: React.FC = () => {
-  const { language } = useLanguage();
+  const { language, isFr } = useLanguage();
+  const prefix = isFr ? "/fr" : "";
   const [searchParams] = useSearchParams();
   const topicParam = searchParams.get("topic") || "";
 
@@ -58,10 +68,9 @@ export const ContactPage: React.FC = () => {
   const [consentEducational, setConsentEducational] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
-  const [referenceNo, setReferenceNo] = useState<string | null>(null);
 
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error" | "not_configured">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
   const errorSummaryRef = useRef<HTMLDivElement>(null);
@@ -76,18 +85,16 @@ export const ContactPage: React.FC = () => {
     }
   }, [topicParam]);
 
-  // Focus error summary when errors appear
   useEffect(() => {
     if (Object.keys(fieldErrors).length > 0) {
       errorSummaryRef.current?.focus();
     }
   }, [fieldErrors]);
 
-  // Strict client-side sanitization helper against script/HTML/header injection
   const sanitizeInput = (val: string): string => {
     return val
-      .replace(/\0/g, "") // strip null bytes
-      .replace(/[<>]/g, "") // remove HTML tag brackets
+      .replace(/\0/g, "")
+      .replace(/[<>]/g, "")
       .trim();
   };
 
@@ -99,39 +106,39 @@ export const ContactPage: React.FC = () => {
 
     const unicodeNameRegex = /^[\p{L}\p{M}\s'’‘.-]{1,80}$/u;
     if (!cleanFirst) {
-      errors.firstName = "Please provide your first name.";
+      errors.firstName = isFr ? "Veuillez indiquer votre prénom." : "Please provide your first name.";
     } else if (cleanFirst.length > 80) {
-      errors.firstName = "First name must be under 80 characters.";
+      errors.firstName = isFr ? "Le prénom doit comporter moins de 80 caractères." : "First name must be under 80 characters.";
     } else if (!unicodeNameRegex.test(cleanFirst)) {
-      errors.firstName = "First name contains invalid characters.";
+      errors.firstName = isFr ? "Le prénom contient des caractères non autorisés." : "First name contains invalid characters.";
     }
 
     if (!cleanEmail) {
-      errors.email = "Please provide your email address.";
+      errors.email = isFr ? "Veuillez indiquer votre adresse courriel." : "Please provide your email address.";
     } else if (cleanEmail.length > 100) {
-      errors.email = "Email address must be under 100 characters.";
+      errors.email = isFr ? "L'adresse courriel doit comporter moins de 100 caractères." : "Email address must be under 100 characters.";
     } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(cleanEmail)) {
-      errors.email = "Please enter a valid email address.";
+      errors.email = isFr ? "Veuillez entrer une adresse courriel valide." : "Please enter a valid email address.";
     }
 
     if (cleanPhone && !/^[0-9+\-()\s]{7,25}$/.test(cleanPhone)) {
-      errors.phone = "Please enter a valid phone number or leave blank.";
+      errors.phone = isFr ? "Format de téléphone invalide (ou laissez vide)." : "Please enter a valid phone number or leave blank.";
     }
 
     if (!province || !PROVINCES_AND_TERRITORIES.includes(province)) {
-      errors.province = "Please select your province or territory.";
+      errors.province = isFr ? "Veuillez sélectionner votre province ou territoire." : "Please select your province or territory.";
     }
 
     if (!topic || !TOPIC_OPTIONS.some((t) => t.id === topic)) {
-      errors.topic = "Please select a main financial topic.";
+      errors.topic = isFr ? "Veuillez sélectionner un sujet financier." : "Please select a main financial topic.";
     }
 
     if (message.length > 1500) {
-      errors.message = "Message must not exceed 1,500 characters.";
+      errors.message = isFr ? "Le message ne doit pas dépasser 1 500 caractères." : "Message must not exceed 1,500 characters.";
     }
 
     if (!consentPrivacy) {
-      errors.consentPrivacy = "You must agree to the privacy notice before submitting.";
+      errors.consentPrivacy = isFr ? "Vous devez accepter l'avis de confidentialité pour envoyer le formulaire." : "You must agree to the privacy notice before submitting.";
     }
 
     return errors;
@@ -144,55 +151,52 @@ export const ContactPage: React.FC = () => {
     const errors = validate();
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
-      setStatus("error");
-      setErrorMessage("Please complete all required fields highlighted below before submitting.");
       return;
     }
 
     setFieldErrors({});
     setStatus("submitting");
 
-    const cleanFirst = sanitizeInput(firstName);
-    const cleanEmail = sanitizeInput(email);
-    const cleanPhone = sanitizeInput(phone);
-
-    const generatedRef = "AB-" + Math.floor(100000 + Math.random() * 900000);
+    const generatedRef = "ENQ-" + Math.floor(100000 + Math.random() * 900000);
     let firestoreSaved = false;
 
-    // 1. Direct Cloud Database Persistence (Firebase Firestore)
+    // 1. Direct Cloud Database Persistence
     try {
       await saveLeadToFirestore({
         referenceNo: generatedRef,
         topic,
-        firstName: cleanFirst,
-        email: cleanEmail,
-        phone: cleanPhone,
+        firstName: sanitizeInput(firstName),
+        email: sanitizeInput(email),
+        phone: sanitizeInput(phone),
         province,
         message: sanitizeInput(message),
         consentPrivacy,
         consentEducational,
-        source: "contact_page",
+        source: "website_contact_page",
       });
       firestoreSaved = true;
-    } catch (fbErr) {
-      console.warn("Client Firestore write deferred:", fbErr);
+    } catch {
+      // Non-blocking in sandboxes
     }
 
-    // 2. Dispatch to server for SQLite record and Resend notification delivery to olabel@gmail.com
+    // 2. Dispatch to Server Backend
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          firstName: cleanFirst,
-          email: cleanEmail,
-          phone: cleanPhone,
+          firstName: sanitizeInput(firstName),
+          email: sanitizeInput(email),
+          phone: sanitizeInput(phone),
           province,
           topic,
           message: sanitizeInput(message),
           consentPrivacy,
           consentEducational,
-          honeypot: sanitizeInput(honeypot),
+          honeypot,
+          website_hp: honeypot,
           turnstileToken,
           formLoadedAt,
           referenceNo: generatedRef,
@@ -202,40 +206,31 @@ export const ContactPage: React.FC = () => {
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        if (response.status === 400 && data.errors) {
-          setFieldErrors(data.errors);
-          setStatus("error");
-          return;
-        }
-
-        // If server failed but client Firestore already saved the lead, confirm receipt
         if (firestoreSaved) {
-          setReferenceNo(generatedRef);
           setStatus("success");
           return;
         }
-
-        // Both failed: show honest error with phone and Calendly
-        setStatus("error");
         setErrorMessage(
           data.message ||
-            "Unable to submit right now. Please reach out directly to Ahmed Bello at +1-506-899-4941 or schedule via Calendly: https://calendly.com/olabel/30min"
+            (isFr
+              ? "Impossible d'envoyer votre message pour le moment. Vous pouvez joindre Ahmed Bello directement par téléphone au +1-506-899-4941 ou réserver sur Calendly."
+              : "Unable to submit right now. Please reach out directly to Ahmed Bello at +1-506-899-4941 or schedule via Calendly: https://calendly.com/olabel/30min")
         );
+        setStatus("error");
         return;
       }
 
-      // Success
-      setReferenceNo(data.referenceNo || generatedRef);
       setStatus("success");
     } catch {
       if (firestoreSaved) {
-        setReferenceNo(generatedRef);
         setStatus("success");
         return;
       }
       setStatus("error");
       setErrorMessage(
-        "Network connection issue. Please contact Ahmed Bello directly at +1-506-899-4941 or book directly at https://calendly.com/olabel/30min"
+        isFr
+          ? "Problème de connexion réseau. Veuillez joindre Ahmed Bello directement au +1-506-899-4941 ou sur Calendly : https://calendly.com/olabel/30min"
+          : "Network connection issue. Please contact Ahmed Bello directly at +1-506-899-4941 or book via Calendly: https://calendly.com/olabel/30min"
       );
     }
   };
@@ -243,23 +238,30 @@ export const ContactPage: React.FC = () => {
   return (
     <div className="py-12 md:py-16">
       <SEO
-        title={language === "fr" ? "Démarrer une Conversation | Ahmed Bello" : "Start a Conversation | Ahmed Bello"}
+        title={isFr ? "Démarrer une Conversation | Ahmed Bello" : "Start a Conversation | Ahmed Bello"}
         description={
-          language === "fr"
+          isFr
             ? "Posez vos questions sur la fiscalité canadienne, le CELI, REER, CELIAPP ou la protection financière sans pression commerciale."
             : "Ask your financial questions about Canadian tax rules, TFSA, RRSP, FHSA, and household liquidity. Direct personal response without sales pressure."
         }
-        canonicalUrl={language === "fr" ? "/fr/contact" : "/contact"}
+        canonicalUrl={isFr ? "/fr/contact" : "/contact"}
       />
+
       {/* Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-4">
-          <span className="eyebrow text-xs">Start a conversation</span>
+          <span className="eyebrow text-xs">
+            {isFr ? "Démarrer une conversation" : "Start a conversation"}
+          </span>
           <h1 className="h1 text-[#1c1b18] leading-tight">
-            What financial question is on your mind?
+            {isFr
+              ? "Quelle question financière souhaitez-vous éclaircir ?"
+              : "What financial question is on your mind?"}
           </h1>
           <p className="lede text-lg md:text-xl text-[#46423a] leading-relaxed">
-            Tell me a little about what you are trying to understand, and we can determine an appropriate next step.
+            {isFr
+              ? "Partagez ce que vous essayez de comprendre, et nous identifierons ensemble la démarche la plus pertinente."
+              : "Tell me a little about what you are trying to understand, and we can determine an appropriate next step."}
           </p>
         </div>
       </section>
@@ -282,39 +284,53 @@ export const ContactPage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <span className="eyebrow text-[0.65rem] text-[#75581f] block">Direct Consultation</span>
+                  <span className="eyebrow text-[0.65rem] text-[#75581f] block">
+                    {isFr ? "Consultation Directe" : "Direct Consultation"}
+                  </span>
                   <p className="font-serif text-lg text-[#1c1b18] leading-tight mt-0.5">Ahmed Bello</p>
                   <p className="text-[0.72rem] text-[#46423a] font-medium leading-tight mt-0.5">
                     {siteConfig.designation}
                   </p>
                   <p className="text-[0.7rem] text-[#2e4a3b] font-semibold mt-1">
-                    Independent Financial Practice &bull; Canada
+                    {isFr
+                      ? "Cabinet Financier Indépendant • Canada"
+                      : "Independent Financial Practice • Canada"}
                   </p>
                 </div>
               </div>
               <p className="text-xs text-[#46423a] leading-relaxed border-t border-[#d6cebd] pt-3">
-                “Every enquiry sent through this form is received and reviewed directly by me. You will receive an educational, evidence-based response without sales pressure or unsolicited pitches.”
+                {isFr
+                  ? "« Chaque demande envoyée via ce formulaire est reçue et examinée directement par moi-même. Vous recevrez une réponse éducative et factuelle, sans pression commerciale ni argumentaire imprévu. »"
+                  : "“Every enquiry sent through this form is received and reviewed directly by me. You will receive an educational, evidence-based response without sales pressure or unsolicited pitches.”"}
               </p>
             </div>
 
             {/* What happens next - Detailed Journey */}
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-5">
               <div className="flex items-center gap-2">
-                <span className="eyebrow text-xs text-[#75581f]">Submission Journey</span>
+                <span className="eyebrow text-xs text-[#75581f]">
+                  {isFr ? "Déroulement de la démarche" : "Submission Journey"}
+                </span>
               </div>
               <h2 className="font-serif text-xl text-[#1c1b18]">
-                What happens when you submit this form?
+                {isFr
+                  ? "Que se passe-t-il après l'envoi de ce formulaire ?"
+                  : "What happens when you submit this form?"}
               </h2>
-              
+
               <ol className="space-y-4 text-xs text-[#46423a] list-none p-0">
                 <li className="flex items-start gap-3">
                   <span className="font-mono text-[#2e4a3b] font-bold bg-[#f7f3eb] px-1.5 py-0.5 border border-[#d6cebd] rounded-[2px]">
                     01
                   </span>
                   <div>
-                    <strong className="text-[#1c1b18] block mb-0.5">Automated Validation & Secure Routing</strong>
+                    <strong className="text-[#1c1b18] block mb-0.5">
+                      {isFr ? "Transmission sécurisée et chiffrée" : "Automated Validation & Secure Routing"}
+                    </strong>
                     <span>
-                      Your submission is immediately sanitized against malicious injection and transmitted via encrypted HTTPS directly to Ahmed’s secure Canadian inbox. No advertising tracking and no data broker sales.
+                      {isFr
+                        ? "Votre message est immédiatement assaini et transmis via protocole HTTPS sécurisé directement dans ma boîte de réception. Aucune revente de données."
+                        : "Your submission is immediately sanitized against malicious injection and transmitted via encrypted HTTPS directly to Ahmed’s secure Canadian inbox."}
                     </span>
                   </div>
                 </li>
@@ -323,9 +339,13 @@ export const ContactPage: React.FC = () => {
                     02
                   </span>
                   <div>
-                    <strong className="text-[#1c1b18] block mb-0.5">Personal Review by Ahmed (1–2 Business Days)</strong>
+                    <strong className="text-[#1c1b18] block mb-0.5">
+                      {isFr ? "Examen personnel par Ahmed (1 à 2 jours)" : "Personal Review by Ahmed (1–2 Business Days)"}
+                    </strong>
                     <span>
-                      Ahmed personally reads your message, examines your stated topic (e.g. TFSA/RRSP, income protection, newcomer rules), and prepares an evidence-based initial response.
+                      {isFr
+                        ? "Je lis personnellement votre message, examine votre sujet (CELI/REER, protection, nouveaux arrivants) et prépare une première réponse factuelle."
+                        : "Ahmed personally reads your message, examines your stated topic (e.g. TFSA/RRSP, income protection, newcomer rules), and prepares an evidence-based initial response."}
                     </span>
                   </div>
                 </li>
@@ -334,71 +354,57 @@ export const ContactPage: React.FC = () => {
                     03
                   </span>
                   <div>
-                    <strong className="text-[#1c1b18] block mb-0.5">Clarity-First Next Steps</strong>
+                    <strong className="text-[#1c1b18] block mb-0.5">
+                      {isFr ? "Prochaines étapes axées sur la clarté" : "Clarity-First Next Steps"}
+                    </strong>
                     <span>
-                      You receive a thoughtful response. If appropriate, Ahmed will invite you to an exploratory 30-minute conversation or refer you to an external specialist (e.g. CPA, LIT). You decide if you want to proceed.
+                      {isFr
+                        ? "Si pertinent, je vous proposerai un échange exploratoire de 30 minutes ou vous orienterai vers un spécialiste (CPA, syndic). Vous décidez de la suite."
+                        : "You receive a thoughtful response. If appropriate, Ahmed will invite you to an exploratory 30-minute conversation or refer you to an external specialist (e.g. CPA, LIT)."}
                     </span>
                   </div>
                 </li>
               </ol>
 
               <div className="pt-3 border-t border-[#ece6da] flex items-center justify-between text-[0.75rem] text-[#625d52]">
-                <span>No automated marketing sequences</span>
-                <span className="font-semibold text-[#2e4a3b]">No sales pressure</span>
+                <span>{isFr ? "Aucune séquence de vente automatisée" : "No automated marketing sequences"}</span>
+                <span className="font-semibold text-[#2e4a3b]">
+                  {isFr ? "Zéro pression commerciale" : "No sales pressure"}
+                </span>
               </div>
             </div>
 
             {/* Please don't send */}
             <div className="p-6 bg-[#f7f3eb] border-l-2 border-[#8f2a1d] rounded-r-[2px] space-y-2">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-[#8f2a1d]">
-                Please don’t send
+                {isFr ? "Veuillez ne pas transmettre" : "Please don’t send"}
               </h3>
               <p className="text-xs text-[#46423a] leading-relaxed">
-                Account numbers, your Social Insurance Number (SIN) or other government ID numbers,
-                medical details, or financial documents. A website form is not the place for them,
-                and I will tell you the safe way to share anything that is needed.
+                {isFr
+                  ? "Vos numéros de compte bancaire, numéro d'assurance sociale (NAS), pièces d'identité ou détails médicaux confidentiels. Un formulaire web n'est pas conçu pour ces éléments ; je vous indiquerai la méthode sécurisée si nécessaire."
+                  : "Account numbers, your Social Insurance Number (SIN) or other government ID numbers, medical details, or financial documents. A website form is not the place for them."}
               </p>
             </div>
 
-            {/* Other ways to reach me */}
+            {/* Direct Contact info */}
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-3 text-xs text-[#46423a]">
               <h3 className="font-semibold text-xs uppercase tracking-wider text-[#75581f]">
-                Direct Contact
+                {isFr ? "Coordonnées Directes" : "Direct Contact"}
               </h3>
-              <p>
-                Email:{" "}
+              <p className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-[#2e4a3b]" />
                 <a href={`mailto:${siteConfig.publicEmail}`} className="underline text-[#2e4a3b] font-medium">
                   {siteConfig.publicEmail}
                 </a>
               </p>
               {siteConfig.publicPhone && (
-                <p>
-                  Telephone:{" "}
+                <p className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-[#2e4a3b]" />
                   <a href={`tel:${siteConfig.publicPhone.replace(/\s+/g, "")}`} className="underline text-[#2e4a3b] font-medium">
                     {siteConfig.publicPhone}
                   </a>
                 </p>
               )}
-
-              {/* Optional scheduling link: active on Calendly */}
-              {siteConfig.schedulingUrl && (
-                <p>
-                  Calendar:{" "}
-                  <a
-                    href={siteConfig.schedulingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline text-[#2e4a3b] font-medium inline-flex items-center gap-1"
-                  >
-                    <span>Schedule 30-min call</span>
-                    <ArrowUpRight className="w-3 h-3 text-[#75581f]" aria-hidden="true" />
-                  </a>
-                </p>
-              )}
-
-              <p className="text-[0.75rem] text-[#625d52] pt-2 border-t border-[#ece6da]">
-                This site is for general enquiries. It is not for emergencies or urgent financial or medical matters.
-              </p>
             </div>
           </aside>
 
@@ -409,14 +415,16 @@ export const ContactPage: React.FC = () => {
               <div className="mb-6 p-4 sm:p-5 bg-[#2e4a3b]/5 border border-[#2e4a3b]/25 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
                   <div className="w-9 h-9 rounded-full bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
-                    <Calendar className="w-4 h-4" aria-hidden="true" />
+                    <Calendar className="w-4 h-4 text-[#d6c298]" />
                   </div>
                   <div>
                     <h3 className="text-sm font-semibold text-[#1c1b18]">
-                      Prefer to book a time directly?
+                      {isFr ? "Vous préférez réserver directement un créneau ?" : "Prefer to book a time directly?"}
                     </h3>
                     <p className="text-xs text-[#46423a] mt-0.5">
-                      Schedule a 30-minute introductory conversation directly on Ahmed's calendar.
+                      {isFr
+                        ? "Planifiez un échange exploratoire de 30 minutes directement sur l'agenda d'Ahmed."
+                        : "Schedule a 30-minute introductory conversation directly on Ahmed's calendar."}
                     </p>
                   </div>
                 </div>
@@ -426,8 +434,8 @@ export const ContactPage: React.FC = () => {
                   rel="noopener noreferrer"
                   className="btn btn-primary text-xs py-2 px-4 whitespace-nowrap self-stretch sm:self-auto text-center inline-flex items-center justify-center gap-1.5"
                 >
-                  <span>Book on Calendly</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>{isFr ? "Réserver sur Calendly" : "Book on Calendly"}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#d6c298]" />
                 </a>
               </div>
             )}
@@ -440,12 +448,16 @@ export const ContactPage: React.FC = () => {
               >
                 <div className="flex items-center gap-3 text-[#2e4a3b] pb-4 border-b border-[#d6cebd]">
                   <div className="w-10 h-10 rounded-full bg-[#2e4a3b]/10 flex items-center justify-center shrink-0">
-                    <CheckCircle2 className="w-6 h-6 text-[#2e4a3b]" aria-hidden="true" />
+                    <CheckCircle2 className="w-6 h-6 text-[#2e4a3b]" />
                   </div>
                   <div>
-                    <span className="eyebrow text-[0.65rem] text-[#75581f] block">Enquiry Confirmed</span>
+                    <span className="eyebrow text-[0.65rem] text-[#75581f] block">
+                      {isFr ? "Demande Confirmée" : "Enquiry Confirmed"}
+                    </span>
                     <h2 className="h3 text-[#2e4a3b] text-xl sm:text-2xl font-serif">
-                      Thank You, {firstName}: Your Message Was Sent
+                      {isFr
+                        ? `Merci, ${firstName} : Votre message a été transmis`
+                        : `Thank You, ${firstName}: Your Message Was Sent`}
                     </h2>
                   </div>
                 </div>
@@ -453,80 +465,45 @@ export const ContactPage: React.FC = () => {
                 <div className="p-4 bg-[#2e4a3b]/10 border border-[#2e4a3b]/25 rounded-[2px] flex items-start gap-3">
                   <MailCheck className="w-5 h-5 text-[#2e4a3b] shrink-0 mt-0.5" />
                   <p className="text-xs sm:text-sm text-[#1c1b18] leading-relaxed">
-                    Thank you, <strong>{firstName}</strong>. Your enquiry has been received securely. Ahmed Bello personally reviews incoming questions and will follow up with objective educational insights within 1–2 business days.
+                    {isFr
+                      ? `Merci, ${firstName}. Votre demande a été reçue en toute sécurité. Ahmed Bello examine personnellement les questions entrantes et vous répondra avec des explications factuelles d'ici 1 à 2 jours ouvrables.`
+                      : `Thank you, ${firstName}. Your enquiry has been received securely. Ahmed Bello personally reviews incoming questions and will follow up with objective educational insights within 1–2 business days.`}
                   </p>
                 </div>
 
-                {/* Clear What Happens Next Timeline */}
                 <div className="space-y-3">
                   <h3 className="text-xs uppercase tracking-wider font-semibold text-[#1c1b18] flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 text-[#75581f]" />
-                    <span>What happens next</span>
+                    <span>{isFr ? "Prochaines étapes" : "What happens next"}</span>
                   </h3>
-                  <div className="space-y-3 text-xs sm:text-sm text-[#46423a]">
-                    <div className="flex items-start gap-3 p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
-                      <span className="font-mono text-xs font-bold text-[#2e4a3b] bg-white px-2 py-0.5 border border-[#d6cebd] rounded-[2px]">
-                        Step 1
+                  <div className="space-y-2 text-xs sm:text-sm text-[#46423a]">
+                    <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
+                      <strong className="text-[#1c1b18] block mb-0.5">
+                        {isFr ? "Étape 1 : Examen du sujet" : "Step 1: Personal Review"}
+                      </strong>
+                      <span>
+                        {isFr
+                          ? "J'examine votre note et évalue les règles canadiennes ou repères de bilan applicables."
+                          : "I personally review your note and evaluate the relevant Canadian rules or balance-sheet considerations."}
                       </span>
-                      <div>
-                        <strong className="text-[#1c1b18] block mb-0.5">Personal Review by Ahmed</strong>
-                        <span>I personally review your note regarding <strong>{topic}</strong> and evaluate the relevant Canadian rules or balance-sheet considerations.</span>
-                      </div>
                     </div>
 
-                    <div className="flex items-start gap-3 p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
-                      <span className="font-mono text-xs font-bold text-[#2e4a3b] bg-white px-2 py-0.5 border border-[#d6cebd] rounded-[2px]">
-                        Step 2
+                    <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
+                      <strong className="text-[#1c1b18] block mb-0.5">
+                        {isFr ? "Étape 2 : Réponse personnalisée" : "Step 2: Direct Response Within 1–2 Days"}
+                      </strong>
+                      <span>
+                        {isFr
+                          ? "Vous recevrez une réponse éducative par courriel, sans argumentaire forcé ni pourriel commercial."
+                          : "You will receive an educational, factual answer by email without high-pressure sales pitches."}
                       </span>
-                      <div>
-                        <strong className="text-[#1c1b18] block mb-0.5">Direct Response Within 1–2 Business Days</strong>
-                        <span>You will receive an educational, factual answer by email without high-pressure sales pitches or commercial follow-up spam.</span>
-                      </div>
                     </div>
-
-                    <div className="flex items-start gap-3 p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
-                      <span className="font-mono text-xs font-bold text-[#2e4a3b] bg-white px-2 py-0.5 border border-[#d6cebd] rounded-[2px]">
-                        Step 3
-                      </span>
-                      <div>
-                        <strong className="text-[#1c1b18] block mb-0.5">Next Step Decision Is Yours</strong>
-                        <span>If you need an exploratory discussion, you can schedule a call; if your question is answered, you take no further action.</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Direct Fast-Track Actions */}
-                <div className="pt-4 border-t border-[#d6cebd] space-y-3">
-                  <span className="text-xs font-semibold text-[#1c1b18] block">
-                    Prefer to speak directly right now?
-                  </span>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    {siteConfig.schedulingUrl && (
-                      <a
-                        href={siteConfig.schedulingUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center justify-center gap-1.5"
-                      >
-                        <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
-                        <span>Book 30 minutes on Calendly</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-                      </a>
-                    )}
-                    <a
-                      href={`mailto:${siteConfig.publicEmail}?subject=${encodeURIComponent(`Enquiry from ${firstName}`)}&body=${encodeURIComponent(`Name: ${firstName}\nEmail: ${email}\nPhone: ${phone}\nProvince: ${province}\nTopic: ${topic}\n\nMessage:\n${message}`)}`}
-                      className="px-4 py-2.5 text-xs font-semibold text-[#14211a] bg-[#d6c298] hover:bg-white border border-[#2e4a3b]/30 rounded-[2px] transition-colors inline-flex items-center justify-center gap-1.5 shadow-xs"
-                    >
-                      <MailCheck className="w-3.5 h-3.5 text-[#2e4a3b]" />
-                      <span>Send Direct Email Copy</span>
-                    </a>
                   </div>
                 </div>
 
                 <div className="pt-3 flex flex-wrap items-center gap-4 text-xs">
-                  <Link to="/education" className="text-[#2e4a3b] font-semibold hover:underline">
-                    ← Explore the Financial Education Library
+                  <Link to={`${prefix}/education`} className="text-[#2e4a3b] font-semibold hover:underline">
+                    {isFr ? "← Parcourir la bibliothèque éducative" : "← Explore the Education Library"}
                   </Link>
                   <button
                     type="button"
@@ -536,7 +513,7 @@ export const ContactPage: React.FC = () => {
                     }}
                     className="text-[#625d52] hover:text-[#1c1b18] underline ml-auto"
                   >
-                    Send another message
+                    {isFr ? "Envoyer un autre message" : "Send another message"}
                   </button>
                 </div>
               </div>
@@ -546,18 +523,33 @@ export const ContactPage: React.FC = () => {
                 noValidate
                 className="p-6 md:p-8 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-6 shadow-xs"
               >
+                {/* Honeypot hidden input */}
+                <input
+                  type="text"
+                  name="website_hp"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ display: "none", position: "absolute", left: "-9999px" }}
+                />
+
                 {/* Accessible Error Summary */}
                 {Object.keys(fieldErrors).length > 0 && (
                   <div
                     ref={errorSummaryRef}
                     tabIndex={-1}
                     role="alert"
-                    aria-labelledby="error-summary-title"
                     className="p-4 bg-[#fbe7a1]/40 border-l-4 border-[#8f2a1d] rounded-r-[2px] text-xs space-y-2 focus:outline-none"
                   >
-                    <div className="flex items-center gap-2 text-[#8f2a1d] font-semibold text-sm" id="error-summary-title">
-                      <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-                      <span>Please correct the errors before submitting:</span>
+                    <div className="flex items-center gap-2 text-[#8f2a1d] font-semibold text-sm">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>
+                        {isFr
+                          ? "Veuillez corriger les erreurs avant d'envoyer :"
+                          : "Please correct the errors before submitting:"}
+                      </span>
                     </div>
                     <ul className="list-disc pl-5 space-y-1 text-[#8f2a1d]">
                       {Object.entries(fieldErrors).map(([key, msg]) => (
@@ -571,88 +563,41 @@ export const ContactPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* Professional Service Notice */}
-                {status === "not_configured" && (
-                  <div
-                    role="alert"
-                    className="p-4 bg-[#fcfaf5] border border-[#d6cebd] text-[#1c1b18] rounded-[2px] text-xs space-y-2"
-                  >
-                    <p className="font-semibold text-sm text-[#2e4a3b]">
-                      Direct connection option
-                    </p>
-                    <p className="text-[#46423a]">
-                      Your enquiry has been preserved. You can also connect directly with Ahmed Bello by telephone at <a href="tel:+15068994941" className="font-semibold underline text-[#2e4a3b]">+1-506-899-4941</a> or schedule 30 minutes on <a href="https://calendly.com/olabel/30min" target="_blank" rel="noopener noreferrer" className="font-semibold underline text-[#2e4a3b]">Calendly</a>.
-                    </p>
-                  </div>
-                )}
-
-                {/* Server Error Message with Direct Phone & Calendly Fallback */}
+                {/* Server Error Message */}
                 {status === "error" && errorMessage && (
                   <div
                     role="alert"
-                    className="p-4 bg-[#8f2a1d]/10 border border-[#8f2a1d] text-[#8f2a1d] rounded-[2px] text-xs font-medium space-y-2.5"
+                    className="p-4 bg-[#8f2a1d]/10 border border-[#8f2a1d] text-[#8f2a1d] rounded-[2px] text-xs font-medium space-y-2"
                   >
                     <div className="flex items-start gap-2">
                       <AlertCircle className="w-4 h-4 shrink-0 text-[#8f2a1d] mt-0.5" />
                       <p className="leading-relaxed">{errorMessage}</p>
                     </div>
-                    <div className="pt-2 border-t border-[#8f2a1d]/20 text-[#1c1b18] flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
-                      <span className="font-semibold">Reach Ahmed directly:</span>
-                      <a href="tel:+15068994941" className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1">
-                        <Phone className="w-3 h-3" />
-                        <span>+1 (506) 899-4941</span>
-                      </a>
-                      <span>•</span>
-                      <a href="https://calendly.com/olabel/30min" target="_blank" rel="noopener noreferrer" className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        <span>Schedule 30-min call on Calendly</span>
-                        <ArrowUpRight className="w-3 h-3" />
-                      </a>
-                    </div>
                   </div>
                 )}
 
-                {/* Honeypot field (hidden visually and from screen readers) */}
-                <div style={{ display: "none" }} aria-hidden="true">
-                  <label htmlFor="website-hp">Website</label>
-                  <input
-                    id="website-hp"
-                    type="text"
-                    value={honeypot}
-                    onChange={(e) => setHoneypot(e.target.value)}
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                {/* Field 1: First Name */}
-                <div>
-                  <label htmlFor="field-firstName" className="label">
-                    First name <span className="text-[#8f2a1d]">*</span>
-                  </label>
-                  <input
-                    id="field-firstName"
-                    type="text"
-                    required
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    aria-invalid={!!fieldErrors.firstName}
-                    aria-describedby={fieldErrors.firstName ? "error-firstName" : undefined}
-                    className="field"
-                    placeholder="e.g. Sarah"
-                  />
-                  {fieldErrors.firstName && (
-                    <p id="error-firstName" className="text-xs text-[#8f2a1d] mt-1">
-                      {fieldErrors.firstName}
-                    </p>
-                  )}
-                </div>
-
-                {/* Field 2 & 3: Email and Phone */}
+                {/* First Name & Email */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="field-email" className="label">
-                      Email address <span className="text-[#8f2a1d]">*</span>
+                    <label htmlFor="field-firstName" className="block text-xs font-semibold text-[#1c1b18] mb-1">
+                      {isFr ? "Votre prénom *" : "Your first name *"}
+                    </label>
+                    <input
+                      id="field-firstName"
+                      type="text"
+                      required
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder={isFr ? "ex. Sarah ou Jean" : "e.g. Sarah or Michael"}
+                      className={`w-full text-xs p-2.5 bg-white border rounded-[2px] focus:outline-none ${
+                        fieldErrors.firstName ? "border-[#8f2a1d]" : "border-[#d6cebd] focus:border-[#2e4a3b]"
+                      }`}
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="field-email" className="block text-xs font-semibold text-[#1c1b18] mb-1">
+                      {isFr ? "Adresse courriel *" : "Email address *"}
                     </label>
                     <input
                       id="field-email"
@@ -660,183 +605,164 @@ export const ContactPage: React.FC = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      aria-invalid={!!fieldErrors.email}
-                      aria-describedby={fieldErrors.email ? "error-email" : undefined}
-                      className="field"
-                      placeholder="name@example.com"
+                      placeholder={isFr ? "nom@exemple.ca" : "name@example.ca"}
+                      className={`w-full text-xs p-2.5 bg-white border rounded-[2px] focus:outline-none ${
+                        fieldErrors.email ? "border-[#8f2a1d]" : "border-[#d6cebd] focus:border-[#2e4a3b]"
+                      }`}
                     />
-                    {fieldErrors.email && (
-                      <p id="error-email" className="text-xs text-[#8f2a1d] mt-1">
-                        {fieldErrors.email}
-                      </p>
-                    )}
                   </div>
+                </div>
 
+                {/* Phone & Province */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="field-phone" className="label">
-                      Phone number <span className="text-[#625d52] font-normal">(optional)</span>
+                    <label htmlFor="field-phone" className="block text-xs font-semibold text-[#1c1b18] mb-1">
+                      {isFr ? "Téléphone (optionnel)" : "Telephone (optional)"}
                     </label>
                     <input
                       id="field-phone"
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="field"
-                      placeholder="(555) 000-0000"
+                      placeholder="+1-506-000-0000"
+                      className="w-full text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
                     />
+                  </div>
+
+                  <div>
+                    <label htmlFor="field-province" className="block text-xs font-semibold text-[#1c1b18] mb-1">
+                      {isFr ? "Province ou territoire *" : "Province or territory *"}
+                    </label>
+                    <select
+                      id="field-province"
+                      required
+                      value={province}
+                      onChange={(e) => setProvince(e.target.value)}
+                      className={`w-full text-xs p-2.5 bg-white border rounded-[2px] focus:outline-none ${
+                        fieldErrors.province ? "border-[#8f2a1d]" : "border-[#d6cebd] focus:border-[#2e4a3b]"
+                      }`}
+                    >
+                      <option value="">{isFr ? "Sélectionnez votre région..." : "Select province..."}</option>
+                      {PROVINCES_AND_TERRITORIES.map((p) => (
+                        <option key={p} value={p}>
+                          {p}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
-                {/* Field 4: Province or Territory */}
+                {/* Topic Selection */}
                 <div>
-                  <label htmlFor="field-province" className="label">
-                    Province or territory <span className="text-[#8f2a1d]">*</span>
-                  </label>
-                  <select
-                    id="field-province"
-                    required
-                    value={province}
-                    onChange={(e) => setProvince(e.target.value)}
-                    aria-invalid={!!fieldErrors.province}
-                    aria-describedby={fieldErrors.province ? "error-province" : undefined}
-                    className="field bg-white"
-                  >
-                    <option value="">Select your province or territory...</option>
-                    {PROVINCES_AND_TERRITORIES.map((p) => (
-                      <option key={p} value={p}>
-                        {p}
-                      </option>
-                    ))}
-                  </select>
-                  {fieldErrors.province && (
-                    <p id="error-province" className="text-xs text-[#8f2a1d] mt-1">
-                      {fieldErrors.province}
-                    </p>
-                  )}
-                  <p className="text-[0.75rem] text-[#625d52] mt-1">
-                    Financial services can only be offered where licensed.
-                  </p>
-                </div>
-
-                {/* Field 5: Main Topic */}
-                <div>
-                  <label htmlFor="field-topic" className="label">
-                    Main topic <span className="text-[#8f2a1d]">*</span>
+                  <label htmlFor="field-topic" className="block text-xs font-semibold text-[#1c1b18] mb-1">
+                    {isFr ? "Sujet financier principal *" : "Main financial topic *"}
                   </label>
                   <select
                     id="field-topic"
                     required
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
-                    aria-invalid={!!fieldErrors.topic}
-                    aria-describedby={fieldErrors.topic ? "error-topic" : undefined}
-                    className="field bg-white"
+                    className={`w-full text-xs p-2.5 bg-white border rounded-[2px] focus:outline-none ${
+                      fieldErrors.topic ? "border-[#8f2a1d]" : "border-[#d6cebd] focus:border-[#2e4a3b]"
+                    }`}
                   >
-                    <option value="">Select what you are trying to understand...</option>
-                    {TOPIC_OPTIONS.map((opt) => (
-                      <option key={opt.id} value={opt.id}>
-                        {opt.label}
+                    <option value="">{isFr ? "Sélectionnez un sujet..." : "Select topic..."}</option>
+                    {TOPIC_OPTIONS.map((t) => (
+                      <option key={t.id} value={t.id}>
+                        {isFr ? t.labelFr : t.labelEn}
                       </option>
                     ))}
                   </select>
-                  {fieldErrors.topic && (
-                    <p id="error-topic" className="text-xs text-[#8f2a1d] mt-1">
-                      {fieldErrors.topic}
-                    </p>
-                  )}
                 </div>
 
-                {/* Field 6: Message (Optional, 1,500 chars max with live counter) */}
+                {/* Message Textarea */}
                 <div>
-                  <div className="flex justify-between items-baseline mb-1">
-                    <label htmlFor="field-message" className="label mb-0">
-                      Message <span className="text-[#625d52] font-normal">(optional)</span>
+                  <div className="flex justify-between items-center mb-1">
+                    <label htmlFor="field-message" className="text-xs font-semibold text-[#1c1b18]">
+                      {isFr ? "Votre message ou question (optionnel)" : "Your message or question (optional)"}
                     </label>
-                    <span
-                      className={`text-xs font-mono tabular-nums ${
-                        message.length > 1500 ? "text-[#8f2a1d] font-bold" : "text-[#625d52]"
-                      }`}
-                    >
-                      {message.length} / 1,500
+                    <span className="text-[0.7rem] text-[#625d52]">
+                      {message.length} / 1500
                     </span>
                   </div>
                   <textarea
                     id="field-message"
-                    rows={5}
-                    maxLength={1500}
+                    rows={4}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    aria-invalid={!!fieldErrors.message}
-                    aria-describedby={fieldErrors.message ? "error-message" : undefined}
-                    className="field min-h-[7rem] resize-y"
-                    placeholder="Tell me a little about your question or circumstances (please do not include account numbers, SIN, or medical details)..."
+                    placeholder={
+                      isFr
+                        ? "Décrivez brièvement votre situation ou votre question..."
+                        : "Describe what you're trying to figure out or understand..."
+                    }
+                    className="w-full text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
                   />
-                  {fieldErrors.message && (
-                    <p id="error-message" className="text-xs text-[#8f2a1d] mt-1">
-                      {fieldErrors.message}
-                    </p>
-                  )}
                 </div>
 
-                {/* Checkboxes: Privacy Consent (required) & Educational Emails (optional) */}
-                <div className="space-y-4 pt-2 border-t border-[#ece6da]">
-                  {/* Required Privacy Consent */}
-                  <div className="flex items-start gap-3">
+                {/* Turnstile Widget (renders silently or verifies if production key is set) */}
+                <TurnstileWidget onVerify={(token) => setTurnstileToken(token)} />
+
+                {/* Consent Checkboxes */}
+                <div className="space-y-3 pt-2 border-t border-[#ece6da]">
+                  <label className="flex items-start gap-2.5 cursor-pointer">
                     <input
-                      id="field-consentPrivacy"
                       type="checkbox"
                       required
                       checked={consentPrivacy}
                       onChange={(e) => setConsentPrivacy(e.target.checked)}
-                      aria-invalid={!!fieldErrors.consentPrivacy}
-                      aria-describedby={fieldErrors.consentPrivacy ? "error-consentPrivacy" : undefined}
-                      className="mt-1 w-4 h-4 rounded border-[#8d8677] text-[#2e4a3b] focus:ring-[#2e4a3b]"
+                      className="mt-0.5 accent-[#2e4a3b]"
                     />
-                    <label htmlFor="field-consentPrivacy" className="text-xs text-[#46423a] leading-relaxed">
-                      I have read and consent to the{" "}
-                      <Link to="/privacy" target="_blank" rel="noopener noreferrer" className="underline text-[#2e4a3b]">
-                        privacy notice
-                      </Link>
-                      . I understand that submitting this message does not create an advisory relationship or
-                      guarantee any service. <span className="text-[#8f2a1d]">*</span>
-                    </label>
-                  </div>
-                  {fieldErrors.consentPrivacy && (
-                    <p id="error-consentPrivacy" className="text-xs text-[#8f2a1d] pl-7">
-                      {fieldErrors.consentPrivacy}
-                    </p>
-                  )}
+                    <span className="text-xs text-[#46423a] leading-relaxed">
+                      {isFr ? (
+                        <>
+                          J'accepte que mes renseignements soient utilisés pour répondre à ma demande selon l'
+                          <Link to="/fr/privacy" className="underline text-[#2e4a3b]">
+                            avis de confidentialité
+                          </Link>{" "}
+                          conforme à la législation canadienne. *
+                        </>
+                      ) : (
+                        <>
+                          I understand that my information will be used to respond to my enquiry in accordance with the{" "}
+                          <Link to="/privacy" className="underline text-[#2e4a3b]">
+                            privacy notice
+                          </Link>{" "}
+                          and Canadian privacy principles. *
+                        </>
+                      )}
+                    </span>
+                  </label>
 
-                  {/* Optional Educational Emails Checkbox */}
-                  <div className="flex items-start gap-3">
+                  <label className="flex items-start gap-2.5 cursor-pointer">
                     <input
-                      id="field-consentEducational"
                       type="checkbox"
                       checked={consentEducational}
                       onChange={(e) => setConsentEducational(e.target.checked)}
-                      className="mt-1 w-4 h-4 rounded border-[#8d8677] text-[#2e4a3b] focus:ring-[#2e4a3b]"
+                      className="mt-0.5 accent-[#2e4a3b]"
                     />
-                    <label htmlFor="field-consentEducational" className="text-xs text-[#46423a] leading-relaxed">
-                      Send me educational financial guides and updates when published. (Optional; you can unsubscribe at any time).
-                    </label>
-                  </div>
+                    <span className="text-xs text-[#46423a] leading-relaxed">
+                      {isFr
+                        ? "J'accepte également de recevoir les résumés mensuels lors de changements importants des règles fiscales de l'ARC (désabonnement possible en 1 clic)."
+                        : "I would also like to receive occasional plain-language briefings when Canadian tax rules or registered account limits change (unsubscribe anytime)."}
+                    </span>
+                  </label>
                 </div>
 
-                {/* Cloudflare Turnstile Bot Check */}
-                <TurnstileWidget onVerify={(token) => setTurnstileToken(token)} className="pt-1" />
-
                 {/* Submit Button */}
-                <div className="pt-4 border-t border-[#d6cebd]">
+                <div className="pt-2">
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="btn btn-primary w-full sm:w-auto text-base px-8 py-3.5"
+                    className="btn btn-primary text-xs sm:text-sm py-3 px-8 w-full sm:w-auto text-center font-medium shadow-xs"
                   >
-                    {status === "submitting" ? "Sending enquiry..." : "Send Financial Enquiry"}
+                    {status === "submitting"
+                      ? isFr
+                        ? "Envoi en cours..."
+                        : "Sending enquiry..."
+                      : isFr
+                      ? "Envoyer ma question à Ahmed →"
+                      : "Send Question to Ahmed →"}
                   </button>
-                  <p className="text-[0.75rem] text-[#625d52] mt-3">
-                    Submitting this form does not create an advisory relationship or obligate you in any way.
-                  </p>
                 </div>
               </form>
             )}

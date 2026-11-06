@@ -4,7 +4,8 @@
 
 import fs from "fs";
 import path from "path";
-import { saveLeadToDatabase, recordEmailDeliveryStatus } from "./dbService.ts";
+import crypto from "crypto";
+import { saveLeadToDatabase, recordEmailDeliveryStatus, recordSubscriberToDatabase } from "./dbService.ts";
 
 export const DEFAULT_NOTIFICATION_RECIPIENTS = "olabel@gmail.com, abello24trdc@wfgmail.ca";
 
@@ -286,19 +287,155 @@ export function shouldSendReceiptToEmail(email: string): boolean {
   return true;
 }
 
-export function recordConfirmedSubscriber(email: string): boolean {
+export const CASL_CONSENT_WORDING =
+  "I consent to receive occasional plain-language educational briefings regarding Canadian tax changes, registered account limits (TFSA, RRSP, FHSA), and financial policy updates from Ahmed Bello under CASL.";
+
+/**
+ * Generate a cryptographically signed, expiring token (48h TTL) for CASL double opt-in.
+ */
+export function generateSubscriptionToken(email: string): string {
+  const normalized = email.toLowerCase().trim();
+  const expiresAt = Date.now() + 48 * 60 * 60 * 1000; // 48 hours validity
+  const payload = `${normalized}:${expiresAt}`;
+  const secret = process.env.SESSION_SECRET || process.env.TOKEN_SECRET || "ahmed_bello_casl_secret_token_2026_ca";
+  const signature = crypto.createHmac("sha256", secret).update(payload).digest("hex");
+  return `${Buffer.from(payload, "utf-8").toString("base64url")}.${signature}`;
+}
+
+/**
+ * Verify HMAC signature and expiration on a subscription token.
+ */
+export function verifySubscriptionToken(token: string): { valid: boolean; email?: string; error?: string } {
+  if (!token || typeof token !== "string" || !token.includes(".")) {
+    return { valid: false, error: "invalid_format" };
+  }
+  const [b64Payload, signature] = token.split(".");
+  if (!b64Payload || !signature) {
+    return { valid: false, error: "invalid_format" };
+  }
   try {
-    const normalized = email.toLowerCase().trim();
-    let subscribers: Record<string, string> = {};
+    const payload = Buffer.from(b64Payload, "base64url").toString("utf-8");
+    const [email, expiresStr] = payload.split(":");
+    const expiresAt = Number(expiresStr);
+    if (!email || isNaN(expiresAt)) {
+      return { valid: false, error: "malformed_token" };
+    }
+    const secret = process.env.SESSION_SECRET || process.env.TOKEN_SECRET || "ahmed_bello_casl_secret_token_2026_ca";
+    const expectedSignature = crypto.createHmac("sha256", secret).update(payload).digest("hex");
+
+    const sigBuffer = Buffer.from(signature, "hex");
+    const expBuffer = Buffer.from(expectedSignature, "hex");
+    if (sigBuffer.length !== expBuffer.length || !crypto.timingSafeEqual(sigBuffer, expBuffer)) {
+      return { valid: false, error: "invalid_signature" };
+    }
+    if (Date.now() > expiresAt) {
+      return { valid: false, error: "token_expired" };
+    }
+    return { valid: true, email };
+  } catch {
+    return { valid: false, error: "verification_exception" };
+  }
+}
+
+/**
+ * Dual Persistence: Store confirmed subscriber in Firebase Firestore
+ */
+export async function saveSubscriberToFirestoreServer(subscriber: {
+  email: string;
+  confirmedAt: string;
+  consentWording: string;
+  ip: string;
+  userAgent?: string;
+  source?: string;
+}): Promise<boolean> {
+  try {
+    const configPath = path.join(process.cwd(), "firebase-applet-config.json");
+    if (!fs.existsSync(configPath)) return false;
+    const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+    const projectId = config.projectId;
+    const dbId = config.firestoreDatabaseId || "(default)";
+    const apiKey = config.apiKey;
+    const docId = `sub_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/${dbId}/documents/subscribers?documentId=${docId}&key=${apiKey}`;
+    const payload = {
+      fields: {
+        email: { stringValue: subscriber.email.trim().toLowerCase() },
+        confirmedAt: { stringValue: subscriber.confirmedAt },
+        consentWording: { stringValue: subscriber.consentWording },
+        ip: { stringValue: subscriber.ip },
+        userAgent: { stringValue: (subscriber.userAgent || "").slice(0, 300) },
+        source: { stringValue: subscriber.source || "double_opt_in" },
+      },
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      console.log(`[FIRESTORE SUBSCRIBER SAVED] CASL proof recorded in Firestore.`);
+      return true;
+    }
+  } catch (err: any) {
+    console.warn(`[FIRESTORE SUBSCRIBER WRITE NOTE]:`, err?.message || err);
+  }
+  return false;
+}
+
+/**
+ * Multi-layer persistence for verified subscribers (SQLite, Firestore, local backup).
+ */
+export async function recordConfirmedSubscriber(params: {
+  email: string;
+  ip: string;
+  userAgent?: string;
+  consentWording?: string;
+  source?: string;
+}): Promise<boolean> {
+  const normalized = params.email.toLowerCase().trim();
+  const confirmedAt = new Date().toISOString();
+  const consentText = params.consentWording || CASL_CONSENT_WORDING;
+
+  // 1. SQLite database persistence
+  recordSubscriberToDatabase({
+    email: normalized,
+    confirmedAt,
+    consentWording: consentText,
+    ip: params.ip,
+    userAgent: params.userAgent,
+    source: params.source || "double_opt_in",
+  });
+
+  // 2. Dual persistence to Firebase Firestore
+  await saveSubscriberToFirestoreServer({
+    email: normalized,
+    confirmedAt,
+    consentWording: consentText,
+    ip: params.ip,
+    userAgent: params.userAgent,
+    source: params.source || "double_opt_in",
+  });
+
+  // 3. Local JSON backup
+  try {
+    let subscribers: Record<string, { confirmedAt: string; ip: string; consentWording: string }> = {};
     if (fs.existsSync(TMP_SUBSCRIBERS_FILE)) {
       subscribers = JSON.parse(fs.readFileSync(TMP_SUBSCRIBERS_FILE, "utf-8"));
     }
-    subscribers[normalized] = new Date().toISOString();
+    subscribers[normalized] = {
+      confirmedAt,
+      ip: params.ip,
+      consentWording: consentText,
+    };
     fs.writeFileSync(TMP_SUBSCRIBERS_FILE, JSON.stringify(subscribers, null, 2), "utf-8");
-    return true;
   } catch {
-    return false;
+    // Non-blocking
   }
+
+  return true;
 }
 
 export interface ContactSubmissionPayload {
@@ -313,6 +450,8 @@ export interface ContactSubmissionPayload {
   consentPrivacy?: unknown;
   consentEducational?: unknown;
   honeypot?: unknown;
+  website_hp?: unknown;
+  hp_check?: unknown;
   formLoadedAt?: unknown;
 }
 
@@ -361,10 +500,10 @@ export async function processContactSubmission(
   const message = sanitizeMultiline(body.message);
   const consentPrivacy = Boolean(body.consentPrivacy);
   const consentEducational = Boolean(body.consentEducational);
-  const honeypot = sanitizeText(body.honeypot);
+  const honeypot = sanitizeText(body.honeypot || body.website_hp || body.hp_check || body.work_phone_hp);
   const formLoadedAt = Number(body.formLoadedAt);
 
-  // 3. Honeypot check: silently drop bots
+  // 3. Honeypot check: silently drop automated spam
   if (honeypot && honeypot.length > 0) {
     return {
       status: 200,
@@ -677,13 +816,14 @@ Origin: https://www.ahmedbello.com
         let confirmationBody: string;
 
         if (isNewsletter) {
+          const subToken = generateSubscriptionToken(email);
           confirmationSubject = "Confirm your subscription: Canadian Financial Education | Ahmed Bello";
           confirmationBody = `Hello ${firstName},
 
 Thank you for requesting to join the Intentional Wealth Briefing through ahmedbello.com.
 
 To confirm your email address and activate your subscription to receive occasional plain-language briefings when key Canadian tax rules, annual registered account limits (TFSA/RRSP/FHSA), or public pension policies are updated, please verify your interest:
-https://www.ahmedbello.com/confirm-subscription?email=${encodeURIComponent(email)}
+https://www.ahmedbello.com/confirm-subscription?token=${encodeURIComponent(subToken)}
 
 If you did not request this educational briefing, please disregard this message. You will not receive any further emails unless confirmed.
 

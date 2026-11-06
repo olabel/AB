@@ -6,44 +6,72 @@ import { CheckCircle2, ShieldCheck, Mail, ArrowRight, BookOpen, Layers } from "l
 
 export const ConfirmSubscriptionPage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const tokenParam = searchParams.get("token") || "";
   const emailParam = searchParams.get("email") || "";
   const { isFr } = useLanguage();
   const [confirmed, setConfirmed] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [verifiedEmail, setVerifiedEmail] = useState<string>("");
 
   useEffect(() => {
     let isMounted = true;
 
-    async function confirmEmail() {
-      if (emailParam) {
+    async function confirmSubscription() {
+      // Prefer cryptographically signed token
+      if (tokenParam) {
         try {
-          // Persist to local storage for visitor's browser
-          localStorage.setItem("ahmed_bello_subscriber_confirmed", emailParam);
-          localStorage.setItem("ahmed_bello_subscriber_date", new Date().toISOString());
-
-          // Inform server to record confirmed status
-          await fetch(`/api/confirm-subscription?email=${encodeURIComponent(emailParam)}`, {
+          const res = await fetch(`/api/confirm-subscription?token=${encodeURIComponent(tokenParam)}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: emailParam }),
+            body: JSON.stringify({ token: tokenParam }),
           });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.success) {
+            if (isMounted) {
+              setVerifiedEmail(data.email || "");
+              setConfirmed(true);
+              setLoading(false);
+              localStorage.setItem("ahmed_bello_subscriber_confirmed", data.email || "confirmed");
+              localStorage.setItem("ahmed_bello_subscriber_date", new Date().toISOString());
+            }
+            return;
+          } else {
+            if (isMounted) {
+              setError(data.message || (isFr ? "Le lien de confirmation est invalide ou a expiré." : "This confirmation link is invalid or has expired."));
+              setLoading(false);
+            }
+            return;
+          }
         } catch {
-          // Non-blocking: status stored locally
+          if (isMounted) {
+            setError(isFr ? "Erreur réseau lors de la validation." : "Network connection error while confirming.");
+            setLoading(false);
+          }
+          return;
         }
       }
 
-      if (isMounted) {
+      // Fallback for legacy requests or manual testing
+      if (emailParam) {
+        setVerifiedEmail(emailParam);
         setConfirmed(true);
+        setLoading(false);
+        return;
+      }
+
+      if (isMounted) {
+        setError(isFr ? "Aucun jeton de confirmation fourni." : "No confirmation token provided.");
         setLoading(false);
       }
     }
 
-    confirmEmail();
+    confirmSubscription();
 
     return () => {
       isMounted = false;
     };
-  }, [emailParam]);
+  }, [tokenParam, emailParam, isFr]);
 
   return (
     <div className="py-16 md:py-24">
@@ -58,26 +86,47 @@ export const ConfirmSubscriptionPage: React.FC = () => {
       />
 
       <div className="wrap max-w-2xl text-center space-y-6">
-        <div className="w-16 h-16 rounded-full bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center mx-auto shadow-sm">
-          <CheckCircle2 className="w-8 h-8 text-[#d6c298]" />
-        </div>
+        {loading ? (
+          <div className="py-12 space-y-3">
+            <div className="w-10 h-10 border-2 border-[#2e4a3b] border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-sm text-[#46423a]">{isFr ? "Vérification cryptographique de votre abonnement..." : "Cryptographically verifying your subscription..."}</p>
+          </div>
+        ) : error ? (
+          <div className="p-8 bg-[#fcfaf5] border-2 border-[#8a3324] rounded-[2px] space-y-4">
+            <h2 className="font-serif text-2xl text-[#8a3324]">
+              {isFr ? "Lien invalide ou expiré" : "Invalid or Expired Link"}
+            </h2>
+            <p className="text-sm text-[#46423a] leading-relaxed">{error}</p>
+            <div className="pt-2">
+              <Link to={isFr ? "/fr" : "/"} className="btn btn-primary text-xs py-2.5 px-6">
+                {isFr ? "Retourner à l'accueil pour s'inscrire" : "Return to Home & Re-subscribe"}
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="w-16 h-16 rounded-full bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center mx-auto shadow-sm">
+              <CheckCircle2 className="w-8 h-8 text-[#d6c298]" />
+            </div>
 
-        <div className="space-y-2">
-          <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f]">
-            {isFr ? "Préférences Confirmées" : "Subscription Verified"}
-          </span>
-          <h1
-            className="font-serif text-3xl sm:text-4xl text-[#1c1b18] tracking-tight"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
-            {isFr ? "Votre abonnement est confirmé" : "Your subscription is confirmed"}
-          </h1>
-          {emailParam && (
-            <p className="text-sm font-mono text-[#2e4a3b] bg-[#2e4a3b]/10 py-1 px-3 rounded-[2px] inline-block">
-              {emailParam}
-            </p>
-          )}
-        </div>
+            <div className="space-y-2">
+              <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f]">
+                {isFr ? "Consentement CASL Confirmé" : "CASL Double Opt-in Confirmed"}
+              </span>
+              <h1
+                className="font-serif text-3xl sm:text-4xl text-[#1c1b18] tracking-tight"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                {isFr ? "Votre abonnement est confirmé" : "Your subscription is confirmed"}
+              </h1>
+              {verifiedEmail && (
+                <p className="text-sm font-mono text-[#2e4a3b] bg-[#2e4a3b]/10 py-1 px-3 rounded-[2px] inline-block">
+                  {verifiedEmail}
+                </p>
+              )}
+            </div>
+          </>
+        )}
 
         <div className="p-6 sm:p-8 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-left space-y-4">
           <div className="flex items-start gap-3">

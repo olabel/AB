@@ -80,8 +80,20 @@ function initDatabase(): DatabaseSync {
         created_at TEXT NOT NULL
       );
 
+      CREATE TABLE IF NOT EXISTS subscribers (
+        id TEXT PRIMARY KEY,
+        email TEXT UNIQUE NOT NULL,
+        confirmed_at TEXT NOT NULL,
+        consent_wording TEXT NOT NULL,
+        ip TEXT NOT NULL,
+        user_agent TEXT,
+        source TEXT NOT NULL,
+        created_at TEXT NOT NULL
+      );
+
       CREATE INDEX IF NOT EXISTS idx_leads_ref ON leads(reference_no);
       CREATE INDEX IF NOT EXISTS idx_alerts_ref ON email_alerts(reference_no);
+      CREATE INDEX IF NOT EXISTS idx_subscribers_email ON subscribers(email);
     `);
 
     dbInstance = db;
@@ -118,11 +130,75 @@ function initDatabase(): DatabaseSync {
         error_message TEXT NOT NULL,
         created_at TEXT NOT NULL
       );
+
+      CREATE TABLE IF NOT EXISTS subscribers (
+        id TEXT PRIMARY KEY,
+        email TEXT UNIQUE NOT NULL,
+        confirmed_at TEXT NOT NULL,
+        consent_wording TEXT NOT NULL,
+        ip TEXT NOT NULL,
+        user_agent TEXT,
+        source TEXT NOT NULL,
+        created_at TEXT NOT NULL
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_subscribers_fallback ON subscribers(email);
     `);
 
     dbInstance = fallbackDb;
     activeDbPath = fallbackPath;
     return fallbackDb;
+  }
+}
+
+/**
+ * Record a double opt-in confirmed subscriber with CASL compliance audit proof
+ */
+export function recordSubscriberToDatabase(params: {
+  email: string;
+  confirmedAt: string;
+  consentWording: string;
+  ip: string;
+  userAgent?: string;
+  source?: string;
+}): boolean {
+  try {
+    const db = initDatabase();
+    const id = crypto.randomUUID();
+    const now = new Date().toISOString();
+    const upsertStmt = db.prepare(`
+      INSERT INTO subscribers (
+        id,
+        email,
+        confirmed_at,
+        consent_wording,
+        ip,
+        user_agent,
+        source,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(email) DO UPDATE SET
+        confirmed_at = excluded.confirmed_at,
+        consent_wording = excluded.consent_wording,
+        ip = excluded.ip,
+        user_agent = excluded.user_agent,
+        source = excluded.source;
+    `);
+
+    upsertStmt.run(
+      id,
+      params.email.toLowerCase().trim(),
+      params.confirmedAt,
+      params.consentWording,
+      params.ip,
+      params.userAgent || null,
+      params.source || "double_opt_in",
+      now
+    );
+    return true;
+  } catch (err) {
+    console.warn("[DB ERROR] Failed to record subscriber in SQLite:", err);
+    return false;
   }
 }
 

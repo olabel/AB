@@ -84,7 +84,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
           <aside className="lg:col-span-4 order-2 lg:order-1">
             <div className="lg:sticky lg:top-28 p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4">
               <h2 className="text-xs font-semibold uppercase tracking-wider text-[#75581f]">
-                On this page
+                {isFrench ? "Sur cette page" : "On this page"}
               </h2>
               <nav aria-label="Legal document section index">
                 <ol className="space-y-2.5 text-xs text-[#46423a] list-none p-0">
@@ -106,9 +106,9 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
 
               <div className="border-t border-[#ece6da] pt-4 text-xs text-[#625d52]">
                 <p>
-                  Questions about these terms?{" "}
-                  <Link to="/contact" className="underline text-[#2e4a3b]">
-                    Contact Ahmed
+                  {isFrench ? "Des questions sur ces modalités ? " : "Questions about these terms? "}
+                  <Link to={isFrench ? "/fr/contact" : "/contact"} className="underline text-[#2e4a3b]">
+                    {isFrench ? "Contacter Ahmed" : "Contact Ahmed"}
                   </Link>
                 </p>
               </div>
@@ -142,13 +142,16 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
 
             {pageType === "disclosures" && (
               <div className="p-6 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] space-y-3">
-                <h3 className="h3 text-[#1c1b18] text-xl">Need more information?</h3>
+                <h3 className="h3 text-[#1c1b18] text-xl">
+                  {isFrench ? "Besoin d'informations complémentaires ?" : "Need more information?"}
+                </h3>
                 <p className="text-xs text-[#46423a]">
-                  If you have questions about licensing, provincial authorization, or product suitability,
-                  you are always welcome to ask.
+                  {isFrench
+                    ? "Si vous avez des questions sur les agréments, les autorisations provinciales ou la convenance d'une solution financière, vous êtes toujours le bienvenu pour échanger."
+                    : "If you have questions about licensing, provincial authorization, or product suitability, you are always welcome to ask."}
                 </p>
-                <Link to="/contact" className="btn btn-primary text-xs py-2 px-4">
-                  Start a Conversation →
+                <Link to={isFrench ? "/fr/contact" : "/contact"} className="btn btn-primary text-xs py-2 px-4">
+                  {isFrench ? "Démarrer une conversation →" : "Start a Conversation →"}
                 </Link>
               </div>
             )}

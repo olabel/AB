@@ -59,12 +59,55 @@
         }
       },
       "required": ["referenceNo", "topic", "firstName", "email", "createdAt"]
+    },
+    "Subscriber": {
+      "title": "Subscriber",
+      "description": "Double opt-in confirmed subscriber with CASL compliance audit trail",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Subscriber email address",
+          "maxLength": 120
+        },
+        "confirmedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp of token verification"
+        },
+        "consentWording": {
+          "type": "string",
+          "description": "Exact CASL consent text shown to the subscriber",
+          "maxLength": 1000
+        },
+        "ip": {
+          "type": "string",
+          "description": "Client IP at confirmation time",
+          "maxLength": 64
+        },
+        "userAgent": {
+          "type": "string",
+          "description": "User agent at confirmation",
+          "maxLength": 300
+        },
+        "source": {
+          "type": "string",
+          "description": "Source of subscription",
+          "maxLength": 60
+        }
+      },
+      "required": ["email", "confirmedAt", "consentWording", "ip"]
     }
   },
   "firestore": {
     "/leads/{leadId}": {
       "schema": "Lead",
       "description": "Submitted client leads and inquiries"
+    },
+    "/subscribers/{subscriberId}": {
+      "schema": "Subscriber",
+      "description": "CASL compliant double opt-in subscribers"
     }
   }
 }

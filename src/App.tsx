@@ -7,7 +7,16 @@ import { DraftBanner } from "./components/Tbc.tsx";
 import { FloatingNewsWidget } from "./components/FloatingNewsWidget.tsx";
 import { MobileBookingBar } from "./components/MobileBookingBar.tsx";
 import { Analytics } from "@vercel/analytics/react";
-import { disclosuresData, privacyData, standardsData, termsData } from "./content/legal.ts";
+import {
+  disclosuresData,
+  privacyData,
+  standardsData,
+  termsData,
+  disclosuresDataFr,
+  privacyDataFr,
+  standardsDataFr,
+  termsDataFr,
+} from "./content/legal.ts";
 
 // Direct imports ensure the matching page's code is executed before first paint,
 // eliminating layout jump (CLS < 0.1) and preventing pre-rendered content from flashing a spinner.
@@ -148,7 +157,7 @@ export default function App() {
                   element={
                     <LegalPage
                       pageType="disclosures"
-                      data={disclosuresData}
+                      data={disclosuresDataFr}
                       eyebrow="Divulgations & Transparence Réglementaire"
                     />
                   }
@@ -168,7 +177,7 @@ export default function App() {
                   element={
                     <LegalPage
                       pageType="privacy"
-                      data={privacyData}
+                      data={privacyDataFr}
                       eyebrow="Avis de Confidentialité"
                     />
                   }
@@ -188,7 +197,7 @@ export default function App() {
                   element={
                     <LegalPage
                       pageType="standards"
-                      data={standardsData}
+                      data={standardsDataFr}
                       eyebrow="Normes Éditoriales"
                     />
                   }
@@ -208,7 +217,7 @@ export default function App() {
                   element={
                     <LegalPage
                       pageType="terms"
-                      data={termsData}
+                      data={termsDataFr}
                       eyebrow="Conditions d'Utilisation"
                     />
                   }
