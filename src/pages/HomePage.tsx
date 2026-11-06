@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { BrandMark } from "../components/BrandMark.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { HowThePiecesFit } from "../components/HowThePiecesFit.tsx";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import {
@@ -284,6 +285,9 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* 2.5 How the Pieces Fit: Architectural Balance-Sheet Integration */}
+      <HowThePiecesFit />
 
       {/* 3. Interactive Decision Models Strip */}
       <section className="section py-14 border-b border-[#d6cebd]">

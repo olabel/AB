@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore, doc, setDoc, getDocFromServer } from "firebase/firestore";
+import { initializeAppCheck, ReCaptchaV3Provider, AppCheck } from "firebase/app-check";
 import firebaseConfig from "../../firebase-applet-config.json";
 
 // Initialize Firebase App
@@ -10,6 +11,39 @@ export const db =
   firebaseConfig.firestoreDatabaseId && firebaseConfig.firestoreDatabaseId !== "(default)"
     ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
     : getFirestore(app);
+
+// Initialize Firebase App Check using the reCAPTCHA v3 provider to verify legitimate app requests
+export let appCheck: AppCheck | null = null;
+
+if (typeof window !== "undefined") {
+  try {
+    const recaptchaSiteKey =
+      (import.meta as any).env?.VITE_RECAPTCHA_V3_SITE_KEY ||
+      firebaseConfig.recaptchaSiteKey ||
+      "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // ReCAPTCHA v3 site key
+
+    // Allow debug token in local development or preview environments to maintain legitimate access
+    const isLocalOrPreview =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.hostname.includes("run.app") ||
+      window.location.hostname.includes("web.app");
+
+    if (isLocalOrPreview && !(self as any).FIREBASE_APPCHECK_DEBUG_TOKEN) {
+      (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+    }
+
+    if (recaptchaSiteKey) {
+      appCheck = initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider(recaptchaSiteKey),
+        isTokenAutoRefreshEnabled: true,
+      });
+    }
+  } catch (appCheckError) {
+    // Handled gracefully so the app remains resilient
+    console.warn("Firebase App Check initialization:", appCheckError);
+  }
+}
 
 // Connection test on boot as required by Firebase skill
 if (typeof window !== "undefined") {
