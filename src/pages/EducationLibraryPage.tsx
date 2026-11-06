@@ -77,7 +77,7 @@ export const EducationLibraryPage: React.FC = () => {
             ? "Guides éducatifs clairs sur le CELI, REER, CELIAPP, RESP, pensions publiques RPC/SV et stratégies d'endettement au Canada."
             : "Plain-language explanations of Canadian registered accounts (TFSA, RRSP, FHSA), risk, debt, income protection, and public pensions."
         }
-        canonicalUrl="/education"
+        canonicalUrl={language === "fr" ? "/fr/education" : "/education"}
       />
       {/* CollectionPage Schema JSON-LD */}
       <script

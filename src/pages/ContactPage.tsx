@@ -243,13 +243,13 @@ export const ContactPage: React.FC = () => {
   return (
     <div className="py-12 md:py-16">
       <SEO
-        title={language === "fr" ? "Contactez Ahmed Bello | Éducation financière canadienne" : "Contact Ahmed Bello | Canadian Financial Education"}
+        title={language === "fr" ? "Démarrer une Conversation | Ahmed Bello" : "Start a Conversation | Ahmed Bello"}
         description={
           language === "fr"
             ? "Posez vos questions sur la fiscalité canadienne, le CELI, REER, CELIAPP ou la protection financière sans pression commerciale."
             : "Ask your financial questions about Canadian tax rules, TFSA, RRSP, FHSA, and household liquidity. Direct personal response without sales pressure."
         }
-        canonicalUrl="/contact"
+        canonicalUrl={language === "fr" ? "/fr/contact" : "/contact"}
       />
       {/* Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">

@@ -16,7 +16,8 @@ import { HowIHelpPage } from "./pages/HowIHelpPage.tsx";
 import { EducationLibraryPage } from "./pages/EducationLibraryPage.tsx";
 import { ArticlePage } from "./pages/ArticlePage.tsx";
 import { InsightsPage } from "./pages/InsightsPage.tsx";
-import { NewsPage } from "./pages/NewsPage.tsx";
+import { WhatChangedPage } from "./pages/WhatChangedPage.tsx";
+import { Navigate } from "react-router-dom";
 import { AboutPage } from "./pages/AboutPage.tsx";
 import { CareersPage } from "./pages/CareersPage.tsx";
 import { AudienceHubPage } from "./pages/AudienceHubPage.tsx";
@@ -73,18 +74,30 @@ export default function App() {
                 <Route path="/education/:slug" element={<ArticlePage />} />
                 <Route path="/insights/:slug" element={<ArticlePage />} />
                 <Route path="/insights" element={<InsightsPage />} />
-                <Route path="/news" element={<NewsPage />} />
-                <Route path="/financial-news" element={<NewsPage />} />
+                <Route path="/what-changed" element={<WhatChangedPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/careers" element={<CareersPage />} />
-                <Route path="/become-an-agent" element={<CareersPage />} />
                 <Route path="/for/:audience" element={<AudienceHubPage />} />
                 <Route path="/investing/islamic-equity" element={<IslamicInvestingPage />} />
-                <Route path="/for/muslim-investors" element={<IslamicInvestingPage />} />
                 <Route path="/calculators" element={<CalculatorsPage />} />
-                <Route path="/financial-calculators" element={<CalculatorsPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/confirm-subscription" element={<ConfirmSubscriptionPage />} />
+
+                {/* English Aliases -> Canonical 301/Replace Redirects */}
+                <Route path="/news" element={<Navigate to="/what-changed" replace />} />
+                <Route path="/financial-news" element={<Navigate to="/what-changed" replace />} />
+                <Route path="/financial-calculators" element={<Navigate to="/calculators" replace />} />
+                <Route path="/health-workers" element={<Navigate to="/for/healthcare" replace />} />
+                <Route path="/doctors-nurses" element={<Navigate to="/for/healthcare" replace />} />
+                <Route path="/for/health-workers" element={<Navigate to="/for/healthcare" replace />} />
+                <Route path="/for/doctors-nurses" element={<Navigate to="/for/healthcare" replace />} />
+                <Route path="/for/entrepreneurs" element={<Navigate to="/for/business-owners" replace />} />
+                <Route path="/for/incorporated" element={<Navigate to="/for/business-owners" replace />} />
+                <Route path="/for/immigrants" element={<Navigate to="/for/newcomers" replace />} />
+                <Route path="/for/new-to-canada" element={<Navigate to="/for/newcomers" replace />} />
+                <Route path="/for/parents" element={<Navigate to="/for/families" replace />} />
+                <Route path="/for/muslim-investors" element={<Navigate to="/investing/islamic-equity" replace />} />
+                <Route path="/become-an-agent" element={<Navigate to="/careers" replace />} />
 
                 {/* French Indexable Routes */}
                 <Route path="/fr" element={<HomePage />} />
@@ -93,18 +106,31 @@ export default function App() {
                 <Route path="/fr/education/:slug" element={<ArticlePage />} />
                 <Route path="/fr/insights/:slug" element={<ArticlePage />} />
                 <Route path="/fr/insights" element={<InsightsPage />} />
-                <Route path="/fr/news" element={<NewsPage />} />
-                <Route path="/fr/financial-news" element={<NewsPage />} />
+                <Route path="/fr/what-changed" element={<WhatChangedPage />} />
                 <Route path="/fr/about" element={<AboutPage />} />
                 <Route path="/fr/careers" element={<CareersPage />} />
-                <Route path="/fr/become-an-agent" element={<CareersPage />} />
                 <Route path="/fr/for/:audience" element={<AudienceHubPage />} />
                 <Route path="/fr/investing/islamic-equity" element={<IslamicInvestingPage />} />
-                <Route path="/fr/for/muslim-investors" element={<IslamicInvestingPage />} />
                 <Route path="/fr/calculators" element={<CalculatorsPage />} />
-                <Route path="/fr/simulateurs" element={<CalculatorsPage />} />
                 <Route path="/fr/contact" element={<ContactPage />} />
                 <Route path="/fr/confirm-subscription" element={<ConfirmSubscriptionPage />} />
+
+                {/* French Aliases -> Canonical 301/Replace Redirects */}
+                <Route path="/fr/news" element={<Navigate to="/fr/what-changed" replace />} />
+                <Route path="/fr/financial-news" element={<Navigate to="/fr/what-changed" replace />} />
+                <Route path="/fr/simulateurs" element={<Navigate to="/fr/calculators" replace />} />
+                <Route path="/fr/financial-calculators" element={<Navigate to="/fr/calculators" replace />} />
+                <Route path="/fr/health-workers" element={<Navigate to="/fr/for/healthcare" replace />} />
+                <Route path="/fr/doctors-nurses" element={<Navigate to="/fr/for/healthcare" replace />} />
+                <Route path="/fr/for/health-workers" element={<Navigate to="/fr/for/healthcare" replace />} />
+                <Route path="/fr/for/doctors-nurses" element={<Navigate to="/fr/for/healthcare" replace />} />
+                <Route path="/fr/for/entrepreneurs" element={<Navigate to="/fr/for/business-owners" replace />} />
+                <Route path="/fr/for/incorporated" element={<Navigate to="/fr/for/business-owners" replace />} />
+                <Route path="/fr/for/immigrants" element={<Navigate to="/fr/for/newcomers" replace />} />
+                <Route path="/fr/for/new-to-canada" element={<Navigate to="/fr/for/newcomers" replace />} />
+                <Route path="/fr/for/parents" element={<Navigate to="/fr/for/families" replace />} />
+                <Route path="/fr/for/muslim-investors" element={<Navigate to="/fr/investing/islamic-equity" replace />} />
+                <Route path="/fr/become-an-agent" element={<Navigate to="/fr/careers" replace />} />
 
                 {/* Legal and standards routes (EN & FR) */}
                 <Route

@@ -11,63 +11,64 @@ export const FloatingNewsWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 
-  // Hide on news pages and all article / reading guides to preserve reading focus
+  // Hide on what-changed pages and all article / reading guides to preserve reading focus
   const isHiddenPage =
+    location.pathname === "/what-changed" ||
+    location.pathname === "/fr/what-changed" ||
     location.pathname === "/news" ||
-    location.pathname === "/financial-news" ||
     location.pathname === "/fr/news" ||
     location.pathname.startsWith("/education") ||
     location.pathname.startsWith("/fr/education") ||
     location.pathname.startsWith("/insights") ||
     location.pathname.startsWith("/fr/insights");
 
-  const topStory = STATIC_NEWS[0];
-
   if (isHiddenPage || isDismissed) {
     return null;
   }
 
+  const prefix = isFr ? "/fr" : "";
+
   return (
     <aside
-      aria-label={isFr ? "Actualités financières en direct" : "Live financial intelligence desk"}
+      aria-label={isFr ? "Changements récents aux règles financières" : "Recent Canadian money rule updates"}
       className="fixed right-3 bottom-20 sm:bottom-8 z-40 select-none"
     >
-      {/* 1. Sleek, Small Hanging / Floating Trigger Button */}
+      {/* 1. Hanging Floating Trigger Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
           className="group flex items-center gap-2 p-2.5 bg-[#1a2c22] hover:bg-[#253d30] text-[#f7f3eb] rounded-full border border-[#d6c298]/60 shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer"
-          title={isFr ? "Ouvrir les actualités financières" : "Live Financial News"}
+          title={isFr ? "Voir les changements réglementaires récents" : "What Changed in Canadian Money Rules"}
           aria-expanded={isOpen}
-          aria-label={isFr ? "Ouvrir les actualités" : "Open Financial News"}
+          aria-label={isFr ? "Changements aux règles" : "Money Rule Changes"}
         >
-          {/* Pulsing Emerald Dot */}
+          {/* Pulsing Amber Dot */}
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#52b788] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#52b788]"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d6c298] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d6c298]"></span>
           </span>
 
           <Newspaper className="w-4 h-4 text-[#d6c298] group-hover:scale-105 transition-transform" />
 
-          {/* Tiny label on hover / medium screens */}
+          {/* Label on hover / medium screens */}
           <span className="hidden group-hover:inline-block pr-1 text-[0.7rem] font-medium tracking-wide text-[#ece6da]">
-            {isFr ? "Actualités" : "News"}
+            {isFr ? "Règles 2026" : "Rule Updates"}
           </span>
         </button>
       )}
 
-      {/* 2. Compact Popup Preview (Strictly Headline, Source, Date, Link - NO summaries) */}
+      {/* 2. Compact Popup Preview */}
       {isOpen && (
         <div className="w-80 sm:w-88 bg-[#1a2c22] text-[#f7f3eb] border border-[#d6c298]/80 rounded-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
           {/* Header */}
           <div className="px-3.5 py-2.5 bg-[#24392e] border-b border-[#2e4a3b] flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#52b788] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#52b788]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d6c298] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d6c298]"></span>
               </span>
               <span className="text-xs font-semibold uppercase tracking-wider text-[#d6c298]">
-                {isFr ? "Dernière Dépêche" : "Latest Headline"}
+                {isFr ? "Ce qui a changé (Nov 2026)" : "What Changed (Nov 2026)"}
               </span>
             </div>
 
@@ -81,40 +82,41 @@ export const FloatingNewsWidget: React.FC = () => {
             </button>
           </div>
 
-          {/* Headline Body: Headline, Source Name, Date, Link ONLY (NO summary or commentary) */}
-          <div className="p-4 space-y-2.5">
+          {/* Headline Body */}
+          <div className="p-4 space-y-2">
             <div className="flex items-center justify-between text-[0.7rem] text-[#d6c298]">
-              <span className="font-semibold">{topStory.source}</span>
-              <span className="text-[#ece6da]/70">
-                {new Date(topStory.pubDate).toLocaleDateString(isFr ? "fr-CA" : "en-CA", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
+              <span className="font-semibold uppercase tracking-wider">
+                {isFr ? "Banque du Canada & BSIF" : "Bank of Canada & OSFI"}
               </span>
+              <span className="text-[#ece6da]/70">Nov 2026</span>
             </div>
 
             <h4 className="font-serif text-sm font-semibold text-[#f7f3eb] leading-snug">
-              <a
-                href={topStory.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#d6c298] transition-colors inline-flex items-start gap-1"
+              <Link
+                to={`${prefix}/what-changed`}
+                onClick={() => setIsOpen(false)}
+                className="hover:text-[#d6c298] transition-colors"
               >
-                <span>{topStory.title}</span>
-                <ExternalLink className="w-3 h-3 shrink-0 mt-1 opacity-70" />
-              </a>
+                {isFr
+                  ? "Baisse du taux directeur à 2,50 % & exemption du test de résistance B-20 du BSIF"
+                  : "Overnight Rate Cut to 2.50% & OSFI Uninsured Mortgage Straight-Switch In Effect"}
+              </Link>
             </h4>
+            <p className="text-xs text-[#d6cebd] line-clamp-2">
+              {isFr
+                ? "Découvrez l'analyse d'Ahmed Bello sur l'impact pour les emprunteurs et les épargnants."
+                : "Read Ahmed's advisor breakdown on mortgage renewal leverage and cash yield shifts."}
+            </p>
           </div>
 
-          {/* Action Link to Full News Page */}
+          {/* Action Link to What Changed Page */}
           <div className="p-2.5 bg-[#17251d] border-t border-[#2e4a3b]">
             <Link
-              to={isFr ? "/fr/news" : "/news"}
+              to={`${prefix}/what-changed`}
               onClick={() => setIsOpen(false)}
               className="w-full inline-flex items-center justify-center gap-1.5 py-1.5 px-3 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs rounded-xs transition-colors text-center"
             >
-              <span>{isFr ? "Consulter toutes les actualités" : "View All Headlines"}</span>
+              <span>{isFr ? "Lire la revue réglementaire complète" : "Read Full Advisor Briefing"}</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>

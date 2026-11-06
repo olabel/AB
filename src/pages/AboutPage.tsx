@@ -30,7 +30,7 @@ export const AboutPage: React.FC = () => {
   return (
     <div className="py-12 md:py-16">
       <SEO
-        title={isFr ? "À Propos d'Ahmed Bello | Professionnel Agréé au Canada" : "About Ahmed Bello | Licensed Financial Solutions Professional"}
+        title={isFr ? "À Propos d'Ahmed Bello | Professionnel Agréé" : "About Ahmed Bello | Licensed Financial Solutions"}
         description={
           isFr
             ? "Éducateur financier indépendant aidant les familles et particuliers au Canada à comprendre les régimes enregistrés (CELI, REER) et la prévoyance."

@@ -31,7 +31,7 @@ export const HowIHelpPage: React.FC = () => {
   return (
     <div className="py-12 md:py-16">
       <SEO
-        title={isFr ? "Comment je vous aide | Démarche d'éducation financière" : "How I Help | Question-Led Financial Education"}
+        title={isFr ? "Comment J'Aide | Éducation Financière" : "How I Help | Financial Guidance"}
         description={
           isFr
             ? "Découvrez notre approche fondée sur la clarté : où allouer votre prochain dollar, protection du revenu et préparation de vos objectifs familiaux."

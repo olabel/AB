@@ -243,16 +243,6 @@ Notes: ${formData.notes || "None"}`;
             : "Objective educational guide on Shari'ah-compliant global equity index investing under AAOIFI standards, balance sheet screening, and Canadian registered accounts (TFSA, RRSP, FHSA)."
         }
         canonicalUrl={isFr ? "/fr/investing/islamic-equity" : "/investing/islamic-equity"}
-        keywords={[
-          "Shariah compliant investing Canada",
-          "Islamic equity index Canada",
-          "Halal investing TFSA RRSP",
-          "AAOIFI screening standards Canada",
-          "MSCI ACWI Islamic Index",
-          "Halal financial planning Canada",
-          "Investissement islamique Canada",
-          "Actions halal CELI REER",
-        ]}
       />
 
       <div className="wrap max-w-5xl px-0">

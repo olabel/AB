@@ -106,16 +106,6 @@ export const NewsPage: React.FC = () => {
             : "Official economic headlines with analytical excerpts and verified photography: Bank of Canada policy rate, US Federal Reserve decisions, Canadian CPI inflation, and CRA tax notices."
         }
         canonicalUrl={isFr ? "/fr/news" : "/news"}
-        keywords={[
-          "Bank of Canada interest rate",
-          "US Federal Reserve rate decision",
-          "Canada CPI inflation",
-          "CRA tax bracket indexation",
-          "Mortgage rates Canada",
-          "Canadian financial news",
-          "Banque du Canada taux",
-          "Actualités financières Canada",
-        ]}
       />
       <div className="wrap max-w-5xl">
         {/* Header Breadcrumbs & Title */}

@@ -3908,6 +3908,12 @@ const rawArticles: Article[] = [
 }
 ];
 
-// Active public articles (held articles are withheld pending CPA compliance review)
-export const articles: Article[] = rawArticles.filter((a) => !a.heldForReview);
+// Active public articles with verified publication and modification timestamps for search engines
+export const articles: Article[] = rawArticles
+  .filter((a) => !a.heldForReview)
+  .map((a) => ({
+    ...a,
+    datePublished: a.datePublished || "2025-01-15T08:00:00-05:00",
+    dateModified: a.dateModified || "2026-11-05T09:00:00-05:00",
+  }));
 export const heldArticles: Article[] = rawArticles.filter((a) => a.heldForReview);

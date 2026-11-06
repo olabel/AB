@@ -292,18 +292,6 @@ Candidate Application Details:
                 timeToComplete: "P3M",
               },
               {
-                "@type": "FAQPage",
-                "@id": `${siteConfig.siteUrl}/careers#faq`,
-                mainEntity: faqs.map((f) => ({
-                  "@type": "Question",
-                  name: f.q,
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: f.a,
-                  },
-                })),
-              },
-              {
                 "@type": "BreadcrumbList",
                 itemListElement: [
                   {

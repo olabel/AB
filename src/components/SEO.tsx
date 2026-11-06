@@ -14,7 +14,41 @@ export interface SEOProps {
   articlePublishedTime?: string;
   articleModifiedTime?: string;
   noIndex?: boolean;
-  keywords?: string | string[];
+}
+
+/**
+ * Formats page titles to strictly stay within the 60-character search engine limit
+ * while never cutting words in the middle (truncates cleanly at word boundaries).
+ */
+export function formatTitle(rawTitle: string, brand = "Ahmed Bello", maxLen = 60): string {
+  const brandSuffix = ` | ${brand}`;
+  const clean = rawTitle.replace(/\s+/g, " ").trim();
+
+  // If already includes the brand
+  if (clean.includes(brand)) {
+    if (clean.length <= maxLen) return clean;
+    const target = maxLen - 3;
+    const slice = clean.slice(0, target);
+    const lastSpace = slice.lastIndexOf(" ");
+    return (lastSpace > 20 ? slice.slice(0, lastSpace) : slice).trim() + "...";
+  }
+
+  // If appending brand fits within maxLen
+  const withBrand = `${clean}${brandSuffix}`;
+  if (withBrand.length <= maxLen) return withBrand;
+
+  // Truncate clean title so cleanTitle + brandSuffix <= maxLen
+  const allowed = maxLen - brandSuffix.length - 3;
+  if (allowed < 15) {
+    const slice = withBrand.slice(0, maxLen - 3);
+    const lastSpace = slice.lastIndexOf(" ");
+    return (lastSpace > 20 ? slice.slice(0, lastSpace) : slice).trim() + "...";
+  }
+
+  const slice = clean.slice(0, allowed);
+  const lastSpace = slice.lastIndexOf(" ");
+  const truncated = (lastSpace > 10 ? slice.slice(0, lastSpace) : slice).trim() + "...";
+  return `${truncated}${brandSuffix}`;
 }
 
 export const SEO: React.FC<SEOProps> = ({
@@ -28,7 +62,6 @@ export const SEO: React.FC<SEOProps> = ({
   articlePublishedTime,
   articleModifiedTime,
   noIndex = false,
-  keywords,
 }) => {
   const location = useLocation();
   const { language } = useLanguage();
@@ -56,22 +89,8 @@ export const SEO: React.FC<SEOProps> = ({
     ? "Éducation financière en langage clair sur les régimes enregistrés (CELI, REER, CELIAPP), l'assurance vie et les décisions budgétaires avec Ahmed Bello."
     : "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.";
 
-  const finalTitle = title
-    ? title.includes("Ahmed Bello")
-      ? title
-      : `${title} | Ahmed Bello`
-    : defaultTitle;
+  const finalTitle = formatTitle(title || defaultTitle);
   const finalDescription = description || defaultDescription;
-
-  const defaultKeywords = isFr
-    ? "éducation financière Canada, CELI vs REER, CELIAPP achat première maison, investissement islamique Canada, indice actions islamique ACWI BlackRock, assurance vie temporaire, crédit nouveaux arrivants, conseiller financier Moncton"
-    : "Canadian financial education, TFSA vs RRSP, FHSA Home Buyers Plan, Islamic investing Canada, Halal Equity Index ACWI BlackRock, term life insurance Canada, newcomer credit building, Bank of Canada rates, financial advisor Moncton NB";
-
-  const finalKeywords = keywords
-    ? Array.isArray(keywords)
-      ? keywords.join(", ")
-      : keywords
-    : defaultKeywords;
 
   useEffect(() => {
     // 1. Update Document Title
@@ -88,6 +107,12 @@ export const SEO: React.FC<SEOProps> = ({
       }
       tag.setAttribute("content", content);
     };
+
+    // Remove dead weight keywords meta tag if present
+    const staleKeywords = document.querySelector('meta[name="keywords"]');
+    if (staleKeywords) {
+      staleKeywords.remove();
+    }
 
     // 3. Helper to set/update link tag
     const setLinkTag = (rel: string, href: string, extraAttrs: Record<string, string> = {}) => {
@@ -107,7 +132,6 @@ export const SEO: React.FC<SEOProps> = ({
 
     // Standard Meta
     setMetaTag("name", "description", finalDescription);
-    setMetaTag("name", "keywords", finalKeywords);
     setMetaTag(
       "name",
       "robots",
@@ -165,7 +189,7 @@ export const SEO: React.FC<SEOProps> = ({
       const tag = document.getElementById("route-jsonld");
       if (tag) tag.remove();
     };
-  }, [finalTitle, finalDescription, finalKeywords, currentCanonical, englishUrl, frenchUrl, ogType, image, jsonLd, isFr, noIndex]);
+  }, [finalTitle, finalDescription, currentCanonical, englishUrl, frenchUrl, ogType, image, jsonLd, isFr, noIndex]);
 
   return null;
 };

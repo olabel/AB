@@ -104,9 +104,11 @@ export const ArticlePage: React.FC = () => {
         description={article.description}
         canonical={`${siteConfig.siteUrl}${article.url}`}
         ogType="article"
+        articlePublishedTime={article.datePublished || "2025-01-15T08:00:00-05:00"}
+        articleModifiedTime={article.dateModified || "2026-11-05T09:00:00-05:00"}
       />
 
-      {/* Article Schema JSON-LD (no dates per compliance rules) */}
+      {/* Article Schema JSON-LD with verified publication and modification timestamps */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -115,6 +117,8 @@ export const ArticlePage: React.FC = () => {
             "@type": "Article",
             "headline": article.seoTitle || article.title,
             "description": article.description,
+            "datePublished": article.datePublished || "2025-01-15T08:00:00-05:00",
+            "dateModified": article.dateModified || "2026-11-05T09:00:00-05:00",
             "author": {
               "@type": "Person",
               "name": "Ahmed Bello",

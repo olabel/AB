@@ -28,12 +28,11 @@ function getSemanticFallbackHtml(pathname: string): string {
       </main>
     `;
   }
-  if (p === "/news") {
+  if (p === "/what-changed" || p === "/fr/what-changed" || p === "/news") {
     return `
       <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
-        <h1>Live Canadian & US Financial News Desk</h1>
-        <p>Real-time institutional intelligence tracking the Bank of Canada policy rate, Federal Reserve FOMC decisions, inflation CPI indices, and CRA regulatory updates.</p>
-        <p>Auto-updated every 15 minutes from official central bank releases and verified financial journalism.</p>
+        <h1>What Changed in Canadian Money Rules | Ahmed Bello</h1>
+        <p>Monthly Canadian financial intelligence briefing by licensed financial solutions professional Ahmed Bello: Bank of Canada interest rate decisions, OSFI Guideline B-20 uninsured mortgage straight-switch rules, CRA registered account ceilings (TFSA, RRSP, FHSA), and Budget 2024 capital gains inclusion rates.</p>
       </main>
     `;
   }
@@ -385,6 +384,117 @@ app.all("/api/confirm-subscription", (req: Request, res: Response) => {
 });
 
 // --------------------------------------------------------------------------
+// 5.1. Strict 301 Canonical URL Normalization & Alias Redirects
+// --------------------------------------------------------------------------
+const REDIRECT_MAP: Record<string, string> = {
+  // Healthcare duplicates -> canonical /for/healthcare
+  "/health-workers": "/for/healthcare",
+  "/doctors-nurses": "/for/healthcare",
+  "/for/health-workers": "/for/healthcare",
+  "/for/doctors-nurses": "/for/healthcare",
+  "/fr/health-workers": "/fr/for/healthcare",
+  "/fr/doctors-nurses": "/fr/for/healthcare",
+  "/fr/for/health-workers": "/fr/for/healthcare",
+  "/fr/for/doctors-nurses": "/fr/for/healthcare",
+
+  // Audience aliases -> canonical
+  "/for/entrepreneurs": "/for/business-owners",
+  "/for/incorporated": "/for/business-owners",
+  "/fr/for/entrepreneurs": "/fr/for/business-owners",
+  "/fr/for/incorporated": "/fr/for/business-owners",
+  "/for/immigrants": "/for/newcomers",
+  "/for/new-to-canada": "/for/newcomers",
+  "/fr/for/immigrants": "/fr/for/newcomers",
+  "/fr/for/new-to-canada": "/fr/for/newcomers",
+  "/for/parents": "/for/families",
+  "/fr/for/parents": "/fr/for/families",
+  "/for/muslim-investors": "/investing/islamic-equity",
+  "/fr/for/muslim-investors": "/fr/investing/islamic-equity",
+  "/become-an-agent": "/careers",
+  "/fr/become-an-agent": "/fr/careers",
+
+  // Calculators aliases -> canonical /calculators
+  "/financial-calculators": "/calculators",
+  "/fr/financial-calculators": "/fr/calculators",
+  "/fr/simulateurs": "/fr/calculators",
+
+  // Cut the news desk -> canonical /what-changed
+  "/news": "/what-changed",
+  "/financial-news": "/what-changed",
+  "/fr/news": "/fr/what-changed",
+  "/fr/financial-news": "/fr/what-changed",
+};
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const cleanPath = req.path.replace(/\/+$/, "") || "/";
+  const target = REDIRECT_MAP[cleanPath.toLowerCase()];
+  if (target) {
+    return res.redirect(301, target);
+  }
+  next();
+});
+
+// --------------------------------------------------------------------------
+// 5.2. Strict Attribute & HTML Escaping Helpers
+// --------------------------------------------------------------------------
+function escapeHtml(str: string): string {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function escapeAttr(str: string): string {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function escapeJsonLd(schema: unknown): string {
+  return JSON.stringify(schema).replace(/<\/script/gi, "<\\/script");
+}
+
+/**
+ * Formats metadata page titles to strictly stay <= 60 characters
+ * without cutting words mid-sentence (truncates cleanly at word boundaries).
+ */
+function formatMetaTitle(rawTitle: string, brand = "Ahmed Bello", maxLen = 60): string {
+  const brandSuffix = ` | ${brand}`;
+  const clean = rawTitle.replace(/\s+/g, " ").trim();
+
+  // If already includes the brand
+  if (clean.includes(brand)) {
+    if (clean.length <= maxLen) return clean;
+    const target = maxLen - 3;
+    const slice = clean.slice(0, target);
+    const lastSpace = slice.lastIndexOf(" ");
+    return (lastSpace > 20 ? slice.slice(0, lastSpace) : slice).trim() + "...";
+  }
+
+  // If appending brand fits within maxLen
+  const withBrand = `${clean}${brandSuffix}`;
+  if (withBrand.length <= maxLen) return withBrand;
+
+  // Truncate clean title so cleanTitle + brandSuffix <= maxLen
+  const allowed = maxLen - brandSuffix.length - 3;
+  if (allowed < 15) {
+    const slice = withBrand.slice(0, maxLen - 3);
+    const lastSpace = slice.lastIndexOf(" ");
+    return (lastSpace > 20 ? slice.slice(0, lastSpace) : slice).trim() + "...";
+  }
+
+  const slice = clean.slice(0, allowed);
+  const lastSpace = slice.lastIndexOf(" ");
+  const truncated = (lastSpace > 10 ? slice.slice(0, lastSpace) : slice).trim() + "...";
+  return `${truncated}${brandSuffix}`;
+}
+
+// --------------------------------------------------------------------------
 // 6. High-Value SEO & Schema.org Rich Structured Data Map
 // --------------------------------------------------------------------------
 interface RouteMeta {
@@ -451,27 +561,6 @@ const siteWideWebSite = {
   publisher: {
     "@id": `${siteConfig.siteUrl}/#person`,
   },
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${siteConfig.siteUrl}/education?q={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
-  },
-};
-
-const howIHelpFaqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: howIHelpTopics.map((topic) => ({
-    "@type": "Question",
-    name: topic.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: `${topic.why} Key concepts include: ${topic.concepts.map((c) => `${c.term}: ${c.plain}`).join("; ")}. Trade-offs: ${topic.tradeoffs.join(" ")}`,
-    },
-  })),
 };
 
 function getRouteMetadata(pathname: string): RouteMeta {
@@ -485,8 +574,7 @@ function getRouteMetadata(pathname: string): RouteMeta {
     const isFrench = cleanPath.startsWith("/fr");
     const article = articles.find((a) => a.slug === slug);
     if (article) {
-      const titleCandidate = `${article.seoTitle || article.title} | Ahmed Bello`;
-      const title = titleCandidate.length > 65 ? `${titleCandidate.slice(0, 62)}...` : titleCandidate;
+      const title = formatMetaTitle(article.seoTitle || article.title, "Ahmed Bello", 60);
       const articleUrl = isFrench ? `/fr${article.url}` : article.url;
 
       return {
@@ -502,6 +590,8 @@ function getRouteMetadata(pathname: string): RouteMeta {
             "@type": "Article",
             headline: article.seoTitle || article.title,
             description: article.description,
+            datePublished: article.datePublished || "2025-01-15T08:00:00-05:00",
+            dateModified: article.dateModified || "2026-11-05T09:00:00-05:00",
             isAccessibleForFree: true,
             inLanguage: isFrench ? "fr-CA" : "en-CA",
             author: siteWidePerson,
@@ -557,60 +647,97 @@ function getRouteMetadata(pathname: string): RouteMeta {
   const forMatch = cleanPath.match(/^\/(?:fr\/)?for\/([^\/]+)$/);
   if (forMatch) {
     const aud = forMatch[1];
-    let title = "Financial Guidance & Topic Clusters | Ahmed Bello";
-    let desc = "Curated Canadian financial guides tailored for specific professions and situations.";
-    if (aud === "healthcare" || aud === "health-workers" || aud === "doctors-nurses") {
-      title = "Financial Guidance for Healthcare Workers, Doctors & Nurses | Ahmed Bello";
-      desc = "Licensing gap planning, newcomer cashflow runway, and income protection for internationally trained healthcare professionals.";
-    } else if (aud === "business-owners" || aud === "incorporated") {
-      title = "Financial Guidance for Canadian Business Owners & CCPCs | Ahmed Bello";
-      desc = "Corporate capital gains rules, Capital Dividend Account extraction, and private company estate planning.";
-    } else if (aud === "families" || aud === "parents") {
-      title = "Financial Guidance for Canadian Families & Homeowners | Ahmed Bello";
-      desc = "Mortgage renewal planning, FHSA and Home Buyers' Plan coordination, RESP education savings, and family protection.";
-    } else if (aud === "newcomers" || aud === "immigrants") {
-      title = "First-Year Financial Essentials for Newcomers to Canada | Ahmed Bello";
-      desc = "Credit score building, first-year savings runway calculator, tax residency timing, and foreign asset reporting.";
+    const isFrench = cleanPath.startsWith("/fr");
+
+    const VALID_AUDIENCES: Record<string, { titleEn: string; titleFr: string; descEn: string; descFr: string; canonical: string }> = {
+      healthcare: {
+        titleEn: "Financial Guidance for Healthcare | Ahmed Bello",
+        titleFr: "Orientation Financière Santé | Ahmed Bello",
+        descEn: "Licensing gap planning, newcomer cashflow runway, and income protection for internationally trained healthcare professionals.",
+        descFr: "Planification des délais d'équivalence, subsistance et protection pour professionnels de la santé.",
+        canonical: "/for/healthcare",
+      },
+      "business-owners": {
+        titleEn: "Financial Guidance for Business Owners | Ahmed Bello",
+        titleFr: "Orientation Propriétaires d'Entreprises | Ahmed Bello",
+        descEn: "Corporate capital gains rules, Capital Dividend Account extraction, and private company estate planning.",
+        descFr: "Règles fiscales corporatives, compte de dividendes en capital et planification de relève.",
+        canonical: "/for/business-owners",
+      },
+      families: {
+        titleEn: "Financial Guidance for Families | Ahmed Bello",
+        titleFr: "Orientation Financière Familles | Ahmed Bello",
+        descEn: "Mortgage renewal planning, FHSA and Home Buyers' Plan coordination, RESP education savings, and family protection.",
+        descFr: "Planification du renouvellement hypothécaire, CELIAPP, RAP et épargne-études REEE.",
+        canonical: "/for/families",
+      },
+      newcomers: {
+        titleEn: "Financial Essentials for Newcomers | Ahmed Bello",
+        titleFr: "Essentiels Nouveaux Arrivants | Ahmed Bello",
+        descEn: "Credit score building, first-year savings runway calculator, tax residency timing, and foreign asset reporting.",
+        descFr: "Bâtir son crédit, réserves financières de première année et règles de résidence fiscale.",
+        canonical: "/for/newcomers",
+      },
+    };
+
+    const matchedAud = VALID_AUDIENCES[aud];
+    if (!matchedAud) {
+      // Unknown audience slug: Return 404 metadata so it never soft-404s with 200 OK
+      return {
+        title: isFrench ? "Page non trouvée (404) | Ahmed Bello" : "Page Not Found (404) | Ahmed Bello",
+        description: isFrench
+          ? "La page de conseil financier demandée n'existe pas."
+          : "The requested financial guidance page could not be found.",
+        ogType: "website",
+        url: `${siteConfig.siteUrl}${cleanPath}`,
+        jsonLd: [siteWideWebSite],
+      };
     }
+
     return {
-      title,
-      description: desc,
+      title: isFrench ? matchedAud.titleFr : matchedAud.titleEn,
+      description: isFrench ? matchedAud.descFr : matchedAud.descEn,
       ogType: "website",
-      url: `${siteConfig.siteUrl}${cleanPath}`,
+      url: `${siteConfig.siteUrl}${isFrench ? `/fr${matchedAud.canonical}` : matchedAud.canonical}`,
       jsonLd: [siteWideWebSite, siteWideFinancialService],
     };
   }
 
   switch (cleanPath) {
     case "/how-i-help":
+    case "/fr/how-i-help":
       return {
-        title: "How I Help | Canadian Financial Guidance | Ahmed Bello",
+        title: cleanPath.startsWith("/fr")
+          ? "Comment J'Aide | Éducation Financière | Ahmed Bello"
+          : "How I Help | Financial Guidance | Ahmed Bello",
         description:
           "Seven question-led financial areas: cash flow, registered accounts, income protection, investing, education savings, retirement, and newcomers.",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/how-i-help`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           siteWideFinancialService,
-          howIHelpFaqSchema,
           {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
-              { "@type": "ListItem", position: 2, name: "How I Help", item: `${siteConfig.siteUrl}/how-i-help` },
+              { "@type": "ListItem", position: 2, name: "How I Help", item: `${siteConfig.siteUrl}${cleanPath}` },
             ],
           },
         ],
       };
 
     case "/education":
+    case "/fr/education":
       return {
-        title: "Financial Education Library | Canadian Money Rules | Ahmed Bello",
+        title: cleanPath.startsWith("/fr")
+          ? "Bibliothèque d'Éducation Financière | Ahmed Bello"
+          : "Financial Education Library | Ahmed Bello",
         description:
           "Plain-language explainers on Canadian registered accounts (TFSA, RRSP, FHSA, RESP), risk, debt, protection, and retirement with official sources.",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/education`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           siteWideFinancialService,
@@ -670,36 +797,46 @@ function getRouteMetadata(pathname: string): RouteMeta {
         ],
       };
 
-        case "/news":
+    case "/what-changed":
+    case "/fr/what-changed":
       return {
-        title: "Live Canadian & US Financial News Desk | Ahmed Bello",
-        description:
-          "Real-time central bank interest rate decisions, Bank of Canada monetary policy, Federal Reserve updates, and verified North American economic news.",
+        title: cleanPath.startsWith("/fr")
+          ? "Changements aux Règles Financières | Ahmed Bello"
+          : "What Changed in Canadian Money Rules | Ahmed Bello",
+        description: cleanPath.startsWith("/fr")
+          ? "Revue mensuelle rédigée par Ahmed Bello : décisions de la Banque du Canada, règles de transfert B-20 du BSIF, plafonds CELIAPP/REER et fiscalité."
+          : "Monthly Canadian financial intelligence by licensed professional Ahmed Bello: Bank of Canada rate shifts, OSFI straight switches, and CRA tax rules.",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/news`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           siteWideFinancialService,
           {
             "@context": "https://schema.org",
-            "@type": "WebPage",
-            name: "Live Financial News Desk",
-            url: `${siteConfig.siteUrl}/news`,
+            "@type": "CollectionPage",
+            name: cleanPath.startsWith("/fr") ? "Changements aux Règles Financières" : "What Changed in Canadian Money Rules",
+            url: `${siteConfig.siteUrl}${cleanPath}`,
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
+              { "@type": "ListItem", position: 2, name: cleanPath.startsWith("/fr") ? "Règles 2026" : "What Changed", item: `${siteConfig.siteUrl}${cleanPath}` },
+            ],
           },
         ],
       };
 
     case "/calculators":
-    case "/financial-calculators":
     case "/fr/calculators":
-    case "/fr/simulateurs":
       return {
         title: cleanPath.startsWith("/fr")
-          ? "Simulateurs Financiers Canadiens & Outils d'Analyse | Ahmed Bello"
-          : "Interactive Canadian Financial Calculators & Decision Simulators | Ahmed Bello",
+          ? "Simulateurs Financiers Canadiens | Ahmed Bello"
+          : "Canadian Financial Calculators | Ahmed Bello",
         description: cleanPath.startsWith("/fr")
-          ? "Simulateurs financiers canadiens interactifs : piste d'atterrissage pour nouveaux arrivants, choc de renouvellement hypothécaire, arbitrage CELI vs REER et plafond de revenu passif SPCC."
-          : "Interactive Canadian financial simulators: Newcomer financial runway, mortgage renewal shock analyzer, TFSA vs RRSP tax arbitrage, and CCPC passive income limit calculator.",
+          ? "Simulateurs interactifs : piste d'atterrissage pour nouveaux arrivants, choc hypothécaire, arbitrage CELI vs REER et plafond passif SPCC."
+          : "Interactive Canadian simulators: Newcomer financial runway, mortgage renewal shock analyzer, TFSA vs RRSP tax arbitrage, and CCPC passive income calculator.",
         ogType: "website",
         url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
@@ -708,8 +845,8 @@ function getRouteMetadata(pathname: string): RouteMeta {
           {
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            name: "Canadian Financial Decision Simulators",
-            url: `${siteConfig.siteUrl}/calculators`,
+            name: "Canadian Financial Decision Simators",
+            url: `${siteConfig.siteUrl}${cleanPath}`,
             applicationCategory: "FinanceApplication",
             operatingSystem: "All",
           },
@@ -718,20 +855,18 @@ function getRouteMetadata(pathname: string): RouteMeta {
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
-              { "@type": "ListItem", position: 2, name: "Financial Calculators", item: `${siteConfig.siteUrl}/calculators` },
+              { "@type": "ListItem", position: 2, name: "Financial Calculators", item: `${siteConfig.siteUrl}${cleanPath}` },
             ],
           },
         ],
       };
 
     case "/investing/islamic-equity":
-    case "/for/muslim-investors":
     case "/fr/investing/islamic-equity":
-    case "/fr/for/muslim-investors":
       return {
         title: cleanPath.startsWith("/fr")
           ? "Investissement Islamique au Canada | Ahmed Bello"
-          : "Islamic Investing in Canada: An Education Guide | Ahmed Bello",
+          : "Islamic Equity Investing in Canada | Ahmed Bello",
         description: cleanPath.startsWith("/fr")
           ? "Guide éducatif sur l'investissement en actions mondiales conformes à la charia selon les normes de l'AAOIFI et les comptes enregistrés canadiens."
           : "Educational guide on Shari'ah-compliant global equity investing under AAOIFI standards. Benchmark index tracking and Canadian registered accounts (TFSA, RRSP, FHSA).",
@@ -752,19 +887,22 @@ function getRouteMetadata(pathname: string): RouteMeta {
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
-              { "@type": "ListItem", position: 2, name: "Islamic Investing", item: `${siteConfig.siteUrl}/investing/islamic-equity` },
+              { "@type": "ListItem", position: 2, name: "Islamic Investing", item: `${siteConfig.siteUrl}${cleanPath}` },
             ],
           },
         ],
       };
 
     case "/about":
+    case "/fr/about":
       return {
-        title: "About Ahmed Bello | Licensed Financial Solutions Professional",
+        title: cleanPath.startsWith("/fr")
+          ? "À Propos d'Ahmed Bello | Professionnel Agréé"
+          : "About Ahmed Bello | Licensed Financial Solutions",
         description:
           "Independent Canadian financial educator helping Canadians understand how their income, savings, protection, and retirement decisions connect.",
         ogType: "profile",
-        url: `${siteConfig.siteUrl}/about`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           siteWidePerson,
@@ -774,20 +912,22 @@ function getRouteMetadata(pathname: string): RouteMeta {
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
-              { "@type": "ListItem", position: 2, name: "About Ahmed", item: `${siteConfig.siteUrl}/about` },
+              { "@type": "ListItem", position: 2, name: "About Ahmed", item: `${siteConfig.siteUrl}${cleanPath}` },
             ],
           },
         ],
       };
 
     case "/careers":
-    case "/become-an-agent":
+    case "/fr/careers":
       return {
-        title: "Independent Financial Practice Mentorship | Ahmed Bello",
+        title: cleanPath.startsWith("/fr")
+          ? "Expansion du Cabinet & Carrières | Ahmed Bello"
+          : "Practice Expansion & Careers | Ahmed Bello",
         description:
           "Launch your independent Canadian financial advisory career. Comprehensive LLQP licensing support, case co-planning, and direct 1-on-1 mentorship with Ahmed Bello. No tuition or desk fees charged by our mentorship program.",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/careers`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           siteWideFinancialService,
@@ -805,18 +945,22 @@ function getRouteMetadata(pathname: string): RouteMeta {
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
-              { "@type": "ListItem", position: 2, name: "Careers & Mentorship", item: `${siteConfig.siteUrl}/careers` },
+              { "@type": "ListItem", position: 2, name: "Careers & Mentorship", item: `${siteConfig.siteUrl}${cleanPath}` },
             ],
           },
         ],
       };
+
     case "/contact":
+    case "/fr/contact":
       return {
-        title: "Start a Conversation | Financial Guidance | Ahmed Bello",
+        title: cleanPath.startsWith("/fr")
+          ? "Démarrer une Conversation | Ahmed Bello"
+          : "Start a Conversation | Ahmed Bello",
         description:
           "Ask a financial question regarding Canadian registered accounts, income protection, retirement, or newcomer finances without sales pressure.",
         ogType: "website",
-        url: `${siteConfig.siteUrl}/contact`,
+        url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
           siteWideWebSite,
           siteWideFinancialService,
@@ -824,7 +968,7 @@ function getRouteMetadata(pathname: string): RouteMeta {
             "@context": "https://schema.org",
             "@type": "ContactPage",
             name: "Start a Conversation | Ahmed Bello",
-            url: `${siteConfig.siteUrl}/contact`,
+            url: `${siteConfig.siteUrl}${cleanPath}`,
             contactPoint: {
               "@type": "ContactPoint",
               email: siteConfig.publicEmail,
@@ -839,7 +983,7 @@ function getRouteMetadata(pathname: string): RouteMeta {
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
-              { "@type": "ListItem", position: 2, name: "Contact", item: `${siteConfig.siteUrl}/contact` },
+              { "@type": "ListItem", position: 2, name: "Contact", item: `${siteConfig.siteUrl}${cleanPath}` },
             ],
           },
         ],
@@ -848,7 +992,9 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/disclosures":
     case "/fr/disclosures":
       return {
-        title: cleanPath.startsWith("/fr") ? "Divulgations Réglementaires & Portée Professionnelle | Ahmed Bello" : "Disclosures & Regulatory Scope | Ahmed Bello",
+        title: cleanPath.startsWith("/fr")
+          ? "Divulgations Réglementaires | Ahmed Bello"
+          : "Regulatory Disclosures | Ahmed Bello",
         description:
           cleanPath.startsWith("/fr")
             ? "Divulgations provinciales relatives aux permis d'exercice, portée des mandats éducatifs, modèles de rémunération et transparence réglementaire."
@@ -869,7 +1015,9 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/standards":
     case "/fr/standards":
       return {
-        title: cleanPath.startsWith("/fr") ? "Normes Éditoriales & Sources Officielles | Ahmed Bello" : "Editorial Standards & Official Sources | Ahmed Bello",
+        title: cleanPath.startsWith("/fr")
+          ? "Normes Éditoriales & Sources | Ahmed Bello"
+          : "Editorial Standards & Sources | Ahmed Bello",
         description:
           cleanPath.startsWith("/fr")
             ? "Processus rigoureux de recherche, de validation auprès des organismes gouvernementaux canadiens et de mise à jour de nos guides financiers."
@@ -890,7 +1038,9 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/privacy":
     case "/fr/privacy":
       return {
-        title: cleanPath.startsWith("/fr") ? "Avis de Confidentialité & Protection des Données | Ahmed Bello" : "Privacy Notice & Data Protection | Ahmed Bello",
+        title: cleanPath.startsWith("/fr")
+          ? "Avis de Confidentialité | Ahmed Bello"
+          : "Privacy Notice & Data Security | Ahmed Bello",
         description:
           cleanPath.startsWith("/fr")
             ? "Traitement, sécurisation et confidentialité des renseignements personnels sous la législation canadienne LPRPDE et LCAP."
@@ -911,7 +1061,9 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/terms":
     case "/fr/terms":
       return {
-        title: cleanPath.startsWith("/fr") ? "Conditions d'Utilisation du Site Web | Ahmed Bello" : "Website Terms of Use | Ahmed Bello",
+        title: cleanPath.startsWith("/fr")
+          ? "Conditions d'Utilisation | Ahmed Bello"
+          : "Terms of Use | Ahmed Bello",
         description:
           cleanPath.startsWith("/fr")
             ? "Règles, propriété intellectuelle, droits d'auteur et avis de non-responsabilité applicables à l'utilisation de cette ressource éducative canadienne."
@@ -932,7 +1084,9 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/confirm-subscription":
     case "/fr/confirm-subscription":
       return {
-        title: cleanPath.startsWith("/fr") ? "Abonnement Confirmé | Ahmed Bello" : "Subscription Confirmed | Ahmed Bello",
+        title: cleanPath.startsWith("/fr")
+          ? "Abonnement Confirmé | Ahmed Bello"
+          : "Subscription Confirmed | Ahmed Bello",
         description: "Your educational newsletter subscription has been confirmed.",
         ogType: "website",
         url: `${siteConfig.siteUrl}${cleanPath}`,
@@ -942,7 +1096,9 @@ function getRouteMetadata(pathname: string): RouteMeta {
     default:
       if (cleanPath === "/" || cleanPath === "/fr") {
         return {
-          title: cleanPath === "/fr" ? "Ahmed Bello | Éducation Financière pour Canadiens" : "Ahmed Bello | Financial Education for Canadians",
+          title: cleanPath === "/fr"
+            ? "Ahmed Bello | Éducation Financière pour Canadiens"
+            : "Ahmed Bello | Financial Education for Canadians",
           description:
             "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.",
           ogType: "website",
@@ -951,7 +1107,6 @@ function getRouteMetadata(pathname: string): RouteMeta {
             siteWideWebSite,
             siteWideFinancialService,
             siteWidePerson,
-            howIHelpFaqSchema,
           ],
         };
       }
@@ -973,58 +1128,58 @@ function getRouteMetadata(pathname: string): RouteMeta {
 function injectHeadMetadata(html: string, pathname: string): string {
   const meta = getRouteMetadata(pathname);
 
-  // Replace <title>
+  // Replace <title> (HTML escaped)
   let transformed = html.replace(
     /<title>.*?<\/title>/i,
-    `<title>${meta.title}</title>`
+    `<title>${escapeHtml(meta.title)}</title>`
   );
 
-  // Replace or inject meta description
+  // Replace or inject meta description (Attribute escaped)
   transformed = transformed.replace(
     /<meta name="description" content=".*?" \/>/i,
-    `<meta name="description" content="${meta.description}" />`
+    `<meta name="description" content="${escapeAttr(meta.description)}" />`
   );
 
-  // Replace canonical
+  // Replace canonical (Attribute escaped)
   transformed = transformed.replace(
     /<link rel="canonical" href=".*?" \/>/i,
-    `<link rel="canonical" href="${meta.url}" />`
+    `<link rel="canonical" href="${escapeAttr(meta.url)}" />`
   );
 
-  // Replace og:title
+  // Replace og:title (Attribute escaped)
   transformed = transformed.replace(
     /<meta property="og:title" content=".*?" \/>/i,
-    `<meta property="og:title" content="${meta.title}" />`
+    `<meta property="og:title" content="${escapeAttr(meta.title)}" />`
   );
 
-  // Replace og:description
+  // Replace og:description (Attribute escaped)
   transformed = transformed.replace(
     /<meta property="og:description" content=".*?" \/>/i,
-    `<meta property="og:description" content="${meta.description}" />`
+    `<meta property="og:description" content="${escapeAttr(meta.description)}" />`
   );
 
-  // Replace og:url
+  // Replace og:url (Attribute escaped)
   transformed = transformed.replace(
     /<meta property="og:url" content=".*?" \/>/i,
-    `<meta property="og:url" content="${meta.url}" />`
+    `<meta property="og:url" content="${escapeAttr(meta.url)}" />`
   );
 
-  // Replace og:type
+  // Replace og:type (Attribute escaped)
   transformed = transformed.replace(
     /<meta property="og:type" content=".*?" \/>/i,
-    `<meta property="og:type" content="${meta.ogType}" />`
+    `<meta property="og:type" content="${escapeAttr(meta.ogType)}" />`
   );
 
-  // Replace twitter:title
+  // Replace twitter:title (Attribute escaped)
   transformed = transformed.replace(
     /<meta name="twitter:title" content=".*?" \/>/i,
-    `<meta name="twitter:title" content="${meta.title}" />`
+    `<meta name="twitter:title" content="${escapeAttr(meta.title)}" />`
   );
 
-  // Replace twitter:description
+  // Replace twitter:description (Attribute escaped)
   transformed = transformed.replace(
     /<meta name="twitter:description" content=".*?" \/>/i,
-    `<meta name="twitter:description" content="${meta.description}" />`
+    `<meta name="twitter:description" content="${escapeAttr(meta.description)}" />`
   );
 
   // Robots meta tag: Indexing enabled when DRAFT_MODE is false and not 404
@@ -1038,9 +1193,9 @@ function injectHeadMetadata(html: string, pathname: string): string {
     extraTags += `\n    <meta name="twitter:image" content="${siteConfig.siteUrl}/brand/og-share.png" />`;
   }
 
-  // Inject Rich JSON-LD Schemas
+  // Inject Rich JSON-LD Schemas (XSS and script-close safe)
   meta.jsonLd.forEach((schema) => {
-    extraTags += `\n    <script type="application/ld+json">${JSON.stringify(schema)}</script>`;
+    extraTags += `\n    <script type="application/ld+json">${escapeJsonLd(schema)}</script>`;
   });
 
   transformed = transformed.replace("</head>", `${extraTags}\n  </head>`);

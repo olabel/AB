@@ -114,14 +114,14 @@ export const CalculatorsPage: React.FC = () => {
         title={
           isFr
             ? "Simulateurs Financiers Canadiens | Ahmed Bello"
-            : "Canadian Financial Decision Calculators | Ahmed Bello"
+            : "Canadian Financial Calculators | Ahmed Bello"
         }
         description={
           isFr
-            ? "Outils interactifs de modélisation financière : simulateur pour nouveaux arrivants, choc du renouvellement hypothécaire, arbitrage CELI vs REER et calcul du plafond de revenus passifs des SPCC."
-            : "Interactive Canadian financial balance-sheet calculators: newcomer runway, mortgage renewal shock, TFSA vs RRSP tax arbitrage, and CCPC passive income SBD grind."
+            ? "Outils interactifs de modélisation financière : simulateur pour nouveaux arrivants, choc du renouvellement hypothécaire, arbitrage CELI vs REER et calcul du plafond passif des SPCC."
+            : "Interactive Canadian financial simulators: newcomer runway, mortgage renewal shock analyzer, TFSA vs RRSP tax arbitrage, and CCPC passive income SBD grind."
         }
-        canonicalUrl="/calculators"
+        canonicalUrl={isFr ? "/fr/calculators" : "/calculators"}
       />
 
       {/* 1. Header */}

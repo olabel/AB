@@ -138,8 +138,8 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to={`${prefix}/for/health-workers`} className="hover:text-white transition-colors">
-                  {isFr ? "Médecins & Infirmières" : "Healthcare & Doctors"}
+                <Link to={`${prefix}/for/healthcare`} className="hover:text-white transition-colors">
+                  {isFr ? "Professionnels de la santé" : "Healthcare Professionals"}
                 </Link>
               </li>
               <li>
@@ -163,7 +163,7 @@ export const Footer: React.FC = () => {
           {/* Col 4: Practice & Navigation (Cols 9-10) */}
           <div className="lg:col-span-2 sm:col-span-1 flex flex-col gap-3">
             <h3 className="eyebrow text-xs uppercase tracking-wider text-[#d6c298]">
-              {isFr ? "Pratique & Veille" : "Practice & Insights"}
+              {isFr ? "Pratique & Veille" : "Practice & Intelligence"}
             </h3>
             <ul className="space-y-2 text-xs list-none p-0 text-[#ece6da]/80">
               <li>
@@ -177,18 +177,21 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to={`${prefix}/what-changed`} className="text-[#d6c298] hover:text-white transition-colors font-medium">
+                  {isFr ? "Ce qui a changé (Règles 2026)" : "What Changed in Money Rules"}
+                </Link>
+              </li>
+              <li>
                 <Link to={`${prefix}/insights`} className="hover:text-white transition-colors">
                   {isFr ? "Perspectives & Analyses" : "Strategic Insights"}
                 </Link>
               </li>
               <li>
-                <Link to={`${prefix}/news`} className="hover:text-white transition-colors">
-                  {isFr ? "Actualités & Taux" : "Financial News Desk"}
-                </Link>
-              </li>
-              <li>
-                <Link to={`${prefix}/careers`} className="text-[#d6c298] hover:text-white transition-colors font-medium">
-                  {isFr ? "Devenir conseiller (Mentorat)" : "Practice Mentorship & Careers"}
+                <Link
+                  to={`${prefix}/careers`}
+                  className="text-[#d6c298] hover:text-white transition-colors font-semibold flex items-center gap-1.5"
+                >
+                  <span>{isFr ? "Expansion du Cabinet & Carrières" : "Practice Expansion & Advisory Careers"}</span>
                 </Link>
               </li>
               <li>

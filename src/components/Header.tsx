@@ -23,8 +23,9 @@ export const Header: React.FC = () => {
   const navItems = [
     { label: t("nav_how_i_help"), href: `${prefix}/how-i-help` },
     { label: t("nav_education"), href: `${prefix}/education` },
-    { label: t("nav_insights"), href: `${prefix}/insights` },
-    { label: t("nav_careers"), href: `${prefix}/careers` },
+    { label: t("nav_calculators"), href: `${prefix}/calculators` },
+    { label: t("nav_what_changed"), href: `${prefix}/what-changed` },
+    { label: language === "fr" ? "À propos" : "About", href: `${prefix}/about` },
   ];
 
   const handleLanguageToggle = () => {

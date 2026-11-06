@@ -180,6 +180,8 @@ const AUDIENCES: Record<string, AudienceConfig> = {
   },
 };
 
+import { NotFoundPage } from "./NotFoundPage.tsx";
+
 export const AudienceHubPage: React.FC = () => {
   const { audience } = useParams<{ audience: string }>();
   const { language } = useLanguage();
@@ -194,8 +196,14 @@ export const AudienceHubPage: React.FC = () => {
 
   const currentAudience = audienceKey ? AUDIENCES[audienceKey] : null;
 
+  // Unknown audience slugs return a proper 404 page (no soft 404)
   if (!currentAudience) {
-    return <Navigate to="/education" replace />;
+    return <NotFoundPage />;
+  }
+
+  // Redirect any alias (e.g., /for/health-workers or /for/doctors-nurses) to the single canonical URL (/for/healthcare)
+  if (audience && currentAudience.slug !== audience) {
+    return <Navigate to={`${isFr ? "/fr" : ""}/for/${currentAudience.slug}`} replace />;
   }
 
   const IconComponent = currentAudience.icon;
@@ -208,7 +216,7 @@ export const AudienceHubPage: React.FC = () => {
       <SEO
         title={isFr ? `${currentAudience.titleFr} | Ahmed Bello` : `${currentAudience.titleEn} | Ahmed Bello`}
         description={isFr ? currentAudience.descriptionFr : currentAudience.descriptionEn}
-        canonicalUrl={`/for/${currentAudience.slug}`}
+        canonicalUrl={isFr ? `/fr/for/${currentAudience.slug}` : `/for/${currentAudience.slug}`}
       />
       <div className="wrap max-w-5xl">
         {/* Breadcrumb */}

@@ -43,6 +43,8 @@ export interface Article {
   invitationAbout: string;
   url: string;
   readingMinutes: number;
+  datePublished?: string;
+  dateModified?: string;
   heldForReview?: boolean;
 }
 
