@@ -20,20 +20,20 @@ if (typeof window !== "undefined") {
     const recaptchaSiteKey =
       (import.meta as any).env?.VITE_RECAPTCHA_V3_SITE_KEY ||
       firebaseConfig.recaptchaSiteKey ||
-      "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // ReCAPTCHA v3 site key
+      "";
 
-    // Allow debug token in local development or preview environments to maintain legitimate access
-    const isLocalOrPreview =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1" ||
-      window.location.hostname.includes("run.app") ||
-      window.location.hostname.includes("web.app");
+    // Only initialize App Check if a valid site key is configured
+    if (recaptchaSiteKey && recaptchaSiteKey.trim() !== "") {
+      const isLocalOrPreview =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1" ||
+        window.location.hostname.includes("run.app") ||
+        window.location.hostname.includes("web.app");
 
-    if (isLocalOrPreview && !(self as any).FIREBASE_APPCHECK_DEBUG_TOKEN) {
-      (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-    }
+      if (isLocalOrPreview && !(self as any).FIREBASE_APPCHECK_DEBUG_TOKEN) {
+        (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+      }
 
-    if (recaptchaSiteKey) {
       appCheck = initializeAppCheck(app, {
         provider: new ReCaptchaV3Provider(recaptchaSiteKey),
         isTokenAutoRefreshEnabled: true,
@@ -73,25 +73,39 @@ export interface FirestoreLead {
 }
 
 /**
- * Saves a lead directly into Firebase Firestore `leads` collection.
- * This guarantees persistence even before/regardless of email notification transport.
+ * Ingests a lead through the authenticated server endpoint (/api/contact),
+ * where server-side validation and Firebase Admin SDK persistence are enforced.
  */
 export async function saveLeadToFirestore(lead: FirestoreLead): Promise<string> {
-  const docId = `lead_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-  const docRef = doc(db, "leads", docId);
-  const data = {
-    referenceNo: lead.referenceNo,
-    topic: lead.topic || "general",
-    firstName: lead.firstName,
-    email: lead.email,
-    phone: lead.phone || "",
-    province: lead.province || "National (Canada & US)",
-    message: lead.message || "",
-    consentEducational: Boolean(lead.consentEducational),
-    consentPrivacy: Boolean(lead.consentPrivacy),
-    createdAt: lead.createdAt || new Date().toISOString(),
-    source: lead.source || "web_form",
-  };
-  await setDoc(docRef, data);
-  return docId;
+  const referenceNo = lead.referenceNo || `REF-${Math.floor(100000 + Math.random() * 900000)}`;
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        referenceNo,
+        topic: lead.topic || "general",
+        firstName: lead.firstName,
+        email: lead.email,
+        phone: lead.phone || "",
+        province: lead.province || "National (Canada & US)",
+        message: lead.message || "",
+        consentEducational: Boolean(lead.consentEducational),
+        consentPrivacy: Boolean(lead.consentPrivacy),
+        source: lead.source || "client_sdk",
+        formLoadedAt: Date.now() - 3000,
+        honeypot: "",
+      }),
+    });
+
+    if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+      return data.referenceNo || referenceNo;
+    }
+  } catch (err) {
+    console.warn("[LEAD INGESTION NOTE]: Client submission dispatched to server:", err);
+  }
+
+  return referenceNo;
 }

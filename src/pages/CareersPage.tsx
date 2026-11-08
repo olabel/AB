@@ -30,7 +30,6 @@ import { siteConfig } from "../config/site.ts";
 import { BrandMark } from "../components/BrandMark.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
-import { saveLeadToFirestore } from "../lib/firebase.ts";
 
 interface FormData {
   firstName: string;
@@ -155,26 +154,7 @@ Candidate Application Details:
 - Motivation & Goals: ${formData.message || "Ready to learn"}
     `.trim();
 
-    // 1. Direct Cloud Database Persistence (Firebase Firestore)
-    try {
-      await saveLeadToFirestore({
-        referenceNo: generatedRef,
-        topic: "mentorship",
-        firstName: `${formData.firstName} ${formData.lastName}`.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim(),
-        province: formData.jurisdiction,
-        message: detailedMessage,
-        consentPrivacy: formData.consentPrivacy,
-        consentEducational: true,
-        source: "careers_mentorship_page",
-      });
-      firestoreSaved = true;
-    } catch (fbErr) {
-      console.warn("Client Firestore write deferred:", fbErr);
-    }
-
-    // 2. Dispatch to server for SQLite record and Resend notification delivery to olabel@gmail.com
+    // Dispatch directly to authenticated server backend (/api/contact)
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -199,10 +179,6 @@ Candidate Application Details:
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        if (firestoreSaved) {
-          setSubmitSuccess(true);
-          return;
-        }
         throw new Error(
           data.message ||
             (isFr
@@ -213,10 +189,6 @@ Candidate Application Details:
 
       setSubmitSuccess(true);
     } catch (err: any) {
-      if (firestoreSaved) {
-        setSubmitSuccess(true);
-        return;
-      }
       setErrorMessage(
         err.message ||
           (isFr
@@ -274,7 +246,7 @@ Candidate Application Details:
         },
         {
           q: "How does compensation work for an independent agent?",
-          a: "Independent financial solutions professionals operate under an independent carrier compensation structure upon active licensing, receiving compensation directly from Canadian financial and insurance institutions upon product placement and policy servicing. There are no arbitrary branch sales quotas, and compensation reflects licensing, professional effort, and client decisions.",
+          a: "Independent financial solutions professionals operate under a contracted carrier compensation model through World Financial Group Insurance Agency of Canada Inc. (WFGIA), receiving commission-based compensation from Canadian financial and insurance institutions upon product placement and policy servicing. Compensation reflects licensing, professional effort, and client decisions, without hidden fees.",
         },
         {
           q: "How much do the regulatory licensing exams cost?",
@@ -530,8 +502,8 @@ Candidate Application Details:
                     </div>
                     <p className="text-[#ece6da]/80 text-[0.75rem] leading-relaxed">
                       {isFr
-                        ? "Aucun quota commercial imposé par une succursale. Construisez votre réputation sur l'éducation financière, l'analyse approfondie et des recommandations éthiques."
-                        : "No arbitrary branch-mandated sales quotas. Build your practice on client education, comprehensive analysis, and ethical recommendations."}
+                        ? "Rémunération transparente basée sur les commissions des assureurs partenaires. Bâtissez votre réputation sur l'éducation financière, l'analyse rigoureuse et des solutions adaptées."
+                        : "Transparent carrier-based compensation model. Build your practice on client education, comprehensive analysis, and ethical recommendations."}
                     </p>
                   </div>
 

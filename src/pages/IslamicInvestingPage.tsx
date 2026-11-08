@@ -27,7 +27,6 @@ import {
   Phone,
 } from "lucide-react";
 import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
-import { saveLeadToFirestore } from "../lib/firebase.ts";
 
 const CANADIAN_PROVINCES = [
   "Alberta",
@@ -154,26 +153,7 @@ City: ${formData.city || "Not specified"}
 Province: ${formData.province}
 Notes: ${formData.notes || "None"}`;
 
-    // 1. Direct Cloud Database Persistence (Firebase Firestore)
-    try {
-      await saveLeadToFirestore({
-        referenceNo: generatedRef,
-        topic: "investing",
-        firstName: formData.fullName.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim(),
-        province: formData.province,
-        message: messageDetails,
-        consentPrivacy: formData.consentPrivacy,
-        consentEducational: formData.consentEducational,
-        source: "islamic_investing_page",
-      });
-      firestoreSaved = true;
-    } catch (fbErr) {
-      console.warn("Client Firestore write deferred:", fbErr);
-    }
-
-    // 2. Dispatch to server for SQLite record and Resend notification delivery to olabel@gmail.com
+    // Dispatch directly to authenticated server backend (/api/contact)
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -197,11 +177,6 @@ Notes: ${formData.notes || "None"}`;
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok || !data.success) {
-        if (firestoreSaved) {
-          setReferenceNo(generatedRef);
-          setFormSubmitted(true);
-          return;
-        }
         throw new Error(
           data.message ||
             (isFr
@@ -213,11 +188,6 @@ Notes: ${formData.notes || "None"}`;
       setReferenceNo(data.referenceNo || generatedRef);
       setFormSubmitted(true);
     } catch (err: any) {
-      if (firestoreSaved) {
-        setReferenceNo(generatedRef);
-        setFormSubmitted(true);
-        return;
-      }
       setFormError(
         err.message ||
           (isFr

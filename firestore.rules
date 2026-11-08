@@ -1,62 +1,22 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Helper to check valid document IDs
-    function isValidId(id) {
-      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
-    }
-
-    // Email regex validation
-    function isValidEmail(email) {
-      return email is string && email.size() >= 5 && email.size() <= 120
-        && email.matches('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
-    }
-
-    // Lead validation helper: strict hasOnly to forbid unknown/arbitrary fields
-    function isValidLead(data) {
-      return data.keys().hasAll(['referenceNo', 'topic', 'firstName', 'email', 'createdAt'])
-        && data.keys().hasOnly(['referenceNo', 'topic', 'firstName', 'email', 'phone', 'province', 'message', 'consentEducational', 'consentPrivacy', 'createdAt', 'source'])
-        && data.referenceNo is string && data.referenceNo.size() >= 4 && data.referenceNo.size() <= 40
-        && data.topic is string && data.topic.size() > 0 && data.topic.size() <= 60
-        && data.firstName is string && data.firstName.size() > 0 && data.firstName.size() <= 100
-        && isValidEmail(data.email)
-        && data.createdAt is string && data.createdAt.size() > 0 && data.createdAt.size() <= 50
-        && (!('phone' in data) || (data.phone is string && data.phone.size() <= 30))
-        && (!('province' in data) || (data.province is string && data.province.size() <= 60))
-        && (!('message' in data) || (data.message is string && data.message.size() <= 5000))
-        && (!('consentEducational' in data) || data.consentEducational is bool)
-        && (!('consentPrivacy' in data) || data.consentPrivacy is bool)
-        && (!('source' in data) || (data.source is string && data.source.size() <= 60));
-    }
-
-    // Subscriber validation helper
-    function isValidSubscriber(data) {
-      return data.keys().hasAll(['email', 'confirmedAt', 'consentWording', 'ip'])
-        && data.keys().hasOnly(['email', 'confirmedAt', 'consentWording', 'ip', 'userAgent', 'source'])
-        && isValidEmail(data.email)
-        && data.confirmedAt is string && data.confirmedAt.size() > 0 && data.confirmedAt.size() <= 50
-        && data.consentWording is string && data.consentWording.size() > 0 && data.consentWording.size() <= 1000
-        && data.ip is string && data.ip.size() > 0 && data.ip.size() <= 64
-        && (!('userAgent' in data) || (data.userAgent is string && data.userAgent.size() <= 300))
-        && (!('source' in data) || (data.source is string && data.source.size() <= 60));
-    }
-
     // Ping check collection for SDK connection verification
     match /test/{docId} {
       allow read: if true;
       allow write: if false;
     }
 
-    // Public lead ingestion
+    // Leads & Subscribers: All client direct writes are strictly DENIED.
+    // Ingestion occurs exclusively through authenticated server-side handlers
+    // utilizing the Firebase Admin SDK with service account credentials,
+    // eliminating client-side CASL tampering, bot injections, and rule bypass.
     match /leads/{leadId} {
-      allow create: if isValidId(leadId) && isValidLead(request.resource.data);
-      allow read, update, delete: if false;
+      allow read, write: if false;
     }
 
-    // Double opt-in subscriber records
     match /subscribers/{subscriberId} {
-      allow create: if isValidId(subscriberId) && isValidSubscriber(request.resource.data);
-      allow read, update, delete: if false;
+      allow read, write: if false;
     }
 
     // Default deny all other collections

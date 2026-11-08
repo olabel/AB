@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import { saveLeadToDatabase, recordEmailDeliveryStatus, recordSubscriberToDatabase } from "./dbService.ts";
+import { saveSubscriberViaAdmin, saveLeadViaAdmin } from "../server/firebaseAdmin.ts";
 
 export const DEFAULT_NOTIFICATION_RECIPIENTS = "olabel@gmail.com, abello24trdc@wfgmail.ca";
 
@@ -92,46 +93,7 @@ export async function saveLeadToFirestoreServer(lead: {
   consentPrivacy?: boolean;
   source?: string;
 }): Promise<boolean> {
-  try {
-    const configPath = path.join(process.cwd(), "firebase-applet-config.json");
-    if (!fs.existsSync(configPath)) return false;
-    const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
-    const projectId = config.projectId;
-    const dbId = config.firestoreDatabaseId || "(default)";
-    const apiKey = config.apiKey;
-    const docId = `lead_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-
-    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/${dbId}/documents/leads?documentId=${docId}&key=${apiKey}`;
-    const payload = {
-      fields: {
-        referenceNo: { stringValue: String(lead.referenceNo || "") },
-        topic: { stringValue: String(lead.topic || "general") },
-        firstName: { stringValue: String(lead.firstName || "") },
-        email: { stringValue: String(lead.email || "") },
-        phone: { stringValue: String(lead.phone || "") },
-        province: { stringValue: String(lead.province || "National (Canada & US)") },
-        message: { stringValue: String(lead.message || "") },
-        consentEducational: { booleanValue: Boolean(lead.consentEducational) },
-        consentPrivacy: { booleanValue: Boolean(lead.consentPrivacy) },
-        createdAt: { stringValue: new Date().toISOString() },
-        source: { stringValue: lead.source || "server_contact_api" },
-      },
-    };
-
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (res.ok) {
-      console.log(`[FIRESTORE SAVED] Ref: #${lead.referenceNo} | Stored in Firebase Firestore.`);
-      return true;
-    }
-  } catch (err: any) {
-    console.warn(`[FIRESTORE WRITE NOTE]:`, err?.message || err);
-  }
-  return false;
+  return await saveLeadViaAdmin(lead);
 }
 
 export function getRecordedLeads(): StoredLead[] {
@@ -292,18 +254,23 @@ export const CASL_CONSENT_WORDING =
 
 /**
  * Generate a cryptographically signed, expiring token (48h TTL) for CASL double opt-in.
+ * Fails closed if SESSION_SECRET / TOKEN_SECRET is not configured.
  */
 export function generateSubscriptionToken(email: string): string {
   const normalized = email.toLowerCase().trim();
   const expiresAt = Date.now() + 48 * 60 * 60 * 1000; // 48 hours validity
   const payload = `${normalized}:${expiresAt}`;
-  const secret = process.env.SESSION_SECRET || process.env.TOKEN_SECRET || "ahmed_bello_casl_secret_token_2026_ca";
+  const secret = (process.env.SESSION_SECRET || process.env.TOKEN_SECRET || "").trim();
+  if (!secret) {
+    throw new Error("SESSION_SECRET is not configured in environment. Double opt-in signing fails closed.");
+  }
   const signature = crypto.createHmac("sha256", secret).update(payload).digest("hex");
   return `${Buffer.from(payload, "utf-8").toString("base64url")}.${signature}`;
 }
 
 /**
  * Verify HMAC signature and expiration on a subscription token.
+ * Fails closed if SESSION_SECRET / TOKEN_SECRET is not configured.
  */
 export function verifySubscriptionToken(token: string): { valid: boolean; email?: string; error?: string } {
   if (!token || typeof token !== "string" || !token.includes(".")) {
@@ -313,6 +280,11 @@ export function verifySubscriptionToken(token: string): { valid: boolean; email?
   if (!b64Payload || !signature) {
     return { valid: false, error: "invalid_format" };
   }
+  const secret = (process.env.SESSION_SECRET || process.env.TOKEN_SECRET || "").trim();
+  if (!secret) {
+    console.error("[CASL SECURITY]: SESSION_SECRET is not configured. Failing closed.");
+    return { valid: false, error: "signing_secret_not_configured" };
+  }
   try {
     const payload = Buffer.from(b64Payload, "base64url").toString("utf-8");
     const [email, expiresStr] = payload.split(":");
@@ -320,7 +292,6 @@ export function verifySubscriptionToken(token: string): { valid: boolean; email?
     if (!email || isNaN(expiresAt)) {
       return { valid: false, error: "malformed_token" };
     }
-    const secret = process.env.SESSION_SECRET || process.env.TOKEN_SECRET || "ahmed_bello_casl_secret_token_2026_ca";
     const expectedSignature = crypto.createHmac("sha256", secret).update(payload).digest("hex");
 
     const sigBuffer = Buffer.from(signature, "hex");
@@ -338,7 +309,8 @@ export function verifySubscriptionToken(token: string): { valid: boolean; email?
 }
 
 /**
- * Dual Persistence: Store confirmed subscriber in Firebase Firestore
+ * Server-Authoritative Subscriber Persistence via Firebase Admin SDK.
+ * Bypasses client rules to securely write CASL proof without allowing public client writes.
  */
 export async function saveSubscriberToFirestoreServer(subscriber: {
   email: string;
@@ -348,41 +320,7 @@ export async function saveSubscriberToFirestoreServer(subscriber: {
   userAgent?: string;
   source?: string;
 }): Promise<boolean> {
-  try {
-    const configPath = path.join(process.cwd(), "firebase-applet-config.json");
-    if (!fs.existsSync(configPath)) return false;
-    const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
-    const projectId = config.projectId;
-    const dbId = config.firestoreDatabaseId || "(default)";
-    const apiKey = config.apiKey;
-    const docId = `sub_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-
-    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/${dbId}/documents/subscribers?documentId=${docId}&key=${apiKey}`;
-    const payload = {
-      fields: {
-        email: { stringValue: subscriber.email.trim().toLowerCase() },
-        confirmedAt: { stringValue: subscriber.confirmedAt },
-        consentWording: { stringValue: subscriber.consentWording },
-        ip: { stringValue: subscriber.ip },
-        userAgent: { stringValue: (subscriber.userAgent || "").slice(0, 300) },
-        source: { stringValue: subscriber.source || "double_opt_in" },
-      },
-    };
-
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (res.ok) {
-      console.log(`[FIRESTORE SUBSCRIBER SAVED] CASL proof recorded in Firestore.`);
-      return true;
-    }
-  } catch (err: any) {
-    console.warn(`[FIRESTORE SUBSCRIBER WRITE NOTE]:`, err?.message || err);
-  }
-  return false;
+  return await saveSubscriberViaAdmin(subscriber);
 }
 
 /**
@@ -541,6 +479,26 @@ export async function processContactSubmission(
   }
   if (isCalculator && !province) {
     province = "National (Canada & US)";
+  }
+
+  const PROVINCE_MAP: Record<string, string> = {
+    AB: "Alberta",
+    BC: "British Columbia",
+    MB: "Manitoba",
+    NB: "New Brunswick",
+    NL: "Newfoundland and Labrador",
+    NT: "Northwest Territories",
+    NS: "Nova Scotia",
+    NU: "Nunavut",
+    ON: "Ontario",
+    PE: "Prince Edward Island",
+    PEI: "Prince Edward Island",
+    QC: "Quebec",
+    SK: "Saskatchewan",
+    YT: "Yukon",
+  };
+  if (province && PROVINCE_MAP[province.toUpperCase()]) {
+    province = PROVINCE_MAP[province.toUpperCase()];
   }
 
   // 5. Validation

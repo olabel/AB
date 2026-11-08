@@ -15,7 +15,6 @@ import {
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
-import { saveLeadToFirestore } from "../lib/firebase.ts";
 
 const PROVINCES_AND_TERRITORIES = [
   "Alberta",
@@ -158,28 +157,8 @@ export const ContactPage: React.FC = () => {
     setStatus("submitting");
 
     const generatedRef = "ENQ-" + Math.floor(100000 + Math.random() * 900000);
-    let firestoreSaved = false;
 
-    // 1. Direct Cloud Database Persistence
-    try {
-      await saveLeadToFirestore({
-        referenceNo: generatedRef,
-        topic,
-        firstName: sanitizeInput(firstName),
-        email: sanitizeInput(email),
-        phone: sanitizeInput(phone),
-        province,
-        message: sanitizeInput(message),
-        consentPrivacy,
-        consentEducational,
-        source: "website_contact_page",
-      });
-      firestoreSaved = true;
-    } catch {
-      // Non-blocking in sandboxes
-    }
-
-    // 2. Dispatch to Server Backend
+    // Dispatch directly to Server Backend (/api/contact)
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -206,10 +185,6 @@ export const ContactPage: React.FC = () => {
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        if (firestoreSaved) {
-          setStatus("success");
-          return;
-        }
         setErrorMessage(
           data.message ||
             (isFr
@@ -222,10 +197,6 @@ export const ContactPage: React.FC = () => {
 
       setStatus("success");
     } catch {
-      if (firestoreSaved) {
-        setStatus("success");
-        return;
-      }
       setStatus("error");
       setErrorMessage(
         isFr

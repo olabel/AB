@@ -106,39 +106,32 @@ export const ArticlePage: React.FC = () => {
         ogType="article"
         articlePublishedTime={article.datePublished || "2025-01-15T08:00:00-05:00"}
         articleModifiedTime={article.dateModified || "2026-11-05T09:00:00-05:00"}
-      />
-
-      {/* Article Schema JSON-LD with verified publication and modification timestamps */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": article.seoTitle || article.title,
-            "description": article.description,
-            "datePublished": article.datePublished || "2025-01-15T08:00:00-05:00",
-            "dateModified": article.dateModified || "2026-11-05T09:00:00-05:00",
-            "author": {
-              "@type": "Person",
-              "name": "Ahmed Bello",
-              "jobTitle": "Licensed Financial Solutions Professional",
-              "url": siteConfig.siteUrl
-            },
-            "publisher": {
-              "@type": "Person",
-              "name": "Ahmed Bello"
-            },
-            "mainEntityOfPage": {
-              "@type": "WebPage",
-              "@id": `${siteConfig.siteUrl}${article.url}`
-            },
-            "citation": article.sources.map((s) => ({
-              "@type": "CreativeWork",
-              "name": s.label,
-              "url": s.url
-            }))
-          })
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: article.seoTitle || article.title,
+          description: article.description,
+          datePublished: article.datePublished || "2025-01-15T08:00:00-05:00",
+          dateModified: article.dateModified || "2026-11-05T09:00:00-05:00",
+          author: {
+            "@type": "Person",
+            name: "Ahmed Bello",
+            jobTitle: "Licensed Financial Solutions Professional",
+            url: siteConfig.siteUrl,
+          },
+          publisher: {
+            "@type": "Person",
+            name: "Ahmed Bello",
+          },
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `${siteConfig.siteUrl}${article.url}`,
+          },
+          citation: article.sources.map((s) => ({
+            "@type": "CreativeWork",
+            name: s.label,
+            url: s.url,
+          })),
         }}
       />
 

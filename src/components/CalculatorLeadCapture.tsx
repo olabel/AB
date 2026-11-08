@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, AlertCircle, RefreshCw, Phone } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
-import { saveLeadToFirestore } from "../lib/firebase.ts";
 
 interface CalculatorLeadCaptureProps {
   calculatorName: string;
@@ -18,7 +17,9 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
   const { isFr } = useLanguage();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-  const [consent, setConsent] = useState(true);
+  const [consent, setConsent] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const [formLoadedAt] = useState<number>(Date.now());
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [referenceNo, setReferenceNo] = useState<string | null>(null);
@@ -43,29 +44,17 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
       return;
     }
 
-    setSubmitting(true);
-    const generatedRef = "CALC-" + Math.floor(100000 + Math.random() * 900000);
-    let firestoreSaved = false;
-
-    // 1. Direct Cloud Database Persistence (Firebase Firestore)
-    try {
-      await saveLeadToFirestore({
-        referenceNo: generatedRef,
-        topic: "calculator",
-        firstName: firstName.trim() || "Valued Client",
-        email: cleanEmail,
-        province: "National (Canada & US)",
-        message: `Calculated Plan: ${calculatorName}\n\nSummary Breakdown:\n${summaryText}`,
-        consentPrivacy: true,
-        consentEducational: consent,
-        source: `calculator_${calculatorName.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`,
-      });
-      firestoreSaved = true;
-    } catch (fbErr) {
-      console.warn("Client Firestore write deferred:", fbErr);
+    if (honeypot) {
+      // Bot detected, silently succeed
+      setSubmitted(true);
+      return;
     }
 
-    // 2. Dispatch to server for SQLite record and Resend notification delivery to olabel@gmail.com
+    setSubmitting(true);
+    const generatedRef = "CALC-" + Math.floor(100000 + Math.random() * 900000);
+
+    // Dispatch directly to server endpoint (/api/contact) where bot controls, rate limits,
+    // and Firebase Admin SDK persistence are enforced server-side.
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -78,31 +67,22 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           message: `Calculated Plan: ${calculatorName}\n\nSummary Breakdown:\n${summaryText}`,
           consentPrivacy: true,
           consentEducational: consent,
-          formLoadedAt: Date.now() - 3000,
-          honeypot: "",
+          formLoadedAt,
+          honeypot,
           referenceNo: generatedRef,
+          source: `calculator_${calculatorName.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`,
         }),
       });
 
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok && data.error && data.error !== "delivery_failed") {
-        if (firestoreSaved) {
-          setReferenceNo(generatedRef);
-          setSubmitted(true);
-          return;
-        }
-        throw new Error(data.message || (isFr ? "Impossible d'envoyer le plan." : "Unable to record plan."));
+        throw new Error(data.message || (isFr ? "Impossible d'enregistrer le plan." : "Unable to record plan."));
       }
 
       setReferenceNo(data.referenceNo || generatedRef);
       setSubmitted(true);
     } catch (err: any) {
-      if (firestoreSaved) {
-        setReferenceNo(generatedRef);
-        setSubmitted(true);
-        return;
-      }
       setErrorMsg(
         err.message ||
           (isFr
@@ -265,6 +245,20 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
                 className="w-full text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
               />
             </div>
+          </div>
+
+          {/* Invisible Honeypot anti-spam trap */}
+          <div className="hidden" aria-hidden="true" style={{ display: "none" }}>
+            <label htmlFor={`calc-hp-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}>Leave blank</label>
+            <input
+              id={`calc-hp-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+              type="text"
+              name="honeypot"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
           </div>
 
           {/* CASL Compliance Checkbox placed prominently before submit */}

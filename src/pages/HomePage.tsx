@@ -77,8 +77,8 @@ export const HomePage: React.FC = () => {
 
               <p className="lede text-base sm:text-lg text-[#46423a] leading-relaxed max-w-2xl">
                 {isFr
-                  ? "Structuration patrimoniale et protection du revenu pour les Canadiens confrontés à des tournants financiers majeurs : renouvellement hypothécaire, optimisation des régimes enregistrés (CELI, REER, CELIAPP), fiscalité des SPCC et intégration financière des nouveaux arrivants. Sans quotas de vente ni conflit d'intérêts."
-                  : "Independent wealth structuring and income protection for Canadians facing high-stakes transitions: mortgage renewal shocks, registered account tax sequencing (TFSA/RRSP/FHSA), corporate passive income rules, and newcomer financial runways. Without proprietary sales quotas or product bias."}
+                  ? "Structuration patrimoniale et protection du revenu pour les Canadiens confrontés à des tournants financiers majeurs : renouvellement hypothécaire, optimisation des régimes enregistrés (CELI, REER, CELIAPP), fiscalité des SPCC et intégration financière des nouveaux arrivants. Représentant indépendant affilié à WFGIA : rémunération par commission selon les solutions convenues, sans obligation d'achat."
+                  : "Independent wealth structuring and income protection for Canadians facing high-stakes transitions: mortgage renewal shocks, registered account tax sequencing (TFSA/RRSP/FHSA), corporate passive income rules, and newcomer financial runways. Independent representative contracted with WFGIA: compensation is commission-based upon product placement, with zero obligation to purchase."}
               </p>
 
               {/* Direct Actions */}
@@ -115,7 +115,7 @@ export const HomePage: React.FC = () => {
               <div className="pt-3 border-t border-[#d6cebd]/60 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-[#625d52]">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#2e4a3b] shrink-0" />
-                  <span>{isFr ? "Zéro pression commerciale" : "Zero Sales Quotas"}</span>
+                  <span>{isFr ? "Rémunération transparente" : "Clear Commission Terms"}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#2e4a3b] shrink-0" />
@@ -467,8 +467,8 @@ export const HomePage: React.FC = () => {
 
           <p className="text-xs text-[#625d52] pt-2">
             {isFr
-              ? "Ahmed Bello est un membre indépendant de World Financial Group (WFG). Aucun frais caché. Aucune obligation commerciale."
-              : "Ahmed Bello is an independent World Financial Group member. No hidden fees. Zero sales pressure."}
+              ? "Ahmed Bello est un représentant indépendant affilié à World Financial Group Assurance du Canada Inc. (WFGIA). Rémunéré à commission sur le placement de produits financiers agréés. Aucun frais de consultation caché, aucune obligation d'achat."
+              : "Ahmed Bello is an independent representative associated with World Financial Group Insurance Agency of Canada Inc. (WFGIA). Compensated through carrier commissions upon product placement. No consultation fees, zero obligation to purchase."}
           </p>
         </div>
       </section>

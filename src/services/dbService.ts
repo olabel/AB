@@ -38,17 +38,8 @@ let activeDbPath = "";
 function initDatabase(): DatabaseSync {
   if (dbInstance) return dbInstance;
 
-  const primaryDir = path.resolve(process.cwd(), "data");
-  let dbPath = path.join(primaryDir, "leads.db");
-
-  try {
-    if (!fs.existsSync(primaryDir)) {
-      fs.mkdirSync(primaryDir, { recursive: true });
-    }
-  } catch {
-    // If current directory is read-only (e.g. Lambda/ephemeral), fallback to /tmp
-    dbPath = path.join("/tmp", "leads.db");
-  }
+  // Use ephemeral /tmp path or in-memory database to prevent writing to Git repository or read-only serverless filesystems
+  const dbPath = path.join("/tmp", "leads_ephemeral.db");
 
   try {
     const db = new DatabaseSync(dbPath);

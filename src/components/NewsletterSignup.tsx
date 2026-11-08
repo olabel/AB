@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, CheckCircle2, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
-import { saveLeadToFirestore } from "../lib/firebase.ts";
 
 interface NewsletterSignupProps {
   title?: string;
@@ -43,27 +42,8 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
 
     setSubmitting(true);
     const generatedRef = "NEWS-" + Math.floor(100000 + Math.random() * 900000);
-    let firestoreSaved = false;
 
-    // 1. Direct Cloud Database Persistence (Firebase Firestore)
-    try {
-      await saveLeadToFirestore({
-        referenceNo: generatedRef,
-        topic: "newsletter",
-        firstName: firstName.trim() || "Reader",
-        email: cleanEmail,
-        province: "National (Canada & US)",
-        message: `Newsletter subscription from page source: ${source}`,
-        consentPrivacy: true,
-        consentEducational: true,
-        source: `newsletter_${source}`,
-      });
-      firestoreSaved = true;
-    } catch (fbErr) {
-      console.warn("Client Firestore write deferred:", fbErr);
-    }
-
-    // 2. Dispatch to server for SQLite record and Resend notification delivery
+    // Dispatch directly to server endpoint where validation, bot controls, and Admin SDK are enforced
     try {
       const response = await fetch("/api/subscribe", {
         method: "POST",
@@ -86,19 +66,11 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        if (firestoreSaved) {
-          setSuccess(true);
-          return;
-        }
         throw new Error(data.message || "Failed to subscribe. Please try again.");
       }
 
       setSuccess(true);
     } catch (err: any) {
-      if (firestoreSaved) {
-        setSuccess(true);
-        return;
-      }
       setErrorMsg(
         err.message || "Could not complete your subscription right now. Please reach out to Ahmed Bello directly at +1-506-899-4941 or enquiries@ahmedbello.com."
       );
