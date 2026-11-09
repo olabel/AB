@@ -15,7 +15,7 @@ const coreRoutes = [
   { path: "/how-i-help", priority: "0.9", changefreq: "monthly" },
   { path: "/investing/islamic-equity", priority: "0.95", changefreq: "weekly" },
   { path: "/education", priority: "0.9", changefreq: "weekly" },
-  { path: "/news", priority: "0.9", changefreq: "hourly" },
+  { path: "/what-changed", priority: "0.9", changefreq: "monthly" },
   { path: "/insights", priority: "0.85", changefreq: "weekly" },
   { path: "/for/healthcare", priority: "0.85", changefreq: "weekly" },
   { path: "/for/business-owners", priority: "0.85", changefreq: "weekly" },

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
+import { trackBookingClick, trackCalculatorCompleted } from "../lib/track.ts";
 import {
   Calculator,
   Compass,
@@ -21,12 +22,80 @@ import {
   HelpCircle,
 } from "lucide-react";
 
-type CalculatorTab = "newcomer" | "mortgage" | "tfsa-rrsp" | "ccpc-passive";
+export type CalculatorTab = "newcomer" | "mortgage" | "tfsa-rrsp" | "ccpc-passive";
+
+/**
+ * Future value of an annuity due: annual contributions made at the START of each year.
+ * FV = annual * (1 + rate) * ((1 + rate)^years - 1) / rate
+ */
+export function futureValue(annual: number, rate: number, years: number): number {
+  if (years <= 0 || annual <= 0) return 0;
+  if (rate <= 0) return annual * years;
+  return annual * (1 + rate) * ((Math.pow(1 + rate, years) - 1) / rate);
+}
 
 export const CalculatorsPage: React.FC = () => {
   const { language } = useLanguage();
   const isFr = language === "fr";
-  const [activeTab, setActiveTab] = useState<CalculatorTab>("newcomer");
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const resolveTab = (): CalculatorTab => {
+    const q = searchParams.get("tab")?.toLowerCase();
+    const h = location.hash.replace("#", "").toLowerCase();
+    const target = q || h;
+    if (target === "newcomer" || target === "runway") return "newcomer";
+    if (target === "mortgage" || target === "renewal") return "mortgage";
+    if (target === "tfsa-rrsp" || target === "growth" || target === "arbitrage") return "tfsa-rrsp";
+    if (target === "ccpc-passive" || target === "corporate" || target === "sbd") return "ccpc-passive";
+    return "newcomer";
+  };
+
+  const [activeTab, setActiveTab] = useState<CalculatorTab>(resolveTab);
+
+  useEffect(() => {
+    const tab = resolveTab();
+    setActiveTab(tab);
+    if (location.hash === "#calculator-tool" || location.hash.includes("calculator")) {
+      const el = document.getElementById("calculator-tool");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location.search, location.hash]);
+
+  const formatCurrency = (val: number): string => {
+    return new Intl.NumberFormat(isFr ? "fr-CA" : "en-CA", {
+      style: "currency",
+      currency: "CAD",
+      maximumFractionDigits: 0,
+    }).format(val);
+  };
+
+  const formatPercent = (val: number): string => {
+    return new Intl.NumberFormat(isFr ? "fr-CA" : "en-CA", {
+      style: "percent",
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    }).format(val);
+  };
+
+  // Proof table data computed strictly from futureValue(10000, rate, years) with start-of-year annuity due
+  const proofHorizons = [10, 20, 30].map((years) => {
+    const cumulative = years * 10000;
+    const adv = Math.round(futureValue(10000, 0.07, years));
+    const tax = Math.round(futureValue(10000, 0.048, years));
+    const diff = adv - tax;
+    const pct = diff / tax;
+    return {
+      years,
+      cumulative,
+      adv,
+      tax,
+      diff,
+      pct,
+    };
+  });
 
   // --------------------------------------------------------------------------
   // Calculator 2: Mortgage Renewal Shock State
@@ -158,7 +227,7 @@ export const CalculatorsPage: React.FC = () => {
           </p>
 
           {/* Calculator Selector Tabs */}
-          <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div id="calculator-tool" className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-2.5 scroll-mt-24">
             <button
               type="button"
               onClick={() => setActiveTab("newcomer")}
@@ -784,41 +853,45 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
                 <tr className="bg-[#14211a] text-[#f7f3eb]">
                   <th className="p-3.5 font-semibold">{isFr ? "Horizon Temporel" : "Horizon"}</th>
                   <th className="p-3.5 font-semibold">{isFr ? "Cotisation Cumulée (10 000 $/an)" : "Cumulative Principal ($10k/yr)"}</th>
-                  <th className="p-3.5 font-semibold text-[#d6c298]">{isFr ? "Compte Enregistré (7 % pur)" : "Tax-Advantaged (7% Nominal)"}</th>
+                  <th className="p-3.5 font-semibold text-[#d6c298]">{isFr ? "Compte Enregistré (7,0 % pur)" : "Tax-Advantaged (7.0% Nominal)"}</th>
                   <th className="p-3.5 font-semibold text-[#d97768]">{isFr ? "Compte Imposable (4,8 % net d'impôt)" : "Taxable Account (4.8% Net After Drag)"}</th>
                   <th className="p-3.5 font-semibold text-white">{isFr ? "Capital Préservé à l'Abri" : "Net Wealth Preserved"}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#ece6da] font-mono">
-                <tr className="hover:bg-[#fcfaf5]">
-                  <td className="p-3.5 font-sans font-medium text-[#1c1b18]">{isFr ? "10 Ans" : "10 Years"}</td>
-                  <td className="p-3.5 text-[#46423a]">$100,000</td>
-                  <td className="p-3.5 font-bold text-[#2e4a3b]">$147,836</td>
-                  <td className="p-3.5 text-[#8a3324]">$127,150</td>
-                  <td className="p-3.5 font-bold text-[#2e4a3b]">+$20,686 (+16.3%)</td>
-                </tr>
-                <tr className="hover:bg-[#fcfaf5]">
-                  <td className="p-3.5 font-sans font-medium text-[#1c1b18]">{isFr ? "20 Ans" : "20 Years"}</td>
-                  <td className="p-3.5 text-[#46423a]">$200,000</td>
-                  <td className="p-3.5 font-bold text-[#2e4a3b]">$438,652</td>
-                  <td className="p-3.5 text-[#8a3324]">$330,660</td>
-                  <td className="p-3.5 font-bold text-[#2e4a3b]">+$107,992 (+32.7%)</td>
-                </tr>
-                <tr className="hover:bg-[#fcfaf5]">
-                  <td className="p-3.5 font-sans font-medium text-[#1c1b18]">{isFr ? "30 Ans" : "30 Years"}</td>
-                  <td className="p-3.5 text-[#46423a]">$300,000</td>
-                  <td className="p-3.5 font-bold text-[#2e4a3b]">$1,010,730</td>
-                  <td className="p-3.5 text-[#8a3324]">$662,118</td>
-                  <td className="p-3.5 font-bold text-[#2e4a3b]">+$348,612 (+52.6%)</td>
-                </tr>
+                {proofHorizons.map((row) => (
+                  <tr key={row.years} className="hover:bg-[#fcfaf5]">
+                    <td className="p-3.5 font-sans font-medium text-[#1c1b18]">
+                      {isFr ? `${row.years} Ans` : `${row.years} Years`}
+                    </td>
+                    <td className="p-3.5 text-[#46423a]">{formatCurrency(row.cumulative)}</td>
+                    <td className="p-3.5 font-bold text-[#2e4a3b]">{formatCurrency(row.adv)}</td>
+                    <td className="p-3.5 text-[#8a3324]">{formatCurrency(row.tax)}</td>
+                    <td className="p-3.5 font-bold text-[#2e4a3b]">
+                      +{formatCurrency(row.diff)} (+{formatPercent(row.pct)})
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-          <p className="text-[11px] text-[#625d52] italic">
-            {isFr
-              ? "Hypothèse purement illustrative : calcul basé sur un placement annuel de 10 000 $ au taux nominal composé de 7 %. Le compte imposable suppose un taux d'imposition marginal combiné de 43 % et une rotation modérée de portefeuille entraînant un frein fiscal de 2,2 % par an."
-              : "Hypothetical mathematical illustration: assumes $10,000 annual contribution at 7% nominal compounded return. Taxable account assumes a 43% combined marginal bracket on income and realized distributions, creating a 2.2% annual tax drag (net return 4.8%). Actual returns and tax obligations vary."}
-          </p>
+          <div className="text-[11px] text-[#625d52] space-y-1.5 pt-1">
+            <p>
+              <strong className="text-[#1c1b18] not-italic">
+                {isFr
+                  ? "Formule actuarielle d'annuité due (cotisations au début de chaque année) :"
+                  : "Actuarial Annuity Due Formula (contributions deposited at the start of each year):"}
+              </strong>{" "}
+              <code className="font-mono bg-[#ece6da]/60 px-1.5 py-0.5 rounded text-[#1c1b18] text-[11px]">
+                FV = P × (1 + r) × [((1 + r)ⁿ − 1) / r]
+              </code>
+            </p>
+            <p className="italic">
+              {isFr
+                ? "Calcul rigoureux : cotisation annuelle P = 10 000 $ versée au début de chaque année sur n années. Le compte enregistré capitalise au taux nominal composé de r = 7,0 % (0 % de frottement fiscal). Le compte imposable capitalise à r = 4,8 % net d'impôt, simulant un frein fiscal annuel de 2,2 % imputable à l'imposition annuelle des intérêts (100 % de la tranche marginale), des dividendes étrangers et de la réalisation périodique des gains en capital. Les montants sont arrondis au dollar le plus proche selon les normes actuarielles."
+                : "Actuarial proof parameters: annual contribution P = $10,000 deposited at the beginning of each year across n years. Tax-advantaged account compounds at r = 7.0% nominal rate with zero annual tax leakage. Taxable non-registered account compounds at r = 4.8% net after tax, reflecting a 2.2% annual drag from ongoing marginal taxation on fixed income interest, non-eligible distributions, and realized rebalancing gains. Values rounded to nearest dollar per standard Canadian actuarial conventions."}
+            </p>
+          </div>
         </div>
       </section>
 
@@ -840,6 +913,7 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
               href="https://calendly.com/olabel/30min"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackBookingClick("calculators_page_bottom")}
               className="btn btn-primary text-sm px-7 py-3 inline-flex items-center gap-2"
             >
               <Calendar className="w-4 h-4 text-[#d6c298]" />

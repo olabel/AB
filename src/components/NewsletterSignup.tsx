@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, CheckCircle2, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { trackNewsletterSubmit } from "../lib/track.ts";
 
 interface NewsletterSignupProps {
   title?: string;

@@ -768,7 +768,7 @@ Origin: https://www.ahmedbello.com
 
     // 8. Automatic Visitor Receipt / Confirmation with Anti-Abuse Rate Limiting
     const canSendReceipt = shouldSendReceiptToEmail(email);
-    if (canSendReceipt && resendResponse.ok) {
+    if (canSendReceipt && resendApiKey) {
       try {
         let confirmationSubject: string;
         let confirmationBody: string;
@@ -791,10 +791,12 @@ Licensed Financial Solutions Professional
 Moncton, New Brunswick, Canada
 https://www.ahmedbello.com`;
         } else if (isCalculator) {
-          confirmationSubject = "Your Customized Plan Calculation Breakdown | Ahmed Bello";
+          confirmationSubject = `Your Customized Plan Calculation Breakdown (#${referenceNo}) | Ahmed Bello`;
           confirmationBody = `Hello ${firstName},
 
 Thank you for calculating your numbers on ahmedbello.com.
+
+Reference Number: #${referenceNo}
 
 Here is the customized calculation you requested:
 ---------------------------------------------------------
@@ -804,8 +806,10 @@ ${message}
 Next Steps:
 Financial calculators provide general mathematical projections, but personal tax brackets, risk tolerance, and Canadian registered account contribution room (TFSA/RRSP/FHSA) require tailored analysis.
 
-If you would like to review your numbers with a Licensed Financial Solutions Professional:
-• Schedule 30 minutes on Calendly: https://calendly.com/olabel/30min
+Schedule a 30-minute review on Calendly:
+https://calendly.com/olabel/30min
+
+Direct Contact:
 • Direct Phone: +1-506-899-4941
 • Direct Email: enquiries@ahmedbello.com
 
@@ -815,19 +819,23 @@ Licensed Financial Solutions Professional
 Moncton, New Brunswick, Canada
 https://www.ahmedbello.com`;
         } else {
-          confirmationSubject = "Confirmation: I received your enquiry | Ahmed Bello";
+          confirmationSubject = `Confirmation: I received your enquiry (#${referenceNo}) | Ahmed Bello`;
           confirmationBody = `Hello ${firstName},
 
 Thank you for reaching out through ahmedbello.com. This automated receipt confirms that I have safely received your enquiry regarding ${topic}.
+
+Reference Number: #${referenceNo}
 
 What happens next:
 1. Review: I personally review incoming enquiries in the order received and aim to follow up with evidence-based educational insights.
 2. Direct, Objective Discussion: I provide clear answers to your questions without sales pressure or proprietary product mandates.
 3. Exploration: If your situation calls for a deeper conversation, we can review next steps during a 30-minute introductory call.
 
-If you would like to schedule a time right away:
-• Schedule 30 minutes on Calendly: https://calendly.com/olabel/30min
-• Direct Phone: +1-506-899-4941
+Schedule your complimentary 30-minute introductory consultation directly on Calendly:
+https://calendly.com/olabel/30min
+
+You can also reach me directly at:
+• Direct Telephone: +1-506-899-4941
 • Direct Email: enquiries@ahmedbello.com
 
 Warm regards,
@@ -850,8 +858,9 @@ https://www.ahmedbello.com`;
             text: confirmationBody,
           }),
         });
-      } catch {
+      } catch (visitorErr) {
         // Non-blocking: Primary enquiry was already handled
+        console.warn(`[VISITOR RECEIPT WARNING]:`, visitorErr);
       }
     }
 

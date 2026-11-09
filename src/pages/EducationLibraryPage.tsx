@@ -6,6 +6,7 @@ import { Search, X, ArrowRight, Calculator, Stethoscope, Briefcase, Users, Compa
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { trackCtaClick } from "../lib/track.ts";
 
 export const EducationLibraryPage: React.FC = () => {
   const { language } = useLanguage();
@@ -273,24 +274,17 @@ export const EducationLibraryPage: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap items-center gap-2 text-xs">
+            <div className="shrink-0">
               <Link
-                to={`${prefix}/calculators`}
-                className="px-3.5 py-2 bg-[#2e4a3b] hover:bg-[#3d6350] text-[#f7f3eb] rounded-[2px] transition-colors font-medium border border-[#d6c298]/30"
+                to={`${prefix}/calculators?tab=tfsa-rrsp#calculator-tool`}
+                onClick={() => trackCtaClick("education_library_banner", "Compare registered versus taxable growth")}
+                className="btn btn-primary text-xs px-5 py-2.5 inline-flex items-center gap-2 whitespace-nowrap"
               >
-                {language === "fr" ? "Stress-tester votre piste d'atterrissage →" : "stress-test your first-year living runway →"}
-              </Link>
-              <Link
-                to={`${prefix}/calculators`}
-                className="px-3.5 py-2 bg-[#2e4a3b] hover:bg-[#3d6350] text-[#f7f3eb] rounded-[2px] transition-colors font-medium border border-[#d6c298]/30"
-              >
-                {language === "fr" ? "Calculer le différentiel de croissance →" : "calculate your tax-sheltered growth differential →"}
-              </Link>
-              <Link
-                to={`${prefix}/calculators`}
-                className="px-3.5 py-2 bg-[#1c2e24] hover:bg-[#253d30] text-[#d6c298] rounded-[2px] transition-colors font-medium border border-[#d6c298]/40"
-              >
-                {language === "fr" ? "Modéliser la réduction de DPE des SPCC →" : "model your CCPC small business deduction grind →"}
+                <span>
+                  {language === "fr"
+                    ? "Comparer la croissance enregistrée et imposable →"
+                    : "Compare registered versus taxable growth →"}
+                </span>
               </Link>
             </div>
           </div>

@@ -15,6 +15,7 @@ import {
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
+import { trackLeadSubmit, trackBookingClick } from "../lib/track.ts";
 
 const PROVINCES_AND_TERRITORIES = [
   "Alberta",
@@ -196,6 +197,7 @@ export const ContactPage: React.FC = () => {
       }
 
       setStatus("success");
+      trackLeadSubmit(topic);
     } catch {
       setStatus("error");
       setErrorMessage(
@@ -403,6 +405,7 @@ export const ContactPage: React.FC = () => {
                   href={siteConfig.schedulingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackBookingClick("contact_page")}
                   className="btn btn-primary text-xs py-2 px-4 whitespace-nowrap self-stretch sm:self-auto text-center inline-flex items-center justify-center gap-1.5"
                 >
                   <span>{isFr ? "Réserver sur Calendly" : "Book on Calendly"}</span>

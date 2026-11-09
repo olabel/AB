@@ -5,6 +5,7 @@ import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { trackCtaClick } from "../lib/track.ts";
 import {
   Stethoscope,
   Briefcase,
@@ -384,10 +385,11 @@ export const AudienceHubPage: React.FC = () => {
                 </div>
               </div>
               <Link
-                to={isFr ? "/fr/calculators" : "/calculators"}
+                to={isFr ? "/fr/calculators?tab=newcomer#calculator-tool" : "/calculators?tab=newcomer#calculator-tool"}
+                onClick={() => trackCtaClick("audience_newcomers", "Calculate your newcomer settlement runway")}
                 className="btn btn-primary text-xs px-5 py-2.5 whitespace-nowrap shrink-0 inline-flex items-center gap-2"
               >
-                <span>{isFr ? "Stress-tester votre piste d'atterrissage financière →" : "stress-test your first-year living runway →"}</span>
+                <span>{isFr ? "Calculer votre réserve financière de nouvel arrivant →" : "Calculate your newcomer settlement runway →"}</span>
               </Link>
             </div>
           </section>
@@ -462,18 +464,13 @@ export const AudienceHubPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <div className="shrink-0">
                 <Link
-                  to={isFr ? "/fr/calculators" : "/calculators"}
+                  to={isFr ? "/fr/calculators?tab=ccpc-passive#calculator-tool" : "/calculators?tab=ccpc-passive#calculator-tool"}
+                  onClick={() => trackCtaClick("audience_business_owners", "Analyze your corporate passive income limit")}
                   className="btn btn-primary text-xs px-5 py-2.5 whitespace-nowrap inline-flex items-center gap-2"
                 >
-                  <span>{isFr ? "Modéliser votre réduction de DPE →" : "model your CCPC small business deduction grind →"}</span>
-                </Link>
-                <Link
-                  to={isFr ? "/fr/calculators" : "/calculators"}
-                  className="btn btn-ghost text-xs px-4 py-2.5 border border-[#d6cebd]/40 text-[#f7f3eb] hover:border-[#d6c298] whitespace-nowrap"
-                >
-                  <span>{isFr ? "Calculer le différentiel de croissance →" : "calculate your tax-sheltered growth differential →"}</span>
+                  <span>{isFr ? "Analyser le plafond de revenu passif de votre société →" : "Analyze your corporate passive income limit →"}</span>
                 </Link>
               </div>
             </div>
@@ -498,10 +495,11 @@ export const AudienceHubPage: React.FC = () => {
                 </div>
               </div>
               <Link
-                to={isFr ? "/fr/calculators" : "/calculators"}
+                to={isFr ? "/fr/calculators?tab=newcomer#calculator-tool" : "/calculators?tab=newcomer#calculator-tool"}
+                onClick={() => trackCtaClick("audience_healthcare", "Calculate your transition emergency reserve")}
                 className="btn btn-primary text-xs px-5 py-2.5 whitespace-nowrap shrink-0 inline-flex items-center gap-2"
               >
-                <span>{isFr ? "Stress-tester votre piste d'équivalence médicale →" : "stress-test your first-year credential runway →"}</span>
+                <span>{isFr ? "Calculer votre réserve de transition professionnelle →" : "Calculate your transition emergency reserve →"}</span>
               </Link>
             </div>
           </section>
@@ -525,10 +523,11 @@ export const AudienceHubPage: React.FC = () => {
                 </div>
               </div>
               <Link
-                to={isFr ? "/fr/calculators" : "/calculators"}
+                to={isFr ? "/fr/calculators?tab=tfsa-rrsp#calculator-tool" : "/calculators?tab=tfsa-rrsp#calculator-tool"}
+                onClick={() => trackCtaClick("audience_families", "Compare TFSA versus RRSP tax benefits")}
                 className="btn btn-primary text-xs px-5 py-2.5 whitespace-nowrap shrink-0 inline-flex items-center gap-2"
               >
-                <span>{isFr ? "Calculer votre différentiel de croissance à l'abri de l'impôt →" : "calculate your tax-sheltered growth differential →"}</span>
+                <span>{isFr ? "Comparer les avantages fiscaux CELI et REER →" : "Compare TFSA versus RRSP tax benefits →"}</span>
               </Link>
             </div>
           </section>

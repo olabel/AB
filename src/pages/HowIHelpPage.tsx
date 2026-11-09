@@ -10,6 +10,7 @@ import { ArrowRight, HelpCircle } from "lucide-react";
 import { siteConfig } from "../config/site.ts";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { trackCtaClick } from "../lib/track.ts";
 
 export const HowIHelpPage: React.FC = () => {
   const { isFr } = useLanguage();
@@ -280,8 +281,12 @@ export const HowIHelpPage: React.FC = () => {
           <div className="pt-2 flex flex-wrap items-center gap-4 text-sm text-[#2e4a3b]">
             <span>
               {isFr ? "Vous préférez modéliser vos chiffres ? " : "Prefer to model your numbers? "}
-              <Link to={isFr ? "/fr/calculators" : "/calculators"} className="underline font-semibold">
-                {isFr ? "Calculer le différentiel de croissance à l'abri de l'impôt →" : "calculate your tax-sheltered growth differential →"}
+              <Link
+                to={isFr ? "/fr/calculators?tab=tfsa-rrsp#calculator-tool" : "/calculators?tab=tfsa-rrsp#calculator-tool"}
+                onClick={() => trackCtaClick("how_i_help_page", "Calculate your tax-sheltered growth potential")}
+                className="underline font-semibold"
+              >
+                {isFr ? "Calculer votre potentiel de croissance à l'abri de l'impôt →" : "Calculate your tax-sheltered growth potential →"}
               </Link>
             </span>
             <span>

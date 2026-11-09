@@ -4,6 +4,7 @@ import { articles } from "../content/data.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { trackCtaClick } from "../lib/track.ts";
 import {
   ArrowRight,
   Sparkles,
@@ -487,18 +488,17 @@ export const InsightsPage: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap items-center gap-2 text-xs">
+            <div className="shrink-0">
               <Link
-                to={`${prefix}/calculators`}
-                className="px-3.5 py-2 bg-[#2e4a3b] hover:bg-[#3d6350] text-[#f7f3eb] rounded-[2px] transition-colors font-medium border border-[#d6c298]/30"
+                to={`${prefix}/calculators?tab=tfsa-rrsp#calculator-tool`}
+                onClick={() => trackCtaClick("insights_banner", "Model your tax-sheltered compound growth")}
+                className="btn btn-primary text-xs px-5 py-2.5 inline-flex items-center gap-2 whitespace-nowrap"
               >
-                {isFr ? "Calculer le différentiel de croissance →" : "calculate your tax-sheltered growth differential →"}
-              </Link>
-              <Link
-                to={`${prefix}/calculators`}
-                className="px-3.5 py-2 bg-[#1c2e24] hover:bg-[#253d30] text-[#d6c298] rounded-[2px] transition-colors font-medium border border-[#d6c298]/40"
-              >
-                {isFr ? "Stress-tester votre piste d'atterrissage →" : "stress-test your first-year living runway →"}
+                <span>
+                  {isFr
+                    ? "Modéliser votre croissance composée à l'abri de l'impôt →"
+                    : "Model your tax-sheltered compound growth →"}
+                </span>
               </Link>
             </div>
           </div>
