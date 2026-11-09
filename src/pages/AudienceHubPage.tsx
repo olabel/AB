@@ -16,6 +16,7 @@ import {
   Calendar,
   Sparkles,
   BookOpen,
+  Calculator,
 } from "lucide-react";
 
 interface AudienceConfig {
@@ -77,14 +78,14 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     id: "business-owners",
     slug: "business-owners",
     aliases: ["entrepreneurs", "incorporated"],
-    titleEn: "Financial Architecture for Canadian Business Owners & Incorporated Professionals",
-    titleFr: "Architecture financière pour propriétaires d'entreprises et professionnels incorporés au Canada",
+    titleEn: "CCPC Tax Efficiency & $50k SBD Passive Income Strategy | Ahmed Bello",
+    titleFr: "Efficience Fiscale des SPCC & Plafond DPE de 50 000 $ | Ahmed Bello",
     eyebrowEn: "Audience Hub: Business Owners & CCPCs",
     eyebrowFr: "Carrefour thématique : Propriétaires d'entreprises",
     descriptionEn:
-      "From managing passive investment income rules and the Small Business Deduction (SBD) grind to extracting tax-free capital via the Capital Dividend Account (CDA), understand how corporate wealth intersects with personal balance sheets.",
+      "Optimize your corporate tax exposure, manage the small business deduction passive income threshold, and extract capital tax-efficiently.",
     descriptionFr:
-      "De la gestion des règles sur les revenus de placement passif et du plafond des petites entreprises à l'extraction de capital non imposable via le Compte de dividendes en capital (CDC).",
+      "Optimisez la fiscalité de votre société, gérez le seuil de revenus passifs de la DPE et extrayez du capital en franchise d'impôt.",
     icon: Briefcase,
     curatedSlugs: [
       "tfsa-vs-rrsp",
@@ -148,14 +149,14 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     id: "newcomers",
     slug: "newcomers",
     aliases: ["immigrants", "new-to-canada"],
-    titleEn: "First-Year Financial Essentials for Newcomers to Canada",
-    titleFr: "Essentiels financiers pour la première année des nouveaux arrivants au Canada",
+    titleEn: "First-Year Financial Blueprint for Newcomers to Canada (Runway & Credit Guide)",
+    titleFr: "Plan Financier de 1re Année pour Nouveaux Arrivants au Canada (Piste & Crédit)",
     eyebrowEn: "Audience Hub: Newcomers to Canada",
     eyebrowFr: "Carrefour thématique : Nouveaux arrivants",
     descriptionEn:
-      "Everything you need to know about starting your Canadian credit record, opening bank accounts, tax residency rules, and avoiding high-cost remittance fees.",
+      "Navigate Canadian banking, credit building, emergency reserves, and tax-sheltered accounts with our step-by-step financial framework.",
     descriptionFr:
-      "Tout ce que vous devez savoir pour bâtir votre crédit canadien, ouvrir des comptes bancaires, respecter les règles de résidence fiscale de l'ARC.",
+      "Bâtissez votre crédit canadien, structurez vos réserves de subsistance et optimisez vos régimes enregistrés dès votre première année.",
     icon: Compass,
     curatedSlugs: [
       "new-to-canada-money-basics",
@@ -214,7 +215,7 @@ export const AudienceHubPage: React.FC = () => {
   return (
     <div className="py-12 md:py-16">
       <SEO
-        title={isFr ? `${currentAudience.titleFr} | Ahmed Bello` : `${currentAudience.titleEn} | Ahmed Bello`}
+        title={isFr ? currentAudience.titleFr : currentAudience.titleEn}
         description={isFr ? currentAudience.descriptionFr : currentAudience.descriptionEn}
         canonicalUrl={isFr ? `/fr/for/${currentAudience.slug}` : `/for/${currentAudience.slug}`}
       />
@@ -312,6 +313,226 @@ export const AudienceHubPage: React.FC = () => {
             )}
           </div>
         </section>
+
+        {/* NEWCOMERS LONG-TAIL TARGET SECTION */}
+        {currentAudience.id === "newcomers" && (
+          <section className="py-12 border-b border-[#d6cebd] space-y-6">
+            <div className="space-y-3 max-w-4xl">
+              <span className="text-[11px] font-mono uppercase tracking-widest text-[#75581f] font-bold block">
+                {isFr ? "Guide Pratique d'Intégration Financière" : "Settlement Capital & Liquidity Framework"}
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18] mb-4">
+                {isFr
+                  ? "Guide de la Réserve de Sécurité et du Fonds d'Urgence pour les Nouveaux Résidents Permanents au Canada"
+                  : "Financial Runway & Emergency Fund Guide for New Permanent Residents in Canada"}
+              </h2>
+              <p className="text-sm sm:text-base text-[#46423a] leading-relaxed">
+                {isFr
+                  ? "L'erreur la plus coûteuse commise par les nouveaux arrivants au Canada consiste à sous-estimer la durée de transition vers leur premier emploi qualifié. Entre l'évaluation des diplômes étrangers (EDE), les examens d'équivalence professionnelle et les délais administratifs, la plupart des ménages traversent une période sans revenu stable de 6 à 12 mois."
+                  : "The single most critical vulnerability facing new permanent residents in Canada is misjudging the duration of their credential recognition and settlement runway. Between provincial regulatory reviews, language testing, and exam sequencing, bridging the gap to full professional earnings frequently requires a protected, liquid cash buffer of 6 to 9 months."}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
+                <h3 className="font-serif text-base font-bold text-[#1c1b18]">
+                  {isFr ? "1. Calcul de la Réserve Minimale" : "1. Minimum Living Runway"}
+                </h3>
+                <p className="text-xs text-[#46423a] leading-relaxed">
+                  {isFr
+                    ? "Additionnez le loyer, l'alimentation, le transport et les frais d'examen. Maintenez au minimum 6 mois de dépenses courantes sur un compte chèque ou d'épargne liquide non exposé aux fluctuations boursières."
+                    : "Tally essential shelter, utilities, food, transit, and professional licensing examination fees. Maintain at least 6 months of non-negotiable living overhead in guaranteed, zero-risk liquid savings before allocating to long-term equities."}
+                </p>
+              </div>
+
+              <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
+                <h3 className="font-serif text-base font-bold text-[#1c1b18]">
+                  {isFr ? "2. Construction du Dossier de Crédit" : "2. Credit Bureau Architecture"}
+                </h3>
+                <p className="text-xs text-[#46423a] leading-relaxed">
+                  {isFr
+                    ? "Votre historique étranger ne vous suit pas. Obtenez immédiatement une carte de crédit pour nouveaux arrivants, maintenez un taux d'utilisation sous 30 % et réglez l'intégralité du solde chaque mois."
+                    : "Foreign credit histories do not cross borders into Canada. Open a primary newcomer or secured credit card with Equifax and TransUnion reporting, keep credit utilization strictly under 30%, and pay statements in full monthly."}
+                </p>
+              </div>
+
+              <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
+                <h3 className="font-serif text-base font-bold text-[#1c1b18]">
+                  {isFr ? "3. Timing des Régimes Enregistrés" : "3. Tax Shelter Sequencing"}
+                </h3>
+                <p className="text-xs text-[#46423a] leading-relaxed">
+                  {isFr
+                    ? "Vos droits de cotisation au CELI débutent l'année où vous devenez résident fiscal canadien âgé de 18 ans et plus. Le REER nécessite des revenus gagnés l'année précédente et déclarés sur votre déclaration T1."
+                    : "TFSA contribution room accumulates starting the year you become a resident for tax purposes aged 18+. RRSP room requires Canadian earned income filed on prior-year CRA T1 returns; the FHSA opens as soon as you are a resident first-time buyer."}
+                </p>
+              </div>
+            </div>
+
+            {/* High-Intent CTA to Interactive Calculator */}
+            <div className="p-5 bg-[#14211a] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <Calculator className="w-5 h-5 text-[#d6c298] shrink-0" />
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                    {isFr ? "Simulateur Interactif" : "Interactive Runway Simulator"}
+                  </span>
+                  <p className="text-sm font-serif text-white mt-0.5">
+                    {isFr
+                      ? "Mesurez votre capital de subsistance et les frais d'équivalence en temps réel."
+                      : "Model your settlement budget, credential verification costs, and monthly burn rate."}
+                  </p>
+                </div>
+              </div>
+              <Link
+                to={isFr ? "/fr/calculators" : "/calculators"}
+                className="btn btn-primary text-xs px-5 py-2.5 whitespace-nowrap shrink-0 inline-flex items-center gap-2"
+              >
+                <span>{isFr ? "Stress-tester votre piste d'atterrissage financière →" : "stress-test your first-year living runway →"}</span>
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* BUSINESS OWNERS LONG-TAIL TARGET SECTION */}
+        {currentAudience.id === "business-owners" && (
+          <section className="py-12 border-b border-[#d6cebd] space-y-6">
+            <div className="space-y-3 max-w-4xl">
+              <span className="text-[11px] font-mono uppercase tracking-widest text-[#75581f] font-bold block">
+                {isFr ? "Fiscalité Avancée des Sociétés Privées" : "Corporate Tax Planning & Retained Capital"}
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18] mb-4">
+                {isFr
+                  ? "Gestion des Seuils de Revenus Passifs des SPCC sous la Règle des 50 000 $ de la DPE"
+                  : "Managing CCPC Passive Income Limits under the $50k Small Business Deduction Rule"}
+              </h2>
+              <p className="text-sm sm:text-base text-[#46423a] leading-relaxed">
+                {isFr
+                  ? "En vertu du paragraphe 125(5.1) de la Loi de l'impôt sur le revenu (LIR), chaque tranche de 1 $ de revenu de placement passif (RPAA) au-delà de 50 000 $ réduit le plafond de la Déduction pour petite entreprise (DPE) de 5 $. Lorsque les placements passifs atteignent 150 000 $, le plafond de 500 000 $ est intégralement éliminé, forçant vos bénéfices d'exploitation au taux d'imposition général de 26,5 % (ou plus selon la province) au lieu du taux préférentiel de 9 % ou 12,2 %."
+                  : "Under Subsection 125(5.1) of the federal Income Tax Act, every $1 of corporate passive investment income—technically known as Adjusted Aggregate Investment Income (AAII)—exceeding $50,000 erodes $5 of your Canadian-Controlled Private Corporation's (CCPC) Small Business Deduction (SBD) limit. Once passive income reaches $150,000, your entire $500,000 active business limit is wiped out, forcing active operational profits from the 9% federal small business rate up to the 26.5%+ general corporate rate."}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
+                <h3 className="font-serif text-base font-bold text-[#1c1b18]">
+                  {isFr ? "La Formule de Réduction 5:1" : "The 5:1 Clawback Mechanism"}
+                </h3>
+                <p className="text-xs text-[#46423a] leading-relaxed">
+                  {isFr
+                    ? "70 000 $ de revenus passifs (20 000 $ d'excédent) amputent 100 000 $ de bénéfice actif admissible au taux réduit, générant jusqu'à 17 500 $/an d'impôt supplémentaire à payer."
+                    : "A corporate holding with $70,000 of passive investment income ($20,000 above the $50,000 statutory threshold) slashes $100,000 from your small business limit, triggering up to $17,500 annually in unneeded corporate tax owing."}
+                </p>
+              </div>
+
+              <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
+                <h3 className="font-serif text-base font-bold text-[#1c1b18]">
+                  {isFr ? "Extraction via le CDC" : "Capital Dividend Account (CDA)"}
+                </h3>
+                <p className="text-xs text-[#46423a] leading-relaxed">
+                  {isFr
+                    ? "La fraction non imposable des gains en capital (50 % ou 33,3 %) crédite le CDC, permettant de distribuer du capital net d'impôt aux actionnaires canadiens."
+                    : "The non-taxable portion of realized corporate capital gains credits your Capital Dividend Account (CDA), allowing tax-free distribution of surplus funds to Canadian resident shareholders via Form T2054."}
+                </p>
+              </div>
+
+              <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
+                <h3 className="font-serif text-base font-bold text-[#1c1b18]">
+                  {isFr ? "Solutions de Trésorerie Exonérées" : "Tax-Exempt Corporate Structures"}
+                </h3>
+                <p className="text-xs text-[#46423a] leading-relaxed">
+                  {isFr
+                    ? "L'assurance vie permanente détenue par la société abrite la croissance des liquidités sans déclencher de RPAA, tout en finançant la relève et le rachat d'actions."
+                    : "Corporate-owned permanent life insurance contracts accumulate internal cash values with zero annual passive tax drag, protecting the $50k SBD limit while creating a substantial tax-free credit to the CDA at death."}
+                </p>
+              </div>
+            </div>
+
+            {/* High-Intent CTA to Interactive Calculator */}
+            <div className="p-5 bg-[#14211a] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <Calculator className="w-5 h-5 text-[#d6c298] shrink-0" />
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                    {isFr ? "Simulateur Corporatif Interactif" : "Interactive CCPC Tax Simulator"}
+                  </span>
+                  <p className="text-sm font-serif text-white mt-0.5">
+                    {isFr
+                      ? "Modélisez l'impact exact de vos surplus de trésorerie sur votre déduction pour petite entreprise."
+                      : "Calculate your corporate tax exposure and model the exact 5:1 small business deduction grind."}
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-3 shrink-0">
+                <Link
+                  to={isFr ? "/fr/calculators" : "/calculators"}
+                  className="btn btn-primary text-xs px-5 py-2.5 whitespace-nowrap inline-flex items-center gap-2"
+                >
+                  <span>{isFr ? "Modéliser votre réduction de DPE →" : "model your CCPC small business deduction grind →"}</span>
+                </Link>
+                <Link
+                  to={isFr ? "/fr/calculators" : "/calculators"}
+                  className="btn btn-ghost text-xs px-4 py-2.5 border border-[#d6cebd]/40 text-[#f7f3eb] hover:border-[#d6c298] whitespace-nowrap"
+                >
+                  <span>{isFr ? "Calculer le différentiel de croissance →" : "calculate your tax-sheltered growth differential →"}</span>
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* HEALTHCARE CALCULATOR CTA CARD */}
+        {currentAudience.id === "healthcare" && (
+          <section className="py-8 border-b border-[#d6cebd]">
+            <div className="p-5 bg-[#14211a] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <Calculator className="w-5 h-5 text-[#d6c298] shrink-0" />
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                    {isFr ? "Modélisation de Trésorerie Médicale" : "Healthcare Cashflow & Bridge Simulator"}
+                  </span>
+                  <p className="text-sm font-serif text-white mt-0.5">
+                    {isFr
+                      ? "Évaluez votre période d'équivalence et vos coûts de subsistance pendant vos démarches de permis."
+                      : "Quantify your licensing gap timeline, credential evaluation costs, and living runway before residency or full practice."}
+                  </p>
+                </div>
+              </div>
+              <Link
+                to={isFr ? "/fr/calculators" : "/calculators"}
+                className="btn btn-primary text-xs px-5 py-2.5 whitespace-nowrap shrink-0 inline-flex items-center gap-2"
+              >
+                <span>{isFr ? "Stress-tester votre piste d'équivalence médicale →" : "stress-test your first-year credential runway →"}</span>
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* FAMILIES CALCULATOR CTA CARD */}
+        {currentAudience.id === "families" && (
+          <section className="py-8 border-b border-[#d6cebd]">
+            <div className="p-5 bg-[#14211a] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <Calculator className="w-5 h-5 text-[#d6c298] shrink-0" />
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                    {isFr ? "Simulateur d'Arbitrage Familial" : "Family Wealth & Tax Arbitrage"}
+                  </span>
+                  <p className="text-sm font-serif text-white mt-0.5">
+                    {isFr
+                      ? "Comparez les rendements nets entre CELI, REER et épargne non enregistrée pour votre foyer."
+                      : "Model the exact after-tax wealth gap between registered accounts (TFSA/RRSP/FHSA) and taxable non-registered savings."}
+                  </p>
+                </div>
+              </div>
+              <Link
+                to={isFr ? "/fr/calculators" : "/calculators"}
+                className="btn btn-primary text-xs px-5 py-2.5 whitespace-nowrap shrink-0 inline-flex items-center gap-2"
+              >
+                <span>{isFr ? "Calculer votre différentiel de croissance à l'abri de l'impôt →" : "calculate your tax-sheltered growth differential →"}</span>
+              </Link>
+            </div>
+          </section>
+        )}
 
         {/* Interactive Calculator Section (if enabled for this audience) */}
         {currentAudience.showCalculator && (

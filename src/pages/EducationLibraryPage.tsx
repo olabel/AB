@@ -257,6 +257,43 @@ export const EducationLibraryPage: React.FC = () => {
               </span>
             </Link>
           </div>
+
+          {/* Interactive Calculators Quick Matrix */}
+          <div className="p-5 bg-[#14211a] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] flex flex-col md:flex-row md:items-center justify-between gap-5">
+            <div className="flex items-center gap-3">
+              <Calculator className="w-6 h-6 text-[#d6c298] shrink-0" />
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                  {language === "fr" ? "Outils de Décision Quantitatifs" : "Quantitative Decision Calculators"}
+                </span>
+                <p className="text-sm font-serif text-white mt-0.5">
+                  {language === "fr"
+                    ? "Modélisez vos chiffres en temps réel selon les règles officielles de l'ARC et de la Banque du Canada."
+                    : "Stress-test your numbers in real time against Canada Revenue Agency and Bank of Canada formulas."}
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <Link
+                to={`${prefix}/calculators`}
+                className="px-3.5 py-2 bg-[#2e4a3b] hover:bg-[#3d6350] text-[#f7f3eb] rounded-[2px] transition-colors font-medium border border-[#d6c298]/30"
+              >
+                {language === "fr" ? "Stress-tester votre piste d'atterrissage →" : "stress-test your first-year living runway →"}
+              </Link>
+              <Link
+                to={`${prefix}/calculators`}
+                className="px-3.5 py-2 bg-[#2e4a3b] hover:bg-[#3d6350] text-[#f7f3eb] rounded-[2px] transition-colors font-medium border border-[#d6c298]/30"
+              >
+                {language === "fr" ? "Calculer le différentiel de croissance →" : "calculate your tax-sheltered growth differential →"}
+              </Link>
+              <Link
+                to={`${prefix}/calculators`}
+                className="px-3.5 py-2 bg-[#1c2e24] hover:bg-[#253d30] text-[#d6c298] rounded-[2px] transition-colors font-medium border border-[#d6c298]/40"
+              >
+                {language === "fr" ? "Modéliser la réduction de DPE des SPCC →" : "model your CCPC small business deduction grind →"}
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 

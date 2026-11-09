@@ -426,32 +426,29 @@ interface RouteMeta {
 const siteWideFinancialService = {
   "@context": "https://schema.org",
   "@type": "FinancialService",
-  "@id": `${siteConfig.siteUrl}/#financialservice`,
-  name: "Ahmed Bello Financial Education",
-  legalName: "Ahmed Bello",
+  "@id": `${siteConfig.siteUrl}/#organization`,
+  name: "Ahmed Bello Financial Solutions",
   url: siteConfig.siteUrl,
-  logo: `${siteConfig.siteUrl}/brand/og-share.png`,
-  image: `${siteConfig.siteUrl}/brand/og-share.png`,
+  logo: `${siteConfig.siteUrl}/logo.png`,
   description:
-    "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA, RESP), insurance solutions, and family money decisions.",
+    "Tax-efficient wealth accumulation, family capital preservation, and financial strategy for Canadian families, CCPC business owners, and newcomers.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Dieppe",
+    addressRegion: "NB",
+    addressCountry: "CA",
+  },
   areaServed: {
     "@type": "Country",
     name: "Canada",
-  },
-  address: {
-    "@type": "PostalAddress",
-    addressCountry: "CA",
   },
   knowsAbout: [
     "Tax-Free Savings Account (TFSA)",
     "Registered Retirement Savings Plan (RRSP)",
     "First Home Savings Account (FHSA)",
-    "Registered Education Savings Plan (RESP)",
-    "Canada Pension Plan (CPP)",
-    "Old Age Security (OAS)",
-    "Life Insurance and Disability Insurance",
-    "Consumer Proposals and Debt Repayment",
-    "Canadian Financial Decision-Making",
+    "CCPC Small Business Deduction Tax Efficiency",
+    "Halal & Islamic Investing Canada",
+    "Newcomer Financial Planning Canada",
   ],
 };
 
@@ -460,13 +457,11 @@ const siteWidePerson = {
   "@type": "Person",
   "@id": `${siteConfig.siteUrl}/#person`,
   name: "Ahmed Bello",
-  jobTitle: siteConfig.designation,
-  url: siteConfig.siteUrl,
-  description:
-    "Licensed Financial Solutions Professional providing plain-language financial education for Canadians.",
+  jobTitle: "Licensed Financial Solutions Professional",
   worksFor: {
-    "@id": `${siteConfig.siteUrl}/#financialservice`,
+    "@id": `${siteConfig.siteUrl}/#organization`,
   },
+  url: siteConfig.siteUrl,
 };
 
 const siteWideWebSite = {
@@ -576,10 +571,10 @@ function getRouteMetadata(pathname: string): RouteMeta {
         canonical: "/for/healthcare",
       },
       "business-owners": {
-        titleEn: "Financial Guidance for Business Owners | Ahmed Bello",
-        titleFr: "Orientation Propriétaires d'Entreprises | Ahmed Bello",
-        descEn: "Corporate capital gains rules, Capital Dividend Account extraction, and private company estate planning.",
-        descFr: "Règles fiscales corporatives, compte de dividendes en capital et planification de relève.",
+        titleEn: "CCPC Tax Efficiency & $50k SBD Passive Income Strategy | Ahmed Bello",
+        titleFr: "Efficience Fiscale des SPCC & Plafond DPE de 50 000 $ | Ahmed Bello",
+        descEn: "Optimize your corporate tax exposure, manage the small business deduction passive income threshold, and extract capital tax-efficiently.",
+        descFr: "Optimisez la fiscalité de votre société, gérez le seuil de revenus passifs de la DPE et extrayez du capital en franchise d'impôt.",
         canonical: "/for/business-owners",
       },
       families: {
@@ -590,10 +585,10 @@ function getRouteMetadata(pathname: string): RouteMeta {
         canonical: "/for/families",
       },
       newcomers: {
-        titleEn: "Financial Essentials for Newcomers | Ahmed Bello",
-        titleFr: "Essentiels Nouveaux Arrivants | Ahmed Bello",
-        descEn: "Credit score building, first-year savings runway calculator, tax residency timing, and foreign asset reporting.",
-        descFr: "Bâtir son crédit, réserves financières de première année et règles de résidence fiscale.",
+        titleEn: "First-Year Financial Blueprint for Newcomers to Canada (Runway & Credit Guide)",
+        titleFr: "Plan Financier de 1re Année pour Nouveaux Arrivants au Canada (Piste & Crédit)",
+        descEn: "Navigate Canadian banking, credit building, emergency reserves, and tax-sheltered accounts with our step-by-step financial framework.",
+        descFr: "Bâtissez votre crédit canadien, structurez vos réserves de subsistance et optimisez vos régimes enregistrés dès votre première année.",
         canonical: "/for/newcomers",
       },
     };
@@ -750,11 +745,11 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/fr/calculators":
       return {
         title: cleanPath.startsWith("/fr")
-          ? "Simulateurs Financiers Canadiens | Ahmed Bello"
-          : "Canadian Financial Calculators | Ahmed Bello",
+          ? "Simulateurs Financiers Canadiens : Piste Nouveaux Arrivants, CELI vs REER & Protection"
+          : "Canadian Financial Planning Calculators: Newcomer Runway, TFSA vs RRSP & Protection",
         description: cleanPath.startsWith("/fr")
-          ? "Simulateurs interactifs : piste d'atterrissage pour nouveaux arrivants, choc hypothécaire, arbitrage CELI vs REER et plafond passif SPCC."
-          : "Interactive Canadian simulators: Newcomer financial runway, mortgage renewal shock analyzer, TFSA vs RRSP tax arbitrage, and CCPC passive income calculator.",
+          ? "Calculez votre potentiel de croissance à l'abri de l'impôt, la réserve financière pour nouveaux arrivants et la protection du revenu familial."
+          : "Calculate your tax-sheltered growth potential, newcomer financial runway, and household income protection gap in real time.",
         ogType: "website",
         url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
@@ -1015,10 +1010,11 @@ function getRouteMetadata(pathname: string): RouteMeta {
       if (cleanPath === "/" || cleanPath === "/fr") {
         return {
           title: cleanPath === "/fr"
-            ? "Ahmed Bello | Éducation Financière pour Canadiens"
-            : "Ahmed Bello | Financial Education for Canadians",
-          description:
-            "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.",
+            ? "Architecture Financière & Protection du Revenu | Ahmed Bello Solutions Financières"
+            : "Canadian Wealth & Protection Architecture | Ahmed Bello Financial Solutions",
+          description: cleanPath === "/fr"
+            ? "Stratégie patrimoniale fiscalement efficiente, protection du revenu familial et préservation du capital pour familles canadiennes, SPCC, professionnels de la santé et nouveaux arrivants."
+            : "Tailored tax-efficient wealth strategy, family income protection, and capital preservation for Canadian families, CCPCs, healthcare professionals, and newcomers.",
           ogType: "website",
           url: `${siteConfig.siteUrl}${cleanPath === "/fr" ? "/fr" : ""}`,
           jsonLd: [

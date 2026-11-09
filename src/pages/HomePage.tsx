@@ -29,13 +29,13 @@ export const HomePage: React.FC = () => {
       <SEO
         title={
           isFr
-            ? "Ahmed Bello | Solutions Financières & Protection du Revenu"
-            : "Ahmed Bello | Financial Architecture & Wealth Protection"
+            ? "Architecture Financière & Protection du Revenu | Ahmed Bello Solutions Financières"
+            : "Canadian Wealth & Protection Architecture | Ahmed Bello Financial Solutions"
         }
         description={
           isFr
-            ? "Orientation financière indépendante pour familles, entrepreneurs incorporés, professionnels de la santé et nouveaux arrivants au Canada avec Ahmed Bello."
-            : "Independent financial architecture and wealth protection for Canadian families, incorporated professionals, healthcare workers, and newcomers with Ahmed Bello."
+            ? "Stratégie patrimoniale fiscalement efficiente, protection du revenu familial et préservation du capital pour familles canadiennes, SPCC, professionnels de la santé et nouveaux arrivants."
+            : "Tailored tax-efficient wealth strategy, family income protection, and capital preservation for Canadian families, CCPCs, healthcare professionals, and newcomers."
         }
         canonicalUrl={isFr ? "/fr" : "/"}
       />

@@ -19,8 +19,8 @@ const coreRoutes = [
   // English Core Routes
   {
     path: "/",
-    title: "Ahmed Bello | Financial Education for Canadians",
-    description: "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.",
+    title: "Canadian Wealth & Protection Architecture | Ahmed Bello Financial Solutions",
+    description: "Tailored tax-efficient wealth strategy, family income protection, and capital preservation for Canadian families, CCPCs, healthcare professionals, and newcomers.",
     lang: "en-CA",
     heading: "Ahmed Bello | Licensed Financial Solutions Professional",
     summary: "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), income protection, debt restructuring, and family financial decision-making.",
@@ -99,8 +99,8 @@ const coreRoutes = [
   },
   {
     path: "/for/business-owners",
-    title: "Financial Guidance for Canadian Business Owners & CCPCs | Ahmed Bello",
-    description: "Corporate financial architecture: passive investment income rules ($50k SBD limit), Capital Dividend Account (CDA) tax-free distributions, and estate liquidity.",
+    title: "CCPC Tax Efficiency & $50k SBD Passive Income Strategy | Ahmed Bello",
+    description: "Optimize your corporate tax exposure, manage the small business deduction passive income threshold, and extract capital tax-efficiently.",
     lang: "en-CA",
     heading: "Financial Strategy for Business Owners & CCPCs",
     summary: "Guidance on corporate holding companies, passive income thresholds, Capital Dividend Account (CDA) distributions, and succession liquidity.",
@@ -115,8 +115,8 @@ const coreRoutes = [
   },
   {
     path: "/for/newcomers",
-    title: "Newcomers to Canada Financial Roadmap | Ahmed Bello",
-    description: "First-year financial checklist for new permanent residents and work permit holders: credit establishment, SIN protection, banking, and FHSA.",
+    title: "First-Year Financial Blueprint for Newcomers to Canada (Runway & Credit Guide)",
+    description: "Navigate Canadian banking, credit building, emergency reserves, and tax-sheltered accounts with our step-by-step financial framework.",
     lang: "en-CA",
     heading: "First-Year Financial Roadmap for Newcomers to Canada",
     summary: "Step-by-step guidance on opening secured credit cards, understanding the Canadian credit bureau scoring system, and opening tax-free registered savings accounts.",
@@ -163,8 +163,8 @@ const coreRoutes = [
   },
   {
     path: "/calculators",
-    title: "Canadian Financial Calculators & Decision Simulators | Ahmed Bello",
-    description: "Interactive Canadian financial simulators: Newcomer financial runway, mortgage renewal shock analyzer, TFSA vs RRSP tax arbitrage, and CCPC passive income limit calculator.",
+    title: "Canadian Financial Planning Calculators: Newcomer Runway, TFSA vs RRSP & Protection",
+    description: "Calculate your tax-sheltered growth potential, newcomer financial runway, and household income protection gap in real time.",
     lang: "en-CA",
     heading: "Interactive Canadian Financial Calculators",
     summary: "Model real Canadian financial scenarios with exact tax rates, inflation parameters, and CRA rules. Includes instant lead capture and strategy review options.",
@@ -173,8 +173,8 @@ const coreRoutes = [
   // French Core Routes
   {
     path: "/fr",
-    title: "Ahmed Bello | Éducation Financière pour Canadiens",
-    description: "Éducation financière en langage clair sur les régimes enregistrés (CELI, REER, CELIAPP), l'assurance vie et les décisions budgétaires avec Ahmed Bello.",
+    title: "Architecture Financière & Protection du Revenu | Ahmed Bello Solutions Financières",
+    description: "Stratégie patrimoniale fiscalement efficiente, protection du revenu familial et préservation du capital pour familles canadiennes, SPCC, professionnels de la santé et nouveaux arrivants.",
     lang: "fr-CA",
     heading: "Ahmed Bello | Professionnel en Solutions Financières Agréé",
     summary: "Éducation financière accessible et indépendante au Canada : régimes enregistrés, protection du revenu familial, remboursement des dettes et investissement réfléchi.",
@@ -253,8 +253,8 @@ const coreRoutes = [
   },
   {
     path: "/fr/for/business-owners",
-    title: "Stratégie Financière pour Chefs d'Entreprise & SPCC | Ahmed Bello",
-    description: "Conseils pour Sociétés Privées sous Contrôle Canadien (SPCC), surplus accumulés, plafond de 50 000 $ de revenus passifs et compte de dividendes en capital (CDC).",
+    title: "Efficience Fiscale des SPCC & Plafond DPE de 50 000 $ | Ahmed Bello",
+    description: "Optimisez la fiscalité de votre société, gérez le seuil de revenus passifs de la DPE et extrayez du capital en franchise d'impôt.",
     lang: "fr-CA",
     heading: "Stratégie Financière pour Propriétaires d'Entreprise",
     summary: "Gestion des sociétés de gestion, seuils de revenus passifs, compte de dividendes en capital (CDC) et relève d'entreprise.",
@@ -269,8 +269,8 @@ const coreRoutes = [
   },
   {
     path: "/fr/for/newcomers",
-    title: "Guide Financier pour Nouveaux Arrivants au Canada | Ahmed Bello",
-    description: "Liste de contrôle première année pour résidents permanents et permis de travail : crédit canadien, NAS et CELIAPP.",
+    title: "Plan Financier de 1re Année pour Nouveaux Arrivants au Canada (Piste & Crédit)",
+    description: "Bâtissez votre crédit canadien, structurez vos réserves de subsistance et optimisez vos régimes enregistrés dès votre première année.",
     lang: "fr-CA",
     heading: "Feuille de Route Financière pour Nouveaux Arrivants",
     summary: "Guide pas à pas pour bâtir un dossier de crédit solide, ouvrir des comptes enregistrés libres d'impôt et comprendre la résidence fiscale.",
@@ -317,8 +317,8 @@ const coreRoutes = [
   },
   {
     path: "/fr/calculators",
-    title: "Simulateurs Financiers Canadiens & Outils d'Analyse | Ahmed Bello",
-    description: "Simulateurs financiers canadiens interactifs : piste d'atterrissage pour nouveaux arrivants, choc de renouvellement hypothécaire, arbitrage CELI vs REER et plafond SPCC.",
+    title: "Simulateurs Financiers Canadiens : Piste Nouveaux Arrivants, CELI vs REER & Protection",
+    description: "Calculez votre potentiel de croissance à l'abri de l'impôt, la réserve financière pour nouveaux arrivants et la protection du revenu familial.",
     lang: "fr-CA",
     heading: "Simulateurs Financiers Canadiens Interactifs",
     summary: "Modélisez vos décisions financières canadiennes selon les règles fiscales officielles de l'ARC, avec options de réception de plan et consultation sans frais.",

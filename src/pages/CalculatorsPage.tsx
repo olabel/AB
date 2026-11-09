@@ -123,13 +123,13 @@ export const CalculatorsPage: React.FC = () => {
       <SEO
         title={
           isFr
-            ? "Simulateurs Financiers Canadiens | Ahmed Bello"
-            : "Canadian Financial Calculators | Ahmed Bello"
+            ? "Simulateurs Financiers Canadiens : Piste Nouveaux Arrivants, CELI vs REER & Protection"
+            : "Canadian Financial Planning Calculators: Newcomer Runway, TFSA vs RRSP & Protection"
         }
         description={
           isFr
-            ? "Outils interactifs de modélisation financière : simulateur pour nouveaux arrivants, choc du renouvellement hypothécaire, arbitrage CELI vs REER et calcul du plafond passif des SPCC."
-            : "Interactive Canadian financial simulators: newcomer runway, mortgage renewal shock analyzer, TFSA vs RRSP tax arbitrage, and CCPC passive income SBD grind."
+            ? "Calculez votre potentiel de croissance à l'abri de l'impôt, la réserve financière pour nouveaux arrivants et la protection du revenu familial."
+            : "Calculate your tax-sheltered growth potential, newcomer financial runway, and household income protection gap in real time."
         }
         canonicalUrl={isFr ? "/fr/calculators" : "/calculators"}
       />
@@ -711,6 +711,114 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
               />
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Long-Tail SEO Educational Guide: Tax-Advantaged vs Taxable Compound Growth */}
+      <section className="section py-16 bg-[#fcfaf5] border-t border-[#d6cebd]">
+        <div className="wrap max-w-5xl space-y-8">
+          <div className="max-w-3xl space-y-3">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-[#75581f] font-bold block">
+              {isFr ? "Guide Quantitatif & Modélisation Fiscale" : "Quantitative Analysis & Tax Drag Modeling"}
+            </span>
+            <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18]">
+              {isFr
+                ? "Comparaison de la Croissance Composée à l'Abri de l'Impôt vs Compte Imposable au Canada"
+                : "Tax-Advantaged vs Taxable Compound Growth Comparison in Canada"}
+            </h2>
+            <p className="text-sm sm:text-base text-[#46423a] leading-relaxed">
+              {isFr
+                ? "Au Canada, le frottement fiscal annuel constitue le frein le plus destructeur pour la constitution d'un patrimoine à long terme. Chaque dollar d'intérêt, de dividende étranger ou de gain en capital réalisé dans un compte non enregistré subit une imposition immédiate qui réduit l'effet multiplicateur des intérêts composés."
+                : "In Canadian financial planning, annual tax drag represents the single largest headwind to long-term wealth accumulation. In a non-registered (taxable) account, interest is taxed at 100% of your top marginal rate, foreign dividends lose foreign withholding tax without federal dividend tax credits, and realized capital gains incur taxable events that permanently disrupt compounding velocity."}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-5 bg-white border border-[#d6cebd] rounded-[2px] space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#2e4a3b] font-bold block">
+                {isFr ? "CELI & CELIAPP (0 % d'impôt)" : "TFSA & FHSA (0% Tax Drag)"}
+              </span>
+              <h3 className="font-serif text-lg text-[#1c1b18] font-semibold">
+                {isFr ? "Croissance 100 % Pure" : "Pure Tax-Free Compounding"}
+              </h3>
+              <p className="text-xs text-[#46423a] leading-relaxed">
+                {isFr
+                  ? "Les rendements (intérêts, dividendes, plus-values) fructifient sans aucun frottement fiscal. Les retraits sont non imposables et n'ont aucun impact sur les prestations gouvernementales (PSV, SRG, ACE)."
+                  : "Every dollar of capital gain, eligible Canadian dividend, and fixed income interest compounds with zero friction. Withdrawals never trigger income-tested clawbacks (OAS/GIS/CCB) and regenerate contribution room the following calendar year."}
+              </p>
+            </div>
+
+            <div className="p-5 bg-white border border-[#d6cebd] rounded-[2px] space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#75581f] font-bold block">
+                {isFr ? "REER (Déduction & Arbitrage)" : "RRSP (Tax Arbitrage Model)"}
+              </span>
+              <h3 className="font-serif text-lg text-[#1c1b18] font-semibold">
+                {isFr ? "Report d'Impôt avec Effet de Levier" : "Pre-Tax Compounding Power"}
+              </h3>
+              <p className="text-xs text-[#46423a] leading-relaxed">
+                {isFr
+                  ? "La déduction fiscale immédiate génère un remboursement. En le réinvestissant systématiquement, vous comblez l'impôt payable au décaissement à la retraite, créant un arbitrage positif si votre tranche baisse."
+                  : "Upfront tax deductions lower taxable earned income immediately. Systematically reinvesting the tax refund neutralizes deferred tax liabilities at withdrawal, capturing significant positive arbitrage when retiring in lower tax brackets."}
+              </p>
+            </div>
+
+            <div className="p-5 bg-white border border-[#d6cebd] rounded-[2px] space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#8a3324] font-bold block">
+                {isFr ? "Compte Imposable (Frottement Fiscal)" : "Taxable Non-Registered Drag"}
+              </span>
+              <h3 className="font-serif text-lg text-[#1c1b18] font-semibold">
+                {isFr ? "Érosion Annuelle du Capital" : "Annual Compounding Friction"}
+              </h3>
+              <p className="text-xs text-[#46423a] leading-relaxed">
+                {isFr
+                  ? "Les impôts prélevés chaque année sur les revenus de placement réduisent le rendement effectif net de 1,5 % à 2,8 % par an. Sur 25 ans, plus de 30 % du capital final potentiel est ainsi perdu en impôt."
+                  : "Annual taxation on interest, foreign distributions, and rebalancing slices between 1.5% and 2.8% off your effective net annual return, confiscating upwards of 30% to 40% of cumulative final wealth over a 25-year investment horizon."}
+              </p>
+            </div>
+          </div>
+
+          {/* Mathematical Proof Table */}
+          <div className="overflow-x-auto border border-[#d6cebd] rounded-[2px] bg-white">
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="bg-[#14211a] text-[#f7f3eb]">
+                  <th className="p-3.5 font-semibold">{isFr ? "Horizon Temporel" : "Horizon"}</th>
+                  <th className="p-3.5 font-semibold">{isFr ? "Cotisation Cumulée (10 000 $/an)" : "Cumulative Principal ($10k/yr)"}</th>
+                  <th className="p-3.5 font-semibold text-[#d6c298]">{isFr ? "Compte Enregistré (7 % pur)" : "Tax-Advantaged (7% Nominal)"}</th>
+                  <th className="p-3.5 font-semibold text-[#d97768]">{isFr ? "Compte Imposable (4,8 % net d'impôt)" : "Taxable Account (4.8% Net After Drag)"}</th>
+                  <th className="p-3.5 font-semibold text-white">{isFr ? "Capital Préservé à l'Abri" : "Net Wealth Preserved"}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#ece6da] font-mono">
+                <tr className="hover:bg-[#fcfaf5]">
+                  <td className="p-3.5 font-sans font-medium text-[#1c1b18]">{isFr ? "10 Ans" : "10 Years"}</td>
+                  <td className="p-3.5 text-[#46423a]">$100,000</td>
+                  <td className="p-3.5 font-bold text-[#2e4a3b]">$147,836</td>
+                  <td className="p-3.5 text-[#8a3324]">$127,150</td>
+                  <td className="p-3.5 font-bold text-[#2e4a3b]">+$20,686 (+16.3%)</td>
+                </tr>
+                <tr className="hover:bg-[#fcfaf5]">
+                  <td className="p-3.5 font-sans font-medium text-[#1c1b18]">{isFr ? "20 Ans" : "20 Years"}</td>
+                  <td className="p-3.5 text-[#46423a]">$200,000</td>
+                  <td className="p-3.5 font-bold text-[#2e4a3b]">$438,652</td>
+                  <td className="p-3.5 text-[#8a3324]">$330,660</td>
+                  <td className="p-3.5 font-bold text-[#2e4a3b]">+$107,992 (+32.7%)</td>
+                </tr>
+                <tr className="hover:bg-[#fcfaf5]">
+                  <td className="p-3.5 font-sans font-medium text-[#1c1b18]">{isFr ? "30 Ans" : "30 Years"}</td>
+                  <td className="p-3.5 text-[#46423a]">$300,000</td>
+                  <td className="p-3.5 font-bold text-[#2e4a3b]">$1,010,730</td>
+                  <td className="p-3.5 text-[#8a3324]">$662,118</td>
+                  <td className="p-3.5 font-bold text-[#2e4a3b]">+$348,612 (+52.6%)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-[11px] text-[#625d52] italic">
+            {isFr
+              ? "Hypothèse purement illustrative : calcul basé sur un placement annuel de 10 000 $ au taux nominal composé de 7 %. Le compte imposable suppose un taux d'imposition marginal combiné de 43 % et une rotation modérée de portefeuille entraînant un frein fiscal de 2,2 % par an."
+              : "Hypothetical mathematical illustration: assumes $10,000 annual contribution at 7% nominal compounded return. Taxable account assumes a 43% combined marginal bracket on income and realized distributions, creating a 2.2% annual tax drag (net return 4.8%). Actual returns and tax obligations vary."}
+          </p>
         </div>
       </section>
 

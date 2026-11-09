@@ -277,12 +277,19 @@ export const HowIHelpPage: React.FC = () => {
               : "We begin with your questions and priorities. I explain the concepts and the trade-offs. Where it is appropriate, and within what I am authorized to offer, we discuss options. Then we write down next steps and agree when to look again, because circumstances change. Not every conversation needs every stage, and a conversation is not a promise of a comprehensive plan, portfolio management, tax advice or ongoing service."}
           </p>
 
-          <p className="text-sm text-[#2e4a3b]">
-            {isFr ? "Vous préférez lire d'abord ? " : "Prefer to read first? "}
-            <Link to={isFr ? "/fr/education" : "/education"} className="underline font-medium">
-              {isFr ? "Consulter notre bibliothèque éducative →" : "Browse the education library →"}
-            </Link>
-          </p>
+          <div className="pt-2 flex flex-wrap items-center gap-4 text-sm text-[#2e4a3b]">
+            <span>
+              {isFr ? "Vous préférez modéliser vos chiffres ? " : "Prefer to model your numbers? "}
+              <Link to={isFr ? "/fr/calculators" : "/calculators"} className="underline font-semibold">
+                {isFr ? "Calculer le différentiel de croissance à l'abri de l'impôt →" : "calculate your tax-sheltered growth differential →"}
+              </Link>
+            </span>
+            <span>
+              <Link to={isFr ? "/fr/education" : "/education"} className="underline font-medium text-[#46423a]">
+                {isFr ? "Consulter notre bibliothèque éducative →" : "Browse the education library →"}
+              </Link>
+            </span>
+          </div>
         </div>
       </section>
 

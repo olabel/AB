@@ -17,15 +17,15 @@ export interface SEOProps {
 }
 
 /**
- * Formats page titles to strictly stay within the 60-character search engine limit
- * while never cutting words in the middle (truncates cleanly at word boundaries).
+ * Formats page titles to preserve full targeted high-intent titles up to 95 characters,
+ * ensuring branding and Canadian financial long-tail keywords are preserved intact.
  */
-export function formatTitle(rawTitle: string, brand = "Ahmed Bello", maxLen = 60): string {
+export function formatTitle(rawTitle: string, brand = "Ahmed Bello", maxLen = 95): string {
   const brandSuffix = ` | ${brand}`;
   const clean = rawTitle.replace(/\s+/g, " ").trim();
 
-  // If already includes the brand
-  if (clean.includes(brand)) {
+  // If already includes the brand, separator, or is an explicit targeted title
+  if (clean.includes(brand) || clean.includes("|") || clean.includes(":")) {
     if (clean.length <= maxLen) return clean;
     const target = maxLen - 3;
     const slice = clean.slice(0, target);
