@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, AlertCircle, RefreshCw, Phone } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { trackCalculatorCompleted, trackLeadSubmit, trackBookingClick } from "../lib/track.ts";
 
 interface CalculatorLeadCaptureProps {
   calculatorName: string;
@@ -82,6 +83,8 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
       setReferenceNo(data.referenceNo || generatedRef);
       setSubmitted(true);
+      trackCalculatorCompleted(calculatorName);
+      trackLeadSubmit("calculator");
     } catch (err: any) {
       setErrorMsg(
         err.message ||
@@ -119,6 +122,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           href="https://calendly.com/olabel/30min"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackBookingClick("calculator_lead_capture")}
           className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shadow-xs shrink-0"
         >
           <Calendar className="w-3.5 h-3.5 text-[#d6c298]" />

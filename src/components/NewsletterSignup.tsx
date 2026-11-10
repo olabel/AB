@@ -71,6 +71,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
       }
 
       setSuccess(true);
+      trackNewsletterSubmit(source);
     } catch (err: any) {
       setErrorMsg(
         err.message || "Could not complete your subscription right now. Please reach out to Ahmed Bello directly at +1-506-899-4941 or enquiries@ahmedbello.com."

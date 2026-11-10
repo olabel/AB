@@ -3,6 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { CheckCircle2, ShieldCheck, Mail, ArrowRight, BookOpen, Layers } from "lucide-react";
+import { trackSubscriptionConfirmed } from "../lib/track.ts";
 
 export const ConfirmSubscriptionPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -32,6 +33,7 @@ export const ConfirmSubscriptionPage: React.FC = () => {
               setVerifiedEmail(data.email || "");
               setConfirmed(true);
               setLoading(false);
+              trackSubscriptionConfirmed();
               localStorage.setItem("ahmed_bello_subscriber_confirmed", data.email || "confirmed");
               localStorage.setItem("ahmed_bello_subscriber_date", new Date().toISOString());
             }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { siteConfig } from "../config/site.ts";
 import { Calendar, MessageSquare, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { trackBookingClick } from "../lib/track.ts";
 
 export const MobileBookingBar: React.FC = () => {
   const { isFr } = useLanguage();
@@ -20,6 +21,7 @@ export const MobileBookingBar: React.FC = () => {
           href={bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackBookingClick("mobile_booking_bar")}
           className="flex-1 bg-[#d6c298] hover:bg-[#e0cfab] text-[#14211a] font-semibold text-xs py-2.5 px-3 rounded-[2px] transition-colors flex items-center justify-center gap-1.5 shadow-xs"
         >
           <Calendar className="w-3.5 h-3.5 shrink-0 text-[#75581f]" aria-hidden="true" />

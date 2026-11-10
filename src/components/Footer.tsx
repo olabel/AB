@@ -4,6 +4,7 @@ import { BrandMark } from "./BrandMark.tsx";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { MapPin, Mail, Phone, Calendar, ArrowRight, ShieldCheck, ExternalLink, Calculator } from "lucide-react";
+import { trackBookingClick } from "../lib/track.ts";
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -64,6 +65,7 @@ export const Footer: React.FC = () => {
                   href={siteConfig.schedulingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackBookingClick("footer")}
                   className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#2e4a3b] hover:bg-[#3a5d4a] text-[#f7f3eb] border border-[#d6c298]/40 rounded-xs text-xs font-medium transition-colors"
                 >
                   <Calendar className="w-3.5 h-3.5 text-[#d6c298]" />

@@ -4,6 +4,7 @@ import { BrandMark } from "./BrandMark.tsx";
 import { Menu, X, Calendar, ArrowUpRight, Phone, Mail, Globe } from "lucide-react";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { trackBookingClick } from "../lib/track.ts";
 
 export const Header: React.FC = () => {
   const { language, toggleLanguage, t } = useLanguage();
@@ -331,7 +332,10 @@ export const Header: React.FC = () => {
                     href={siteConfig.schedulingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={closeMobileMenu}
+                    onClick={() => {
+                      trackBookingClick("header_mobile");
+                      closeMobileMenu();
+                    }}
                     className="btn btn-secondary w-full text-center py-3 text-sm font-medium inline-flex items-center justify-center gap-2"
                   >
                     <Calendar className="w-4 h-4 text-[#75581f]" />
