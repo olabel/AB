@@ -192,8 +192,8 @@ export const CalculatorsPage: React.FC = () => {
       <SEO
         title={
           isFr
-            ? "Simulateurs Financiers Canadiens : Piste Nouveaux Arrivants, CELI vs REER & Protection"
-            : "Canadian Financial Planning Calculators: Newcomer Runway, TFSA vs RRSP & Protection"
+            ? "Simulateurs Financiers Canadiens | Ahmed Bello"
+            : "Canadian Financial Planning Calculators | Ahmed Bello"
         }
         description={
           isFr

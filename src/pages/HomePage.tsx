@@ -18,6 +18,7 @@ import {
   Sparkles,
   TrendingDown,
   CheckCircle2,
+  AlertTriangle,
 } from "lucide-react";
 
 export const HomePage: React.FC = () => {
@@ -369,6 +370,25 @@ export const HomePage: React.FC = () => {
                   ? "Calculez l'érosion 5:1 de votre déduction PME (DPE)."
                   : "Calculate Section 125(5.1) 5-for-1 SBD tax clawback."}
               </p>
+            </Link>
+          </div>
+
+          {/* Contextual link to statutory blindspots */}
+          <div className="flex flex-col sm:flex-row items-center justify-between p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs gap-3">
+            <div className="flex items-center gap-2 text-[#46423a]">
+              <AlertTriangle className="w-4 h-4 text-[#75581f] shrink-0" />
+              <span>
+                <strong>{isFr ? "Guide de vigilance :" : "Statutory vigilance:"}</strong>{" "}
+                {isFr
+                  ? "Explorez les règles statutaires et subventions méconnues souvent découvertes trop tard."
+                  : "Explore verified Canadian money rules, grants, and tax traps most people discover too late."}
+              </span>
+            </div>
+            <Link
+              to={`${prefix}/costly-blindspots`}
+              className="text-[#2e4a3b] font-semibold hover:underline shrink-0 flex items-center gap-1"
+            >
+              <span>{isFr ? "Consulter les pièges financiers →" : "View costly blindspots →"}</span>
             </Link>
           </div>
         </div>

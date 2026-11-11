@@ -257,13 +257,13 @@ Candidate Application Details:
   return (
     <div className="py-10 lg:py-16">
       <SEO
-        title={isFr ? "Devenir professionnel agréé au Canada | Ahmed Bello" : "Join Our Independent Practice & Mentorship | Ahmed Bello"}
+        title={isFr ? "Expansion du Cabinet & Carrières | Ahmed Bello" : "Practice Expansion & Careers | Ahmed Bello"}
         description={
           isFr
             ? "Programme de mentorat pour le cours du PAAP/LLQP et formation pour professionnels indépendants en solutions financières au Canada."
             : "Mentorship and licensing support for aspiring independent financial solutions professionals in Canada. LLQP preparation and practice development."
         }
-        canonicalUrl="/careers"
+        canonicalUrl={isFr ? "/fr/careers" : "/careers"}
       />
       {/* Schema.org Structured Data */}
       <script

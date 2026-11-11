@@ -108,15 +108,38 @@ export const CostlyBlindspotsPage: React.FC = () => {
       <SEO
         title={
           isFr
-            ? "37 Pièges Financiers Canadiens que la Majorité Découvrent Trop Tard | Ahmed Bello"
-            : "37 Costly Canadian Money Blindspots Most People Discover Too Late | Ahmed Bello"
+            ? "Pièges Financiers Coûteux au Canada | Ahmed Bello"
+            : "Costly Canadian Money Blindspots | Ahmed Bello"
         }
         description={
           isFr
-            ? "Découvrez 37 règles financières canadiennes, subventions méconnues, déductions oubliées et pièges fiscaux qui coûtent des milliers de dollars aux familles chaque année."
-            : "Explore 37 verified Canadian financial blindspots, missed government grants, hidden tax deductions, and statutory traps that quietly cost families thousands of dollars."
+            ? "Règles financières méconnues au Canada : subventions oubliées, délais de prescription et pièges fiscaux découverts trop tard. Démarches concrètes."
+            : "Verified Canadian financial blindspots, missed government grants, and costly tax traps that families and professionals discover too late. Actionable steps."
         }
         canonicalUrl={isFr ? "/fr/costly-blindspots" : "/costly-blindspots"}
+      />
+
+      {/* Structured Data: ItemList of Financial Rules */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: isFr ? "Pièges Financiers Coûteux au Canada" : "Costly Canadian Money Blindspots",
+            description: isFr
+              ? "Guide exhaustif des règles financières statutaires souvent découvertes trop tard par les familles, acheteurs et retraités au Canada."
+              : "Comprehensive intelligence guide on statutory rules, benefits, and tax mechanisms Canadians discover too late.",
+            numberOfItems: BLINDSPOTS_DATA.length,
+            itemListElement: BLINDSPOTS_DATA.map((item, idx) => ({
+              "@type": "ListItem",
+              position: idx + 1,
+              name: isFr ? item.titleFr : item.titleEn,
+              description: isFr ? item.summaryFr : item.summaryEn,
+              url: `https://www.ahmedbello.com${isFr ? "/fr" : ""}/costly-blindspots#${item.id}`,
+            })),
+          }),
+        }}
       />
 
       {/* Hero Section */}
@@ -134,14 +157,14 @@ export const CostlyBlindspotsPage: React.FC = () => {
             style={{ fontFamily: "var(--font-serif)" }}
           >
             {isFr
-              ? "37 pièges financiers canadiens que la majorité découvrent trop tard."
-              : "37 costly Canadian money blindspots most people discover too late."}
+              ? "Pièges financiers canadiens que la majorité découvrent trop tard."
+              : "Costly Canadian money blindspots most people discover too late."}
           </h1>
 
           <p className="lede text-base sm:text-lg text-[#46423a] leading-relaxed max-w-3xl">
             {isFr
-              ? "Au Canada, le manque d'information sur les programmes publics, les délais de prescription et les règles fiscales coûte des milliards de dollars chaque année aux contribuables. Voici 37 réalités vérifiées, documentées avec leurs lois et démarches concrètes."
-              : "In Canadian personal finance, not knowing statutory rules isn't harmless—it is quietly expensive. From unclaimed children's bonds and 25% mortgage rebates to estate traps and clawback thresholds, here are 37 verified realities every Canadian should master."}
+              ? `Au Canada, le manque d'information sur les programmes publics, les délais de prescription et les règles fiscales coûte des milliards de dollars chaque année aux contribuables. Voici ${BLINDSPOTS_DATA.length} réalités vérifiées, documentées avec leurs lois et démarches concrètes, régulièrement mises à jour.`
+              : `In Canadian personal finance, not knowing statutory rules isn't harmless—it is quietly expensive. From unclaimed children's bonds and 25% mortgage rebates to estate traps and clawback thresholds, here are ${BLINDSPOTS_DATA.length} verified provisions every Canadian should master, updated as regulations evolve.`}
           </p>
 
           {/* Value Anchor Metric Badges */}
@@ -189,7 +212,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
               <label htmlFor="blindspot-search" className="sr-only">
-                {isFr ? "Rechercher parmi les 37 pièges" : "Search the 37 blindspots"}
+                {isFr ? "Rechercher parmi les pièges financiers" : "Search financial blindspots"}
               </label>
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#75581f]">
                 <Search className="w-4 h-4" />
@@ -458,8 +481,8 @@ export const CostlyBlindspotsPage: React.FC = () => {
 
           <h2 className="font-serif text-2xl sm:text-3xl text-white">
             {isFr
-              ? "Combien de ces 37 règles influencent actuellement votre bilan familial ?"
-              : "How many of these 37 rules currently apply to your balance sheet?"}
+              ? "Combien de ces règles statutaires influencent actuellement votre bilan familial ?"
+              : "How many of these statutory rules currently apply to your balance sheet?"}
           </h2>
 
           <p className="text-sm text-[#ece6da]/90 max-w-xl mx-auto leading-relaxed">

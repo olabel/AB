@@ -21,7 +21,7 @@ export interface BlindspotItem {
 }
 
 export const BLINDSPOT_CATEGORIES = [
-  { id: "all", labelEn: "All 37 Blindspots", labelFr: "Les 37 pièges financiers" },
+  { id: "all", labelEn: "All Blindspots", labelFr: "Tous les pièges financiers" },
   { id: "family", labelEn: "Kids & Family", labelFr: "Enfants & Famille" },
   { id: "housing", labelEn: "Home Buying & Mortgages", labelFr: "Achat immobilier & Hypothèque" },
   { id: "benefits", labelEn: "Benefits Hiding in Plain Sight", labelFr: "Prestations méconnues" },

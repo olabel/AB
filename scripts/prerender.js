@@ -67,15 +67,15 @@ const coreRoutes = [
   },
   {
     path: "/costly-blindspots",
-    title: "37 Costly Canadian Money Blindspots | Ahmed Bello",
-    description: "37 statutory financial rules and overlooked benefits that cost Canadians thousands when missed: $0 RESP Learning Bond, 25% CMHC refund, and tax traps.",
+    title: "Costly Canadian Money Blindspots | Ahmed Bello",
+    description: "Verified Canadian financial blindspots, missed government grants, and costly tax traps that families and professionals discover too late. Actionable steps.",
     lang: "en-CA",
-    heading: "37 Canadian Financial Rules You Wish You Knew Sooner",
+    heading: "Costly Canadian Money Blindspots",
     summary: "Critical statutory rules, government grants, tax loopholes, and traps across family savings, home buying, retirement, and estate planning in Canada.",
   },
   {
     path: "/careers",
-    title: "Independent Financial Practice Mentorship | Ahmed Bello",
+    title: "Practice Expansion & Careers | Ahmed Bello",
     description: "Comprehensive Canadian provincial LLQP licensing support, practical case co-planning, and independent practice mentorship with Ahmed Bello.",
     lang: "en-CA",
     heading: "Independent Financial Solutions Practice Mentorship",
@@ -91,7 +91,7 @@ const coreRoutes = [
   },
   {
     path: "/investing/islamic-equity",
-    title: "Islamic Investing in Canada: An Education Guide | Ahmed Bello",
+    title: "Islamic Equity Investing in Canada | Ahmed Bello",
     description: "Educational guide on Shari'ah-compliant global equity investing under AAOIFI standards. Benchmark index tracking (MSCI ACWI Islamic Index) and Canadian registered accounts (TFSA, RRSP, FHSA, RESP, Corporate).",
     lang: "en-CA",
     heading: "Islamic Investing in Canada: Educational Framework",
@@ -99,7 +99,7 @@ const coreRoutes = [
   },
   {
     path: "/for/healthcare",
-    title: "Financial Guidance for Healthcare Workers, Doctors & Nurses | Ahmed Bello",
+    title: "Financial Guidance for Healthcare | Ahmed Bello",
     description: "Tailored financial planning for Canadian doctors, nurses, and medical professionals managing licensing gaps, foreign credential costs, and income protection.",
     lang: "en-CA",
     heading: "Financial Planning for Healthcare Workers & Medical Professionals",
@@ -107,7 +107,7 @@ const coreRoutes = [
   },
   {
     path: "/for/business-owners",
-    title: "CCPC Tax Efficiency & $50k SBD Passive Income Strategy | Ahmed Bello",
+    title: "CCPC Tax Efficiency & SBD Strategy | Ahmed Bello",
     description: "Optimize your corporate tax exposure, manage the small business deduction passive income threshold, and extract capital tax-efficiently.",
     lang: "en-CA",
     heading: "Financial Strategy for Business Owners & CCPCs",
@@ -115,7 +115,7 @@ const coreRoutes = [
   },
   {
     path: "/for/families",
-    title: "Family Financial Decision-Making Guide | Ahmed Bello",
+    title: "Financial Guidance for Families | Ahmed Bello",
     description: "Practical financial planning for Canadian families: education savings (RESP grants), income protection, mortgage renewals, and estate transfer.",
     lang: "en-CA",
     heading: "Financial Decision-Making for Canadian Families",
@@ -123,7 +123,7 @@ const coreRoutes = [
   },
   {
     path: "/for/newcomers",
-    title: "First-Year Financial Blueprint for Newcomers to Canada (Runway & Credit Guide)",
+    title: "Newcomer Financial Blueprint Canada | Ahmed Bello",
     description: "Navigate Canadian banking, credit building, emergency reserves, and tax-sheltered accounts with our step-by-step financial framework.",
     lang: "en-CA",
     heading: "First-Year Financial Roadmap for Newcomers to Canada",
@@ -171,7 +171,7 @@ const coreRoutes = [
   },
   {
     path: "/calculators",
-    title: "Canadian Financial Planning Calculators: Newcomer Runway, TFSA vs RRSP & Protection",
+    title: "Canadian Financial Planning Calculators | Ahmed Bello",
     description: "Calculate your tax-sheltered growth potential, newcomer financial runway, and household income protection gap in real time.",
     lang: "en-CA",
     heading: "Interactive Canadian Financial Calculators",
@@ -229,18 +229,18 @@ const coreRoutes = [
   },
   {
     path: "/fr/costly-blindspots",
-    title: "37 Pièges Financiers Coûteux au Canada | Ahmed Bello",
-    description: "Règles financières méconnues au Canada : bon d'études REEE sans dépôt, remboursement SCHL de 25 %, décalage de déduction REER et droits rétroactifs.",
+    title: "Pièges Financiers Coûteux au Canada | Ahmed Bello",
+    description: "Règles financières méconnues au Canada : subventions oubliées, délais de prescription et pièges fiscaux découverts trop tard. Démarches concrètes.",
     lang: "fr-CA",
-    heading: "37 Règles Financières Canadiennes que Vous Devriez Connaître",
+    heading: "Pièges Financiers Coûteux au Canada",
     summary: "Règles statutaires critiques, subventions fédérales et pièges fiscaux souvent découverts trop tard par les contribuables canadiens.",
   },
   {
     path: "/fr/careers",
-    title: "Mentorat Professionnel Indépendant | Ahmed Bello",
+    title: "Expansion du Cabinet & Carrières | Ahmed Bello",
     description: "Accompagnement éducatif et préparation aux examens provinciaux du PQAP pour bâtir un cabinet de solutions financières au Canada.",
     lang: "fr-CA",
-    heading: "Mentorat en Solutions Financières Indépendantes",
+    heading: "Expansion du Cabinet & Carrières Professionnelles",
     summary: "Découvrez notre programme d'accompagnement pour la préparation aux examens du PQAP et le développement d'une pratique financière indépendante.",
   },
   {
@@ -261,7 +261,7 @@ const coreRoutes = [
   },
   {
     path: "/fr/for/healthcare",
-    title: "Planification Financière Professionnels de Santé & Médecins | Ahmed Bello",
+    title: "Orientation Financière Santé | Ahmed Bello",
     description: "Orientation financière pour médecins, infirmières et diplômés internationaux en santé au Canada : équivalences, fiscalité et subsistance.",
     lang: "fr-CA",
     heading: "Planification Financière pour Professionnels de la Santé",
@@ -269,7 +269,7 @@ const coreRoutes = [
   },
   {
     path: "/fr/for/business-owners",
-    title: "Efficience Fiscale des SPCC & Plafond DPE de 50 000 $ | Ahmed Bello",
+    title: "Efficience Fiscale des SPCC & DPE | Ahmed Bello",
     description: "Optimisez la fiscalité de votre société, gérez le seuil de revenus passifs de la DPE et extrayez du capital en franchise d'impôt.",
     lang: "fr-CA",
     heading: "Stratégie Financière pour Propriétaires d'Entreprise",
@@ -277,7 +277,7 @@ const coreRoutes = [
   },
   {
     path: "/fr/for/families",
-    title: "Guide Financier pour Familles Canadiennes | Ahmed Bello",
+    title: "Orientation Financière Familles | Ahmed Bello",
     description: "Planification pour familles : épargne-études REEE, subvention SCEE de 20 %, protection du revenu, renouvellement hypothécaire et succession.",
     lang: "fr-CA",
     heading: "Décisions Financières pour les Familles au Canada",
@@ -285,11 +285,19 @@ const coreRoutes = [
   },
   {
     path: "/fr/for/newcomers",
-    title: "Plan Financier de 1re Année pour Nouveaux Arrivants au Canada (Piste & Crédit)",
+    title: "Plan Financier Nouveaux Arrivants | Ahmed Bello",
     description: "Bâtissez votre crédit canadien, structurez vos réserves de subsistance et optimisez vos régimes enregistrés dès votre première année.",
     lang: "fr-CA",
     heading: "Feuille de Route Financière pour Nouveaux Arrivants",
     summary: "Guide pas à pas pour bâtir un dossier de crédit solide, ouvrir des comptes enregistrés libres d'impôt et comprendre la résidence fiscale.",
+  },
+  {
+    path: "/fr/calculators",
+    title: "Simulateurs Financiers Canadiens | Ahmed Bello",
+    description: "Calculez votre potentiel de croissance à l'abri de l'impôt, la réserve financière pour nouveaux arrivants et la protection du revenu familial.",
+    lang: "fr-CA",
+    heading: "Simulateurs Financiers Canadiens Interactifs",
+    summary: "Modélisez vos décisions financières canadiennes selon les règles fiscales officielles de l'ARC, avec options de réception de plan et consultation sans frais.",
   },
   {
     path: "/fr/disclosures",
@@ -330,14 +338,6 @@ const coreRoutes = [
     lang: "fr-CA",
     heading: "Préférences d'Abonnement Confirmées",
     summary: "Votre adresse courriel a été vérifiée. Vous recevrez des analyses ponctuelles lors de modifications législatives importantes.",
-  },
-  {
-    path: "/fr/calculators",
-    title: "Simulateurs Financiers Canadiens : Piste Nouveaux Arrivants, CELI vs REER & Protection",
-    description: "Calculez votre potentiel de croissance à l'abri de l'impôt, la réserve financière pour nouveaux arrivants et la protection du revenu familial.",
-    lang: "fr-CA",
-    heading: "Simulateurs Financiers Canadiens Interactifs",
-    summary: "Modélisez vos décisions financières canadiennes selon les règles fiscales officielles de l'ARC, avec options de réception de plan et consultation sans frais.",
   },
 ];
 

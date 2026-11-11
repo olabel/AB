@@ -585,8 +585,8 @@ function getRouteMetadata(pathname: string): RouteMeta {
         canonical: "/for/healthcare",
       },
       "business-owners": {
-        titleEn: "CCPC Tax Efficiency & $50k SBD Passive Income Strategy | Ahmed Bello",
-        titleFr: "Efficience Fiscale des SPCC & Plafond DPE de 50 000 $ | Ahmed Bello",
+        titleEn: "CCPC Tax Efficiency & SBD Strategy | Ahmed Bello",
+        titleFr: "Efficience Fiscale des SPCC & DPE | Ahmed Bello",
         descEn: "Optimize your corporate tax exposure, manage the small business deduction passive income threshold, and extract capital tax-efficiently.",
         descFr: "Optimisez la fiscalité de votre société, gérez le seuil de revenus passifs de la DPE et extrayez du capital en franchise d'impôt.",
         canonical: "/for/business-owners",
@@ -599,8 +599,8 @@ function getRouteMetadata(pathname: string): RouteMeta {
         canonical: "/for/families",
       },
       newcomers: {
-        titleEn: "First-Year Financial Blueprint for Newcomers to Canada (Runway & Credit Guide)",
-        titleFr: "Plan Financier de 1re Année pour Nouveaux Arrivants au Canada (Piste & Crédit)",
+        titleEn: "Newcomer Financial Blueprint Canada | Ahmed Bello",
+        titleFr: "Plan Financier Nouveaux Arrivants | Ahmed Bello",
         descEn: "Navigate Canadian banking, credit building, emergency reserves, and tax-sheltered accounts with our step-by-step financial framework.",
         descFr: "Bâtissez votre crédit canadien, structurez vos réserves de subsistance et optimisez vos régimes enregistrés dès votre première année.",
         canonical: "/for/newcomers",
@@ -759,11 +759,11 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/fr/costly-blindspots":
       return {
         title: cleanPath.startsWith("/fr")
-          ? "37 Pièges Financiers Coûteux au Canada | Ahmed Bello"
-          : "37 Costly Canadian Money Blindspots | Ahmed Bello",
+          ? "Pièges Financiers Coûteux au Canada | Ahmed Bello"
+          : "Costly Canadian Money Blindspots | Ahmed Bello",
         description: cleanPath.startsWith("/fr")
-          ? "Règles financières méconnues au Canada : bon d'études REEE sans dépôt, remboursement SCHL de 25 %, décalage de déduction REER et droits rétroactifs."
-          : "37 statutory financial rules and overlooked benefits that cost Canadians thousands when missed: $0 RESP Learning Bond, 25% CMHC refund, and tax traps.",
+          ? "Règles financières méconnues au Canada : subventions oubliées, délais de prescription et pièges fiscaux découverts trop tard. Démarches concrètes."
+          : "Verified Canadian financial blindspots, missed government grants, and costly tax traps that families and professionals discover too late. Actionable steps.",
         ogType: "article",
         url: `${siteConfig.siteUrl}${cleanPath}`,
         jsonLd: [
@@ -774,8 +774,8 @@ function getRouteMetadata(pathname: string): RouteMeta {
             "@context": "https://schema.org",
             "@type": "Article",
             headline: cleanPath.startsWith("/fr")
-              ? "37 Règles Financières et Pièges Coûteux au Canada"
-              : "37 Costly Canadian Money Rules & Overlooked Financial Blindspots",
+              ? "Pièges Financiers Coûteux au Canada"
+              : "Costly Canadian Money Rules & Financial Blindspots",
             description: cleanPath.startsWith("/fr")
               ? "Guide exhaustif des règles financières statutaires souvent découvertes trop tard par les familles, acheteurs et retraités au Canada."
               : "Comprehensive intelligence guide on statutory rules, benefits, and tax mechanisms Canadians discover too late.",
@@ -800,8 +800,8 @@ function getRouteMetadata(pathname: string): RouteMeta {
     case "/fr/calculators":
       return {
         title: cleanPath.startsWith("/fr")
-          ? "Simulateurs Financiers Canadiens : Piste Nouveaux Arrivants, CELI vs REER & Protection"
-          : "Canadian Financial Planning Calculators: Newcomer Runway, TFSA vs RRSP & Protection",
+          ? "Simulateurs Financiers Canadiens | Ahmed Bello"
+          : "Canadian Financial Planning Calculators | Ahmed Bello",
         description: cleanPath.startsWith("/fr")
           ? "Calculez votre potentiel de croissance à l'abri de l'impôt, la réserve financière pour nouveaux arrivants et la protection du revenu familial."
           : "Calculate your tax-sheltered growth potential, newcomer financial runway, and household income protection gap in real time.",

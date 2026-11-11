@@ -141,6 +141,35 @@ export const EducationLibraryPage: React.FC = () => {
               </p>
             </div>
           </div>
+          {/* Statutory Vigilance & Money Blindspots Feature Banner */}
+          <div className="p-5 sm:p-6 bg-[#14211a] text-[#f7f3eb] border border-[#d6c298]/40 rounded-[2px] shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+            <div className="space-y-1.5 max-w-2xl">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 bg-[#d6c298]/20 text-[#d6c298] font-mono text-[11px] font-semibold uppercase tracking-wider rounded-[1px]">
+                  {language === "fr" ? "Vigilance Réglementaire" : "Statutory Intelligence"}
+                </span>
+                <span className="text-xs text-[#d6c298]/80 font-medium">
+                  {language === "fr" ? "Règles, subventions & pièges fiscaux" : "Verified Rules, Grants & Tax Traps"}
+                </span>
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl text-white font-medium">
+                {language === "fr"
+                  ? "Pièges financiers canadiens découverts trop tard"
+                  : "Costly Canadian Money Blindspots Discovered Too Late"}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#ece6da]/90 leading-relaxed">
+                {language === "fr"
+                  ? "Du bon d'études sans dépôt au remboursement SCHL de 25 % et au décalage de déduction REER : les règles méconnues qui coûtent des milliers de dollars."
+                  : "From $0 RESP Learning Bonds and 25% CMHC refunds to RRSP deduction deferrals and estate traps: verified statutory rules every Canadian should master."}
+              </p>
+            </div>
+            <Link
+              to={`${prefix}/costly-blindspots`}
+              className="px-5 py-2.5 bg-[#d6c298] text-[#14211a] hover:bg-white text-xs font-semibold rounded-[2px] transition-colors shrink-0 flex items-center gap-1.5 shadow-xs"
+            >
+              <span>{language === "fr" ? "Consulter le guide →" : "Explore the Compendium →"}</span>
+            </Link>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {/* Islamic Investing Feature */}

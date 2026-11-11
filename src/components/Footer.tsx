@@ -93,7 +93,7 @@ export const Footer: React.FC = () => {
                   className="text-[#d6c298] font-medium hover:text-white transition-colors flex items-center gap-1.5"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-[#d6c298]" />
-                  <span>{isFr ? "37 Pièges Financiers" : "37 Costly Blindspots"}</span>
+                  <span>{isFr ? "Pièges Financiers Coûteux" : "Costly Money Blindspots"}</span>
                   <span className="px-1.5 py-0.5 bg-[#d6c298]/20 text-[#d6c298] text-[10px] rounded font-mono font-semibold">ESSENTIAL</span>
                 </Link>
               </li>

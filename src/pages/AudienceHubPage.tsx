@@ -26,6 +26,8 @@ interface AudienceConfig {
   aliases?: string[];
   titleEn: string;
   titleFr: string;
+  metaTitleEn?: string;
+  metaTitleFr?: string;
   eyebrowEn: string;
   eyebrowFr: string;
   descriptionEn: string;
@@ -45,6 +47,8 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     aliases: ["health-workers", "doctors-nurses"],
     titleEn: "Financial Guidance for Healthcare Workers & Internationally Trained Doctors and Nurses",
     titleFr: "Orientation financière pour professionnels de la santé, médecins et infirmiers formés à l'étranger",
+    metaTitleEn: "Financial Guidance for Healthcare | Ahmed Bello",
+    metaTitleFr: "Orientation Financière Santé | Ahmed Bello",
     eyebrowEn: "Audience Hub: Healthcare & Medical Professionals",
     eyebrowFr: "Carrefour thématique : Professionnels de la santé",
     descriptionEn:
@@ -81,6 +85,8 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     aliases: ["entrepreneurs", "incorporated"],
     titleEn: "CCPC Tax Efficiency & $50k SBD Passive Income Strategy | Ahmed Bello",
     titleFr: "Efficience Fiscale des SPCC & Plafond DPE de 50 000 $ | Ahmed Bello",
+    metaTitleEn: "CCPC Tax Efficiency & SBD Strategy | Ahmed Bello",
+    metaTitleFr: "Efficience Fiscale des SPCC & DPE | Ahmed Bello",
     eyebrowEn: "Audience Hub: Business Owners & CCPCs",
     eyebrowFr: "Carrefour thématique : Propriétaires d'entreprises",
     descriptionEn:
@@ -116,6 +122,8 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     aliases: ["parents", "homeowners"],
     titleEn: "Connected Financial Guidance for Canadian Families & Homeowners",
     titleFr: "Orientation financière globale pour les familles et propriétaires canadiens",
+    metaTitleEn: "Financial Guidance for Families | Ahmed Bello",
+    metaTitleFr: "Orientation Financière Familles | Ahmed Bello",
     eyebrowEn: "Audience Hub: Canadian Families",
     eyebrowFr: "Carrefour thématique : Familles canadiennes",
     descriptionEn:
@@ -152,6 +160,8 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     aliases: ["immigrants", "new-to-canada"],
     titleEn: "First-Year Financial Blueprint for Newcomers to Canada (Runway & Credit Guide)",
     titleFr: "Plan Financier de 1re Année pour Nouveaux Arrivants au Canada (Piste & Crédit)",
+    metaTitleEn: "Newcomer Financial Blueprint Canada | Ahmed Bello",
+    metaTitleFr: "Plan Financier Nouveaux Arrivants | Ahmed Bello",
     eyebrowEn: "Audience Hub: Newcomers to Canada",
     eyebrowFr: "Carrefour thématique : Nouveaux arrivants",
     descriptionEn:
@@ -216,7 +226,7 @@ export const AudienceHubPage: React.FC = () => {
   return (
     <div className="py-12 md:py-16">
       <SEO
-        title={isFr ? currentAudience.titleFr : currentAudience.titleEn}
+        title={isFr ? (currentAudience.metaTitleFr || currentAudience.titleFr) : (currentAudience.metaTitleEn || currentAudience.titleEn)}
         description={isFr ? currentAudience.descriptionFr : currentAudience.descriptionEn}
         canonicalUrl={isFr ? `/fr/for/${currentAudience.slug}` : `/for/${currentAudience.slug}`}
       />
@@ -225,13 +235,13 @@ export const AudienceHubPage: React.FC = () => {
         <nav aria-label="Breadcrumb" className="mb-6 text-xs text-[#625d52]">
           <ol className="flex items-center gap-2 list-none p-0">
             <li>
-              <Link to="/" className="hover:text-[#2e4a3b] transition-colors">
+              <Link to={isFr ? "/fr" : "/"} className="hover:text-[#2e4a3b] transition-colors">
                 {isFr ? "Accueil" : "Home"}
               </Link>
             </li>
             <li aria-hidden="true">&rsaquo;</li>
             <li>
-              <Link to="/education" className="hover:text-[#2e4a3b] transition-colors">
+              <Link to={isFr ? "/fr/education" : "/education"} className="hover:text-[#2e4a3b] transition-colors">
                 {isFr ? "Éducation financière" : "Education Library"}
               </Link>
             </li>

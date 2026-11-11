@@ -25,7 +25,6 @@ export const Header: React.FC = () => {
     { label: t("nav_how_i_help"), href: `${prefix}/how-i-help` },
     { label: t("nav_education"), href: `${prefix}/education` },
     { label: t("nav_calculators"), href: `${prefix}/calculators` },
-    { label: language === "fr" ? "37 Pièges Financiers" : "37 Blindspots", href: `${prefix}/costly-blindspots` },
     { label: t("nav_what_changed"), href: `${prefix}/what-changed` },
     { label: language === "fr" ? "À propos" : "About", href: `${prefix}/about` },
   ];
