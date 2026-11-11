@@ -37,35 +37,33 @@ export function isOriginAuthorized(originOrReferer?: string, reqHost?: string): 
 
 /**
  * Secure Client IP Resolution:
- * Prioritizes trusted edge headers (Cloudflare, Vercel).
- * When falling back to X-Forwarded-For, uses the rightmost (last proxy appended)
- * address rather than the client-controllable leftmost value.
+ * Prioritizes trusted edge headers in strict order:
+ * 1. x-vercel-forwarded-for
+ * 2. x-real-ip
+ * 3. x-forwarded-for
+ * Removes cf-connecting-ip.
  */
 export function resolveClientIp(req: any): string {
-  // 1. Cloudflare verified header
-  const cfIp = req.headers?.["cf-connecting-ip"];
-  if (typeof cfIp === "string" && cfIp.trim()) return cfIp.trim();
-
-  // 2. Vercel verified real IP
-  const realIp = req.headers?.["x-real-ip"];
-  if (typeof realIp === "string" && realIp.trim()) return realIp.trim();
-
-  // 3. Vercel forwarded IP
+  // 1. Vercel forwarded IP
   const vercelForwarded = req.headers?.["x-vercel-forwarded-for"];
   if (typeof vercelForwarded === "string" && vercelForwarded.trim()) {
     const parts = vercelForwarded.split(",").map((p) => p.trim()).filter(Boolean);
     if (parts.length > 0) return parts[parts.length - 1];
   }
 
-  // 4. Express req.ip (when trust proxy is configured)
-  if (req.ip && typeof req.ip === "string") return req.ip;
+  // 2. Vercel verified real IP
+  const realIp = req.headers?.["x-real-ip"];
+  if (typeof realIp === "string" && realIp.trim()) return realIp.trim();
 
-  // 5. X-Forwarded-For: Take the LAST IP (added by the closest trusted proxy)
+  // 3. X-Forwarded-For: Take the LAST IP (added by the closest trusted proxy)
   const forwarded = req.headers?.["x-forwarded-for"];
   if (typeof forwarded === "string" && forwarded.trim()) {
     const parts = forwarded.split(",").map((p) => p.trim()).filter(Boolean);
     if (parts.length > 0) return parts[parts.length - 1];
   }
+
+  // 4. Express req.ip (when trust proxy is configured)
+  if (req.ip && typeof req.ip === "string") return req.ip;
 
   return req.socket?.remoteAddress || "127.0.0.1";
 }
@@ -73,11 +71,18 @@ export function resolveClientIp(req: any): string {
 /**
  * Cloudflare Turnstile Verification:
  * Validates human challenge tokens with Cloudflare's siteverify endpoint.
+ * Fails closed on error or invalid response.
  */
 export async function verifyTurnstileToken(token: string, clientIp: string): Promise<boolean> {
   const secretKey = (process.env.TURNSTILE_SECRET_KEY || "").trim();
-  // If no secret key is configured in dev, do not block local developer workflows
-  if (!secretKey) return true;
+  // Fail closed if no secret key configured in production
+  if (!secretKey) {
+    if (process.env.NODE_ENV === "production") {
+      console.error("[TURNSTILE ERROR]: TURNSTILE_SECRET_KEY missing in production environment.");
+      return false;
+    }
+    return true; // Local developer fallback
+  }
   if (!token) return false;
 
   try {
@@ -93,7 +98,7 @@ export async function verifyTurnstileToken(token: string, clientIp: string): Pro
     const outcome = (await res.json()) as any;
     return Boolean(outcome?.success);
   } catch (err) {
-    console.warn("[TURNSTILE VERIFY EXCEPTION]:", err);
+    console.error("[TURNSTILE VERIFY EXCEPTION]:", err);
     return false;
   }
 }
@@ -154,7 +159,7 @@ export async function handleContactSubmission(req: any, res: any) {
   }
   rawBody = rawBody || {};
 
-  // Cloudflare Turnstile token validation if configured
+  // Cloudflare Turnstile token validation
   const turnstileToken = rawBody.turnstileToken || rawBody["cf-turnstile-response"];
   if (process.env.TURNSTILE_SECRET_KEY) {
     const isHuman = await verifyTurnstileToken(turnstileToken, clientIp);
@@ -171,7 +176,17 @@ export async function handleContactSubmission(req: any, res: any) {
   }
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "olabel@gmail.com, abello24trdc@wfgmail.ca";
+  const CONTACT_TO_EMAIL = (process.env.CONTACT_TO_EMAIL || "").trim();
+
+  // Fail closed if CONTACT_TO_EMAIL is unconfigured
+  if (!CONTACT_TO_EMAIL) {
+    console.error("[CONFIG ERROR]: CONTACT_TO_EMAIL environment variable is missing or empty.");
+    return res.status(500).json({
+      error: "service_unavailable",
+      message: "Contact submission service is temporarily unavailable. Please schedule a meeting directly or call +1-506-899-4941.",
+    });
+  }
+
   const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || "Ahmed Bello <enquiries@ahmedbello.com>";
 
   const result = await processContactSubmission(
@@ -190,7 +205,7 @@ export async function handleContactSubmission(req: any, res: any) {
  */
 export async function handleConfirmSubscription(req: any, res: any) {
   if (res.setHeader) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Origin", "https://www.ahmedbello.com");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   }
@@ -223,12 +238,21 @@ export async function handleConfirmSubscription(req: any, res: any) {
   const clientIp = resolveClientIp(req);
   const userAgent = (req.headers?.["user-agent"] as string) || "Unknown User-Agent";
 
-  await recordConfirmedSubscriber({
+  const recorded = await recordConfirmedSubscriber({
     email: verification.email,
     ip: clientIp,
     userAgent,
     source: "double_opt_in_signed_token",
   });
+
+  if (!recorded) {
+    console.error(`[SUBSCRIBER ERROR]: Failed to persist confirmed subscriber ${verification.email}`);
+    return res.status(500).json({
+      success: false,
+      error: "persistence_failed",
+      message: "Unable to record confirmed subscription. Please try again or contact us directly.",
+    });
+  }
 
   return res.json({
     success: true,

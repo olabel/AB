@@ -8,7 +8,8 @@
     "build": "npx tsx scripts/generateSitemap.js && vite build && npx tsx scripts/prerender.js",
     "start": "tsx server.ts",
     "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test:amt": "tsx scripts/test-amt.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

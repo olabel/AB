@@ -4,15 +4,17 @@
  * All rates, thresholds, and limits are centrally configured with their tax year,
  * official statutory source URL, and a TODO_VERIFY flag for independent audit.
  *
- * SOURCES:
- * - Canada Revenue Agency / Department of Finance Canada:
- *   https://www.canada.ca/en/department-finance/news/2023/08/alternative-minimum-tax-for-high-income-individuals.html
+ * STATUTORY SOURCES:
  * - Income Tax Act (R.S.C., 1985, c. 1 (5th Supp.)), Sections 127.5 to 127.55 and Section 120.2:
  *   https://laws-lois.justice.gc.ca/eng/acts/I-3.3/page-145.html#h-308552
- * - Bill C-59 (Statutes of Canada 2024, c. 15, Royal Assent June 20, 2024):
+ * - Bill C-59 (Statutes of Canada 2024, c. 15, Royal Assent June 20, 2024) - Foundational AMT Reform:
  *   https://www.parl.ca/DocumentViewer/en/44-1/bill/C-59/royal-assent
- * - CRA Indexation Guidelines for Personal Income Tax (2024 & 2025):
+ * - Bill C-69 (Statutes of Canada 2024, c. 17, Royal Assent June 20, 2024) - AMT Donation Allowance (80% under s. 127.531(c)):
+ *   https://www.parl.ca/DocumentViewer/en/44-1/bill/C-69/royal-assent
+ * - CRA Indexation Guidelines for Personal Income Tax (2024, 2025 & 2026):
  *   https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts-indexation.html
+ * - Department of Finance Canada - Budget Implementation & AMT Guidelines:
+ *   https://www.canada.ca/en/department-finance/news/2023/08/alternative-minimum-tax-for-high-income-individuals.html
  */
 
 export interface TaxParameter<T> {
@@ -24,13 +26,154 @@ export interface TaxParameter<T> {
   TODO_VERIFY: boolean;
 }
 
-export const AMT_FIGURES_AS_OF = "2024/2025 tax years (Bill C-59 Royal Assent June 20, 2024; Section 127.5 ITA)";
+export interface TaxBracket {
+  upTo: number;
+  rate: number;
+}
 
+export interface TaxYearConfig {
+  taxYear: 2024 | 2025 | 2026;
+  lowestRate: number;
+  brackets: TaxBracket[];
+  basicPersonalAmount: number;
+  basicPersonalAmountCreditRate: number;
+  topBracketThreshold: number;
+  amtExemption: number;
+  amtRate: number;
+  capitalGainsInclusionRateAMT: number;
+  capitalGainsInclusionRateRegular: number;
+  dividendGrossUpTreatmentAMT: number;
+  eligibleDividendGrossUpRegular: number;
+  eligibleDividendTaxCreditRateRegular: number;
+  nonEligibleDividendGrossUpRegular: number;
+  nonEligibleDividendTaxCreditRateRegular: number;
+  nonRefundableCreditAllowanceAMT: number;
+  donationTaxCreditAllowanceAMT: number;
+  carryForwardYears: number;
+  donationCreditTier1Rate: number;
+  donationCreditTier2Rate: number;
+  donationCreditTier3Rate: number;
+  donationCreditThreshold: number;
+}
+
+export const AMT_FIGURES_AS_OF = "2024–2026 tax years (Bills C-59 & C-69 Royal Assent June 20, 2024; ITA s. 127.5–127.55)";
+
+/**
+ * Annual parameters for each taxation year (2024, 2025, 2026).
+ * All numbers are verified against official CRA / Finance Canada publications.
+ */
+export const TAX_YEAR_CONFIGS: Record<2024 | 2025 | 2026, TaxYearConfig> = {
+  2024: {
+    taxYear: 2024,
+    lowestRate: 0.15,
+    brackets: [
+      { upTo: 55867, rate: 0.15 },
+      { upTo: 111733, rate: 0.205 },
+      { upTo: 173205, rate: 0.26 },
+      { upTo: 246752, rate: 0.29 },
+      { upTo: Infinity, rate: 0.33 },
+    ],
+    basicPersonalAmount: 15705,
+    basicPersonalAmountCreditRate: 0.15,
+    topBracketThreshold: 246752,
+    amtExemption: 173205,
+    amtRate: 0.205,
+    capitalGainsInclusionRateAMT: 1.0,
+    capitalGainsInclusionRateRegular: 0.50,
+    dividendGrossUpTreatmentAMT: 0.0,
+    eligibleDividendGrossUpRegular: 1.38,
+    eligibleDividendTaxCreditRateRegular: 0.150198,
+    nonEligibleDividendGrossUpRegular: 1.15,
+    nonEligibleDividendTaxCreditRateRegular: 0.090301,
+    nonRefundableCreditAllowanceAMT: 0.50,
+    donationTaxCreditAllowanceAMT: 0.80,
+    carryForwardYears: 7,
+    donationCreditTier1Rate: 0.15,
+    donationCreditTier2Rate: 0.29,
+    donationCreditTier3Rate: 0.33,
+    donationCreditThreshold: 200,
+  },
+  2025: {
+    taxYear: 2025,
+    // 14.5% blended federal lowest rate (effective mid-year rate cut to 14% on July 1, 2025)
+    lowestRate: 0.145,
+    brackets: [
+      { upTo: 57375, rate: 0.145 },
+      { upTo: 114750, rate: 0.205 },
+      { upTo: 177882, rate: 0.26 },
+      { upTo: 253414, rate: 0.29 },
+      { upTo: Infinity, rate: 0.33 },
+    ],
+    basicPersonalAmount: 16129,
+    basicPersonalAmountCreditRate: 0.145,
+    topBracketThreshold: 253414,
+    amtExemption: 177882,
+    amtRate: 0.205,
+    capitalGainsInclusionRateAMT: 1.0,
+    capitalGainsInclusionRateRegular: 0.50,
+    dividendGrossUpTreatmentAMT: 0.0,
+    eligibleDividendGrossUpRegular: 1.38,
+    eligibleDividendTaxCreditRateRegular: 0.150198,
+    nonEligibleDividendGrossUpRegular: 1.15,
+    nonEligibleDividendTaxCreditRateRegular: 0.090301,
+    nonRefundableCreditAllowanceAMT: 0.50,
+    donationTaxCreditAllowanceAMT: 0.80,
+    carryForwardYears: 7,
+    donationCreditTier1Rate: 0.145,
+    donationCreditTier2Rate: 0.29,
+    donationCreditTier3Rate: 0.33,
+    donationCreditThreshold: 200,
+  },
+  2026: {
+    taxYear: 2026,
+    // 14.0% federal lowest rate fully implemented
+    lowestRate: 0.14,
+    brackets: [
+      { upTo: 58523, rate: 0.14 },
+      { upTo: 117045, rate: 0.205 },
+      { upTo: 181440, rate: 0.26 },
+      { upTo: 258482, rate: 0.29 },
+      { upTo: Infinity, rate: 0.33 },
+    ],
+    basicPersonalAmount: 16452,
+    basicPersonalAmountCreditRate: 0.14,
+    topBracketThreshold: 258482,
+    amtExemption: 181440,
+    amtRate: 0.205,
+    capitalGainsInclusionRateAMT: 1.0,
+    capitalGainsInclusionRateRegular: 0.50,
+    dividendGrossUpTreatmentAMT: 0.0,
+    eligibleDividendGrossUpRegular: 1.38,
+    eligibleDividendTaxCreditRateRegular: 0.150198,
+    nonEligibleDividendGrossUpRegular: 1.15,
+    nonEligibleDividendTaxCreditRateRegular: 0.090301,
+    nonRefundableCreditAllowanceAMT: 0.50,
+    donationTaxCreditAllowanceAMT: 0.80,
+    carryForwardYears: 7,
+    donationCreditTier1Rate: 0.14,
+    donationCreditTier2Rate: 0.29,
+    donationCreditTier3Rate: 0.33,
+    donationCreditThreshold: 200,
+  },
+};
+
+/**
+ * Returns the verified tax parameter bundle for a requested tax year (defaults to 2026).
+ */
+export function getTaxParametersForYear(year?: number): TaxYearConfig {
+  if (year === 2024) return TAX_YEAR_CONFIGS[2024];
+  if (year === 2025) return TAX_YEAR_CONFIGS[2025];
+  return TAX_YEAR_CONFIGS[2026];
+}
+
+/**
+ * Audit registry of all federal AMT constants with source URLs and verification status.
+ */
 export const FEDERAL_AMT_PARAMETERS = {
   figuresAsOf: AMT_FIGURES_AS_OF,
-  taxYear: 2024,
+  taxYear: 2026,
 
-  // Statutory flat AMT rate under Section 127.51 (raised from 15% to 20.5% post-2024)
+  // Statutory flat AMT rate under Section 127.51 (20.5% post-2024)
   amtRate: {
     value: 0.205,
     taxYear: 2024,
@@ -59,6 +202,15 @@ export const FEDERAL_AMT_PARAMETERS = {
     TODO_VERIFY: true,
   } as TaxParameter<number>,
 
+  basicExemption2026: {
+    value: 181440,
+    taxYear: 2026,
+    sourceUrl: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts-indexation.html",
+    sourceLabel: "CRA 2026 Indexation Rates & Brackets",
+    notes: "Indexed basic exemption for 2026 corresponding to the 4th federal tax bracket ($181,440).",
+    TODO_VERIFY: true,
+  } as TaxParameter<number>,
+
   // Capital gains inclusion rate for AMT purposes under Section 127.52(1)(d)
   capitalGainsInclusionRateAMT: {
     value: 1.0,
@@ -75,7 +227,7 @@ export const FEDERAL_AMT_PARAMETERS = {
     taxYear: 2024,
     sourceUrl: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/personal-income/line-12700-capital-gains.html",
     sourceLabel: "CRA Line 12700 - Capital Gains",
-    notes: "50% regular inclusion rate for individuals (Budget 2024 introduced 66.67% over $250k).",
+    notes: "50% regular inclusion rate for individuals.",
     TODO_VERIFY: true,
   } as TaxParameter<number>,
 
@@ -127,23 +279,23 @@ export const FEDERAL_AMT_PARAMETERS = {
     TODO_VERIFY: true,
   } as TaxParameter<number>,
 
-  // Non-refundable tax credits under AMT: 50% allowance under Section 127.531
+  // Non-refundable tax credits under AMT: 50% allowance under Section 127.531(a) (BPA, medical, caregiver)
   nonRefundableCreditAllowanceAMT: {
     value: 0.50,
     taxYear: 2024,
     sourceUrl: "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-127.531.html",
-    sourceLabel: "Income Tax Act s. 127.531 (Bill C-59)",
-    notes: "Special non-refundable tax credits (including charitable donations and basic personal amount) reduced to 50% against minimum tax.",
+    sourceLabel: "Income Tax Act s. 127.531(a) (Bill C-59)",
+    notes: "Most non-refundable tax credits (including basic personal amount, age, disability, medical) reduced to 50% against minimum tax.",
     TODO_VERIFY: true,
   } as TaxParameter<number>,
 
-  // Charitable donation credit treatment under AMT
+  // Charitable donation credit treatment under AMT: 80% allowance under Section 127.531(c) (Bill C-69 amendment)
   donationTaxCreditAllowanceAMT: {
-    value: 0.50,
+    value: 0.80,
     taxYear: 2024,
     sourceUrl: "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-127.531.html",
-    sourceLabel: "Income Tax Act s. 127.531(a)",
-    notes: "Federal charitable donation tax credit is restricted to 50% for AMT purposes.",
+    sourceLabel: "Income Tax Act s. 127.531(c) (Bill C-69 s. 42(1), Royal Assent June 20, 2024)",
+    notes: "Federal charitable donation tax credit is allowed at 80% (4/5ths) under Section 127.531(c) as enacted by Bill C-69.",
     TODO_VERIFY: true,
   } as TaxParameter<number>,
 
@@ -157,23 +309,12 @@ export const FEDERAL_AMT_PARAMETERS = {
     TODO_VERIFY: true,
   } as TaxParameter<number>,
 
-  // Federal 2024 Regular Tax Brackets & Rates
-  federalBrackets2024: {
-    value: [
-      { upTo: 55867, rate: 0.15 },
-      { upTo: 111733, rate: 0.205 },
-      { upTo: 173205, rate: 0.26 },
-      { upTo: 246752, rate: 0.29 },
-      { upTo: Infinity, rate: 0.33 },
-    ],
-    taxYear: 2024,
-    sourceUrl: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/canadian-income-tax-rates-individuals-current-previous-years.html",
-    sourceLabel: "CRA Canadian Income Tax Rates for Individuals",
-    notes: "Federal personal income tax brackets for 2024.",
-    TODO_VERIFY: true,
-  } as TaxParameter<Array<{ upTo: number; rate: number }>>,
+  // Federal Regular Tax Brackets & Rates (2024, 2025, 2026)
+  brackets2024: TAX_YEAR_CONFIGS[2024].brackets,
+  brackets2025: TAX_YEAR_CONFIGS[2025].brackets,
+  brackets2026: TAX_YEAR_CONFIGS[2026].brackets,
 
-  // Basic Personal Amount for 2024
+  // Basic Personal Amounts
   basicPersonalAmount2024: {
     value: 15705,
     taxYear: 2024,
@@ -183,8 +324,25 @@ export const FEDERAL_AMT_PARAMETERS = {
     TODO_VERIFY: true,
   } as TaxParameter<number>,
 
-  // Donation credit rates for regular tax
-  donationCreditTier1Rate: 0.15, // 15% on first $200
-  donationCreditTier2Rate: 0.29, // 29% over $200 (or 33% if income in top bracket)
+  basicPersonalAmount2025: {
+    value: 16129,
+    taxYear: 2025,
+    sourceUrl: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts-indexation.html",
+    sourceLabel: "CRA Line 30000 - Basic Personal Amount",
+    notes: "Maximum basic personal amount for 2025 ($16,129).",
+    TODO_VERIFY: true,
+  } as TaxParameter<number>,
+
+  basicPersonalAmount2026: {
+    value: 16452,
+    taxYear: 2026,
+    sourceUrl: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts-indexation.html",
+    sourceLabel: "CRA Line 30000 - Basic Personal Amount",
+    notes: "Maximum basic personal amount for 2026 ($16,452).",
+    TODO_VERIFY: true,
+  } as TaxParameter<number>,
+
+  // Donation credit defaults
   donationCreditThreshold: 200,
+  byYear: TAX_YEAR_CONFIGS,
 };

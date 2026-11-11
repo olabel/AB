@@ -8,7 +8,7 @@ import crypto from "crypto";
 import { saveLeadToDatabase, recordEmailDeliveryStatus, recordSubscriberToDatabase } from "./dbService.ts";
 import { saveSubscriberViaAdmin, saveLeadViaAdmin } from "../server/firebaseAdmin.ts";
 
-export const DEFAULT_NOTIFICATION_RECIPIENTS = "olabel@gmail.com, abello24trdc@wfgmail.ca";
+export const DEFAULT_NOTIFICATION_RECIPIENTS = (process.env.CONTACT_TO_EMAIL || "").trim();
 
 export const VALID_PROVINCES = [
   "Alberta",
@@ -348,7 +348,7 @@ export async function recordConfirmedSubscriber(params: {
   });
 
   // 2. Dual persistence to Firebase Firestore
-  await saveSubscriberToFirestoreServer({
+  const firestoreSuccess = await saveSubscriberToFirestoreServer({
     email: normalized,
     confirmedAt,
     consentWording: consentText,
@@ -371,6 +371,12 @@ export async function recordConfirmedSubscriber(params: {
     fs.writeFileSync(TMP_SUBSCRIBERS_FILE, JSON.stringify(subscribers, null, 2), "utf-8");
   } catch {
     // Non-blocking
+  }
+
+  // Must return false when Firestore write fails
+  if (!firestoreSuccess) {
+    console.error(`[FIRESTORE WRITE FAILED] Could not record confirmed subscriber ${normalized}`);
+    return false;
   }
 
   return true;
@@ -601,7 +607,7 @@ export async function processContactSubmission(
         referenceNo: dbRecord.referenceNo,
         status: "offline_saved",
         errorMessage: "RESEND_API_KEY unconfigured; lead safely preserved in SQLite database",
-        recipients: "olabel@gmail.com, abello24trdc@wfgmail.ca",
+        recipients: contactToEmail || "configured_recipient",
       });
       console.warn(`[EMAIL ALERT] Ref: #${dbRecord.referenceNo} | Email unconfigured. Lead preserved in SQLite database.`);
       return {
@@ -666,22 +672,28 @@ Submitted: ${new Date().toISOString()}
 Origin: https://www.ahmedbello.com
   `.trim();
 
-  const rawRecipientsList = contactToEmail
-    .split(/[,;\s]+/)
-    .map((e) => e.trim())
-    .filter((e) => e.includes("@"));
+  const rawRecipients = Array.from(
+    new Set(
+      contactToEmail
+        .split(/[,;\s]+/)
+        .map((e) => e.trim())
+        .filter((e) => e.includes("@"))
+    )
+  );
 
-  // Ensure both designated advisor inboxes are always targeted
-  if (!rawRecipientsList.includes("olabel@gmail.com")) {
-    rawRecipientsList.push("olabel@gmail.com");
+  if (rawRecipients.length === 0) {
+    console.error("[CONTACT ERROR]: No valid recipient email found in CONTACT_TO_EMAIL.");
+    return {
+      status: 500,
+      body: {
+        error: "service_unavailable",
+        message: "Contact delivery service is temporarily unavailable. Please schedule a meeting directly or call +1-506-899-4941.",
+      },
+    };
   }
-  if (!rawRecipientsList.includes("abello24trdc@wfgmail.ca")) {
-    rawRecipientsList.push("abello24trdc@wfgmail.ca");
-  }
-  const rawRecipients = Array.from(new Set(rawRecipientsList));
+
   const allRecipientsString = rawRecipients.join(", ");
-
-  const primaryRecipient = rawRecipients[0] || "olabel@gmail.com";
+  const primaryRecipient = rawRecipients[0];
 
   try {
     let resendResponse = await fetch("https://api.resend.com/emails", {
@@ -716,7 +728,7 @@ Origin: https://www.ahmedbello.com
       });
     }
 
-    // Direct Notification Fallback: If custom domain is unverified, fallback to Resend's verified onboarding sender to olabel@gmail.com
+    // Direct Notification Fallback: If custom domain is unverified, fallback to Resend's verified onboarding sender to primary recipient
     if (!resendResponse.ok) {
       try {
         const fallbackResend = await fetch("https://api.resend.com/emails", {
@@ -727,7 +739,7 @@ Origin: https://www.ahmedbello.com
           },
           body: JSON.stringify({
             from: "Ahmed Bello Notifications <onboarding@resend.dev>",
-            to: ["olabel@gmail.com"],
+            to: [primaryRecipient],
             reply_to: email,
             subject: `${emailSubject} [Notification]`,
             text: advisorEmailBody,
@@ -735,7 +747,7 @@ Origin: https://www.ahmedbello.com
         });
         if (fallbackResend.ok) {
           resendResponse = fallbackResend;
-          console.log(`[RESEND DELIVERED] Dispatched notification to olabel@gmail.com via onboarding@resend.dev`);
+          console.log(`[RESEND DELIVERED] Dispatched notification to ${primaryRecipient} via onboarding@resend.dev`);
         }
       } catch (fbErr) {
         // preserve original response

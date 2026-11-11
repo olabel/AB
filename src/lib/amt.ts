@@ -1,16 +1,21 @@
 /**
- * Federal Alternative Minimum Tax (AMT) Calculation Engine (Post-2024 Bill C-59 Framework)
+ * Federal Alternative Minimum Tax (AMT) Calculation Engine (Post-2024 Bill C-59 & C-69 Framework)
  *
  * Implements the statutory parallel tax calculation defined in Sections 127.5 to 127.55
  * and Section 120.2 of the Canadian Income Tax Act.
  *
  * SCOPE:
  * - Computes Federal Part I Regular Tax and Federal Alternative Minimum Tax.
- * - PROVINCIAL TAX IS EXPLICITLY OUT OF SCOPE (each province assesses a percentage of federal AMT, e.g. ON ~33.67%, BC ~33.7%).
+ * - Provincial AMT is not included. Most provinces add a share of federal AMT.
+ * - All rate, bracket, BPA, and exemption constants are sourced dynamically from src/config/taxParameters.ts.
  * - Output values are mathematical estimations for financial education purposes only.
  */
 
-import { FEDERAL_AMT_PARAMETERS } from "../config/taxParameters.ts";
+import {
+  getTaxParametersForYear,
+  TaxYearConfig,
+  AMT_FIGURES_AS_OF,
+} from "../config/taxParameters.ts";
 
 export interface AmtCalculationInput {
   employmentIncome: number;
@@ -18,14 +23,14 @@ export interface AmtCalculationInput {
   realizedCapitalGains?: number;
   eligibleDividends?: number; // Actual cash amount received
   nonEligibleDividends?: number; // Actual cash amount received
-  deductions?: number; // RRSP contributions, allowable union dues, etc.
+  deductions?: number; // Carrying charges, childcare, union dues, etc.
   charitableDonations?: number; // Total eligible philanthropic gifts
   priorYearAmtCarryForward?: number; // Unused AMT from prior 7 taxation years
-  taxYear?: 2024 | 2025;
+  taxYear?: 2024 | 2025 | 2026;
 }
 
 export interface AmtCalculationResult {
-  // Primary user-facing metrics required by prompt
+  // Primary user-facing metrics
   regularFederalTaxEstimate: number;
   amtEstimate: number;
   amtApplies: boolean;
@@ -50,39 +55,21 @@ export interface AmtCalculationResult {
   carryForwardApplied: number;
   remainingCarryForward: number;
 
-  taxYear: number;
+  taxYear: 2024 | 2025 | 2026;
   figuresAsOf: string;
   provincialScopeNote: string;
 }
 
 /**
- * Calculates federal tax before non-refundable credits under the 2024/2025 federal brackets.
+ * Calculates federal tax before non-refundable credits using statutory tax year brackets.
  */
-function calculateFederalTaxOnIncome(taxableIncome: number, year: number): number {
-  if (taxableIncome <= 0) return 0;
-
-  // 2024 Brackets: 15% <= 55,867 | 20.5% <= 111,733 | 26% <= 173,205 | 29% <= 246,752 | 33% remainder
-  const brackets =
-    year === 2025
-      ? [
-          { upTo: 57375, rate: 0.15 },
-          { upTo: 114750, rate: 0.205 },
-          { upTo: 177882, rate: 0.26 },
-          { upTo: 253414, rate: 0.29 },
-          { upTo: Infinity, rate: 0.33 },
-        ]
-      : [
-          { upTo: 55867, rate: 0.15 },
-          { upTo: 111733, rate: 0.205 },
-          { upTo: 173205, rate: 0.26 },
-          { upTo: 246752, rate: 0.29 },
-          { upTo: Infinity, rate: 0.33 },
-        ];
+function calculateFederalTaxOnIncome(taxableIncome: number, cfg: TaxYearConfig): number {
+  if (!Number.isFinite(taxableIncome) || taxableIncome <= 0) return 0;
 
   let tax = 0;
   let previousLimit = 0;
 
-  for (const b of brackets) {
+  for (const b of cfg.brackets) {
     if (taxableIncome > previousLimit) {
       const taxableInBracket = Math.min(taxableIncome - previousLimit, b.upTo - previousLimit);
       tax += taxableInBracket * b.rate;
@@ -97,23 +84,29 @@ function calculateFederalTaxOnIncome(taxableIncome: number, year: number): numbe
 
 /**
  * Calculates federal charitable donation tax credit.
- * - 15% on first $200
- * - 29% (or 33% to the extent taxable income exceeds top federal bracket) on remaining donations
+ * - Tier 1: Lowest rate for the year (15% in 2024, 14.5% in 2025, 14.0% in 2026) on first $200
+ * - Tier 2: 29% (or 33% to the extent taxable income exceeds top federal bracket) on remaining donations
  */
-function calculateDonationCredit(donations: number, taxableIncome: number, topBracketThreshold: number): number {
-  if (donations <= 0) return 0;
+function calculateDonationCredit(
+  donations: number,
+  taxableIncome: number,
+  cfg: TaxYearConfig
+): number {
+  if (!Number.isFinite(donations) || donations <= 0) return 0;
 
-  const tier1Donations = Math.min(donations, 200);
-  const tier2Donations = Math.max(0, donations - 200);
+  const tier1Donations = Math.min(donations, cfg.donationCreditThreshold);
+  const tier2Donations = Math.max(0, donations - cfg.donationCreditThreshold);
 
-  let credit = tier1Donations * 0.15;
+  let credit = tier1Donations * cfg.donationCreditTier1Rate;
 
   if (tier2Donations > 0) {
-    const incomeInTopBracket = Math.max(0, taxableIncome - topBracketThreshold);
+    const incomeInTopBracket = Math.max(0, taxableIncome - cfg.topBracketThreshold);
     const donationsEligibleFor33 = Math.min(tier2Donations, incomeInTopBracket);
     const donationsEligibleFor29 = tier2Donations - donationsEligibleFor33;
 
-    credit += donationsEligibleFor33 * 0.33 + donationsEligibleFor29 * 0.29;
+    credit +=
+      donationsEligibleFor33 * cfg.donationCreditTier3Rate +
+      donationsEligibleFor29 * cfg.donationCreditTier2Rate;
   }
 
   return credit;
@@ -121,24 +114,35 @@ function calculateDonationCredit(donations: number, taxableIncome: number, topBr
 
 /**
  * Pure, unit-testable Alternative Minimum Tax calculation function.
+ * Sanitizes negative and blank inputs to 0.
  */
 export function calculateAlternativeMinimumTax(input: AmtCalculationInput): AmtCalculationResult {
-  const year = input.taxYear || 2024;
-  const employmentIncome = Math.max(0, input.employmentIncome || 0);
-  const otherIncome = Math.max(0, input.otherIncome || 0);
-  const realizedCapitalGains = Math.max(0, input.realizedCapitalGains || 0);
-  const eligibleDividends = Math.max(0, input.eligibleDividends || 0);
-  const nonEligibleDividends = Math.max(0, input.nonEligibleDividends || 0);
-  const deductions = Math.max(0, input.deductions || 0);
-  const charitableDonations = Math.max(0, input.charitableDonations || 0);
-  const priorYearAmtCarryForward = Math.max(0, input.priorYearAmtCarryForward || 0);
+  const year: 2024 | 2025 | 2026 =
+    input.taxYear === 2024 || input.taxYear === 2025 || input.taxYear === 2026
+      ? input.taxYear
+      : 2026;
+
+  const cfg = getTaxParametersForYear(year);
+
+  // Sanitize all inputs to nonnegative numbers
+  const employmentIncome = Math.max(0, Number(input.employmentIncome) || 0);
+  const otherIncome = Math.max(0, Number(input.otherIncome) || 0);
+  const realizedCapitalGains = Math.max(0, Number(input.realizedCapitalGains) || 0);
+  const eligibleDividends = Math.max(0, Number(input.eligibleDividends) || 0);
+  const nonEligibleDividends = Math.max(0, Number(input.nonEligibleDividends) || 0);
+  const deductions = Math.max(0, Number(input.deductions) || 0);
+  const charitableDonations = Math.max(0, Number(input.charitableDonations) || 0);
+  const priorYearAmtCarryForward = Math.max(0, Number(input.priorYearAmtCarryForward) || 0);
 
   // --------------------------------------------------------------------------
   // 1. REGULAR FEDERAL PART I TAX COMPUTATION
   // --------------------------------------------------------------------------
-  const regularCapitalGainsInclusion = realizedCapitalGains * FEDERAL_AMT_PARAMETERS.capitalGainsInclusionRateRegular.value; // 50%
-  const regularEligibleDividendsTaxable = eligibleDividends * FEDERAL_AMT_PARAMETERS.eligibleDividendGrossUpRegular.value; // 138%
-  const regularNonEligibleDividendsTaxable = nonEligibleDividends * FEDERAL_AMT_PARAMETERS.nonEligibleDividendGrossUpRegular.value; // 115%
+  const regularCapitalGainsInclusion =
+    realizedCapitalGains * cfg.capitalGainsInclusionRateRegular;
+  const regularEligibleDividendsTaxable =
+    eligibleDividends * cfg.eligibleDividendGrossUpRegular;
+  const regularNonEligibleDividendsTaxable =
+    nonEligibleDividends * cfg.nonEligibleDividendGrossUpRegular;
 
   const regularTotalIncome =
     employmentIncome +
@@ -148,53 +152,60 @@ export function calculateAlternativeMinimumTax(input: AmtCalculationInput): AmtC
     regularNonEligibleDividendsTaxable;
 
   const regularTaxableIncome = Math.max(0, regularTotalIncome - deductions);
-
-  const regularTaxBeforeCredits = calculateFederalTaxOnIncome(regularTaxableIncome, year);
+  const regularTaxBeforeCredits = calculateFederalTaxOnIncome(regularTaxableIncome, cfg);
 
   // Non-refundable tax credits (Federal)
-  const bpaAmount = year === 2025 ? 16129 : FEDERAL_AMT_PARAMETERS.basicPersonalAmount2024.value; // 15,705 for 2024
-  const bpaCredit = bpaAmount * 0.15;
+  const bpaCredit = cfg.basicPersonalAmount * cfg.basicPersonalAmountCreditRate;
 
-  const eligibleDivCredit = regularEligibleDividendsTaxable * FEDERAL_AMT_PARAMETERS.eligibleDividendTaxCreditRateRegular.value;
-  const nonEligibleDivCredit = regularNonEligibleDividendsTaxable * FEDERAL_AMT_PARAMETERS.nonEligibleDividendTaxCreditRateRegular.value;
+  const eligibleDivCredit =
+    regularEligibleDividendsTaxable * cfg.eligibleDividendTaxCreditRateRegular;
+  const nonEligibleDivCredit =
+    regularNonEligibleDividendsTaxable * cfg.nonEligibleDividendTaxCreditRateRegular;
 
-  const topBracketThreshold = year === 2025 ? 253414 : 246752;
-  const regularDonationCredit = calculateDonationCredit(charitableDonations, regularTaxableIncome, topBracketThreshold);
+  const regularDonationCredit = calculateDonationCredit(
+    charitableDonations,
+    regularTaxableIncome,
+    cfg
+  );
 
-  const regularNonRefundableCredits = bpaCredit + eligibleDivCredit + nonEligibleDivCredit + regularDonationCredit;
+  const regularNonRefundableCredits =
+    bpaCredit + eligibleDivCredit + nonEligibleDivCredit + regularDonationCredit;
   const regularFederalTax = Math.max(0, regularTaxBeforeCredits - regularNonRefundableCredits);
 
   // --------------------------------------------------------------------------
-  // 2. ALTERNATIVE MINIMUM TAX (AMT) COMPUTATION (Bill C-59)
+  // 2. ALTERNATIVE MINIMUM TAX (AMT) COMPUTATION (Bills C-59 & C-69)
   // --------------------------------------------------------------------------
-  // Capital gains included at 100% under AMT
-  const amtCapitalGainsInclusion = realizedCapitalGains * FEDERAL_AMT_PARAMETERS.capitalGainsInclusionRateAMT.value;
+  // Capital gains included at 100% under AMT (ITA s. 127.52(1)(d))
+  const amtCapitalGainsInclusion =
+    realizedCapitalGains * cfg.capitalGainsInclusionRateAMT;
 
-  // Actual cash dividends included with 0% gross-up
+  // Actual cash dividends included with 0% gross-up (ITA s. 127.52(1)(g))
   const amtDividendsInclusion = eligibleDividends + nonEligibleDividends;
 
   // Adjusted taxable income before exemption
   const amtAdjustedTaxableIncome = Math.max(
     0,
-    employmentIncome + otherIncome + amtCapitalGainsInclusion + amtDividendsInclusion - deductions
+    employmentIncome +
+      otherIncome +
+      amtCapitalGainsInclusion +
+      amtDividendsInclusion -
+      deductions
   );
 
-  // Basic AMT Exemption: $173,205 (2024) or $177,882 (2025)
-  const amtExemptionAmount =
-    year === 2025
-      ? FEDERAL_AMT_PARAMETERS.basicExemption2025.value
-      : FEDERAL_AMT_PARAMETERS.basicExemption2024.value;
-
+  // Basic AMT Exemption: 4th federal bracket threshold
+  const amtExemptionAmount = cfg.amtExemption;
   const amtExemptionApplied = Math.min(amtAdjustedTaxableIncome, amtExemptionAmount);
   const amtTaxableBase = Math.max(0, amtAdjustedTaxableIncome - amtExemptionAmount);
 
-  // Flat statutory rate: 20.5%
-  const amtGrossTax = amtTaxableBase * FEDERAL_AMT_PARAMETERS.amtRate.value;
+  // Flat statutory rate: 20.5% (ITA s. 127.51)
+  const amtGrossTax = amtTaxableBase * cfg.amtRate;
 
-  // Non-refundable tax credits under AMT: 50% allowance under Section 127.531
-  // Dividend tax credits are completely disallowed under AMT
-  const amtBpaCreditAllowed = bpaCredit * FEDERAL_AMT_PARAMETERS.nonRefundableCreditAllowanceAMT.value;
-  const amtDonationCreditAllowed = regularDonationCredit * FEDERAL_AMT_PARAMETERS.donationTaxCreditAllowanceAMT.value;
+  // Non-refundable tax credits under AMT:
+  // - 50% allowance for BPA and other standard personal credits (ITA s. 127.531(a))
+  // - 80% allowance for charitable donation tax credit (ITA s. 127.531(c), as amended by Bill C-69 s. 42(1))
+  // - Dividend tax credits are disallowed under AMT (ITA s. 127.531)
+  const amtBpaCreditAllowed = bpaCredit * cfg.nonRefundableCreditAllowanceAMT;
+  const amtDonationCreditAllowed = regularDonationCredit * cfg.donationTaxCreditAllowanceAMT;
   const amtCreditsAllowed = amtBpaCreditAllowed + amtDonationCreditAllowed;
 
   const netAmt = Math.max(0, amtGrossTax - amtCreditsAllowed);
@@ -215,7 +226,6 @@ export function calculateAlternativeMinimumTax(input: AmtCalculationInput): AmtC
     estimatedAmtPayable = netAmt - regularFederalTax;
     estimatedCarryForwardCredit = estimatedAmtPayable;
     totalFederalTaxPayable = netAmt;
-    // Carry-forward cannot be utilized in a year where AMT exceeds regular tax
     carryForwardApplied = 0;
     remainingCarryForward = priorYearAmtCarryForward;
   } else {
@@ -225,7 +235,7 @@ export function calculateAlternativeMinimumTax(input: AmtCalculationInput): AmtC
     estimatedCarryForwardCredit = 0;
 
     if (priorYearAmtCarryForward > 0) {
-      // Prior AMT can offset regular tax down to the AMT floor (s. 120.2)
+      // Prior AMT can offset regular tax down to the AMT floor (ITA s. 120.2)
       const maxCarryForwardUsable = Math.max(0, regularFederalTax - netAmt);
       carryForwardApplied = Math.min(priorYearAmtCarryForward, maxCarryForwardUsable);
       totalFederalTaxPayable = regularFederalTax - carryForwardApplied;
@@ -260,9 +270,9 @@ export function calculateAlternativeMinimumTax(input: AmtCalculationInput): AmtC
     remainingCarryForward: Math.round(remainingCarryForward),
 
     taxYear: year,
-    figuresAsOf: FEDERAL_AMT_PARAMETERS.figuresAsOf,
+    figuresAsOf: AMT_FIGURES_AS_OF,
     provincialScopeNote:
-      "Provincial Alternative Minimum Tax is explicitly out of scope. Most provinces levy an additional minimum tax equal to approximately 33.67% (Ontario) to 33.7% (BC) of federal AMT. Consult your provincial tax return schedule (Form T691).",
+      "Provincial AMT is not included. Most provinces add a share of federal AMT.",
   };
 }
 

@@ -443,7 +443,10 @@ const siteWideFinancialService = {
   "@id": `${siteConfig.siteUrl}/#organization`,
   name: "Ahmed Bello Financial Solutions",
   url: siteConfig.siteUrl,
-  logo: `${siteConfig.siteUrl}/logo.png`,
+  logo: `${siteConfig.siteUrl}/brand/icon-512.png`,
+  image: `${siteConfig.siteUrl}${siteConfig.headshotUrl}`,
+  telephone: siteConfig.publicPhone,
+  email: siteConfig.publicEmail,
   description:
     "Tax-efficient wealth accumulation, family capital preservation, and financial strategy for Canadian families, CCPC business owners, and newcomers.",
   address: {
@@ -472,6 +475,9 @@ const siteWidePerson = {
   "@id": `${siteConfig.siteUrl}/#person`,
   name: "Ahmed Bello",
   jobTitle: "Licensed Financial Solutions Professional",
+  telephone: siteConfig.publicPhone,
+  email: siteConfig.publicEmail,
+  image: `${siteConfig.siteUrl}${siteConfig.headshotUrl}`,
   worksFor: {
     "@id": `${siteConfig.siteUrl}/#organization`,
   },

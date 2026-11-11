@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, AlertCircle, RefreshCw, Phone } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
-import { trackCalculatorCompleted, trackLeadSubmit, trackBookingClick } from "../lib/track.ts";
+import { trackLeadSubmit, trackBookingClick } from "../lib/track.ts";
+import { TurnstileWidget } from "./TurnstileWidget.tsx";
 
 interface CalculatorLeadCaptureProps {
   calculatorName: string;
@@ -31,6 +32,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [formLoadedAt] = useState<number>(Date.now());
   const [submitting, setSubmitting] = useState(false);
@@ -82,6 +84,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
             : `Request for: ${calculatorName}`,
           consentPrivacy: true,
           consentEducational: consent,
+          turnstileToken,
           formLoadedAt,
           honeypot,
           referenceNo: generatedRef,
@@ -97,7 +100,6 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
       setReferenceNo(data.referenceNo || generatedRef);
       setSubmitted(true);
-      trackCalculatorCompleted(analyticsCalculatorName || calculatorName);
       trackLeadSubmit(analyticsTopic || topic || "calculator");
     } catch (err: any) {
       setErrorMsg(
@@ -156,12 +158,12 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
                 {isFr ? (
                   <>
                     Une copie de votre calcul pour <strong>{calculatorName}</strong> a été enregistrée pour{" "}
-                    <strong>{email}</strong>. Ahmed Bello examinera vos calculs et prendra contact avec vous si vous souhaitez approfondir votre stratégie.
+                    <strong>{email}</strong> (Réf : {referenceNo || "En cours"}). Ahmed Bello examinera vos calculs et prendra contact avec vous si vous souhaitez approfondir votre stratégie.
                   </>
                 ) : (
                   <>
                     A detailed breakdown of your <strong>{calculatorName}</strong> calculation has been saved for{" "}
-                    <strong>{email}</strong>. Ahmed Bello will review your calculation details and follow up if you would like to explore next steps.
+                    <strong>{email}</strong> (Ref: {referenceNo || "Pending"}). Ahmed Bello will review your calculation details and follow up if you would like to explore next steps.
                   </>
                 )}
               </p>
@@ -279,6 +281,9 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
             />
           </div>
 
+          {/* Turnstile Human Verification Challenge */}
+          <TurnstileWidget onVerify={(token) => setTurnstileToken(token)} />
+
           {/* CASL Compliance Checkbox placed prominently before submit */}
           <div
             className={`p-3 rounded-[2px] border transition-colors ${
@@ -302,7 +307,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
               >
                 {isFr ? (
                   <>
-                    <strong className="text-[#1c1b18]">Consentement LCAP :</strong> J'accepte de recevoir une copie de ce plan personnalisé et des résumés éducatifs ponctuels d'Ahmed Bello selon la législation canadienne contre les pourriels (LCAP). Désabonnement instantané en 1 clic. Consultez l'
+                    <strong className="text-[#1c1b18]">Consentement LCAP :</strong> J'accepte de recevoir une copie de ce plan personnalisé et des résumés éducatifs ponctuels d'Ahmed Bello Solutions Financières selon la législation canadienne contre les pourriels (LCAP). Désabonnement instantané en 1 clic. Consultez l'
                     <Link to="/fr/privacy" className="underline hover:text-[#2e4a3b] font-medium">
                       avis de confidentialité
                     </Link>
@@ -310,7 +315,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
                   </>
                 ) : (
                   <>
-                    <strong className="text-[#1c1b18]">CASL Consent:</strong> I consent to receive a copy of this customized calculation plan and occasional educational briefings from Ahmed Bello under Canada’s Anti-Spam Legislation (CASL). Unsubscribe anytime with 1 click. Read the{" "}
+                    <strong className="text-[#1c1b18]">CASL Consent:</strong> I consent to receive a copy of this customized calculation plan and occasional educational briefings from Ahmed Bello Financial Solutions under Canada’s Anti-Spam Legislation (CASL). Unsubscribe anytime with 1 click. Read the{" "}
                     <Link to="/privacy" className="underline hover:text-[#2e4a3b] font-medium">
                       privacy notice
                     </Link>
