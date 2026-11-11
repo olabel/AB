@@ -1,4 +1,4 @@
-import { Article, Category, DecisionMapData, HowIHelpTopic, AboutData } from "./types.ts";
+import type { Article, Category, DecisionMapData, HowIHelpTopic, AboutData } from "./types.ts";
 
 export const categories: Category[] = [
   {

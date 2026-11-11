@@ -66,6 +66,14 @@ const coreRoutes = [
     summary: "Curated monthly brief covering policy rate announcements, OSFI mortgage straight-switch guidelines, CRA contribution rooms (TFSA/RRSP/FHSA), and tax law changes.",
   },
   {
+    path: "/costly-blindspots",
+    title: "37 Costly Canadian Money Blindspots | Ahmed Bello",
+    description: "37 statutory financial rules and overlooked benefits that cost Canadians thousands when missed: $0 RESP Learning Bond, 25% CMHC refund, and tax traps.",
+    lang: "en-CA",
+    heading: "37 Canadian Financial Rules You Wish You Knew Sooner",
+    summary: "Critical statutory rules, government grants, tax loopholes, and traps across family savings, home buying, retirement, and estate planning in Canada.",
+  },
+  {
     path: "/careers",
     title: "Independent Financial Practice Mentorship | Ahmed Bello",
     description: "Comprehensive Canadian provincial LLQP licensing support, practical case co-planning, and independent practice mentorship with Ahmed Bello.",
@@ -218,6 +226,14 @@ const coreRoutes = [
     lang: "fr-CA",
     heading: "Ce qui a changé dans les règles financières canadiennes",
     summary: "Synthèse mensuelle des annonces de politique monétaire, des lignes directrices du BSIF pour le transfert hypothécaire sans test de résistance et des modifications fiscales de l'ARC.",
+  },
+  {
+    path: "/fr/costly-blindspots",
+    title: "37 Pièges Financiers Coûteux au Canada | Ahmed Bello",
+    description: "Règles financières méconnues au Canada : bon d'études REEE sans dépôt, remboursement SCHL de 25 %, décalage de déduction REER et droits rétroactifs.",
+    lang: "fr-CA",
+    heading: "37 Règles Financières Canadiennes que Vous Devriez Connaître",
+    summary: "Règles statutaires critiques, subventions fédérales et pièges fiscaux souvent découverts trop tard par les contribuables canadiens.",
   },
   {
     path: "/fr/careers",

@@ -18,6 +18,8 @@
     { "source": "/financial-news", "destination": "/what-changed", "permanent": true },
     { "source": "/fr/news", "destination": "/fr/what-changed", "permanent": true },
     { "source": "/fr/financial-news", "destination": "/fr/what-changed", "permanent": true },
+    { "source": "/blindspots", "destination": "/costly-blindspots", "permanent": true },
+    { "source": "/fr/blindspots", "destination": "/fr/costly-blindspots", "permanent": true },
     { "source": "/financial-calculators", "destination": "/calculators", "permanent": true },
     { "source": "/fr/financial-calculators", "destination": "/fr/calculators", "permanent": true },
     { "source": "/fr/simulateurs", "destination": "/fr/calculators", "permanent": true },

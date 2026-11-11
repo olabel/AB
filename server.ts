@@ -36,6 +36,16 @@ function getSemanticFallbackHtml(pathname: string): string {
       </main>
     `;
   }
+  if (p === "/costly-blindspots" || p === "/fr/costly-blindspots" || p === "/blindspots") {
+    return `
+      <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
+        <h1>37 Costly Canadian Money Blindspots | Ahmed Bello</h1>
+        <p>A strategic compendium of 37 critical Canadian financial rules, overlooked statutory benefits, and tax mechanisms that cost Canadians thousands of dollars when discovered too late. Covers $0 Canada Learning Bond, CMHC Eco Plus 25% premium refund, FHSA 15-year clock, RRSP deduction deferral, and pension delay mathematics.</p>
+        <h2>Contact & Direct Advisory Practice</h2>
+        <p>Ahmed Bello, Licensed Financial Solutions Professional | Headquartered in Dieppe/Moncton, New Brunswick | Licensed across Canada.</p>
+      </main>
+    `;
+  }
   return "";
 }
 import { getLatestFinancialNews } from "./src/services/newsService.ts";
@@ -341,6 +351,10 @@ const REDIRECT_MAP: Record<string, string> = {
   "/financial-news": "/what-changed",
   "/fr/news": "/fr/what-changed",
   "/fr/financial-news": "/fr/what-changed",
+
+  // Blindspots aliases -> canonical /costly-blindspots
+  "/blindspots": "/costly-blindspots",
+  "/fr/blindspots": "/fr/costly-blindspots",
 };
 
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -736,6 +750,47 @@ function getRouteMetadata(pathname: string): RouteMeta {
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
               { "@type": "ListItem", position: 2, name: cleanPath.startsWith("/fr") ? "Règles 2026" : "What Changed", item: `${siteConfig.siteUrl}${cleanPath}` },
+            ],
+          },
+        ],
+      };
+
+    case "/costly-blindspots":
+    case "/fr/costly-blindspots":
+      return {
+        title: cleanPath.startsWith("/fr")
+          ? "37 Pièges Financiers Coûteux au Canada | Ahmed Bello"
+          : "37 Costly Canadian Money Blindspots | Ahmed Bello",
+        description: cleanPath.startsWith("/fr")
+          ? "Règles financières méconnues au Canada : bon d'études REEE sans dépôt, remboursement SCHL de 25 %, décalage de déduction REER et droits rétroactifs."
+          : "37 statutory financial rules and overlooked benefits that cost Canadians thousands when missed: $0 RESP Learning Bond, 25% CMHC refund, and tax traps.",
+        ogType: "article",
+        url: `${siteConfig.siteUrl}${cleanPath}`,
+        jsonLd: [
+          siteWideWebSite,
+          siteWideFinancialService,
+          siteWidePerson,
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: cleanPath.startsWith("/fr")
+              ? "37 Règles Financières et Pièges Coûteux au Canada"
+              : "37 Costly Canadian Money Rules & Overlooked Financial Blindspots",
+            description: cleanPath.startsWith("/fr")
+              ? "Guide exhaustif des règles financières statutaires souvent découvertes trop tard par les familles, acheteurs et retraités au Canada."
+              : "Comprehensive intelligence guide on statutory rules, benefits, and tax mechanisms Canadians discover too late.",
+            author: siteWidePerson,
+            publisher: siteWideFinancialService,
+            datePublished: "2026-03-01T08:00:00-05:00",
+            dateModified: "2026-11-10T09:00:00-05:00",
+            inLanguage: cleanPath.startsWith("/fr") ? "fr-CA" : "en-CA",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
+              { "@type": "ListItem", position: 2, name: cleanPath.startsWith("/fr") ? "Pièges Financiers" : "Costly Blindspots", item: `${siteConfig.siteUrl}${cleanPath}` },
             ],
           },
         ],
