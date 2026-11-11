@@ -8,12 +8,24 @@ interface CalculatorLeadCaptureProps {
   calculatorName: string;
   summaryText: string;
   className?: string;
+  topic?: string;
+  customHeading?: string;
+  customSubheading?: string;
+  customButtonLabel?: string;
+  analyticsCalculatorName?: string;
+  analyticsTopic?: string;
 }
 
 export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
   calculatorName,
   summaryText,
   className = "",
+  topic,
+  customHeading,
+  customSubheading,
+  customButtonLabel,
+  analyticsCalculatorName,
+  analyticsTopic,
 }) => {
   const { isFr } = useLanguage();
   const [firstName, setFirstName] = useState("");
@@ -63,15 +75,17 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
         body: JSON.stringify({
           firstName: firstName.trim() || "Valued Client",
           email: cleanEmail,
-          topic: "calculator",
+          topic: topic || "calculator",
           province: "National (Canada & US)",
-          message: `Calculated Plan: ${calculatorName}\n\nSummary Breakdown:\n${summaryText}`,
+          message: summaryText
+            ? `Calculated Plan: ${calculatorName}\n\nSummary Breakdown:\n${summaryText}`
+            : `Request for: ${calculatorName}`,
           consentPrivacy: true,
           consentEducational: consent,
           formLoadedAt,
           honeypot,
           referenceNo: generatedRef,
-          source: `calculator_${calculatorName.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`,
+          source: `calculator_${(analyticsCalculatorName || calculatorName).toLowerCase().replace(/[^a-z0-9]+/g, "_")}`,
         }),
       });
 
@@ -83,8 +97,8 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
       setReferenceNo(data.referenceNo || generatedRef);
       setSubmitted(true);
-      trackCalculatorCompleted(calculatorName);
-      trackLeadSubmit("calculator");
+      trackCalculatorCompleted(analyticsCalculatorName || calculatorName);
+      trackLeadSubmit(analyticsTopic || topic || "calculator");
     } catch (err: any) {
       setErrorMsg(
         err.message ||
@@ -111,10 +125,10 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#ece6da] pb-4">
         <div>
           <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block mb-0.5">
-            {isFr ? "Conserver vos résultats" : "Save Your Calculations"}
+            {customSubheading || (isFr ? "Conserver vos résultats" : "Save Your Calculations")}
           </span>
           <h4 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-medium leading-snug">
-            {isFr ? "Recevez ce plan personnalisé par courriel" : "Email me this customized plan"}
+            {customHeading || (isFr ? "Recevez ce plan personnalisé par courriel" : "Email me this customized plan")}
           </h4>
         </div>
 
@@ -314,11 +328,13 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
               className="btn btn-primary text-xs py-2.5 px-5 whitespace-nowrap flex items-center justify-center gap-2 shadow-xs cursor-pointer font-medium"
             >
               {submitting ? (
-                <span>{isFr ? "Enregistrement et envoi..." : "Recording & Sending Plan..."}</span>
+                <span>{isFr ? "Enregistrement et envoi..." : "Recording & Sending..."}</span>
               ) : (
                 <>
                   <Mail className="w-3.5 h-3.5 text-[#d6c298]" />
-                  <span>{isFr ? "M'envoyer ce plan personnalisé" : "Email me this customized plan"}</span>
+                  <span>
+                    {customButtonLabel || (isFr ? "M'envoyer ce plan personnalisé" : "Email me this customized plan")}
+                  </span>
                   <ArrowRight className="w-3.5 h-3.5 opacity-70" />
                 </>
               )}

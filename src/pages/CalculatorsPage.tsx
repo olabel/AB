@@ -308,6 +308,39 @@ export const CalculatorsPage: React.FC = () => {
               </div>
             </button>
           </div>
+
+          {/* Dedicated AMT Calculator Card (Task 1e Registration) */}
+          <div className="mt-4 p-4 sm:p-5 bg-gradient-to-r from-[#fcfaf5] to-[#f4f7f4] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 bg-[#8a3324]/10 text-[#8a3324] font-mono text-[10px] font-bold uppercase rounded-[2px]">
+                  {isFr ? "Nouveau • Loi C-59" : "New • Bill C-59"}
+                </span>
+                <span className="text-xs font-semibold text-[#75581f]">
+                  {isFr ? "Calculateur Fédéral Dédié" : "Dedicated Standalone Calculator"}
+                </span>
+              </div>
+              <h3 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-medium leading-snug">
+                {isFr
+                  ? "Simulateur d'Impôt Minimum de Remplacement (IMR)"
+                  : "Alternative Minimum Tax (AMT) Calculator Canada"}
+              </h3>
+              <p className="text-xs text-[#46423a] max-w-2xl leading-relaxed">
+                {isFr
+                  ? "Estimez si la réforme de l'IMR (taux de 20,5 %, inclusion à 100 % des gains, restriction des dons) déclenche un impôt supplémentaire sur vos ventes d'actifs ou dons importants."
+                  : "Estimate whether Canada's reformed AMT rules (20.5% rate, 100% capital gains inclusion, 50% donation credit limit) trigger extra tax on your business exits or major liquidations."}
+              </p>
+            </div>
+
+            <Link
+              to={isFr ? "/fr/calculators/amt" : "/calculators/amt"}
+              className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+            >
+              <Scale className="w-3.5 h-3.5 text-[#d6c298]" />
+              <span>{isFr ? "Ouvrir le simulateur IMR" : "Open AMT Calculator"}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
       </section>
 

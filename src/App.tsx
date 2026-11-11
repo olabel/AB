@@ -34,6 +34,7 @@ import { ContactPage } from "./pages/ContactPage.tsx";
 import { ConfirmSubscriptionPage } from "./pages/ConfirmSubscriptionPage.tsx";
 import { LegalPage } from "./pages/LegalPage.tsx";
 import { CalculatorsPage } from "./pages/CalculatorsPage.tsx";
+import { AmtCalculatorPage } from "./pages/AmtCalculatorPage.tsx";
 import { CostlyBlindspotsPage } from "./pages/CostlyBlindspotsPage.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
 
@@ -89,6 +90,7 @@ export default function App() {
                 <Route path="/for/:audience" element={<AudienceHubPage />} />
                 <Route path="/investing/islamic-equity" element={<IslamicInvestingPage />} />
                 <Route path="/calculators" element={<CalculatorsPage />} />
+                <Route path="/calculators/amt" element={<AmtCalculatorPage />} />
                 <Route path="/costly-blindspots" element={<CostlyBlindspotsPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/confirm-subscription" element={<ConfirmSubscriptionPage />} />
@@ -106,6 +108,7 @@ export default function App() {
                 <Route path="/fr/for/:audience" element={<AudienceHubPage />} />
                 <Route path="/fr/investing/islamic-equity" element={<IslamicInvestingPage />} />
                 <Route path="/fr/calculators" element={<CalculatorsPage />} />
+                <Route path="/fr/calculators/amt" element={<AmtCalculatorPage />} />
                 <Route path="/fr/costly-blindspots" element={<CostlyBlindspotsPage />} />
                 <Route path="/fr/contact" element={<ContactPage />} />
                 <Route path="/fr/confirm-subscription" element={<ConfirmSubscriptionPage />} />

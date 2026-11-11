@@ -3,8 +3,27 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
 import { Tbc } from "../components/Tbc.tsx";
 import { DRAFT_MODE, siteConfig } from "../config/site.ts";
-import { Check, Copy, ExternalLink, ArrowRight, Share2, Sparkles, CheckCircle2, Calculator, MessageSquare, Linkedin, Send } from "lucide-react";
+import {
+  Check,
+  Copy,
+  ExternalLink,
+  ArrowRight,
+  Share2,
+  Sparkles,
+  CheckCircle2,
+  Calculator,
+  MessageSquare,
+  Linkedin,
+  Send,
+  Scale,
+  Calendar,
+  AlertCircle,
+  HelpCircle,
+  ClipboardList,
+} from "lucide-react";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
+import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
+import { trackBookingClick } from "../lib/track.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 
@@ -75,6 +94,14 @@ export const ArticlePage: React.FC = () => {
 
   const sections = [
     { id: "overview", label: isFr ? "Vue d'ensemble" : "Overview" },
+    ...(article.sections
+      ? article.sections.map((s, idx) => ({
+          id: s.id || `section-${idx}`,
+          label: s.h2,
+        }))
+      : []),
+    ...(article.checklist ? [{ id: "checklist", label: article.checklist.title }] : []),
+    ...(article.faqs ? [{ id: "faqs", label: isFr ? "Foire aux questions" : "Frequently Asked Questions" }] : []),
     ...(article.example ? [{ id: "example", label: isFr ? "Exemple hypothétique" : "Hypothetical example" }] : []),
     { id: "misunderstandings", label: isFr ? "Idées reçues fréquentes" : "Common misunderstandings" },
     { id: "tradeoffs", label: isFr ? "Compromis et limites" : "Trade-offs and limitations" },
@@ -344,6 +371,48 @@ export const ArticlePage: React.FC = () => {
               </div>
             </div>
 
+            {/* Top Compliance Disclaimer for Pension Decision Review */}
+            {article.slug === "pension-commuted-value-transfer-par-tax-planning" && (
+              <div className="p-4 bg-[#fcfaf5] border-l-4 border-[#75581f] rounded-[2px] text-xs text-[#46423a] leading-relaxed shadow-xs flex items-start gap-2.5">
+                <AlertCircle className="w-4 h-4 text-[#75581f] shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-[#1c1b18] block font-semibold mb-0.5">
+                    {isFr ? "Avis de conformité réglementaire" : "Regulatory Compliance Notice"}
+                  </strong>
+                  {isFr
+                    ? "Formation générale uniquement. Les décisions relatives aux régimes de retraite dépendent de votre régime et de votre situation personnelle. Confirmez les détails auprès de l'administrateur de votre régime et d'un professionnel de la fiscalité."
+                    : "General education only. Pension decisions depend on your plan and personal situation. Confirm details with your plan administrator and a tax professional."}
+                </div>
+              </div>
+            )}
+
+            {/* Dedicated AMT Calculator Banner on AMT Guide */}
+            {article.slug === "canadian-alternative-minimum-tax-amt-high-earners-guide" && (
+              <div className="p-5 bg-gradient-to-r from-[#fcfaf5] to-[#f4f7f4] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                    {isFr ? "Outil interactif" : "Interactive Decision Tool"}
+                  </span>
+                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                    {isFr ? "Simulateur d'Impôt Minimum de Remplacement (IMR)" : "Alternative Minimum Tax (AMT) Calculator Canada"}
+                  </h4>
+                  <p className="text-xs text-[#46423a]">
+                    {isFr
+                      ? "Modélisez l'impact des règles de la loi C-59 sur vos gains en capital, vos dividendes et le report sur 7 ans."
+                      : "Model the impact of Bill C-59 on your capital gains, dividends, donations, and 7-year carry-forward recovery."}
+                  </p>
+                </div>
+                <Link
+                  to={`${prefix}/calculators/amt`}
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                >
+                  <Scale className="w-3.5 h-3.5 text-[#d6c298]" />
+                  <span>{isFr ? "Ouvrir le simulateur" : "Open Calculator"}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            )}
+
             {/* 1. Problem / Lead Paragraph */}
             <section className="text-lg md:text-xl font-serif text-[#1c1b18] leading-relaxed border-b border-[#d6cebd] pb-8">
               <p>{article.problem}</p>
@@ -360,6 +429,73 @@ export const ArticlePage: React.FC = () => {
                 </p>
               ))}
             </section>
+
+            {/* 2b. Structured H2 Sections (if provided) */}
+            {article.sections &&
+              article.sections.map((sec, sIdx) => (
+                <section key={sec.id || `sec-${sIdx}`} id={sec.id || `sec-${sIdx}`} className="space-y-4 prose-editorial">
+                  <h2 className="h3 text-[#1c1b18] border-b border-[#ece6da] pb-2 font-serif text-xl sm:text-2xl">
+                    {sec.h2}
+                  </h2>
+                  {sec.paragraphs.map((p, pIdx) => (
+                    <p key={`sp-${pIdx}`} className="leading-relaxed text-sm sm:text-base text-[#46423a]">
+                      {p}
+                    </p>
+                  ))}
+                </section>
+              ))}
+
+            {/* 2c. Decision Checklist (if provided) */}
+            {article.checklist && (
+              <section id="checklist" className="p-6 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] space-y-4 shadow-xs">
+                <div className="flex items-center gap-2 border-b border-[#d6cebd] pb-3">
+                  <ClipboardList className="w-5 h-5 text-[#75581f]" />
+                  <h2 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-semibold">
+                    {article.checklist.title}
+                  </h2>
+                </div>
+                <div className="space-y-3">
+                  {article.checklist.items.map((item, cIdx) => (
+                    <div key={`chk-${cIdx}`} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#46423a]">
+                      <CheckCircle2 className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
+                      <p className="leading-relaxed">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 2d. 8-Question FAQ Accordion (if provided) */}
+            {article.faqs && article.faqs.length > 0 && (
+              <section id="faqs" className="space-y-4">
+                <div className="border-b border-[#ece6da] pb-2">
+                  <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block mb-0.5">
+                    {isFr ? "Questions Fréquentes" : "Frequently Asked Questions"}
+                  </span>
+                  <h2 className="h3 text-[#1c1b18] font-serif text-xl sm:text-2xl">
+                    {isFr ? "Questions Essentielles sur la Rente Commuée" : "Frequently Asked Pension Questions"}
+                  </h2>
+                </div>
+                <div className="space-y-3">
+                  {article.faqs.map((faq, fIdx) => (
+                    <details
+                      key={`faq-${fIdx}`}
+                      className="group border border-[#d6cebd] rounded-[2px] bg-white overflow-hidden transition-colors open:bg-[#fcfaf5]"
+                    >
+                      <summary className="p-4 cursor-pointer font-serif text-sm sm:text-base font-semibold text-[#1c1b18] flex items-center justify-between list-none hover:text-[#2e4a3b]">
+                        <span className="capitalize">{faq.question}</span>
+                        <span className="text-[#75581f] text-xs font-bold transition-transform group-open:rotate-180">
+                          ▼
+                        </span>
+                      </summary>
+                      <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-[#46423a] leading-relaxed border-t border-[#ece6da]/60">
+                        {faq.answer}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* 3. Hypothetical Example */}
             {article.example && (
@@ -549,6 +685,76 @@ export const ArticlePage: React.FC = () => {
               </Link>
               .
             </div>
+
+            {/* Bottom Compliance Disclaimer and CTAs for Pension Commuted Value (Task 2c & 2d) */}
+            {article.slug === "pension-commuted-value-transfer-par-tax-planning" && (
+              <div className="space-y-6 pt-2">
+                <div className="p-4 bg-[#fcfaf5] border-l-4 border-[#75581f] rounded-[2px] text-xs text-[#46423a] leading-relaxed shadow-xs flex items-start gap-2.5">
+                  <AlertCircle className="w-4 h-4 text-[#75581f] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-[#1c1b18] block font-semibold mb-0.5">
+                      {isFr ? "Avis de conformité réglementaire" : "Regulatory Compliance Notice"}
+                    </strong>
+                    {isFr
+                      ? "Formation générale uniquement. Les décisions relatives aux régimes de retraite dépendent de votre régime et de votre situation personnelle. Confirmez les détails auprès de l'administrateur de votre régime et d'un professionnel de la fiscalité."
+                      : "General education only. Pension decisions depend on your plan and personal situation. Confirm details with your plan administrator and a tax professional."}
+                  </div>
+                </div>
+
+                {/* CTA 1: Email capture for the pension decision checklist */}
+                <CalculatorLeadCapture
+                  calculatorName="pension-decision-checklist"
+                  analyticsCalculatorName="pension_decision_checklist"
+                  analyticsTopic="pension-checklist"
+                  topic="pension-checklist"
+                  summaryText="Pension Commuted Value vs Deferred Pension Decision Checklist requested from article."
+                  customHeading={
+                    isFr
+                      ? "Télécharger la grille d'aide à la décision sur la rente commuée"
+                      : "Get the Pension Decision Checklist"
+                  }
+                  customSubheading={
+                    isFr ? "Diligence Raisonnable Indépendante" : "Independent Due Diligence"
+                  }
+                  customButtonLabel={
+                    isFr
+                      ? "M'envoyer la grille de décision par courriel"
+                      : "Send Me the Pension Decision Checklist"
+                  }
+                />
+
+                {/* CTA 2: Booking button with utm_campaign=commuted-value */}
+                <div className="p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-3 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+                  <div className="space-y-1">
+                    <span className="text-[0.68rem] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                      {isFr ? "Accompagnement Sans Pression" : "Independent Fiduciary Review"}
+                    </span>
+                    <h4 className="font-serif text-lg font-medium text-[#f7f3eb]">
+                      {isFr
+                        ? "Besoin d'un second regard indépendant sur votre relevé de cessation ?"
+                        : "Need an independent review of your pension termination statement?"}
+                    </h4>
+                    <p className="text-xs text-[#ece6da]">
+                      {isFr
+                        ? "Examinez vos plafonds de transfert ITR 8517, le montant PAR et l'impact fiscal lors d'une séance de 30 minutes."
+                        : "Review your ITR 8517 Maximum Transfer Value, PAR capacity, and tax impact in a private 30-minute discussion."}
+                    </p>
+                  </div>
+
+                  <a
+                    href={`${siteConfig.bookingUrl}?utm_campaign=commuted-value`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackBookingClick("commuted-value")}
+                    className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2.5 px-4 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 font-semibold transition-colors"
+                  >
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>{isFr ? "Réserver sur Calendly" : "Book a 30-Min Review"}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            )}
 
             {/* 9. Next Step: Interactive Question Box Under Every Guide */}
             <div className="p-6 sm:p-8 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] space-y-5 shadow-sm no-print">

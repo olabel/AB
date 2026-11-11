@@ -37,6 +37,7 @@ export const siteConfig = {
   publicEmail: "enquiries@ahmedbello.com",
   publicPhone: "+1-506-899-4941",
   schedulingUrl: "https://calendly.com/olabel/30min",
+  bookingUrl: "https://calendly.com/olabel/30min",
   socialLinks: null as Record<string, string> | null,
   newsletterWebhookUrl: null as string | null,
   defaultFromEmail: "Ahmed Bello <enquiries@ahmedbello.com>",

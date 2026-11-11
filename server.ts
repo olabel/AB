@@ -829,6 +829,40 @@ function getRouteMetadata(pathname: string): RouteMeta {
         ],
       };
 
+    case "/calculators/amt":
+    case "/fr/calculators/amt":
+      return {
+        title: cleanPath.startsWith("/fr")
+          ? "Calculateur d'Impôt Minimum de Remplacement | Ahmed Bello"
+          : "Alternative Minimum Tax Calculator Canada | Ahmed Bello",
+        description: cleanPath.startsWith("/fr")
+          ? "Estimez si l'impôt minimum de remplacement canadien (IMR) s'applique à vos gains, dividendes et dons. Simulateur fédéral gratuit."
+          : "Estimate whether Canada's alternative minimum tax applies to you. Free calculator for capital gains, dividends, donations and carry-forward.",
+        ogType: "website",
+        url: `${siteConfig.siteUrl}${cleanPath}`,
+        jsonLd: [
+          siteWideWebSite,
+          siteWideFinancialService,
+          {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: cleanPath.startsWith("/fr") ? "Calculateur d'Impôt Minimum de Remplacement (IMR)" : "Alternative Minimum Tax (AMT) Calculator Canada",
+            url: `${siteConfig.siteUrl}${cleanPath}`,
+            applicationCategory: "FinanceApplication",
+            operatingSystem: "All",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.siteUrl },
+              { "@type": "ListItem", position: 2, name: cleanPath.startsWith("/fr") ? "Simulateurs" : "Calculators", item: `${siteConfig.siteUrl}${cleanPath.startsWith("/fr") ? "/fr/calculators" : "/calculators"}` },
+              { "@type": "ListItem", position: 3, name: cleanPath.startsWith("/fr") ? "Calculateur IMR" : "AMT Calculator", item: `${siteConfig.siteUrl}${cleanPath}` },
+            ],
+          },
+        ],
+      };
+
     case "/investing/islamic-equity":
     case "/fr/investing/islamic-equity":
       return {

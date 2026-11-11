@@ -177,6 +177,14 @@ const coreRoutes = [
     heading: "Interactive Canadian Financial Calculators",
     summary: "Model real Canadian financial scenarios with exact tax rates, inflation parameters, and CRA rules. Includes instant lead capture and strategy review options.",
   },
+  {
+    path: "/calculators/amt",
+    title: "Alternative Minimum Tax Calculator Canada | Ahmed Bello",
+    description: "Estimate whether Canada's alternative minimum tax applies to you. Free calculator for capital gains, dividends, donations and carry-forward.",
+    lang: "en-CA",
+    heading: "Alternative Minimum Tax (AMT) Calculator Canada",
+    summary: "Model how post-2024 federal tax reforms under Bill C-59 impact your business exits, real estate capital gains, charitable donations, and 7-year carry-forward recovery.",
+  },
 
   // French Core Routes
   {
@@ -298,6 +306,14 @@ const coreRoutes = [
     lang: "fr-CA",
     heading: "Simulateurs Financiers Canadiens Interactifs",
     summary: "Modélisez vos décisions financières canadiennes selon les règles fiscales officielles de l'ARC, avec options de réception de plan et consultation sans frais.",
+  },
+  {
+    path: "/fr/calculators/amt",
+    title: "Calculateur d'Impôt Minimum de Remplacement | Ahmed Bello",
+    description: "Estimez si l'impôt minimum de remplacement canadien (IMR) s'applique à vos gains, dividendes et dons. Simulateur fédéral gratuit.",
+    lang: "fr-CA",
+    heading: "Calculateur d'Impôt Minimum de Remplacement (IMR)",
+    summary: "Modélisez l'impact des réformes fédérales de la loi C-59 sur vos gains en capital, vos dividendes, vos dons de bienfaisance et vos crédits de report d'IMR sur 7 ans.",
   },
   {
     path: "/fr/disclosures",

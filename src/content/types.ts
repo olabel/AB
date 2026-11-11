@@ -22,6 +22,22 @@ export interface ArticleMisunderstanding {
   reality: string;
 }
 
+export interface ArticleSection {
+  id?: string;
+  h2: string;
+  paragraphs: string[];
+}
+
+export interface ArticleFaq {
+  question: string;
+  answer: string;
+}
+
+export interface ArticleChecklist {
+  title: string;
+  items: string[];
+}
+
 export interface Article {
   slug: string;
   kind: "guide" | "insight";
@@ -46,6 +62,9 @@ export interface Article {
   datePublished?: string;
   dateModified?: string;
   heldForReview?: boolean;
+  sections?: ArticleSection[];
+  faqs?: ArticleFaq[];
+  checklist?: ArticleChecklist;
 }
 
 export interface Category {
