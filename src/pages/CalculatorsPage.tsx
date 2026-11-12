@@ -5,6 +5,7 @@ import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { trackBookingClick, trackCalculatorCompleted } from "../lib/track.ts";
+import { getTaxParametersForYear } from "../config/taxParameters.ts";
 import {
   Calculator,
   Compass,
@@ -143,10 +144,11 @@ export const CalculatorsPage: React.FC = () => {
 
   // Marginal tax estimation (Federal + Average Provincial)
   const estimateTaxRate = (inc: number): number => {
-    if (inc <= 55867) return 0.20;
-    if (inc <= 111733) return 0.31;
-    if (inc <= 173205) return 0.43;
-    if (inc <= 246752) return 0.48;
+    const b = getTaxParametersForYear().brackets;
+    if (inc <= b[0].upTo) return 0.20;
+    if (inc <= b[1].upTo) return 0.31;
+    if (inc <= b[2].upTo) return 0.43;
+    if (inc <= b[3].upTo) return 0.48;
     return 0.53;
   };
 
