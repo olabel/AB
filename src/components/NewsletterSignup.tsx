@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, CheckCircle2, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { Mail, CheckCircle2, ArrowRight, ShieldCheck } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext.tsx";
 import { trackNewsletterSubmit } from "../lib/track.ts";
 
 interface NewsletterSignupProps {
@@ -16,6 +17,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
   source = "general",
   className = "",
 }) => {
+  const { isFr } = useLanguage();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
@@ -85,8 +87,8 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
     <div
       className={`bg-[#fcfaf5] border border-[#d6cebd] p-8 md:p-10 rounded-[2px] shadow-sm relative overflow-hidden ${className}`}
     >
-      {/* Subtle architectural brass accent line */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#2e4a3b] via-[#75581f] to-[#2e4a3b]" />
+      {/* Architectural top border */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-[#2e4a3b]" />
 
       <div className="max-w-2xl mx-auto text-center space-y-3 mb-6">
         <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-[#2e4a3b]/10 text-[#2e4a3b] rounded-[2px] text-xs font-semibold uppercase tracking-wider">
@@ -108,7 +110,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
 
       {success ? (
         <div className="max-w-md mx-auto p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] text-center space-y-3">
-          <div className="w-10 h-10 rounded-full bg-[#f7f3eb] text-[#2e4a3b] flex items-center justify-center mx-auto">
+          <div className="w-10 h-10 rounded-[2px] bg-[#f7f3eb] text-[#2e4a3b] flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-6 h-6" />
           </div>
           <h4 className="font-serif text-xl text-[#f7f3eb]">Confirmation Request Sent</h4>
@@ -184,7 +186,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
               className="text-[0.72rem] text-[#625d52] leading-tight cursor-pointer"
             >
               I consent to receive occasional educational emails from Ahmed Bello under Canada’s Anti-Spam Legislation (CASL). I can unsubscribe anytime with one click. Read the{" "}
-              <Link to="/privacy" className="underline hover:text-[#2e4a3b]">
+              <Link to={`${isFr ? "/fr" : ""}/privacy`} className="underline hover:text-[#2e4a3b]">
                 privacy notice
               </Link>
               .
@@ -193,16 +195,13 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
         </form>
       )}
 
-      {/* Trust reassurance icons */}
+      {/* Compliance notes */}
       <div className="mt-6 pt-5 border-t border-[#ece6da] flex flex-wrap items-center justify-center gap-6 text-[0.7rem] text-[#625d52]">
         <span className="flex items-center gap-1.5">
           <ShieldCheck className="w-3.5 h-3.5 text-[#2e4a3b]" />
           Strict CASL Compliance
         </span>
-        <span className="flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-[#75581f]" />
-          Zero Spam / No Sales Pitches
-        </span>
+        <span>Zero Spam / No Sales Pitches</span>
         <span>1-Click Easy Unsubscribe</span>
       </div>
     </div>

@@ -94,7 +94,6 @@ export const Footer: React.FC = () => {
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-[#d6c298]" />
                   <span>{isFr ? "Pièges Financiers Coûteux" : "Costly Money Blindspots"}</span>
-                  <span className="px-1.5 py-0.5 bg-[#d6c298]/20 text-[#d6c298] text-[10px] rounded font-mono font-semibold">ESSENTIAL</span>
                 </Link>
               </li>
               <li>
@@ -104,7 +103,6 @@ export const Footer: React.FC = () => {
                 >
                   <Calculator className="w-3.5 h-3.5 text-[#d6c298]" />
                   <span>{isFr ? "Simulateurs Financiers" : "Interactive Calculators"}</span>
-                  <span className="px-1.5 py-0.5 bg-[#d6c298]/20 text-[#d6c298] text-[10px] rounded font-mono font-semibold">NEW</span>
                 </Link>
               </li>
               <li>
@@ -113,13 +111,13 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to={`${prefix}/education/fhsa-with-the-home-buyers-plan`} className="hover:text-white transition-colors">
+                <Link to={`${prefix}/education/fhsa-vs-hbp-first-time-home-buyer-stacking`} className="hover:text-white transition-colors">
                   {isFr ? "CELIAPP & Régime RAP" : "FHSA & Home Buyers' Plan"}
                 </Link>
               </li>
               <li>
-                <Link to={`${prefix}/education/building-credit-as-a-newcomer-in-canada`} className="hover:text-white transition-colors">
-                  {isFr ? "Bâtir son crédit au Canada" : "Building Canadian Credit"}
+                <Link to={`${prefix}/education/new-to-canada-money-basics`} className="hover:text-white transition-colors">
+                  {isFr ? "Finances des nouveaux arrivants" : "Newcomer Money Basics"}
                 </Link>
               </li>
               <li>
@@ -128,7 +126,7 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to={`${prefix}/education/newcomers-first-year-financial-checklist`} className="hover:text-white transition-colors">
+                <Link to={`${prefix}/calculators?tab=newcomer#calculator-tool`} className="hover:text-white transition-colors">
                   {isFr ? "Planificateur pour nouveaux arrivants" : "Newcomer Planning Calculator"}
                 </Link>
               </li>

@@ -75,7 +75,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: firstName.trim() || "Valued Client",
+          firstName: firstName.trim() || "Reader",
           email: cleanEmail,
           topic: topic || "calculator",
           province: "National (Canada & US)",
@@ -122,7 +122,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
     <div
       className={`mt-6 p-6 sm:p-7 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] space-y-5 shadow-xs relative overflow-hidden ${className}`}
     >
-      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#2e4a3b] via-[#75581f] to-[#2e4a3b]" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-[#2e4a3b]" />
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#ece6da] pb-4">
         <div>
@@ -175,13 +175,14 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
               href="https://calendly.com/olabel/30min"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackBookingClick("calculator_lead_capture_confirmed")}
               className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2 px-3.5 inline-flex items-center gap-1.5 font-semibold transition-colors"
             >
               <Calendar className="w-3.5 h-3.5" />
               <span>{isFr ? "Planifier un échange de 30 min sur Calendly" : "Schedule 30-Min Discussion on Calendly"}</span>
             </a>
             <a
-              href={`mailto:enquiries@ahmedbello.com?subject=${encodeURIComponent(`Plan: ${calculatorName}`)}&body=${encodeURIComponent(`Client: ${firstName || "Valued Client"} (${email})\n\n${summaryText}`)}`}
+              href={`mailto:enquiries@ahmedbello.com?subject=${encodeURIComponent(`Plan: ${calculatorName}`)}&body=${encodeURIComponent(`Reader: ${firstName || "Reader"} (${email})\n\n${summaryText}`)}`}
               className="text-xs text-[#d6c298] hover:text-white underline inline-flex items-center gap-1 py-1"
             >
               <Mail className="w-3.5 h-3.5" />

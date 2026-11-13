@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext.tsx";
 import { CheckSquare, AlertCircle, ArrowRight, RefreshCw, Award } from "lucide-react";
 
 interface Question {
@@ -23,7 +24,7 @@ const QUESTIONS: Question[] = [
     id: 2,
     title: "If illness or injury stopped your work for 6 months, how much of your net take-home pay would continue automatically?",
     options: [
-      { label: "0% (No private or group disability coverage", score: 0, feedback: "Critical exposure: your ability to earn is your single largest lifetime asset." },
+      { label: "0% (No private or group disability coverage)", score: 0, feedback: "Critical exposure: your ability to earn is your single largest lifetime asset." },
       { label: "Only basic employer group coverage (often capped or taxable)", score: 1, feedback: "Group coverage is a start, but frequently has restrictive definitions or caps." },
       { label: "60% to 70% via comprehensive, portable disability coverage", score: 3, feedback: "Rock-solid Tier 2 Income Protection Wall." },
       { label: "Unsure of exact group terms and definitions", score: 1, feedback: "Reviewing your benefit booklet is a vital first step." },
@@ -52,6 +53,7 @@ const QUESTIONS: Question[] = [
 ];
 
 export const StructureDiagnostic: React.FC = () => {
+  const { isFr } = useLanguage();
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -207,7 +209,7 @@ export const StructureDiagnostic: React.FC = () => {
               <span>Retake diagnostic</span>
             </button>
             <Link
-              to={`/contact?topic=${assessment.topic}`}
+              to={`${isFr ? "/fr" : ""}/contact?topic=${assessment.topic}`}
               className="btn btn-primary text-xs py-2 px-5"
             >
               Review these results with Ahmed →

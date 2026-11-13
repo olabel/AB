@@ -9,7 +9,6 @@ import {
   Users,
   Calendar,
   ArrowUpRight,
-  Sparkles,
   Clock,
   Briefcase,
   HelpCircle,
@@ -30,6 +29,7 @@ import { siteConfig } from "../config/site.ts";
 import { BrandMark } from "../components/BrandMark.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { trackBookingClick, trackLeadSubmit } from "../lib/track.ts";
 
 interface FormData {
   firstName: string;
@@ -63,12 +63,12 @@ const CANADIAN_PROVINCES = [
 ];
 
 const US_REGIONS = [
-  "United States - Northeast",
-  "United States - Southeast",
-  "United States - Midwest",
-  "United States - Southwest",
-  "United States - West Coast",
-  "United States - Other State",
+  "United States — Northeast",
+  "United States — Southeast",
+  "United States — Midwest",
+  "United States — Southwest",
+  "United States — West Coast",
+  "United States — Other State",
 ];
 
 export const CareersPage: React.FC = () => {
@@ -115,7 +115,7 @@ export const CareersPage: React.FC = () => {
       setFormData((prev) => {
         const next = { ...prev, [name]: value };
         if (name === "country") {
-          next.jurisdiction = value === "Canada" ? "New Brunswick" : "United States - Northeast";
+          next.jurisdiction = value === "Canada" ? "New Brunswick" : "United States — Northeast";
         }
         return next;
       });
@@ -141,7 +141,6 @@ export const CareersPage: React.FC = () => {
 
     setSubmitting(true);
     const generatedRef = "APP-" + Math.floor(100000 + Math.random() * 900000);
-    let firestoreSaved = false;
 
     const detailedMessage = `
 Candidate Application Details:
@@ -187,6 +186,7 @@ Candidate Application Details:
         );
       }
 
+      trackLeadSubmit("mentorship");
       setSubmitSuccess(true);
     } catch (err: any) {
       setErrorMessage(
@@ -264,55 +264,53 @@ Candidate Application Details:
             : "Mentorship and licensing support for aspiring independent financial solutions professionals in Canada. LLQP preparation and practice development."
         }
         canonicalUrl={isFr ? "/fr/careers" : "/careers"}
-      />
-      {/* Schema.org Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": [
-              {
-                "@type": "EducationalOccupationalProgram",
-                "@id": `${siteConfig.siteUrl}/careers#program`,
-                name: "Independent Financial Solutions Practice Mentorship",
-                description:
-                  "Comprehensive study support for Canadian provincial LLQP exams, practical file co-planning, and career mentorship with Ahmed Bello.",
-                provider: {
-                  "@type": "Person",
-                  name: "Ahmed Bello",
-                  jobTitle: "Licensed Financial Solutions Professional",
-                  url: siteConfig.siteUrl,
-                },
-                offers: {
-                  "@type": "Offer",
-                  price: "0",
-                  priceCurrency: "CAD",
-                  category: "Educational Mentorship",
-                },
-                occupationalCategory: "Licensed Financial Solutions Professional",
-                educationalProgramMode: "Hybrid / Remote",
-                timeToComplete: "P3M",
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "EducationalOccupationalProgram",
+              "@id": `${siteConfig.siteUrl}${isFr ? "/fr" : ""}/careers#program`,
+              inLanguage: isFr ? "fr-CA" : "en-CA",
+              name: isFr
+                ? "Mentorat de Pratique Indépendante en Solutions Financières"
+                : "Independent Financial Solutions Practice Mentorship",
+              description: isFr
+                ? "Accompagnement complet pour les examens provinciaux du PAAP/LLQP, co-planification pratique et mentorat de carrière avec Ahmed Bello."
+                : "Comprehensive study support for Canadian provincial LLQP exams, practical file co-planning, and career mentorship with Ahmed Bello.",
+              provider: {
+                "@type": "Person",
+                name: "Ahmed Bello",
+                jobTitle: "Licensed Financial Solutions Professional",
+                url: siteConfig.siteUrl,
               },
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  {
-                    "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: siteConfig.siteUrl,
-                  },
-                  {
-                    "@type": "ListItem",
-                    position: 2,
-                    name: "Become an Independent Agent",
-                    item: `${siteConfig.siteUrl}/careers`,
-                  },
-                ],
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "CAD",
+                category: "Educational Mentorship",
               },
-            ],
-          }),
+              occupationalCategory: "Licensed Financial Solutions Professional",
+              educationalProgramMode: "Hybrid / Remote",
+              timeToComplete: "P3M",
+            },
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: isFr ? "Accueil" : "Home",
+                  item: isFr ? `${siteConfig.siteUrl}/fr` : `${siteConfig.siteUrl}/`,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: isFr ? "Carrières & Mentorat" : "Practice Expansion & Careers",
+                  item: `${siteConfig.siteUrl}${isFr ? "/fr" : ""}/careers`,
+                },
+              ],
+            },
+          ],
         }}
       />
 
@@ -336,7 +334,7 @@ Candidate Application Details:
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center pb-16 border-b border-[#d6cebd]">
           <div className="lg:col-span-7 flex flex-col gap-5">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] w-fit text-xs font-semibold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-[#75581f]" />
+              <GraduationCap className="w-3.5 h-3.5 text-[#75581f]" />
               <span>
                 {isFr
                   ? "Mentorat de Pratique Indépendante • Canada & É.-U. • Préparation Complète au Titre"
@@ -420,7 +418,8 @@ Candidate Application Details:
                   href={siteConfig.schedulingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary text-center px-6 py-3 text-base font-medium inline-flex items-center justify-center gap-2 group"
+                  onClick={() => trackBookingClick("careers_hero")}
+                  className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-center px-6 py-3 text-base font-medium inline-flex items-center justify-center gap-2 group"
                 >
                   <Calendar className="w-4 h-4 text-[#75581f]" />
                   <span>{isFr ? "Réserver un appel d'orientation (30 min)" : "Schedule 30-Min Discovery Call"}</span>
@@ -433,8 +432,6 @@ Candidate Application Details:
           {/* Unique Hero Visual: Architectural Practice Portal & Ecosystem Blueprint */}
           <div className="lg:col-span-5 flex justify-center">
             <div className="w-full max-w-md bg-[#14211a] text-[#f7f3eb] border border-[#2e4a3b]/60 p-6 rounded-[2px] shadow-xl relative overflow-hidden">
-              {/* Subtle background architectural glow */}
-              <div className="absolute top-0 right-0 w-48 h-48 bg-[#2e4a3b]/20 rounded-full blur-3xl pointer-events-none" />
 
               {/* Blueprint Header */}
               <div className="flex items-center justify-between pb-4 border-b border-[#d6c298]/20">
@@ -524,7 +521,7 @@ Candidate Application Details:
               {/* Tab 2: 3-Stage Progression */}
               {activeTab === "progression" && (
                 <div className="space-y-3 pt-1 text-xs">
-                  <div className="flex items-start gap-3 p-2.5 bg-[#1a2c22] border-l-2 border-[#d6c298] rounded-[1px]">
+                  <div className="flex items-start gap-3 p-2.5 bg-[#1a2c22] border border-[#d6c298]/30 rounded-[2px]">
                     <span className="font-serif text-[#d6c298] font-bold text-sm">01</span>
                     <div>
                       <div className="font-semibold text-[#f7f3eb]">
@@ -538,7 +535,7 @@ Candidate Application Details:
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-2.5 bg-[#1a2c22] border-l-2 border-[#d6c298] rounded-[1px]">
+                  <div className="flex items-start gap-3 p-2.5 bg-[#1a2c22] border border-[#d6c298]/30 rounded-[2px]">
                     <span className="font-serif text-[#d6c298] font-bold text-sm">02</span>
                     <div>
                       <div className="font-semibold text-[#f7f3eb]">
@@ -552,7 +549,7 @@ Candidate Application Details:
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-2.5 bg-[#1a2c22] border-l-2 border-[#d6c298] rounded-[1px]">
+                  <div className="flex items-start gap-3 p-2.5 bg-[#1a2c22] border border-[#d6c298]/30 rounded-[2px]">
                     <span className="font-serif text-[#d6c298] font-bold text-sm">03</span>
                     <div>
                       <div className="font-semibold text-[#f7f3eb]">
@@ -773,7 +770,7 @@ Candidate Application Details:
             {/* Pillar 1 */}
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-full bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-[2px] bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center mb-4">
                   <GraduationCap className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl text-[#1c1b18] mb-2">
@@ -793,7 +790,7 @@ Candidate Application Details:
             {/* Pillar 2 */}
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-full bg-[#75581f]/10 text-[#75581f] flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-[2px] bg-[#75581f]/10 text-[#75581f] flex items-center justify-center mb-4">
                   <Award className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl text-[#1c1b18] mb-2">
@@ -813,7 +810,7 @@ Candidate Application Details:
             {/* Pillar 3 */}
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-full bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-[2px] bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center mb-4">
                   <Compass className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl text-[#1c1b18] mb-2">
@@ -833,7 +830,7 @@ Candidate Application Details:
             {/* Pillar 4 */}
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-full bg-[#75581f]/10 text-[#75581f] flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-[2px] bg-[#75581f]/10 text-[#75581f] flex items-center justify-center mb-4">
                   <Users className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl text-[#1c1b18] mb-2">
@@ -853,7 +850,7 @@ Candidate Application Details:
             {/* Pillar 5 */}
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col justify-between md:col-span-2">
               <div>
-                <div className="w-10 h-10 rounded-full bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-[2px] bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center mb-4">
                   <Clock className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl text-[#1c1b18] mb-2">
@@ -1129,7 +1126,7 @@ Candidate Application Details:
 
               {submitSuccess ? (
                 <div className="p-8 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] shadow-sm space-y-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f7f3eb] text-[#2e4a3b] flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-[2px] bg-[#f7f3eb] text-[#2e4a3b] flex items-center justify-center">
                     <Check className="w-6 h-6" />
                   </div>
                   <h3 className="font-serif text-2xl text-[#f7f3eb]">
@@ -1153,6 +1150,7 @@ Candidate Application Details:
                         href={siteConfig.schedulingUrl}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackBookingClick("careers_success")}
                         className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs font-semibold px-4 py-2.5 inline-flex items-center gap-2 transition-colors"
                       >
                         <Calendar className="w-4 h-4 text-[#75581f]" />
@@ -1483,6 +1481,7 @@ Candidate Application Details:
                     href={siteConfig.schedulingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackBookingClick("careers_card")}
                     className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs font-semibold px-4 py-3 text-center inline-flex items-center justify-center gap-2 transition-colors group"
                   >
                     <Calendar className="w-4 h-4 text-[#75581f]" />

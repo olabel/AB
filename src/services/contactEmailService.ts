@@ -40,10 +40,13 @@ export const VALID_TOPICS = [
   "protection",
   "family",
   "retirement",
+  "debt",
   "newcomer",
   "mentorship",
   "newsletter",
   "calculator",
+  "amt",
+  "pension-checklist",
   "other",
 ];
 
@@ -470,7 +473,7 @@ export async function processContactSubmission(
   }
 
   const isNewsletter = topic === "newsletter";
-  const isCalculator = topic === "calculator";
+  const isCalculator = topic === "calculator" || topic === "amt" || topic === "pension-checklist";
   const isMentorship = topic === "mentorship";
 
   if (isNewsletter && !firstName) {
@@ -481,7 +484,7 @@ export async function processContactSubmission(
   }
 
   if (isCalculator && !firstName) {
-    firstName = "Valued Client";
+    firstName = "Reader";
   }
   if (isCalculator && !province) {
     province = "National (Canada & US)";
@@ -502,6 +505,12 @@ export async function processContactSubmission(
     QC: "Quebec",
     SK: "Saskatchewan",
     YT: "Yukon",
+    "UNITED STATES - NORTHEAST": "United States — Northeast",
+    "UNITED STATES - SOUTHEAST": "United States — Southeast",
+    "UNITED STATES - MIDWEST": "United States — Midwest",
+    "UNITED STATES - SOUTHWEST": "United States — Southwest",
+    "UNITED STATES - WEST COAST": "United States — West Coast",
+    "UNITED STATES - OTHER STATE": "United States — Other State",
   };
   if (province && PROVINCE_MAP[province.toUpperCase()]) {
     province = PROVINCE_MAP[province.toUpperCase()];

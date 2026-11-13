@@ -2,51 +2,32 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { articles } from "../src/content/data.ts";
+import {
+  SITE_URL,
+  getAllIndexableCoreRoutes,
+  getLanguageUrls,
+} from "../src/config/seoMetadata.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const sitemapPath = path.resolve(__dirname, "../public/sitemap.xml");
 
-const baseUrl = "https://www.ahmedbello.com";
 const currentDate = new Date().toISOString().split("T")[0];
-
-const coreRoutes = [
-  { path: "", priority: "1.0", changefreq: "weekly" },
-  { path: "/how-i-help", priority: "0.9", changefreq: "monthly" },
-  { path: "/investing/islamic-equity", priority: "0.95", changefreq: "weekly" },
-  { path: "/education", priority: "0.9", changefreq: "weekly" },
-  { path: "/what-changed", priority: "0.9", changefreq: "monthly" },
-  { path: "/costly-blindspots", priority: "0.95", changefreq: "weekly" },
-  { path: "/insights", priority: "0.85", changefreq: "weekly" },
-  { path: "/for/healthcare", priority: "0.85", changefreq: "weekly" },
-  { path: "/for/business-owners", priority: "0.85", changefreq: "weekly" },
-  { path: "/for/families", priority: "0.85", changefreq: "weekly" },
-  { path: "/for/newcomers", priority: "0.85", changefreq: "weekly" },
-  { path: "/calculators", priority: "0.9", changefreq: "weekly" },
-  { path: "/calculators/amt", priority: "0.9", changefreq: "weekly" },
-  { path: "/about", priority: "0.75", changefreq: "monthly" },
-  { path: "/careers", priority: "0.85", changefreq: "weekly" },
-  { path: "/contact", priority: "0.8", changefreq: "monthly" },
-  { path: "/disclosures", priority: "0.5", changefreq: "yearly" },
-  { path: "/standards", priority: "0.5", changefreq: "yearly" },
-  { path: "/privacy", priority: "0.5", changefreq: "yearly" },
-  { path: "/terms", priority: "0.5", changefreq: "yearly" },
-];
+const coreRoutes = getAllIndexableCoreRoutes();
 
 let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 `;
 
-// Add English routes with alternates
+// Add all indexable English & French Core Routes from seoMetadata.ts
 for (const r of coreRoutes) {
-  const enUrl = `${baseUrl}${r.path}`;
-  const frUrl = `${baseUrl}/fr${r.path}`;
+  const { enUrl, frUrl, canonicalUrl } = getLanguageUrls(r.path);
   xml += `  <url>
-    <loc>${enUrl}</loc>
+    <loc>${canonicalUrl}</loc>
     <lastmod>${currentDate}</lastmod>
-    <changefreq>${r.changefreq}</changefreq>
-    <priority>${r.priority}</priority>
+    <changefreq>${r.changefreq || "monthly"}</changefreq>
+    <priority>${r.priority || "0.80"}</priority>
     <xhtml:link rel="alternate" hreflang="en-CA" href="${enUrl}"/>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="${frUrl}"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="${enUrl}"/>
@@ -54,27 +35,14 @@ for (const r of coreRoutes) {
 `;
 }
 
-// Add French routes with alternates
-for (const r of coreRoutes) {
-  const enUrl = `${baseUrl}${r.path}`;
-  const frUrl = `${baseUrl}/fr${r.path}`;
-  xml += `  <url>
-    <loc>${frUrl}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>${r.changefreq}</changefreq>
-    <priority>${(parseFloat(r.priority) * 0.95).toFixed(2)}</priority>
-    <xhtml:link rel="alternate" hreflang="en-CA" href="${enUrl}"/>
-    <xhtml:link rel="alternate" hreflang="fr-CA" href="${frUrl}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="${enUrl}"/>
-  </url>
-`;
-}
-
-// Add Articles
+// Add all active Articles & Strategic Insights in EN and FR
 for (const a of articles) {
-  const enUrl = `${baseUrl}${a.url}`;
-  const frUrl = `${baseUrl}/fr${a.url}`;
+  const enPath = a.url;
+  const frPath = `/fr${a.url}`;
+  const enUrl = `${SITE_URL}${enPath}`;
+  const frUrl = `${SITE_URL}${frPath}`;
   const prio = a.kind === "guide" ? "0.85" : "0.80";
+
   xml += `  <url>
     <loc>${enUrl}</loc>
     <lastmod>${currentDate}</lastmod>
@@ -100,4 +68,6 @@ for (const a of articles) {
 xml += `</urlset>\n`;
 
 fs.writeFileSync(sitemapPath, xml, "utf-8");
-console.log(`[Sitemap Generated] Successfully wrote multilingual sitemap to ${sitemapPath}`);
+console.log(
+  `[Sitemap Generated] Wrote ${coreRoutes.length + articles.length * 2} URLs to ${sitemapPath}`
+);

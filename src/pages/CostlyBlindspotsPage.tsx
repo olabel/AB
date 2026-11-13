@@ -17,7 +17,6 @@ import {
   Copy,
   ChevronDown,
   ChevronUp,
-  Sparkles,
   ArrowRight,
   ShieldCheck,
   TrendingUp,
@@ -103,6 +102,26 @@ export const CostlyBlindspotsPage: React.FC = () => {
     });
   }, [selectedCategory, searchQuery, isFr]);
 
+  const itemListJsonLd = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: isFr ? "Pièges Financiers Coûteux au Canada" : "Costly Canadian Money Blindspots",
+      description: isFr
+        ? "Guide exhaustif des règles financières statutaires souvent découvertes trop tard par les familles, acheteurs et retraités au Canada."
+        : "Comprehensive intelligence guide on statutory rules, benefits, and tax mechanisms Canadians discover too late.",
+      numberOfItems: BLINDSPOTS_DATA.length,
+      itemListElement: BLINDSPOTS_DATA.map((item, idx) => ({
+        "@type": "ListItem",
+        position: idx + 1,
+        name: isFr ? item.titleFr : item.titleEn,
+        description: isFr ? item.summaryFr : item.summaryEn,
+        url: `https://www.ahmedbello.com${isFr ? "/fr" : ""}/costly-blindspots#${item.id}`,
+      })),
+    }),
+    [isFr]
+  );
+
   return (
     <div className="py-12 md:py-16">
       <SEO
@@ -117,29 +136,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
             : "Verified Canadian financial blindspots, missed government grants, and costly tax traps that families and professionals discover too late. Actionable steps."
         }
         canonicalUrl={isFr ? "/fr/costly-blindspots" : "/costly-blindspots"}
-      />
-
-      {/* Structured Data: ItemList of Financial Rules */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            name: isFr ? "Pièges Financiers Coûteux au Canada" : "Costly Canadian Money Blindspots",
-            description: isFr
-              ? "Guide exhaustif des règles financières statutaires souvent découvertes trop tard par les familles, acheteurs et retraités au Canada."
-              : "Comprehensive intelligence guide on statutory rules, benefits, and tax mechanisms Canadians discover too late.",
-            numberOfItems: BLINDSPOTS_DATA.length,
-            itemListElement: BLINDSPOTS_DATA.map((item, idx) => ({
-              "@type": "ListItem",
-              position: idx + 1,
-              name: isFr ? item.titleFr : item.titleEn,
-              description: isFr ? item.summaryFr : item.summaryEn,
-              url: `https://www.ahmedbello.com${isFr ? "/fr" : ""}/costly-blindspots#${item.id}`,
-            })),
-          }),
-        }}
+        jsonLd={itemListJsonLd}
       />
 
       {/* Hero Section */}
@@ -302,7 +299,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
               <p className="text-xs text-[#625d52]">
                 {isFr
                   ? "Essayez d'autres mots-clés ou réinitialisez le filtre de catégorie."
-                  : "Try clearing your search query or selecting 'All 37 Blindspots'."}
+                  : "Try clearing your search query or selecting 'All Blindspots'."}
               </p>
               <button
                 type="button"
@@ -310,7 +307,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
                   setSearchQuery("");
                   setSelectedCategory("all");
                 }}
-                className="btn btn-secondary text-xs px-4 py-2 mt-2"
+                className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-xs px-4 py-2 mt-2"
               >
                 {isFr ? "Réinitialiser les filtres" : "Reset Filters"}
               </button>
@@ -356,7 +353,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
 
                       {/* Financial Stake Warning Callout */}
                       <div className="inline-flex items-center gap-2 text-xs font-medium text-[#8a3324] pt-0.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#8a3324] shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-[1px] bg-[#8a3324] shrink-0" />
                         <span>
                           <strong className="font-semibold text-[#8a3324]">
                             {isFr ? "Enjeu financier : " : "Financial Stake: "}
@@ -388,7 +385,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
                       </div>
 
                       {/* Human Case Story Box */}
-                      <div className="p-4 bg-white border-l-3 border-[#2e4a3b] border-y border-r border-[#d6cebd] rounded-r-[2px] space-y-1.5">
+                      <div className="p-4 bg-white border border-[#d6cebd] rounded-[2px] space-y-1.5">
                         <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-[#75581f] font-bold">
                           <Users className="w-3.5 h-3.5" />
                           <span>{isFr ? "Exemple concret" : "Real-World Experience"}</span>

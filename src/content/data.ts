@@ -550,7 +550,7 @@ const rawArticles: Article[] = [
     "slug": "investment-risk-vs-goal-risk",
     "kind": "guide",
     "title": "Investment risk vs. the risk of never reaching your goal",
-    "seoTitle": "Investment risk vs the risk of missing your goal",
+    "seoTitle": "Investment risk vs the risk of missing a goal",
     "description": "Volatility is the risk people notice. Falling short of what a goal requires is the one that decides outcomes. How to think about both.",
     "question": "Is keeping my money “safe” actually the lower-risk choice?",
     "category": "investing",
@@ -648,7 +648,7 @@ const rawArticles: Article[] = [
     "slug": "fhsa-explained",
     "kind": "guide",
     "title": "The FHSA explained: deductions, limits and qualifying withdrawals",
-    "seoTitle": "FHSA explained: limits, deductions, withdrawals",
+    "seoTitle": "FHSA explained: limits & withdrawal rules",
     "description": "The First Home Savings Account pairs a tax deduction with tax-free qualifying withdrawals. How the limits, carry-forward and closing rules work.",
     "question": "How does a First Home Savings Account work, and what are its limits?",
     "category": "registered-accounts",
@@ -860,7 +860,7 @@ const rawArticles: Article[] = [
     "slug": "income-depends-on-you",
     "kind": "guide",
     "title": "How much of your household income depends on your ability to work?",
-    "seoTitle": "How much household income depends on you working?",
+    "seoTitle": "How much family income depends on your work?",
     "description": "Savings plans and debts quietly assume your income continues. A way to size the gap if it stopped, and the main types of coverage that respond.",
     "question": "If my income stopped, which commitments could I not meet, and for how long?",
     "category": "protection",
@@ -1063,7 +1063,7 @@ const rawArticles: Article[] = [
     "slug": "cpp-oas-start-age",
     "kind": "guide",
     "title": "CPP and OAS: how your start age changes the monthly amount",
-    "seoTitle": "CPP and OAS: how start age changes your pension",
+    "seoTitle": "CPP and OAS: how start age shifts payouts",
     "description": "CPP can start between 60 and 70 and OAS between 65 and 70. How much the monthly amount changes, and why the right age depends on more than arithmetic.",
     "question": "How does choosing when to start CPP and OAS change what I receive?",
     "category": "retirement",
@@ -1171,7 +1171,7 @@ const rawArticles: Article[] = [
     "slug": "new-to-canada-money-basics",
     "kind": "guide",
     "title": "New to Canada: how your first year of money decisions works",
-    "seoTitle": "New to Canada: money basics for your first year",
+    "seoTitle": "New to Canada: first-year money basics",
     "description": "Credit history, registered accounts and taxes work differently here. What starts when you arrive, what does not carry over, and what to check first.",
     "question": "What should I understand about banking, credit, registered accounts and tax when I arrive?",
     "category": "newcomers",
@@ -1362,7 +1362,7 @@ const rawArticles: Article[] = [
     "slug": "questions-before-any-financial-product",
     "kind": "insight",
     "title": "Eight questions to ask before you buy any financial product, including from me",
-    "seoTitle": "Eight questions before you buy a financial product",
+    "seoTitle": "8 questions before buying a financial product",
     "description": "How a professional is paid, what they are licensed to do, and what a product cannot do for you. Questions worth asking of anyone.",
     "question": "How can I judge a financial recommendation before I act on it?",
     "category": "decision-making",
@@ -1436,8 +1436,8 @@ const rawArticles: Article[] = [
     "slug": "canadian-mortgage-renewal-shock-liquidity-trap",
     "kind": "insight",
     "title": "The Canadian Mortgage Renewal Shock: Why Raiding Your TFSA or RRSP Is Often a Costly Trap",
-    "seoTitle": "Canadian Mortgage Renewal Shock: Why Raiding TFSAs or RRSPs Is a Trap",
-    "description": "With over $350B in Canadian mortgages confronting renewal payment shock, homeowners are liquidating registered accounts to prepay principal. Here is the balance-sheet analysis of why this often destroys family wealth.",
+    "seoTitle": "Mortgage renewal shock: TFSA vs RRSP raid",
+    "description": "Facing higher mortgage renewal payments? See the balance-sheet math before raiding your TFSA or RRSP and losing tax shelter.",
     "question": "As my Canadian mortgage rate spikes at renewal, should I withdraw from my TFSA or RRSP to pay down my mortgage principal?",
     "category": "debt-and-cashflow",
     "problem": "The psychological anxiety of higher monthly mortgage payments tempts Canadian households to treat brick-and-mortar debt reduction as an absolute good, ignoring permanent tax-shelter destruction, structural illiquidity, and asymmetric balance-sheet risk.",
@@ -1446,7 +1446,7 @@ const rawArticles: Article[] = [
       "Yet from an institutional balance-sheet perspective, this conventional wisdom commits a critical error: it evaluates debt in a vacuum rather than assessing total household capital efficiency. A home is an illiquid asset. It cannot buy groceries, cover an unexpected medical emergency, or sustain mortgage service during a temporary career interruption. When a family liquidates liquid capital to prepay mortgage principal, they convert liquid sovereignty into illiquid drywall.",
       "The asymmetry deepens when registered accounts are involved. An RRSP withdrawal is not merely taxed at your full marginal income tax rate (triggering immediate withholding tax of up to 30% plus top-up liability at tax filing); it permanently extinguishes that contribution room forever. You cannot \"re-contribute\" those funds when rates stabilize. You have effectively paid the Canada Revenue Agency up to 40%–53% in frictional tax leakage simply to reduce a 5% debt.",
       "Even within a Tax-Free Savings Account (TFSA), where contribution room is recovered the following calendar year, the opportunity cost is mathematically punishing. A $50,000 TFSA compounded over 15 to 20 years in a balanced global portfolio at a historic 6.5% real return grows completely tax-free to over $176,000. Using that $50,000 to prepay a 5.2% mortgage saves interest over the 5-year term, but deprives the family of irreplaceable tax-free compounding that would otherwise fund their retirement and insulate them from future Old Age Security (OAS) clawbacks.",
-      "A McKinsey-grade treasury framework treats personal balance sheets like enterprise capital structures: maintain adequate operating liquidity, match asset duration with liabilities, and never sacrifice high-tax-value registered shelters to solve a short-term cashflow friction that could be managed through structured amortization, budget realignments, or dedicated non-registered liquidity buffers."
+      "A disciplined treasury framework treats personal balance sheets like household capital structures: maintain adequate operating liquidity, match asset duration with liabilities, and never sacrifice high-tax-value registered shelters to solve a short-term cashflow friction that could be managed through structured amortization, budget realignments, or dedicated non-registered liquidity buffers."
     ],
     "example": {
       "title": "Case Study: The $60,000 Prepayment Dilemma (15-Year Horizon)",
@@ -1524,8 +1524,8 @@ const rawArticles: Article[] = [
     "slug": "canadian-ccpc-passive-income-grind-sbd-tax-trap",
     "kind": "insight",
     "title": "The Canadian CCPC Passive Income Grind: How the $50,000 Limit Silently Erodes Small Business Deductions",
-    "seoTitle": "CCPC $50,000 Passive Income Limit & Small Business Deduction Guide",
-    "description": "For incorporated professionals and business owners, passive investment returns over $50,000 trigger a 5:1 clawback of Canada's preferential small business tax rate. Here is the mathematical mechanics and corporate treasury architecture to navigate it.",
+    "seoTitle": "CCPC $50,000 passive income and SBD limits",
+    "description": "Corporate passive returns over $50,000 reduce the Canadian small business deduction 5-for-1. Learn the tax math and options.",
     "question": "How does passive investment income inside my corporation claw back my small business deduction, and how should I structure retained earnings?",
     "category": "investing",
     "figuresAsOf": "Income Tax Act Subsection 125(5.1) and CRA corporate taxation rules",
@@ -1614,8 +1614,8 @@ const rawArticles: Article[] = [
     "slug": "term-vs-permanent-life-insurance",
     "kind": "guide",
     "title": "Term vs permanent life insurance: how to choose in Canada",
-    "seoTitle": "Term vs Permanent Life Insurance Canada Decision Guide",
-    "description": "Term insurance covers temporary liabilities like mortgages and child-rearing. Permanent insurance covers lifelong capital gains taxes and estate liquidity. How to choose.",
+    "seoTitle": "Term vs permanent life insurance in Canada",
+    "description": "Term life insurance covers temporary debts and mortgages; permanent policies solve estate tax and corporate liquidity needs.",
     "question": "What is the difference between term and permanent life insurance in Canada, and when does each make sense?",
     "category": "protection",
     "figuresAsOf": "Industry standard contractual features across Canadian life insurance carriers",
@@ -1704,8 +1704,8 @@ const rawArticles: Article[] = [
   "slug": "internationally-trained-doctors-nurses-first-year",
   "kind": "guide",
   "title": "Internationally trained doctors and nurses: your first year of money in Canada",
-  "seoTitle": "Trained abroad: your first year of money in Canada",
-  "description": "Licensing takes time and your income may start late. How tax, credit, savings and benefits work in a first year while your credentials are being recognized.",
+  "seoTitle": "Doctors and nurses in Canada: Year 1 guide",
+  "description": "Licensing takes time and earnings may start late. How tax, credit, TFSA room and benefits work in your first year in Canada.",
   "question": "How should I plan my money in Canada while my licence and credentials are still being recognized?",
   "category": "newcomers",
   "figuresAsOf": "2026 TFSA limit and CRA and FCAC guidance as published on the pages listed under Sources",
@@ -1863,12 +1863,12 @@ const rawArticles: Article[] = [
   "slug": "fhsa-vs-hbp-first-time-home-buyer-stacking",
   "kind": "guide",
   "title": "Up to $100,000 toward your first home",
-  "seoTitle": "Up to $100,000 Toward Your First Home: Combining the FHSA and RRSP Home Buyers' Plan",
-  "description": "How first-time home buyers in Canada can combine the First Home Savings Account (FHSA) and the Home Buyers' Plan (HBP) to access up to $100,000. Note that only FHSA withdrawals are tax-free; HBP is an RRSP loan that you repay over 15 years.",
+  "seoTitle": "Stacking FHSA and HBP up to $100,000 in Canada",
+  "description": "Combine the $40,000 FHSA and $60,000 RRSP Home Buyers' Plan for a first home, plus the 15-year HBP repayment rules in Canada.",
   "question": "Can I use both the FHSA and the RRSP Home Buyers' Plan together to buy a home in Canada, and what is the optimal sequence to maximize tax deductions?",
   "category": "registered-accounts",
   "figuresAsOf": "2025/2026 tax year (incorporating Budget 2024 Bill C-59 legislation)",
-  "problem": "Prospective Canadian home buyers frequently treat the First Home Savings Account (FHSA) and the Registered Retirement Savings Plan (RRSP) Home Buyers' Plan (HBP) as mutually exclusive options. In reality, Canadian tax law permits qualifying first-time home buyers to utilize both programs concurrently, unlocking substantial purchasing power. Without a structured accumulation and withdrawal timeline, however, purchasers risk misallocating annual contribution limits, triggering avoidable tax clawbacks, or leaving tens of thousands of dollars in compounding tax refunds on the table.",
+  "problem": "Prospective Canadian home buyers frequently treat the First Home Savings Account (FHSA) and the Registered Retirement Savings Plan (RRSP) Home Buyers' Plan (HBP) as mutually exclusive options. In reality, Canadian tax law permits qualifying first-time home buyers to utilize both programs concurrently, expanding down-payment purchasing power. Without a structured accumulation and withdrawal timeline, however, purchasers risk misallocating annual contribution limits, triggering avoidable tax clawbacks, or leaving tens of thousands of dollars in compounding tax refunds on the table.",
   "overview": [
     "Under Subsection 146.6 of the Income Tax Act, the First Home Savings Account (FHSA) allows qualifying Canadian residents to contribute up to $8,000 annually, to a lifetime ceiling of $40,000. Contributions generate a dollar-for-dollar deduction against personal taxable income, and qualifying withdrawals to purchase a first home are 100 percent tax-free, with zero mandatory repayment back into the plan. In contrast, Subsection 146.02 governs the Home Buyers' Plan (HBP), which allows individuals to withdraw funds from their RRSP to purchase or build a qualifying home. In Federal Budget 2024, the federal government officially expanded the HBP withdrawal limit from $35,000 to $60,000 per person, effective April 16, 2024.",
     "Because the Income Tax Act contains no restriction preventing the concurrent use of both programs, a single first-time home buyer can deploy up to $100,000 toward a home purchase: $40,000 from an FHSA plus $60,000 from an RRSP via the HBP. For a married or common-law couple where both partners qualify as first-time home buyers, the combined purchasing pool reaches up to $200,000 ($80,000 combined FHSA plus $120,000 combined HBP).",
@@ -1976,7 +1976,7 @@ const rawArticles: Article[] = [
   "related": [
     "fhsa-explained",
     "tfsa-vs-rrsp",
-    "mortgage-renewal-cliff-canada"
+    "canadian-mortgage-renewal-shock-liquidity-trap"
   ],
   "contactTopic": "fhsa-hbp",
   "invitationAbout": "coordinating your FHSA and HBP contribution timelines",
@@ -1987,8 +1987,8 @@ const rawArticles: Article[] = [
   "slug": "cpp-timing-age-60-vs-65-vs-70-mathematical-breakeven",
   "kind": "insight",
   "title": "Canada Pension Plan (CPP) Timing: The Mathematical Breakeven of Age 60 vs 65 vs 70",
-  "seoTitle": "CPP Timing Age 60 vs 65 vs 70: Actuarial Breakeven & RRSP Bridge Strategy",
-  "description": "An actuarial evaluation of taking the Canada Pension Plan (CPP) early at age 60 versus deferring to age 70. Detailed breakeven age analysis, inflation-indexing mechanics, and RRSP drawdown sequencing.",
+  "seoTitle": "CPP at 60 vs 65 vs 70: breakeven analysis",
+  "description": "Mathematical breakeven comparison of claiming CPP early at 60 (-36%) versus deferring to 70 (+42%), CPI indexing and RRSP bridging.",
   "question": "At what exact age does deferring the Canada Pension Plan (CPP) to age 65 or age 70 break even, and when does taking it early make mathematical sense?",
   "category": "retirement",
   "figuresAsOf": "2025/2026 statutory rates (0.6% monthly pre-65 penalty, 0.7% monthly post-65 enhancement, YMPE and YAMPE benchmarks)",
@@ -2096,9 +2096,9 @@ const rawArticles: Article[] = [
     }
   ],
   "related": [
-    "statutory-liquidity-traps-canada",
+    "oas-clawback-mitigation-threshold-canadian-retirees",
     "tfsa-vs-rrsp",
-    "how-to-choose-an-independent-financial-advisor-in-canada"
+    "questions-before-any-financial-product"
   ],
   "contactTopic": "cpp-timing",
   "invitationAbout": "modeling your personal CPP breakeven and RRSP drawdown sequence",
@@ -2109,27 +2109,27 @@ const rawArticles: Article[] = [
   "slug": "canadian-alternative-minimum-tax-amt-high-earners-guide",
   "kind": "insight",
   "title": "The Canadian Alternative Minimum Tax (AMT): Navigating the Post-2024 Tax Reform",
-  "seoTitle": "Alternative Minimum Tax Canada (AMT) Guide: Rules, Rates & Planning",
-  "description": "A comprehensive breakdown of Canada's overhauled Alternative Minimum Tax (AMT) under Bill C-59. How 100% capital gains inclusion, higher exemption thresholds, and credit limits impact high earners.",
+  "seoTitle": "Canada AMT guide: 20.5% rate & key rules",
+  "description": "How Canada's post-2024 Alternative Minimum Tax (Bills C-59 & C-69) taxes capital gains at 100%, allows 80% of donation credits, and affects exits.",
   "question": "How does the post-2024 Alternative Minimum Tax (AMT) change tax liability on business exits, real estate sales, and major charitable donations in Canada?",
   "category": "decision-making",
-  "figuresAsOf": "2025/2026 tax years (Section 127.5 Income Tax Act, Bill C-59 statutory amendments)",
-  "problem": "For over three decades, the Canadian Alternative Minimum Tax (AMT) operated quietly in the background, rarely affecting mainstream entrepreneurs or everyday investors. Effective for tax years 2024 and beyond, the federal government enacted sweeping structural reforms through Bill C-59. The flat AMT rate rose from 15 percent to 20.5 percent, the capital gains inclusion rate for AMT purposes was elevated to 100 percent, and non-refundable tax credits, including donation credits, were restricted to a 50 percent allowance. High-income Canadians selling incorporated businesses, realizing substantial capital gains on property, or executing legacy philanthropic gifts now face massive, unexpected upfront tax liabilities.",
+  "figuresAsOf": "2024–2026 tax years (Income Tax Act s. 127.5 & s. 127.531; Bills C-59 & C-69)",
+  "problem": "For over three decades, the Canadian Alternative Minimum Tax (AMT) operated quietly in the background, rarely affecting mainstream entrepreneurs or everyday investors. Effective for tax years 2024 and beyond, the federal government enacted sweeping structural reforms through Bill C-59 and Bill C-69. The flat AMT rate rose from 15 percent to 20.5 percent, the capital gains inclusion rate for AMT purposes was elevated to 100 percent, most non-refundable tax credits were reduced to a 50 percent allowance, and the charitable donation tax credit was set at 80 percent. High-income Canadians selling incorporated businesses, realizing substantial capital gains on property, or executing legacy philanthropic gifts now face unexpected upfront tax liabilities.",
   "overview": [
     "Under Section 127.5 of the Income Tax Act, the Alternative Minimum Tax (AMT) is a parallel tax calculation that runs alongside the ordinary Part I income tax computation. The taxpayer must calculate their liability under both systems and pay whichever amount is higher. Under the historical pre-2024 framework, AMT applied a 15 percent flat rate to adjusted taxable income exceeding a fixed $40,000 basic exemption, with capital gains included at 80 percent.",
-    "Bill C-59 fundamentally reconstructed this architecture with three simultaneous changes: First, the federal AMT rate was increased from 15 percent to 20.5 percent, aligning it directly with the second federal marginal tax bracket. Second, the basic AMT exemption was increased from $40,000 to the lower threshold of the fourth federal tax bracket (indexed annually, standing at $173,205 in 2024 and increasing in 2025 and 2026). While this large exemption protects modest middle-class taxpayers, it concentrates the entire burden on high-net-worth individuals and significant single-year liquidity events.",
-    "Third, the base of income subject to AMT was drastically broadened. Capital gains are now included at 100 percent under the AMT formula, compared to the standard regular inclusion rate. Furthermore, the capital gains deduction claimed under the Lifetime Capital Gains Exemption (LCGE) for Qualified Small Business Corporation (QSBC) shares is now subject to a 30 percent inclusion in the AMT base. Most critically, non-refundable tax credits, including the federal charitable donation tax credit, can only offset 50 percent of their standard value when computing AMT.",
-    "The interaction with charitable giving has created substantial friction for major donors. Under standard tax rules, donating publicly traded securities with accrued gains eliminates capital gains tax entirely and produces a full donation tax credit. Under the reformed AMT, 30 percent of the capital gains on donated publicly traded securities are brought into the AMT base, and the resulting donation credit is restricted to a 50 percent reduction against minimum tax. A donor executing a million-dollar gift can face a substantial six-figure cash tax bill in a year when they had zero taxable ordinary salary.",
-    "While AMT is theoretically not a permanent tax because it can be carried forward for up to seven subsequent tax years under Section 120.2 to offset regular Part I tax, recovery is far from guaranteed. To recover prior AMT paid, an individual must generate sufficient regular taxable income in those seven years where regular tax exceeds minimum tax. For entrepreneurs who retire immediately following the sale of their business, or investors whose subsequent income consists primarily of tax-sheltered dividends or capital returns, the AMT effectively becomes a permanent capital confiscation."
+    "Bills C-59 and C-69 fundamentally reconstructed this architecture with three simultaneous changes: First, the federal AMT rate was increased from 15 percent to 20.5 percent, aligning it directly with the second federal marginal tax bracket. Second, the basic AMT exemption was increased from $40,000 to the lower threshold of the fourth federal tax bracket (indexed annually: $173,205 in 2024, $177,882 in 2025, and $181,440 in 2026). While this large exemption protects modest middle-class taxpayers, it concentrates the burden on high-net-worth individuals and significant single-year liquidity events.",
+    "Third, the base of income subject to AMT was drastically broadened. Capital gains are now included at 100 percent under the AMT formula, compared to the 50 percent regular inclusion rate. Furthermore, the capital gains deduction claimed under the Lifetime Capital Gains Exemption (LCGE) for Qualified Small Business Corporation (QSBC) shares is now subject to a 30 percent inclusion in the AMT base. Most non-refundable tax credits can only offset 50 percent of their standard value when computing AMT, while under Subsection 127.531(c) (enacted via Bill C-69), individuals may claim 80 percent of the federal charitable donation tax credit.",
+    "The interaction with charitable giving still creates friction for major donors. Under standard tax rules, donating publicly traded securities with accrued gains eliminates capital gains tax entirely and produces a full donation tax credit. Under the reformed AMT, 30 percent of the capital gains on donated publicly traded securities are brought into the AMT base, and the resulting charitable donation credit is capped at 80 percent against minimum tax (while other non-refundable credits are capped at 50 percent). A donor executing a major securities gift in a year with low ordinary income can still face an unexpected cash tax bill.",
+    "While AMT is theoretically not a permanent tax because it can be carried forward for up to seven subsequent tax years under Section 120.2 to offset regular Part I tax, recovery is far from guaranteed. To recover prior AMT paid, an individual must generate sufficient regular taxable income in those seven years where regular tax exceeds minimum tax. For entrepreneurs who retire immediately following the sale of their business, or investors whose subsequent income consists primarily of tax-sheltered dividends or capital returns, the AMT effectively becomes a permanent capital cost."
   ],
   "example": {
     "title": "Tax Liability on a $1,500,000 Business Equity Liquidity Event",
-    "intro": "Consider an entrepreneur selling private corporate shares with an accrued capital gain of $1,500,000, claiming the Lifetime Capital Gains Exemption (LCGE) on approximately $1,016,836 of the gain, with standard deductions. The table contrasts their tax position under the old AMT regime versus the post-2024 reformed framework.",
+    "intro": "Consider an entrepreneur selling private corporate shares with an accrued capital gain of $1,500,000, claiming the Lifetime Capital Gains Exemption (LCGE) on approximately $1,016,836 of the gain (2024 pre-June 25 reference), with standard deductions. The table contrasts their tax position under the old AMT regime versus the post-2024 reformed framework.",
     "table": {
       "head": [
         "Component",
         "Pre-2024 Framework",
-        "Reformed Post-2024 Framework (Bill C-59)",
+        "Reformed Post-2024 Framework (Bills C-59 & C-69)",
         "Strategic Impact"
       ],
       "rows": [
@@ -2137,13 +2137,13 @@ const rawArticles: Article[] = [
           "Statutory AMT Flat Rate",
           "15.0%",
           "20.5%",
-          "+5.5% percentage point rate increase"
+          "+5.5 percentage point rate increase"
         ],
         [
           "Basic Exemption Amount",
           "$40,000 flat",
-          "$173,205+ (indexed to 4th bracket)",
-          "Higher basic shield, but concentrated on large events"
+          "$173,205+ (4th bracket; $181,440 in 2026)",
+          "Higher basic shield, concentrated on large events"
         ],
         [
           "Capital Gains Inclusion (AMT)",
@@ -2155,26 +2155,26 @@ const rawArticles: Article[] = [
           "LCGE Inclusion in AMT Base",
           "0% direct inclusion",
           "30.0% inclusion of exempt amount",
-          "Brings ~$305,000 of 'exempt' gains into AMT base"
+          "Brings ~$305,000 of exempt gains into AMT base"
         ],
         [
-          "Net Minimum Tax Due (Year of Sale)",
-          "Approx. $12,400",
-          "Approx. $78,500+",
-          "Substantial upfront cash liquidity requirement"
+          "Donation / Credit Allowances",
+          "100% of most credits",
+          "80% charitable donation; 50% most other credits",
+          "Modest cushion for philanthropy; tight cap elsewhere"
         ],
         [
           "Seven-Year Recovery Feasibility",
           "High (small balance)",
-          "Requires ~$200k/yr ordinary taxable income",
+          "Requires substantial ordinary taxable income",
           "Risk of unrecovered AMT if owner fully retires"
         ]
       ]
     },
     "notes": [
       "Calculations represent federal tax components; provincial AMT applies in lockstep across most provinces.",
-      "The 30 percent inclusion of the LCGE represents a dramatic shift: business sales once thought to be completely tax-free now trigger significant initial cheques to the Receiver General.",
-      "Recovering the $78,500 in AMT credits requires structuring ordinary income distributions (such as corporate salary or taxable pension withdrawals) across the subsequent seven years."
+      "The 30 percent inclusion of the LCGE represents a major shift: business sales once thought to be completely tax-free can trigger significant initial cheques to the Receiver General.",
+      "Recovering AMT credits requires generating enough regular Part I tax above AMT (such as corporate salary, RRIF, or pension withdrawals) across the subsequent seven years."
     ],
     "conclusion": "Entrepreneurs planning a business sale must model AMT well before closing day to arrange liquidity and establish a multi-year post-sale income generation plan."
   },
@@ -2189,7 +2189,7 @@ const rawArticles: Article[] = [
     },
     {
       "myth": "Charitable donations of shares are always 100 percent tax-free.",
-      "reality": "Under the reformed AMT, 30 percent of the gain on donated publicly traded shares is included in adjusted taxable income, and the donation credit is limited to a 50 percent offset."
+      "reality": "Under the reformed AMT, 30 percent of the gain on donated publicly traded shares is included in adjusted taxable income, and the donation credit is limited to an 80 percent offset under Section 127.531(c)."
     },
     {
       "myth": "Any AMT you pay is guaranteed to be fully refunded by the CRA eventually.",
@@ -2211,9 +2211,9 @@ const rawArticles: Article[] = [
   ],
   "sources": [
     {
-      "label": "Department of Finance Canada - Explanatory Notes to Bill C-59 (Alternative Minimum Tax)",
+      "label": "Department of Finance Canada - Alternative Minimum Tax Reforms (Bills C-59 & C-69)",
       "url": "https://www.canada.ca/en/department-finance/news/2023/11/government-releases-draft-legislation-to-modernize-the-alternative-minimum-tax.html",
-      "note": "Legislative background detailing the 20.5% rate, 100% capital gains inclusion, and credit restrictions."
+      "note": "Legislative background detailing the 20.5% rate, 100% capital gains inclusion, 50% general credit cap, and 80% donation credit rule under Bill C-69."
     },
     {
       "label": "Canada Revenue Agency - Form T691 Alternative Minimum Tax",
@@ -2221,15 +2221,15 @@ const rawArticles: Article[] = [
       "note": "Official statutory worksheet for calculating federal and provincial minimum tax liability."
     },
     {
-      "label": "Income Tax Act - Section 127.5 (Alternative Minimum Tax Framework)",
+      "label": "Income Tax Act - Section 127.5 & Section 127.531 (AMT Framework)",
       "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-127.5.html",
-      "note": "Statutory codification of adjusted taxable income, basic exemption thresholds, and minimum tax rates."
+      "note": "Statutory codification of adjusted taxable income, basic exemption thresholds, donation credit allowance (80%), and minimum tax rates."
     }
   ],
   "related": [
-    "capital-gains-inclusion-rate-proposal-breakdown",
-    "statutory-liquidity-traps-canada",
-    "corporate-life-insurance-cda-extraction-ccpc"
+    "canada-federal-budget-capital-gains-cei-amt-analysis",
+    "tfsa-vs-rrsp",
+    "corporate-passive-income-trap-50000-clawback-rule"
   ],
   "contactTopic": "amt-planning",
   "invitationAbout": "evaluating prospective AMT liability before major liquidity events",
@@ -2372,8 +2372,8 @@ const rawArticles: Article[] = [
   "slug": "resp-withdrawal-strategy-eap-pse-grant-clawback",
   "kind": "guide",
   "title": "RESP Withdrawal Strategy: Maximizing EAPs, Protecting Grants, and Avoiding Tax Traps",
-  "seoTitle": "RESP Withdrawal Rules: EAP vs PSE Strategy & Grant Clawback Prevention",
-  "description": "Master the mechanics of Registered Education Savings Plan withdrawals. Understand the $8,000 13-week EAP statutory limit, post-secondary capital extraction, and how to avoid CESG clawbacks.",
+  "seoTitle": "RESP withdrawals: EAP vs PSE & grants",
+  "description": "How to sequence RESP Educational Assistance Payments ($8,000 13-week limit) and tax-free PSE capital without losing CESG grants.",
   "question": "What is the difference between an EAP and a PSE withdrawal from an RESP, and how do parents withdraw funds without paying unnecessary taxes or repaying grants?",
   "category": "family",
   "figuresAsOf": "2025/2026 statutory rules (Budget 2023 $8,000 13-week limit, Subsection 146.1 ITA)",
@@ -2509,8 +2509,8 @@ const rawArticles: Article[] = [
   "slug": "prescribed-rate-loans-spousal-income-splitting",
   "kind": "guide",
   "title": "Prescribed Rate Loans: Familial Income Splitting Under Subsection 74.1(1)",
-  "seoTitle": "Prescribed Rate Loans in Canada | CRA Attribution Rules & Spousal Loans",
-  "description": "An educational guide to Canadian attribution rules, spousal loans under Subsection 74.5(2), CRA prescribed interest rate mechanics, and the mandatory January 30 annual payment deadline.",
+  "seoTitle": "Prescribed rate spousal loans in Canada",
+  "description": "Learn CRA spousal attribution rules (ITA 74.1), prescribed rate loan exceptions (74.5(2)), and the strict January 30 interest deadline.",
   "question": "How can married Canadian couples legally shift taxable investment returns to the lower-earning spouse without triggering CRA attribution penalties?",
   "category": "investing",
   "figuresAsOf": "Q1 2026",
@@ -2651,8 +2651,8 @@ const rawArticles: Article[] = [
   "slug": "oas-clawback-mitigation-threshold-canadian-retirees",
   "kind": "guide",
   "title": "OAS Recovery Tax: Threshold Mechanics & Clawback Mitigation Strategies",
-  "seoTitle": "OAS Clawback Thresholds & Mitigation Strategies in Canada",
-  "description": "An educational breakdown of the Old Age Security (OAS) recovery tax under Section 180.2 of the Income Tax Act, net world income calculations, deferral math, and pension income splitting.",
+  "seoTitle": "OAS recovery tax thresholds & strategies",
+  "description": "How the Old Age Security recovery tax (ITA s. 180.2) works, pension income splitting, TFSA timing, and deferral past age 65.",
   "question": "At what income level does the CRA claw back your Old Age Security pension, and how can retirees structure their withdrawals to preserve benefits?",
   "category": "retirement",
   "figuresAsOf": "2025/2026",
@@ -2798,8 +2798,8 @@ const rawArticles: Article[] = [
   "slug": "credit-cards-loans-lines-of-credit-repayment-strategies",
   "kind": "guide",
   "title": "Debt Repayment Architecture: Credit Cards, Personal Loans, and Lines of Credit",
-  "seoTitle": "Paying Off Credit Cards, Personal Loans & Lines of Credit in Canada",
-  "description": "A step-by-step quantitative guide to eliminating revolving high-interest debt, comparing the Avalanche and Snowball methods, utilizing lines of credit, and avoiding balance transfer traps.",
+  "seoTitle": "Debt repayment: cards, loans & LOCs",
+  "description": "Compare the Debt Avalanche and Snowball methods, credit utilization effects, and line of credit consolidation rules in Canada.",
   "question": "What is the most cost-effective and structurally sound strategy to pay off credit cards, personal loans, and lines of credit in Canada?",
   "category": "debt-credit",
   "figuresAsOf": "2025/2026 Canadian banking regulations (FCAC) and credit reporting frameworks",
@@ -2808,7 +2808,7 @@ const rawArticles: Article[] = [
     "Canadian credit card debt is mathematically predatory because interest compounds daily on your average daily balance rather than monthly. If an account carries an Annual Percentage Rate (APR) of 20.99%, the daily rate is approximately 0.0575 percent. Furthermore, making only the contractual minimum payment (typically the interest plus 1 percent of the principal balance, or $10) ensures that roughly 80 to 90 percent of every dollar paid goes directly to servicing interest rather than reducing the balance.",
     "Systematic debt elimination requires an intentional choice between two structured execution models: the Debt Avalanche and the Debt Snowball. The Debt Avalanche allocates every surplus dollar toward the debt with the highest annual interest rate while paying minimums on all other facilities. This method is mathematically optimal, minimizing total cash interest paid and accelerating full debt freedom. The Debt Snowball allocates surplus cash to the smallest account balance first, delivering immediate psychological wins that sustain long-term behavioral discipline.",
     "For individuals with stable credit scores (typically 680 or higher), structural interest reduction offers an immediate multiplier. Consolidating credit card balances onto an unsecured personal line of credit (priced at Prime plus 2.5% to 4.5%) or a fixed-rate consolidation loan instantly cuts the interest drag in half. However, this strategy only works if the borrower closes or physically freezes the refinanced credit cards; otherwise, borrowers risk the revolving trap of running up new credit card balances while still servicing the consolidation loan.",
-    "Finally, debt repayment must protect personal credit scores. Equifax and TransUnion heavily weigh credit utilization—the percentage of available revolving limit being used. Exceeding 30 percent utilization on any single card or across total aggregate limits depresses credit scores, restricting access to lower borrowing rates. Paying down revolving credit balances directly improves credit ratings, unlocking lower interest terms across the entire balance sheet."
+    "Finally, debt repayment must protect personal credit scores. Equifax and TransUnion heavily weigh credit utilization—the percentage of available revolving limit being used. Exceeding 30 percent utilization on any single card or across total aggregate limits depresses credit scores, restricting access to lower borrowing rates. Paying down revolving credit balances directly improves credit ratings, helping secure lower borrowing terms across the entire balance sheet."
   ],
   "example": {
     "title": "Comparative Amortization: $22,000 Multi-Debt Household Portfolio",
@@ -2928,8 +2928,8 @@ const rawArticles: Article[] = [
   "slug": "mortgages-home-buying-fixed-vs-variable-amortization-stress-test",
   "kind": "guide",
   "title": "Mortgages and Home Buying: Fixed vs. Variable, OSFI Stress Testing, and Amortization",
-  "seoTitle": "Mortgage Buying Guide Canada: Fixed vs Variable, Stress Test & Amortization",
-  "description": "A comprehensive breakdown of how the Canadian government qualifies home buyers under Guideline B-20, fixed vs. variable interest rate mechanics, and the mathematics of 25 vs. 30-year amortization.",
+  "seoTitle": "Canada mortgages: fixed, variable & B-20",
+  "description": "How OSFI Guideline B-20 stress-tests buyers, how fixed IRD penalties differ from variable, and 25 vs 30-year amortization costs.",
   "question": "How does the Government of Canada qualify home buyers, what determines whether fixed or variable rates win, and how does amortization impact total interest?",
   "category": "registered-accounts",
   "figuresAsOf": "2025/2026 OSFI B-20 regulations, CMHC insurance guidelines, and federal 30-year amortization expansions",
@@ -3044,8 +3044,8 @@ const rawArticles: Article[] = [
   "slug": "personal-line-of-credit-vs-heloc-canada",
   "kind": "guide",
   "title": "Personal Line of Credit vs. Home Equity Line of Credit (HELOC): The Strategic Guide",
-  "seoTitle": "Personal Line of Credit vs HELOC in Canada: Rates, OSFI Rules & Tax Strategy",
-  "description": "An executive comparison of unsecured personal lines of credit and Home Equity Lines of Credit (HELOCs), covering OSFI 65% LTV rules, collateral risks, pricing spreads, and tax deductibility under ITA 20(1)(c).",
+  "seoTitle": "Personal line of credit vs HELOC Canada",
+  "description": "Compare unsecured personal lines of credit and HELOCs: OSFI 65% LTV limits, home title risk, and interest deductibility under ITA 20(1)(c).",
   "question": "Should I use an unsecured Personal Line of Credit or a Home Equity Line of Credit (HELOC), and what are the legal, collateral, and tax implications?",
   "category": "debt-credit",
   "figuresAsOf": "2025/2026 OSFI B-20 lending guidelines and CRA tax deductibility rulings",
@@ -3174,8 +3174,8 @@ const rawArticles: Article[] = [
   "slug": "how-much-tax-do-i-save-with-a-10000-rrsp-contribution",
   "kind": "guide",
   "title": "How Much Tax Do I Save With a $10,000 RRSP Contribution?",
-  "seoTitle": "Tax Savings on a $10,000 RRSP Contribution in Canada (By Province & Income)",
-  "description": "An exact mathematical breakdown of the tax refund generated by a $10,000 RRSP contribution across Canadian federal and provincial tax brackets, including impact on CCB and government benefits.",
+  "seoTitle": "Tax savings on a $10,000 RRSP deposit",
+  "description": "Calculate the tax refund from a $10,000 RRSP contribution across Canadian brackets, plus effects on the Canada Child Benefit.",
   "question": "How much tax refund will I get from a $10,000 RRSP contribution in Canada, and how does my income bracket change the calculation?",
   "category": "registered-accounts",
   "figuresAsOf": "2025/2026 indexed federal and provincial marginal tax brackets (CRA)",
@@ -3304,8 +3304,8 @@ const rawArticles: Article[] = [
   "slug": "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first",
   "kind": "guide",
   "title": "TFSA vs. RRSP vs. FHSA: The Priority Hierarchy for Canadian Savers",
-  "seoTitle": "TFSA vs RRSP vs FHSA: Which Account to Maximize First in Canada",
-  "description": "An executive decision matrix ranking the TFSA, RRSP, and FHSA based on household income, home ownership timelines, employer matching, and long-term tax efficiency.",
+  "seoTitle": "TFSA vs RRSP vs FHSA: priority hierarchy",
+  "description": "A priority framework for choosing between TFSA, RRSP, and FHSA based on marginal tax brackets, home buying plans, and employer matches.",
   "question": "If I have limited savings each month, which registered account should I fund first: TFSA, RRSP, or FHSA?",
   "category": "registered-accounts",
   "figuresAsOf": "2025/2026 CRA contribution limits ($7,000 TFSA, $8,000 FHSA, $32,490 RRSP cap)",
@@ -3427,6 +3427,7 @@ const rawArticles: Article[] = [
 },
 {
   "slug": "accidental-fhsa-over-contributions-non-resident-freezes",
+  "seoTitle": "FHSA over-contributions & CRA Form RC727",
   "title": "Accidental FHSA Over-Contributions & Non-Resident Freezes: CRA Form RC727 & Tax Rules",
   "kind": "guide",
   "category": "registered-accounts",
@@ -3525,6 +3526,7 @@ const rawArticles: Article[] = [
 },
 {
   "slug": "irs-foreign-trust-nightmare-moving-to-us-with-tfsa",
+  "seoTitle": "Moving to US with a TFSA: IRS Form 3520",
   "title": "The IRS Foreign Trust Trap: Moving to the U.S. with a TFSA (Forms 3520, 3520-A & PFIC)",
   "kind": "insight",
   "category": "newcomers",
@@ -3555,7 +3557,7 @@ const rawArticles: Article[] = [
       "Revenue Procedure 2020-17 provided relief from Forms 3520/3520-A for certain tax-favored foreign retirement and non-retirement trusts (such as RESPs and RDSPs), but the IRS explicitly declined to extend this safe harbor to TFSAs.",
       "TFSA contribution room is not lost upon liquidation: every dollar withdrawn is added back to your Canadian contribution room on January 1st of the following calendar year, ready to be re-contributed if you ever move back to Canada."
     ],
-    "conclusion": "Holding a $50,000 TFSA in the United States can generate $3,000+ in annual cross-border tax preparation fees and risk $10,000 statutory IRS penalties. Clean liquidation prior to crossing the border is the standard fiduciary path."
+    "conclusion": "Holding a $50,000 TFSA in the United States can generate $3,000+ in annual cross-border tax preparation fees and risk $10,000 statutory IRS penalties. Clean liquidation prior to crossing the border is the standard tax-compliance path."
   },
   "misunderstandings": [
     {
@@ -3612,7 +3614,7 @@ const rawArticles: Article[] = [
     "tfsa-vs-rrsp",
     "accidental-fhsa-over-contributions-non-resident-freezes",
     "internationally-trained-doctors-nurses-first-year",
-    "newcomers-first-year-financial-checklist"
+    "new-to-canada-money-basics"
   ],
   "contactTopic": "accounts",
   "invitationAbout": "cross-border Canada-U.S. registered account coordination and departure tax planning",
@@ -3621,10 +3623,11 @@ const rawArticles: Article[] = [
 },
 {
   "slug": "corporate-passive-income-trap-50000-clawback-rule",
+  "seoTitle": "Corporate passive income $50k clawback",
   "title": "The Corporate Passive Income Trap: CRA $50,000 AAII Clawback Rule & Form T2 Schedule 7",
   "kind": "insight",
   "category": "decision-making",
-  "description": "Understand the ITA Section 125(5.1) $50,000 passive income threshold that claws back the federal Small Business Deduction at a 5-for-1 rate up to $150,000 AAII.",
+  "description": "How ITA s. 125(5.1) reduces the CCPC Small Business Deduction by $5 for every $1 of passive investment income over $50,000.",
   "figuresAsOf": "2026 Corporate Tax Framework",
   "question": "How does earning more than $50,000 in passive investment income inside your Canadian corporation trigger a 5-to-1 grind on your Small Business Deduction (SBD)?",
   "problem": "Incorporated Canadian business owners, physicians, consultants, and contractors who accumulate retained earnings inside their Canadian-Controlled Private Corporation (CCPC) face a steep tax cliff under Section 125(5.1) of the Income Tax Act. Once your corporation and associated entities generate more than $50,000 of Adjusted Aggregate Investment Income (AAII) in a tax year, the federal Small Business Deduction (SBD) limit ($500,000) is reduced by $5 for every $1 of investment income above $50,000. At $150,000 of passive income, your SBD is reduced to zero—pushing active business profits from the preferential 12.2% small business tax rate up to the 26.5% to 29% general corporate rate.",
@@ -3664,7 +3667,7 @@ const rawArticles: Article[] = [
     },
     {
       "myth": "Passive income only counts interest and dividends, not capital gains.",
-      "reality": "Net taxable capital gains (the taxable 50% or 66.7% portion) are fully included in AAII, meaning a single large portfolio rebalancing can trigger the full $500,000 SBD wipeout."
+      "reality": "Net taxable capital gains (the taxable 50% portion) are fully included in AAII, meaning a single large portfolio rebalancing can reduce the $500,000 SBD."
     },
     {
       "myth": "The clawback applies in the same year the passive income is earned.",
@@ -3715,70 +3718,70 @@ const rawArticles: Article[] = [
 },
 {
   "slug": "66-percent-capital-gains-tax-family-cottage-trap",
-  "title": "The 66.7% Capital Gains Inclusion Rate & The Family Cottage Tax Trap (Form T2091 & Bill C-69)",
+  "seoTitle": "Family cottage tax trap: s. 70(5) & T2091",
+  "title": "Capital Gains & The Family Cottage Tax Trap: Section 70(5), Form T2091, and 50% Inclusion",
   "kind": "insight",
   "category": "family",
-  "description": "How Canada's 66.7% capital gains inclusion rate and Section 70(5) deemed disposition at death trigger unexpected tax bills on family cottages and vacation homes.",
-  "figuresAsOf": "2026 Budget 2024 / Bill C-69 Rules",
-  "question": "How does Canada's 66.7% capital gains inclusion rate impact vacation properties, deemed disposition upon death, and Form T2091 designations?",
-  "problem": "For generations, Canadian families have passed down family cottages, vacation properties, and recreational lakefront parcels under the assumption that capital gains taxes could be managed with basic spousal rollovers. Following the passage of Bill C-69 (Budget 2024), any capital gain exceeding $250,000 for individuals—and from dollar one for personal trusts and corporations—faces a 66.67% inclusion rate rather than the historical 50%. Under Section 70(5) of the Income Tax Act, upon the death of the second spouse, the cottage is deemed disposed of at Fair Market Value (FMV). On a cottage purchased decades ago for $80,000 and now valued at $900,000, the terminal tax liability can exceed $300,000, forcing grieving heirs into an emergency fire-sale.",
+  "description": "Canada cancelled the proposed 66.7% hike in 2025, keeping a 50% inclusion rate—yet Section 70(5) at death still creates large cottage bills.",
+  "figuresAsOf": "2025/2026 CRA Capital Gains Framework (50% Inclusion Retained)",
+  "question": "Why does Section 70(5) deemed disposition still create major estate tax bills on family cottages even with the 50% inclusion rate retained?",
+  "problem": "For generations, Canadian families have passed down cottages and vacation properties assuming capital gains could be managed informally. In Budget 2024, Ottawa proposed raising the capital gains inclusion rate from 50% to 66.67% above $250,000, creating widespread alarm among cottage owners. On March 21, 2025, the federal government cancelled that proposed increase—keeping the statutory inclusion rate at a flat 50%. Even at 50%, however, Section 70(5) of the Income Tax Act deems every non-exempt property sold at Fair Market Value upon the second spouse's death. On a cottage bought decades ago for $150,000 and now worth $950,000, an $800,000 gain creates $400,000 in taxable income and over $214,000 in terminal tax—still enough to force a sale without liquidity planning.",
   "overview": [
-    "The New Two-Tier Capital Gains Framework (Bill C-69): Effective June 25, 2024, Canada transitioned from a uniform 50% capital gains inclusion rate to a tiered structure: (1) Individuals pay tax on 50% of the first $250,000 of annual net capital gains; (2) Individuals pay tax on 66.67% of net capital gains exceeding $250,000; and (3) Corporations and family trusts pay tax on 66.67% of all capital gains from the very first dollar. At top provincial tax brackets (e.g., 53.5% in Ontario, 54% in Nova Scotia, 53.3% in New Brunswick), the effective marginal tax rate on large capital gains jumps from ~26.7% to over 35.6%.",
-    "The Deemed Disposition at Death Trap (ITA Section 70(5)): Canadian tax law does not have an inheritance or estate tax, but it imposes something far more aggressive: Section 70(5) deemed disposition. When the second spouse passes away, the CRA treats every asset—including vacation homes, non-registered stocks, and real estate—as if it were sold at fair market value immediately prior to death. Because a recreational cottage has often appreciated by $500,000 to $1,500,000 over a 30-year family tenure, the deemed capital gain pushes the deceased's final tax return into the 66.7% inclusion tier.",
-    "Form T2091(IND) and the Principal Residence Exemption (PRE): Canadians can designate any property they 'ordinarily inhabit' at some point during the year as their Principal Residence under Section 54 of the ITA, sheltering gains from tax using Form T2091(IND) (Designation of a Property as a Principal Residence by an Individual). However, a family unit (spouses and minor children) can only designate one single property per calendar year for years after 1981. If you allocate the PRE to your cottage to eliminate a $600,000 cottage gain, you expose your primary city residence to capital gains tax for those exact same years.",
-    "Adjusted Cost Base (ACB) Tracking and Capital Improvements: Many cottage owners fail to maintain receipts for capital improvements made over decades (e.g., septic system installations, dock replacements, roof overhauls, electrical upgrades, additions). Under Section 53 of the ITA, legitimate capital additions increase your Adjusted Cost Base (ACB) and directly reduce taxable capital gains. Routine repairs and maintenance do not qualify. Without contemporaneous receipts and contractor invoices, the CRA will disallow ACB additions upon audit.",
-    "Estate Liquidity Solutions: Permanent Joint Last-to-Die Insurance: When heirs inherit a cottage, they face a tax deadline on April 30th (or six months after death) to pay the terminal tax bill in cash. Banks rarely lend to an estate without personal guarantees, leaving heirs with two choices: pay hundreds of thousands out of pocket or sell the family retreat. The classic wealth preservation solution is a Joint Last-to-Die Permanent Life Insurance policy. The tax-free death benefit pays out precisely when Section 70(5) deemed disposition occurs, providing immediate liquid cash to settle the CRA terminal liability while allowing the cottage to pass directly to the next generation without forced partition or sale."
+    "Capital Gains Inclusion Rate Remains 50% (March 2025 Cancellation): While Budget 2024 had proposed a two-tier 50% / 66.67% inclusion system starting June 25, 2024, the federal government formally announced on March 21, 2025 that it would cancel the proposed inclusion rate hike. Consequently, individuals, personal trusts, and corporations continue to apply the flat 50% capital gains inclusion rate.",
+    "The Deemed Disposition at Death Trap (ITA Section 70(5)): Canadian tax law does not levy an American-style estate tax, but Section 70(5) imposes a deemed disposition at death. When the second spouse passes away, the CRA treats every capital asset—including vacation homes, non-registered stocks, and investment real estate—as if sold at Fair Market Value immediately prior to death. Because recreational cottages frequently appreciate by $500,000 to $1,500,000 over multi-decade family ownership, the resulting terminal tax return often lands in top provincial marginal brackets.",
+    "Form T2091(IND) and the Principal Residence Exemption (PRE): Canadians can designate any property they 'ordinarily inhabit' during the year as their Principal Residence under Section 54 of the ITA using Form T2091(IND). However, a family unit can only designate one property per calendar year for years after 1981. Allocating the PRE to a cottage exposes your primary city residence to capital gains tax for those overlapping years.",
+    "Adjusted Cost Base (ACB) Tracking and Capital Improvements: Many cottage owners overlook receipts for capital additions made over decades (such as septic installations, drilled wells, foundations, structural additions, or solar upgrades). Under Section 53 of the ITA, documented capital additions raise your Adjusted Cost Base and lower the taxable gain—unlike routine repairs and maintenance. Without contractor invoices and proof of payment, CRA will disallow unsubstantiated ACB claims.",
+    "Estate Liquidity Planning: When heirs inherit a family cottage, the estate must settle the terminal CRA liability in cash—typically by April 30 of the year following death (or six months after death for late-year passings). Without non-registered cash reserves or Joint Last-to-Die permanent life insurance proceeds to fund the tax bill, families frequently have no option except to sell the property."
   ],
   "example": {
-    "title": "Cottage Capital Gains Tax Comparison: Pre-June 25, 2024 vs Post-June 25, 2024",
-    "intro": "A family cottage in the Muskokas/Shediac originally purchased for $150,000 (ACB) is valued at $950,000 upon the passing of the surviving parent, triggering an $800,000 capital gain on the terminal tax return (top marginal bracket of 53.5%).",
+    "title": "Estate Tax Calculation on a Family Cottage Under Retained 50% Inclusion",
+    "intro": "Hypothetical scenario: a family cottage originally purchased for $150,000 (ACB including documented additions) is valued at $950,000 upon the passing of the surviving parent, triggering an $800,000 capital gain on the terminal T1 return (assuming a 53.5% combined top marginal tax rate).",
     "table": {
-      "head": ["Capital Gain Breakdown", "Pre-June 25, 2024 (50% Flat)", "Post-June 25, 2024 (Tiered 66.7%)", "Tax Liability Difference"],
+      "head": ["Capital Gain Component", "Retained 50% Flat Inclusion", "Had Proposed 66.67% Tiered Rule Applied", "Key Planning Takeaway"],
       "rows": [
-        ["Total Fair Market Value (FMV)", "$950,000", "$950,000", "No change in property valuation"],
-        ["Adjusted Cost Base (ACB)", "$150,000", "$150,000", "Base acquisition plus additions"],
-        ["Total Capital Gain Triggered", "$800,000", "$800,000", "Deemed disposition under ITA 70(5)"],
-        ["Tier 1 Taxable Gain (First $250k)", "$125,000 (50% of $250k)", "$125,000 (50% of $250k)", "$0 difference on first tier"],
-        ["Tier 2 Taxable Gain (Excess $550k)", "$275,000 (50% of $550k)", "$366,685 (66.67% of $550k)", "+$91,685 added to taxable income"],
-        ["Total Taxable Capital Gain", "$400,000", "$491,685", "+$91,685 in taxable income"],
-        ["Estimated Estate Tax Bill (53.5%)", "$214,000", "$263,051", "+$49,051 cash tax increase (+22.9%)"]
+        ["Fair Market Value at Death (FMV)", "$950,000", "$950,000", "Determined by formal appraisal"],
+        ["Documented Adjusted Cost Base (ACB)", "$150,000", "$150,000", "Requires capital improvement receipts"],
+        ["Total Capital Gain (ITA s. 70(5))", "$800,000", "$800,000", "Deemed disposition on terminal return"],
+        ["Taxable Capital Gain", "$400,000 (50% flat)", "$491,685 (cancelled 2024 proposal)", "$91,685 lower taxable gain at 50%"],
+        ["Estimated Estate Tax Bill (53.5%)", "$214,000", "$263,051 (cancelled proposal)", "$214,000 cash liquidity still needed"],
+        ["Without Liquidity Funding", "High risk of forced sale", "Forced sale risk", "Must fund via cash reserve or insurance"]
       ]
     },
     "notes": [
-      "The new 66.7% inclusion rate increases the estate's cash tax liability by $49,051 (+22.9%) on an $800,000 gain.",
-      "If the cottage were held in a Family Trust or Private Holding Company, the 66.67% inclusion rate would apply to the entire $800,000 gain from dollar one, generating $285,348 in immediate tax.",
-      "CRA Form T2091(IND) must be filed with the terminal T1 return even if the Principal Residence Exemption covers only a portion of the years owned."
+      "Even after the March 2025 cancellation of the proposed 66.67% increase, a 50% inclusion rate still requires $214,000 in cash to keep an $800,000-gain cottage in the family.",
+      "Every $20,000 of documented capital additions you can prove in your ACB file reduces the taxable gain by $10,000 and saves ~$5,350 in estate tax.",
+      "CRA Form T2091(IND) must be filed with the terminal return whenever claiming the Principal Residence Exemption for any portion of ownership."
     ],
-    "conclusion": "Without a liquid funding mechanism (such as Joint Last-to-Die insurance), heirs must secure $263,000 in cash within months of a parent's death, or be forced to put the family cottage on the market."
+    "conclusion": "Cancelling the 66.67% proposal relieved upward pressure on estate tax rates, yet Section 70(5) deemed disposition still demands concrete cash-liquidity planning and thorough ACB documentation."
   },
   "misunderstandings": [
     {
       "myth": "Canada has no estate tax, so children inherit the cottage completely tax-free.",
-      "reality": "Canada has no formal 'estate tax', but Section 70(5) deemed disposition taxes all accrued capital gains as if the property was sold the moment before death."
+      "reality": "Canada has no formal estate tax, but Section 70(5) deemed disposition taxes 50% of all accrued capital gains as if the property were sold immediately before death."
     },
     {
       "myth": "You can avoid the tax by transferring the cottage to your children for $1 while you are alive.",
-      "reality": "Under Section 69 of the ITA (Non-Arm's Length Transactions), the CRA deems you to have sold the property at Fair Market Value, triggering immediate capital gains tax, while the child's ACB is set at $1, resulting in devastating double taxation."
+      "reality": "Under Section 69 of the ITA (Non-Arm's Length Transactions), the CRA deems you to have sold the property at Fair Market Value, triggering immediate capital gains tax while giving the child a $1 ACB—risking double taxation."
     },
     {
       "myth": "You can claim the Principal Residence Exemption on both your city home and your cottage.",
-      "reality": "A married couple can only designate one single property per calendar year between them for any year after 1981 under Section 54."
+      "reality": "A married or common-law couple can only designate one property per calendar year between them for any year after 1981 under Section 54."
     },
     {
       "myth": "All cottage renovations and repairs increase your Adjusted Cost Base.",
-      "reality": "Only capital additions (such as a new bunkie, septic tank, or drilled well) increase ACB. Routine maintenance, painting, and dock repairs do not qualify."
+      "reality": "Only capital additions of an enduring nature (such as a bunkie, septic tank, or drilled well) increase ACB. Routine maintenance, painting, and repairs do not qualify."
     }
   ],
   "tradeoffs": [
-    "Allocating the Principal Residence Exemption to the cottage shelters its gains, but exposes your city home's future appreciation to full capital gains taxation.",
-    "Transferring the cottage to a family trust locks in future appreciation for the next generation, but triggers an immediate deemed disposition every 21 years under the 21-Year Rule.",
-    "Funding the estate tax through permanent Joint Last-to-Die life insurance guarantees cash liquidity for heirs, but requires ongoing annual premium payments during your lifetime."
+    "Allocating the Principal Residence Exemption to the cottage shelters its gains, but exposes your city home's appreciation for those designated years.",
+    "Transferring a cottage to a family trust can split future growth, but triggers a deemed disposition every 21 years under the 21-Year Rule.",
+    "Funding the estate tax through permanent Joint Last-to-Die life insurance provides cash liquidity to heirs, but requires ongoing annual premiums during your lifetime."
   ],
   "questions": [
-    "What is your family cottage's documented Adjusted Cost Base (ACB), and do you possess receipts for major capital improvements?",
-    "Have you compared the historical and projected appreciation of your city residence versus your recreational property to evaluate Form T2091 PRE allocation?",
-    "Does your estate have sufficient liquid non-registered investments to cover a $250,000+ terminal tax liability without selling real estate?",
-    "Have you explored a Joint Last-to-Die life insurance policy structure to fund the deemed disposition liability under Bill C-69?"
+    "What is your family cottage's documented Adjusted Cost Base (ACB), and do you keep receipts for major capital improvements?",
+    "Have you compared the appreciation per year of your city residence versus your recreational property for Form T2091 PRE allocation?",
+    "Does your estate hold enough liquid non-registered cash or investments to pay a $200,000+ terminal tax bill without selling real estate?",
+    "Have you reviewed whether Joint Last-to-Die life insurance or a sinking fund best covers the Section 70(5) liability?"
   ],
   "sources": [
     {
@@ -3797,9 +3800,9 @@ const rawArticles: Article[] = [
       "note": "Statutory basis for terminal taxation of capital property at fair market value."
     },
     {
-      "label": "Department of Finance Canada - Bill C-69 Capital Gains Inclusion Rate Regulations",
-      "url": "https://www.canada.ca/en/department-finance/news/2024/06/capital-gains-inclusion-rate.html",
-      "note": "Statutory implementation of the two-tier 50% / 66.67% inclusion framework."
+      "label": "Prime Minister / Department of Finance Canada - Cancellation of Proposed Capital Gains Tax Increase (March 2025)",
+      "url": "https://www.canada.ca/en/department-finance.html",
+      "note": "March 21, 2025 announcement cancelling the proposed two-tier 66.67% inclusion hike and retaining the 50% rate."
     }
   ],
   "related": [
@@ -3815,6 +3818,7 @@ const rawArticles: Article[] = [
 },
 {
   "slug": "switching-uninsured-mortgages-without-osfi-stress-test",
+  "seoTitle": "Mortgage straight-switch without B-20 test",
   "title": "Switching Uninsured Mortgages Without the OSFI Stress Test: The Straight-Switch Exemption",
   "kind": "guide",
   "category": "debt-credit",
@@ -3908,90 +3912,90 @@ const rawArticles: Article[] = [
 },
 {
   "slug": "canada-federal-budget-capital-gains-cei-amt-analysis",
-  "title": "Canada Federal Budget Analysis: Capital Gains 66.7%, CEI 33.3%, and the AMT Overhaul",
+  "seoTitle": "Capital gains at 50%, LCGE, CEI & AMT",
+  "title": "Canadian Capital Gains After 2025: 50% Inclusion Retained, $1.25M LCGE, and AMT Reform",
   "kind": "insight",
   "category": "decision-making",
-  "description": "Comprehensive analysis of federal budget tax legislation: Bill C-69 capital gains two-tier rules, the Canadian Entrepreneurs' Incentive, and Alternative Minimum Tax restructuring.",
-  "figuresAsOf": "2026 Department of Finance & CRA Tax Rules",
-  "question": "How do Bill C-69's 66.7% capital gains inclusion, the Canadian Entrepreneurs' Incentive (CEI), and the revised Alternative Minimum Tax impact Canadian investors, business owners, and estate transfers?",
-  "problem": "The enactment of Bill C-69 and federal budget legislation introduced the most significant structural overhaul of Canadian capital taxation in over three decades. By moving from a uniform 50% capital gains inclusion rate to a split system (50% on the first $250,000 for individuals; 66.67% on amounts above $250,000 and from dollar one for all corporations and trusts), Ottawa fundamentally altered investment returns, holding company balance sheets, and intergenerational business successions. Simultaneously, the introduction of the Canadian Entrepreneurs' Incentive (CEI), the increase of the Lifetime Capital Gains Exemption (LCGE) to $1,250,000, and the aggressive tightening of the Alternative Minimum Tax (AMT) create severe planning traps for anyone realizing substantial asset gains or donating appreciated securities.",
+  "description": "Updated Canadian tax breakdown: 50% capital gains inclusion retained after the 2025 cancellation, $1.25M LCGE, CEI rules, and 20.5% AMT.",
+  "figuresAsOf": "2025/2026 CRA & Department of Finance Tax Rules",
+  "question": "What actually changed after the March 2025 cancellation of Canada's proposed capital gains hike, alongside the $1.25M LCGE and 20.5% AMT overhaul?",
+  "problem": "After Budget 2024 proposed raising the capital gains inclusion rate to 66.67% above $250,000 for individuals and from dollar one for corporations and trusts, investors and CCPC owners restructured balance sheets for a steeper tax regime. On March 21, 2025, the federal government formally cancelled that proposed inclusion rate increase—meaning the statutory inclusion rate remains a flat 50%. Meanwhile, the higher $1,250,000 Lifetime Capital Gains Exemption (LCGE) and the post-2024 Alternative Minimum Tax (AMT) overhaul under Bills C-59 and C-69 remain key planning factors.",
   "overview": [
-    "The Two-Tier Inclusion Framework: Effective June 25, 2024, the capital gains inclusion rate remains 50% on the first $250,000 of net capital gains realized by an individual in a taxation year. For capital gains exceeding $250,000, the inclusion rate escalates to 66.67% (two-thirds). Crucially, the $250,000 threshold applies strictly to natural persons; corporations and trusts do not receive any annual threshold and are subject to the 66.67% inclusion rate from dollar one. In top tax provinces (e.g., Ontario, Quebec, New Brunswick, and BC), the top effective marginal tax rate on capital gains for individuals rises from roughly 26.7% to approximately 35.8% on gains over $250,000.",
-    "Corporate Balance Sheet Shock: CCPCs and Holding Companies: For Canadian-Controlled Private Corporations (CCPCs), the 66.67% inclusion rate applies to all realized portfolio gains and sales of corporate real estate. When a CCPC realizes a capital gain under the 66.67% inclusion rule, only 33.33% of the gain flows into the Capital Dividend Account (CDA) for tax-free extraction to shareholders (down from 50%). The remaining 66.67% is taxed as Aggregate Investment Income (AAII) at a combined federal-provincial corporate rate of roughly 50.2% (with 30.67% refundable RDTOH). Furthermore, this higher inclusion increases passive investment income, accelerating the $50,000 AAII threshold clawback under Section 125(5.1) that grinds down the Small Business Deduction.",
-    "The Canadian Entrepreneurs' Incentive (CEI): Designed to mitigate the impact on business founders, the CEI reduces the capital gains inclusion rate to 33.33% (one-third) on qualifying dispositions of business equity, up to a lifetime ceiling of $2,000,000. This $2 million limit phases in at $400,000 per year from 2025 to 2029. However, strict eligibility criteria apply: the founder must hold at least 5% of voting shares, have been actively engaged on a regular and continuous basis for at least three consecutive years, and the business must not be a professional corporation (operating medicine, dentistry, law, or accounting), financial institution, real estate firm, or arts/entertainment business.",
-    "The Enhanced Lifetime Capital Gains Exemption (LCGE): The federal budget increased the LCGE from $1,016,836 to $1,250,000 for dispositions of Qualified Small Business Corporation (QSBC) shares and qualified farm or fishing property. Combined with the phased-in CEI ($2 million at 33.33% inclusion) and the initial $250,000 individual bracket at 50%, an eligible business founder selling in 2029 can shelter or substantially discount up to $3,250,000 in capital gains, delivering substantial tax savings when structured properly.",
-    "The Alternative Minimum Tax (AMT) Overhaul under Section 127.5: The AMT was overhauled to prevent high-income individuals from excessively reducing their personal tax through deductions and credits. The AMT statutory rate was raised from 15% to 20.5%. While the basic exemption was raised from $40,000 to match the start of the fourth federal tax bracket ($173,205, indexed), the AMT inclusion rules were tightened: capital gains are included at 100% (rather than the regular inclusion rate), capital loss carry-forwards and non-capital losses are limited to a 50% deduction, and charitable donation tax credits are restricted to an 80% claim under the AMT formula. Large charitable gifts of publicly traded stock—traditionally exempt from regular capital gains tax—can now trigger tens of thousands in unexpected AMT liability."
+    "Capital Gains Inclusion Rate Retained at 50% (March 2025 Cancellation): On March 21, 2025, Ottawa announced the cancellation of the proposed increase to the capital gains inclusion rate from 50% to 66.67%. As confirmed by CRA administration, capital gains realized by individuals, personal trusts, and Canadian-Controlled Private Corporations (CCPCs) remain subject to the standard 50% inclusion rate. In top provincial brackets (~53.5% Ontario), the personal top effective tax rate on capital gains remains ~26.77% rather than rising to 35.7%.",
+    "CCPC Capital Dividend Account (CDA) Preserved at 50%: For Canadian-Controlled Private Corporations and holding companies, retaining the 50% inclusion rate preserved the full 50% non-taxable portion credited to the Capital Dividend Account (CDA). Half of a realized corporate capital gain continues to be extractable tax-free by shareholders under Subsection 89(1), while the taxable 50% remains part of Aggregate Investment Income (and subject to the $50,000 AAII Small Business Deduction clawback threshold under Section 125(5.1)).",
+    "The $1,250,000 Lifetime Capital Gains Exemption (LCGE): Effective for dispositions on or after June 25, 2024, the LCGE ceiling for Qualified Small Business Corporation (QSBC) shares and qualified farm or fishing property increased to $1,250,000 (indexed starting in 2026). This higher lifetime exemption still allows eligible founders to shelter substantial business-exit gains from regular Part I tax.",
+    "Status of the Canadian Entrepreneurs' Incentive (CEI): Announced in Budget 2024 alongside the now-cancelled capital gains inclusion hike, the CEI proposed a 33.33% inclusion rate on up to $2,000,000 of qualifying non-professional founder share gains over 2025–2029. Following the cancellation of the inclusion-rate legislation in March 2025, business owners should verify current statutory status with their tax advisor rather than assuming the CEI applies.",
+    "The Alternative Minimum Tax (AMT) Overhaul Under Section 127.5: Enacted via Bills C-59 and C-69 for 2024 and subsequent years, the federal AMT statutory rate jumped from 15% to 20.5%, with an annually indexed 4th-bracket basic exemption ($173,205 in 2024, $177,882 in 2025, $181,440 in 2026). Under AMT, capital gains are included at 100%, 30% of LCGE-exempt gains enter the base, most non-refundable credits are allowed at 50%, and charitable donation tax credits are allowed at 80% (ITA s. 127.531(c)). Large liquidity events and major stock donations can therefore trigger upfront AMT even with the regular 50% inclusion rate."
   ],
   "example": {
-    "title": "Comprehensive Federal Budget Tax Impact: Comparing $1,000,000 Capital Gain Across Entity Types",
-    "intro": "A comparison of the total income tax payable on a $1,000,000 capital gain realized by an Individual vs. a Private Corporation (CCPC) vs. an Eligible Founder utilizing the CEI and LCGE in Ontario (top combined marginal tax rate of 53.53%).",
+    "title": "Tax Impact Comparison: $1,000,000 Capital Gain Across Scenarios (Ontario Top Bracket ~53.53%)",
+    "intro": "Hypothetical comparison of regular federal/provincial tax on a $1,000,000 capital gain under the retained 50% inclusion rule versus the cancelled 2024 proposal and QSBC LCGE sheltering (before AMT check).",
     "table": {
-      "head": ["Entity Structure & Scenario", "Total Capital Gain", "Taxable Capital Gain (Inclusion)", "Capital Dividend Account (CDA)", "Estimated Total Tax Payable", "Effective Tax Rate"],
+      "head": ["Scenario", "Capital Gain", "Taxable Inclusion", "Capital Dividend Account (CDA)", "Estimated Regular Tax", "Effective Regular Rate"],
       "rows": [
-        ["Scenario A: Individual (Pre-Budget 50% Flat)", "$1,000,000", "$500,000 (50% flat)", "N/A (Personal)", "$267,650", "26.77%"],
-        ["Scenario B: Individual (Current Two-Tier Rule)", "$1,000,000", "$625,000 ($125k + $500k)", "N/A (Personal)", "$334,562", "33.46% (+$66,912 delta)"],
-        ["Scenario C: Corporate / CCPC Portfolio Gain", "$1,000,000", "$666,667 (66.67% flat from $1)", "$333,333 (Tax-free CDA)", "$334,467 (Immediate corporate)", "33.45% (Pre-dividend)"],
-        ["Scenario D: Founder (Full LCGE $1.25M Available)", "$1,000,000", "$0 (Sheltered by LCGE)", "N/A (QSBC Sale)", "$0", "0.00% (Tax-Free)"],
-        ["Scenario E: Founder (CEI Qualified, LCGE Exhausted)", "$1,000,000", "$333,333 (33.33% CEI rate)", "N/A (Personal)", "$178,433", "17.84% (Save $156k vs B)"]
+        ["Individual (Retained 50% Rule)", "$1,000,000", "$500,000 (50% flat)", "N/A (Personal)", "$267,650", "26.77%"],
+        ["Individual (Cancelled 66.7% Proposal)", "$1,000,000", "$625,000 ($125k + $500k)", "N/A (Personal)", "$334,562 (avoided)", "33.46% (cancelled)"],
+        ["CCPC Portfolio Gain (Retained 50%)", "$1,000,000", "$500,000 (50% flat)", "$500,000 (50% tax-free CDA)", "$250,850 (corporate part I)", "25.09% (before RDTOH)"],
+        ["Founder QSBC Exit ($1.25M LCGE)", "$1,000,000", "$0 regular Part I tax", "N/A (QSBC Sale)", "$0 regular (check Form T691 AMT)", "Check 30% LCGE AMT"]
       ]
     },
     "notes": [
-      "Individual tax calculations reflect Ontario top marginal combined federal/provincial personal tax rate of 53.53% (inclusive of provincial surtax).",
-      "Corporate scenario C assumes investment portfolio realization inside an operating or holding company; does not include secondary personal tax on dividend distribution (refundable RDTOH integration).",
-      "CEI requires strict adherence to CRA active business asset tests and exclusion of professional corporations under Section 125(5.1)."
+      "Individual figures apply Ontario's ~53.53% top combined marginal tax rate; provincial rates vary.",
+      "Although regular Part I tax is $0 on an LCGE-sheltered $1,000,000 QSBC gain, 30% of the exempt gain ($300,000) enters the AMT calculation under Section 127.5.",
+      "Retaining the 50% rule preserves the full 50% CCPC Capital Dividend Account (CDA) credit rather than compressing it to 33.33%."
     ],
-    "conclusion": "The federal budget dramatically widens the gap between active small business equity (which benefits from the enhanced LCGE and CEI) and passive holding company investments (which face 66.7% inclusion and CDA compression). Active portfolio rebalancing and life insurance corporate shelters become vital tools."
+    "conclusion": "Cancelling the 66.67% inclusion increase restored certainty around the 50% rule and the 50% corporate CDA, yet founders and high-income donors must still model the 20.5% AMT before realizing large gains."
   },
   "misunderstandings": [
     {
-      "myth": "The $250,000 threshold applies to private corporations and family holding companies.",
-      "reality": "Corporations and trusts do not receive the $250,000 annual threshold. Every dollar of corporate capital gain is subject to the full 66.67% inclusion rate."
+      "myth": "Canada's capital gains inclusion rate rose to 66.67% on gains over $250,000.",
+      "reality": "While proposed in Budget 2024, the federal government formally cancelled the inclusion rate increase on March 21, 2025. The capital gains inclusion rate remains 50%."
     },
     {
-      "myth": "Physicians, dentists, and accountants with incorporated professional practices can use the Canadian Entrepreneurs' Incentive (CEI).",
-      "reality": "Bill C-69 explicitly excludes professional corporations, financial institutions, insurance agencies, real estate holdings, and passive consulting businesses from the CEI."
+      "myth": "Because the 66.67% hike was cancelled, the $1.25M Lifetime Capital Gains Exemption disappeared too.",
+      "reality": "The government confirmed the enhanced $1.25M LCGE limit remained in place for qualifying small business shares and farm/fishing property."
     },
     {
-      "myth": "Donating publicly traded shares to charity is completely tax-free and exempt from all taxes.",
-      "reality": "While exempt from regular capital gains tax, large share donations can trigger Alternative Minimum Tax (AMT) under Section 127.5 because 30% of the untaxed gain is added into the AMT base and donation tax credits are restricted to 80%."
+      "myth": "Donating publicly traded shares to charity is exempt from all taxes under AMT.",
+      "reality": "While exempt from regular capital gains tax, large share donations can trigger Alternative Minimum Tax under Section 127.5 because 30% of the untaxed gain enters the AMT base and donation credits are capped at 80% under Section 127.531(c)."
     },
     {
-      "myth": "Capital losses incurred in prior years only offset capital gains at the old 50% rate.",
-      "reality": "CRA inclusion rate rules adjust net capital losses from prior years when applied against gains realized under the 66.67% regime so that one dollar of prior loss offsets one dollar of equivalent pre-tax gain."
+      "myth": "Because the regular inclusion rate is 50%, capital gains are only included at 50% under AMT.",
+      "reality": "Under the post-2024 AMT rules (Bills C-59 and C-69), capital gains are included at 100% when calculating adjusted taxable income for minimum tax."
     }
   ],
   "tradeoffs": [
-    "Realizing capital gains personal assets in a single tax year triggers the higher 66.67% rate on amounts over $250,000, whereas spreading asset sales over multiple calendar years preserves multiple $250,000 annual 50% brackets.",
-    "Holding passive investments in a CCPC provides immediate tax deferral at the 12.2% active small business rate, but liquidation faces the 66.67% inclusion rate and shrinks the tax-free Capital Dividend Account (CDA) to only 33.33%.",
-    "Utilizing corporate life insurance shields annual growth from passive investment income rules (avoiding the $50,000 AAII clawback) and pays out the death benefit proceeds via the CDA tax-free to surviving shareholders."
+    "Realizing large personal capital gains in one year still requires checking whether the 100% AMT inclusion triggers minimum tax above regular Part I tax.",
+    "Holding passive investments inside a CCPC preserves the 50% CDA credit on gains, but the taxable 50% continues to count toward the $50,000 AAII Small Business Deduction clawback.",
+    "Claiming the $1.25M LCGE eliminates regular tax on qualifying shares, but requires generating sufficient ordinary income over seven years to recover any AMT paid."
   ],
   "questions": [
-    "Are your substantial capital gains held personally or inside a holding company/CCPC?",
-    "If selling a private business, does your share structure satisfy the active engagement and 5% voting requirements for the Canadian Entrepreneurs' Incentive?",
-    "Will a planned major charitable donation or cottage disposition trigger Alternative Minimum Tax (AMT) under the updated Section 127.5 threshold?",
-    "Have you evaluated spousal loan or trust structures to utilize multiple individual $250,000 lower-bracket inclusion pools?"
+    "Does my capital transaction rely on the retained 50% inclusion rate, or could 100% AMT inclusion still trigger Form T691 minimum tax?",
+    "If selling QSBC shares using the $1.25M LCGE, what will my upfront federal AMT liability be?",
+    "If corporate investments realize capital gains, how does the 50% taxable portion affect our Section 125(5.1) $50,000 passive income limit?",
+    "Are we staging large charitable share gifts over multiple tax years to stay below the AMT exemption?"
   ],
   "sources": [
     {
-      "label": "Department of Finance Canada - Budget 2024 Tax Measures & Bill C-69 Notice of Ways and Means Motion",
-      "url": "https://www.canada.ca/en/department-finance/news/2024/04/fairness-for-every-generation-budget-2024.html",
-      "note": "Official federal budget policy statement establishing the two-tier capital gains inclusion rates, CEI, and LCGE increases."
+      "label": "Department of Finance Canada - Cancellation of Proposed Capital Gains Inclusion Increase (March 2025)",
+      "url": "https://www.canada.ca/en/department-finance.html",
+      "note": "March 21, 2025 announcement retaining the 50% capital gains inclusion rate while preserving the $1.25M LCGE."
     },
     {
-      "label": "Canada Revenue Agency (CRA) - Capital Gains Inclusion Rate Changes and Guidance",
+      "label": "Canada Revenue Agency (CRA) - Line 12700 Capital Gains Guidance",
       "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/personal-income/line-12700-capital-gains.html",
-      "note": "CRA technical administrative directives on reporting personal and corporate capital dispositions under Bill C-69."
+      "note": "CRA reporting guidance confirming administration of the 50% capital gains inclusion rate."
     },
     {
-      "label": "Department of Finance Canada - Alternative Minimum Tax (AMT) for High-Income Individuals",
-      "url": "https://www.canada.ca/en/department-finance/news/2023/08/alternative-minimum-tax-for-high-income-individuals.html",
-      "note": "Statutory revisions to Income Tax Act Section 127.5 regarding AMT rate, exemptions, and donation credit caps."
+      "label": "Income Tax Act - Section 127.5 & Section 127.531 (Bills C-59 & C-69 AMT Rules)",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-127.5.html",
+      "note": "Statutory provisions for the 20.5% AMT rate, 100% gains inclusion, and 80% charitable donation credit."
     }
   ],
   "related": [
     "66-percent-capital-gains-tax-family-cottage-trap",
     "corporate-passive-income-trap-50000-clawback-rule",
-    "corporate-life-insurance-cda-extraction-ccpc",
+    "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first",
     "canadian-alternative-minimum-tax-amt-high-earners-guide"
   ],
   "contactTopic": "business",
@@ -4001,10 +4005,11 @@ const rawArticles: Article[] = [
 },
 {
   "slug": "prescribed-rate-spousal-loans-tax-arbitrage-guide",
+  "seoTitle": "Prescribed rate spousal loans: Jan 30 rule",
   "title": "Prescribed Rate Spousal Loans: Capitalizing on the 4% Window Before the CRA Reset",
   "kind": "guide",
   "category": "registered-accounts",
-  "description": "Step-by-step statutory mechanics of CRA prescribed rate demand loans (ITA Section 74.5(2)), January 30 annual interest deadlines, and spousal income splitting.",
+  "description": "How formal CRA prescribed rate demand loans under ITA Section 74.5(2) bypass attribution rules, plus the strict January 30 payment rule.",
   "figuresAsOf": "2026 CRA Prescribed Rate Framework",
   "question": "How does a formal prescribed rate spousal loan under Section 74.5(2) legally bypass attribution rules and split investment income between spouses?",
   "problem": "In Canada, high-earning individuals in top marginal tax brackets (50% to 54%) face severe tax drag when investing non-registered capital. Attempting to transfer funds to a lower-earning or non-earning spouse triggers the attribution rules of the Income Tax Act (Sections 74.1 and 74.2): all future dividends, interest, and capital gains are attributed back and taxed in the hands of the higher-earning spouse. However, Section 74.5(2) contains an explicit statutory safe harbour: if the higher-earning spouse extends a bona fide demand loan at the official CRA prescribed interest rate in effect at the loan's inception, attribution is permanently eliminated for the life of the loan. With recent Bank of Canada rate cuts driving the CRA prescribed rate down to 4%, high-net-worth couples have a prime mathematical window to establish permanent spousal lending structures.",
@@ -4098,10 +4103,10 @@ const rawArticles: Article[] = [
 {
   "slug": "pension-commuted-value-transfer-par-tax-planning",
   "title": "Commuted Value Pension Transfers & PAR: HOOPP, CAAT, and Public Service Exit Math",
-  "seoTitle": "Commuted Value of a Pension Explained | Ahmed Bello",
+  "seoTitle": "Commuted value of a pension explained",
   "kind": "guide",
   "category": "retirement",
-  "description": "Understand how pension commuted values are calculated, why interest rates impact your payout, and key questions to ask your plan administrator before deciding.",
+  "description": "Understand how pension commuted values are calculated, why interest rates impact your payout, and key questions for your plan.",
   "figuresAsOf": "2026 Canadian Pension Valuation Standards",
   "datePublished": "2025-01-15T08:00:00-05:00",
   "dateModified": "2026-11-11T09:00:00-05:00",

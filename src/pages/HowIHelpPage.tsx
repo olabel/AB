@@ -10,7 +10,7 @@ import { ArrowRight, HelpCircle } from "lucide-react";
 import { siteConfig } from "../config/site.ts";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
-import { trackCtaClick } from "../lib/track.ts";
+import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 
 export const HowIHelpPage: React.FC = () => {
   const { isFr } = useLanguage();
@@ -125,7 +125,7 @@ export const HowIHelpPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-4 bg-[#ece6da]/60 border-l-2 border-[#8d8677] text-xs text-[#46423a] space-y-1">
+          <div className="p-4 bg-[#ece6da]/60 border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a] space-y-1">
             <p>
               <strong>{isFr ? "Réglementation et permis professionnels :" : "Professional licensing:"}</strong>{" "}
               {isFr
@@ -241,7 +241,7 @@ export const HowIHelpPage: React.FC = () => {
 
       {/* 4. Educational Disclaimer */}
       <section className="wrap max-w-4xl mb-16">
-        <div className="p-5 bg-[#ece6da]/60 border-l-2 border-[#8d8677] text-xs text-[#46423a] leading-relaxed">
+        <div className="p-5 bg-[#ece6da]/60 border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a] leading-relaxed">
           <strong>{isFr ? "Contenu éducatif, non un conseil personnalisé." : "Educational content, not advice."}</strong>{" "}
           {isFr
             ? "Cette page propose une éducation financière générale. Elle ne constitue pas un conseil fiscal, juridique ou d'investissement personnalisé, ni une offre ou sollicitation d'achat de produits spécifiques. Chaque situation financière est unique, les règles et plafonds évoluent, et les calculs sont hypothétiques. Vérifiez les données actuelles auprès des organismes officiels et d'un professionnel qualifié avant d'agir."
@@ -320,7 +320,8 @@ export const HowIHelpPage: React.FC = () => {
                 href={siteConfig.schedulingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
+                onClick={() => trackBookingClick("how_i_help_bottom")}
+                className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-base px-6 py-3 inline-flex items-center gap-2"
               >
                 <span>{isFr ? "Réserver 30 min sur Calendly" : "Book 30 Min on Calendly"}</span>
                 <span aria-hidden="true">→</span>

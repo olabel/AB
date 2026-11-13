@@ -294,8 +294,8 @@ ${unmodelledDisclaimer}`;
                   <div className="flex justify-between items-center mb-1">
                     <label htmlFor="amt-capgains" className="font-semibold text-[#1c1b18] flex items-center gap-1">
                       <span>{isFr ? "Gains en capital bruts réalisés ($)" : "Realized Gross Capital Gains ($)"}</span>
-                      <span className="text-[10px] bg-[#8a3324]/10 text-[#8a3324] font-bold px-1.5 py-0.2 rounded">
-                        100% IMR
+                      <span className="text-[10px] bg-[#8a3324]/10 text-[#8a3324] font-bold px-1.5 py-0.2 rounded-[2px]">
+                        {isFr ? "100 % IMR" : "100% AMT"}
                       </span>
                     </label>
                     <span className="font-mono text-[#8a3324] font-bold">{formatCAD(amtInput.realizedCapitalGains || 0)}</span>
@@ -399,8 +399,8 @@ ${unmodelledDisclaimer}`;
                   <div className="flex justify-between items-center mb-1">
                     <label htmlFor="amt-donations" className="font-semibold text-[#1c1b18] flex items-center gap-1">
                       <span>{isFr ? "Dons de bienfaisance admissibles ($)" : "Charitable Donations ($)"}</span>
-                      <span className="text-[10px] bg-[#2e4a3b]/15 text-[#2e4a3b] font-bold px-1.5 py-0.2 rounded">
-                        80% Crédit IMR
+                      <span className="text-[10px] bg-[#2e4a3b]/15 text-[#2e4a3b] font-bold px-1.5 py-0.2 rounded-[2px]">
+                        {isFr ? "80 % Crédit IMR" : "80% AMT Credit"}
                       </span>
                     </label>
                     <span className="font-mono text-[#2e4a3b] font-bold">{formatCAD(amtInput.charitableDonations || 0)}</span>
@@ -881,7 +881,7 @@ ${unmodelledDisclaimer}`;
       {/* Formal Disclaimers & Booking CTA */}
       <section className="section py-12 md:py-16 border-t border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-8">
-          <div className="p-5 bg-[#ece6da]/50 border-l-3 border-[#8d8677] text-xs text-[#46423a] leading-relaxed space-y-2">
+          <div className="p-5 bg-[#ece6da]/50 border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a] leading-relaxed space-y-2">
             <strong className="text-[#1c1b18] block uppercase tracking-wider text-[11px]">
               {isFr ? "Avis de non-responsabilité et cadre légal" : "Estimate-Only Disclaimers & Legal Notice"}
             </strong>

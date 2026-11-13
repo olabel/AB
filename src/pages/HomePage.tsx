@@ -5,6 +5,7 @@ import { SEO } from "../components/SEO.tsx";
 import { HowThePiecesFit } from "../components/HowThePiecesFit.tsx";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { trackBookingClick } from "../lib/track.ts";
 import {
   Calendar,
   ArrowRight,
@@ -15,7 +16,6 @@ import {
   Building2,
   Stethoscope,
   Users,
-  Sparkles,
   TrendingDown,
   CheckCircle2,
   AlertTriangle,
@@ -48,7 +48,6 @@ export const HomePage: React.FC = () => {
             {/* Left Column: Direct Value Proposition */}
             <div className="lg:col-span-7 space-y-5">
               <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] text-[11px] font-semibold uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#2e4a3b]" />
                 <span>
                   {isFr
                     ? "Cabinet Financier Indépendant • Agréé Partout au Canada"
@@ -88,6 +87,7 @@ export const HomePage: React.FC = () => {
                   href={siteConfig.schedulingUrl || "https://calendly.com/olabel/30min"}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackBookingClick("home_hero")}
                   className="btn btn-primary text-sm px-6 py-3 shadow-xs inline-flex items-center gap-2"
                 >
                   <Calendar className="w-4 h-4 text-[#d6c298]" />
@@ -194,7 +194,7 @@ export const HomePage: React.FC = () => {
               className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="w-9 h-9 rounded-full bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center">
+                <div className="w-9 h-9 rounded-[2px] bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center">
                   <Users className="w-4 h-4" />
                 </div>
                 <h3 className="font-serif text-lg text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
@@ -218,7 +218,7 @@ export const HomePage: React.FC = () => {
               className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="w-9 h-9 rounded-full bg-[#75581f]/10 text-[#75581f] flex items-center justify-center">
+                <div className="w-9 h-9 rounded-[2px] bg-[#75581f]/10 text-[#75581f] flex items-center justify-center">
                   <Building2 className="w-4 h-4" />
                 </div>
                 <h3 className="font-serif text-lg text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
@@ -242,7 +242,7 @@ export const HomePage: React.FC = () => {
               className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="w-9 h-9 rounded-full bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center">
+                <div className="w-9 h-9 rounded-[2px] bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center">
                   <Stethoscope className="w-4 h-4" />
                 </div>
                 <h3 className="font-serif text-lg text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
@@ -266,7 +266,7 @@ export const HomePage: React.FC = () => {
               className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="w-9 h-9 rounded-full bg-[#75581f]/10 text-[#75581f] flex items-center justify-center">
+                <div className="w-9 h-9 rounded-[2px] bg-[#75581f]/10 text-[#75581f] flex items-center justify-center">
                   <Compass className="w-4 h-4" />
                 </div>
                 <h3 className="font-serif text-lg text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
@@ -313,7 +313,7 @@ export const HomePage: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <Link
-              to={`${prefix}/calculators`}
+              to={`${prefix}/calculators?tab=newcomer#calculator-tool`}
               className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all"
             >
               <span className="font-mono text-xs text-[#75581f] font-semibold block mb-1">01</span>
@@ -328,7 +328,7 @@ export const HomePage: React.FC = () => {
             </Link>
 
             <Link
-              to={`${prefix}/calculators`}
+              to={`${prefix}/calculators?tab=mortgage#calculator-tool`}
               className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all"
             >
               <span className="font-mono text-xs text-[#75581f] font-semibold block mb-1">02</span>
@@ -343,7 +343,7 @@ export const HomePage: React.FC = () => {
             </Link>
 
             <Link
-              to={`${prefix}/calculators`}
+              to={`${prefix}/calculators?tab=tfsa-rrsp#calculator-tool`}
               className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all"
             >
               <span className="font-mono text-xs text-[#75581f] font-semibold block mb-1">03</span>
@@ -358,7 +358,7 @@ export const HomePage: React.FC = () => {
             </Link>
 
             <Link
-              to={`${prefix}/calculators`}
+              to={`${prefix}/calculators?tab=ccpc-passive#calculator-tool`}
               className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all"
             >
               <span className="font-mono text-xs text-[#75581f] font-semibold block mb-1">04</span>
@@ -399,7 +399,6 @@ export const HomePage: React.FC = () => {
         <div className="wrap max-w-6xl space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#2e4a3b] pb-4">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#d6c298]" />
               <span className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold">
                 {isFr ? "Veille Réglementaire • Novembre 2026" : "Monthly Advisor Briefing • November 2026"}
               </span>
@@ -438,14 +437,16 @@ export const HomePage: React.FC = () => {
             </div>
 
             <div className="p-4 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-2">
-              <span className="text-[11px] font-mono text-[#d6c298] block">ARC &amp; Loi C-69</span>
+              <span className="text-[11px] font-mono text-[#d6c298] block">
+                {isFr ? "ARC & Lois C-59 / C-69" : "CRA & Bills C-59 / C-69"}
+              </span>
               <h4 className="font-serif text-base text-white font-semibold">
-                {isFr ? "Gains en capital à 66,7 %" : "66.7% Corporate Capital Gains"}
+                {isFr ? "Gains à 50 % maintenus & IMR" : "50% Capital Gains Retained & AMT"}
               </h4>
               <p className="text-xs text-[#ece6da]/80 leading-relaxed">
                 {isFr
-                  ? "Inclusion à 66,7 % dès le 1er dollar pour les sociétés. Nécessite une restructuration par Compte de dividendes en capital."
-                  : "Corporate portfolios face 66.7% inclusion from dollar one. Restructuring via Capital Dividend Account strategies is essential."}
+                  ? "La hausse à 66,7 % a été annulée (50 % maintenu), tandis que l'ECGC de 1,25 M$ et l'IMR fédéral de 20,5 % (crédit pour dons à 80 %) s'appliquent."
+                  : "The proposed 66.7% hike was cancelled (50% inclusion retained), while the $1.25M LCGE and 20.5% federal AMT (80% donation credit) apply."}
               </p>
             </div>
           </div>
@@ -472,6 +473,7 @@ export const HomePage: React.FC = () => {
               href={siteConfig.schedulingUrl || "https://calendly.com/olabel/30min"}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackBookingClick("home_bottom")}
               className="btn btn-primary text-sm px-8 py-3 shadow-xs inline-flex items-center gap-2"
             >
               <Calendar className="w-4 h-4 text-[#d6c298]" />

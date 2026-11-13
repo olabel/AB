@@ -107,7 +107,7 @@ export const ConfirmSubscriptionPage: React.FC = () => {
           </div>
         ) : (
           <>
-            <div className="w-16 h-16 rounded-full bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center mx-auto shadow-sm">
+            <div className="w-16 h-16 rounded-[2px] bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center mx-auto shadow-sm">
               <CheckCircle2 className="w-8 h-8 text-[#d6c298]" />
             </div>
 

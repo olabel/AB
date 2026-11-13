@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { siteConfig } from "../config/site.ts";
+import { trackBookingClick } from "../lib/track.ts";
 import {
   Calendar,
-  Sparkles,
   TrendingDown,
   Scale,
   ShieldCheck,
@@ -176,29 +176,29 @@ const RULE_CHANGES: RuleChangeItem[] = [
     category: "corporate",
     categoryLabelEn: "Corporate & Wealth Architecture",
     categoryLabelFr: "Fiscalité corporative & Patrimoine",
-    titleEn: "Bill C-69 Two-Tier Capital Gains Inclusion Rate in Full Effect: $250,000 Threshold",
-    titleFr: "Entrée en vigueur complète du taux d'inclusion des gains en capital de la Loi C-69",
+    titleEn: "50% Capital Gains Inclusion Retained After Cancellation; AMT & $1.25M LCGE in Force",
+    titleFr: "Maintien de l'inclusion à 50 % des gains en capital ; IMR et ECGC à 1,25 M$ en vigueur",
     summaryEn:
-      "Following the formal enactment of Bill C-69 implementing Budget 2024 measures, Canada's capital gains inclusion rate is strictly two-tiered: 50% on annual individual net capital gains up to $250,000, and 66.67% on gains exceeding $250,000. All corporate dispositions and trust capital gains face 66.67% inclusion from dollar one.",
+      "On March 21, 2025, the federal government cancelled the previously proposed increase of the capital gains inclusion rate to 66.67%. As a result, Canada's 50% capital gains inclusion rate remains intact for individuals, corporations, and trusts. Meanwhile, the enacted $1.25 million Lifetime Capital Gains Exemption (LCGE) and the post-2024 Alternative Minimum Tax (AMT) under Bills C-59 and C-69 (20.5% flat rate, 100% capital gains inclusion, and an 80% charitable donation tax credit allowance) remain in full effect.",
     summaryFr:
-      "Suite à la promulgation de la Loi C-69, le taux d'inclusion des gains en capital au Canada est à deux paliers : 50 % sur les premiers 250 000 $ de gains nets annuels pour les particuliers, et 66,67 % sur l'excédent. Pour les sociétés (SPCC) et fiducies, le taux de 66,67 % s'applique dès le premier dollar.",
+      "Le 21 mars 2025, le gouvernement fédéral a annulé la hausse proposée du taux d'inclusion des gains en capital à 66,67 %. Le taux d'inclusion à 50 % demeure donc en vigueur pour les particuliers, les sociétés et les fiducies. Parallèlement, l'exonération cumulative des gains en capital (ECGC) portée à 1,25 M$ et l'impôt minimum de remplacement (IMR) réformé par les lois C-59 et C-69 (taux de 20,5 %, inclusion à 100 % des gains et crédit pour dons admis à 80 %) s'appliquent pleinement.",
     ahmedAnalysisEn:
-      "My Take: Incorporated business owners, medical professionals, and owners of appreciated secondary real estate (such as family cottages) are hit hardest. Because corporate investment portfolios don't get the $250,000 individual threshold, your corporate tax on realized gains jumps by roughly 33%. Furthermore, active corporations earning over $50,000 in passive investment income face the 5-for-1 Small Business Deduction grind under Section 125(5.1). We are working with clients to restructure corporate holdings into tax-sheltered corporate life insurance and Capital Dividend Account (CDA) strategies to legally bypass this trap.",
+      "My Take: While corporate portfolios and family cottages avoid the cancelled 66.67% inclusion rate, high-income taxpayers and incorporated business owners still face two real structural pressures: the 20.5% federal AMT (which includes 100% of capital gains above the federal exemption threshold) and the 5-for-1 Small Business Deduction grind when CCPC passive investment income exceeds $50,000 under ITA Subsection 125(5.1). Multi-year realization timing and corporate Capital Dividend Account (CDA) planning remain essential.",
     ahmedAnalysisFr:
-      "Mon analyse : Les entrepreneurs incorporés et les propriétaires de chalets familiaux sont les plus touchés. Les sociétés privées ne bénéficient pas du seuil individuel de 250 000 $. En outre, tout gain de placement passif dépassant 50 000 $ réduit votre déduction accordée aux petites entreprises de 5 $ par dollar. Une restructuration d'actifs corporatifs s'impose.",
+      "Mon analyse : Bien que les sociétés privées et les propriétaires de chalets évitent la hausse annulée à 66,67 %, deux règles bien réelles exigent une planification rigoureuse : l'IMR fédéral de 20,5 % (incluant 100 % des gains en capital) et la réduction 5 pour 1 de la DPE lorsque les revenus passifs de SPCC dépassent 50 000 $ (art. 125(5.1)). L'étalement des gains et la gestion du Compte de dividendes en capital (CDC) restent primordiaux.",
     actionItemsEn: [
-      "Review corporate retained earnings: calculate your corporation's Adjusted Aggregate Investment Income (AAII) on Schedule 7.",
-      "Audit family cottage Adjusted Cost Base (ACB): collect historical receipts for capital additions and assess Form T2091 designations.",
-      "Explore corporate-owned life insurance: cash value accumulates completely exempt from annual AAII passive income reporting under ITA Section 148.",
+      "Model large capital realizations or property sales against the 20.5% federal AMT threshold before year-end.",
+      "Review corporate retained earnings: calculate your corporation's Adjusted Aggregate Investment Income (AAII) on T2 Schedule 7.",
+      "Audit family cottage Adjusted Cost Base (ACB): keep capital improvement receipts and evaluate principal-residence designation rules.",
     ],
     actionItemsFr: [
-      "Examinez les bénéfices non répartis de votre société : calculez le revenu de placement passif rajusté (RPPR) sur l'annexe 7 de la T2.",
-      "Rassemblez les factures de rénovations majeures pour rehausser le prix de base rajusté (PBR) de votre chalet familial.",
-      "Explorez l'assurance vie universelle ou avec participation détenue par la société : la croissance de la valeur de rachat est 100 % exonérée d'impôt passif.",
+      "Simulez toute réalisation importante de gains en capital face à l'IMR fédéral de 20,5 % avant la fin d'année.",
+      "Examinez les bénéfices non répartis de votre société : calculez le revenu de placement passif rajusté sur l'annexe 7 de la T2.",
+      "Documentez le prix de base rajusté (PBR) du chalet familial et conservez les factures de rénovations majeures.",
     ],
     officialSource: {
-      label: "Department of Finance Canada - Capital Gains Inclusion Rate Measures",
-      url: "https://www.canada.ca/en/department-finance/news/2024/06/capital-gains-inclusion-rate.html",
+      label: "Canada Revenue Agency - Capital Gains Inclusion Rate",
+      url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/personal-income/line-12700-capital-gains.html",
     },
   },
   {
@@ -311,7 +311,7 @@ export const WhatChangedPage: React.FC = () => {
         {/* Page Hero */}
         <header className="pb-10 border-b border-[#d6cebd] space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] text-xs font-semibold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-[#75581f]" />
+            <Scale className="w-3.5 h-3.5 text-[#75581f]" />
             <span>
               {isFr ? "Revue Réglementaire & Fiscale Mensuelle" : "Monthly Advisor Regulatory Briefing"}
             </span>
@@ -418,12 +418,12 @@ export const WhatChangedPage: React.FC = () => {
               </div>
 
               {/* Ahmed's Direct Take Callout */}
-              <div className="bg-[#2e4a3b]/10 border-l-4 border-[#2e4a3b] p-4 sm:p-5 rounded-r-xs space-y-2">
+              <div className="bg-[#2e4a3b]/10 border border-[#2e4a3b]/40 p-4 sm:p-5 rounded-[2px] space-y-2">
                 <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#2e4a3b]">
-                  <Sparkles className="w-4 h-4 text-[#75581f]" />
+                  <Scale className="w-4 h-4 text-[#75581f]" />
                   <span>{isFr ? "L'analyse d'Ahmed Bello" : "Ahmed's Advisor Analysis"}</span>
                 </div>
-                <p className="text-xs sm:text-sm text-[#1c1b18] font-serif italic leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#1c1b18] font-serif leading-relaxed">
                   {isFr ? item.ahmedAnalysisFr : item.ahmedAnalysisEn}
                 </p>
               </div>
@@ -483,6 +483,7 @@ export const WhatChangedPage: React.FC = () => {
                 href={siteConfig.schedulingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackBookingClick("what_changed_bottom")}
                 className="inline-flex items-center gap-2 px-5 py-3 bg-[#2e4a3b] hover:bg-[#385b48] text-[#f7f3eb] border border-[#d6c298]/40 font-medium text-xs sm:text-sm rounded-xs transition-colors"
               >
                 <Calendar className="w-4 h-4 text-[#d6c298]" />

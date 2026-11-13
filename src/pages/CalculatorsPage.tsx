@@ -18,7 +18,6 @@ import {
   AlertTriangle,
   Scale,
   Calendar,
-  Sparkles,
   Layers,
   HelpCircle,
 } from "lucide-react";
@@ -312,11 +311,11 @@ export const CalculatorsPage: React.FC = () => {
           </div>
 
           {/* Dedicated AMT Calculator Card (Task 1e Registration) */}
-          <div className="mt-4 p-4 sm:p-5 bg-gradient-to-r from-[#fcfaf5] to-[#f4f7f4] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+          <div className="mt-4 p-4 sm:p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <span className="px-2 py-0.5 bg-[#8a3324]/10 text-[#8a3324] font-mono text-[10px] font-bold uppercase rounded-[2px]">
-                  {isFr ? "Nouveau • Loi C-59" : "New • Bill C-59"}
+                  {isFr ? "Nouveau • Lois C-59 & C-69" : "New • Bills C-59 & C-69"}
                 </span>
                 <span className="text-xs font-semibold text-[#75581f]">
                   {isFr ? "Calculateur Fédéral Dédié" : "Dedicated Standalone Calculator"}
@@ -329,8 +328,8 @@ export const CalculatorsPage: React.FC = () => {
               </h3>
               <p className="text-xs text-[#46423a] max-w-2xl leading-relaxed">
                 {isFr
-                  ? "Estimez si la réforme de l'IMR (taux de 20,5 %, inclusion à 100 % des gains, restriction des dons) déclenche un impôt supplémentaire sur vos ventes d'actifs ou dons importants."
-                  : "Estimate whether Canada's reformed AMT rules (20.5% rate, 100% capital gains inclusion, 50% donation credit limit) trigger extra tax on your business exits or major liquidations."}
+                  ? "Estimez si la réforme de l'IMR (taux de 20,5 %, inclusion à 100 % des gains, crédit pour dons admis à 80 % sous la loi C-69) déclenche un impôt supplémentaire sur vos ventes d'actifs ou dons importants."
+                  : "Estimate whether Canada's reformed AMT rules (20.5% rate, 100% capital gains inclusion, 80% donation credit allowance under Bill C-69) trigger extra tax on your business exits or major liquidations."}
               </p>
             </div>
 
@@ -396,7 +395,7 @@ export const CalculatorsPage: React.FC = () => {
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Solde hypothécaire actuel" : "Current Mortgage Balance"}</span>
-                        <span className="font-mono text-[#2e4a3b] font-bold">${mortgageBalance.toLocaleString()}</span>
+                        <span className="font-mono text-[#2e4a3b] font-bold">{formatCurrency(mortgageBalance)}</span>
                       </div>
                       <input
                         type="range"
@@ -463,7 +462,7 @@ export const CalculatorsPage: React.FC = () => {
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                           <span>{isFr ? "Épargne CELI disponible" : "Liquid TFSA Reserves"}</span>
-                          <span className="font-mono text-[#75581f] font-bold">${registeredSavings.toLocaleString()}</span>
+                          <span className="font-mono text-[#75581f] font-bold">{formatCurrency(registeredSavings)}</span>
                         </div>
                         <input
                           type="range"
@@ -489,11 +488,15 @@ export const CalculatorsPage: React.FC = () => {
                     <div className="grid grid-cols-2 gap-3 border-b border-[#2e4a3b] pb-4">
                       <div>
                         <span className="text-[0.7rem] text-[#ece6da]/70 block">{isFr ? "Paiement actuel" : "Current Payment"}</span>
-                        <span className="text-lg font-mono font-bold">${oldPayment} / mo</span>
+                        <span className="text-lg font-mono font-bold">
+                          {formatCurrency(oldPayment)} {isFr ? "/ mois" : "/ mo"}
+                        </span>
                       </div>
                       <div>
                         <span className="text-[0.7rem] text-[#d6c298] block">{isFr ? "Nouveau paiement" : "New Payment"}</span>
-                        <span className="text-xl font-mono font-bold text-white">${newPayment} / mo</span>
+                        <span className="text-xl font-mono font-bold text-white">
+                          {formatCurrency(newPayment)} {isFr ? "/ mois" : "/ mo"}
+                        </span>
                       </div>
                     </div>
 
@@ -502,14 +505,14 @@ export const CalculatorsPage: React.FC = () => {
                         {isFr ? "Choc mensuel net :" : "Monthly Payment Shock:"}
                       </span>
                       <span className="font-mono text-base font-bold text-[#f7f3eb]">
-                        +${monthlyPaymentIncrease} / mo
+                        +{formatCurrency(monthlyPaymentIncrease)} {isFr ? "/ mois" : "/ mo"}
                       </span>
                     </div>
 
                     <div className="text-xs text-[#ece6da]/80 leading-relaxed pt-1">
                       {isFr
-                        ? `Ce saut de taux représentera +${fiveYearIncrease.toLocaleString()} $ d'intérêts et de mensualités supplémentaires sur le prochain terme de 5 ans.`
-                        : `Over the next 5-year term, this rate step-up demands an extra $${fiveYearIncrease.toLocaleString()} in household cash flow.`}
+                        ? `Ce saut de taux représentera +${formatCurrency(fiveYearIncrease)} d'intérêts et de mensualités supplémentaires sur le prochain terme de 5 ans.`
+                        : `Over the next 5-year term, this rate step-up demands an extra ${formatCurrency(fiveYearIncrease)} in household cash flow.`}
                     </div>
                   </div>
 
@@ -520,8 +523,8 @@ export const CalculatorsPage: React.FC = () => {
                     </span>
                     <p className="text-[#46423a] leading-relaxed">
                       {isFr
-                        ? `Rembourser ${registeredSavings.toLocaleString()} $ réduirait votre mensualité de ~${monthlySavingsFromPrepay} $/mois. Cependant, ce même capital composé à 6,5 % dans votre CELI atteindrait ~${tfsa15YearFutureValue.toLocaleString()} $ nets d'impôt dans 15 ans.`
-                        : `Prepaying $${registeredSavings.toLocaleString()} reduces your mortgage service by ~$${monthlySavingsFromPrepay}/mo. However, leaving that capital compounded at 6.5% tax-free grows to ~$${tfsa15YearFutureValue.toLocaleString()} in 15 years.`}
+                        ? `Rembourser ${formatCurrency(registeredSavings)} réduirait votre mensualité de ~${formatCurrency(monthlySavingsFromPrepay)} / mois. Cependant, ce même capital composé à 6,5 % dans votre CELI atteindrait ~${formatCurrency(tfsa15YearFutureValue)} nets d'impôt dans 15 ans.`
+                        : `Prepaying ${formatCurrency(registeredSavings)} reduces your mortgage service by ~${formatCurrency(monthlySavingsFromPrepay)}/mo. However, leaving that capital compounded at 6.5% tax-free grows to ~${formatCurrency(tfsa15YearFutureValue)} in 15 years.`}
                     </p>
                   </div>
                 </div>
@@ -567,7 +570,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Revenu annuel brut actuel" : "Current Annual Gross Income"}</span>
-                        <span className="font-mono text-[#2e4a3b] font-bold">${currentIncome.toLocaleString()}</span>
+                        <span className="font-mono text-[#2e4a3b] font-bold">{formatCurrency(currentIncome)}</span>
                       </div>
                       <input
                         type="range"
@@ -587,7 +590,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Revenu annuel prévu à la retraite" : "Estimated Annual Retirement Income"}</span>
-                        <span className="font-mono text-[#75581f] font-bold">${retirementIncome.toLocaleString()}</span>
+                        <span className="font-mono text-[#75581f] font-bold">{formatCurrency(retirementIncome)}</span>
                       </div>
                       <input
                         type="range"
@@ -608,7 +611,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                           <span>{isFr ? "Cotisation annuelle" : "Annual Contribution"}</span>
-                          <span className="font-mono text-[#1c1b18] font-bold">${annualContribution.toLocaleString()}</span>
+                          <span className="font-mono text-[#1c1b18] font-bold">{formatCurrency(annualContribution)}</span>
                         </div>
                         <input
                           type="range"
@@ -650,11 +653,11 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                     <div className="space-y-3 border-b border-[#2e4a3b] pb-4">
                       <div className="flex justify-between items-center text-xs">
                         <span className="text-[#ece6da]/70">{isFr ? "Valeur nette CELI (100 % libre d'impôt)" : "TFSA Terminal (100% Tax-Free):"}</span>
-                        <span className="font-mono font-bold text-white text-base">${tfsaTerminal.toLocaleString()}</span>
+                        <span className="font-mono font-bold text-white text-base">{formatCurrency(tfsaTerminal)}</span>
                       </div>
                       <div className="flex justify-between items-center text-xs">
                         <span className="text-[#ece6da]/70">{isFr ? "Valeur nette REER (remboursement réinvesti)" : "RRSP Terminal (Net of Taxes):"}</span>
-                        <span className="font-mono font-bold text-[#d6c298] text-base">${rrspAfterTaxTerminal.toLocaleString()}</span>
+                        <span className="font-mono font-bold text-[#d6c298] text-base">{formatCurrency(rrspAfterTaxTerminal)}</span>
                       </div>
                     </div>
 
@@ -666,8 +669,8 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                       </span>
                       <span className="text-lg font-mono font-bold text-white">
                         {rrspArbitrageDelta >= 0
-                          ? isFr ? `+${rrspArbitrageDelta.toLocaleString()} $ net` : `+$${rrspArbitrageDelta.toLocaleString()} Net`
-                          : isFr ? `+${Math.abs(rrspArbitrageDelta).toLocaleString()} $ net` : `+$${Math.abs(rrspArbitrageDelta).toLocaleString()} Net`}
+                          ? `+${formatCurrency(rrspArbitrageDelta)} ${isFr ? "net" : "Net"}`
+                          : `+${formatCurrency(Math.abs(rrspArbitrageDelta))} ${isFr ? "net" : "Net"}`}
                       </span>
                       <p className="text-[0.7rem] text-[#ece6da]/80 mt-1">
                         {currentMarginalRate > retirementMarginalRate
@@ -722,7 +725,7 @@ Net Arbitrage Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in fa
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Revenu d'entreprise exploitée activement (BPA)" : "Active Business Income (ABI)"}</span>
-                        <span className="font-mono text-[#2e4a3b] font-bold">${activeBusinessIncome.toLocaleString()}</span>
+                        <span className="font-mono text-[#2e4a3b] font-bold">{formatCurrency(activeBusinessIncome)}</span>
                       </div>
                       <input
                         type="range"
@@ -738,7 +741,7 @@ Net Arbitrage Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in fa
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Revenu passif de placement annuel (RPAA)" : "Adjusted Aggregate Investment Income (AAII)"}</span>
-                        <span className="font-mono text-[#8a3324] font-bold">${passiveInvestmentIncome.toLocaleString()}</span>
+                        <span className="font-mono text-[#8a3324] font-bold">{formatCurrency(passiveInvestmentIncome)}</span>
                       </div>
                       <input
                         type="range"
@@ -752,11 +755,15 @@ Net Arbitrage Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in fa
                       <span className="text-[0.68rem] text-[#625d52]">
                         {passiveInvestmentIncome > 50000 ? (
                           <span className="text-[#8a3324] font-semibold">
-                            ⚠️ Dépasse le seuil légal de 50 000 $ de ${(passiveInvestmentIncome - 50000).toLocaleString()} $. Réduction 5:1 déclenchée.
+                            {isFr
+                              ? `Dépasse le seuil légal de 50 000 $ de ${formatCurrency(passiveInvestmentIncome - 50000)}. Réduction 5:1 déclenchée.`
+                              : `Exceeds $50,000 statutory threshold by ${formatCurrency(passiveInvestmentIncome - 50000)}. 5:1 clawback active.`}
                           </span>
                         ) : (
                           <span className="text-[#2e4a3b] font-semibold">
-                            ✓ Inférieur au seuil de 50 000 $. Plein plafond DPE de 500 000 $ préservé.
+                            {isFr
+                              ? "Inférieur au seuil de 50 000 $. Plein plafond DPE de 500 000 $ préservé."
+                              : "Below $50,000 threshold. Full $500,000 SBD limit preserved."}
                           </span>
                         )}
                       </span>
@@ -774,15 +781,15 @@ Net Arbitrage Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in fa
                     <div className="space-y-2 border-b border-[#2e4a3b] pb-4 text-xs">
                       <div className="flex justify-between">
                         <span className="text-[#ece6da]/70">{isFr ? "Érosion du plafond DPE (5:1) :" : "SBD Limit Slashed (5:1):"}</span>
-                        <span className="font-mono font-bold text-[#d97768]">-${sbdGrindAmount.toLocaleString()}</span>
+                        <span className="font-mono font-bold text-[#d97768]">-{formatCurrency(sbdGrindAmount)}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#ece6da]/70">{isFr ? "Plafond restant à 12,2 % :" : "Remaining Limit at 12.2%:"}</span>
-                        <span className="font-mono font-bold text-white">${remainingSbdLimit.toLocaleString()}</span>
+                        <span className="font-mono font-bold text-white">{formatCurrency(remainingSbdLimit)}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#ece6da]/70">{isFr ? "Bénéfice poussé à 26,5 % :" : "Operating Income Pushed to 26.5%:"}</span>
-                        <span className="font-mono font-bold text-[#d6c298]">${regularTaxedAbi.toLocaleString()}</span>
+                        <span className="font-mono font-bold text-[#d6c298]">{formatCurrency(regularTaxedAbi)}</span>
                       </div>
                     </div>
 
@@ -791,7 +798,7 @@ Net Arbitrage Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in fa
                         {isFr ? "Impôt corporatif supplémentaire :" : "Extra Corporate Tax Owed:"}
                       </span>
                       <span className="font-mono text-base font-bold text-white">
-                        +${extraCorporateTaxOwing.toLocaleString()} / an
+                        +{formatCurrency(extraCorporateTaxOwing)} {isFr ? "/ an" : "/ yr"}
                       </span>
                     </div>
 

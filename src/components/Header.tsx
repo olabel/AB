@@ -336,7 +336,7 @@ export const Header: React.FC = () => {
                       trackBookingClick("header_mobile");
                       closeMobileMenu();
                     }}
-                    className="btn btn-secondary w-full text-center py-3 text-sm font-medium inline-flex items-center justify-center gap-2"
+                    className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] w-full text-center py-3 text-sm font-medium inline-flex items-center justify-center gap-2"
                   >
                     <Calendar className="w-4 h-4 text-[#75581f]" />
                     <span>{t("btn_book_call")}</span>

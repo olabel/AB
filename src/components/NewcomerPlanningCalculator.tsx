@@ -11,7 +11,6 @@ import {
   DollarSign,
   Clock,
   ShieldAlert,
-  Sparkles,
   BookOpen,
   Building,
   GraduationCap,
@@ -427,7 +426,7 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
               {isFr ? "Ressource officielle liée :" : "Relevant Guide from the Library:"}
             </span>
             <Link
-              to="/education/internationally-trained-doctors-nurses-first-year"
+              to={`${isFr ? "/fr" : ""}/education/internationally-trained-doctors-nurses-first-year`}
               className="text-[#2e4a3b] font-serif text-sm hover:underline block leading-snug"
             >
               {isFr

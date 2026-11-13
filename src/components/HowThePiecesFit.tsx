@@ -191,7 +191,7 @@ export const HowThePiecesFit: React.FC = () => {
                       {p.tag}
                     </span>
                     <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center ${
+                      className={`w-7 h-7 rounded-[2px] flex items-center justify-center ${
                         isHighlighted ? "bg-[#2e4a3b] text-white" : "bg-[#ece6da] text-[#46423a]"
                       }`}
                     >
@@ -215,7 +215,7 @@ export const HowThePiecesFit: React.FC = () => {
                     ))}
                   </ul>
 
-                  <p className="text-[10px] text-[#75581f] pt-1 italic border-t border-[#d6cebd]/40 leading-tight">
+                  <p className="text-[10px] text-[#75581f] pt-1 border-t border-[#d6cebd]/40 leading-tight">
                     {p.note}
                   </p>
                 </div>

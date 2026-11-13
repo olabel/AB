@@ -5,6 +5,7 @@ import { siteConfig } from "../config/site.ts";
 import { BrandMark } from "../components/BrandMark.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import { trackBookingClick } from "../lib/track.ts";
 
 export const AboutPage: React.FC = () => {
   const { isFr } = useLanguage();
@@ -245,7 +246,8 @@ export const AboutPage: React.FC = () => {
                 href={siteConfig.schedulingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
+                onClick={() => trackBookingClick("about_bottom")}
+                className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-base px-6 py-3 inline-flex items-center gap-2"
               >
                 <span>{isFr ? "Réserver 30 min sur Calendly" : "Book 30 Min on Calendly"}</span>
                 <span aria-hidden="true">→</span>

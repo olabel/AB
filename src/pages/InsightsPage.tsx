@@ -4,10 +4,10 @@ import { articles } from "../content/data.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
 import { trackCtaClick } from "../lib/track.ts";
 import {
   ArrowRight,
-  Sparkles,
   Scale,
   Building,
   Users,
@@ -28,36 +28,37 @@ export const InsightsPage: React.FC = () => {
   const prefix = isFr ? "/fr" : "";
   const [selectedTheme, setSelectedTheme] = useState<InsightCategoryFilter>("all");
 
-  // Core Analytical Essays
+  // Core Analytical Essays (dynamically include all kind === "insight" articles)
   const ccpcEssay = articles.find(
     (a) => a.slug === "canadian-ccpc-passive-income-grind-sbd-tax-trap"
   );
   const mortgageEssay = articles.find(
     (a) => a.slug === "canadian-mortgage-renewal-shock-liquidity-trap"
   );
-  const debtVsSaveEssay = articles.find((a) => a.slug === "savings-or-debt-first");
-  const advisorQuestionsEssay = articles.find(
-    (a) => a.slug === "questions-before-any-financial-product"
-  );
 
-  const allEssays = [
-    ccpcEssay,
-    mortgageEssay,
-    debtVsSaveEssay,
-    advisorQuestionsEssay,
-  ].filter(Boolean);
+  const allEssays = articles.filter((a) => a.kind === "insight");
 
   const filteredEssays = allEssays.filter((essay) => {
-    if (!essay) return false;
     if (selectedTheme === "all") return true;
     if (selectedTheme === "corporate-tax") {
-      return essay.slug.includes("ccpc") || essay.slug.includes("passive-income");
+      return (
+        essay.slug.includes("ccpc") ||
+        essay.slug.includes("passive-income") ||
+        essay.slug.includes("amt")
+      );
     }
     if (selectedTheme === "mortgages-liquidity") {
-      return essay.slug.includes("mortgage") || essay.slug.includes("savings-or-debt");
+      return (
+        essay.slug.includes("mortgage") ||
+        essay.slug.includes("savings-or-debt")
+      );
     }
     if (selectedTheme === "decision-frameworks") {
-      return essay.slug.includes("questions-before") || essay.slug.includes("savings-or-debt");
+      return (
+        essay.slug.includes("questions-before") ||
+        essay.slug.includes("savings-or-debt") ||
+        essay.slug.includes("cpp-timing")
+      );
     }
     return true;
   });
@@ -72,10 +73,10 @@ export const InsightsPage: React.FC = () => {
         }
         description={
           isFr
-            ? "Analyses économiques approfondies : plafond de 50 000 $ de revenus passifs des SPCC, choc du renouvellement hypothécaire canadien et critères fiduciaires indépendants."
+            ? "Analyses économiques approfondies : plafond de 50 000 $ de revenus passifs des SPCC, choc du renouvellement hypothécaire canadien et critères indépendants."
             : "Deep-dive analytical essays on the Canadian CCPC $50,000 passive income limit, mortgage renewal liquidity shock, and evaluating financial advice."
         }
-        canonicalUrl="/insights"
+        canonicalUrl={`${prefix}/insights`}
       />
 
       {/* 1. Header with Editorial Rationale */}
@@ -102,7 +103,7 @@ export const InsightsPage: React.FC = () => {
           <p className="lede text-base sm:text-lg text-[#46423a] leading-relaxed max-w-3xl">
             {isFr
               ? "Notre bibliothèque éducative détaille les plafonds officiels de l'ARC et des régimes enregistrés. Ces essais approfondis examinent la mécanique économique sous-jacente : l'architecture de trésorerie d'entreprise, la préservation de la liquidité du bilan familial et l'alignement des incitations professionnelles."
-              : "While the education library explains CRA registered limits and basic rules, these long-form essays provide quantitative economic analysis: corporate treasury architecture, total household balance-sheet liquidity, and distinguishing fiduciary principles from sales rhetoric."}
+              : "While the education library explains CRA registered limits and basic rules, these long-form essays provide quantitative economic analysis: corporate treasury architecture, total household balance-sheet liquidity, and distinguishing objective licensing principles from sales rhetoric."}
           </p>
 
           {/* Quick Filter Tabs */}
@@ -172,7 +173,7 @@ export const InsightsPage: React.FC = () => {
                 </h2>
               </div>
               <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-[#2e4a3b] font-semibold">
-                <Sparkles className="w-3.5 h-3.5 text-[#75581f]" />
+                <Scale className="w-3.5 h-3.5 text-[#75581f]" />
                 <span>{isFr ? "Modèles chiffrés inclus" : "Quantitative Models Included"}</span>
               </span>
             </div>
@@ -191,7 +192,7 @@ export const InsightsPage: React.FC = () => {
                         {ccpcEssay.readingMinutes} {isFr ? "min de lecture" : "min read"}
                       </span>
                       <span className="text-xs text-[#75581f] font-medium hidden sm:inline">
-                        &bull; ITA Subsection 125(5.1)
+                        &bull; {isFr ? "LIR par. 125(5.1)" : "ITA Subsection 125(5.1)"}
                       </span>
                     </div>
 
@@ -200,15 +201,15 @@ export const InsightsPage: React.FC = () => {
                         to={`${prefix}${ccpcEssay.url}`}
                         className="hover:text-[#2e4a3b] transition-colors"
                       >
-                        {ccpcEssay.title}
+                        {isFr ? ARTICLE_FR_SEO[ccpcEssay.slug]?.title || ccpcEssay.title : ccpcEssay.title}
                       </Link>
                     </h3>
 
                     <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
-                      {ccpcEssay.description}
+                      {isFr ? ARTICLE_FR_SEO[ccpcEssay.slug]?.description || ccpcEssay.description : ccpcEssay.description}
                     </p>
 
-                    <div className="p-3 bg-[#fcfaf5] border-l-2 border-[#75581f] text-xs text-[#46423a] italic">
+                    <div className="p-3 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
                       <strong>{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{ccpcEssay.problem}&rdquo;
                     </div>
                   </div>
@@ -241,7 +242,7 @@ export const InsightsPage: React.FC = () => {
                         {mortgageEssay.readingMinutes} {isFr ? "min de lecture" : "min read"}
                       </span>
                       <span className="text-xs text-[#75581f] font-medium hidden sm:inline">
-                        &bull; Bank of Canada Review
+                        &bull; {isFr ? "Revue Banque du Canada" : "Bank of Canada Review"}
                       </span>
                     </div>
 
@@ -250,15 +251,15 @@ export const InsightsPage: React.FC = () => {
                         to={`${prefix}${mortgageEssay.url}`}
                         className="hover:text-[#2e4a3b] transition-colors"
                       >
-                        {mortgageEssay.title}
+                        {isFr ? ARTICLE_FR_SEO[mortgageEssay.slug]?.title || mortgageEssay.title : mortgageEssay.title}
                       </Link>
                     </h3>
 
                     <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
-                      {mortgageEssay.description}
+                      {isFr ? ARTICLE_FR_SEO[mortgageEssay.slug]?.description || mortgageEssay.description : mortgageEssay.description}
                     </p>
 
-                    <div className="p-3 bg-[#fcfaf5] border-l-2 border-[#2e4a3b] text-xs text-[#46423a] italic">
+                    <div className="p-3 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
                       <strong>{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{mortgageEssay.problem}&rdquo;
                     </div>
                   </div>
@@ -328,11 +329,23 @@ export const InsightsPage: React.FC = () => {
                     <div className="flex items-center gap-2 text-xs text-[#625d52]">
                       <span className="font-semibold text-[#2e4a3b] uppercase tracking-wider text-[0.7rem]">
                         {essay.category === "debt-and-cashflow"
-                          ? "Household Treasury"
+                          ? isFr
+                            ? "Trésorerie des ménages"
+                            : "Household Treasury"
                           : essay.category === "investing"
-                          ? "Corporate & Wealth"
+                          ? isFr
+                            ? "Sociétés & Patrimoine"
+                            : "Corporate & Wealth"
                           : essay.category === "education"
-                          ? "Fiduciary Standards"
+                          ? isFr
+                            ? "Normes de conseil"
+                            : "Advisory Standards"
+                          : essay.category === "retirement"
+                          ? isFr
+                            ? "Retraite & Rentes"
+                            : "Retirement & Pensions"
+                          : isFr
+                          ? "Priorités financières"
                           : "Financial Priorities"}
                       </span>
                       <span>&bull;</span>
@@ -343,15 +356,15 @@ export const InsightsPage: React.FC = () => {
 
                     <h3 className="font-serif text-xl text-[#1c1b18] leading-snug">
                       <Link to={`${prefix}${essay.url}`} className="hover:text-[#2e4a3b] transition-colors">
-                        {essay.title}
+                        {isFr ? ARTICLE_FR_SEO[essay.slug]?.title || essay.title : essay.title}
                       </Link>
                     </h3>
 
                     <p className="text-xs text-[#46423a] leading-relaxed line-clamp-3">
-                      {essay.description}
+                      {isFr ? ARTICLE_FR_SEO[essay.slug]?.description || essay.description : essay.description}
                     </p>
 
-                    <div className="p-3 bg-[#f7f3eb] border-l-2 border-[#8d8677] text-xs text-[#46423a] italic">
+                    <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
                       <strong>{isFr ? "La question :" : "The Question:"}</strong> {essay.question}
                     </div>
                   </div>

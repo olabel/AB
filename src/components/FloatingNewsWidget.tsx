@@ -37,20 +37,15 @@ export const FloatingNewsWidget: React.FC = () => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="group flex items-center gap-2 p-2.5 bg-[#1a2c22] hover:bg-[#253d30] text-[#f7f3eb] rounded-full border border-[#d6c298]/60 shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer"
+          className="group flex items-center gap-2 p-2.5 bg-[#1a2c22] hover:bg-[#253d30] text-[#f7f3eb] rounded-[2px] border border-[#d6c298]/60 shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer"
           title={isFr ? "Voir les changements réglementaires récents" : "What Changed in Canadian Money Rules"}
           aria-expanded={isOpen}
           aria-label={isFr ? "Changements aux règles" : "Money Rule Changes"}
         >
-          {/* Pulsing Amber Dot */}
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d6c298] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d6c298]"></span>
-          </span>
+          <span className="inline-flex h-2 w-2 rounded-[1px] bg-[#d6c298]" aria-hidden="true" />
 
           <Newspaper className="w-4 h-4 text-[#d6c298] group-hover:scale-105 transition-transform" />
 
-          {/* Label on hover / medium screens */}
           <span className="hidden group-hover:inline-block pr-1 text-[0.7rem] font-medium tracking-wide text-[#ece6da]">
             {isFr ? "Règles 2026" : "Rule Updates"}
           </span>
@@ -59,14 +54,11 @@ export const FloatingNewsWidget: React.FC = () => {
 
       {/* 2. Compact Popup Preview */}
       {isOpen && (
-        <div className="w-80 sm:w-88 bg-[#1a2c22] text-[#f7f3eb] border border-[#d6c298]/80 rounded-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="w-80 sm:w-88 bg-[#1a2c22] text-[#f7f3eb] border border-[#d6c298]/80 rounded-[2px] shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="px-3.5 py-2.5 bg-[#24392e] border-b border-[#2e4a3b] flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d6c298] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d6c298]"></span>
-              </span>
+              <span className="inline-flex h-2 w-2 rounded-[1px] bg-[#d6c298]" aria-hidden="true" />
               <span className="text-xs font-semibold uppercase tracking-wider text-[#d6c298]">
                 {isFr ? "Ce qui a changé (Nov 2026)" : "What Changed (Nov 2026)"}
               </span>

@@ -5,7 +5,8 @@ import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { SEO } from "../components/SEO.tsx";
-import { trackCtaClick } from "../lib/track.ts";
+import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
+import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 import {
   Stethoscope,
   Briefcase,
@@ -15,7 +16,6 @@ import {
   ShieldCheck,
   CheckCircle2,
   Calendar,
-  Sparkles,
   BookOpen,
   Calculator,
 } from "lucide-react";
@@ -278,7 +278,7 @@ export const AudienceHubPage: React.FC = () => {
             {Object.values(AUDIENCES).map((aud) => (
               <Link
                 key={aud.id}
-                to={`/for/${aud.slug}`}
+                to={`${isFr ? "/fr" : ""}/for/${aud.slug}`}
                 className={`text-xs px-3 py-1.5 rounded-[2px] border transition-colors ${
                   aud.id === currentAudience.id
                     ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] font-semibold"
@@ -442,7 +442,7 @@ export const AudienceHubPage: React.FC = () => {
                 </h3>
                 <p className="text-xs text-[#46423a] leading-relaxed">
                   {isFr
-                    ? "La fraction non imposable des gains en capital (50 % ou 33,3 %) crédite le CDC, permettant de distribuer du capital net d'impôt aux actionnaires canadiens."
+                    ? "La fraction non imposable des gains en capital (50 %) crédite le CDC, permettant de distribuer du capital net d'impôt aux actionnaires canadiens."
                     : "The non-taxable portion of realized corporate capital gains credits your Capital Dividend Account (CDA), allowing tax-free distribution of surplus funds to Canadian resident shareholders via Form T2054."}
                 </p>
               </div>
@@ -585,25 +585,29 @@ export const AudienceHubPage: React.FC = () => {
                         {cat?.label || art.category}
                       </span>
                       <span>&bull;</span>
-                      <span>{art.readingMinutes} min read</span>
+                      <span>
+                        {art.readingMinutes} {isFr ? "min de lecture" : "min read"}
+                      </span>
                     </div>
 
                     <h3 className="font-serif text-xl text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
-                      <Link to={art.url}>{art.title}</Link>
+                      <Link to={`${isFr ? "/fr" : ""}${art.url}`}>
+                        {isFr ? ARTICLE_FR_SEO[art.slug]?.title || art.title : art.title}
+                      </Link>
                     </h3>
 
                     <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed line-clamp-3">
-                      {art.description}
+                      {isFr ? ARTICLE_FR_SEO[art.slug]?.description || art.description : art.description}
                     </p>
 
-                    <div className="p-3 bg-[#f7f3eb] border-l-2 border-[#75581f] text-xs text-[#46423a] italic">
-                      <strong>The Question:</strong> {art.question}
+                    <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
+                      <strong>{isFr ? "La question :" : "The Question:"}</strong> {art.question}
                     </div>
                   </div>
 
                   <div className="pt-5 border-t border-[#ece6da] mt-5 flex items-center justify-between">
                     <Link
-                      to={art.url}
+                      to={`${isFr ? "/fr" : ""}${art.url}`}
                       className="text-xs font-semibold text-[#2e4a3b] flex items-center gap-1.5 group-hover:underline"
                     >
                       <span>{isFr ? "Lire le guide" : "Read the guide"}</span>
@@ -636,6 +640,7 @@ export const AudienceHubPage: React.FC = () => {
               href={siteConfig.schedulingUrl || "/contact"}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackBookingClick("audience_hub_bottom")}
               className="btn btn-primary px-8 py-3.5 text-base inline-flex items-center gap-2 shadow-sm"
             >
               <Calendar className="w-4 h-4 text-[#d6c298]" />

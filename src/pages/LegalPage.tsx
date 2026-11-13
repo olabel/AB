@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { LegalPageData } from "../content/legal.ts";
 import { Tbc } from "../components/Tbc.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { getCoreRouteSeo } from "../config/seoMetadata.ts";
 
 interface LegalPageProps {
   pageType: "disclosures" | "privacy" | "standards" | "terms";
@@ -29,36 +30,17 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
   };
 
   const isFrench = location.pathname.startsWith("/fr");
-  const titlesByPage: Record<string, { en: string; fr: string }> = {
-    disclosures: {
-      en: "Regulatory Disclosures & Professional Scope | Ahmed Bello",
-      fr: "Divulgations Réglementaires & Portée Professionnelle | Ahmed Bello",
-    },
-    privacy: {
-      en: "Privacy Notice & Data Protection | Ahmed Bello",
-      fr: "Avis de Confidentialité & Protection des Données | Ahmed Bello",
-    },
-    standards: {
-      en: "Editorial Standards & Official Sources | Ahmed Bello",
-      fr: "Normes Éditoriales & Sources Officielles | Ahmed Bello",
-    },
-    terms: {
-      en: "Website Terms of Use | Ahmed Bello",
-      fr: "Conditions d'Utilisation du Site Web | Ahmed Bello",
-    },
-  };
-
-  const pageTitle = titlesByPage[pageType]
-    ? (isFrench ? titlesByPage[pageType].fr : titlesByPage[pageType].en)
-    : `${data.title} | Ahmed Bello`;
   const canonicalPath = isFrench ? `/fr/${pageType}` : `/${pageType}`;
+  const routeSeo = getCoreRouteSeo(canonicalPath);
+  const pageTitle = routeSeo?.title ?? `${data.title} | Ahmed Bello`;
+  const pageDescription = routeSeo?.description ?? data.lede;
 
   return (
     <div className="py-12 md:py-16">
       <SEO
         title={pageTitle}
-        description={data.lede}
-        canonical={canonicalPath}
+        description={pageDescription}
+        canonicalUrl={canonicalPath}
       />
       {/* Header */}
       <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
@@ -70,7 +52,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
           </p>
 
           {data.bannerNotice && (
-            <div className="p-4 bg-[#fcfaf5] border-l-2 border-[#8d8677] text-xs text-[#625d52]">
+            <div className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs text-[#625d52]">
               <Tbc>{data.bannerNotice}</Tbc>
             </div>
           )}

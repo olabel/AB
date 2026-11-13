@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext.tsx";
 import { FileText, ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
 
 interface CaseStudy {
@@ -74,6 +75,7 @@ const CASE_STUDIES: CaseStudy[] = [
 ];
 
 export const StructuralCaseStudies: React.FC = () => {
+  const { isFr } = useLanguage();
   const [selectedCaseId, setSelectedCaseId] = useState<string>("first-home");
   const activeCase = CASE_STUDIES.find((c) => c.id === selectedCaseId) || CASE_STUDIES[0];
 
@@ -155,7 +157,7 @@ export const StructuralCaseStudies: React.FC = () => {
         </div>
 
         {/* Structural Outcome */}
-        <div className="p-4 bg-[#2e4a3b]/10 border-l-3 border-[#2e4a3b] rounded-r-[2px] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-4 bg-[#fcfaf5] border border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-1.5 text-[#2e4a3b] text-xs font-semibold uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4" />
@@ -166,7 +168,7 @@ export const StructuralCaseStudies: React.FC = () => {
             </p>
           </div>
           <Link
-            to={`/contact?topic=${activeCase.contactTopic}`}
+            to={`${isFr ? "/fr" : ""}/contact?topic=${activeCase.contactTopic}`}
             className="btn btn-primary text-xs py-2 px-4 whitespace-nowrap shrink-0"
           >
             Ask about this framework →

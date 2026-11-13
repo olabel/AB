@@ -20,13 +20,13 @@ import {
   HelpCircle,
   FileText,
   Calendar,
-  Sparkles,
   ExternalLink,
   Percent,
   Check,
   Phone,
 } from "lucide-react";
 import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
+import { trackBookingClick, trackLeadSubmit } from "../lib/track.ts";
 
 const CANADIAN_PROVINCES = [
   "Alberta",
@@ -143,7 +143,6 @@ export const IslamicInvestingPage: React.FC = () => {
 
     setIsSubmitting(true);
     const generatedRef = "ISL-" + Math.floor(100000 + Math.random() * 900000);
-    let firestoreSaved = false;
 
     const messageDetails = `Islamic Investing Lead:
 Target Account: ${formData.accountType}
@@ -186,6 +185,7 @@ Notes: ${formData.notes || "None"}`;
       }
 
       setReferenceNo(data.referenceNo || generatedRef);
+      trackLeadSubmit("investing");
       setFormSubmitted(true);
     } catch (err: any) {
       setFormError(
@@ -482,7 +482,7 @@ Notes: ${formData.notes || "None"}`;
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
               <div className="flex items-center gap-2 text-[#2e4a3b] font-bold text-sm">
-                <Sparkles className="w-4 h-4 text-[#75581f]" />
+                <ShieldCheck className="w-4 h-4 text-[#75581f]" />
                 <span>TFSA (CELI)</span>
               </div>
               <p className="text-xs text-[#46423a] leading-relaxed">
@@ -742,7 +742,7 @@ Notes: ${formData.notes || "None"}`;
             </div>
           </div>
 
-          <div className="p-3 bg-[#ece6da]/40 border-l-2 border-[#8d8677] text-[0.7rem] text-[#46423a] leading-relaxed">
+          <div className="p-3 bg-[#ece6da]/40 border border-[#d6cebd] rounded-[2px] text-[0.7rem] text-[#46423a] leading-relaxed">
             <strong>{isFr ? "Précision méthodologique :" : "Methodological Transparency:"}</strong>{" "}
             {isFr
               ? "Les investissements en actions comportent un risque de perte en capital et des fluctuations de marché. Les calculs ci-dessus sont purement illustratifs et intègrent un taux d'inflation hypothétique de 2,5 % et une déduction de frais de gestion. Les rendements réels varient chaque année et ne sont pas garantis."
@@ -787,6 +787,7 @@ Notes: ${formData.notes || "None"}`;
                       href={siteConfig.schedulingUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackBookingClick("islamic_investing_success")}
                       className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs rounded-xs transition-colors"
                     >
                       <span>{isFr ? "Réserver une session de 30 min sur Calendly" : "Schedule 30-Min Call on Calendly"}</span>
@@ -824,7 +825,13 @@ Notes: ${formData.notes || "None"}`;
                         <span>+1 (506) 899-4941</span>
                       </a>
                       <span>•</span>
-                      <a href="https://calendly.com/olabel/30min" target="_blank" rel="noopener noreferrer" className="underline font-semibold text-[#d6c298] inline-flex items-center gap-1">
+                      <a
+                        href="https://calendly.com/olabel/30min"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => trackBookingClick("islamic_investing_error")}
+                        className="underline font-semibold text-[#d6c298] inline-flex items-center gap-1"
+                      >
                         <Calendar className="w-3 h-3" />
                         <span>{isFr ? "Réserver 30 min sur Calendly" : "Schedule 30 min on Calendly"}</span>
                       </a>
@@ -1146,7 +1153,7 @@ Notes: ${formData.notes || "None"}`;
         </section>
 
         {/* 9. REGULATORY DISCLAIMER */}
-        <div className="p-4 bg-[#ece6da]/60 border-l-2 border-[#8d8677] text-xs text-[#46423a] leading-relaxed">
+        <div className="p-4 bg-[#ece6da]/60 border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a] leading-relaxed">
           <strong>{isFr ? "Divulgation réglementaire d'indépendance :" : "Independent Regulatory Disclosure:"}</strong>{" "}
           {isFr
             ? "Ce document est publié à des fins d'éducation financière générale et d'information objective concernant l'investissement en actions islamiques au Canada. Ahmed Bello est un professionnel indépendant agréé en solutions financières. Aucune recommandation d'achat spécifique n'est formulée sans analyse préalable de votre situation financière, de votre tolérance au risque et de vos objectifs personnels."

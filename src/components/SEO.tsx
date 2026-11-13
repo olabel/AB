@@ -2,6 +2,12 @@ import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
+import {
+  formatStrictTitle,
+  getCanonicalUrl,
+  getCoreRouteSeo,
+  getLanguageUrls,
+} from "../config/seoMetadata.ts";
 
 export interface SEOProps {
   title?: string;
@@ -17,38 +23,11 @@ export interface SEOProps {
 }
 
 /**
- * Formats page titles to strictly stay within the 60-character budget for optimal
- * search engine snippet rendering without mid-word truncation.
+ * Formats page titles to strictly stay within the 60-character budget
+ * without mid-word ellipses truncation.
  */
 export function formatTitle(rawTitle: string, brand = "Ahmed Bello", maxLen = 60): string {
-  const brandSuffix = ` | ${brand}`;
-  const clean = rawTitle.replace(/\s+/g, " ").trim();
-
-  // If already includes the brand, separator, or is an explicit targeted title
-  if (clean.includes(brand) || clean.includes("|") || clean.includes(":")) {
-    if (clean.length <= maxLen) return clean;
-    const target = maxLen - 3;
-    const slice = clean.slice(0, target);
-    const lastSpace = slice.lastIndexOf(" ");
-    return (lastSpace > 20 ? slice.slice(0, lastSpace) : slice).trim() + "...";
-  }
-
-  // If appending brand fits within maxLen
-  const withBrand = `${clean}${brandSuffix}`;
-  if (withBrand.length <= maxLen) return withBrand;
-
-  // Truncate clean title so cleanTitle + brandSuffix <= maxLen
-  const allowed = maxLen - brandSuffix.length - 3;
-  if (allowed < 15) {
-    const slice = withBrand.slice(0, maxLen - 3);
-    const lastSpace = slice.lastIndexOf(" ");
-    return (lastSpace > 20 ? slice.slice(0, lastSpace) : slice).trim() + "...";
-  }
-
-  const slice = clean.slice(0, allowed);
-  const lastSpace = slice.lastIndexOf(" ");
-  const truncated = (lastSpace > 10 ? slice.slice(0, lastSpace) : slice).trim() + "...";
-  return `${truncated}${brandSuffix}`;
+  return formatStrictTitle(rawTitle, brand, maxLen);
 }
 
 export const SEO: React.FC<SEOProps> = ({
@@ -56,50 +35,50 @@ export const SEO: React.FC<SEOProps> = ({
   description,
   canonical,
   canonicalUrl,
-  ogType = "website",
+  ogType,
   image = `${siteConfig.siteUrl}/brand/og-share.png`,
   jsonLd,
   articlePublishedTime,
   articleModifiedTime,
-  noIndex = false,
+  noIndex,
 }) => {
   const location = useLocation();
   const { language } = useLanguage();
   const isFr = language === "fr";
 
-  // Compute canonical URL
   const path = location.pathname;
-  const isFrenchRoute = path.startsWith("/fr");
-  const baseCanonicalPath = isFrenchRoute ? path.replace(/^\/fr(\/|$)/, "$1") || "/" : path;
+  const routeSeo = getCoreRouteSeo(path);
+  const { enUrl, frUrl, canonicalUrl: computedCanonical } = getLanguageUrls(path);
+  const rawCanonical = canonical || canonicalUrl;
+  const currentCanonical = rawCanonical
+    ? rawCanonical.startsWith("http")
+      ? rawCanonical
+      : getCanonicalUrl(rawCanonical)
+    : computedCanonical || getCanonicalUrl(path);
 
-  const currentCanonical =
-    canonical ||
-    canonicalUrl ||
-    `${siteConfig.siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
-
-  const englishUrl = `${siteConfig.siteUrl}${baseCanonicalPath === "/" ? "" : baseCanonicalPath}`;
-  const frenchUrl = `${siteConfig.siteUrl}/fr${baseCanonicalPath === "/" ? "" : baseCanonicalPath}`;
-
-  // Default title & description
   const defaultTitle = isFr
-    ? "Ahmed Bello | Éducation Financière pour Canadiens"
-    : "Ahmed Bello | Financial Education for Canadians";
+    ? "Éducation financière au Canada | Ahmed Bello"
+    : "Financial Education for Canadians | Ahmed Bello";
 
   const defaultDescription = isFr
-    ? "Éducation financière en langage clair sur les régimes enregistrés (CELI, REER, CELIAPP), l'assurance vie et les décisions budgétaires avec Ahmed Bello."
-    : "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions with Ahmed Bello.";
+    ? "Éducation financière claire sur les régimes enregistrés (CELI, REER, CELIAPP), l'assurance vie et les décisions familiales au Canada."
+    : "Plain-language Canadian financial education on registered accounts (TFSA, RRSP, FHSA), insurance, and family money decisions.";
 
-  const finalTitle = formatTitle(title || defaultTitle);
-  const finalDescription = description || defaultDescription;
+  const finalTitle = formatStrictTitle(title || routeSeo?.title || defaultTitle);
+  const finalDescription = description || routeSeo?.description || defaultDescription;
+  const finalOgType = ogType || routeSeo?.ogType || "website";
+  const finalNoIndex = typeof noIndex === "boolean" ? noIndex : Boolean(routeSeo?.noIndex);
 
   useEffect(() => {
-    // 1. Update Document Title
     document.title = finalTitle;
     document.documentElement.lang = isFr ? "fr-CA" : "en-CA";
 
-    // 2. Helper to set/update meta tag
     const setMetaTag = (attr: "name" | "property", key: string, content: string) => {
-      let tag = document.querySelector(`meta[${attr}="${key}"]`);
+      const tags = document.querySelectorAll(`meta[${attr}="${key}"]`);
+      let tag = tags[0] as HTMLMetaElement | undefined;
+      for (let i = 1; i < tags.length; i++) {
+        tags[i].remove();
+      }
       if (!tag) {
         tag = document.createElement("meta");
         tag.setAttribute(attr, key);
@@ -108,19 +87,22 @@ export const SEO: React.FC<SEOProps> = ({
       tag.setAttribute("content", content);
     };
 
-    // Remove dead weight keywords meta tag if present
-    const staleKeywords = document.querySelector('meta[name="keywords"]');
-    if (staleKeywords) {
-      staleKeywords.remove();
-    }
+    const removeMetaTag = (attr: "name" | "property", key: string) => {
+      document.querySelectorAll(`meta[${attr}="${key}"]`).forEach((el) => el.remove());
+    };
 
-    // 3. Helper to set/update link tag
+    removeMetaTag("name", "keywords");
+
     const setLinkTag = (rel: string, href: string, extraAttrs: Record<string, string> = {}) => {
       let selector = `link[rel="${rel}"]`;
       if (extraAttrs.hreflang) {
         selector += `[hreflang="${extraAttrs.hreflang}"]`;
       }
-      let link = document.querySelector(selector);
+      const links = document.querySelectorAll(selector);
+      let link = links[0] as HTMLLinkElement | undefined;
+      for (let i = 1; i < links.length; i++) {
+        links[i].remove();
+      }
       if (!link) {
         link = document.createElement("link");
         link.setAttribute("rel", rel);
@@ -130,33 +112,29 @@ export const SEO: React.FC<SEOProps> = ({
       link.setAttribute("href", href);
     };
 
-    // Standard Meta
     setMetaTag("name", "description", finalDescription);
     setMetaTag(
       "name",
       "robots",
-      noIndex
+      finalNoIndex
         ? "noindex, nofollow"
         : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
     );
 
-    // Canonical & Language Alternates
     setLinkTag("canonical", currentCanonical);
-    setLinkTag("alternate", englishUrl, { hreflang: "en-CA" });
-    setLinkTag("alternate", frenchUrl, { hreflang: "fr-CA" });
-    setLinkTag("alternate", englishUrl, { hreflang: "x-default" });
+    setLinkTag("alternate", enUrl, { hreflang: "en-CA" });
+    setLinkTag("alternate", frUrl, { hreflang: "fr-CA" });
+    setLinkTag("alternate", enUrl, { hreflang: "x-default" });
 
-    // OpenGraph
     setMetaTag("property", "og:title", finalTitle);
     setMetaTag("property", "og:description", finalDescription);
     setMetaTag("property", "og:url", currentCanonical);
-    setMetaTag("property", "og:type", ogType);
+    setMetaTag("property", "og:type", finalOgType);
     setMetaTag("property", "og:site_name", "Ahmed Bello");
     setMetaTag("property", "og:locale", isFr ? "fr_CA" : "en_CA");
     setMetaTag("property", "og:locale:alternate", isFr ? "en_CA" : "fr_CA");
     setMetaTag("property", "og:image", image);
 
-    // Twitter Card
     setMetaTag("name", "twitter:card", "summary_large_image");
     setMetaTag("name", "twitter:title", finalTitle);
     setMetaTag("name", "twitter:description", finalDescription);
@@ -164,12 +142,16 @@ export const SEO: React.FC<SEOProps> = ({
 
     if (articlePublishedTime) {
       setMetaTag("property", "article:published_time", articlePublishedTime);
-    }
-    if (articleModifiedTime) {
-      setMetaTag("property", "article:modified_time", articleModifiedTime);
+    } else {
+      removeMetaTag("property", "article:published_time");
     }
 
-    // 4. Injected Structured Data (JSON-LD)
+    if (articleModifiedTime) {
+      setMetaTag("property", "article:modified_time", articleModifiedTime);
+    } else {
+      removeMetaTag("property", "article:modified_time");
+    }
+
     let scriptTag = document.getElementById("route-jsonld") as HTMLScriptElement | null;
     if (jsonLd) {
       if (!scriptTag) {
@@ -185,11 +167,23 @@ export const SEO: React.FC<SEOProps> = ({
     }
 
     return () => {
-      // Cleanup custom JSON-LD when unmounting
       const tag = document.getElementById("route-jsonld");
       if (tag) tag.remove();
     };
-  }, [finalTitle, finalDescription, currentCanonical, englishUrl, frenchUrl, ogType, image, jsonLd, isFr, noIndex]);
+  }, [
+    finalTitle,
+    finalDescription,
+    currentCanonical,
+    enUrl,
+    frUrl,
+    finalOgType,
+    image,
+    jsonLd,
+    isFr,
+    finalNoIndex,
+    articlePublishedTime,
+    articleModifiedTime,
+  ]);
 
   return null;
 };

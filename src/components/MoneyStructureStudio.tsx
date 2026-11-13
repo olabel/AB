@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext.tsx";
 import { Shield, TrendingUp, Layers, Compass, AlertTriangle, CheckCircle, ArrowRight } from "lucide-react";
 
 interface StructureTier {
@@ -121,6 +122,7 @@ const SCENARIOS: StressScenario[] = [
 ];
 
 export const MoneyStructureStudio: React.FC = () => {
+  const { isFr } = useLanguage();
   const [activeTierId, setActiveTierId] = useState<string>("foundation");
   const [activeScenarioId, setActiveScenarioId] = useState<string>("disability");
 
@@ -195,12 +197,9 @@ export const MoneyStructureStudio: React.FC = () => {
                 {currentTier.title}
               </h4>
             </div>
-            <span className="px-3 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] text-xs font-medium rounded-[2px] self-start sm:self-center">
-              Essential Foundation
-            </span>
           </div>
 
-          <p className="text-base text-[#1c1b18] font-serif italic text-lg leading-relaxed">
+          <p className="text-base text-[#1c1b18] font-serif text-lg leading-relaxed">
             &ldquo;{currentTier.purpose}&rdquo;
           </p>
 
@@ -220,7 +219,7 @@ export const MoneyStructureStudio: React.FC = () => {
 
             {/* Contrast: Without Structure vs Intentional Design */}
             <div className="md:col-span-6 space-y-4">
-              <div className="p-4 bg-[#8f2a1d]/10 border-l-2 border-[#8f2a1d] rounded-r-[2px] space-y-1">
+              <div className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-1">
                 <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-[#8f2a1d] block">
                   Vulnerability If Left Unstructured
                 </span>
@@ -229,7 +228,7 @@ export const MoneyStructureStudio: React.FC = () => {
                 </p>
               </div>
 
-              <div className="p-4 bg-[#2e4a3b]/10 border-l-2 border-[#2e4a3b] rounded-r-[2px] space-y-1">
+              <div className="p-4 bg-[#f7f3eb] border border-[#2e4a3b]/40 rounded-[2px] space-y-1">
                 <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-[#2e4a3b] block">
                   Intentional Architectural Design
                 </span>
@@ -314,7 +313,7 @@ export const MoneyStructureStudio: React.FC = () => {
           <p className="text-xs text-[#ece6da]/70">
             Want to see how your own household pieces connect before a shock occurs?
           </p>
-          <Link to="/contact" className="btn btn-primary text-xs py-2 px-5 shrink-0">
+          <Link to={isFr ? "/fr/contact" : "/contact"} className="btn btn-primary text-xs py-2 px-5 shrink-0">
             Start a Conversation with Ahmed →
           </Link>
         </div>

@@ -40,7 +40,11 @@ const TOPIC_OPTIONS = [
   { id: "protection", labelEn: "Income protection & life insurance", labelFr: "Protection du revenu & assurance vie" },
   { id: "family", labelEn: "Family planning & education savings (RESP)", labelFr: "Planification familiale & épargne-études (REEE)" },
   { id: "retirement", labelEn: "Retirement & public pensions (CPP/OAS)", labelFr: "Retraite & rentes publiques (RPC/SV)" },
+  { id: "debt", labelEn: "Debt strategy & mortgage structure", labelFr: "Stratégie d'endettement & hypothèque" },
   { id: "newcomer", labelEn: "New to Canada settlement finances", labelFr: "Finances de 1re année pour nouveaux arrivants" },
+  { id: "amt", labelEn: "Alternative Minimum Tax (AMT) analysis", labelFr: "Impôt minimum de remplacement (IMR)" },
+  { id: "pension-checklist", labelEn: "Pension commuted value decision review", labelFr: "Analyse de valeur de rachat de pension" },
+  { id: "mentorship", labelEn: "Independent practice mentorship (LLQP)", labelFr: "Mentorat de pratique indépendante (PAAP)" },
   { id: "other", labelEn: "Other financial question", labelFr: "Autre question financière" },
 ];
 
@@ -348,7 +352,7 @@ export const ContactPage: React.FC = () => {
             </div>
 
             {/* Please don't send */}
-            <div className="p-6 bg-[#f7f3eb] border-l-2 border-[#8f2a1d] rounded-r-[2px] space-y-2">
+            <div className="p-6 bg-[#f7f3eb] border border-[#8f2a1d]/35 rounded-[2px] space-y-2">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-[#8f2a1d]">
                 {isFr ? "Veuillez ne pas transmettre" : "Please don’t send"}
               </h3>
@@ -387,7 +391,7 @@ export const ContactPage: React.FC = () => {
             {siteConfig.schedulingUrl && (
               <div className="mb-6 p-4 sm:p-5 bg-[#2e4a3b]/5 border border-[#2e4a3b]/25 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+                  <div className="w-9 h-9 rounded-[2px] bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
                     <Calendar className="w-4 h-4 text-[#d6c298]" />
                   </div>
                   <div>
@@ -421,7 +425,7 @@ export const ContactPage: React.FC = () => {
                 className="p-6 sm:p-8 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] space-y-6 shadow-sm"
               >
                 <div className="flex items-center gap-3 text-[#2e4a3b] pb-4 border-b border-[#d6cebd]">
-                  <div className="w-10 h-10 rounded-full bg-[#2e4a3b]/10 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-[2px] bg-[#2e4a3b]/10 flex items-center justify-center shrink-0">
                     <CheckCircle2 className="w-6 h-6 text-[#2e4a3b]" />
                   </div>
                   <div>
@@ -515,7 +519,7 @@ export const ContactPage: React.FC = () => {
                     ref={errorSummaryRef}
                     tabIndex={-1}
                     role="alert"
-                    className="p-4 bg-[#fbe7a1]/40 border-l-4 border-[#8f2a1d] rounded-r-[2px] text-xs space-y-2 focus:outline-none"
+                    className="p-4 bg-[#fbe7a1]/40 border border-[#8f2a1d] rounded-[2px] text-xs space-y-2 focus:outline-none"
                   >
                     <div className="flex items-center gap-2 text-[#8f2a1d] font-semibold text-sm">
                       <AlertCircle className="w-4 h-4 shrink-0" />

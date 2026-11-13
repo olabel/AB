@@ -103,7 +103,6 @@ export const DecisionMap: React.FC = () => {
                         fill="none"
                         stroke="#75581f"
                         strokeWidth="2"
-                        className="animate-pulse"
                       />
                     )}
 
@@ -210,7 +209,7 @@ export const DecisionMap: React.FC = () => {
                 return (
                   <div
                     key={`conn-${idx}`}
-                    className="p-3 bg-[#f7f3eb] border-l-2 border-[#2e4a3b] rounded-r-[2px] text-xs leading-relaxed"
+                    className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] text-xs leading-relaxed"
                   >
                     <strong className="block text-[#2e4a3b] font-semibold text-xs mb-1">
                       {otherNode?.label}

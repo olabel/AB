@@ -8,17 +8,13 @@ import {
   Copy,
   ExternalLink,
   ArrowRight,
-  Share2,
-  Sparkles,
   CheckCircle2,
-  Calculator,
   MessageSquare,
   Linkedin,
   Send,
   Scale,
   Calendar,
   AlertCircle,
-  HelpCircle,
   ClipboardList,
 } from "lucide-react";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
@@ -26,6 +22,7 @@ import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { trackBookingClick } from "../lib/track.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
 
 const TOPIC_LABELS: Record<string, { en: string; fr: string }> = {
   accounts: { en: "Canadian Registered Accounts (TFSA / RRSP / FHSA)", fr: "Comptes enregistrés canadiens (CELI / REER / CELIAPP)" },
@@ -75,7 +72,11 @@ export const ArticlePage: React.FC = () => {
   }
 
   const category = categories.find((c) => c.id === article.category);
-  const kindLabel = article.kind === "guide" ? "Guide" : "Insight";
+  const kindLabel = article.kind === "guide" ? "Guide" : isFr ? "Analyse" : "Insight";
+  const frSeo = isFr ? ARTICLE_FR_SEO[article.slug] : undefined;
+  const localizedSeoTitle = frSeo?.seoTitle || article.seoTitle || article.title;
+  const localizedTitle = frSeo?.title || article.title;
+  const localizedDescription = frSeo?.description || article.description;
   const relatedArticles = article.related
     .map((relSlug) => articles.find((a) => a.slug === relSlug))
     .filter(Boolean);
@@ -86,8 +87,9 @@ export const ArticlePage: React.FC = () => {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const pageUrl = typeof window !== "undefined" ? window.location.href : `${siteConfig.siteUrl}${article.url}`;
-  const shareTitle = `${article.title} | Ahmed Bello`;
+  const pageUrl =
+    typeof window !== "undefined" ? window.location.href : `${siteConfig.siteUrl}${prefix}${article.url}`;
+  const shareTitle = `${localizedTitle} | Ahmed Bello`;
   const shareLinkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
   const shareTwitter = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(pageUrl)}`;
   const shareWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareTitle + " " + pageUrl)}`;
@@ -121,23 +123,24 @@ export const ArticlePage: React.FC = () => {
         className="fixed top-0 left-0 right-0 z-50 h-[3.5px] bg-[#d6cebd]/40 pointer-events-none"
       >
         <div
-          className="h-full bg-gradient-to-r from-[#75581f] via-[#2e4a3b] to-[#2e4a3b] transition-[width] duration-150 ease-out"
+          className="h-full bg-[#2e4a3b] transition-[width] duration-150 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
 
       <SEO
-        title={article.seoTitle || article.title}
-        description={article.description}
-        canonical={`${siteConfig.siteUrl}${article.url}`}
+        title={localizedSeoTitle}
+        description={localizedDescription}
+        canonicalUrl={`${prefix}${article.url}`}
         ogType="article"
         articlePublishedTime={article.datePublished || "2025-01-15T08:00:00-05:00"}
         articleModifiedTime={article.dateModified || "2026-11-05T09:00:00-05:00"}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Article",
-          headline: article.seoTitle || article.title,
-          description: article.description,
+          inLanguage: isFr ? "fr-CA" : "en-CA",
+          headline: localizedSeoTitle,
+          description: localizedDescription,
           datePublished: article.datePublished || "2025-01-15T08:00:00-05:00",
           dateModified: article.dateModified || "2026-11-05T09:00:00-05:00",
           author: {
@@ -152,7 +155,7 @@ export const ArticlePage: React.FC = () => {
           },
           mainEntityOfPage: {
             "@type": "WebPage",
-            "@id": `${siteConfig.siteUrl}${article.url}`,
+            "@id": `${siteConfig.siteUrl}${prefix}${article.url}`,
           },
           citation: article.sources.map((s) => ({
             "@type": "CreativeWork",
@@ -167,7 +170,7 @@ export const ArticlePage: React.FC = () => {
         <header className="max-w-4xl mb-12">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#2e4a3b] mb-4">
             <Link
-              to={`/education?category=${article.category}`}
+              to={`${prefix}/education?category=${article.category}`}
               className="hover:underline text-[#2e4a3b]"
             >
               {category?.label || article.category}
@@ -177,14 +180,14 @@ export const ArticlePage: React.FC = () => {
           </div>
 
           <h1 className="h1 text-[#1c1b18] mb-6 font-normal leading-[1.12]">
-            {article.title}
+            {localizedTitle}
           </h1>
 
-          <div className="p-4 bg-[#fcfaf5] border-l-2 border-[#2e4a3b] text-[#1c1b18] rounded-r-[2px]">
+          <div className="p-4 bg-[#fcfaf5] border border-[#d6cebd] text-[#1c1b18] rounded-[2px]">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#2e4a3b] block mb-1">
               {t("meta_the_question")}
             </span>
-            <p className="text-lg font-serif italic text-[#1c1b18] leading-snug">
+            <p className="text-lg font-serif text-[#1c1b18] leading-snug">
               {article.question}
             </p>
           </div>
@@ -206,9 +209,9 @@ export const ArticlePage: React.FC = () => {
                     <span className="text-[#625d52] font-medium">{t("meta_reading_progress")}</span>
                     <span className="text-[#2e4a3b] font-bold">{Math.round(scrollProgress)}%</span>
                   </div>
-                  <div className="w-full bg-[#ece6da] h-1.5 rounded-full overflow-hidden">
+                  <div className="w-full bg-[#ece6da] h-1.5 rounded-[1px] overflow-hidden">
                     <div
-                      className="bg-[#2e4a3b] h-full transition-[width] duration-150 ease-out rounded-full"
+                      className="bg-[#2e4a3b] h-full transition-[width] duration-150 ease-out rounded-[1px]"
                       style={{ width: `${scrollProgress}%` }}
                     />
                   </div>
@@ -216,7 +219,9 @@ export const ArticlePage: React.FC = () => {
 
                 {article.figuresAsOf && (
                   <div className="border-t border-[#ece6da] pt-3">
-                    <span className="text-[#625d52] block mb-0.5 font-medium">Figures as of</span>
+                    <span className="text-[#625d52] block mb-0.5 font-medium">
+                      {isFr ? "Données en date du" : "Figures as of"}
+                    </span>
                     <span className="text-[#1c1b18]">{article.figuresAsOf}</span>
                   </div>
                 )}
@@ -227,30 +232,36 @@ export const ArticlePage: React.FC = () => {
                     href="#sources"
                     className="text-[#2e4a3b] font-semibold hover:underline"
                   >
-                    {article.sources.length} cited
+                    {article.sources.length} {isFr ? "citées" : "cited"}
                   </a>
                 </div>
 
                 <div className="border-t border-[#ece6da] pt-3">
-                  <span className="text-[#625d52] block mb-1 font-medium">Editorial Review</span>
+                  <span className="text-[#625d52] block mb-1 font-medium">
+                    {isFr ? "Révision éditoriale" : "Editorial Review"}
+                  </span>
                   <Link
-                    to="/standards"
+                    to={`${prefix}/standards`}
                     className="text-[#2e4a3b] underline hover:text-[#1c1b18]"
                   >
-                    How content is checked →
+                    {isFr ? "Méthodologie de vérification →" : "How content is checked →"}
                   </Link>
                 </div>
 
                 <div className="border-t border-[#ece6da] pt-3">
-                  <span className="text-[#625d52] block mb-0.5 font-medium">Publication Status</span>
-                  <span className="text-[#2e4a3b] font-semibold">Verified Educational Guide</span>
+                  <span className="text-[#625d52] block mb-0.5 font-medium">
+                    {isFr ? "Statut de publication" : "Publication Status"}
+                  </span>
+                  <span className="text-[#2e4a3b] font-semibold">
+                    {isFr ? "Guide éducatif vérifié" : "Verified Educational Guide"}
+                  </span>
                 </div>
               </div>
 
               {/* Sticky "On this page" index */}
-              <nav aria-label="Table of contents" className="hidden lg:block border-t border-[#d6cebd] pt-6">
+              <nav aria-label={isFr ? "Table des matières" : "Table of contents"} className="hidden lg:block border-t border-[#d6cebd] pt-6">
                 <h2 className="text-xs font-semibold tracking-wider uppercase text-[#46423a] mb-3">
-                  On this page
+                  {isFr ? "Sur cette page" : "On this page"}
                 </h2>
                 <ul className="space-y-2 text-sm list-none p-0">
                   {sections.map((sec) => (
@@ -276,12 +287,12 @@ export const ArticlePage: React.FC = () => {
                   {copied ? (
                     <>
                       <Check className="w-4 h-4 text-[#2e4a3b]" aria-hidden="true" />
-                      <span>Link copied to clipboard</span>
+                      <span>{isFr ? "Lien copié" : "Link copied to clipboard"}</span>
                     </>
                   ) : (
                     <>
                       <Copy className="w-4 h-4" aria-hidden="true" />
-                      <span>Copy article link</span>
+                      <span>{isFr ? "Copier le lien de l'article" : "Copy article link"}</span>
                     </>
                   )}
                 </button>
@@ -296,7 +307,7 @@ export const ArticlePage: React.FC = () => {
               <div className="flex items-center justify-between pb-3 border-b border-[#d6cebd]">
                 <div className="flex items-center gap-2">
                   <span className="p-1 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px]">
-                    <Sparkles className="w-3.5 h-3.5 text-[#d6c298]" />
+                    <Scale className="w-3.5 h-3.5 text-[#d6c298]" />
                   </span>
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#1c1b18]">
                     {isFr ? "Synthèse exécutive en 60 secondes" : "60-Second Executive Summary"}
@@ -310,15 +321,25 @@ export const ArticlePage: React.FC = () => {
               <div className="space-y-2 text-xs sm:text-sm text-[#46423a] leading-relaxed">
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
-                  <p><strong>The Core Friction:</strong> {article.problem}</p>
+                  <p>
+                    <strong>{isFr ? "L'enjeu central :" : "The Core Friction:"}</strong> {article.problem}
+                  </p>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#75581f] shrink-0 mt-0.5" />
-                  <p><strong>Key Strategic Rule:</strong> {article.tradeoffs[0] || article.overview[0]}</p>
+                  <p>
+                    <strong>{isFr ? "Règle stratégique clé :" : "Key Strategic Rule:"}</strong> {article.tradeoffs[0] || article.overview[0]}
+                  </p>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
-                  <p><strong>Fiduciary Takeaway:</strong> {article.misunderstandings[0]?.reality || "Evaluate total balance-sheet impact before committing non-registered or registered capital."}</p>
+                  <p>
+                    <strong>{isFr ? "Point clé :" : "Balance-Sheet Takeaway:"}</strong>{" "}
+                    {article.misunderstandings[0]?.reality ||
+                      (isFr
+                        ? "Évaluez l'impact global sur votre bilan avant d'engager votre capital enregistré ou non enregistré."
+                        : "Evaluate total balance-sheet impact before committing non-registered or registered capital.")}
+                  </p>
                 </div>
               </div>
 
@@ -373,7 +394,7 @@ export const ArticlePage: React.FC = () => {
 
             {/* Top Compliance Disclaimer for Pension Decision Review */}
             {article.slug === "pension-commuted-value-transfer-par-tax-planning" && (
-              <div className="p-4 bg-[#fcfaf5] border-l-4 border-[#75581f] rounded-[2px] text-xs text-[#46423a] leading-relaxed shadow-xs flex items-start gap-2.5">
+              <div className="p-4 bg-[#fcfaf5] border border-[#75581f]/40 rounded-[2px] text-xs text-[#46423a] leading-relaxed shadow-xs flex items-start gap-2.5">
                 <AlertCircle className="w-4 h-4 text-[#75581f] shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-[#1c1b18] block font-semibold mb-0.5">
@@ -388,7 +409,7 @@ export const ArticlePage: React.FC = () => {
 
             {/* Dedicated AMT Calculator Banner on AMT Guide */}
             {article.slug === "canadian-alternative-minimum-tax-amt-high-earners-guide" && (
-              <div className="p-5 bg-gradient-to-r from-[#fcfaf5] to-[#f4f7f4] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
                 <div className="space-y-1">
                   <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
                     {isFr ? "Outil interactif" : "Interactive Decision Tool"}
@@ -398,8 +419,8 @@ export const ArticlePage: React.FC = () => {
                   </h4>
                   <p className="text-xs text-[#46423a]">
                     {isFr
-                      ? "Modélisez l'impact des règles de la loi C-59 sur vos gains en capital, vos dividendes et le report sur 7 ans."
-                      : "Model the impact of Bill C-59 on your capital gains, dividends, donations, and 7-year carry-forward recovery."}
+                      ? "Modélisez l'impact des règles des lois C-59 et C-69 sur vos gains en capital, vos dons et le report sur 7 ans."
+                      : "Model the impact of Bills C-59 & C-69 on your capital gains, dividends, donations, and 7-year carry-forward recovery."}
                   </p>
                 </div>
                 <Link
@@ -473,7 +494,13 @@ export const ArticlePage: React.FC = () => {
                     {isFr ? "Questions Fréquentes" : "Frequently Asked Questions"}
                   </span>
                   <h2 className="h3 text-[#1c1b18] font-serif text-xl sm:text-2xl">
-                    {isFr ? "Questions Essentielles sur la Rente Commuée" : "Frequently Asked Pension Questions"}
+                    {article.slug === "pension-commuted-value-transfer-par-tax-planning"
+                      ? isFr
+                        ? "Questions Essentielles sur la Rente Commuée"
+                        : "Frequently Asked Pension Questions"
+                      : isFr
+                      ? "Foire aux questions"
+                      : "Frequently Asked Questions"}
                   </h2>
                 </div>
                 <div className="space-y-3">
@@ -675,7 +702,7 @@ export const ArticlePage: React.FC = () => {
             </section>
 
             {/* 8. Educational Disclaimer */}
-            <div className="p-4 bg-[#ece6da]/50 border-l-2 border-[#8d8677] text-xs text-[#46423a] leading-relaxed">
+            <div className="p-4 bg-[#ece6da]/50 border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a] leading-relaxed">
               <strong>{isFr ? "Contenu éducatif, pas un conseil." : "Educational content, not advice."}</strong>{" "}
               {isFr
                 ? "Ce guide propose une formation financière générale. Il ne constitue pas un conseil financier, fiscal, juridique ou d'investissement personnalisé, ni une offre d'achat ou de vente d'un produit quelconque. Les règles et plafonds évoluent ; confirmez les données actuelles auprès des autorités officielles et d'un professionnel qualifié avant d'agir."
@@ -689,7 +716,7 @@ export const ArticlePage: React.FC = () => {
             {/* Bottom Compliance Disclaimer and CTAs for Pension Commuted Value (Task 2c & 2d) */}
             {article.slug === "pension-commuted-value-transfer-par-tax-planning" && (
               <div className="space-y-6 pt-2">
-                <div className="p-4 bg-[#fcfaf5] border-l-4 border-[#75581f] rounded-[2px] text-xs text-[#46423a] leading-relaxed shadow-xs flex items-start gap-2.5">
+                <div className="p-4 bg-[#fcfaf5] border border-[#75581f]/40 rounded-[2px] text-xs text-[#46423a] leading-relaxed shadow-xs flex items-start gap-2.5">
                   <AlertCircle className="w-4 h-4 text-[#75581f] shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-[#1c1b18] block font-semibold mb-0.5">
@@ -727,7 +754,7 @@ export const ArticlePage: React.FC = () => {
                 <div className="p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-3 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
                   <div className="space-y-1">
                     <span className="text-[0.68rem] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
-                      {isFr ? "Accompagnement Sans Pression" : "Independent Fiduciary Review"}
+                      {isFr ? "Accompagnement Sans Pression" : "Independent Pension Review"}
                     </span>
                     <h4 className="font-serif text-lg font-medium text-[#f7f3eb]">
                       {isFr
@@ -824,7 +851,7 @@ export const ArticlePage: React.FC = () => {
                             {relCat?.label || rel.category}
                           </span>
                           <h4 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug mb-2">
-                            {rel.title}
+                            {isFr ? ARTICLE_FR_SEO[rel.slug]?.title || rel.title : rel.title}
                           </h4>
                           <p className="text-xs text-[#625d52] line-clamp-3 mb-4">
                             {rel.question}

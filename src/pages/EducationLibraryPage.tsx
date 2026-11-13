@@ -6,6 +6,7 @@ import { Search, X, ArrowRight, Calculator, Stethoscope, Briefcase, Users, Compa
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
 import { trackCtaClick } from "../lib/track.ts";
 
 export const EducationLibraryPage: React.FC = () => {
@@ -41,6 +42,8 @@ export const EducationLibraryPage: React.FC = () => {
   // In the attached markdown, it listed 8 articles under Education Library:
   // tfsa-vs-rrsp, investment-risk-vs-goal-risk, fhsa-explained, consumer-proposals-explained,
   // income-depends-on-you, resp-basics, cpp-oas-start-age, new-to-canada-money-basics.
+  const isFr = language === "fr";
+
   const filteredArticles = useMemo(() => {
     return articles.filter((art) => {
       // Category filter
@@ -50,8 +53,13 @@ export const EducationLibraryPage: React.FC = () => {
       // Query filter
       if (query.trim()) {
         const q = query.toLowerCase();
-        const matchesTitle = art.title.toLowerCase().includes(q);
-        const matchesDesc = art.description.toLowerCase().includes(q);
+        const frSeo = ARTICLE_FR_SEO[art.slug];
+        const matchesTitle =
+          art.title.toLowerCase().includes(q) ||
+          (frSeo?.title.toLowerCase().includes(q) ?? false);
+        const matchesDesc =
+          art.description.toLowerCase().includes(q) ||
+          (frSeo?.description.toLowerCase().includes(q) ?? false);
         const matchesQuestion = art.question.toLowerCase().includes(q);
         const matchesProblem = art.problem.toLowerCase().includes(q);
         return matchesTitle || matchesDesc || matchesQuestion || matchesProblem;
@@ -72,25 +80,24 @@ export const EducationLibraryPage: React.FC = () => {
   return (
     <div className="py-12 md:py-16">
       <SEO
-        title={language === "fr" ? "Bibliothèque d'éducation financière | Ahmed Bello" : "Financial Education Library | Ahmed Bello"}
+        title={isFr ? "Bibliothèque d'éducation financière | Ahmed Bello" : "Financial Education Library | Ahmed Bello"}
         description={
-          language === "fr"
-            ? "Guides éducatifs clairs sur le CELI, REER, CELIAPP, RESP, pensions publiques RPC/SV et stratégies d'endettement au Canada."
-            : "Plain-language explanations of Canadian registered accounts (TFSA, RRSP, FHSA), risk, debt, income protection, and public pensions."
+          isFr
+            ? "Guides pratiques sur les comptes enregistrés canadiens (CELI, REER, CELIAPP), l'assurance vie, le crédit et les finances familiales."
+            : "Plain-language guides on Canadian registered accounts (TFSA, RRSP, FHSA), life insurance, credit building, and household money fundamentals."
         }
-        canonicalUrl={language === "fr" ? "/fr/education" : "/education"}
-      />
-      {/* CollectionPage Schema JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "name": "Financial Education Library | Ahmed Bello",
-            "description": "Plain-language explanations of Canadian registered accounts, risk, debt, protection, and retirement rules.",
-            "url": `${siteConfig.siteUrl}/education`
-          })
+        canonicalUrl={isFr ? "/fr/education" : "/education"}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          inLanguage: isFr ? "fr-CA" : "en-CA",
+          name: isFr
+            ? "Bibliothèque d'Éducation Financière | Ahmed Bello"
+            : "Canadian Financial Education Library | Ahmed Bello",
+          description: isFr
+            ? "Guides pratiques sur les comptes enregistrés canadiens (CELI, REER, CELIAPP), l'assurance vie, le crédit et les finances familiales."
+            : "Plain-language guides on Canadian registered accounts (TFSA, RRSP, FHSA), life insurance, credit building, and household money fundamentals.",
+          url: `${siteConfig.siteUrl}${prefix}/education`,
         }}
       />
 
@@ -111,7 +118,7 @@ export const EducationLibraryPage: React.FC = () => {
               : "Plain-language explanations of how Canadian money rules actually work, with the trade-offs, the common misunderstandings and a link to the official source every time."}
           </p>
 
-          <div className="p-4 bg-[#ece6da]/60 border-l-2 border-[#8d8677] text-xs text-[#46423a] leading-relaxed">
+          <div className="p-4 bg-[#ece6da]/60 border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a] leading-relaxed">
             <strong>{language === "fr" ? "Contenu éducatif, pas un conseil." : "Educational content, not advice."}</strong>{" "}
             {language === "fr"
               ? "Cette page propose une formation financière générale. Elle ne constitue pas un conseil financier, fiscal, juridique ou d'investissement personnalisé, ni une offre d'achat ou de vente d'un produit quelconque. Vos circonstances sont uniques, les règles et plafonds évoluent, et les exemples utilisent des chiffres hypothétiques. Vérifiez les informations actuelles auprès des sources officielles et d'un professionnel qualifié avant d'agir."
@@ -445,6 +452,9 @@ export const EducationLibraryPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredArticles.map((art) => {
                 const cat = categories.find((c) => c.id === art.category);
+                const frSeo = isFr ? ARTICLE_FR_SEO[art.slug] : undefined;
+                const displayTitle = frSeo?.title || art.title;
+                const displayDescription = frSeo?.description || art.description;
                 return (
                   <article
                     key={art.slug}
@@ -462,14 +472,14 @@ export const EducationLibraryPage: React.FC = () => {
                       </div>
 
                       <h3 className="h3 text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
-                        <Link to={`${prefix}${art.url}`}>{art.title}</Link>
+                        <Link to={`${prefix}${art.url}`}>{displayTitle}</Link>
                       </h3>
 
                       <p className="text-sm text-[#46423a] leading-relaxed">
-                        {art.description}
+                        {displayDescription}
                       </p>
 
-                      <div className="p-3 bg-[#f7f3eb] border-l-2 border-[#8d8677] text-xs text-[#46423a] italic">
+                      <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
                         <strong>{language === "fr" ? "La question :" : "The question:"}</strong> {art.question}
                       </div>
                     </div>
