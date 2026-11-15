@@ -18,8 +18,9 @@ import {
   ClipboardList,
 } from "lucide-react";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
+import { FhsaQuickEstimator } from "../components/FhsaQuickEstimator.tsx";
 import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
-import { trackBookingClick } from "../lib/track.ts";
+import { trackBookingClick, trackCtaClick } from "../lib/track.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
@@ -105,6 +106,9 @@ export const ArticlePage: React.FC = () => {
     ...(article.checklist ? [{ id: "checklist", label: article.checklist.title }] : []),
     ...(article.faqs ? [{ id: "faqs", label: isFr ? "Foire aux questions" : "Frequently Asked Questions" }] : []),
     ...(article.example ? [{ id: "example", label: isFr ? "Exemple hypothétique" : "Hypothetical example" }] : []),
+    ...(article.slug === "fhsa-explained"
+      ? [{ id: "fhsa-estimator", label: isFr ? "Simulateur CELIAPP" : "FHSA Tax Estimator" }]
+      : []),
     { id: "misunderstandings", label: isFr ? "Idées reçues fréquentes" : "Common misunderstandings" },
     { id: "tradeoffs", label: isFr ? "Compromis et limites" : "Trade-offs and limitations" },
     { id: "questions", label: isFr ? "Questions à considérer" : "Questions to consider" },
@@ -135,34 +139,58 @@ export const ArticlePage: React.FC = () => {
         ogType="article"
         articlePublishedTime={article.datePublished || "2025-01-15T08:00:00-05:00"}
         articleModifiedTime={article.dateModified || "2026-11-05T09:00:00-05:00"}
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "Article",
-          inLanguage: isFr ? "fr-CA" : "en-CA",
-          headline: localizedSeoTitle,
-          description: localizedDescription,
-          datePublished: article.datePublished || "2025-01-15T08:00:00-05:00",
-          dateModified: article.dateModified || "2026-11-05T09:00:00-05:00",
-          author: {
-            "@type": "Person",
-            name: "Ahmed Bello",
-            jobTitle: "Licensed Financial Solutions Professional",
-            url: siteConfig.siteUrl,
-          },
-          publisher: {
-            "@type": "Person",
-            name: "Ahmed Bello",
-          },
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `${siteConfig.siteUrl}${prefix}${article.url}`,
-          },
-          citation: article.sources.map((s) => ({
-            "@type": "CreativeWork",
-            name: s.label,
-            url: s.url,
-          })),
-        }}
+        jsonLd={(() => {
+          const articleSchema = {
+            "@type": "Article",
+            inLanguage: isFr ? "fr-CA" : "en-CA",
+            headline: localizedSeoTitle,
+            description: localizedDescription,
+            datePublished: article.datePublished || "2025-01-15T08:00:00-05:00",
+            dateModified: article.dateModified || "2026-11-05T09:00:00-05:00",
+            author: {
+              "@type": "Person",
+              name: "Ahmed Bello",
+              jobTitle: "Licensed Financial Solutions Professional",
+              url: siteConfig.siteUrl,
+            },
+            publisher: {
+              "@type": "Person",
+              name: "Ahmed Bello",
+            },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `${siteConfig.siteUrl}${prefix}${article.url}`,
+            },
+            citation: article.sources.map((s) => ({
+              "@type": "CreativeWork",
+              name: s.label,
+              url: s.url,
+            })),
+          };
+          if (article.faqs && article.faqs.length > 0) {
+            return {
+              "@context": "https://schema.org",
+              "@graph": [
+                articleSchema,
+                {
+                  "@type": "FAQPage",
+                  mainEntity: article.faqs.map((faq) => ({
+                    "@type": "Question",
+                    name: faq.question,
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: faq.answer,
+                    },
+                  })),
+                },
+              ],
+            };
+          }
+          return {
+            "@context": "https://schema.org",
+            ...articleSchema,
+          };
+        })()}
       />
 
       <div className="wrap">
@@ -296,6 +324,52 @@ export const ArticlePage: React.FC = () => {
                     </>
                   )}
                 </button>
+              </div>
+
+              {/* Sticky Reader Conversion Card */}
+              <div className="p-5 bg-[#14211a] text-[#f7f3eb] border border-[#2e4a3b] rounded-[2px] space-y-3">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-[#d6c298] font-semibold block">
+                  {isFr ? "Appliquer à votre situation" : "Apply to Your Numbers"}
+                </span>
+                <p className="text-xs text-[#ece6da]/90 leading-relaxed">
+                  {article.slug === "fhsa-explained"
+                    ? isFr
+                      ? "Calculez votre déduction CELIAPP, cumulez avec le RAP (60 000 $) ou posez une question fiscale précise."
+                      : "Calculate your FHSA tax refund, model $100k FHSA + HBP stacking, or ask a question about your eligibility."
+                    : isFr
+                    ? `Vous avez une question sur ${article.invitationAbout} ? Demandez une réponse claire et sans pression.`
+                    : `Have a specific question about ${article.invitationAbout}? Get a direct, no-pressure educational answer.`}
+                </p>
+                <div className="flex flex-col gap-2 pt-1">
+                  {article.slug === "fhsa-explained" && (
+                    <a
+                      href="#fhsa-estimator"
+                      onClick={() => trackCtaClick("article_sidebar", "fhsa_estimator")}
+                      className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2 px-3 inline-flex items-center justify-center gap-1.5 font-semibold transition-colors"
+                    >
+                      <span>{isFr ? "Calculer mon économie CELIAPP" : "Estimate My FHSA Tax Refund"}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  <Link
+                    to={`${prefix}/contact?topic=${article.contactTopic}`}
+                    onClick={() => trackCtaClick("article_sidebar", `ask_${article.slug}`)}
+                    className="btn btn-primary text-xs py-2 px-3 inline-flex items-center justify-center gap-1.5 border border-[#d6c298]/40"
+                  >
+                    <span>{isFr ? "Poser ma question" : "Ask Ahmed About This"}</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#d6c298]" />
+                  </Link>
+                  <a
+                    href={siteConfig.schedulingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackBookingClick(`article_sidebar_${article.slug}`)}
+                    className="text-[11px] text-[#d6c298] hover:text-white underline text-center py-1 inline-flex items-center justify-center gap-1"
+                  >
+                    <Calendar className="w-3 h-3" />
+                    <span>{isFr ? "Planifier 30 min sur Calendly" : "Book a 30-min call"}</span>
+                  </a>
+                </div>
               </div>
             </div>
           </aside>
@@ -431,6 +505,35 @@ export const ArticlePage: React.FC = () => {
                   <span>{isFr ? "Ouvrir le simulateur" : "Open Calculator"}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
+              </div>
+            )}
+
+            {/* Top Interactive Estimator Shortcut Banner on FHSA Guide */}
+            {article.slug === "fhsa-explained" && (
+              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                    {isFr ? "Calculateur & Liste CELIAPP" : "Interactive Tool & Opening Checklist"}
+                  </span>
+                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                    {isFr
+                      ? "Simuler votre remboursement d'impôt CELIAPP et le cumul RAP (100 000 $)"
+                      : "Estimate your FHSA tax refund and $100k FHSA + HBP stacking"}
+                  </h4>
+                  <p className="text-xs text-[#46423a]">
+                    {isFr
+                      ? "Vérifiez vos droits reportés (plafond de 8 000 $) et recevez l'aide-mémoire d'ouverture par courriel."
+                      : "Check your $8,000 carry-forward room and receive a free printable opening checklist by email."}
+                  </p>
+                </div>
+                <a
+                  href="#fhsa-estimator"
+                  onClick={() => trackCtaClick("fhsa_top_banner", "jump_to_estimator")}
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                >
+                  <span>{isFr ? "Calculer maintenant" : "Estimate My Refund"}</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#d6c298]" />
+                </a>
               </div>
             )}
 
@@ -600,6 +703,12 @@ export const ArticlePage: React.FC = () => {
                   }
                 />
               </section>
+            )}
+
+            {article.slug === "fhsa-explained" && (
+              <div className="pt-2">
+                <FhsaQuickEstimator />
+              </div>
             )}
 
             {/* 4. Common Misunderstandings (Myth / Reality) */}

@@ -1,8 +1,16 @@
-import fs from "fs";
 import path from "path";
 import crypto from "crypto";
-// Use node:sqlite DatabaseSync (Node 22 built-in SQLite engine)
-import { DatabaseSync } from "node:sqlite";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+
+type SqliteDb = {
+  exec: (sql: string) => void;
+  prepare: (sql: string) => {
+    run: (...args: any[]) => any;
+    all: (...args: any[]) => any[];
+  };
+};
 
 export interface LeadRecord {
   id: string;
@@ -32,113 +40,86 @@ export interface EmailAlert {
   createdAt: string;
 }
 
-let dbInstance: DatabaseSync | null = null;
+let dbInstance: SqliteDb | null = null;
+let sqliteUnavailable = false;
 let activeDbPath = "";
 
-function initDatabase(): DatabaseSync {
+const SCHEMA_SQL = `
+  CREATE TABLE IF NOT EXISTS leads (
+    id TEXT PRIMARY KEY,
+    reference_no TEXT UNIQUE NOT NULL,
+    topic TEXT NOT NULL,
+    first_name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT,
+    province TEXT,
+    message TEXT,
+    consent_privacy INTEGER NOT NULL DEFAULT 1,
+    consent_educational INTEGER NOT NULL DEFAULT 0,
+    ip TEXT,
+    email_status TEXT NOT NULL DEFAULT 'pending',
+    email_error TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS email_alerts (
+    id TEXT PRIMARY KEY,
+    lead_id TEXT NOT NULL,
+    reference_no TEXT NOT NULL,
+    recipient TEXT NOT NULL,
+    error_message TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS subscribers (
+    id TEXT PRIMARY KEY,
+    email TEXT UNIQUE NOT NULL,
+    confirmed_at TEXT NOT NULL,
+    consent_wording TEXT NOT NULL,
+    ip TEXT NOT NULL,
+    user_agent TEXT,
+    source TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_leads_ref ON leads(reference_no);
+  CREATE INDEX IF NOT EXISTS idx_alerts_ref ON email_alerts(reference_no);
+  CREATE INDEX IF NOT EXISTS idx_subscribers_email ON subscribers(email);
+`;
+
+function initDatabase(): SqliteDb | null {
   if (dbInstance) return dbInstance;
+  if (sqliteUnavailable) return null;
 
-  // Use ephemeral /tmp path or in-memory database to prevent writing to Git repository or read-only serverless filesystems
-  const dbPath = path.join("/tmp", "leads_ephemeral.db");
-
+  let DatabaseSyncCtor: any;
   try {
-    const db = new DatabaseSync(dbPath);
-    db.exec(`
-      CREATE TABLE IF NOT EXISTS leads (
-        id TEXT PRIMARY KEY,
-        reference_no TEXT UNIQUE NOT NULL,
-        topic TEXT NOT NULL,
-        first_name TEXT NOT NULL,
-        email TEXT NOT NULL,
-        phone TEXT,
-        province TEXT,
-        message TEXT,
-        consent_privacy INTEGER NOT NULL DEFAULT 1,
-        consent_educational INTEGER NOT NULL DEFAULT 0,
-        ip TEXT,
-        email_status TEXT NOT NULL DEFAULT 'pending',
-        email_error TEXT,
-        created_at TEXT NOT NULL,
-        updated_at TEXT NOT NULL
-      );
+    ({ DatabaseSync: DatabaseSyncCtor } = require("node:sqlite"));
+  } catch (err: any) {
+    sqliteUnavailable = true;
+    console.warn("[DB NOTE]: node:sqlite unavailable in this Node runtime; continuing with Firestore + Resend:", err?.message || err);
+    return null;
+  }
 
-      CREATE TABLE IF NOT EXISTS email_alerts (
-        id TEXT PRIMARY KEY,
-        lead_id TEXT NOT NULL,
-        reference_no TEXT NOT NULL,
-        recipient TEXT NOT NULL,
-        error_message TEXT NOT NULL,
-        created_at TEXT NOT NULL
-      );
-
-      CREATE TABLE IF NOT EXISTS subscribers (
-        id TEXT PRIMARY KEY,
-        email TEXT UNIQUE NOT NULL,
-        confirmed_at TEXT NOT NULL,
-        consent_wording TEXT NOT NULL,
-        ip TEXT NOT NULL,
-        user_agent TEXT,
-        source TEXT NOT NULL,
-        created_at TEXT NOT NULL
-      );
-
-      CREATE INDEX IF NOT EXISTS idx_leads_ref ON leads(reference_no);
-      CREATE INDEX IF NOT EXISTS idx_alerts_ref ON email_alerts(reference_no);
-      CREATE INDEX IF NOT EXISTS idx_subscribers_email ON subscribers(email);
-    `);
-
+  const dbPath = path.join("/tmp", "leads_ephemeral.db");
+  try {
+    const db = new DatabaseSyncCtor(dbPath) as SqliteDb;
+    db.exec(SCHEMA_SQL);
     dbInstance = db;
     activeDbPath = dbPath;
     return db;
   } catch (err) {
-    // Fallback to /tmp if primary path failed
-    const fallbackPath = path.join("/tmp", "leads.db");
-    const fallbackDb = new DatabaseSync(fallbackPath);
-    fallbackDb.exec(`
-      CREATE TABLE IF NOT EXISTS leads (
-        id TEXT PRIMARY KEY,
-        reference_no TEXT UNIQUE NOT NULL,
-        topic TEXT NOT NULL,
-        first_name TEXT NOT NULL,
-        email TEXT NOT NULL,
-        phone TEXT,
-        province TEXT,
-        message TEXT,
-        consent_privacy INTEGER NOT NULL DEFAULT 1,
-        consent_educational INTEGER NOT NULL DEFAULT 0,
-        ip TEXT,
-        email_status TEXT NOT NULL DEFAULT 'pending',
-        email_error TEXT,
-        created_at TEXT NOT NULL,
-        updated_at TEXT NOT NULL
-      );
-
-      CREATE TABLE IF NOT EXISTS email_alerts (
-        id TEXT PRIMARY KEY,
-        lead_id TEXT NOT NULL,
-        reference_no TEXT NOT NULL,
-        recipient TEXT NOT NULL,
-        error_message TEXT NOT NULL,
-        created_at TEXT NOT NULL
-      );
-
-      CREATE TABLE IF NOT EXISTS subscribers (
-        id TEXT PRIMARY KEY,
-        email TEXT UNIQUE NOT NULL,
-        confirmed_at TEXT NOT NULL,
-        consent_wording TEXT NOT NULL,
-        ip TEXT NOT NULL,
-        user_agent TEXT,
-        source TEXT NOT NULL,
-        created_at TEXT NOT NULL
-      );
-
-      CREATE INDEX IF NOT EXISTS idx_subscribers_fallback ON subscribers(email);
-    `);
-
-    dbInstance = fallbackDb;
-    activeDbPath = fallbackPath;
-    return fallbackDb;
+    try {
+      const fallbackPath = path.join("/tmp", "leads.db");
+      const fallbackDb = new DatabaseSyncCtor(fallbackPath) as SqliteDb;
+      fallbackDb.exec(SCHEMA_SQL);
+      dbInstance = fallbackDb;
+      activeDbPath = fallbackPath;
+      return fallbackDb;
+    } catch {
+      sqliteUnavailable = true;
+      return null;
+    }
   }
 }
 
@@ -155,6 +136,7 @@ export function recordSubscriberToDatabase(params: {
 }): boolean {
   try {
     const db = initDatabase();
+    if (!db) return false;
     const id = crypto.randomUUID();
     const now = new Date().toISOString();
     const upsertStmt = db.prepare(`
@@ -222,6 +204,9 @@ export function saveLeadToDatabase(data: {
   ip?: string;
 }): { id: string; referenceNo: string } {
   const db = initDatabase();
+  if (!db) {
+    throw new Error("SQLite database unavailable in this runtime");
+  }
   const id = crypto.randomUUID();
   const referenceNo = generateReferenceNo();
   const now = new Date().toISOString();
@@ -276,6 +261,7 @@ export function recordEmailDeliveryStatus(params: {
 }): void {
   try {
     const db = initDatabase();
+    if (!db) return;
     const now = new Date().toISOString();
 
     const updateStmt = db.prepare(`
@@ -324,6 +310,7 @@ export function recordEmailDeliveryStatus(params: {
 export function getEmailAlerts(): EmailAlert[] {
   try {
     const db = initDatabase();
+    if (!db) return [];
     const stmt = db.prepare("SELECT * FROM email_alerts ORDER BY created_at DESC LIMIT 50");
     const rows = stmt.all() as any[];
     return rows.map((r) => ({

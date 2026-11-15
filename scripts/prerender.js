@@ -55,6 +55,7 @@ for (const art of articles) {
     ogType: "article",
     heading: art.title,
     summary: art.description,
+    faqs: art.faqs,
     noIndex: false,
   });
 
@@ -67,6 +68,7 @@ for (const art of articles) {
     ogType: "article",
     heading: frSeo?.title || art.title,
     summary: frSeo?.description || art.description,
+    faqs: art.faqs,
     noIndex: false,
   });
 }
@@ -171,6 +173,25 @@ function renderRouteHtml(r) {
     /<meta\s+name="twitter:description"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta name="twitter:description" content="${escapeAttr(r.description)}" />`
   );
+
+  if (Array.isArray(r.faqs) && r.faqs.length > 0) {
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: r.faqs.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: f.answer,
+        },
+      })),
+    };
+    html = html.replace(
+      "</head>",
+      `  <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>\n  </head>`
+    );
+  }
 
   html = html.replace('<div id="root"></div>', `<div id="root">${semanticBody}</div>`);
   return html;

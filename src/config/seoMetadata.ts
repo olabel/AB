@@ -654,10 +654,10 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
       "La volatilité se remarque vite, mais manquer la cible financière détermine le résultat. Comment équilibrer les deux risques au Canada.",
   },
   "fhsa-explained": {
-    seoTitle: "CELIAPP expliqué : plafonds et retraits",
+    seoTitle: "CELIAPP Canada : plafonds, impôt et RAP",
     title: "Le CELIAPP expliqué : déductions, plafonds et retraits",
     description:
-      "Le CELIAPP combine déduction fiscale à l'entrée et retrait libre d'impôt pour une première maison. Règles, reports et clôture.",
+      "Guide CELIAPP au Canada : plafond de 8 000 $/an (40 000 $ à vie), report de droits, déduction d'impôt et cumul de 100 000 $ avec le RAP REER.",
   },
   "consumer-proposals-explained": {
     seoTitle: "Proposition de consommateur au Canada",

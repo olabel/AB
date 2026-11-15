@@ -472,8 +472,13 @@ export async function processContactSubmission(
     }
   }
 
+  const rawSource = sanitizeText(body.source);
   const isNewsletter = topic === "newsletter";
-  const isCalculator = topic === "calculator" || topic === "amt" || topic === "pension-checklist";
+  const isCalculator =
+    topic === "calculator" ||
+    topic === "amt" ||
+    topic === "pension-checklist" ||
+    rawSource.startsWith("calculator_");
   const isMentorship = topic === "mentorship";
 
   if (isNewsletter && !firstName) {
@@ -593,7 +598,7 @@ export async function processContactSubmission(
     message,
     consentPrivacy,
     consentEducational,
-    source: isNewsletter ? "newsletter_form" : isCalculator ? "calculator_form" : "contact_form",
+    source: rawSource || (isNewsletter ? "newsletter_form" : isCalculator ? "calculator_form" : "contact_form"),
   });
 
   // Backup file persistence
