@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Mail, CheckCircle2, ArrowRight, ShieldCheck } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { trackNewsletterSubmit } from "../lib/track.ts";
+import { TurnstileWidget } from "./TurnstileWidget.tsx";
 
 interface NewsletterSignupProps {
   title?: string;
@@ -12,8 +13,8 @@ interface NewsletterSignupProps {
 }
 
 export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
-  title = "The Intentional Wealth Briefing",
-  description = "Occasional plain-language briefings when key Canadian tax rules, annual registered account limits (TFSA/RRSP/FHSA), or public pension policies are updated. Zero sales pitches. Unsubscribe anytime.",
+  title,
+  description,
   source = "general",
   className = "",
 }) => {
@@ -21,6 +22,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [formLoadedAt] = useState<number>(() => Date.now());
 
@@ -28,18 +30,35 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  const resolvedTitle =
+    title ||
+    (isFr ? "Le Bulletin d'Éducation Financière" : "The Intentional Wealth Briefing");
+  const resolvedDescription =
+    description ||
+    (isFr
+      ? "Analyses pratiques en langage clair lorsque les règles fiscales canadiennes, les plafonds enregistrés annuels (CELI, REER, CELIAPP) ou les politiques de retraite publique évoluent. Aucune vente forcée. Désabonnement en tout temps."
+      : "Occasional plain-language briefings when key Canadian tax rules, annual registered account limits (TFSA/RRSP/FHSA), or public pension policies are updated. Zero sales pitches. Unsubscribe anytime.");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
 
     const cleanEmail = email.trim();
     if (!cleanEmail || !cleanEmail.includes("@")) {
-      setErrorMsg("Please enter a valid email address.");
+      setErrorMsg(
+        isFr
+          ? "Veuillez saisir une adresse courriel valide."
+          : "Please enter a valid email address."
+      );
       return;
     }
 
     if (!consent) {
-      setErrorMsg("Please check the box to confirm your consent under Canadian anti-spam legislation.");
+      setErrorMsg(
+        isFr
+          ? "Veuillez cocher la case pour confirmer votre consentement en vertu de la loi canadienne anti-pourriel (LCAP)."
+          : "Please check the box to confirm your consent under Canadian anti-spam legislation."
+      );
       return;
     }
 
@@ -54,29 +73,40 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          firstName: firstName.trim() || "Reader",
+          firstName: firstName.trim() || (isFr ? "Lecteur" : "Reader"),
           email: cleanEmail,
           topic: "newsletter",
           message: `Newsletter subscription from page source: ${source}`,
           consentPrivacy: true,
           consentEducational: true,
+          turnstileToken,
           honeypot,
           formLoadedAt,
           referenceNo: generatedRef,
+          language: isFr ? "fr" : "en",
+          source: `newsletter_${source}`,
         }),
       });
 
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to subscribe. Please try again.");
+        throw new Error(
+          data.message ||
+            (isFr
+              ? "Échec de l'inscription. Veuillez réessayer."
+              : "Failed to subscribe. Please try again.")
+        );
       }
 
       setSuccess(true);
       trackNewsletterSubmit(source);
     } catch (err: any) {
       setErrorMsg(
-        err.message || "Could not complete your subscription right now. Please reach out to Ahmed Bello directly at +1-506-899-4941 or enquiries@ahmedbello.com."
+        err.message ||
+          (isFr
+            ? "Impossible de finaliser votre inscription pour le moment. Contactez Ahmed Bello directement au +1-506-899-4941 ou à enquiries@ahmedbello.com."
+            : "Could not complete your subscription right now. Please reach out to Ahmed Bello directly at +1-506-899-4941 or enquiries@ahmedbello.com.")
       );
     } finally {
       setSubmitting(false);
@@ -93,18 +123,18 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
       <div className="max-w-2xl mx-auto text-center space-y-3 mb-6">
         <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-[#2e4a3b]/10 text-[#2e4a3b] rounded-[2px] text-xs font-semibold uppercase tracking-wider">
           <Mail className="w-3.5 h-3.5 text-[#75581f]" />
-          <span>Occasional Educational Briefings</span>
+          <span>{isFr ? "Bulletins Éducatifs Périodiques" : "Occasional Educational Briefings"}</span>
         </div>
 
         <h3
           className="font-serif text-2xl sm:text-3xl text-[#1c1b18] tracking-tight"
           style={{ fontFamily: "var(--font-serif)" }}
         >
-          {title}
+          {resolvedTitle}
         </h3>
 
         <p className="text-sm text-[#46423a] leading-relaxed max-w-xl mx-auto">
-          {description}
+          {resolvedDescription}
         </p>
       </div>
 
@@ -113,10 +143,21 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
           <div className="w-10 h-10 rounded-[2px] bg-[#f7f3eb] text-[#2e4a3b] flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-6 h-6" />
           </div>
-          <h4 className="font-serif text-xl text-[#f7f3eb]">Confirmation Request Sent</h4>
+          <h4 className="font-serif text-xl text-[#f7f3eb]">
+            {isFr ? "Demande de confirmation envoyée" : "Confirmation Request Sent"}
+          </h4>
           <p className="text-xs text-[#ece6da] leading-relaxed">
-            Thank you for requesting to subscribe. Please check your inbox at{" "}
-            <strong className="text-white">{email}</strong> and click the confirmation link to complete your subscription.
+            {isFr ? (
+              <>
+                Merci pour votre demande d'inscription. Veuillez vérifier votre boîte de réception à{" "}
+                <strong className="text-white">{email}</strong> et cliquer sur le lien de confirmation pour valider votre abonnement.
+              </>
+            ) : (
+              <>
+                Thank you for requesting to subscribe. Please check your inbox at{" "}
+                <strong className="text-white">{email}</strong> and click the confirmation link to complete your subscription.
+              </>
+            )}
           </p>
         </div>
       ) : (
@@ -144,7 +185,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
               name="firstName"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              placeholder="First name (optional)"
+              placeholder={isFr ? "Prénom (optionnel)" : "First name (optional)"}
               className="text-xs sm:text-sm p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b] sm:w-1/3"
             />
             <input
@@ -153,7 +194,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address *"
+              placeholder={isFr ? "Votre adresse courriel *" : "Enter your email address *"}
               className="text-xs sm:text-sm p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b] flex-1"
             />
             <button
@@ -162,15 +203,17 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
               className="btn btn-primary text-xs sm:text-sm py-3 px-6 whitespace-nowrap flex items-center justify-center gap-1.5 shadow-sm"
             >
               {submitting ? (
-                <span>Subscribing...</span>
+                <span>{isFr ? "Inscription..." : "Subscribing..."}</span>
               ) : (
                 <>
-                  <span>Subscribe</span>
+                  <span>{isFr ? "S'inscrire" : "Subscribe"}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </>
               )}
             </button>
           </div>
+
+          <TurnstileWidget onVerify={setTurnstileToken} />
 
           {/* CASL & Privacy Consent */}
           <div className="flex items-start gap-2 pt-1 text-left">
@@ -185,11 +228,23 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
               htmlFor={`consent-${source}`}
               className="text-[0.72rem] text-[#625d52] leading-tight cursor-pointer"
             >
-              I consent to receive occasional educational emails from Ahmed Bello under Canada’s Anti-Spam Legislation (CASL). I can unsubscribe anytime with one click. Read the{" "}
-              <Link to={`${isFr ? "/fr" : ""}/privacy`} className="underline hover:text-[#2e4a3b]">
-                privacy notice
-              </Link>
-              .
+              {isFr ? (
+                <>
+                  J'accepte de recevoir des courriels éducatifs ponctuels d'Ahmed Bello en vertu de la Loi canadienne anti-pourriel (LCAP). Désabonnement en 1 clic à tout moment. Consultez l'{" "}
+                  <Link to="/fr/privacy" className="underline hover:text-[#2e4a3b]">
+                    avis de confidentialité
+                  </Link>
+                  .
+                </>
+              ) : (
+                <>
+                  I consent to receive occasional educational emails from Ahmed Bello under Canada’s Anti-Spam Legislation (CASL). I can unsubscribe anytime with one click. Read the{" "}
+                  <Link to="/privacy" className="underline hover:text-[#2e4a3b]">
+                    privacy notice
+                  </Link>
+                  .
+                </>
+              )}
             </label>
           </div>
         </form>
@@ -199,10 +254,10 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
       <div className="mt-6 pt-5 border-t border-[#ece6da] flex flex-wrap items-center justify-center gap-6 text-[0.7rem] text-[#625d52]">
         <span className="flex items-center gap-1.5">
           <ShieldCheck className="w-3.5 h-3.5 text-[#2e4a3b]" />
-          Strict CASL Compliance
+          {isFr ? "Conformité stricte LCAP" : "Strict CASL Compliance"}
         </span>
-        <span>Zero Spam / No Sales Pitches</span>
-        <span>1-Click Easy Unsubscribe</span>
+        <span>{isFr ? "Zéro pourriel / Aucune vente" : "Zero Spam / No Sales Pitches"}</span>
+        <span>{isFr ? "Désabonnement en 1 clic" : "1-Click Easy Unsubscribe"}</span>
       </div>
     </div>
   );

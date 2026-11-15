@@ -189,7 +189,7 @@ function renderRouteHtml(r) {
     };
     html = html.replace(
       "</head>",
-      `  <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>\n  </head>`
+      `  <script type="application/ld+json" data-prerender-jsonld="true">${JSON.stringify(faqSchema)}</script>\n  </head>`
     );
   }
 

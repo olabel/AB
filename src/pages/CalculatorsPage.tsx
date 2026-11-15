@@ -139,7 +139,7 @@ export const CalculatorsPage: React.FC = () => {
   const [retirementIncome, setRetirementIncome] = useState<number>(55000);
   const [annualContribution, setAnnualContribution] = useState<number>(7000);
   const [yearsToRetirement, setYearsToRetirement] = useState<number>(20);
-  const [assumedReturn, setAssumedReturn] = useState<number>(6.0);
+  const assumedReturn = 6.0;
 
   // Marginal tax estimation (Federal + Average Provincial)
   const estimateTaxRate = (inc: number): number => {
@@ -231,7 +231,10 @@ export const CalculatorsPage: React.FC = () => {
           <div id="calculator-tool" className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-2.5 scroll-mt-24">
             <button
               type="button"
-              onClick={() => setActiveTab("newcomer")}
+              onClick={() => {
+                setActiveTab("newcomer");
+                trackCalculatorCompleted("newcomer");
+              }}
               className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between ${
                 activeTab === "newcomer"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] shadow-xs"
@@ -251,7 +254,10 @@ export const CalculatorsPage: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => setActiveTab("mortgage")}
+              onClick={() => {
+                setActiveTab("mortgage");
+                trackCalculatorCompleted("mortgage");
+              }}
               className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between ${
                 activeTab === "mortgage"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] shadow-xs"
@@ -271,7 +277,10 @@ export const CalculatorsPage: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => setActiveTab("tfsa-rrsp")}
+              onClick={() => {
+                setActiveTab("tfsa-rrsp");
+                trackCalculatorCompleted("tfsa-rrsp");
+              }}
               className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between ${
                 activeTab === "tfsa-rrsp"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] shadow-xs"
@@ -291,7 +300,10 @@ export const CalculatorsPage: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => setActiveTab("ccpc-passive")}
+              onClick={() => {
+                setActiveTab("ccpc-passive");
+                trackCalculatorCompleted("ccpc-passive");
+              }}
               className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between ${
                 activeTab === "ccpc-passive"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] shadow-xs"

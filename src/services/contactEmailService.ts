@@ -64,7 +64,7 @@ export interface StoredLead {
   recordedAt: string;
 }
 
-export function recordLeadSubmission(lead: Omit<StoredLead, "recordedAt">): void {
+export function recordLeadSubmission(lead: Omit<StoredLead, "recordedAt">): boolean {
   try {
     let existing: StoredLead[] = [];
     if (fs.existsSync(TMP_LEADS_FILE)) {
@@ -80,8 +80,10 @@ export function recordLeadSubmission(lead: Omit<StoredLead, "recordedAt">): void
     };
     existing.push(record);
     fs.writeFileSync(TMP_LEADS_FILE, JSON.stringify(existing, null, 2), "utf-8");
+    return true;
   } catch (err) {
     console.warn("Could not save lead to backup leads file:", err);
+    return false;
   }
 }
 export async function saveLeadToFirestoreServer(lead: {
@@ -811,7 +813,7 @@ export async function processContactSubmission(
 
   // Dual Persistence: Also persist directly to Firebase Firestore
   const referenceNo = dbRecord?.referenceNo || Math.random().toString(36).substring(2, 8).toUpperCase();
-  await saveLeadToFirestoreServer({
+  const firestoreSaved = await saveLeadToFirestoreServer({
     referenceNo,
     topic,
     firstName,
@@ -825,7 +827,7 @@ export async function processContactSubmission(
   });
 
   // Backup file persistence
-  recordLeadSubmission({
+  const backupSaved = recordLeadSubmission({
     topic,
     name: firstName,
     email,
@@ -836,22 +838,30 @@ export async function processContactSubmission(
     ip: clientIp,
   });
 
+  const anyPersisted = Boolean(dbRecord || firestoreSaved || backupSaved);
+
   // 6. If no Resend API key is present in environment, record alert in DB and handle outcome
   if (!resendApiKey) {
-    if (dbRecord) {
-      recordEmailDeliveryStatus({
-        leadId: dbRecord.id,
-        referenceNo: dbRecord.referenceNo,
-        status: "offline_saved",
-        errorMessage: "RESEND_API_KEY unconfigured; lead safely preserved in SQLite database",
-        recipients: contactToEmail || "configured_recipient",
-      });
-      console.warn(`[EMAIL ALERT] Ref: #${dbRecord.referenceNo} | Email unconfigured. Lead preserved in SQLite database.`);
+    if (anyPersisted) {
+      if (dbRecord) {
+        recordEmailDeliveryStatus({
+          leadId: dbRecord.id,
+          referenceNo: dbRecord.referenceNo,
+          status: "offline_saved",
+          errorMessage: "RESEND_API_KEY unconfigured; lead safely preserved in SQLite database",
+          recipients: contactToEmail || "configured_recipient",
+        });
+      }
+      console.warn(
+        `[EMAIL ALERT] Ref: #${referenceNo} | Email unconfigured. Lead preserved (${
+          dbRecord ? "SQLite" : firestoreSaved ? "Firestore" : "backup"
+        }).`
+      );
       return {
         status: 200,
         body: {
           success: true,
-          referenceNo: dbRecord.referenceNo,
+          referenceNo,
           message: isNewsletter
             ? "Subscription request received. Please check your inbox for confirmation."
             : isCalculator
@@ -1165,7 +1175,7 @@ https://www.ahmedbello.com`;
           }
         }
 
-        await fetch("https://api.resend.com/emails", {
+        const visitorRes = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${resendApiKey}`,
@@ -1179,53 +1189,64 @@ https://www.ahmedbello.com`;
             text: confirmationBody,
           }),
         });
+        if (!visitorRes.ok) {
+          const errDetail = await visitorRes.text().catch(() => "");
+          console.warn(`[VISITOR RECEIPT WARNING]: Resend returned HTTP ${visitorRes.status} ${errDetail}`);
+        }
       } catch (visitorErr) {
         // Non-blocking: Primary enquiry was already handled
         console.warn(`[VISITOR RECEIPT WARNING]:`, visitorErr);
       }
     }
 
-    if (dbRecord) {
+    if (!resendResponse.ok && !anyPersisted) {
       return {
-        status: 200,
+        status: 500,
         body: {
-          success: true,
-          referenceNo: dbRecord.referenceNo,
-          message: isNewsletter
-            ? "Subscription request received. Please check your inbox for confirmation."
-            : isCalculator
-            ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
-            : "Enquiry sent successfully. I will follow up shortly.",
+          error: "delivery_failed",
+          message:
+            "Your message could not be sent right now. Please reach out directly to Ahmed Bello by phone at +1-506-899-4941 or schedule a conversation via Calendly.",
+          phone: "+1-506-899-4941",
+          calendly: "https://calendly.com/olabel/30min",
         },
       };
     }
+
+    const successMessage = isNewsletter
+      ? "Subscription request received. Please check your inbox for confirmation."
+      : isCalculator
+      ? "Your customized plan has been recorded and queued for delivery. Ahmed Bello will review your calculation details."
+      : "Enquiry sent successfully. I will follow up shortly.";
 
     return {
       status: 200,
       body: {
         success: true,
-        message: isNewsletter
-          ? "Subscription request received. Please check your inbox for confirmation."
-          : "Enquiry sent successfully. I will follow up shortly.",
+        referenceNo,
+        recorded: anyPersisted,
+        queued: !resendResponse.ok && anyPersisted,
+        message: successMessage,
       },
     };
   } catch (err: any) {
-    if (dbRecord) {
-      recordEmailDeliveryStatus({
-        leadId: dbRecord.id,
-        referenceNo: dbRecord.referenceNo,
-        status: "failed",
-        errorMessage: err?.message || "Network exception during email dispatch",
-        recipients: contactToEmail,
-      });
+    if (anyPersisted) {
+      if (dbRecord) {
+        recordEmailDeliveryStatus({
+          leadId: dbRecord.id,
+          referenceNo: dbRecord.referenceNo,
+          status: "failed",
+          errorMessage: err?.message || "Network exception during email dispatch",
+          recipients: contactToEmail,
+        });
+      }
       console.warn(
-        `[EMAIL ALERT] Ref: #${dbRecord.referenceNo} | Dispatch exception. Lead safely preserved in SQLite database.`
+        `[EMAIL ALERT] Ref: #${referenceNo} | Dispatch exception. Lead safely preserved.`
       );
       return {
         status: 200,
         body: {
           success: true,
-          referenceNo: dbRecord.referenceNo,
+          referenceNo,
           message: isNewsletter
             ? "Subscription request received. Please check your inbox for confirmation."
             : isCalculator

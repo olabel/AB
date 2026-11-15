@@ -260,7 +260,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
       </section>
 
       {/* Filter and Search Controls */}
-      <section className="section py-6 bg-[#fcfaf5] border-b border-[#d6cebd] sticky top-16 z-20 shadow-xs">
+      <section className="section py-6 bg-[#fcfaf5] border-b border-[#d6cebd] sticky top-20 z-20 shadow-xs">
         <div className="wrap max-w-5xl space-y-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             {/* Search Input */}
@@ -434,40 +434,52 @@ export const CostlyBlindspotsPage: React.FC = () => {
                     }`}
                   >
                     {/* Card Header & Toggle */}
-                    <div
-                      onClick={() => toggleItem(item.id)}
-                      className="p-5 sm:p-6 cursor-pointer flex items-start justify-between gap-4 select-none hover:bg-[#fcfaf5]/60 transition-colors"
-                    >
-                      <div className="space-y-2 flex-1">
-                        {/* Quiet Unboxed Metadata */}
-                        <div className="flex items-center gap-2 text-[11px] text-[#625d52] font-mono">
-                          <span className="font-bold text-[#75581f]">
-                            {String(item.number).padStart(2, "0")}
-                          </span>
-                          <span aria-hidden="true">/</span>
-                          <span className="uppercase tracking-wider font-semibold text-[#2e4a3b]">
-                            {categoryLabel}
-                          </span>
+                    <div className="p-5 sm:p-6 flex items-start justify-between gap-4 hover:bg-[#fcfaf5]/60 transition-colors">
+                      <button
+                        type="button"
+                        onClick={() => toggleItem(item.id)}
+                        aria-expanded={isExpanded}
+                        className="flex-1 text-left cursor-pointer flex items-start justify-between gap-4 focus:outline-hidden group"
+                      >
+                        <div className="space-y-2 flex-1">
+                          {/* Quiet Unboxed Metadata */}
+                          <div className="flex items-center gap-2 text-[11px] text-[#625d52] font-mono">
+                            <span className="font-bold text-[#75581f]">
+                              {String(item.number).padStart(2, "0")}
+                            </span>
+                            <span aria-hidden="true">/</span>
+                            <span className="uppercase tracking-wider font-semibold text-[#2e4a3b]">
+                              {categoryLabel}
+                            </span>
+                          </div>
+
+                          {/* Title Question */}
+                          <h2 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-semibold leading-snug group-hover:text-[#2e4a3b] transition-colors">
+                            {title}
+                          </h2>
+
+                          {/* Financial Stake Warning Callout */}
+                          <div className="inline-flex items-center gap-2 text-xs font-medium text-[#8a3324] pt-0.5">
+                            <span className="w-1.5 h-1.5 rounded-[1px] bg-[#8a3324] shrink-0" />
+                            <span>
+                              <strong className="font-semibold text-[#8a3324]">
+                                {isFr ? "Enjeu financier : " : "Financial Stake: "}
+                              </strong>
+                              {costStake}
+                            </span>
+                          </div>
                         </div>
 
-                        {/* Title Question */}
-                        <h2 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-semibold leading-snug">
-                          {title}
-                        </h2>
+                        <span className="p-2 text-[#625d52] group-hover:text-[#1c1b18] rounded-[2px] transition-colors shrink-0 mt-0.5">
+                          {isExpanded ? (
+                            <ChevronUp className="w-5 h-5 text-[#2e4a3b]" />
+                          ) : (
+                            <ChevronDown className="w-5 h-5" />
+                          )}
+                        </span>
+                      </button>
 
-                        {/* Financial Stake Warning Callout */}
-                        <div className="inline-flex items-center gap-2 text-xs font-medium text-[#8a3324] pt-0.5">
-                          <span className="w-1.5 h-1.5 rounded-[1px] bg-[#8a3324] shrink-0" />
-                          <span>
-                            <strong className="font-semibold text-[#8a3324]">
-                              {isFr ? "Enjeu financier : " : "Financial Stake: "}
-                            </strong>
-                            {costStake}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-1.5 shrink-0 mt-1">
+                      <div className="flex items-center shrink-0 mt-1">
                         <button
                           type="button"
                           onClick={(e) => toggleFlag(item.id, e)}
@@ -489,18 +501,6 @@ export const CostlyBlindspotsPage: React.FC = () => {
                               <Bookmark className="w-3.5 h-3.5 text-[#75581f]" />
                               <span className="hidden sm:inline">{isFr ? "À vérifier" : "Applies to me"}</span>
                             </>
-                          )}
-                        </button>
-
-                        <button
-                          type="button"
-                          aria-label={isExpanded ? "Collapse details" : "Expand details"}
-                          className="p-2 text-[#625d52] hover:text-[#1c1b18] rounded-[2px] transition-colors"
-                        >
-                          {isExpanded ? (
-                            <ChevronUp className="w-5 h-5 text-[#2e4a3b]" />
-                          ) : (
-                            <ChevronDown className="w-5 h-5" />
                           )}
                         </button>
                       </div>

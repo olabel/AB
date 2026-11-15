@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
-import { CheckCircle2, ShieldCheck, Mail, ArrowRight, BookOpen, Layers } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Mail, BookOpen, Layers } from "lucide-react";
 import { trackSubscriptionConfirmed } from "../lib/track.ts";
 
 export const ConfirmSubscriptionPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const tokenParam = searchParams.get("token") || "";
-  const emailParam = searchParams.get("email") || "";
   const { isFr } = useLanguage();
-  const [confirmed, setConfirmed] = useState(false);
+  const isFrRef = useRef(isFr);
+  isFrRef.current = isFr;
+  const processedTokenRef = useRef<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [verifiedEmail, setVerifiedEmail] = useState<string>("");
@@ -19,52 +20,58 @@ export const ConfirmSubscriptionPage: React.FC = () => {
     let isMounted = true;
 
     async function confirmSubscription() {
-      // Prefer cryptographically signed token
-      if (tokenParam) {
-        try {
-          const res = await fetch(`/api/confirm-subscription?token=${encodeURIComponent(tokenParam)}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ token: tokenParam }),
-          });
-          const data = await res.json().catch(() => ({}));
-          if (res.ok && data.success) {
-            if (isMounted) {
-              setVerifiedEmail(data.email || "");
-              setConfirmed(true);
-              setLoading(false);
-              trackSubscriptionConfirmed();
-              localStorage.setItem("ahmed_bello_subscriber_confirmed", data.email || "confirmed");
-              localStorage.setItem("ahmed_bello_subscriber_date", new Date().toISOString());
-            }
-            return;
-          } else {
-            if (isMounted) {
-              setError(data.message || (isFr ? "Le lien de confirmation est invalide ou a expiré." : "This confirmation link is invalid or has expired."));
-              setLoading(false);
-            }
-            return;
-          }
-        } catch {
-          if (isMounted) {
-            setError(isFr ? "Erreur réseau lors de la validation." : "Network connection error while confirming.");
-            setLoading(false);
-          }
-          return;
+      if (!tokenParam) {
+        if (isMounted) {
+          setError(
+            isFrRef.current
+              ? "Aucun jeton de confirmation cryptographique fourni. Veuillez utiliser le lien reçu par courriel."
+              : "No cryptographic confirmation token provided. Please use the verification link sent to your email."
+          );
+          setLoading(false);
         }
-      }
-
-      // Fallback for legacy requests or manual testing
-      if (emailParam) {
-        setVerifiedEmail(emailParam);
-        setConfirmed(true);
-        setLoading(false);
         return;
       }
 
-      if (isMounted) {
-        setError(isFr ? "Aucun jeton de confirmation fourni." : "No confirmation token provided.");
-        setLoading(false);
+      if (processedTokenRef.current === tokenParam) {
+        return;
+      }
+      processedTokenRef.current = tokenParam;
+
+      try {
+        const res = await fetch(`/api/confirm-subscription?token=${encodeURIComponent(tokenParam)}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: tokenParam }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          if (isMounted) {
+            setVerifiedEmail(data.email || "");
+            setLoading(false);
+            trackSubscriptionConfirmed();
+            localStorage.setItem("ahmed_bello_subscriber_confirmed", data.email || "confirmed");
+            localStorage.setItem("ahmed_bello_subscriber_date", new Date().toISOString());
+          }
+        } else {
+          if (isMounted) {
+            setError(
+              data.message ||
+                (isFrRef.current
+                  ? "Le lien de confirmation est invalide ou a expiré."
+                  : "This confirmation link is invalid or has expired.")
+            );
+            setLoading(false);
+          }
+        }
+      } catch {
+        if (isMounted) {
+          setError(
+            isFrRef.current
+              ? "Erreur réseau lors de la validation."
+              : "Network connection error while confirming."
+          );
+          setLoading(false);
+        }
       }
     }
 
@@ -73,7 +80,7 @@ export const ConfirmSubscriptionPage: React.FC = () => {
     return () => {
       isMounted = false;
     };
-  }, [tokenParam, emailParam, isFr]);
+  }, [tokenParam]);
 
   return (
     <div className="py-16 md:py-24">

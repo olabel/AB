@@ -170,6 +170,8 @@ Notes: ${formData.notes || "None"}`;
           turnstileToken,
           formLoadedAt,
           referenceNo: generatedRef,
+          language: isFr ? "fr" : "en",
+          source: "islamic_investing_form",
         }),
       });
 
@@ -781,6 +783,11 @@ Notes: ${formData.notes || "None"}`;
                     ? "Merci pour votre démarche. Votre demande a bien été transmise. Ahmed Bello prendra contact avec vous sous 24 à 48 heures ouvrables pour analyser vos objectifs en toute indépendance."
                     : "Thank you for reaching out. Your consultation request has been received securely. Ahmed Bello will review your situation and follow up directly within 1 to 2 business days."}
                 </p>
+                {referenceNo && (
+                  <p className="text-xs font-mono text-[#d6c298]">
+                    {isFr ? "Numéro de référence :" : "Reference Number:"} #{referenceNo}
+                  </p>
+                )}
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                   {siteConfig.schedulingUrl && (
                     <a
@@ -932,13 +939,13 @@ Notes: ${formData.notes || "None"}`;
                       onChange={handleFormChange}
                       className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
                     >
-                      <option value="tfsa">TFSA (CELI) - Tax-Free Growth</option>
-                      <option value="rrsp">RRSP (REER) - Tax-Deductible</option>
-                      <option value="fhsa">FHSA (CELIAPP) - First Home Savings</option>
-                      <option value="resp">RESP (REEE) - Children's Education</option>
-                      <option value="corporate">Corporate Holding / CCPC (Société)</option>
-                      <option value="transfer">Direct Transfer from Existing Institution</option>
-                      <option value="multiple">Multiple Accounts / Comprehensive Strategy</option>
+                      <option value="tfsa">{isFr ? "CELI (TFSA) — Croissance libre d'impôt" : "TFSA (CELI) - Tax-Free Growth"}</option>
+                      <option value="rrsp">{isFr ? "REER (RRSP) — Déductible d'impôt" : "RRSP (REER) - Tax-Deductible"}</option>
+                      <option value="fhsa">{isFr ? "CELIAPP (FHSA) — Première habitation" : "FHSA (CELIAPP) - First Home Savings"}</option>
+                      <option value="resp">{isFr ? "REEE (RESP) — Épargne-études" : "RESP (REEE) - Children's Education"}</option>
+                      <option value="corporate">{isFr ? "Société de portefeuille / SPCC" : "Corporate Holding / CCPC (Société)"}</option>
+                      <option value="transfer">{isFr ? "Transfert direct depuis une autre institution" : "Direct Transfer from Existing Institution"}</option>
+                      <option value="multiple">{isFr ? "Plusieurs comptes / Stratégie globale" : "Multiple Accounts / Comprehensive Strategy"}</option>
                     </select>
                   </div>
 
@@ -952,12 +959,12 @@ Notes: ${formData.notes || "None"}`;
                       onChange={handleFormChange}
                       className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
                     >
-                      <option value="monthly-500">$300 - $1,000 / month (PAC / Recurring)</option>
-                      <option value="10k-25k">$10,000 - $25,000</option>
-                      <option value="25k-50k">$25,000 - $50,000</option>
-                      <option value="50k-100k">$50,000 - $100,000</option>
-                      <option value="100k-250k">$100,000 - $250,000</option>
-                      <option value="250k+">$250,000+ (Corporate / High Net Worth)</option>
+                      <option value="monthly-500">{isFr ? "300 $ – 1 000 $ / mois (cotisations régulières)" : "$300 - $1,000 / month (PAC / Recurring)"}</option>
+                      <option value="10k-25k">{isFr ? "10 000 $ – 25 000 $" : "$10,000 - $25,000"}</option>
+                      <option value="25k-50k">{isFr ? "25 000 $ – 50 000 $" : "$25,000 - $50,000"}</option>
+                      <option value="50k-100k">{isFr ? "50 000 $ – 100 000 $" : "$50,000 - $100,000"}</option>
+                      <option value="100k-250k">{isFr ? "100 000 $ – 250 000 $" : "$100,000 - $250,000"}</option>
+                      <option value="250k+">{isFr ? "250 000 $+ (Société / Patrimoine élevé)" : "$250,000+ (Corporate / High Net Worth)"}</option>
                     </select>
                   </div>
                 </div>

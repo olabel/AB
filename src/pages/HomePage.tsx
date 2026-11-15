@@ -407,7 +407,7 @@ export const HomePage: React.FC = () => {
               to={`${prefix}/what-changed`}
               className="text-xs text-[#d6c298] hover:text-white font-medium inline-flex items-center gap-1"
             >
-              <span>{isFr ? "Lire toutes les 6 analyses de novembre →" : "Read all 6 November updates →"}</span>
+              <span>{isFr ? "Lire toutes les 7 analyses de novembre →" : "Read all 7 November updates →"}</span>
             </Link>
           </div>
 

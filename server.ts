@@ -138,52 +138,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// --------------------------------------------------------------------------
-// 2. Strict Input Sanitization Helpers
-// --------------------------------------------------------------------------
-function sanitizeText(input: unknown): string {
-  if (typeof input !== "string") return "";
-  return input
-    .replace(/\0/g, "") // remove null bytes
-    .replace(/[\r\n]/g, " ") // prevent CRLF / header injection
-    .replace(/<[^>]*>/g, "") // strip HTML tags
-    .replace(/[<>]/g, "") // remove stray angle brackets
-    .trim();
-}
+// Input validation, sanitization, and rate-limiting are unified in contactEmailService.ts & apiHandlers.ts
 
-function sanitizeMultiline(input: unknown): string {
-  if (typeof input !== "string") return "";
-  return input
-    .replace(/\0/g, "") // remove null bytes
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "") // strip scripts
-    .replace(/<[^>]*>/g, "") // strip HTML tags
-    .replace(/[<>]/g, "") // strip angle brackets
-    .trim();
-}
-
-// --------------------------------------------------------------------------
-// 3. Robust Per-IP Rate Limiting
-// --------------------------------------------------------------------------
-const ipSubmissions = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_MAX = 5;
-const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const entry = ipSubmissions.get(ip);
-
-  if (!entry || now > entry.resetTime) {
-    ipSubmissions.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
-    return true;
-  }
-
-  if (entry.count >= RATE_LIMIT_MAX) {
-    return false;
-  }
-
-  entry.count += 1;
-  return true;
-}
 
 // --------------------------------------------------------------------------
 // 4. Live Launch Robots.txt & Dynamic High-Value Sitemap.xml
@@ -766,10 +722,10 @@ function injectHeadMetadata(html: string, pathname: string): string {
     `<meta name="twitter:description" content="${escapeAttr(meta.description)}" />`
   );
 
-  // Inject route-specific JSON-LD schemas
+  // Inject route-specific JSON-LD schemas (marked so hydrated client SEO swaps cleanly without duplicates)
   let extraTags = "";
   meta.jsonLd.forEach((schema) => {
-    extraTags += `\n    <script type="application/ld+json">${escapeJsonLd(schema)}</script>`;
+    extraTags += `\n    <script type="application/ld+json" data-prerender-jsonld="true">${escapeJsonLd(schema)}</script>`;
   });
 
   transformed = transformed.replace("</head>", `${extraTags}\n  </head>`);

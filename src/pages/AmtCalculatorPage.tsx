@@ -27,11 +27,11 @@ export const AmtCalculatorPage: React.FC = () => {
   const { isFr } = useLanguage();
   const prefix = isFr ? "/fr" : "";
 
-  // User input states - Defaults to current 2026 tax year
+  // User input states - Defaults to current 2026 tax year (matches worked example)
   const [taxYear, setTaxYear] = useState<2024 | 2025 | 2026>(2026);
-  const [employmentIncome, setEmploymentIncome] = useState<number>(120000);
+  const [employmentIncome, setEmploymentIncome] = useState<number>(60000);
   const [otherIncome, setOtherIncome] = useState<number>(0);
-  const [realizedCapitalGains, setRealizedCapitalGains] = useState<number>(400000);
+  const [realizedCapitalGains, setRealizedCapitalGains] = useState<number>(500000);
   const [eligibleDividends, setEligibleDividends] = useState<number>(0);
   const [nonEligibleDividends, setNonEligibleDividends] = useState<number>(0);
   const [deductions, setDeductions] = useState<number>(5000);
@@ -389,7 +389,7 @@ ${unmodelledDisclaimer}`;
                       className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] font-mono text-xs"
                     />
                     <p className="text-[10px] text-[#625d52] mt-0.5">
-                      {isFr ? "Frais financiers, garde d'enfants (50 % sous IMR)." : "Carrying charges, child care (50% under AMT)."}
+                      {isFr ? "Cotisations REER et déductions admissibles." : "RRSP and eligible income deductions."}
                     </p>
                   </div>
                 </div>
@@ -626,36 +626,55 @@ ${unmodelledDisclaimer}`;
       {/* Hypothetical Worked Example Section */}
       <section className="section py-12 bg-[#fcfaf5] border-t border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-6">
-          <div className="border-b border-[#ece6da] pb-3">
-            <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block mb-1">
-              {isFr ? "Démonstration Chiffrée" : "Comprehensive Scenario"}
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18]">
-              {isFr ? "Exemple Hypothétique Traité" : "Hypothetical Worked Example"}
-            </h2>
-            <p className="text-xs sm:text-sm text-[#625d52] mt-1">
-              {isFr
-                ? "Démonstration chiffrée selon les règles des lois C-59 et C-69 pour l'année d'imposition 2024."
-                : "Step-by-step arithmetic calibrated strictly to 2024 Bills C-59 and C-69 statutory rules."}
-            </p>
+          <div className="border-b border-[#ece6da] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block mb-1">
+                {isFr ? "Démonstration Chiffrée" : "Comprehensive Scenario"}
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18]">
+                {isFr ? "Exemple Hypothétique Traité" : "Hypothetical Worked Example"}
+              </h2>
+              <p className="text-xs sm:text-sm text-[#625d52] mt-1">
+                {isFr
+                  ? "Démonstration chiffrée selon les barèmes fédéraux 2026 et les règles des lois C-59 et C-69."
+                  : "Step-by-step arithmetic calibrated strictly to 2026 federal brackets and Bills C-59 and C-69 statutory rules."}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setTaxYear(2026);
+                setEmploymentIncome(60000);
+                setOtherIncome(0);
+                setRealizedCapitalGains(500000);
+                setEligibleDividends(0);
+                setNonEligibleDividends(0);
+                setDeductions(5000);
+                setDonations(30000);
+                setPriorYearAmtCarryForward(0);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-xs px-3.5 py-2 shrink-0 self-start sm:self-auto"
+            >
+              {isFr ? "Charger dans le calculateur ↑" : "Load into calculator ↑"}
+            </button>
           </div>
 
           <div className="p-5 sm:p-6 bg-white border border-[#d6cebd] rounded-[2px] space-y-4 text-xs sm:text-sm text-[#46423a] leading-relaxed shadow-xs">
             <p>
               {isFr ? (
                 <>
-                  Considérons <strong>Alexandre</strong>, un professionnel cadre résidant au Canada. En 2024, il touche un
-                  salaire d'emploi T4 de <strong>120 000 $</strong>. Durant l'année, il vend un portefeuille d'actions hors
-                  régime enregistré et réalise un gain en capital de <strong>400 000 $</strong>. En fin d'année, il verse un don
-                  de bienfaisance de <strong>30 000 $</strong> à un organisme de bienfaisance enregistré canadien, et réclame
-                  5 000 $ de déductions pour frais de garde.
+                  Considérons <strong>Alexandre</strong>, résident canadien en 2026. Il déclare un salaire d'emploi T4 modéré de{" "}
+                  <strong>60 000 $</strong> tout en réalisant un gain en capital important de <strong>500 000 $</strong> lors de
+                  la vente d'un immeuble ou d'un portefeuille hors régime enregistré. Il verse également <strong>5 000 $</strong> au
+                  REER et effectue un don de bienfaisance de <strong>30 000 $</strong> en espèces à un organisme enregistré canadien.
                 </>
               ) : (
                 <>
-                  Consider <strong>Alex</strong>, an executive in Canada. In 2024, Alex earns <strong>$120,000</strong> in
-                  regular T4 salary. During the year, Alex sells non-registered equities, realizing a <strong>$400,000</strong>{" "}
-                  gross capital gain. To support a community cause, Alex makes a <strong>$30,000</strong> donation to a
-                  registered Canadian charity and claims $5,000 in child care deductions.
+                  Consider <strong>Alex</strong>, a Canadian resident in 2026. Alex earns a modest T4 salary of{" "}
+                  <strong>$60,000</strong> while realizing a one-time <strong>$500,000</strong> gross capital gain from selling
+                  non-registered investments or property. Alex also claims <strong>$5,000</strong> in RRSP deductions and makes a{" "}
+                  <strong>$30,000</strong> cash donation to a registered Canadian charity.
                 </>
               )}
             </p>
@@ -673,52 +692,52 @@ ${unmodelledDisclaimer}`;
                 <tbody className="divide-y divide-[#ece6da] font-mono text-[11px]">
                   <tr className="hover:bg-[#fcfaf5]">
                     <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Salaire T4" : "T4 Salary"}</td>
-                    <td className="p-3">$120,000</td>
-                    <td className="p-3">$120,000</td>
+                    <td className="p-3">$60,000</td>
+                    <td className="p-3">$60,000</td>
                     <td className="p-3 font-sans text-[#625d52]">{isFr ? "Inclus à 100 % dans les deux calculs" : "100% included in both"}</td>
                   </tr>
                   <tr className="hover:bg-[#fcfaf5]">
-                    <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Gain en capital (400 000 $)" : "Capital Gain ($400,000)"}</td>
-                    <td className="p-3">$200,000 (50%)</td>
-                    <td className="p-3 font-bold text-[#8a3324]">$400,000 (100%)</td>
+                    <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Gain en capital (500 000 $)" : "Capital Gain ($500,000)"}</td>
+                    <td className="p-3">$250,000 (50%)</td>
+                    <td className="p-3 font-bold text-[#8a3324]">$500,000 (100%)</td>
                     <td className="p-3 font-sans text-[#625d52]">
                       {isFr ? "L'IMR inclut 100 % du gain (vs 50 % régulier)" : "AMT mandates 100% inclusion under Bill C-59"}
                     </td>
                   </tr>
                   <tr className="hover:bg-[#fcfaf5]">
-                    <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Déductions (5 000 $)" : "Deductions ($5,000)"}</td>
-                    <td className="p-3">-$5,000 (100%)</td>
-                    <td className="p-3">-$2,500 (50%)</td>
+                    <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Déduction REER (5 000 $)" : "Deductions ($5,000)"}</td>
+                    <td className="p-3">-$5,000</td>
+                    <td className="p-3">-$5,000</td>
                     <td className="p-3 font-sans text-[#625d52]">
-                      {isFr ? "Déductions admissibles plafonnées à 50 % sous IMR" : "Deductions capped at 50% under AMT"}
+                      {isFr ? "Déduction admissible déduite du revenu imposable" : "Eligible deduction subtracted from taxable income"}
                     </td>
                   </tr>
                   <tr className="hover:bg-[#fcfaf5] bg-[#ece6da]/30">
                     <td className="p-3 font-sans font-bold text-[#1c1b18]">{isFr ? "Revenu Imposable" : "Taxable Base"}</td>
-                    <td className="p-3 font-bold">$315,000</td>
-                    <td className="p-3 font-bold text-[#8a3324]">$517,500</td>
-                    <td className="p-3 font-sans text-[#625d52]">{isFr ? "Écart d'assiette de 202 500 $" : "$202,500 wider taxable base"}</td>
+                    <td className="p-3 font-bold">$305,000</td>
+                    <td className="p-3 font-bold text-[#8a3324]">$555,000</td>
+                    <td className="p-3 font-sans text-[#625d52]">{isFr ? "Écart d'assiette de 250 000 $" : "$250,000 wider adjusted base"}</td>
                   </tr>
                   <tr className="hover:bg-[#fcfaf5]">
-                    <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Exemption de base" : "Basic Exemption"}</td>
+                    <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Exemption de base 2026" : "2026 Basic Exemption"}</td>
                     <td className="p-3">{isFr ? "S/O (Barème par tranches)" : "N/A (Graduated brackets)"}</td>
-                    <td className="p-3 font-bold text-[#2e4a3b]">-$173,205</td>
-                    <td className="p-3 font-sans text-[#625d52]">{isFr ? "Exemption fédérale 2024 indexée" : "Indexed 2024 4th bracket threshold"}</td>
+                    <td className="p-3 font-bold text-[#2e4a3b]">-$181,440</td>
+                    <td className="p-3 font-sans text-[#625d52]">{isFr ? "Assiette nette IMR = 373 560 $ (× 20,5 % = 76 580 $)" : "Net AMT base = $373,560 (× 20.5% = $76,580 gross)"}</td>
                   </tr>
                   <tr className="hover:bg-[#fcfaf5]">
-                    <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Crédits Dons (30 000 $)" : "Donation Tax Credit ($30,000)"}</td>
-                    <td className="p-3">-$8,700 (100%)</td>
-                    <td className="p-3 font-bold text-[#2e4a3b]">-$6,960 (80%)</td>
+                    <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Crédits MPB & Dons (30 000 $)" : "BPA & Donation Credits ($30k)"}</td>
+                    <td className="p-3">-$12,165 (100%)</td>
+                    <td className="p-3 font-bold text-[#2e4a3b]">-$9,041</td>
                     <td className="p-3 font-sans text-[#625d52]">
-                      {isFr ? "Crédit pour dons admis à 80 % sous l'IMR (loi C-69)" : "Donation credit allowed at 80% under Bill C-69"}
+                      {isFr ? "MPB admis à 50 % + Dons admis à 80 % (loi C-69)" : "50% BPA ($1,152) + 80% donation credit ($7,890 under Bill C-69)"}
                     </td>
                   </tr>
                   <tr className="hover:bg-[#fcfaf5] bg-[#fdf0ed]">
                     <td className="p-3 font-sans font-bold text-[#1c1b18]">{isFr ? "Impôt Fédéral Net" : "Net Federal Tax"}</td>
-                    <td className="p-3 font-bold">$61,260</td>
-                    <td className="p-3 font-bold text-[#8a3324]">$63,620</td>
+                    <td className="p-3 font-bold">$62,461</td>
+                    <td className="p-3 font-bold text-[#8a3324]">$67,539</td>
                     <td className="p-3 font-sans text-[#8a3324] font-medium">
-                      {isFr ? "L'IMR dépasse l'impôt régulier de 2 360 $" : "AMT exceeds regular tax by $2,360"}
+                      {isFr ? "L'IMR dépasse l'impôt régulier de 5 078 $" : "AMT exceeds regular tax by $5,078"}
                     </td>
                   </tr>
                 </tbody>
@@ -727,8 +746,8 @@ ${unmodelledDisclaimer}`;
 
             <p className="text-xs text-[#625d52] pt-1 leading-relaxed">
               {isFr
-                ? "Résultat : Alexandre doit verser 2 360 $ de taxe fédérale supplémentaire en 2024. Cependant, ces 2 360 $ ne sont pas perdus : ils constituent un crédit de report d'IMR en vertu de l'article 120.2 de la LIR, récupérable sur les 7 années suivantes dès que son impôt régulier dépassera son IMR."
-                : "Result: Alex pays $2,360 in additional federal tax for 2024. Crucially, this $2,360 is not permanently lost: under Section 120.2 of the Income Tax Act, it creates an AMT carry-forward credit that can be applied to reduce regular tax over the next 7 years."}
+                ? "Résultat : Alexandre doit verser 5 078 $ d'IMR fédéral supplémentaire en 2026. Cependant, ces 5 078 $ constituent un crédit de report d'IMR en vertu de l'article 120.2 de la LIR, récupérable sur les 7 années suivantes dès que son impôt régulier dépassera son IMR."
+                : "Result: Alex pays $5,078 in additional federal AMT for 2026. Crucially, this $5,078 is not permanently lost: under Section 120.2 of the Income Tax Act, it creates an AMT carry-forward credit recoverable against regular tax over the next 7 years."}
             </p>
           </div>
         </div>

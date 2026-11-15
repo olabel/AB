@@ -100,12 +100,12 @@ export async function saveSubscriberViaAdmin(subscriber: {
 
     const docId = `sub_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
     await db.collection("subscribers").doc(docId).set({
-      email: subscriber.email.trim().toLowerCase(),
+      email: subscriber.email.trim().toLowerCase().slice(0, 120),
       confirmedAt: subscriber.confirmedAt,
-      consentWording: subscriber.consentWording,
-      ip: subscriber.ip,
+      consentWording: String(subscriber.consentWording || "").slice(0, 1000),
+      ip: String(subscriber.ip || "").slice(0, 64),
       userAgent: (subscriber.userAgent || "").slice(0, 300),
-      source: subscriber.source || "double_opt_in_signed_token",
+      source: String(subscriber.source || "double_opt_in_signed_token").slice(0, 60),
       recordedVia: "firebase_admin_sdk",
       serverTimestamp: new Date().toISOString(),
     });
@@ -140,17 +140,17 @@ export async function saveLeadViaAdmin(lead: {
 
     const docId = `lead_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
     await db.collection("leads").doc(docId).set({
-      referenceNo: String(lead.referenceNo || ""),
-      topic: String(lead.topic || "general"),
-      firstName: String(lead.firstName || ""),
-      email: String(lead.email || ""),
-      phone: String(lead.phone || ""),
-      province: String(lead.province || "National (Canada & US)"),
-      message: String(lead.message || ""),
+      referenceNo: String(lead.referenceNo || "").slice(0, 30),
+      topic: String(lead.topic || "general").slice(0, 50),
+      firstName: String(lead.firstName || "").slice(0, 100),
+      email: String(lead.email || "").slice(0, 120),
+      phone: String(lead.phone || "").slice(0, 30),
+      province: String(lead.province || "National (Canada & US)").slice(0, 50),
+      message: String(lead.message || "").slice(0, 5000),
       consentEducational: Boolean(lead.consentEducational),
       consentPrivacy: Boolean(lead.consentPrivacy),
       createdAt: new Date().toISOString(),
-      source: lead.source || "server_contact_api",
+      source: String(lead.source || "server_contact_api").slice(0, 50),
       recordedVia: "firebase_admin_sdk",
     });
 

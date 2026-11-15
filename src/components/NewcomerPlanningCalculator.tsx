@@ -31,7 +31,7 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
   const isFr = language === "fr";
 
   // Calculator Inputs
-  const [householdType, setHouseholdType] = useState<"single" | "couple" | "family">("couple");
+  const householdType = "couple";
   const [professionTrack, setProfessionTrack] = useState<"healthcare" | "regulated" | "general">(
     defaultProfession === "healthcare" ? "healthcare" : "regulated"
   );

@@ -184,6 +184,8 @@ export const ContactPage: React.FC = () => {
           turnstileToken,
           formLoadedAt,
           referenceNo: generatedRef,
+          language: isFr ? "fr" : "en",
+          source: "contact_form",
         }),
       });
 

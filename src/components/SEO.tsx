@@ -154,6 +154,7 @@ export const SEO: React.FC<SEOProps> = ({
 
     let scriptTag = document.getElementById("route-jsonld") as HTMLScriptElement | null;
     if (jsonLd) {
+      document.querySelectorAll('script[data-prerender-jsonld="true"]').forEach((el) => el.remove());
       if (!scriptTag) {
         scriptTag = document.createElement("script");
         scriptTag.id = "route-jsonld";

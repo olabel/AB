@@ -31,12 +31,13 @@ export const Header: React.FC = () => {
 
   const handleLanguageToggle = () => {
     const isCurrentlyFrench = location.pathname.startsWith("/fr");
+    const suffix = `${location.search}${location.hash}`;
     if (isCurrentlyFrench) {
       const target = location.pathname.replace(/^\/fr(\/|$)/, "$1") || "/";
-      navigate(target);
+      navigate(`${target}${suffix}`);
     } else {
       const target = location.pathname === "/" ? "/fr" : `/fr${location.pathname}`;
-      navigate(target);
+      navigate(`${target}${suffix}`);
     }
   };
 

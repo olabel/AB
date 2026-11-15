@@ -204,8 +204,15 @@ export async function handleContactSubmission(req: any, res: any) {
  * Unified Handler for /api/confirm-subscription (CASL Double Opt-in)
  */
 export async function handleConfirmSubscription(req: any, res: any) {
+  const reqHost = req.get ? req.get("host") : req.headers?.["host"];
+  const origin = req.headers?.["origin"] as string | undefined;
+
   if (res.setHeader) {
-    res.setHeader("Access-Control-Allow-Origin", "https://www.ahmedbello.com");
+    if (origin && isOriginAuthorized(origin, reqHost)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    } else {
+      res.setHeader("Access-Control-Allow-Origin", "https://www.ahmedbello.com");
+    }
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   }

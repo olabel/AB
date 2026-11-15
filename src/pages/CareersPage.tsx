@@ -28,6 +28,7 @@ import {
 import { siteConfig } from "../config/site.ts";
 import { BrandMark } from "../components/BrandMark.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { trackBookingClick, trackLeadSubmit } from "../lib/track.ts";
 
@@ -92,6 +93,8 @@ export const CareersPage: React.FC = () => {
   });
 
   const [formLoadedAt] = useState<number>(() => Date.now());
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [referenceNo, setReferenceNo] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -169,9 +172,12 @@ Candidate Application Details:
           message: detailedMessage,
           consentPrivacy: formData.consentPrivacy,
           consentEducational: true,
+          turnstileToken,
           honeypot: formData.honeypot,
           formLoadedAt,
           referenceNo: generatedRef,
+          language: isFr ? "fr" : "en",
+          source: "careers_mentorship",
         }),
       });
 
@@ -186,6 +192,7 @@ Candidate Application Details:
         );
       }
 
+      setReferenceNo(data.referenceNo || generatedRef);
       trackLeadSubmit("mentorship");
       setSubmitSuccess(true);
     } catch (err: any) {
@@ -1139,6 +1146,11 @@ Candidate Application Details:
                       ? "Ahmed a bien reçu vos informations et examinera attentivement votre profil. Vous recevrez une réponse personnalisée par courriel d'ici 1 à 2 jours ouvrables."
                       : "Ahmed has received your application and will review your profile. You will receive a personal email follow-up within 1 to 2 business days."}
                   </p>
+                  {referenceNo && (
+                    <p className="text-xs font-mono text-[#d6c298]">
+                      {isFr ? "Numéro de référence :" : "Reference Number:"} #{referenceNo}
+                    </p>
+                  )}
                   {siteConfig.schedulingUrl && (
                     <div className="pt-4 border-t border-[#f7f3eb]/20">
                       <p className="text-xs text-[#d6c298] mb-3">
@@ -1438,6 +1450,10 @@ Candidate Application Details:
                         </>
                       )}
                     </label>
+                  </div>
+
+                  <div className="pt-1">
+                    <TurnstileWidget onVerify={setTurnstileToken} />
                   </div>
 
                   <button
