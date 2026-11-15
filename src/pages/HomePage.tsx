@@ -92,7 +92,7 @@ export const HomePage: React.FC = () => {
                 >
                   <Calendar className="w-4 h-4 text-[#d6c298]" />
                   <span>
-                    {isFr ? "Planifier un appel de 30 min" : "Schedule 30-Min Strategy Call"}
+                    {isFr ? "Poser une question en 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}
                   </span>
                 </a>
 
@@ -478,7 +478,7 @@ export const HomePage: React.FC = () => {
             >
               <Calendar className="w-4 h-4 text-[#d6c298]" />
               <span>
-                {isFr ? "Réserver un appel de 30 min sur Calendly" : "Schedule 30-Min Call on Calendly"}
+                {isFr ? "Obtenir un second avis sur votre situation" : "Get a Second Opinion on Your Situation"}
               </span>
             </a>
 

@@ -16,7 +16,7 @@ export const MobileBookingBar: React.FC = () => {
       className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#14211a]/95 backdrop-blur-md border-t border-[#2e4a3b]/80 px-3 py-2.5 shadow-2xl safe-area-inset-bottom"
     >
       <div className="flex items-center gap-2 max-w-md mx-auto">
-        {/* Book 30 Minutes */}
+        {/* Ask a 15-Min Question */}
         <a
           href={bookingUrl}
           target="_blank"
@@ -25,7 +25,7 @@ export const MobileBookingBar: React.FC = () => {
           className="flex-1 bg-[#d6c298] hover:bg-[#e0cfab] text-[#14211a] font-semibold text-xs py-2.5 px-3 rounded-[2px] transition-colors flex items-center justify-center gap-1.5 shadow-xs"
         >
           <Calendar className="w-3.5 h-3.5 shrink-0 text-[#75581f]" aria-hidden="true" />
-          <span className="truncate">{isFr ? "Réserver 30 min" : "Book 30 minutes"}</span>
+          <span className="truncate">{isFr ? "Question 15 min" : "Ask a 15-Min Question"}</span>
           <ArrowUpRight className="w-3 h-3 shrink-0 opacity-70" aria-hidden="true" />
         </a>
 

@@ -716,8 +716,8 @@ export const CostlyBlindspotsPage: React.FC = () => {
 
           <p className="text-sm text-[#ece6da]/90 max-w-xl mx-auto leading-relaxed">
             {isFr
-              ? "Planifiez un échange sans pression commerciale avec Ahmed Bello pour auditer vos régimes enregistrés, votre structure hypothécaire ou vos déductions manquées."
-              : "Schedule a 30-minute introductory conversation with Ahmed Bello to review your registered shelters, mortgage renewal timeline, and uncollected credits with zero sales pressure."}
+              ? "Posez une question rapide de 15 minutes ou obtenez un second avis sans pression commerciale sur vos comptes enregistrés, votre renouvellement hypothécaire ou vos crédits non réclamés."
+              : "Ask a quick 15-minute question or get a second opinion on your registered shelters, mortgage renewal timeline, and uncollected credits—with zero sales pitch."}
           </p>
 
           <div className="pt-3">
@@ -729,7 +729,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
               className="btn btn-primary text-sm px-8 py-3.5 inline-flex items-center gap-2 shadow-md"
             >
               <Calendar className="w-4 h-4 text-[#d6c298]" />
-              <span>{isFr ? "Planifier un appel de 30 minutes sur Calendly" : "Schedule 30-Min Strategy Call on Calendly"}</span>
+              <span>{isFr ? "Poser une question en 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}</span>
             </a>
           </div>
         </div>

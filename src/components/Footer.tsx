@@ -69,7 +69,7 @@ export const Footer: React.FC = () => {
                   className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#2e4a3b] hover:bg-[#3a5d4a] text-[#f7f3eb] border border-[#d6c298]/40 rounded-xs text-xs font-medium transition-colors"
                 >
                   <Calendar className="w-3.5 h-3.5 text-[#d6c298]" />
-                  <span>{isFr ? "Réserver une session de 30 min" : "Schedule 30-Min Strategy Call"}</span>
+                  <span>{isFr ? "Poser une question en 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}</span>
                   <ArrowRight className="w-3 h-3 text-[#d6c298]" />
                 </a>
               </div>

@@ -445,6 +445,9 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
       {/* Lead Capture: Email Me This Plan & Book Review */}
       <CalculatorLeadCapture
         calculatorName="Newcomer First-Year Financial Runway"
+        analyticsCalculatorName="newcomer_runway"
+        analyticsTopic="newcomer"
+        topic="newcomer"
         summaryText={`Household Type: ${householdType}
 Profession Track: ${professionTrack}
 Licensing / Recognition Delay: ${monthsToLicense} months

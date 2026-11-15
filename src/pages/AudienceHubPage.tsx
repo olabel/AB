@@ -644,7 +644,7 @@ export const AudienceHubPage: React.FC = () => {
               className="btn btn-primary px-8 py-3.5 text-base inline-flex items-center gap-2 shadow-sm"
             >
               <Calendar className="w-4 h-4 text-[#d6c298]" />
-              <span>{isFr ? "Réserver un appel de 30 min sur Calendly →" : "Schedule 30-Min Call on Calendly →"}</span>
+              <span>{isFr ? "Poser une question en 15 min (sans pression) →" : "Ask a 15-Min Question (Free, No Pitch) →"}</span>
             </a>
             <p className="text-xs text-[#625d52]">
               {isFr ? (

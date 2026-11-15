@@ -419,6 +419,228 @@ export interface ContactServiceResult {
   };
 }
 
+interface WelcomeActionAsset {
+  subjectPrefix: string;
+  title: string;
+  steps: string[];
+  replyQuestion: string;
+}
+
+export function buildWelcomeActionAsset(
+  rawSource: string,
+  topic: string,
+  lang: "en" | "fr"
+): WelcomeActionAsset {
+  const s = (rawSource || "").toLowerCase();
+  const isFr = lang === "fr";
+
+  if (s.includes("fhsa")) {
+    return isFr
+      ? {
+          subjectPrefix: "Votre Plan d'Action & Aide-Mémoire CELIAPP",
+          title: "Votre Plan d'Action Rapide (CELIAPP + RAP)",
+          steps: [
+            "Ouvrez votre CELIAPP dès que possible : vos droits annuels de 8 000 $ (et jusqu'à 8 000 $ reportés) ne commencent à s'accumuler qu'après l'ouverture officielle du compte.",
+            "Confirmez votre admissibilité à titre d'acheteur d'une première habitation auprès de l'ARC (règle des 4 années civiles précédentes).",
+            "Planifiez le décaissement coordonné CELIAPP + RAP (jusqu'à 60 000 $) avant la clôture pour financer la mise de fonds sans impôt.",
+          ],
+          replyQuestion:
+            "Prévoyez-vous acheter au cours des 12 prochains mois, ou votre horizon est-il plutôt de 2 à 5 ans ?",
+        }
+      : {
+          subjectPrefix: "Your FHSA Action Checklist & Calculation",
+          title: "Your Quick Welcome Action Checklist (FHSA + HBP)",
+          steps: [
+            "Open the FHSA before year-end even with a small starter deposit: the $8,000 annual room (and $8,000 carry-forward cap) only begins accruing once the account is opened.",
+            "Verify your CRA first-time home buyer status (you and your spouse/partner did not live in a home either of you owned in the current year or prior 4 calendar years).",
+            "Sequence your closing timeline carefully so qualifying FHSA + Home Buyers' Plan (up to $60,000) withdrawals arrive before completion without triggering HBP repayment surprises.",
+          ],
+          replyQuestion:
+            "Are you planning to buy within the next 12 months, or is your timeline 2–5 years out?",
+        };
+  }
+
+  if (s.includes("blindspot")) {
+    return isFr
+      ? {
+          subjectPrefix: "Votre Liste d'Actions Prioritaires (Pièges Financiers)",
+          title: "3 vérifications rapides pour récupérer vos dollars oubliés",
+          steps: [
+            "Vérifiez vos échéances : les remboursements d'assurance prêt hypothécaire écoénergétique (SCHL / Sagen / Canada Guaranty) exigent souvent une demande dans les 24 mois suivant la clôture.",
+            "Validez l'espace inutilisé de la SCEE et du BEC pour tout enfant de 17 ans ou moins (et demandez à l'institution le relevé des subventions disponibles).",
+            "Utilisez l'outil « Modifier ma déclaration » de Mon dossier ARC pour réclamer d'éventuels crédits manqués sur jusqu'à 10 années d'imposition antérieures.",
+          ],
+          replyQuestion:
+            "Lequel des points de votre liste vous semble le plus urgent pour votre foyer en ce moment ?",
+        }
+      : {
+          subjectPrefix: "Your Money Blindspots Action Checklist",
+          title: "3 Fast Statutory Deadline Checks to Start Today",
+          steps: [
+            "Check closing-folder deadlines first: CMHC / Sagen / Canada Guaranty energy-efficiency premium refunds typically must be claimed within 24 months of home closing.",
+            "Confirm unused RESP CESG carry-forward room and Canada Learning Bond ($0 deposit needed for eligible lower-income families) before age 17.",
+            "Check CRA My Account 'Change my return' if you may have missed medical, tuition, disability, or employment-expense claims within the 10-year T1-ADJ window.",
+          ],
+          replyQuestion:
+            "Which item on your checklist feels most urgent for your household right now?",
+        };
+  }
+
+  if (s.includes("tfsa_vs_rrsp") || topic === "accounts") {
+    return isFr
+      ? {
+          subjectPrefix: "Votre Synthèse & Liste d'Actions CELI vs REER",
+          title: "3 vérifications avant de cotiser à votre CELI ou REER",
+          steps: [
+            "Confirmez vos droits réels dans Mon dossier ARC (les totaux bancaires ne reflètent pas toujours vos retraits de l'année précédente ou les facteurs d'équivalence).",
+            "Rappelez-vous qu'un retrait CELI ne redonne des droits de cotisation que le 1er janvier suivant (pénalité de 1 %/mois en cas de dépassement).",
+            "Si vous utilisez le REER dans une tranche fiscale élevée, réinvestissez le remboursement d'impôt dans votre CELI ou votre hypothèque plutôt que de le dépenser.",
+          ],
+          replyQuestion:
+            "Cherchez-vous surtout à préparer l'achat d'une maison, réduire votre impôt cette année ou bâtir un revenu de retraite flexible ?",
+        }
+      : {
+          subjectPrefix: "Your TFSA vs. RRSP Tax Action Summary",
+          title: "3 Checks Before Funding Your Next Contribution",
+          steps: [
+            "Confirm exact room inside CRA My Account (and remember any 2026 TFSA withdrawals do not restore room until January 1, avoiding the 1%/month over-contribution penalty).",
+            "Compare your marginal bracket today vs. expected retirement income—especially if Old Age Security recovery tax or child-benefit income testing applies.",
+            "If picking RRSP for the upfront deduction ($33,810 max in 2026 at 18% of prior-year income), set aside or reinvest the refund immediately rather than absorbing it into lifestyle spending.",
+          ],
+          replyQuestion:
+            "Are you optimizing right now for a home purchase, retirement income flexibility, or reducing this year's tax bill?",
+        };
+  }
+
+  if (s.includes("resp") || topic === "family") {
+    return isFr
+      ? {
+          subjectPrefix: "Votre Plan d'Action & Subventions REEE",
+          title: "3 étapes pour maximiser vos subventions REEE (SCEE & BEC)",
+          steps: [
+            "Demandez à votre fournisseur de vérifier le solde exact de droits de SCEE inutilisés auprès d'EDSC (jusqu'à 1 000 $/an de subvention de base sur 5 000 $ en rattrapage).",
+            "Assurez-vous que le numéro d'assurance sociale (NAS) de votre enfant est au dossier afin de recevoir la SCEE (20 % jusqu'à 7 200 $ à vie) et le Bon d'études canadien le cas échéant.",
+            "Si votre enfant approche 15 ans, vérifiez la règle des 16-17 ans (minimum cumulatif de 2 000 $ ou 100 $/an sur 4 ans avant la fin des 15 ans).",
+          ],
+          replyQuestion:
+            "Quel âge a votre enfant actuellement, et avez-vous déjà un compte REEE ouvert à son nom ?",
+        }
+      : {
+          subjectPrefix: "Your RESP Grant & Provider Action Checklist",
+          title: "3 Quick Steps to Protect Your Child's RESP Grants",
+          steps: [
+            "Ask your RESP provider to confirm your child's remaining ESDC unused CESG room (allowing up to $1,000 basic grant per year on a $5,000 catch-up contribution toward the $7,200 lifetime cap).",
+            "Verify your child's SIN is linked and ask specifically for both Basic/Additional CESG and the Canada Learning Bond ($500 yr 1 + $100/yr to $2,000 for eligible modest-income families).",
+            "If your child is 14–15, double-check the age 16–17 rule ($2,000 total contributed before Dec 31 of the year they turn 15, or $100/yr in any 4 prior years).",
+          ],
+          replyQuestion:
+            "How old is your child right now, and do you already have an RESP opened?",
+        };
+  }
+
+  if (s.includes("newcomer") || topic === "newcomer") {
+    return isFr
+      ? {
+          subjectPrefix: "Votre Plan d'Autonomie Financière (1re Année au Canada)",
+          title: "Liste d'actions prioritaires des 90 premiers jours au Canada",
+          steps: [
+            "Confirmez votre date officielle de résidence fiscale avant d'ouvrir un CELI ou un CELIAPP (cotiser avant de devenir résident fiscal entraîne une pénalité de 1 % par mois).",
+            "Obtenez votre NAS, demandez les crédits TPS/TVH et l'ACE, et établissez un historique de crédit canadien simple avec un faible ratio d'utilisation.",
+            "Vérifiez auprès d'un comptable l'obligation de déclaration T1135 (biens étrangers > 100 000 $ CA) applicable à partir de votre deuxième année de résidence fiscale.",
+          ],
+          replyQuestion:
+            "Dans quelle province vous installez-vous, et quel est votre horizon pour commencer à exercer ou stabiliser vos revenus ?",
+        }
+      : {
+          subjectPrefix: "Your First-Year Canada Financial Runway Plan",
+          title: "90-Day Canadian Settlement Financial Checklist",
+          steps: [
+            "Confirm your exact CRA tax-residency start date before funding a TFSA or FHSA (contributing before becoming a Canadian resident for tax purposes triggers a 1%/month penalty).",
+            "Apply early for your SIN, GST/HST credit, and Canada Child Benefit, and build Canadian credit history safely with low card utilization.",
+            "Flag the CRA Form T1135 foreign property rule ($100,000+ CAD cost outside Canada) early with a tax preparer so your second-year filing has no late-filing surprises.",
+          ],
+          replyQuestion:
+            "Which province are you settling in, and are you budgeting mainly around licensing timelines or your first home purchase?",
+        };
+  }
+
+  if (s.includes("amt") || topic === "amt") {
+    return isFr
+      ? {
+          subjectPrefix: "Votre Estimation IMR & Liste de Vérification Fiscale",
+          title: "3 points clés à préparer avec votre CPA (IMR fédéral)",
+          steps: [
+            "Distinguez les dons en espèces des dons de titres cotés en bourse (inclus à 30 % dans le calcul de l'IMR et crédit de don permis à 80 %).",
+            "Vérifiez si le crédit d'IMR généré cette année peut être récupéré sur l'impôt régulier des 7 années d'imposition suivantes.",
+            "Échelonnez si possible la réalisation de gains en capital sur plusieurs années civiles autour de l'exemption d'IMR.",
+          ],
+          replyQuestion:
+            "Votre transaction est-elle prévue cette année civile, ou évaluez-vous un étalement sur plusieurs années avec votre comptable ?",
+        }
+      : {
+          subjectPrefix: "Your Federal AMT Estimate & CPA Preparation Notes",
+          title: "3 Key Points to Bring to Your CPA / Tax Review",
+          steps: [
+            "Separate cash charitable donations from publicly listed securities (which carry a 30% AMT inclusion alongside the 80% charitable donation tax credit allowance).",
+            "Check your 7-year regular-tax capacity so any excess AMT paid this year has a realistic path to carry-forward recovery.",
+            "Test multi-year timing of capital gains around the annual AMT exemption rather than triggering a single-year spike without running both T1 and T691 estimates.",
+          ],
+          replyQuestion:
+            "Is this liquidity event happening this calendar year, or are you exploring multi-year timing?",
+        };
+  }
+
+  if (s.includes("pension") || topic === "pension-checklist") {
+    return isFr
+      ? {
+          subjectPrefix: "Votre Grille d'Aide à la Décision — Rente Commuée",
+          title: "3 vérifications avant l'échéance de votre relevé de cessation",
+          steps: [
+            "Notez la date limite stricte indiquée sur votre trousse d'option de retraite (souvent 60 à 90 jours après la cessation d'emploi).",
+            "Comparez la valeur de transfert maximale (ITR 8517) vers votre CRI à la portion excédentaire imposable au comptant dans l'année du transfert.",
+            "Évaluez la valeur de l'indexation garantie et de la réversion au conjoint survivant avant de renoncer à une rente à prestations déterminées.",
+          ],
+          replyQuestion:
+            "Quelle est la date limite indiquée sur votre relevé d'option de retraite en ce moment ?",
+        }
+      : {
+          subjectPrefix: "Your Pension Commuted Value Decision Checklist",
+          title: "3 Critical Checks Before Your Pension Election Deadline",
+          steps: [
+            "Highlight the strict election deadline printed on your termination package (once missed or executed, commuted-value transfers are typically irreversible).",
+            "Compare your ITR 8517 Maximum Transfer Value (tax-sheltered into a LIRA) against any excess lump sum paid in cash and taxed at your marginal rate in the transfer year.",
+            "Benchmark inflation protection, bridge benefits, and spousal survivor coverage before trading away defined-benefit lifetime income.",
+          ],
+          replyQuestion:
+            "What decision deadline is printed on your pension option statement right now?",
+        };
+  }
+
+  return isFr
+    ? {
+        subjectPrefix: "Votre Synthèse Personnalisée & Liste d'Actions",
+        title: "3 prochaines vérifications rapides",
+        steps: [
+          "Confirmez vos droits de cotisation exacts dans Mon dossier ARC (CELI 7 000 $/an, REER jusqu'à 33 810 $/an selon 2026) avant de virer des fonds.",
+          "Vérifiez si votre employeur offre une cotisation de contrepartie avant d'allouer des liquidités ailleurs.",
+          "Gardez votre coussin d'urgence séparé des placements à long terme pour ne jamais devoir liquider au mauvais moment.",
+        ],
+        replyQuestion:
+          "Travaillez-vous sur une décision prévue d'ici 12 mois, ou plutôt sur une stratégie à 2–5 ans ?",
+      }
+    : {
+        subjectPrefix: "Your Customized Plan Calculation Breakdown",
+        title: "3 Quick Verification Steps for Your Next Move",
+        steps: [
+          "Verify your exact remaining room in CRA My Account (2026 TFSA annual limit $7,000; 2026 RRSP 18% up to $33,810) before transferring cash.",
+          "Capture any employer matching contributions first before funding lower-priority accounts.",
+          "Keep short-term cash needs (next 1–3 years) out of volatile growth assets so timing never forces a bad sale.",
+        ],
+        replyQuestion:
+          "Are you planning around a decision in the next 12 months, or looking 2–5 years ahead?",
+      };
+}
+
 export async function processContactSubmission(
   rawBody: any,
   clientIp: string,
@@ -473,6 +695,7 @@ export async function processContactSubmission(
   }
 
   const rawSource = sanitizeText(body.source);
+  const lang: "en" | "fr" = sanitizeText(body.language) === "fr" ? "fr" : "en";
   const isNewsletter = topic === "newsletter";
   const isCalculator =
     topic === "calculator" ||
@@ -801,74 +1024,145 @@ Origin: https://www.ahmedbello.com
 
         if (isNewsletter) {
           const subToken = generateSubscriptionToken(email);
-          confirmationSubject = "Confirm your subscription: Canadian Financial Education | Ahmed Bello";
-          confirmationBody = `Hello ${firstName},
+          if (lang === "fr") {
+            confirmationSubject = "Confirmez votre inscription : Éducation financière canadienne | Ahmed Bello";
+            confirmationBody = `Bonjour ${firstName},
+
+Merci de votre demande d'inscription au bulletin d'éducation financière sur ahmedbello.com.
+
+Pour confirmer votre adresse courriel et recevoir nos résumés pratiques lorsque les règles fiscales canadiennes ou les plafonds des comptes enregistrés (CELI / REER / CELIAPP) changent, veuillez valider votre inscription :
+https://www.ahmedbello.com/fr/confirm-subscription?token=${encodeURIComponent(subToken)}
+
+Question rapide (répondez simplement à ce courriel) : quel objectif financier compte le plus pour votre foyer cette année — l'achat d'une propriété, la réduction d'impôt ou la préparation de la retraite ?
+
+Cordialement,
+Ahmed Bello
+Professionnel agréé en solutions financières
+Moncton (Nouveau-Brunswick), Canada
+https://www.ahmedbello.com/fr`;
+          } else {
+            confirmationSubject = "Confirm your subscription: Canadian Financial Education | Ahmed Bello";
+            confirmationBody = `Hello ${firstName},
 
 Thank you for requesting to join the Intentional Wealth Briefing through ahmedbello.com.
 
 To confirm your email address and activate your subscription to receive occasional plain-language briefings when key Canadian tax rules, annual registered account limits (TFSA/RRSP/FHSA), or public pension policies are updated, please verify your interest:
 https://www.ahmedbello.com/confirm-subscription?token=${encodeURIComponent(subToken)}
 
-If you did not request this educational briefing, please disregard this message. You will not receive any further emails unless confirmed.
+Quick question — just hit reply: which goal matters most for your household over the next 12 months (buying a home, lowering tax, family protection, or retirement readiness)?
 
 Warm regards,
 Ahmed Bello
 Licensed Financial Solutions Professional
 Moncton, New Brunswick, Canada
 https://www.ahmedbello.com`;
+          }
         } else if (isCalculator) {
-          confirmationSubject = `Your Customized Plan Calculation Breakdown (#${referenceNo}) | Ahmed Bello`;
-          confirmationBody = `Hello ${firstName},
+          const asset = buildWelcomeActionAsset(rawSource, topic, lang);
+          confirmationSubject =
+            lang === "fr"
+              ? `${asset.subjectPrefix} (#${referenceNo}) | Ahmed Bello`
+              : `${asset.subjectPrefix} (#${referenceNo}) | Ahmed Bello`;
 
-Thank you for calculating your numbers on ahmedbello.com.
+          if (lang === "fr") {
+            confirmationBody = `Bonjour ${firstName},
 
-Reference Number: #${referenceNo}
+Merci d'avoir utilisé les outils de planification sur ahmedbello.com.
 
-Here is the customized calculation you requested:
+Numéro de référence : #${referenceNo}
+
+Votre synthèse calculée :
 ---------------------------------------------------------
 ${message}
 ---------------------------------------------------------
 
-Next Steps:
-Financial calculators provide general mathematical projections, but personal tax brackets, risk tolerance, and Canadian registered account contribution room (TFSA/RRSP/FHSA) require tailored analysis.
+${asset.title} :
+${asset.steps.map((s, idx) => `${idx + 1}. ${s}`).join("\n")}
 
-Schedule a 30-minute review on Calendly:
-https://calendly.com/olabel/30min
+Une simple question pour vous aider (répondez directement à ce courriel) :
+${asset.replyQuestion}
 
-Direct Contact:
-• Direct Phone: +1-506-899-4941
-• Direct Email: enquiries@ahmedbello.com
+Vous préférez poser une question rapide de vive voix ?
+Poser une question en 15 min (gratuit, sans pression) : https://calendly.com/olabel/30min
+Téléphone direct : +1-506-899-4941 | Courriel : enquiries@ahmedbello.com
 
-Warm regards,
+Cordialement,
 Ahmed Bello
-Licensed Financial Solutions Professional
-Moncton, New Brunswick, Canada
-https://www.ahmedbello.com`;
-        } else {
-          confirmationSubject = `Confirmation: I received your enquiry (#${referenceNo}) | Ahmed Bello`;
-          confirmationBody = `Hello ${firstName},
+Professionnel agréé en solutions financières
+Moncton (Nouveau-Brunswick), Canada
+https://www.ahmedbello.com/fr`;
+          } else {
+            confirmationBody = `Hello ${firstName},
 
-Thank you for reaching out through ahmedbello.com. This automated receipt confirms that I have safely received your enquiry regarding ${topic}.
+Thank you for running your numbers on ahmedbello.com.
 
 Reference Number: #${referenceNo}
 
-What happens next:
-1. Review: I personally review incoming enquiries in the order received and aim to follow up with evidence-based educational insights.
-2. Direct, Objective Discussion: I provide clear answers to your questions without sales pressure or proprietary product mandates.
-3. Exploration: If your situation calls for a deeper conversation, we can review next steps during a 30-minute introductory call.
+Here is the calculation & breakdown you requested:
+---------------------------------------------------------
+${message}
+---------------------------------------------------------
 
-Schedule your complimentary 30-minute introductory consultation directly on Calendly:
-https://calendly.com/olabel/30min
+${asset.title}:
+${asset.steps.map((s, idx) => `${idx + 1}. ${s}`).join("\n")}
 
-You can also reach me directly at:
-• Direct Telephone: +1-506-899-4941
-• Direct Email: enquiries@ahmedbello.com
+Quick question — just hit reply to this email:
+${asset.replyQuestion}
+
+Prefer to talk through one quick detail instead?
+Ask a 15-min question (free, no pitch): https://calendly.com/olabel/30min
+Direct Phone: +1-506-899-4941 | Direct Email: enquiries@ahmedbello.com
 
 Warm regards,
 Ahmed Bello
 Licensed Financial Solutions Professional
 Moncton, New Brunswick, Canada
 https://www.ahmedbello.com`;
+          }
+        } else {
+          if (lang === "fr") {
+            confirmationSubject = `Confirmation : j'ai bien reçu votre message (#${referenceNo}) | Ahmed Bello`;
+            confirmationBody = `Bonjour ${firstName},
+
+Merci d'avoir écrit via ahmedbello.com. Ce message confirme la bonne réception de votre question concernant « ${topic} ».
+
+Numéro de référence : #${referenceNo}
+
+En attendant ma réponse personnelle :
+1. Ayez sous la main vos plafonds de cotisation (Mon dossier ARC) si votre question porte sur CELI, REER ou CELIAPP.
+2. Si vous le souhaitez, répondez simplement à ce courriel pour préciser votre échéancier principal (moins d'un an ou 2 à 5 ans).
+
+Si vous préférez un échange rapide :
+Poser une question en 15 min (sans pression) : https://calendly.com/olabel/30min
+Téléphone direct : +1-506-899-4941 | Courriel : enquiries@ahmedbello.com
+
+Cordialement,
+Ahmed Bello
+Professionnel agréé en solutions financières
+Moncton (Nouveau-Brunswick), Canada
+https://www.ahmedbello.com/fr`;
+          } else {
+            confirmationSubject = `Confirmation: I received your enquiry (#${referenceNo}) | Ahmed Bello`;
+            confirmationBody = `Hello ${firstName},
+
+Thank you for reaching out through ahmedbello.com. This confirms I have safely received your enquiry regarding ${topic}.
+
+Reference Number: #${referenceNo}
+
+While I review your note:
+1. I personally review every message in order and reply with plain-language educational clarity—no sales pitch.
+2. If you want to add one detail so my reply is tailored to your numbers, just hit reply: are you looking at a decision in the next 12 months, or planning 2–5 years ahead?
+
+Prefer a quick conversation instead?
+Ask a 15-min question (free, no pitch): https://calendly.com/olabel/30min
+Direct Telephone: +1-506-899-4941 | Direct Email: enquiries@ahmedbello.com
+
+Warm regards,
+Ahmed Bello
+Licensed Financial Solutions Professional
+Moncton, New Brunswick, Canada
+https://www.ahmedbello.com`;
+          }
         }
 
         await fetch("https://api.resend.com/emails", {
@@ -879,6 +1173,7 @@ https://www.ahmedbello.com`;
           },
           body: JSON.stringify({
             from: contactFromEmail,
+            reply_to: "enquiries@ahmedbello.com",
             to: [email],
             subject: confirmationSubject,
             text: confirmationBody,

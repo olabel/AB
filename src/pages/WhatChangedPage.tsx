@@ -487,7 +487,7 @@ export const WhatChangedPage: React.FC = () => {
                 className="inline-flex items-center gap-2 px-5 py-3 bg-[#2e4a3b] hover:bg-[#385b48] text-[#f7f3eb] border border-[#d6c298]/40 font-medium text-xs sm:text-sm rounded-xs transition-colors"
               >
                 <Calendar className="w-4 h-4 text-[#d6c298]" />
-                <span>{isFr ? "Planifier un appel de 30 min" : "Schedule 30-Min Strategy Call"}</span>
+                <span>{isFr ? "Poser une question en 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}</span>
               </a>
             )}
           </div>

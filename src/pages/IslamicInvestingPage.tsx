@@ -790,7 +790,7 @@ Notes: ${formData.notes || "None"}`;
                       onClick={() => trackBookingClick("islamic_investing_success")}
                       className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs rounded-xs transition-colors"
                     >
-                      <span>{isFr ? "Réserver une session de 30 min sur Calendly" : "Schedule 30-Min Call on Calendly"}</span>
+                      <span>{isFr ? "Poser une question en 15 min sur Calendly" : "Ask a 15-Min Question on Calendly"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </a>
                   )}
@@ -833,7 +833,7 @@ Notes: ${formData.notes || "None"}`;
                         className="underline font-semibold text-[#d6c298] inline-flex items-center gap-1"
                       >
                         <Calendar className="w-3 h-3" />
-                        <span>{isFr ? "Réserver 30 min sur Calendly" : "Schedule 30 min on Calendly"}</span>
+                        <span>{isFr ? "Question de 15 min sur Calendly" : "Ask a 15-min question on Calendly"}</span>
                       </a>
                     </div>
                   </div>

@@ -900,8 +900,8 @@ ${unmodelledDisclaimer}`;
             </h2>
             <p className="text-sm text-[#46423a] max-w-xl mx-auto">
               {isFr
-                ? "Planifiez un entretien introductif de 30 minutes avec Ahmed Bello pour examiner vos options de structuration sans aucune démarche commerciale."
-                : "Schedule a 30-minute introductory conversation with Ahmed Bello to review your multi-year balance sheet and tax structure with zero sales pressure."}
+                ? "Posez une question rapide de 15 minutes ou obtenez un second avis objectif sur la structure de votre bilan avant de finaliser avec votre CPA."
+                : "Ask a quick 15-minute question or get a second opinion on your multi-year balance sheet structure before finalizing with your CPA—zero sales pitch."}
             </p>
             <div className="pt-2">
               <a
@@ -912,7 +912,7 @@ ${unmodelledDisclaimer}`;
                 className="btn btn-primary text-xs sm:text-sm px-6 py-3 inline-flex items-center gap-2"
               >
                 <Calendar className="w-4 h-4 text-[#d6c298]" />
-                <span>{isFr ? "Réserver un appel de 30 minutes sur Calendly" : "Schedule 30-Min Call on Calendly"}</span>
+                <span>{isFr ? "Obtenir un second avis (15 min)" : "Get a Second Opinion on Your Situation"}</span>
               </a>
             </div>
           </div>

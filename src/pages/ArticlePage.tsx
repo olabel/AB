@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { FhsaQuickEstimator } from "../components/FhsaQuickEstimator.tsx";
+import { TfsaVsRrspQuickWidget } from "../components/TfsaVsRrspQuickWidget.tsx";
+import { RespGrantQuickWidget } from "../components/RespGrantQuickWidget.tsx";
 import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { trackBookingClick, trackCtaClick } from "../lib/track.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
@@ -108,6 +110,15 @@ export const ArticlePage: React.FC = () => {
     ...(article.example ? [{ id: "example", label: isFr ? "Exemple hypothétique" : "Hypothetical example" }] : []),
     ...(article.slug === "fhsa-explained"
       ? [{ id: "fhsa-estimator", label: isFr ? "Simulateur CELIAPP" : "FHSA Tax Estimator" }]
+      : []),
+    ...(article.slug === "tfsa-vs-rrsp" || article.slug === "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first"
+      ? [{ id: "tfsa-rrsp-widget", label: isFr ? "Comparateur CELI vs REER" : "TFSA vs. RRSP Priority Check" }]
+      : []),
+    ...(article.slug === "resp-basics"
+      ? [{ id: "resp-grant-widget", label: isFr ? "Calculateur SCEE REEE" : "RESP Grant Estimator" }]
+      : []),
+    ...(article.slug === "new-to-canada-money-basics" || article.slug === "internationally-trained-doctors-nurses-first-year"
+      ? [{ id: "newcomer-calculator", label: isFr ? "Planificateur 1re année" : "Newcomer Runway Calculator" }]
       : []),
     { id: "misunderstandings", label: isFr ? "Idées reçues fréquentes" : "Common misunderstandings" },
     { id: "tradeoffs", label: isFr ? "Compromis et limites" : "Trade-offs and limitations" },
@@ -336,9 +347,21 @@ export const ArticlePage: React.FC = () => {
                     ? isFr
                       ? "Calculez votre déduction CELIAPP, cumulez avec le RAP (60 000 $) ou posez une question fiscale précise."
                       : "Calculate your FHSA tax refund, model $100k FHSA + HBP stacking, or ask a question about your eligibility."
+                    : article.slug === "tfsa-vs-rrsp" || article.slug === "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first"
+                    ? isFr
+                      ? "Comparez CELI et REER selon votre tranche fiscale actuelle et recevez votre aide-mémoire par courriel."
+                      : "Check whether TFSA or RRSP fits your bracket better and get your tailored tax checklist by email."
+                    : article.slug === "resp-basics"
+                    ? isFr
+                      ? "Estimez la SCEE (20 %) et vos droits de rattrapage jusqu'à 1 000 $/an selon l'âge de votre enfant."
+                      : "Estimate your 20% CESG match and catch-up room up to $1,000/yr based on your child's age."
+                    : article.slug === "new-to-canada-money-basics" || article.slug === "internationally-trained-doctors-nurses-first-year"
+                    ? isFr
+                      ? "Calculez votre coussin de liquidités de 1re année au Canada et recevez votre plan par courriel."
+                      : "Map your first-year Canadian cash runway and email yourself a step-by-step settlement checklist."
                     : isFr
-                    ? `Vous avez une question sur ${article.invitationAbout} ? Demandez une réponse claire et sans pression.`
-                    : `Have a specific question about ${article.invitationAbout}? Get a direct, no-pressure educational answer.`}
+                    ? `Vous avez une question sur ${article.invitationAbout} ? Demandez un second avis sans pression.`
+                    : `Have a specific question about ${article.invitationAbout}? Get a direct, no-pressure second opinion.`}
                 </p>
                 <div className="flex flex-col gap-2 pt-1">
                   {article.slug === "fhsa-explained" && (
@@ -348,6 +371,36 @@ export const ArticlePage: React.FC = () => {
                       className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2 px-3 inline-flex items-center justify-center gap-1.5 font-semibold transition-colors"
                     >
                       <span>{isFr ? "Calculer mon économie CELIAPP" : "Estimate My FHSA Tax Refund"}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  {(article.slug === "tfsa-vs-rrsp" || article.slug === "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first") && (
+                    <a
+                      href="#tfsa-rrsp-widget"
+                      onClick={() => trackCtaClick("article_sidebar", "tfsa_rrsp_widget")}
+                      className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2 px-3 inline-flex items-center justify-center gap-1.5 font-semibold transition-colors"
+                    >
+                      <span>{isFr ? "Comparer CELI vs REER" : "Run 15-Sec TFSA vs. RRSP Check"}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  {article.slug === "resp-basics" && (
+                    <a
+                      href="#resp-grant-widget"
+                      onClick={() => trackCtaClick("article_sidebar", "resp_grant_widget")}
+                      className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2 px-3 inline-flex items-center justify-center gap-1.5 font-semibold transition-colors"
+                    >
+                      <span>{isFr ? "Calculer la subvention REEE" : "Estimate Child's RESP Grant"}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  {(article.slug === "new-to-canada-money-basics" || article.slug === "internationally-trained-doctors-nurses-first-year") && (
+                    <a
+                      href="#newcomer-calculator"
+                      onClick={() => trackCtaClick("article_sidebar", "newcomer_calculator")}
+                      className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2 px-3 inline-flex items-center justify-center gap-1.5 font-semibold transition-colors"
+                    >
+                      <span>{isFr ? "Calculer mon budget 1re année" : "Calculate First-Year Runway"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </a>
                   )}
@@ -367,7 +420,7 @@ export const ArticlePage: React.FC = () => {
                     className="text-[11px] text-[#d6c298] hover:text-white underline text-center py-1 inline-flex items-center justify-center gap-1"
                   >
                     <Calendar className="w-3 h-3" />
-                    <span>{isFr ? "Planifier 30 min sur Calendly" : "Book a 30-min call"}</span>
+                    <span>{isFr ? "Question de 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}</span>
                   </a>
                 </div>
               </div>
@@ -537,6 +590,93 @@ export const ArticlePage: React.FC = () => {
               </div>
             )}
 
+            {/* Top Interactive Shortcut Banner on TFSA vs RRSP Guides */}
+            {(article.slug === "tfsa-vs-rrsp" || article.slug === "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first") && (
+              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                    {isFr ? "Vérification en 15 secondes" : "15-Second Account Check & Checklist"}
+                  </span>
+                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                    {isFr
+                      ? "Comparez CELI vs REER selon votre tranche fiscale et recevez la synthèse"
+                      : "See how TFSA vs. RRSP compares at your bracket & get the tax checklist"}
+                  </h4>
+                  <p className="text-xs text-[#46423a]">
+                    {isFr
+                      ? "Comparez les plafonds 2026 (CELI 7 000 $, REER jusqu'à 33 810 $) et obtenez les vérifications clés par courriel."
+                      : "Test your current tax rate against 2026 CRA limits ($7,000 TFSA / up to $33,810 RRSP) and save your summary by email."}
+                  </p>
+                </div>
+                <a
+                  href="#tfsa-rrsp-widget"
+                  onClick={() => trackCtaClick("tfsa_rrsp_top_banner", "jump_to_widget")}
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                >
+                  <span>{isFr ? "Lancer le test 15 sec" : "Run 15-Sec Check"}</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#d6c298]" />
+                </a>
+              </div>
+            )}
+
+            {/* Top Interactive Shortcut Banner on RESP Guide */}
+            {article.slug === "resp-basics" && (
+              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                    {isFr ? "Calculateur Subvention REEE (15 sec)" : "15-Second RESP Grant & Catch-Up Check"}
+                  </span>
+                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                    {isFr
+                      ? "Estimez la SCEE (20 %) et les droits de rattrapage pour votre enfant"
+                      : "Calculate your child's CESG match & unused catch-up room"}
+                  </h4>
+                  <p className="text-xs text-[#46423a]">
+                    {isFr
+                      ? "Vérifiez la règle jusqu'à 1 000 $/an en rattrapage, les critères des 16-17 ans et le BEC par courriel."
+                      : "See how missed years boost your match up to $1,000/yr and get the RESP provider checklist by email."}
+                  </p>
+                </div>
+                <a
+                  href="#resp-grant-widget"
+                  onClick={() => trackCtaClick("resp_top_banner", "jump_to_widget")}
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                >
+                  <span>{isFr ? "Calculer la subvention" : "Estimate Grant"}</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#d6c298]" />
+                </a>
+              </div>
+            )}
+
+            {/* Top Interactive Shortcut Banner on Newcomer Guides */}
+            {(article.slug === "new-to-canada-money-basics" || article.slug === "internationally-trained-doctors-nurses-first-year") && (
+              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                    {isFr ? "Planificateur 1re Année & Liste" : "Interactive Runway Tool & Checklist"}
+                  </span>
+                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                    {isFr
+                      ? "Calculez votre autonomie financière de 1re année au Canada"
+                      : "Model your first-year Canadian cash runway & settlement buffer"}
+                  </h4>
+                  <p className="text-xs text-[#46423a]">
+                    {isFr
+                      ? "Intégrez vos délais d'équivalence, vos frais mensuels et recevez la liste d'actions des 90 premiers jours."
+                      : "Factor in licensing wait times and household burn rate, then email yourself the 90-day newcomer checklist."}
+                  </p>
+                </div>
+                <a
+                  href="#newcomer-calculator"
+                  onClick={() => trackCtaClick("newcomer_top_banner", "jump_to_widget")}
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                >
+                  <span>{isFr ? "Calculer mon autonomie" : "Calculate Runway"}</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#d6c298]" />
+                </a>
+              </div>
+            )}
+
             {/* 1. Problem / Lead Paragraph */}
             <section className="text-lg md:text-xl font-serif text-[#1c1b18] leading-relaxed border-b border-[#d6cebd] pb-8">
               <p>{article.problem}</p>
@@ -694,7 +834,7 @@ export const ArticlePage: React.FC = () => {
             {/* Contextual Interactive Calculator Module */}
             {(article.slug === "internationally-trained-doctors-nurses-first-year" ||
               article.slug === "new-to-canada-money-basics") && (
-              <section className="pt-2">
+              <section id="newcomer-calculator" className="pt-2 scroll-mt-28">
                 <NewcomerPlanningCalculator
                   defaultProfession={
                     article.slug === "internationally-trained-doctors-nurses-first-year"
@@ -708,6 +848,18 @@ export const ArticlePage: React.FC = () => {
             {article.slug === "fhsa-explained" && (
               <div className="pt-2">
                 <FhsaQuickEstimator />
+              </div>
+            )}
+
+            {(article.slug === "tfsa-vs-rrsp" || article.slug === "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first") && (
+              <div className="pt-2">
+                <TfsaVsRrspQuickWidget />
+              </div>
+            )}
+
+            {article.slug === "resp-basics" && (
+              <div className="pt-2">
+                <RespGrantQuickWidget />
               </div>
             )}
 
@@ -872,8 +1024,8 @@ export const ArticlePage: React.FC = () => {
                     </h4>
                     <p className="text-xs text-[#ece6da]">
                       {isFr
-                        ? "Examinez vos plafonds de transfert ITR 8517, le montant PAR et l'impact fiscal lors d'une séance de 30 minutes."
-                        : "Review your ITR 8517 Maximum Transfer Value, PAR capacity, and tax impact in a private 30-minute discussion."}
+                        ? "Obtenez un second avis objectif sur vos plafonds de transfert ITR 8517, le montant PAR et l'impact fiscal lors d'une question rapide de 15 minutes."
+                        : "Get an objective second opinion on your ITR 8517 Maximum Transfer Value, PAR capacity, and tax impact with zero sales pitch."}
                     </p>
                   </div>
 
@@ -885,7 +1037,7 @@ export const ArticlePage: React.FC = () => {
                     className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2.5 px-4 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 font-semibold transition-colors"
                   >
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>{isFr ? "Réserver sur Calendly" : "Book a 30-Min Review"}</span>
+                    <span>{isFr ? "Obtenir un second avis (15 min)" : "Get a Second Opinion"}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </a>
                 </div>

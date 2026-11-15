@@ -519,6 +519,24 @@ const rawArticles: Article[] = [
       "Have I checked my actual room on my notice of assessment or in CRA My Account?",
       "What will I hold inside the account, and does it suit when I will need the money?"
     ],
+    "faqs": [
+      {
+        "question": "What are the TFSA and RRSP contribution limits for 2026?",
+        "answer": "For 2026, the annual TFSA dollar limit is $7,000, plus any unused room carried forward from prior eligible years and any prior-year TFSA withdrawals. The 2026 RRSP annual dollar maximum is 18% of prior-year earned income up to $33,810, reduced by any pension adjustment, plus unused room carried forward."
+      },
+      {
+        "question": "If I withdraw money from a TFSA, can I put it back in the same year?",
+        "answer": "TFSA withdrawals are not added back to your contribution room until January 1 of the following calendar year. Re-contributing withdrawn funds in the same calendar year without spare unused room triggers a 1% per month CRA over-contribution tax on the excess."
+      },
+      {
+        "question": "How do TFSA and RRSP withdrawals affect OAS and government benefits?",
+        "answer": "RRSP and RRIF withdrawals count as taxable income, which can reduce income-tested benefits such as Old Age Security (OAS recovery tax) and the Guaranteed Income Supplement (GIS). TFSA withdrawals are tax-free and do not count toward income-tested benefit thresholds."
+      },
+      {
+        "question": "When must an RRSP be converted to retirement income?",
+        "answer": "Under CRA rules, you must convert your RRSP—for example into a Registered Retirement Income Fund (RRIF) or an annuity—by December 31 of the calendar year you turn 71."
+      }
+    ],
     "sources": [
       {
         "label": "Canada Revenue Agency: Before you contribute to a TFSA",
@@ -1106,6 +1124,24 @@ const rawArticles: Article[] = [
       "Which other goals compete for that money?",
       "What would I do if my child does not pursue post-secondary education?",
       "Does the plan I am considering charge fees or restrict withdrawals?"
+    ],
+    "faqs": [
+      {
+        "question": "How much does the Canada Education Savings Grant (CESG) pay each year?",
+        "answer": "The basic CESG matches 20% on the first $2,500 contributed annually per child, up to $500 a year and a $7,200 lifetime maximum per beneficiary. If earlier eligible years were missed, carried-forward room allows up to $1,000 of basic CESG on a $5,000 contribution in a single year."
+      },
+      {
+        "question": "Until what age can an RESP earn the CESG?",
+        "answer": "Contributions qualify for the CESG up to the end of the calendar year in which the beneficiary turns 17. However, to qualify at ages 16 and 17, at least $2,000 must have been contributed before the end of the year the child turned 15, or at least $100 per year in any four previous years."
+      },
+      {
+        "question": "What is the RESP lifetime contribution limit per child?",
+        "answer": "The lifetime maximum contribution limit per beneficiary across all RESPs is $50,000, with no annual contribution cap aside from the $2,500 (or $5,000 with catch-up room) annual threshold that attracts the basic 20% CESG."
+      },
+      {
+        "question": "What happens to RESP money if my child does not attend post-secondary school?",
+        "answer": "Original principal contributions can be returned to the subscriber tax-free, while unused government grants must be repaid to the government. Accumulated investment earnings may be taxed at the subscriber's rate plus an additional tax, or transferred to your RRSP within CRA limits if conditions are met."
+      }
     ],
     "sources": [
       {

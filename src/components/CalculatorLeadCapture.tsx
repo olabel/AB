@@ -88,6 +88,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           formLoadedAt,
           honeypot,
           referenceNo: generatedRef,
+          language: isFr ? "fr" : "en",
           source: `calculator_${(analyticsCalculatorName || calculatorName).toLowerCase().replace(/[^a-z0-9]+/g, "_")}`,
         }),
       });
@@ -142,7 +143,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shadow-xs shrink-0"
         >
           <Calendar className="w-3.5 h-3.5 text-[#d6c298]" />
-          <span>{isFr ? "Réserver une révision de 30 min" : "Book a 30-min review"}</span>
+          <span>{isFr ? "Question de 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}</span>
         </a>
       </div>
 
@@ -179,7 +180,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
               className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2 px-3.5 inline-flex items-center gap-1.5 font-semibold transition-colors"
             >
               <Calendar className="w-3.5 h-3.5" />
-              <span>{isFr ? "Planifier un échange de 30 min sur Calendly" : "Schedule 30-Min Discussion on Calendly"}</span>
+              <span>{isFr ? "Obtenir un second avis sur Calendly" : "Get a Second Opinion on Your Situation"}</span>
             </a>
             <a
               href={`mailto:enquiries@ahmedbello.com?subject=${encodeURIComponent(`Plan: ${calculatorName}`)}&body=${encodeURIComponent(`Reader: ${firstName || "Reader"} (${email})\n\n${summaryText}`)}`}
@@ -223,7 +224,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
                   className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1"
                 >
                   <Calendar className="w-3 h-3" />
-                  <span>{isFr ? "Réserver 30 min sur Calendly" : "Schedule 30 min on Calendly"}</span>
+                  <span>{isFr ? "Question de 15 min sur Calendly" : "Ask a 15-min question on Calendly"}</span>
                 </a>
               </div>
             </div>

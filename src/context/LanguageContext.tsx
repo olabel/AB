@@ -29,7 +29,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Buttons & CTAs
     btn_start_conversation: "Start a Conversation",
-    btn_book_call: "Schedule 30-Min Call",
+    btn_book_call: "Ask a 15-Min Question",
     btn_read_guide: "Read the guide",
     btn_read_essay: "Read the essay",
     btn_subscribe: "Subscribe",
@@ -117,7 +117,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Buttons & CTAs
     btn_start_conversation: "Démarrer une conversation",
-    btn_book_call: "Réserver un appel de 30 min",
+    btn_book_call: "Question de 15 min (gratuit)",
     btn_read_guide: "Lire le guide",
     btn_read_essay: "Lire l'analyse",
     btn_subscribe: "S'abonner",

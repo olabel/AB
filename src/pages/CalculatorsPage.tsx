@@ -947,8 +947,8 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
           </h2>
           <p className="text-sm text-[#46423a] max-w-xl mx-auto">
             {isFr
-              ? "Planifiez un échange sans pression commerciale pour examiner vos comptes enregistrés, votre trésorerie ou votre société."
-              : "Schedule a 30-minute introductory conversation to review your balance sheet, registered shelters, or corporate treasury with zero sales pressure."}
+              ? "Obtenez un second avis sans pression commerciale pour vérifier vos comptes enregistrés, votre trésorerie ou votre société."
+              : "Ask a quick 15-minute question or get an objective second opinion on your balance sheet, registered shelters, or corporate treasury—zero sales pitch."}
           </p>
           <div className="pt-2">
             <a
@@ -959,7 +959,7 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
               className="btn btn-primary text-sm px-7 py-3 inline-flex items-center gap-2"
             >
               <Calendar className="w-4 h-4 text-[#d6c298]" />
-              <span>{isFr ? "Réserver un appel de 30 minutes sur Calendly" : "Schedule 30-Min Call on Calendly"}</span>
+              <span>{isFr ? "Obtenir un second avis (15 min)" : "Get a Second Opinion on Your Situation"}</span>
             </a>
           </div>
         </div>
