@@ -78,7 +78,7 @@ export const FloatingNewsWidget: React.FC = () => {
           <div className="p-4 space-y-2">
             <div className="flex items-center justify-between text-[0.7rem] text-[#d6c298]">
               <span className="font-semibold uppercase tracking-wider">
-                {isFr ? "Banque du Canada & BSIF" : "Bank of Canada & OSFI"}
+                {isFr ? "Budget 2026 & Banque du Canada" : "Budget 2026 & Bank of Canada"}
               </span>
               <span className="text-[#ece6da]/70">Nov 2026</span>
             </div>
@@ -90,14 +90,14 @@ export const FloatingNewsWidget: React.FC = () => {
                 className="hover:text-[#d6c298] transition-colors"
               >
                 {isFr
-                  ? "Baisse du taux directeur à 2,50 % & exemption du test de résistance B-20 du BSIF"
-                  : "Overnight Rate Cut to 2.50% & OSFI Uninsured Mortgage Straight-Switch In Effect"}
+                  ? "Budget 2026, plafond REER 2027 à 35 390 $ & taux directeur porté à 2,50 %"
+                  : "Budget 2026 Proposals, 2027 RRSP $35,390 Limit & BoC Rate Raised to 2.50%"}
               </Link>
             </h4>
             <p className="text-xs text-[#d6cebd] line-clamp-2">
               {isFr
-                ? "Découvrez l'analyse d'Ahmed Bello sur l'impact pour les emprunteurs et les épargnants."
-                : "Read Ahmed's advisor breakdown on mortgage renewal leverage and cash yield shifts."}
+                ? "Consultez les 7 mises à jour vérifiées de novembre : seuil T1135, taux prescrit à 3 % et règles hypothécaires."
+                : "Read 7 verified November updates covering T1135, CRA 3% spousal loan rates, and OSFI B-20 rules."}
             </p>
           </div>
 

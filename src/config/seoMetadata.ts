@@ -132,10 +132,10 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "en-CA",
     title: "What Changed in Canadian Money Rules | Ahmed Bello",
     description:
-      "Monthly plain-language analysis of Bank of Canada rates, OSFI mortgage rules, CRA contribution limits, and federal tax law updates.",
+      "Nov 2026 Canadian money rule updates: Federal Budget 2026, 2027 RRSP limits, BoC 2.50% rate, CRA 3% prescribed rate, OSFI B-20, and 14% tax rules.",
     heading: "What Changed in Canadian Money Rules",
     summary:
-      "Curated monthly brief covering policy rate announcements, OSFI mortgage straight-switch rules, CRA contribution rooms, and federal tax changes.",
+      "Verified November 2026 briefing covering Federal Budget 2026 proposals, 2027 CRA limits, Bank of Canada 2.50% policy rate, and OSFI B-20 mortgage rules.",
     priority: "0.9",
     changefreq: "monthly",
   },
@@ -407,10 +407,10 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "fr-CA",
     title: "Règles Financières Canadiennes | Ahmed Bello",
     description:
-      "Analyse mensuelle des taux de la Banque du Canada, des règles hypothécaires du BSIF, des plafonds de l'ARC et des changements fiscaux.",
+      "Mises à jour nov. 2026 : Budget 2026, plafonds REER 2027, taux directeur à 2,50 %, taux prescrit à 3 %, règles BSIF B-20 et fiscalité fédérale.",
     heading: "Ce qui a changé dans les règles financières canadiennes",
     summary:
-      "Synthèse mensuelle des décisions monétaires, des règles du BSIF et des modifications fiscales fédérales.",
+      "Synthèse de novembre 2026 : propositions du Budget 2026, plafonds ARC 2027, taux directeur à 2,50 % et règles hypothécaires BSIF.",
     priority: "0.86",
     changefreq: "monthly",
   },

@@ -413,40 +413,42 @@ export const HomePage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div className="p-4 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-2">
-              <span className="text-[11px] font-mono text-[#d6c298] block">Banque du Canada</span>
+              <span className="text-[11px] font-mono text-[#d6c298] block">
+                {isFr ? "Budget fédéral 2026" : "Federal Budget 2026"}
+              </span>
               <h4 className="font-serif text-base text-white font-semibold">
-                {isFr ? "Taux directeur abaissé à 2,50 %" : "Overnight Rate Cut to 2.50%"}
+                {isFr ? "Seuil T1135 à 200 000 $ & REER à vie" : "T1135 $200k Threshold & RRSP-for-Life"}
               </h4>
               <p className="text-xs text-[#ece6da]/80 leading-relaxed">
                 {isFr
-                  ? "Taux préférentiel à 4,70 %. Allégement des dettes variables mais érosion rapide des comptes épargne à intérêt élevé (HISA)."
-                  : "Prime rate drops to 4.70%. Variable borrowing costs ease, while static cash in savings accounts faces rapid return compression."}
+                  ? "Le Budget du 5 nov. propose un seuil T1135 doublé à 200 000 $, une date unique au 15 mai (dès 2027) et un incitatif de croissance de 15 M$."
+                  : "Tabled Nov 5: proposes doubling the Form T1135 threshold to $200k, a unified May 15 filing date (from 2027), and RRSP/RRIF merger consultations."}
               </p>
             </div>
 
             <div className="p-4 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-2">
-              <span className="text-[11px] font-mono text-[#d6c298] block">BSIF (OSFI) B-20</span>
+              <span className="text-[11px] font-mono text-[#d6c298] block">Banque du Canada</span>
               <h4 className="font-serif text-base text-white font-semibold">
-                {isFr ? "Fin du test pour transferts simples" : "Straight Switches Unburdened"}
+                {isFr ? "Taux directeur relevé à 2,50 %" : "Overnight Rate Raised to 2.50%"}
               </h4>
               <p className="text-xs text-[#ece6da]/80 leading-relaxed">
                 {isFr
-                  ? "Les emprunteurs non assurés avec 20 % d'équité peuvent transférer de banque sans requalification au test de résistance."
-                  : "Conventional mortgage borrowers with 20%+ equity can now switch lenders at maturity without requalifying under the stress test."}
+                  ? "Hausse de 25 pb le 28 octobre (taux préférentiel à 4,70 % contre 4,45 %). Impact immédiat sur les marges et hypothèques variables."
+                  : "Raised 25 bps on Oct 28 (prime moves from 4.45% to 4.70%). Variable borrowing and HELOC servicing costs adjust ahead of Dec 9."}
               </p>
             </div>
 
             <div className="p-4 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-2">
               <span className="text-[11px] font-mono text-[#d6c298] block">
-                {isFr ? "ARC & Lois C-59 / C-69" : "CRA & Bills C-59 / C-69"}
+                {isFr ? "ARC 2027 & Taux prescrit 3 %" : "CRA 2027 Limits & 3% Loan Rate"}
               </span>
               <h4 className="font-serif text-base text-white font-semibold">
-                {isFr ? "Gains à 50 % maintenus & IMR" : "50% Capital Gains Retained & AMT"}
+                {isFr ? "Plafond REER 2027 à 35 390 $" : "2027 RRSP Limit Rises to $35,390"}
               </h4>
               <p className="text-xs text-[#ece6da]/80 leading-relaxed">
                 {isFr
-                  ? "La hausse à 66,7 % a été annulée (50 % maintenu), tandis que l'ECGC de 1,25 M$ et l'IMR fédéral de 20,5 % (crédit pour dons à 80 %) s'appliquent."
-                  : "The proposed 66.7% hike was cancelled (50% inclusion retained), while the $1.25M LCGE and 20.5% federal AMT (80% donation credit) apply."}
+                  ? "MGA du RPC à 76 700 $ (MGAP 87 400 $), taux prescrit T4 maintenu à 3 % pour prêts familiaux et inclusion des gains maintenue à 50 %."
+                  : "2027 CPP YMPE hits $76,700 (YAMPE $87,400), Q4 prescribed spousal loan rate holds at 3%, and 50% capital gains inclusion stays in force."}
               </p>
             </div>
           </div>
