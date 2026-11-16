@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { siteConfig } from "../config/site.ts";
 
 export type Language = "en" | "fr";
 
@@ -17,9 +18,9 @@ const translations: Record<Language, Record<string, string>> = {
     nav_how_i_help: "How I Help",
     nav_education: "Education",
     nav_calculators: "Calculators",
-    nav_what_changed: "What Changed",
+    nav_what_changed: "2026 Money Rules",
     nav_insights: "Insights",
-    nav_news: "Rule Changes",
+    nav_news: "2026 Money Rules",
     nav_careers: "Practice Expansion & Careers",
     nav_contact: "Start a Conversation",
     nav_disclosures: "Disclosures",
@@ -28,8 +29,8 @@ const translations: Record<Language, Record<string, string>> = {
     nav_terms: "Terms of Use",
 
     // Buttons & CTAs
-    btn_start_conversation: "Start a Conversation",
-    btn_book_call: "Ask a 15-Min Question",
+    btn_start_conversation: siteConfig.ctaLabelEn,
+    btn_book_call: siteConfig.ctaLabelEn,
     btn_read_guide: "Read the guide",
     btn_read_essay: "Read the essay",
     btn_subscribe: "Subscribe",
@@ -107,7 +108,7 @@ const translations: Record<Language, Record<string, string>> = {
     nav_calculators: "Simulateurs",
     nav_what_changed: "Règles 2026",
     nav_insights: "Perspectives",
-    nav_news: "Actualités",
+    nav_news: "Règles 2026",
     nav_careers: "Expansion du Cabinet & Carrières",
     nav_contact: "Démarrer une conversation",
     nav_disclosures: "Divulgations",
@@ -116,8 +117,8 @@ const translations: Record<Language, Record<string, string>> = {
     nav_terms: "Conditions d'utilisation",
 
     // Buttons & CTAs
-    btn_start_conversation: "Démarrer une conversation",
-    btn_book_call: "Question de 15 min (gratuit)",
+    btn_start_conversation: siteConfig.ctaLabelFr,
+    btn_book_call: siteConfig.ctaLabelFr,
     btn_read_guide: "Lire le guide",
     btn_read_essay: "Lire l'analyse",
     btn_subscribe: "S'abonner",

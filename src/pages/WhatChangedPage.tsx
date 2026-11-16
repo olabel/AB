@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
-import { siteConfig } from "../config/site.ts";
+import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
 import { trackBookingClick } from "../lib/track.ts";
 import {
   Calendar,
@@ -325,12 +325,12 @@ export const WhatChangedPage: React.FC = () => {
   });
 
   return (
-    <div className="py-12 md:py-16 bg-[#f7f3eb]">
+    <section className="section bg-[#f7f3eb]">
       <SEO
         title={
           isFr
-            ? "Règles Financières Canadiennes | Ahmed Bello"
-            : "What Changed in Canadian Money Rules | Ahmed Bello"
+            ? "Règles financières 2026 au Canada | Ahmed Bello"
+            : "2026 Money Rules in Canada | Ahmed Bello"
         }
         description={
           isFr
@@ -351,30 +351,27 @@ export const WhatChangedPage: React.FC = () => {
             </li>
             <li aria-hidden="true">&rsaquo;</li>
             <li className="text-[#1c1b18] font-medium">
-              {isFr ? "Changements aux Règles Financières" : "What Changed in Money Rules"}
+              {isFr ? "Règles financières 2026" : "2026 Money Rules"}
             </li>
           </ol>
         </nav>
 
         {/* Page Hero */}
         <header className="pb-10 border-b border-[#d6cebd] space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#2e4a3b]">
             <Scale className="w-3.5 h-3.5 text-[#75581f]" />
             <span>
               {isFr ? "Revue Réglementaire & Fiscale Mensuelle" : "Monthly Advisor Regulatory Briefing"}
             </span>
           </div>
 
-          <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#1c1b18] leading-tight"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <h1 className="h1 text-[#1c1b18]">
             {isFr
               ? "Ce qui a changé dans les règles financières au Canada"
               : "What Changed in Canadian Money Rules"}
           </h1>
 
-          <p className="text-base sm:text-lg text-[#4a463d] font-serif italic max-w-3xl leading-relaxed">
+          <p className="lede measure font-serif italic">
             {isFr
               ? "Chaque mois, la Banque du Canada, le ministère des Finances, le BSIF et l'ARC ajustent les taux d'intérêt, les règles hypothécaires et les plafonds fiscaux. Voici notre synthèse vérifiée de l'édition de novembre 2026 et des mesures concrètes à retenir."
               : "Every month, federal regulators, the Bank of Canada, Department of Finance, OSFI, and the CRA adjust interest rates, mortgage guidelines, and tax limits. Here is a verified November 2026 assessment of what changed, what remains proposed, and practical steps to check."}
@@ -439,10 +436,11 @@ export const WhatChangedPage: React.FC = () => {
               {/* Card Meta & Header */}
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#d6cebd]/60 pb-4">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#2e4a3b]/10 text-[#2e4a3b] font-mono text-[11px] font-semibold uppercase tracking-wider rounded-xs border border-[#2e4a3b]/20">
-                    <Calendar className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#2e4a3b]">
+                    <Calendar className="w-3.5 h-3.5" />
                     {item.month} {item.year}
                   </span>
+                  <span aria-hidden="true" className="text-[#d6cebd]">&bull;</span>
                   <span className="text-xs text-[#75581f] font-medium uppercase tracking-wider">
                     {isFr ? item.categoryLabelFr : item.categoryLabelEn}
                   </span>
@@ -461,10 +459,7 @@ export const WhatChangedPage: React.FC = () => {
 
               {/* Title & Official Summary */}
               <div>
-                <h2
-                  className="text-2xl sm:text-3xl font-serif text-[#1c1b18] mb-3 leading-snug"
-                  style={{ fontFamily: "var(--font-serif)" }}
-                >
+                <h2 className="h2 text-[#1c1b18] mb-3">
                   {isFr ? item.titleFr : item.titleEn}
                 </h2>
                 <p className="text-sm sm:text-base text-[#4a463d] leading-relaxed">
@@ -473,7 +468,7 @@ export const WhatChangedPage: React.FC = () => {
               </div>
 
               {/* Ahmed's Direct Take Callout */}
-              <div className="bg-[#2e4a3b]/10 border border-[#2e4a3b]/40 p-4 sm:p-5 rounded-[2px] space-y-2">
+              <div className="border-l-2 border-[#2e4a3b] bg-[#fcfaf5] pl-4 sm:pl-5 py-3 pr-4 space-y-1.5">
                 <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#2e4a3b]">
                   <Scale className="w-4 h-4 text-[#75581f]" />
                   <span>{isFr ? "L'analyse d'Ahmed Bello" : "Ahmed's Advisor Analysis"}</span>
@@ -492,7 +487,7 @@ export const WhatChangedPage: React.FC = () => {
                 <ul className="space-y-2 text-xs sm:text-sm text-[#4a463d] list-none p-0">
                   {(isFr ? item.actionItemsFr : item.actionItemsEn).map((action, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
-                      <span className="text-[#75581f] font-mono font-bold mt-0.5">&rsaquo;</span>
+                      <span className="text-[#75581f] font-bold mt-0.5">&rsaquo;</span>
                       <span className="leading-relaxed">{action}</span>
                     </li>
                   ))}
@@ -536,30 +531,29 @@ export const WhatChangedPage: React.FC = () => {
               : "Whether you have an upcoming mortgage renewal, registered accounts to balance, or a Canadian corporation to protect, let's review your exact numbers with zero obligation."}
           </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-4">
-            <Link
-              to={isFr ? "/fr/contact" : "/contact"}
-              className="inline-flex items-center gap-2 px-5 py-3 bg-[#d6c298] hover:bg-[#c2ad82] text-[#14211a] font-medium text-xs sm:text-sm rounded-xs transition-colors"
-            >
-              <span>{isFr ? "Poser une question à Ahmed" : "Send a Question to Ahmed"}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
+          <div className="pt-2 flex flex-wrap items-center gap-5">
             {siteConfig.schedulingUrl && (
               <a
                 href={siteConfig.schedulingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackBookingClick("what_changed_bottom")}
-                className="inline-flex items-center gap-2 px-5 py-3 bg-[#2e4a3b] hover:bg-[#385b48] text-[#f7f3eb] border border-[#d6c298]/40 font-medium text-xs sm:text-sm rounded-xs transition-colors"
+                className="btn bg-[#d6c298] hover:bg-[#c2ad82] text-[#14211a] font-medium text-xs sm:text-sm rounded-[2px] transition-colors inline-flex items-center gap-2"
               >
-                <Calendar className="w-4 h-4 text-[#d6c298]" />
-                <span>{isFr ? "Poser une question en 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}</span>
+                <Calendar className="w-4 h-4" />
+                <span>{getCtaLabel(isFr)}</span>
               </a>
             )}
+            <Link
+              to={isFr ? "/fr/contact" : "/contact"}
+              className="arrow-link text-sm text-[#d6c298] hover:text-white"
+            >
+              <span>{getSecondaryCtaLabel(isFr)}</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </section>
       </div>
-    </div>
+    </section>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { siteConfig } from "../config/site.ts";
+import { siteConfig, getCtaLabel } from "../config/site.ts";
+import { Portrait } from "../components/Portrait.tsx";
 import {
   AlertCircle,
   CheckCircle2,
@@ -195,8 +196,8 @@ export const ContactPage: React.FC = () => {
         setErrorMessage(
           data.message ||
             (isFr
-              ? "Impossible d'envoyer votre message pour le moment. Vous pouvez joindre Ahmed Bello directement par téléphone au +1-506-899-4941 ou réserver sur Calendly."
-              : "Unable to submit right now. Please reach out directly to Ahmed Bello at +1-506-899-4941 or schedule via Calendly: https://calendly.com/olabel/30min")
+              ? `Impossible d'envoyer votre message pour le moment. Vous pouvez joindre Ahmed Bello directement par téléphone au ${siteConfig.publicPhone} ou réserver en ligne : ${siteConfig.schedulingUrl}`
+              : `Unable to submit right now. Please reach out directly to Ahmed Bello at ${siteConfig.publicPhone} or book online: ${siteConfig.schedulingUrl}`)
         );
         setStatus("error");
         return;
@@ -208,14 +209,14 @@ export const ContactPage: React.FC = () => {
       setStatus("error");
       setErrorMessage(
         isFr
-          ? "Problème de connexion réseau. Veuillez joindre Ahmed Bello directement au +1-506-899-4941 ou sur Calendly : https://calendly.com/olabel/30min"
-          : "Network connection issue. Please contact Ahmed Bello directly at +1-506-899-4941 or book via Calendly: https://calendly.com/olabel/30min"
+          ? `Problème de connexion réseau. Veuillez joindre Ahmed Bello directement au ${siteConfig.publicPhone} ou réserver en ligne : ${siteConfig.schedulingUrl}`
+          : `Network connection issue. Please contact Ahmed Bello directly at ${siteConfig.publicPhone} or book online: ${siteConfig.schedulingUrl}`
       );
     }
   };
 
   return (
-    <div className="py-12 md:py-16">
+    <div>
       <SEO
         title={isFr ? "Démarrer une Conversation | Ahmed Bello" : "Start a Conversation | Ahmed Bello"}
         description={
@@ -227,7 +228,7 @@ export const ContactPage: React.FC = () => {
       />
 
       {/* Header */}
-      <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
+      <section className="section border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-4">
           <span className="eyebrow text-xs">
             {isFr ? "Démarrer une conversation" : "Start a conversation"}
@@ -237,7 +238,7 @@ export const ContactPage: React.FC = () => {
               ? "Quelle question financière souhaitez-vous éclaircir ?"
               : "What financial question is on your mind?"}
           </h1>
-          <p className="lede text-lg md:text-xl text-[#46423a] leading-relaxed">
+          <p className="lede measure">
             {isFr
               ? "Partagez ce que vous essayez de comprendre, et nous identifierons ensemble la démarche la plus pertinente."
               : "Tell me a little about what you are trying to understand, and we can determine an appropriate next step."}
@@ -246,43 +247,36 @@ export const ContactPage: React.FC = () => {
       </section>
 
       {/* Main Grid: Info (Left) + Form (Right) */}
-      <div className="wrap max-w-5xl py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Left Column: Context, What happens next, Don't send */}
-          <aside className="lg:col-span-5 space-y-8 order-2 lg:order-1">
-            {/* Direct Advisor Reassurance Card */}
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4 shadow-2xs">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-20 shrink-0 border border-[#75581f]/30 bg-[#f7f3eb] p-0.5 rounded-[1px] overflow-hidden">
-                  <img
-                    src={siteConfig.headshotUrl}
-                    alt="Ahmed Bello"
-                    className="w-full h-full object-cover object-top rounded-[1px]"
-                    width={64}
-                    height={80}
-                  />
+      <section className="section">
+        <div className="wrap max-w-5xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Left Column: Context, What happens next, Don't send */}
+            <aside className="lg:col-span-5 space-y-8 order-2 lg:order-1">
+              {/* Direct Advisor Reassurance Card */}
+              <div className="card-editorial p-5 space-y-4">
+                <div className="flex items-center gap-4">
+                  <Portrait variant="avatar" alt="Ahmed Bello" loading="eager" />
+                  <div>
+                    <span className="eyebrow text-[0.65rem] text-[#75581f] block">
+                      {isFr ? "Consultation Directe" : "Direct Consultation"}
+                    </span>
+                    <p className="font-serif text-lg text-[#1c1b18] leading-tight mt-0.5">Ahmed Bello</p>
+                    <p className="text-[0.72rem] text-[#46423a] font-medium leading-tight mt-0.5">
+                      {siteConfig.designation}
+                    </p>
+                    <p className="text-[0.7rem] text-[#2e4a3b] font-semibold mt-1">
+                      {isFr
+                        ? "Cabinet Financier Indépendant • Canada"
+                        : "Independent Financial Practice • Canada"}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <span className="eyebrow text-[0.65rem] text-[#75581f] block">
-                    {isFr ? "Consultation Directe" : "Direct Consultation"}
-                  </span>
-                  <p className="font-serif text-lg text-[#1c1b18] leading-tight mt-0.5">Ahmed Bello</p>
-                  <p className="text-[0.72rem] text-[#46423a] font-medium leading-tight mt-0.5">
-                    {siteConfig.designation}
-                  </p>
-                  <p className="text-[0.7rem] text-[#2e4a3b] font-semibold mt-1">
-                    {isFr
-                      ? "Cabinet Financier Indépendant • Canada"
-                      : "Independent Financial Practice • Canada"}
-                  </p>
-                </div>
+                <p className="text-xs text-[#46423a] leading-relaxed border-t border-[#d6cebd] pt-3">
+                  {isFr
+                    ? "« Chaque demande envoyée via ce formulaire est reçue et examinée directement par moi-même. Vous recevrez une réponse éducative et factuelle, sans pression commerciale ni argumentaire imprévu. »"
+                    : "“Every enquiry sent through this form is received and reviewed directly by me. You will receive an educational, evidence-based response without sales pressure or unsolicited pitches.”"}
+                </p>
               </div>
-              <p className="text-xs text-[#46423a] leading-relaxed border-t border-[#d6cebd] pt-3">
-                {isFr
-                  ? "« Chaque demande envoyée via ce formulaire est reçue et examinée directement par moi-même. Vous recevrez une réponse éducative et factuelle, sans pression commerciale ni argumentaire imprévu. »"
-                  : "“Every enquiry sent through this form is received and reviewed directly by me. You will receive an educational, evidence-based response without sales pressure or unsolicited pitches.”"}
-              </p>
-            </div>
 
             {/* What happens next - Detailed Journey */}
             <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-5">
@@ -299,7 +293,7 @@ export const ContactPage: React.FC = () => {
 
               <ol className="space-y-4 text-xs text-[#46423a] list-none p-0">
                 <li className="flex items-start gap-3">
-                  <span className="font-mono text-[#2e4a3b] font-bold bg-[#f7f3eb] px-1.5 py-0.5 border border-[#d6cebd] rounded-[2px]">
+                  <span className="tabular-nums text-[#2e4a3b] font-semibold bg-[#f7f3eb] px-1.5 py-0.5 border border-[#d6cebd] rounded-[2px]">
                     01
                   </span>
                   <div>
@@ -314,7 +308,7 @@ export const ContactPage: React.FC = () => {
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="font-mono text-[#2e4a3b] font-bold bg-[#f7f3eb] px-1.5 py-0.5 border border-[#d6cebd] rounded-[2px]">
+                  <span className="tabular-nums text-[#2e4a3b] font-semibold bg-[#f7f3eb] px-1.5 py-0.5 border border-[#d6cebd] rounded-[2px]">
                     02
                   </span>
                   <div>
@@ -329,7 +323,7 @@ export const ContactPage: React.FC = () => {
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="font-mono text-[#2e4a3b] font-bold bg-[#f7f3eb] px-1.5 py-0.5 border border-[#d6cebd] rounded-[2px]">
+                  <span className="tabular-nums text-[#2e4a3b] font-semibold bg-[#f7f3eb] px-1.5 py-0.5 border border-[#d6cebd] rounded-[2px]">
                     03
                   </span>
                   <div>
@@ -338,8 +332,8 @@ export const ContactPage: React.FC = () => {
                     </strong>
                     <span>
                       {isFr
-                        ? "Si pertinent, je vous proposerai un échange exploratoire de 30 minutes ou vous orienterai vers un spécialiste (CPA, syndic). Vous décidez de la suite."
-                        : "You receive a thoughtful response. If appropriate, Ahmed will invite you to an exploratory 30-minute conversation or refer you to an external specialist (e.g. CPA, LIT)."}
+                        ? `Si pertinent, je vous proposerai un appel gratuit de ${siteConfig.callDurationMinutes} minutes ou vous orienterai vers un spécialiste (CPA, syndic). Vous décidez de la suite.`
+                        : `You receive a thoughtful response. If appropriate, we can set up a free ${siteConfig.callDurationMinutes}-minute call or refer you to an external specialist (e.g. CPA, LIT).`}
                     </span>
                   </div>
                 </li>
@@ -402,8 +396,8 @@ export const ContactPage: React.FC = () => {
                     </h3>
                     <p className="text-xs text-[#46423a] mt-0.5">
                       {isFr
-                        ? "Planifiez un échange exploratoire de 30 minutes directement sur l'agenda d'Ahmed."
-                        : "Schedule a 30-minute introductory conversation directly on Ahmed's calendar."}
+                        ? `Planifiez un appel gratuit de ${siteConfig.callDurationMinutes} minutes directement sur l'agenda d'Ahmed.`
+                        : `Schedule a free ${siteConfig.callDurationMinutes}-minute conversation directly on Ahmed's calendar.`}
                     </p>
                   </div>
                 </div>
@@ -414,7 +408,7 @@ export const ContactPage: React.FC = () => {
                   onClick={() => trackBookingClick("contact_page")}
                   className="btn btn-primary text-xs py-2 px-4 whitespace-nowrap self-stretch sm:self-auto text-center inline-flex items-center justify-center gap-1.5"
                 >
-                  <span>{isFr ? "Réserver sur Calendly" : "Book on Calendly"}</span>
+                  <span>{getCtaLabel(isFr)}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-[#d6c298]" />
                 </a>
               </div>
@@ -424,7 +418,7 @@ export const ContactPage: React.FC = () => {
             {status === "success" ? (
               <div
                 tabIndex={-1}
-                className="p-6 sm:p-8 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] space-y-6 shadow-sm"
+                className="card-editorial border-[#2e4a3b] p-6 sm:p-8 space-y-6"
               >
                 <div className="flex items-center gap-3 text-[#2e4a3b] pb-4 border-b border-[#d6cebd]">
                   <div className="w-10 h-10 rounded-[2px] bg-[#2e4a3b]/10 flex items-center justify-center shrink-0">
@@ -746,9 +740,10 @@ export const ContactPage: React.FC = () => {
                 </div>
               </form>
             )}
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

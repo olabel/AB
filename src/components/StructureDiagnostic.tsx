@@ -175,7 +175,7 @@ export const StructureDiagnostic: React.FC = () => {
               : "How Well Coordinated Is Your Current Plan?"}
           </h3>
         </div>
-        <span className="font-mono text-xs text-[#2e4a3b] font-semibold bg-[#f7f3eb] px-3 py-1.5 border border-[#d6cebd] rounded-[2px]">
+        <span className="tabular-nums text-xs text-[#2e4a3b] font-semibold bg-[#f7f3eb] px-3 py-1.5 border border-[#d6cebd] rounded-[2px]">
           {isFr ? `${answeredCount} sur ${questions.length} répondues` : `${answeredCount} of ${questions.length} Answered`}
         </span>
       </div>
@@ -194,7 +194,7 @@ export const StructureDiagnostic: React.FC = () => {
               return (
                 <div key={q.id} className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] space-y-3">
                   <h4 className="font-serif text-lg text-[#1c1b18] font-normal">
-                    <span className="font-mono text-xs font-semibold text-[#75581f] mr-2">0{q.id}.</span>
+                    <span className="tabular-nums text-xs font-semibold text-[#75581f] mr-2">0{q.id}.</span>
                     {q.title}
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
@@ -230,12 +230,12 @@ export const StructureDiagnostic: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="p-6 md:p-8 bg-[#f7f3eb] border-2 border-[#2e4a3b] rounded-[2px] space-y-6">
+        <div className="p-6 md:p-8 bg-[#f7f3eb] border border-[#2e4a3b] rounded-[2px] space-y-6">
           <div className="flex items-center justify-between gap-3 border-b border-[#d6cebd] pb-4">
             <div className="flex items-center gap-2.5">
               <Award className="w-6 h-6 text-[#75581f]" aria-hidden="true" />
               <div>
-                <span className="text-xs font-mono text-[#75581f] uppercase tracking-wider font-semibold">
+                <span className="eyebrow text-[#75581f]">
                   {isFr ? "Résultat du bilan" : "Checkup Result"}
                 </span>
                 <h4 className="font-serif text-2xl text-[#1c1b18]">{assessment.level}</h4>

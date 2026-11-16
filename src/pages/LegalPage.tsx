@@ -4,6 +4,7 @@ import { LegalPageData } from "../content/legal.ts";
 import { Tbc } from "../components/Tbc.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { getCoreRouteSeo } from "../config/seoMetadata.ts";
+import { getSecondaryCtaLabel } from "../config/site.ts";
 
 interface LegalPageProps {
   pageType: "disclosures" | "privacy" | "standards" | "terms";
@@ -36,23 +37,23 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
   const pageDescription = routeSeo?.description ?? data.lede;
 
   return (
-    <div className="py-12 md:py-16">
+    <div>
       <SEO
         title={pageTitle}
         description={pageDescription}
         canonicalUrl={canonicalPath}
       />
       {/* Header */}
-      <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
+      <section className="section border-b border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-5">
           <span className="eyebrow text-xs">{eyebrow}</span>
           <h1 className="h1 text-[#1c1b18] leading-tight">{data.title}</h1>
-          <p className="lede text-lg md:text-xl text-[#46423a] leading-relaxed">
+          <p className="lede measure">
             {data.lede}
           </p>
 
           {data.bannerNotice && (
-            <div className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs text-[#625d52]">
+            <div className="card-editorial p-4 text-xs text-[#625d52]">
               <Tbc>{data.bannerNotice}</Tbc>
             </div>
           )}
@@ -60,7 +61,8 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
       </section>
 
       {/* Main Content with Sticky 'On this page' index */}
-      <div className="wrap max-w-5xl py-12">
+      <section className="section">
+        <div className="wrap max-w-5xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           {/* Sticky 'On this page' index (Left) */}
           <aside className="lg:col-span-4 order-2 lg:order-1">
@@ -76,7 +78,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
                         href={`#${sec.id}`}
                         className="hover:text-[#2e4a3b] hover:underline flex items-baseline gap-2 transition-colors py-0.5"
                       >
-                        <span className="font-mono text-[#75581f] font-semibold shrink-0">
+                        <span className="tabular-nums text-[#75581f] font-semibold shrink-0">
                           {sec.number}
                         </span>
                         <span className="leading-snug">{sec.title}</span>
@@ -106,7 +108,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
                 className="scroll-mt-28 border-b border-[#ece6da] pb-10 space-y-4"
               >
                 <div className="flex items-baseline gap-3">
-                  <span className="font-mono text-sm font-semibold text-[#75581f]">
+                  <span className="tabular-nums text-sm font-semibold text-[#75581f]">
                     {sec.number}
                   </span>
                   <h2 className="h3 text-[#1c1b18] text-2xl">
@@ -114,7 +116,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
                   </h2>
                 </div>
 
-                <div className="prose-editorial text-sm md:text-base text-[#46423a] leading-relaxed space-y-3.5">
+                <div className="prose-editorial text-[#46423a] space-y-3.5">
                   {sec.content.map((p, pIdx) => (
                     <p key={`p-${pIdx}`}>{renderText(p)}</p>
                   ))}
@@ -123,7 +125,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
             ))}
 
             {pageType === "disclosures" && (
-              <div className="p-6 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] space-y-3">
+              <div className="card-editorial p-6 space-y-3">
                 <h3 className="h3 text-[#1c1b18] text-xl">
                   {isFrench ? "Besoin d'informations complémentaires ?" : "Need more information?"}
                 </h3>
@@ -133,13 +135,14 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, data, eyebrow })
                     : "If you have questions about licensing, provincial authorization, or product suitability, you are always welcome to ask."}
                 </p>
                 <Link to={isFrench ? "/fr/contact" : "/contact"} className="btn btn-primary text-xs py-2 px-4">
-                  {isFrench ? "Démarrer une conversation →" : "Start a Conversation →"}
+                  {getSecondaryCtaLabel(isFrench)} →
                 </Link>
               </div>
             )}
           </div>
         </div>
-      </div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import {
   getCanonicalUrl,
   getCoreRouteSeo,
   getLanguageUrls,
+  getOgImageForPath,
 } from "../config/seoMetadata.ts";
 
 export interface SEOProps {
@@ -36,7 +37,7 @@ export const SEO: React.FC<SEOProps> = ({
   canonical,
   canonicalUrl,
   ogType,
-  image = `${siteConfig.siteUrl}/brand/og-share.png`,
+  image,
   jsonLd,
   articlePublishedTime,
   articleModifiedTime,
@@ -48,6 +49,7 @@ export const SEO: React.FC<SEOProps> = ({
 
   const path = location.pathname;
   const routeSeo = getCoreRouteSeo(path);
+  const resolvedImage = image || getOgImageForPath(path, siteConfig.siteUrl);
   const { enUrl, frUrl, canonicalUrl: computedCanonical } = getLanguageUrls(path);
   const rawCanonical = canonical || canonicalUrl;
   const currentCanonical = rawCanonical
@@ -133,12 +135,12 @@ export const SEO: React.FC<SEOProps> = ({
     setMetaTag("property", "og:site_name", "Ahmed Bello");
     setMetaTag("property", "og:locale", isFr ? "fr_CA" : "en_CA");
     setMetaTag("property", "og:locale:alternate", isFr ? "en_CA" : "fr_CA");
-    setMetaTag("property", "og:image", image);
+    setMetaTag("property", "og:image", resolvedImage);
 
     setMetaTag("name", "twitter:card", "summary_large_image");
     setMetaTag("name", "twitter:title", finalTitle);
     setMetaTag("name", "twitter:description", finalDescription);
-    setMetaTag("name", "twitter:image", image);
+    setMetaTag("name", "twitter:image", resolvedImage);
 
     if (articlePublishedTime) {
       setMetaTag("property", "article:published_time", articlePublishedTime);
@@ -178,7 +180,7 @@ export const SEO: React.FC<SEOProps> = ({
     enUrl,
     frUrl,
     finalOgType,
-    image,
+    resolvedImage,
     jsonLd,
     isFr,
     finalNoIndex,

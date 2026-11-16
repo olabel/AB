@@ -182,7 +182,7 @@ export const DecisionMap: React.FC = () => {
                       : "bg-[#f7f3eb] text-[#1c1b18] border-[#d6cebd] hover:border-[#8d8677]"
                   }`}
                 >
-                  <span className="block text-[0.68rem] opacity-75 font-mono mb-0.5">
+                  <span className="block text-[0.68rem] opacity-75 tabular-nums font-semibold mb-0.5">
                     0{index + 1}
                   </span>
                   <span className="line-clamp-2 leading-tight">{node.label}</span>
@@ -197,7 +197,7 @@ export const DecisionMap: React.FC = () => {
               <h4 className="font-serif text-lg font-medium text-[#1c1b18]">
                 {selectedNode?.label} <span className="font-sans text-xs text-[#625d52] font-normal">connects to:</span>
               </h4>
-              <span className="text-xs font-mono text-[#75581f]">
+              <span className="text-xs tabular-nums font-medium text-[#75581f]">
                 {connectedEdges.length} connections
               </span>
             </div>

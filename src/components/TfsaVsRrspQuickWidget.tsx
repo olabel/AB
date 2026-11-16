@@ -92,11 +92,11 @@ export const TfsaVsRrspQuickWidget: React.FC = () => {
   return (
     <section
       id="tfsa-rrsp-widget"
-      className="bg-white border-2 border-[#2e4a3b]/40 rounded-[2px] p-6 sm:p-7 space-y-6 shadow-xs scroll-mt-28"
+      className="card-editorial border-[#2e4a3b]/50 p-6 sm:p-7 space-y-6 scroll-mt-28"
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#ece6da] pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-[#75581f] font-bold">
+          <div className="flex items-center gap-2 eyebrow text-[#75581f]">
             <Calculator className="w-3.5 h-3.5" />
             <span>{isFr ? "Vérification Rapide (15 secondes)" : "15-Second Account Priority Check"}</span>
           </div>
@@ -145,7 +145,7 @@ export const TfsaVsRrspQuickWidget: React.FC = () => {
               <label htmlFor="tr-contrib" className="font-semibold text-[#1c1b18]">
                 {isFr ? "Montant brut prévu" : "Amount you are allocating (pre-tax / gross)"}
               </label>
-              <span className="font-mono font-semibold text-[#2e4a3b]">{formatMoney(contribution)}</span>
+              <span className="tabular-nums font-semibold text-[#2e4a3b]">{formatMoney(contribution)}</span>
             </div>
             <input
               id="tr-contrib"

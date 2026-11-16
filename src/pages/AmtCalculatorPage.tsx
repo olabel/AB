@@ -4,18 +4,16 @@ import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { calculateFederalAmt, type AmtInput, type AmtResult } from "../lib/amt.ts";
-import { FEDERAL_AMT_PARAMETERS, AMT_FIGURES_AS_OF } from "../config/taxParameters.ts";
+import { getTaxParametersForYear, AMT_FIGURES_AS_OF } from "../config/taxParameters.ts";
+import { siteConfig, getCtaLabel } from "../config/site.ts";
 import { trackBookingClick, trackCalculatorCompleted } from "../lib/track.ts";
 import {
   Calculator,
   Scale,
-  AlertTriangle,
   Info,
-  CheckCircle2,
   Calendar,
   ArrowRight,
   ShieldAlert,
-  HelpCircle,
   FileText,
   DollarSign,
   TrendingDown,
@@ -26,22 +24,64 @@ import {
 export const AmtCalculatorPage: React.FC = () => {
   const { isFr } = useLanguage();
   const prefix = isFr ? "/fr" : "";
+  const ctaLabel = getCtaLabel(isFr);
 
-  // User input states - Defaults to current 2026 tax year (matches worked example)
+  // User input states - Starts empty (0) until user enters figures or loads the sample scenario
   const [taxYear, setTaxYear] = useState<2024 | 2025 | 2026>(2026);
-  const [employmentIncome, setEmploymentIncome] = useState<number>(60000);
+  const [employmentIncome, setEmploymentIncome] = useState<number>(0);
   const [otherIncome, setOtherIncome] = useState<number>(0);
-  const [realizedCapitalGains, setRealizedCapitalGains] = useState<number>(500000);
+  const [realizedCapitalGains, setRealizedCapitalGains] = useState<number>(0);
   const [eligibleDividends, setEligibleDividends] = useState<number>(0);
   const [nonEligibleDividends, setNonEligibleDividends] = useState<number>(0);
-  const [deductions, setDeductions] = useState<number>(5000);
-  const [donations, setDonations] = useState<number>(30000);
+  const [deductions, setDeductions] = useState<number>(0);
+  const [donations, setDonations] = useState<number>(0);
   const [priorYearAmtCarryForward, setPriorYearAmtCarryForward] = useState<number>(0);
+  const [isSampleActive, setIsSampleActive] = useState<boolean>(false);
+  const [hasTrackedCompletion, setHasTrackedCompletion] = useState<boolean>(false);
 
-  // Track initial calculator completion once on load
+  const taxParams = useMemo(() => getTaxParametersForYear(taxYear), [taxYear]);
+
+  const hasInputs =
+    employmentIncome > 0 ||
+    otherIncome > 0 ||
+    realizedCapitalGains > 0 ||
+    eligibleDividends > 0 ||
+    nonEligibleDividends > 0 ||
+    deductions > 0 ||
+    donations > 0 ||
+    priorYearAmtCarryForward > 0;
+
   useEffect(() => {
-    trackCalculatorCompleted("amt");
-  }, []);
+    if (hasInputs && !hasTrackedCompletion) {
+      trackCalculatorCompleted("amt");
+      setHasTrackedCompletion(true);
+    }
+  }, [hasInputs, hasTrackedCompletion]);
+
+  const loadSampleScenario = () => {
+    setTaxYear(2026);
+    setEmploymentIncome(60000);
+    setOtherIncome(0);
+    setRealizedCapitalGains(500000);
+    setEligibleDividends(0);
+    setNonEligibleDividends(0);
+    setDeductions(5000);
+    setDonations(30000);
+    setPriorYearAmtCarryForward(0);
+    setIsSampleActive(true);
+  };
+
+  const resetInputs = () => {
+    setEmploymentIncome(0);
+    setOtherIncome(0);
+    setRealizedCapitalGains(0);
+    setEligibleDividends(0);
+    setNonEligibleDividends(0);
+    setDeductions(0);
+    setDonations(0);
+    setPriorYearAmtCarryForward(0);
+    setIsSampleActive(false);
+  };
 
   // FAQ accordion open states
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -168,56 +208,46 @@ ${unmodelledDisclaimer}`;
       />
 
       {/* Hero Header */}
-      <section className="section pb-8 pt-4 border-b border-[#d6cebd]">
+      <section className="section border-b border-[#d6cebd]">
         <div className="wrap max-w-5xl space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 text-xs">
             <Link
               to={isFr ? "/fr/calculators" : "/calculators"}
-              className="text-xs font-semibold text-[#75581f] hover:underline inline-flex items-center gap-1"
+              className="font-semibold text-[#75581f] hover:underline inline-flex items-center gap-1"
             >
-              <Calculator className="w-3.5 h-3.5" />
+              <Calculator className="w-3.5 h-3.5" aria-hidden="true" />
               <span>{isFr ? "Tous les simulateurs" : "All Calculators"}</span>
             </Link>
             <span className="text-[#d6cebd]">/</span>
-            <span className="text-xs font-bold text-[#2e4a3b] uppercase tracking-wider">
-              {isFr ? "Lois C-59 & C-69 (IMR Fédéral)" : "Bills C-59 & C-69 Federal AMT"}
-            </span>
+            <span className="eyebrow">{isFr ? "Simulateur d'IMR fédéral" : "Federal AMT Estimator"}</span>
           </div>
 
-          <h1
-            className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1c1b18] leading-[1.15] tracking-tight"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <h1 className="h1 text-[#1c1b18]">
             {isFr
               ? "Calculateur d'Impôt Minimum de Remplacement (IMR)"
               : "Alternative Minimum Tax (AMT) Calculator Canada"}
           </h1>
 
-          <p className="text-base sm:text-lg text-[#46423a] leading-relaxed max-w-3xl">
+          <p className="lede measure">
             {isFr
-              ? "Modélisez l'impact des réformes fédérales de l'IMR (lois C-59 et C-69) sur vos gains en capital, vos dividendes, vos dons de bienfaisance et vos crédits de report d'IMR sur 7 ans."
-              : "Model how federal tax reforms under Bills C-59 and C-69 impact your business exits, real estate capital gains, charitable donations, and 7-year carry-forward recovery."}
+              ? `Basé sur les chiffres publiés par l'ARC pour ${taxYear}. Estimations à des fins éducatives seulement.`
+              : `Based on published CRA figures for ${taxYear}. Estimates for education only.`}
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 pt-1 text-xs">
-            <span className="px-2.5 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] font-mono rounded-[2px] font-semibold border border-[#2e4a3b]/20">
-              {AMT_FIGURES_AS_OF}
-            </span>
-            <span className="px-2.5 py-1 bg-[#ece6da] text-[#46423a] font-mono rounded-[2px]">
-              ITA 127.5–127.55 & ITA 120.2
-            </span>
-          </div>
+          <p className="small text-[#625d52]">
+            {AMT_FIGURES_AS_OF}
+          </p>
         </div>
       </section>
 
       {/* Scope & Notice Banner */}
-      <section className="section py-4 bg-[#fcfaf5] border-b border-[#ece6da]">
+      <section className="py-4 bg-[#fcfaf5] border-b border-[#ece6da]">
         <div className="wrap max-w-5xl">
-          <div className="flex items-start gap-3 p-3.5 bg-white border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
-            <Info className="w-4 h-4 text-[#75581f] shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3 text-xs text-[#46423a]">
+            <Info className="w-4 h-4 text-[#75581f] shrink-0 mt-0.5" aria-hidden="true" />
             <div className="leading-relaxed">
               <strong className="text-[#1c1b18]">
-                {isFr ? "Précision sur le champ d'application :" : "Statutory Scope Notice:"}
+                {isFr ? "Portée fédérale :" : "Statutory scope:"}
               </strong>{" "}
               {result.provincialScopeNote}
             </div>
@@ -226,43 +256,56 @@ ${unmodelledDisclaimer}`;
       </section>
 
       {/* Calculator Workspace */}
-      <section className="section py-10 md:py-14">
+      <section className="section">
         <div className="wrap max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Form Inputs (7 cols) */}
-            <div className="lg:col-span-7 space-y-6 bg-white p-6 sm:p-7 border border-[#d6cebd] rounded-[2px] shadow-xs">
-              <div className="flex items-center justify-between border-b border-[#ece6da] pb-3 flex-wrap gap-2">
-                <h2 className="font-serif text-xl text-[#1c1b18] font-semibold">
-                  {isFr ? "Paramètres de Revenus & Déductions" : "Income & Deduction Parameters"}
-                </h2>
-                <div className="flex items-center gap-1 bg-[#fcfaf5] p-1 border border-[#d6cebd] rounded-[2px]">
+            <div className="lg:col-span-7 space-y-6 card-editorial p-6 sm:p-7">
+              <div className="flex items-center justify-between border-b border-[#ece6da] pb-3 flex-wrap gap-3">
+                <div>
+                  <h2 className="font-serif text-xl text-[#1c1b18]">
+                    {isFr ? "Paramètres de revenus et déductions" : "Income & Deduction Parameters"}
+                  </h2>
+                  {isSampleActive && (
+                    <span className="text-xs font-medium text-[#75581f] block mt-0.5">
+                      {isFr ? "Scénario exemple affiché (modifiez tout champ ci-dessous)" : "Sample scenario loaded (edit any figure below)"}
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => setTaxYear(2024)}
-                    className={`px-2 py-1 text-xs font-semibold rounded-[2px] transition-colors ${
-                      taxYear === 2024 ? "bg-[#2e4a3b] text-[#f7f3eb]" : "text-[#46423a] hover:text-[#1c1b18]"
-                    }`}
+                    onClick={isSampleActive ? resetInputs : loadSampleScenario}
+                    className="text-xs font-medium text-[#2e4a3b] underline hover:text-[#14211a] cursor-pointer"
                   >
-                    2024 ({formatCAD(FEDERAL_AMT_PARAMETERS.basicExemption2024.value)})
+                    {isSampleActive
+                      ? isFr ? "Réinitialiser à zéro" : "Clear figures"
+                      : isFr ? "Charger un scénario exemple" : "Load sample scenario"}
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => setTaxYear(2025)}
-                    className={`px-2 py-1 text-xs font-semibold rounded-[2px] transition-colors ${
-                      taxYear === 2025 ? "bg-[#2e4a3b] text-[#f7f3eb]" : "text-[#46423a] hover:text-[#1c1b18]"
-                    }`}
-                  >
-                    2025 ({formatCAD(FEDERAL_AMT_PARAMETERS.basicExemption2025.value)})
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setTaxYear(2026)}
-                    className={`px-2 py-1 text-xs font-semibold rounded-[2px] transition-colors ${
-                      taxYear === 2026 ? "bg-[#2e4a3b] text-[#f7f3eb]" : "text-[#46423a] hover:text-[#1c1b18]"
-                    }`}
-                  >
-                    2026 ({formatCAD(FEDERAL_AMT_PARAMETERS.basicExemption2026.value)})
-                  </button>
+                </div>
+              </div>
+
+              {/* Tax Year Selector */}
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#ece6da] text-xs">
+                <span className="font-semibold text-[#1c1b18]">
+                  {isFr ? "Année d'imposition (exemption de base) :" : "Tax year (basic exemption):"}
+                </span>
+                <div className="flex items-center gap-1 bg-[#f7f3eb] p-1 border border-[#d6cebd] rounded-[2px]">
+                  {([2024, 2025, 2026] as const).map((yr) => {
+                    const yrParams = getTaxParametersForYear(yr);
+                    return (
+                      <button
+                        key={yr}
+                        type="button"
+                        onClick={() => setTaxYear(yr)}
+                        className={`px-2.5 py-1 text-xs font-semibold rounded-[2px] transition-colors cursor-pointer ${
+                          taxYear === yr ? "bg-[#2e4a3b] text-[#f7f3eb]" : "text-[#46423a] hover:text-[#1c1b18]"
+                        }`}
+                      >
+                        {yr} ({formatCAD(yrParams.amtExemption)})
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -273,7 +316,7 @@ ${unmodelledDisclaimer}`;
                     <label htmlFor="amt-emp" className="font-semibold text-[#1c1b18]">
                       {isFr ? "Revenu d'emploi / T4 ($)" : "Employment Income / T4 ($)"}
                     </label>
-                    <span className="font-mono text-[#75581f] font-medium">{formatCAD(amtInput.employmentIncome || 0)}</span>
+                    <span className="tabular-nums text-[#75581f] font-medium">{formatCAD(amtInput.employmentIncome || 0)}</span>
                   </div>
                   <input
                     id="amt-emp"
@@ -282,7 +325,7 @@ ${unmodelledDisclaimer}`;
                     step={1000}
                     value={employmentIncome}
                     onChange={(e) => setEmploymentIncome(Number(e.target.value) || 0)}
-                    className="w-full p-2.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b] font-mono text-xs"
+                    className="w-full p-2.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b] tabular-nums text-xs"
                   />
                   <p className="text-[11px] text-[#625d52] mt-0.5">
                     {isFr ? "Traitements, salaires, commissions imposables réguliers." : "Regular salary, wages, and bonuses."}
@@ -298,7 +341,7 @@ ${unmodelledDisclaimer}`;
                         {isFr ? "100 % IMR" : "100% AMT"}
                       </span>
                     </label>
-                    <span className="font-mono text-[#8a3324] font-bold">{formatCAD(amtInput.realizedCapitalGains || 0)}</span>
+                    <span className="tabular-nums text-[#8a3324] font-bold">{formatCAD(amtInput.realizedCapitalGains || 0)}</span>
                   </div>
                   <input
                     id="amt-capgains"
@@ -307,7 +350,7 @@ ${unmodelledDisclaimer}`;
                     step={5000}
                     value={realizedCapitalGains}
                     onChange={(e) => setRealizedCapitalGains(Number(e.target.value) || 0)}
-                    className="w-full p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b] font-mono text-xs"
+                    className="w-full p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b] tabular-nums text-xs"
                   />
                   <p className="text-[11px] text-[#625d52]">
                     {isFr
@@ -329,7 +372,7 @@ ${unmodelledDisclaimer}`;
                       step={1000}
                       value={eligibleDividends}
                       onChange={(e) => setEligibleDividends(Number(e.target.value) || 0)}
-                      className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] font-mono text-xs"
+                      className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                     />
                     <p className="text-[10px] text-[#625d52] mt-0.5">
                       {isFr ? "Montant net reçu (0 % majoration sous IMR)." : "Cash amount (no gross-up under AMT)."}
@@ -347,7 +390,7 @@ ${unmodelledDisclaimer}`;
                       step={1000}
                       value={nonEligibleDividends}
                       onChange={(e) => setNonEligibleDividends(Number(e.target.value) || 0)}
-                      className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] font-mono text-xs"
+                      className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                     />
                     <p className="text-[10px] text-[#625d52] mt-0.5">
                       {isFr ? "SPCC / PME canadiennes." : "Small business CCPC dividends."}
@@ -368,7 +411,7 @@ ${unmodelledDisclaimer}`;
                       step={1000}
                       value={otherIncome}
                       onChange={(e) => setOtherIncome(Number(e.target.value) || 0)}
-                      className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] font-mono text-xs"
+                      className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                     />
                     <p className="text-[10px] text-[#625d52] mt-0.5">
                       {isFr ? "Intérêts, pensions, loyers nets." : "Interest, pension, net rentals."}
@@ -386,7 +429,7 @@ ${unmodelledDisclaimer}`;
                       step={500}
                       value={deductions}
                       onChange={(e) => setDeductions(Number(e.target.value) || 0)}
-                      className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] font-mono text-xs"
+                      className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                     />
                     <p className="text-[10px] text-[#625d52] mt-0.5">
                       {isFr ? "Cotisations REER et déductions admissibles." : "RRSP and eligible income deductions."}
@@ -403,7 +446,7 @@ ${unmodelledDisclaimer}`;
                         {isFr ? "80 % Crédit IMR" : "80% AMT Credit"}
                       </span>
                     </label>
-                    <span className="font-mono text-[#2e4a3b] font-bold">{formatCAD(amtInput.charitableDonations || 0)}</span>
+                    <span className="tabular-nums text-[#2e4a3b] font-bold">{formatCAD(amtInput.charitableDonations || 0)}</span>
                   </div>
                   <input
                     id="amt-donations"
@@ -412,7 +455,7 @@ ${unmodelledDisclaimer}`;
                     step={1000}
                     value={donations}
                     onChange={(e) => setDonations(Number(e.target.value) || 0)}
-                    className="w-full p-2.5 bg-white border border-[#d6cebd] rounded-[2px] font-mono text-xs"
+                    className="w-full p-2.5 bg-white border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                   />
                   <p className="text-[11px] text-[#625d52] mt-0.5">
                     {isFr
@@ -430,7 +473,7 @@ ${unmodelledDisclaimer}`;
                     <label htmlFor="amt-carry" className="font-semibold text-[#1c1b18]">
                       {isFr ? "Report d'IMR d'années antérieures (art. 120.2) ($)" : "Prior-Year AMT Carry-Forward (ITA 120.2) ($)"}
                     </label>
-                    <span className="font-mono text-[#2e4a3b] font-medium">{formatCAD(amtInput.priorYearAmtCarryForward || 0)}</span>
+                    <span className="tabular-nums text-[#2e4a3b] font-medium">{formatCAD(amtInput.priorYearAmtCarryForward || 0)}</span>
                   </div>
                   <input
                     id="amt-carry"
@@ -439,7 +482,7 @@ ${unmodelledDisclaimer}`;
                     step={1000}
                     value={priorYearAmtCarryForward}
                     onChange={(e) => setPriorYearAmtCarryForward(Number(e.target.value) || 0)}
-                    className="w-full p-2.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] font-mono text-xs"
+                    className="w-full p-2.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                   />
                   <p className="text-[11px] text-[#625d52] mt-0.5">
                     {isFr
@@ -450,153 +493,152 @@ ${unmodelledDisclaimer}`;
               </div>
             </div>
 
-            {/* Right Column: Comparative Results & Real-Time Verdict (5 cols) */}
+            {/* Right Column: Calm Neutral Comparative Results Panel (5 cols) */}
             <div className="lg:col-span-5 space-y-5">
-              {/* Verdict Card */}
-              <div
-                className={`p-6 border-2 rounded-[2px] shadow-sm space-y-4 transition-colors ${
-                  result.amtApplies
-                    ? "bg-[#fdf0ed] border-[#d97768] text-[#1c1b18]"
-                    : "bg-[#f4f7f4] border-[#2e4a3b] text-[#1c1b18]"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[0.68rem] uppercase tracking-wider font-bold text-[#75581f] flex items-center gap-1">
-                    <Scale className="w-3.5 h-3.5" />
-                    <span>{isFr ? "Verdict Fiscal Fédéral" : "Federal Tax Comparison"}</span>
+              {/* Calm Neutral Verdict Card */}
+              <div className="card-editorial p-6 space-y-4">
+                <div className="flex items-center justify-between border-b border-[#ece6da] pb-3">
+                  <span className="text-xs uppercase tracking-wider font-semibold text-[#75581f] flex items-center gap-1.5">
+                    <Scale className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>{isFr ? "Estimation fédérale" : "Federal Tax Estimate"}</span>
                   </span>
-                  <span
-                    className={`text-[0.68rem] uppercase font-bold px-2 py-0.5 rounded-[2px] ${
-                      result.amtApplies ? "bg-[#8a3324] text-white" : "bg-[#2e4a3b] text-white"
-                    }`}
-                  >
-                    {result.amtApplies
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-[2px] bg-[#ece6da] text-[#1c1b18]">
+                    {!hasInputs
                       ? isFr
-                        ? "IMR APPLICABLE"
-                        : "AMT APPLIES"
+                        ? "En attente de chiffres"
+                        : "Enter figures"
+                      : result.amtApplies
+                      ? isFr
+                        ? "IMR applicable"
+                        : "AMT applies"
                       : isFr
-                      ? "IMPÔT RÉGULIER"
-                      : "REGULAR TAX"}
+                      ? "Impôt régulier"
+                      : "Regular tax"}
                   </span>
                 </div>
 
-                <div className="space-y-1">
-                  <div className="text-xs text-[#625d52]">
-                    {result.amtApplies
-                      ? isFr
-                        ? "Supplément d'IMR fédéral exigible :"
-                        : "Additional Federal AMT Payable:"
-                      : isFr
-                      ? "Aucun supplément d'IMR exigible"
-                      : "No Additional AMT Payable"}
+                {!hasInputs ? (
+                  <div className="space-y-4 py-2">
+                    <p className="text-sm text-[#46423a] leading-relaxed">
+                      {isFr
+                        ? "Saisissez vos montants ci-contre ou chargez l'exemple traité pour estimer votre impôt minimum de remplacement fédéral."
+                        : "Enter your income, capital gains, or donations to estimate whether federal AMT applies, or load the sample scenario."}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={loadSampleScenario}
+                      className="btn btn-primary w-full text-sm"
+                    >
+                      {isFr ? "Charger le scénario exemple (gain de 500 k$)" : "Load sample scenario ($500k gain)"}
+                    </button>
                   </div>
-                  <div className="font-serif text-3xl sm:text-4xl font-bold text-[#1c1b18]">
-                    {formatCAD(result.estimatedAmtPayable)}
-                  </div>
-                </div>
-
-                <p className="text-xs leading-relaxed text-[#46423a]">
-                  {result.amtApplies ? (
-                    isFr ? (
-                      <>
-                        Votre impôt minimum de remplacement estimé (<strong>{formatCAD(result.amtEstimate)}</strong>) dépasse
-                        votre impôt régulier fédéral (<strong>{formatCAD(result.regularFederalTax)}</strong>) de{" "}
-                        <strong>{formatCAD(result.estimatedAmtPayable)}</strong>. Vous devez acquitter ce surplus sur votre
-                        déclaration T1 fédérale.
-                      </>
-                    ) : (
-                      <>
-                        Your estimated Alternative Minimum Tax (<strong>{formatCAD(result.amtEstimate)}</strong>) exceeds
-                        regular federal tax (<strong>{formatCAD(result.regularFederalTax)}</strong>) by{" "}
-                        <strong>{formatCAD(result.estimatedAmtPayable)}</strong>. You must remit this higher amount on line 127
-                        of your federal Schedule 1.
-                      </>
-                    )
-                  ) : isFr ? (
-                    <>
-                      Votre impôt régulier fédéral (<strong>{formatCAD(result.regularFederalTax)}</strong>) est supérieur ou
-                      égal à votre IMR (<strong>{formatCAD(result.amtEstimate)}</strong>). L'IMR ne s'applique pas cette
-                      année.
-                    </>
-                  ) : (
-                    <>
-                      Your regular federal Part I tax (<strong>{formatCAD(result.regularFederalTax)}</strong>) is equal to or
-                      higher than your AMT estimate (<strong>{formatCAD(result.amtEstimate)}</strong>). AMT does not apply
-                      this year.
-                    </>
-                  )}
-                </p>
-
-                {/* 7-Year Carry-Forward Box */}
-                <div className="pt-3 border-t border-[#d6cebd] text-xs space-y-1">
-                  <div className="flex justify-between font-medium">
-                    <span>{isFr ? "Crédit de report d'IMR généré (7 ans) :" : "7-Year Carry-Forward Generated:"}</span>
-                    <span className="font-mono font-bold text-[#2e4a3b]">
-                      {formatCAD(result.estimatedCarryForwardCredit)}
-                    </span>
-                  </div>
-                  {result.carryForwardApplied > 0 && (
-                    <div className="flex justify-between font-medium text-[#75581f]">
-                      <span>{isFr ? "Crédit antérieur utilisé cette année :" : "Prior-Year Credit Utilized:"}</span>
-                      <span className="font-mono font-bold">-{formatCAD(result.carryForwardApplied)}</span>
+                ) : (
+                  <>
+                    <div className="space-y-1">
+                      <div className="text-xs text-[#625d52]">
+                        {result.amtApplies
+                          ? isFr
+                            ? "Supplément d'IMR fédéral estimé :"
+                            : "Estimated Additional Federal AMT:"
+                          : isFr
+                          ? "Supplément d'IMR fédéral :"
+                          : "Additional Federal AMT:"}
+                      </div>
+                      <div className="font-serif text-3xl sm:text-4xl text-[#1c1b18] tabular-nums">
+                        {formatCAD(result.estimatedAmtPayable)}
+                      </div>
                     </div>
-                  )}
-                  <p className="text-[11px] text-[#625d52] italic pt-1">
-                    {isFr
-                      ? "En vertu de l'art. 120.2 de la LIR, l'IMR payé peut être déduit de votre impôt régulier futur sur une période de 7 ans."
-                      : "Under ITA Section 120.2, AMT paid generates a credit recoverable against regular tax over the following 7 tax years."}
-                  </p>
-                </div>
+
+                    {/* One-sentence plain-language meaning */}
+                    <p className="text-sm leading-relaxed text-[#46423a]">
+                      {result.amtApplies
+                        ? isFr
+                          ? `Votre IMR estimé (${formatCAD(result.amtEstimate)}) dépasse l'impôt régulier (${formatCAD(result.regularFederalTax)}), créant un supplément temporaire récupérable sur 7 ans.`
+                          : `Your estimated AMT (${formatCAD(result.amtEstimate)}) exceeds regular federal tax (${formatCAD(result.regularFederalTax)}), creating a temporary advance recoverable over the next 7 years.`
+                        : isFr
+                        ? `Votre impôt régulier (${formatCAD(result.regularFederalTax)}) reste supérieur ou égal à l'IMR (${formatCAD(result.amtEstimate)}), aucun supplément d'IMR ne s'applique.`
+                        : `Your regular federal tax (${formatCAD(result.regularFederalTax)}) equals or exceeds AMT (${formatCAD(result.amtEstimate)}), so no additional AMT applies.`}
+                    </p>
+
+                    {/* 7-Year Carry-Forward Row */}
+                    <div className="pt-3 border-t border-[#ece6da] text-xs space-y-1.5">
+                      <div className="flex justify-between font-medium text-[#1c1b18]">
+                        <span>{isFr ? "Crédit reportable sur 7 ans :" : "7-Year Carry-Forward Generated:"}</span>
+                        <span className="font-semibold text-[#2e4a3b] tabular-nums">
+                          {formatCAD(result.estimatedCarryForwardCredit)}
+                        </span>
+                      </div>
+                      {result.carryForwardApplied > 0 && (
+                        <div className="flex justify-between font-medium text-[#75581f]">
+                          <span>{isFr ? "Crédit antérieur utilisé :" : "Prior-Year Credit Utilized:"}</span>
+                          <span className="font-semibold tabular-nums">-{formatCAD(result.carryForwardApplied)}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Single Clear Next Step */}
+                    <div className="pt-3 border-t border-[#ece6da]">
+                      <a
+                        href={siteConfig.schedulingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => trackBookingClick("amt_result_next_step")}
+                        className="btn btn-primary w-full text-sm inline-flex items-center justify-center gap-2"
+                      >
+                        <Calendar className="w-4 h-4 text-[#d6c298]" aria-hidden="true" />
+                        <span>{ctaLabel}</span>
+                      </a>
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* Step-by-Step Breakdown Table */}
-              <div className="bg-[#fcfaf5] border border-[#d6cebd] p-4 rounded-[2px] space-y-3 text-xs">
-                <h3 className="font-semibold text-[#1c1b18] uppercase tracking-wider text-[11px] border-b border-[#ece6da] pb-1.5 flex items-center justify-between">
-                  <span>{isFr ? "Décomposition Actuarielle Fédérale" : "Federal Arithmetic Audit"}</span>
-                  <span className="font-mono text-[10px] text-[#75581f]">{taxYear}</span>
+              <div className="card-editorial p-5 space-y-3 text-xs">
+                <h3 className="font-semibold text-[#1c1b18] uppercase tracking-wider text-xs border-b border-[#ece6da] pb-2 flex items-center justify-between">
+                  <span>{isFr ? "Détail du calcul fédéral" : "Federal Calculation Breakdown"}</span>
+                  <span className="text-[#75581f] tabular-nums">{taxYear}</span>
                 </h3>
 
-                <div className="space-y-1.5 font-mono text-[11px]">
+                <div className="space-y-1.5 tabular-nums text-xs">
                   <div className="flex justify-between py-1 border-b border-[#ece6da]">
-                    <span className="text-[#46423a] font-sans">{isFr ? "Revenu imposable régulier :" : "Regular Taxable Income:"}</span>
-                    <span className="font-bold text-[#1c1b18]">{formatCAD(result.regularTaxableIncome)}</span>
+                    <span className="text-[#46423a]">{isFr ? "Revenu imposable régulier :" : "Regular Taxable Income:"}</span>
+                    <span className="font-semibold text-[#1c1b18]">{formatCAD(result.regularTaxableIncome)}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#ece6da]">
-                    <span className="text-[#46423a] font-sans">{isFr ? "Revenu imposable rajusté (IMR) :" : "AMT Adjusted Taxable Income:"}</span>
-                    <span className="font-bold text-[#8a3324]">{formatCAD(result.amtAdjustedTaxableIncome)}</span>
+                    <span className="text-[#46423a]">{isFr ? "Revenu imposable rajusté (IMR) :" : "AMT Adjusted Taxable Income:"}</span>
+                    <span className="font-semibold text-[#1c1b18]">{formatCAD(result.amtAdjustedTaxableIncome)}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#ece6da]">
-                    <span className="text-[#46423a] font-sans">{isFr ? "Exemption de base :" : "Basic Federal Exemption:"}</span>
+                    <span className="text-[#46423a]">{isFr ? "Exemption de base :" : "Basic Federal Exemption:"}</span>
                     <span className="text-[#2e4a3b]">-{formatCAD(result.amtExemptionApplied)}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#ece6da]">
-                    <span className="text-[#46423a] font-sans">{isFr ? "Assiette nette d'IMR :" : "Net AMT Base Subject to Tax:"}</span>
-                    <span className="font-bold text-[#1c1b18]">{formatCAD(result.amtTaxableBase)}</span>
+                    <span className="text-[#46423a]">{isFr ? "Assiette nette d'IMR :" : "Net AMT Base:"}</span>
+                    <span className="font-semibold text-[#1c1b18]">{formatCAD(result.amtTaxableBase)}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#ece6da]">
-                    <span className="text-[#46423a] font-sans">{isFr ? "Taux fixe d'IMR fédéral :" : "Federal AMT Statutory Rate:"}</span>
+                    <span className="text-[#46423a]">{isFr ? "Taux d'IMR fédéral :" : "Federal AMT Rate:"}</span>
                     <span className="text-[#1c1b18]">20.5%</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#ece6da]">
-                    <span className="text-[#46423a] font-sans">{isFr ? "IMR brut avant crédits :" : "Gross AMT Before Credits:"}</span>
+                    <span className="text-[#46423a]">{isFr ? "IMR brut avant crédits :" : "Gross AMT Before Credits:"}</span>
                     <span className="text-[#1c1b18]">{formatCAD(result.amtGrossTax)}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#ece6da]">
-                    <span className="text-[#46423a] font-sans">{isFr ? "Crédits IMR admis (art. 127.531) :" : "Allowed AMT Credits (s. 127.531):"}</span>
+                    <span className="text-[#46423a]">{isFr ? "Crédits admis (art. 127.531) :" : "Allowed Credits (s. 127.531):"}</span>
                     <span className="text-[#2e4a3b]">-{formatCAD(result.amtCreditsAllowed)}</span>
                   </div>
-                  <div className="flex justify-between py-1 pt-2 font-bold text-xs bg-white p-2 rounded-[2px] border border-[#d6cebd]">
-                    <span className="text-[#1c1b18] font-sans">{isFr ? "Impôt fédéral dû (le plus élevé) :" : "Total Federal Tax Due:"}</span>
-                    <span className={result.amtApplies ? "text-[#8a3324]" : "text-[#2e4a3b]"}>
-                      {formatCAD(result.totalFederalTaxPayable)}
-                    </span>
+                  <div className="flex justify-between py-2 font-semibold text-sm text-[#1c1b18]">
+                    <span>{isFr ? "Impôt fédéral dû :" : "Total Federal Tax Due:"}</span>
+                    <span>{formatCAD(result.totalFederalTaxPayable)}</span>
                   </div>
                 </div>
 
-                {/* Honest Scope Note in Results Panel */}
-                <div className="pt-2 border-t border-[#ece6da] text-[10px] text-[#75581f] leading-relaxed">
-                  <p>{unmodelledDisclaimer}</p>
-                </div>
+                {/* Honest Scope Note */}
+                <p className="pt-2 border-t border-[#ece6da] text-xs text-[#625d52] leading-relaxed">
+                  {unmodelledDisclaimer}
+                </p>
               </div>
 
               {/* Lead Capture */}
@@ -643,15 +685,7 @@ ${unmodelledDisclaimer}`;
             <button
               type="button"
               onClick={() => {
-                setTaxYear(2026);
-                setEmploymentIncome(60000);
-                setOtherIncome(0);
-                setRealizedCapitalGains(500000);
-                setEligibleDividends(0);
-                setNonEligibleDividends(0);
-                setDeductions(5000);
-                setDonations(30000);
-                setPriorYearAmtCarryForward(0);
+                loadSampleScenario();
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-xs px-3.5 py-2 shrink-0 self-start sm:self-auto"
@@ -689,7 +723,7 @@ ${unmodelledDisclaimer}`;
                     <th className="p-3 font-semibold">{isFr ? "Explication de la Formule" : "Statutory Explanation"}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#ece6da] font-mono text-[11px]">
+                <tbody className="divide-y divide-[#ece6da] tabular-nums text-xs">
                   <tr className="hover:bg-[#fcfaf5]">
                     <td className="p-3 font-sans font-medium text-[#1c1b18]">{isFr ? "Salaire T4" : "T4 Salary"}</td>
                     <td className="p-3">$60,000</td>
@@ -732,11 +766,11 @@ ${unmodelledDisclaimer}`;
                       {isFr ? "MPB admis à 50 % + Dons admis à 80 % (loi C-69)" : "50% BPA ($1,152) + 80% donation credit ($7,890 under Bill C-69)"}
                     </td>
                   </tr>
-                  <tr className="hover:bg-[#fcfaf5] bg-[#fdf0ed]">
-                    <td className="p-3 font-sans font-bold text-[#1c1b18]">{isFr ? "Impôt Fédéral Net" : "Net Federal Tax"}</td>
+                  <tr className="hover:bg-[#fcfaf5] bg-[#f7f3eb]">
+                    <td className="p-3 font-sans font-bold text-[#1c1b18]">{isFr ? "Impôt fédéral net" : "Net Federal Tax"}</td>
                     <td className="p-3 font-bold">$62,461</td>
-                    <td className="p-3 font-bold text-[#8a3324]">$67,539</td>
-                    <td className="p-3 font-sans text-[#8a3324] font-medium">
+                    <td className="p-3 font-bold text-[#1c1b18]">$67,539</td>
+                    <td className="p-3 font-sans text-[#46423a] font-medium">
                       {isFr ? "L'IMR dépasse l'impôt régulier de 5 078 $" : "AMT exceeds regular tax by $5,078"}
                     </td>
                   </tr>
@@ -826,7 +860,7 @@ ${unmodelledDisclaimer}`;
           <div className="p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-3 shadow-sm">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-1">
-                <span className="text-[0.68rem] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                <span className="text-[0.68rem] uppercase tracking-wider text-[#d6c298] font-semibold block">
                   {isFr ? "Guide Stratégique Approfondi" : "In-Depth Editorial Guide"}
                 </span>
                 <h3 className="font-serif text-lg sm:text-xl font-medium text-[#f7f3eb]">
@@ -886,7 +920,7 @@ ${unmodelledDisclaimer}`;
                     </span>
                   </button>
                   {isOpen && (
-                    <div className="p-4 pt-1 text-xs sm:text-sm text-[#46423a] leading-relaxed border-t border-[#ece6da] bg-[#fcfaf5]/40 animate-fadeIn">
+                    <div className="p-4 pt-1 text-xs sm:text-sm text-[#46423a] leading-relaxed border-t border-[#ece6da] bg-[#fcfaf5]/40 rise">
                       {faq.a}
                     </div>
                   )}
@@ -898,7 +932,7 @@ ${unmodelledDisclaimer}`;
       </section>
 
       {/* Formal Disclaimers & Booking CTA */}
-      <section className="section py-12 md:py-16 border-t border-[#d6cebd]">
+      <section className="section border-t border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-8">
           <div className="p-5 bg-[#ece6da]/50 border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a] leading-relaxed space-y-2">
             <strong className="text-[#1c1b18] block uppercase tracking-wider text-[11px]">
@@ -912,26 +946,26 @@ ${unmodelledDisclaimer}`;
           </div>
 
           <div className="text-center space-y-4 pt-4">
-            <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18]">
+            <h2 className="h2 text-[#1c1b18]">
               {isFr
                 ? "Vous préparez une vente d'entreprise ou une transaction majeure ?"
                 : "Planning a major liquidity event or business exit?"}
             </h2>
-            <p className="text-sm text-[#46423a] max-w-xl mx-auto">
+            <p className="lede measure mx-auto">
               {isFr
-                ? "Posez une question rapide de 15 minutes ou obtenez un second avis objectif sur la structure de votre bilan avant de finaliser avec votre CPA."
-                : "Ask a quick 15-minute question or get a second opinion on your multi-year balance sheet structure before finalizing with your CPA—zero sales pitch."}
+                ? "Faisons le point sur la structure de votre bilan avant de finaliser avec votre CPA."
+                : "Review how your tax shelters and liquidity plan fit together before finalizing with your CPA."}
             </p>
             <div className="pt-2">
               <a
-                href="https://calendly.com/olabel/30min"
+                href={siteConfig.schedulingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackBookingClick("amt_calculator_bottom")}
-                className="btn btn-primary text-xs sm:text-sm px-6 py-3 inline-flex items-center gap-2"
+                className="btn btn-primary inline-flex items-center gap-2"
               >
-                <Calendar className="w-4 h-4 text-[#d6c298]" />
-                <span>{isFr ? "Obtenir un second avis (15 min)" : "Get a Second Opinion on Your Situation"}</span>
+                <Calendar className="w-4 h-4 text-[#d6c298]" aria-hidden="true" />
+                <span>{ctaLabel}</span>
               </a>
             </div>
           </div>

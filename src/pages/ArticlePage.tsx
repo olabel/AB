@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
 import { Tbc } from "../components/Tbc.tsx";
-import { DRAFT_MODE, siteConfig } from "../config/site.ts";
+import { Portrait } from "../components/Portrait.tsx";
+import { DRAFT_MODE, siteConfig, hasSiteCredentials, getCtaLabel } from "../config/site.ts";
 import {
   Check,
   Copy,
@@ -83,6 +84,12 @@ export const ArticlePage: React.FC = () => {
   const relatedArticles = article.related
     .map((relSlug) => articles.find((a) => a.slug === relSlug))
     .filter(Boolean);
+  const reviewedDateRaw = article.dateModified || "2026-11-05T09:00:00-05:00";
+  const reviewedDateFormatted = new Date(reviewedDateRaw).toLocaleDateString(
+    isFr ? "fr-CA" : "en-CA",
+    { year: "numeric", month: "long", day: "numeric" }
+  );
+  const showCredentials = hasSiteCredentials();
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -218,11 +225,42 @@ export const ArticlePage: React.FC = () => {
             <span className="text-[#625d52]">{kindLabel}</span>
           </div>
 
-          <h1 className="h1 text-[#1c1b18] mb-6 font-normal leading-[1.12]">
+          <h1 className="h1 text-[#1c1b18] mb-5 font-normal">
             {localizedTitle}
           </h1>
 
-          <div className="p-4 bg-[#fcfaf5] border border-[#d6cebd] text-[#1c1b18] rounded-[2px]">
+          {/* Author & Editorial Review Block */}
+          <div className="flex flex-wrap items-center gap-3.5 pb-5 mb-5 border-b border-[#d6cebd] text-xs text-[#46423a]">
+            <Portrait variant="avatar" alt={siteConfig.name} className="shrink-0" />
+            <div className="space-y-0.5 min-w-0">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                <span className="font-semibold text-[#1c1b18]">{siteConfig.name}</span>
+                {showCredentials && (siteConfig.credentials.licenceType || siteConfig.credentials.provinces) && (
+                  <span className="text-[#625d52]">
+                    &middot;{" "}
+                    {[siteConfig.credentials.licenceType, siteConfig.credentials.provinces]
+                      .filter(Boolean)
+                      .join(" · ")}
+                    {siteConfig.credentials.licenceNumbers ? ` (${siteConfig.credentials.licenceNumbers})` : ""}
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-[#625d52]">
+                <span>
+                  {isFr ? `Révisé le ${reviewedDateFormatted}` : `Reviewed ${reviewedDateFormatted}`}
+                </span>
+                <span aria-hidden="true">&middot;</span>
+                <Link
+                  to={`${prefix}/standards`}
+                  className="text-[#2e4a3b] underline hover:text-[#1c1b18]"
+                >
+                  {isFr ? "Méthodologie de vérification" : "How content is checked"}
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="card-editorial p-4 text-[#1c1b18]">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#2e4a3b] block mb-1">
               {t("meta_the_question")}
             </span>
@@ -238,22 +276,10 @@ export const ArticlePage: React.FC = () => {
           <aside className="lg:col-span-4 order-2 lg:order-1 no-print">
             <div className="lg:sticky lg:top-28 space-y-8">
               {/* Meta Box */}
-              <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs space-y-3.5">
+              <div className="card-editorial p-5 text-xs space-y-3.5">
                 <div>
                   <span className="text-[#625d52] block mb-0.5 font-medium">{t("meta_reading_time")}</span>
                   <span className="text-[#1c1b18] font-semibold">{article.readingMinutes} {t("meta_min_read")}</span>
-                </div>
-                <div className="border-t border-[#ece6da] pt-3">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[#625d52] font-medium">{t("meta_reading_progress")}</span>
-                    <span className="text-[#2e4a3b] font-bold">{Math.round(scrollProgress)}%</span>
-                  </div>
-                  <div className="w-full bg-[#ece6da] h-1.5 rounded-[1px] overflow-hidden">
-                    <div
-                      className="bg-[#2e4a3b] h-full transition-[width] duration-150 ease-out rounded-[1px]"
-                      style={{ width: `${scrollProgress}%` }}
-                    />
-                  </div>
                 </div>
 
                 {article.figuresAsOf && (
@@ -339,7 +365,7 @@ export const ArticlePage: React.FC = () => {
 
               {/* Sticky Reader Conversion Card */}
               <div className="p-5 bg-[#14211a] text-[#f7f3eb] border border-[#2e4a3b] rounded-[2px] space-y-3">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-[#d6c298] font-semibold block">
+                <span className="text-[11px] uppercase tracking-wider text-[#d6c298] font-semibold block">
                   {isFr ? "Appliquer à votre situation" : "Apply to Your Numbers"}
                 </span>
                 <p className="text-xs text-[#ece6da]/90 leading-relaxed">
@@ -420,7 +446,7 @@ export const ArticlePage: React.FC = () => {
                     className="text-[11px] text-[#d6c298] hover:text-white underline text-center py-1 inline-flex items-center justify-center gap-1"
                   >
                     <Calendar className="w-3 h-3" />
-                    <span>{isFr ? "Question de 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}</span>
+                    <span>{getCtaLabel(isFr)}</span>
                   </a>
                 </div>
               </div>
@@ -430,7 +456,7 @@ export const ArticlePage: React.FC = () => {
           {/* Right Column: Editorial Longform Reading Body */}
           <div className="lg:col-span-8 order-1 lg:order-2 space-y-12 max-w-prose measure">
             {/* 0. Executive 60-Second Briefing Box */}
-            <div className="p-6 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] shadow-xs space-y-4">
+            <div className="card-editorial p-6 space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-[#d6cebd]">
                 <div className="flex items-center gap-2">
                   <span className="p-1 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px]">
@@ -440,7 +466,7 @@ export const ArticlePage: React.FC = () => {
                     {isFr ? "Synthèse exécutive en 60 secondes" : "60-Second Executive Summary"}
                   </span>
                 </div>
-                <span className="text-[0.68rem] font-mono text-[#75581f] uppercase tracking-wider font-semibold">
+                <span className="text-[0.68rem] text-[#75581f] uppercase tracking-wider font-semibold">
                   {article.kind === "insight" ? (isFr ? "Note stratégique" : "Strategic Briefing") : (isFr ? "Guide pratique" : "Core Guide")}
                 </span>
               </div>
@@ -536,9 +562,9 @@ export const ArticlePage: React.FC = () => {
 
             {/* Dedicated AMT Calculator Banner on AMT Guide */}
             {article.slug === "canadian-alternative-minimum-tax-amt-high-earners-guide" && (
-              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+              <div className="card-editorial p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Outil interactif" : "Interactive Decision Tool"}
                   </span>
                   <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
@@ -552,7 +578,7 @@ export const ArticlePage: React.FC = () => {
                 </div>
                 <Link
                   to={`${prefix}/calculators/amt`}
-                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                 >
                   <Scale className="w-3.5 h-3.5 text-[#d6c298]" />
                   <span>{isFr ? "Ouvrir le simulateur" : "Open Calculator"}</span>
@@ -563,9 +589,9 @@ export const ArticlePage: React.FC = () => {
 
             {/* Top Interactive Estimator Shortcut Banner on FHSA Guide */}
             {article.slug === "fhsa-explained" && (
-              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+              <div className="card-editorial p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Calculateur & Liste CELIAPP" : "Interactive Tool & Opening Checklist"}
                   </span>
                   <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
@@ -582,7 +608,7 @@ export const ArticlePage: React.FC = () => {
                 <a
                   href="#fhsa-estimator"
                   onClick={() => trackCtaClick("fhsa_top_banner", "jump_to_estimator")}
-                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                 >
                   <span>{isFr ? "Calculer maintenant" : "Estimate My Refund"}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#d6c298]" />
@@ -592,9 +618,9 @@ export const ArticlePage: React.FC = () => {
 
             {/* Top Interactive Shortcut Banner on TFSA vs RRSP Guides */}
             {(article.slug === "tfsa-vs-rrsp" || article.slug === "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first") && (
-              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+              <div className="card-editorial p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Vérification en 15 secondes" : "15-Second Account Check & Checklist"}
                   </span>
                   <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
@@ -611,7 +637,7 @@ export const ArticlePage: React.FC = () => {
                 <a
                   href="#tfsa-rrsp-widget"
                   onClick={() => trackCtaClick("tfsa_rrsp_top_banner", "jump_to_widget")}
-                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                 >
                   <span>{isFr ? "Lancer le test 15 sec" : "Run 15-Sec Check"}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#d6c298]" />
@@ -621,9 +647,9 @@ export const ArticlePage: React.FC = () => {
 
             {/* Top Interactive Shortcut Banner on RESP Guide */}
             {article.slug === "resp-basics" && (
-              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+              <div className="card-editorial p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Calculateur Subvention REEE (15 sec)" : "15-Second RESP Grant & Catch-Up Check"}
                   </span>
                   <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
@@ -640,7 +666,7 @@ export const ArticlePage: React.FC = () => {
                 <a
                   href="#resp-grant-widget"
                   onClick={() => trackCtaClick("resp_top_banner", "jump_to_widget")}
-                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                 >
                   <span>{isFr ? "Calculer la subvention" : "Estimate Grant"}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#d6c298]" />
@@ -650,9 +676,9 @@ export const ArticlePage: React.FC = () => {
 
             {/* Top Interactive Shortcut Banner on Newcomer Guides */}
             {(article.slug === "new-to-canada-money-basics" || article.slug === "internationally-trained-doctors-nurses-first-year") && (
-              <div className="p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+              <div className="card-editorial p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-mono font-bold text-[#75581f]">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Planificateur 1re Année & Liste" : "Interactive Runway Tool & Checklist"}
                   </span>
                   <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
@@ -669,7 +695,7 @@ export const ArticlePage: React.FC = () => {
                 <a
                   href="#newcomer-calculator"
                   onClick={() => trackCtaClick("newcomer_top_banner", "jump_to_widget")}
-                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+                  className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                 >
                   <span>{isFr ? "Calculer mon autonomie" : "Calculate Runway"}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#d6c298]" />
@@ -711,7 +737,7 @@ export const ArticlePage: React.FC = () => {
 
             {/* 2c. Decision Checklist (if provided) */}
             {article.checklist && (
-              <section id="checklist" className="p-6 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] space-y-4 shadow-xs">
+              <section id="checklist" className="card-editorial p-6 space-y-4">
                 <div className="flex items-center gap-2 border-b border-[#d6cebd] pb-3">
                   <ClipboardList className="w-5 h-5 text-[#75581f]" />
                   <h2 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-semibold">
@@ -808,7 +834,7 @@ export const ArticlePage: React.FC = () => {
                               <td
                                 key={`cell-${cIdx}`}
                                 className={`py-3 px-3 ${
-                                  cIdx > 0 ? "font-mono tabular-nums text-[#2e4a3b] font-medium" : "text-[#1c1b18]"
+                                  cIdx > 0 ? "tabular-nums text-[#2e4a3b] font-medium" : "text-[#1c1b18]"
                                 }`}
                               >
                                 {cell}
@@ -1014,7 +1040,7 @@ export const ArticlePage: React.FC = () => {
                 {/* CTA 2: Booking button with utm_campaign=commuted-value */}
                 <div className="p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-3 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
                   <div className="space-y-1">
-                    <span className="text-[0.68rem] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                    <span className="text-[0.68rem] uppercase tracking-wider text-[#d6c298] font-semibold block">
                       {isFr ? "Accompagnement Sans Pression" : "Independent Pension Review"}
                     </span>
                     <h4 className="font-serif text-lg font-medium text-[#f7f3eb]">
@@ -1024,20 +1050,20 @@ export const ArticlePage: React.FC = () => {
                     </h4>
                     <p className="text-xs text-[#ece6da]">
                       {isFr
-                        ? "Obtenez un second avis objectif sur vos plafonds de transfert ITR 8517, le montant PAR et l'impact fiscal lors d'une question rapide de 15 minutes."
+                        ? "Obtenez un second avis objectif sur vos plafonds de transfert ITR 8517, le montant PAR et l'impact fiscal lors d'un échange rapide."
                         : "Get an objective second opinion on your ITR 8517 Maximum Transfer Value, PAR capacity, and tax impact with zero sales pitch."}
                     </p>
                   </div>
 
                   <a
-                    href={`${siteConfig.bookingUrl}?utm_campaign=commuted-value`}
+                    href={`${siteConfig.schedulingUrl}?utm_campaign=commuted-value`}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackBookingClick("commuted-value")}
                     className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2.5 px-4 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 font-semibold transition-colors"
                   >
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>{isFr ? "Obtenir un second avis (15 min)" : "Get a Second Opinion"}</span>
+                    <span>{getCtaLabel(isFr)}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </a>
                 </div>
@@ -1045,7 +1071,7 @@ export const ArticlePage: React.FC = () => {
             )}
 
             {/* 9. Next Step: Interactive Question Box Under Every Guide */}
-            <div className="p-6 sm:p-8 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] space-y-5 shadow-sm no-print">
+            <div className="card-editorial p-6 sm:p-8 space-y-5 no-print">
               <div className="flex items-center gap-2">
                 <span className="p-1 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px]">
                   <MessageSquare className="w-4 h-4 text-[#d6c298]" />
@@ -1068,7 +1094,7 @@ export const ArticlePage: React.FC = () => {
                 </p>
               </div>
 
-              <div className="p-4 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="pt-4 border-t border-[#ece6da] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="text-xs text-[#46423a]">
                   <span className="block font-semibold text-[#1c1b18]">
                     {isFr ? "Sujet pré-sélectionné :" : "Pre-selected Topic:"}

@@ -1,61 +1,100 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BrandMark } from "../components/BrandMark.tsx";
+import { Portrait } from "../components/Portrait.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { HowThePiecesFit } from "../components/HowThePiecesFit.tsx";
-import { siteConfig } from "../config/site.ts";
+import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { trackBookingClick } from "../lib/track.ts";
 import {
   Calendar,
   ArrowRight,
-  ShieldCheck,
-  Calculator,
   Compass,
-  Home,
   Building2,
   Stethoscope,
   Users,
-  TrendingDown,
-  CheckCircle2,
   AlertTriangle,
 } from "lucide-react";
 
 export const HomePage: React.FC = () => {
-  const { language, isFr } = useLanguage();
+  const { isFr } = useLanguage();
   const prefix = isFr ? "/fr" : "";
+  const ctaLabel = getCtaLabel(isFr);
+  const secondaryCtaLabel = getSecondaryCtaLabel(isFr);
+
+  const personNode: Record<string, any> = {
+    "@type": "Person",
+    "@id": `${siteConfig.siteUrl}/#person`,
+    name: siteConfig.name,
+    jobTitle: siteConfig.designation,
+    telephone: siteConfig.publicPhone,
+    email: siteConfig.publicEmail,
+    image: `${siteConfig.siteUrl}${siteConfig.portrait}`,
+    worksFor: {
+      "@id": `${siteConfig.siteUrl}/#organization`,
+    },
+    url: `${siteConfig.siteUrl}${prefix || "/"}`,
+  };
+
+  if (Array.isArray(siteConfig.socialProfiles) && siteConfig.socialProfiles.length > 0) {
+    personNode.sameAs = siteConfig.socialProfiles;
+  }
+
+  const homeJsonLd = [
+    {
+      "@type": "FinancialService",
+      "@id": `${siteConfig.siteUrl}/#organization`,
+      name: "Ahmed Bello Financial Solutions",
+      url: `${siteConfig.siteUrl}/`,
+      logo: `${siteConfig.siteUrl}/brand/icon-512.png`,
+      image: `${siteConfig.siteUrl}${siteConfig.portrait}`,
+      telephone: siteConfig.publicPhone,
+      email: siteConfig.publicEmail,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Dieppe",
+        addressRegion: "NB",
+        addressCountry: "CA",
+      },
+      areaServed: {
+        "@type": "Country",
+        name: "Canada",
+      },
+    },
+    personNode,
+  ];
 
   return (
     <div className="bg-[#f7f3eb]">
       <SEO
         title={
           isFr
-            ? "Planification Financière & Protection | Ahmed Bello"
-            : "Canadian Wealth & Protection Planning | Ahmed Bello"
+            ? "Ahmed Bello | Planification financière à Dieppe, NB"
+            : "Ahmed Bello | Financial Planning in Dieppe, NB"
         }
         description={
           isFr
-            ? "Stratégie patrimoniale fiscalement efficiente, protection du revenu familial et préservation du capital pour familles canadiennes, SPCC, professionnels de la santé et nouveaux arrivants."
-            : "Tailored tax-efficient wealth strategy, family income protection, and capital preservation for Canadian families, CCPCs, healthcare professionals, and newcomers."
+            ? "Planification financière, protection du revenu familial et stratégies CELI, REER et CELIAPP pour familles, entrepreneurs, professionnels de santé et nouveaux arrivants."
+            : "Financial planning, income protection, and registered account strategy for Canadian families, business owners, healthcare professionals, and newcomers."
         }
         canonicalUrl={isFr ? "/fr" : "/"}
+        jsonLd={homeJsonLd}
       />
 
-      {/* 1. Hero: Crystal-Clear Positioning within 5 Seconds */}
-      <section className="section pb-14 pt-8 md:pt-14 border-b border-[#d6cebd]">
+      {/* 1. Hero: Clear Positioning, Single Primary CTA & Single Text Link */}
+      <section className="section border-b border-[#d6cebd]">
         <div className="wrap max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Direct Value Proposition */}
-            <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] text-[11px] font-semibold uppercase tracking-wider">
-                <span>
-                  {isFr
-                    ? "Cabinet Financier Indépendant • Agréé Partout au Canada"
-                    : "Independent Financial Practice • Licensed Across Canada"}
-                </span>
-              </div>
+            <div className="lg:col-span-7 space-y-5 rise">
+              <span className="eyebrow block">
+                {isFr
+                  ? "Dieppe, Nouveau-Brunswick • Pratique indépendante au Canada"
+                  : "Dieppe, New Brunswick • Independent Canadian Practice"}
+              </span>
 
-              <h1 className="display text-[#1c1b18] leading-[1.08] tracking-tight">
+              <h1 className="display text-[#1c1b18]">
                 {isFr ? (
                   <>
                     Planification financière pour{" "}
@@ -75,91 +114,70 @@ export const HomePage: React.FC = () => {
                 )}
               </h1>
 
-              <p className="lede text-base sm:text-lg text-[#46423a] leading-relaxed max-w-2xl">
+              <p className="lede measure">
                 {isFr
-                  ? "Structuration patrimoniale et protection du revenu pour les Canadiens confrontés à des tournants financiers majeurs : renouvellement hypothécaire, optimisation des régimes enregistrés (CELI, REER, CELIAPP), fiscalité des SPCC et intégration financière des nouveaux arrivants. Représentant indépendant affilié à WFGIA : rémunération par commission selon les solutions convenues, sans obligation d'achat."
-                  : "Independent wealth structuring and income protection for Canadians facing high-stakes transitions: mortgage renewal shocks, registered account tax sequencing (TFSA/RRSP/FHSA), corporate passive income rules, and newcomer financial runways. Independent representative contracted with WFGIA: compensation is commission-based upon product placement, with zero obligation to purchase."}
+                  ? "J'aide les ménages, entrepreneurs et professionnels de la santé au Canada à coordonner leurs comptes enregistrés, leur protection du revenu et leur fiscalité. Chaque rencontre débute par un examen simple de vos chiffres et priorités, sans engagement."
+                  : "I help Canadian families, business owners, and healthcare professionals coordinate their registered accounts, income protection, and tax decisions. Every engagement starts with a plain-language look at your numbers and priorities—with zero obligation."}
               </p>
 
-              {/* Direct Actions */}
-              <div className="pt-2 flex flex-wrap items-center gap-3">
+              {/* Single Primary Button + Single Text Link */}
+              <div className="pt-2 flex flex-wrap items-center gap-6">
                 <a
-                  href={siteConfig.schedulingUrl || "https://calendly.com/olabel/30min"}
+                  href={siteConfig.schedulingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackBookingClick("home_hero")}
-                  className="btn btn-primary text-sm px-6 py-3 shadow-xs inline-flex items-center gap-2"
+                  className="btn btn-primary inline-flex items-center gap-2"
                 >
-                  <Calendar className="w-4 h-4 text-[#d6c298]" />
-                  <span>
-                    {isFr ? "Poser une question en 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}
-                  </span>
+                  <Calendar className="w-4 h-4 text-[#d6c298]" aria-hidden="true" />
+                  <span>{ctaLabel}</span>
                 </a>
 
-                <Link
-                  to={`${prefix}/calculators`}
-                  className="btn btn-ghost text-sm px-5 py-3 border border-[#d6cebd] hover:border-[#2e4a3b] inline-flex items-center gap-2"
-                >
-                  <Calculator className="w-4 h-4 text-[#75581f]" />
-                  <span>{isFr ? "Simulateurs Financiers" : "Run Financial Simulators"}</span>
-                </Link>
-
-                <Link
-                  to={`${prefix}/what-changed`}
-                  className="text-xs font-semibold text-[#2e4a3b] hover:underline px-2 py-3 inline-flex items-center gap-1"
-                >
-                  <span>{isFr ? "Règles 2026 →" : "Nov 2026 Money Rules →"}</span>
+                <Link to={`${prefix}/calculators`} className="arrow-link text-sm sm:text-base">
+                  <span>{isFr ? "Essayer les simulateurs" : "Explore financial calculators"}</span>
+                  <span aria-hidden="true">→</span>
                 </Link>
               </div>
 
-              {/* Quick Trust Highlights */}
-              <div className="pt-3 border-t border-[#d6cebd]/60 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-[#625d52]">
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2e4a3b] shrink-0" />
-                  <span>{isFr ? "Rémunération transparente" : "Clear Commission Terms"}</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2e4a3b] shrink-0" />
-                  <span>{isFr ? "Accès multi-institutions" : "Multi-Carrier Access"}</span>
-                </div>
-                <div className="flex items-center gap-1.5 col-span-2 sm:col-span-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#75581f] shrink-0" />
-                  <span>{isFr ? "Membre indépendant WFG" : "Independent WFG Member"}</span>
-                </div>
-              </div>
+              {/* Concise WFGIA Commission Disclosure & How I'm Paid Link */}
+              <p className="small text-[#625d52] pt-1 max-w-xl">
+                {isFr
+                  ? "Représentant indépendant affilié à WFGIA, rémunéré par commission lors du placement d'un produit. "
+                  : "Independent representative contracted with WFGIA, compensated by carrier commissions upon product placement. "}
+                <Link to={`${prefix}/disclosures`} className="link">
+                  {isFr ? "Comment je suis rémunéré" : "How I'm paid"}
+                </Link>
+                .
+              </p>
             </div>
 
-            {/* Right Column: Ahmed Bello Portrait & Credentials Card */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end">
-              <div className="w-full max-w-sm bg-[#fcfaf5] border border-[#d6cebd] p-4 rounded-[2px] shadow-sm">
-                <div className="border border-[#75581f]/20 bg-[#ece6da]/40 p-1 rounded-[1px] relative overflow-hidden">
-                  <img
-                    src="/assets/aistudio/unnamed_dd5949a8.webp"
-                    alt="Ahmed Bello, Licensed Financial Solutions Professional"
-                    className="w-full aspect-[4/5] object-cover object-top rounded-[1px]"
-                    width={380}
-                    height={475}
-                    loading="eager"
-                  />
-                  <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#d6c298]" />
-                  <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-[#d6c298]" />
-                </div>
-
-                <div className="mt-3.5 pt-3 border-t border-[#d6cebd] flex items-center justify-between gap-3 text-left">
+            {/* Right Column: Canonical Portrait from siteConfig */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end rise rise-2">
+              <div className="w-full max-w-sm space-y-3">
+                <Portrait
+                  alt={
+                    isFr
+                      ? "Ahmed Bello, professionnel agréé en solutions financières à Dieppe, NB"
+                      : "Ahmed Bello, Licensed Financial Solutions Professional in Dieppe, NB"
+                  }
+                  variant="hero"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+                <div className="flex items-center justify-between gap-3 pt-1">
                   <div className="flex items-center gap-2.5">
-                    <BrandMark size={28} className="w-7 h-7 shrink-0 text-[#2e4a3b]" />
+                    <BrandMark size={26} className="w-6.5 h-6.5 shrink-0 text-[#2e4a3b]" />
                     <div>
                       <p className="font-serif text-lg text-[#1c1b18] leading-tight">Ahmed Bello</p>
-                      <p className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold">
-                        {siteConfig.designation}
+                      <p className="text-xs text-[#75581f] font-medium">
+                        {isFr
+                          ? "Professionnel en solutions financières agréé"
+                          : siteConfig.designation}
                       </p>
                     </div>
                   </div>
-                  <Link
-                    to={`${prefix}/about`}
-                    className="text-xs text-[#2e4a3b] font-medium hover:underline shrink-0"
-                  >
-                    {isFr ? "Parcours →" : "About →"}
+                  <Link to={`${prefix}/about`} className="arrow-link text-xs shrink-0">
+                    {isFr ? "À propos →" : "About →"}
                   </Link>
                 </div>
               </div>
@@ -168,331 +186,310 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Practice Pillars: Who the Practice Serves */}
-      <section className="section py-14 border-b border-[#d6cebd] bg-[#fcfaf5]">
+      {/* 2. Practice Pillars */}
+      <section className="section border-b border-[#d6cebd] bg-[#fcfaf5]">
         <div className="wrap max-w-6xl space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <span className="eyebrow text-xs text-[#75581f]">
-                {isFr ? "Pôles de Pratique" : "Practice Pillars"}
+              <span className="eyebrow block">
+                {isFr ? "Pôles de pratique" : "Who I work with"}
               </span>
               <h2 className="h2 text-[#1c1b18] mt-1">
-                {isFr ? "À qui s'adresse notre cabinet" : "Who the practice is built for"}
+                {isFr ? "À qui s'adresse notre pratique" : "Who the practice is built for"}
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-[#625d52] max-w-md">
+            <p className="small text-[#625d52] max-w-md">
               {isFr
-                ? "Nous accompagnons quatre profils distincts aux prises avec des décisions financières canadiennes stratégiques."
-                : "Focused financial planning built around specific, high-stakes Canadian balance-sheet crossroads."}
+                ? "Un accompagnement structuré autour de quatre réalités financières canadiennes précises."
+                : "Structured planning tailored to four common Canadian financial crossroads."}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Pillar 1: Families */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <Link
               to={`${prefix}/for/families`}
-              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all group flex flex-col justify-between"
+              className="card-editorial p-6 hover:border-[#2e4a3b] transition-colors group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="w-9 h-9 rounded-[2px] bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center">
-                  <Users className="w-4 h-4" />
-                </div>
-                <h3 className="font-serif text-lg text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
-                  {isFr ? "Familles Canadiennes" : "Canadian Families"}
+                <Users className="w-5 h-5 text-[#2e4a3b]" aria-hidden="true" />
+                <h3 className="h3 text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors">
+                  {isFr ? "Familles canadiennes" : "Canadian Families"}
                 </h3>
-                <p className="text-xs text-[#46423a] leading-relaxed">
+                <p className="small text-[#46423a]">
                   {isFr
-                    ? "Choc de renouvellement hypothécaire, optimisation combinée CELIAPP + RAP (100k$ non taxé), REEE et protection du revenu familial."
-                    : "Mortgage renewal shock management, pooling $100k+ in FHSA and RRSP Home Buyers' Plan room, and life insurance income protection."}
+                    ? "Renouvellement hypothécaire, cumul CELIAPP et RAP, REEE et protection du revenu familial."
+                    : "Mortgage renewals, pooling FHSA and RRSP Home Buyers' Plan room, RESPs, and family income protection."}
                 </p>
               </div>
-              <div className="pt-4 flex items-center gap-1 text-xs font-semibold text-[#2e4a3b]">
-                <span>{isFr ? "Voir l'orientation" : "Explore guidance"}</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
+              <span className="pt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#2e4a3b]">
+                <span>{isFr ? "Explorer" : "Explore guidance"}</span>
+                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </span>
             </Link>
 
-            {/* Pillar 2: Business Owners */}
             <Link
               to={`${prefix}/for/business-owners`}
-              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all group flex flex-col justify-between"
+              className="card-editorial p-6 hover:border-[#2e4a3b] transition-colors group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="w-9 h-9 rounded-[2px] bg-[#75581f]/10 text-[#75581f] flex items-center justify-center">
-                  <Building2 className="w-4 h-4" />
-                </div>
-                <h3 className="font-serif text-lg text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                <Building2 className="w-5 h-5 text-[#75581f]" aria-hidden="true" />
+                <h3 className="h3 text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors">
                   {isFr ? "Entrepreneurs & SPCC" : "Incorporated Owners"}
                 </h3>
-                <p className="text-xs text-[#46423a] leading-relaxed">
+                <p className="small text-[#46423a]">
                   {isFr
-                    ? "Éviter le piège de la réduction 5:1 de la DPE au-delà de 50 000 $ de revenus passifs (art. 125(5.1)) et extractions par Compte de dividendes en capital (CDC)."
-                    : "Managing the $50,000 corporate passive income clawback under Section 125(5.1), Capital Dividend Account (CDA) extraction, and retained earnings sheltering."}
+                    ? "Seuil de 50 000 $ de revenus passifs (DPE), compte de dividendes en capital et réserve corporative."
+                    : "Managing the $50,000 passive income limit, Capital Dividend Account strategy, and retained earnings."}
                 </p>
               </div>
-              <div className="pt-4 flex items-center gap-1 text-xs font-semibold text-[#2e4a3b]">
-                <span>{isFr ? "Voir l'orientation" : "Explore guidance"}</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
+              <span className="pt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#2e4a3b]">
+                <span>{isFr ? "Explorer" : "Explore guidance"}</span>
+                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </span>
             </Link>
 
-            {/* Pillar 3: Healthcare */}
             <Link
               to={`${prefix}/for/healthcare`}
-              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all group flex flex-col justify-between"
+              className="card-editorial p-6 hover:border-[#2e4a3b] transition-colors group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="w-9 h-9 rounded-[2px] bg-[#2e4a3b]/10 text-[#2e4a3b] flex items-center justify-center">
-                  <Stethoscope className="w-4 h-4" />
-                </div>
-                <h3 className="font-serif text-lg text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
-                  {isFr ? "Professionnels de Santé" : "Healthcare Workers"}
+                <Stethoscope className="w-5 h-5 text-[#2e4a3b]" aria-hidden="true" />
+                <h3 className="h3 text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors">
+                  {isFr ? "Professionnels de santé" : "Healthcare Workers"}
                 </h3>
-                <p className="text-xs text-[#46423a] leading-relaxed">
+                <p className="small text-[#46423a]">
                   {isFr
-                    ? "Gestion de trésorerie pendant l'équivalence des diplômes médicaux, assurance invalidité sans annulation pour médecins et infirmiers."
-                    : "Credential recognition runway modeling for foreign-trained clinicians, locum cash flow management, and non-cancellable disability coverage."}
+                    ? "Trésorerie pendant l'équivalence des diplômes, incorporation médicale et protection invalidité."
+                    : "Credential recognition cash flow, physician incorporation, and non-cancellable disability protection."}
                 </p>
               </div>
-              <div className="pt-4 flex items-center gap-1 text-xs font-semibold text-[#2e4a3b]">
-                <span>{isFr ? "Voir l'orientation" : "Explore guidance"}</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
+              <span className="pt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#2e4a3b]">
+                <span>{isFr ? "Explorer" : "Explore guidance"}</span>
+                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </span>
             </Link>
 
-            {/* Pillar 4: Newcomers */}
             <Link
               to={`${prefix}/for/newcomers`}
-              className="p-5 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all group flex flex-col justify-between"
+              className="card-editorial p-6 hover:border-[#2e4a3b] transition-colors group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="w-9 h-9 rounded-[2px] bg-[#75581f]/10 text-[#75581f] flex items-center justify-center">
-                  <Compass className="w-4 h-4" />
-                </div>
-                <h3 className="font-serif text-lg text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
-                  {isFr ? "Nouveaux Arrivants" : "Newcomers to Canada"}
+                <Compass className="w-5 h-5 text-[#75581f]" aria-hidden="true" />
+                <h3 className="h3 text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors">
+                  {isFr ? "Nouveaux arrivants" : "Newcomers to Canada"}
                 </h3>
-                <p className="text-xs text-[#46423a] leading-relaxed">
+                <p className="small text-[#46423a]">
                   {isFr
-                    ? "Planification de la réserve d'installation (1re année), établissement du dossier de crédit, date charnière de résidence fiscale et déclaration T1135."
-                    : "First-year settlement runway simulation, rapid credit score building, tax residency start timing, and CRA Form T1135 foreign property compliance."}
+                    ? "Réserve de première année, historique de crédit canadien et déclaration T1135."
+                    : "First-year settlement reserves, building Canadian credit history, and CRA Form T1135 compliance."}
                 </p>
               </div>
-              <div className="pt-4 flex items-center gap-1 text-xs font-semibold text-[#2e4a3b]">
-                <span>{isFr ? "Voir l'orientation" : "Explore guidance"}</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
+              <span className="pt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#2e4a3b]">
+                <span>{isFr ? "Explorer" : "Explore guidance"}</span>
+                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 2.5 How the Pieces Fit: Coordinated Balance-Sheet Planning */}
+      {/* 2.5 How the Pieces Fit */}
       <HowThePiecesFit />
 
-      {/* 3. Interactive Decision Models Strip */}
-      <section className="section py-14 border-b border-[#d6cebd]">
+      {/* 3. Interactive Calculators Strip */}
+      <section className="section border-b border-[#d6cebd]">
         <div className="wrap max-w-6xl space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <span className="eyebrow text-xs text-[#2e4a3b]">
-                {isFr ? "Modélisation Quantitative" : "Interactive Calculators"}
+              <span className="eyebrow block">
+                {isFr ? "Simulateurs interactifs" : "Interactive Calculators"}
               </span>
-              <h2 className="h2 text-[#1c1b18] mt-0.5">
-                {isFr ? "Simulez vos chiffres en direct" : "Quantitative balance-sheet models"}
+              <h2 className="h2 text-[#1c1b18] mt-1">
+                {isFr ? "Modélisez vos chiffres" : "Run the numbers before deciding"}
               </h2>
             </div>
-            <Link
-              to={`${prefix}/calculators`}
-              className="btn btn-ghost text-xs py-2 px-4 border border-[#d6cebd] hover:border-[#2e4a3b] shrink-0 inline-flex items-center gap-1.5"
-            >
-              <span>{isFr ? "Ouvrir les 4 simulateurs" : "Open all 4 calculators"}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+            <Link to={`${prefix}/calculators`} className="arrow-link text-sm shrink-0">
+              <span>{isFr ? "Tous les simulateurs" : "Open all calculators"} →</span>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
               to={`${prefix}/calculators?tab=newcomer#calculator-tool`}
-              className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all"
+              className="card-editorial p-5 hover:border-[#2e4a3b] transition-colors"
             >
-              <span className="font-mono text-xs text-[#75581f] font-semibold block mb-1">01</span>
-              <h4 className="font-serif text-base text-[#1c1b18] font-bold">
-                {isFr ? "Trésorerie 1re Année" : "Newcomer Runway"}
-              </h4>
-              <p className="text-[0.72rem] text-[#625d52] mt-1">
+              <span className="text-xs text-[#75581f] font-semibold block mb-1">01</span>
+              <h3 className="font-serif text-lg text-[#1c1b18]">
+                {isFr ? "Trésorerie 1re année" : "Newcomer Runway"}
+              </h3>
+              <p className="small text-[#625d52] mt-1">
                 {isFr
-                  ? "Modélisez vos coûts d'équivalence et mois de réserve."
-                  : "Calculate living burn & foreign credential exam costs."}
+                  ? "Estimez vos réserves de première année et coûts d'équivalence."
+                  : "Estimate living reserves and credential exam costs."}
               </p>
             </Link>
 
             <Link
               to={`${prefix}/calculators?tab=mortgage#calculator-tool`}
-              className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all"
+              className="card-editorial p-5 hover:border-[#2e4a3b] transition-colors"
             >
-              <span className="font-mono text-xs text-[#75581f] font-semibold block mb-1">02</span>
-              <h4 className="font-serif text-base text-[#1c1b18] font-bold">
-                {isFr ? "Choc Hypothécaire" : "Mortgage Renewal"}
-              </h4>
-              <p className="text-[0.72rem] text-[#625d52] mt-1">
+              <span className="text-xs text-[#75581f] font-semibold block mb-1">02</span>
+              <h3 className="font-serif text-lg text-[#1c1b18]">
+                {isFr ? "Choc hypothécaire" : "Mortgage Renewal"}
+              </h3>
+              <p className="small text-[#625d52] mt-1">
                 {isFr
-                  ? "Mesurez le saut de mensualité et le coût d'opportunité CELI."
-                  : "Measure payment delta & the cost of raiding your TFSA."}
+                  ? "Comparez la hausse de mensualités et l'effet sur votre CELI."
+                  : "Measure payment changes and TFSA trade-offs."}
               </p>
             </Link>
 
             <Link
               to={`${prefix}/calculators?tab=tfsa-rrsp#calculator-tool`}
-              className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all"
+              className="card-editorial p-5 hover:border-[#2e4a3b] transition-colors"
             >
-              <span className="font-mono text-xs text-[#75581f] font-semibold block mb-1">03</span>
-              <h4 className="font-serif text-base text-[#1c1b18] font-bold">
-                {isFr ? "Comparatif CELI vs REER" : "TFSA vs RRSP"}
-              </h4>
-              <p className="text-[0.72rem] text-[#625d52] mt-1">
+              <span className="text-xs text-[#75581f] font-semibold block mb-1">03</span>
+              <h3 className="font-serif text-lg text-[#1c1b18]">
+                {isFr ? "CELI vs REER" : "TFSA vs RRSP"}
+              </h3>
+              <p className="small text-[#625d52] mt-1">
                 {isFr
-                  ? "Comparez la richesse nette selon vos taux d'impôt."
-                  : "Model terminal after-tax wealth with refund reinvestment."}
+                  ? "Comparez la valeur nette après impôt selon vos tranches."
+                  : "Compare after-tax wealth across tax brackets."}
               </p>
             </Link>
 
             <Link
-              to={`${prefix}/calculators?tab=ccpc-passive#calculator-tool`}
-              className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-all"
+              to={`${prefix}/calculators/amt`}
+              className="card-editorial p-5 hover:border-[#2e4a3b] transition-colors"
             >
-              <span className="font-mono text-xs text-[#75581f] font-semibold block mb-1">04</span>
-              <h4 className="font-serif text-base text-[#1c1b18] font-bold">
-                {isFr ? "Plafond Passif SPCC" : "CCPC $50k Grind"}
-              </h4>
-              <p className="text-[0.72rem] text-[#625d52] mt-1">
+              <span className="text-xs text-[#75581f] font-semibold block mb-1">04</span>
+              <h3 className="font-serif text-lg text-[#1c1b18]">
+                {isFr ? "Impôt minimum (IMR)" : "Federal AMT"}
+              </h3>
+              <p className="small text-[#625d52] mt-1">
                 {isFr
-                  ? "Calculez l'érosion 5:1 de votre déduction PME (DPE)."
-                  : "Calculate Section 125(5.1) 5-for-1 SBD tax clawback."}
+                  ? "Évaluez votre exposition à l'impôt minimum de remplacement."
+                  : "Check federal Alternative Minimum Tax exposure."}
               </p>
             </Link>
           </div>
 
-          {/* Contextual link to statutory blindspots */}
-          <div className="flex flex-col sm:flex-row items-center justify-between p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs gap-3">
-            <div className="flex items-center gap-2 text-[#46423a]">
-              <AlertTriangle className="w-4 h-4 text-[#75581f] shrink-0" />
+          <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-[#d6cebd]">
+            <div className="flex items-center gap-2 small text-[#46423a]">
+              <AlertTriangle className="w-4 h-4 text-[#75581f] shrink-0" aria-hidden="true" />
               <span>
-                <strong>{isFr ? "Guide de vigilance :" : "Statutory vigilance:"}</strong>{" "}
                 {isFr
-                  ? "Explorez les règles statutaires et subventions méconnues souvent découvertes trop tard."
-                  : "Explore verified Canadian money rules, grants, and tax traps most people discover too late."}
+                  ? "Consultez les pièges fiscaux et subventions souvent oubliés au Canada."
+                  : "Review common Canadian tax traps, deadlines, and overlooked government grants."}
               </span>
             </div>
-            <Link
-              to={`${prefix}/costly-blindspots`}
-              className="text-[#2e4a3b] font-semibold hover:underline shrink-0 flex items-center gap-1"
-            >
-              <span>{isFr ? "Consulter les pièges financiers →" : "View costly blindspots →"}</span>
+            <Link to={`${prefix}/costly-blindspots`} className="arrow-link text-sm shrink-0">
+              <span>{isFr ? "Voir les pièges financiers" : "View costly blindspots"} →</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 4. November 2026 Regulatory Intelligence Briefing Callout */}
-      <section className="section py-14 border-b border-[#d6cebd] bg-[#14211a] text-[#f7f3eb] on-dark">
+      {/* 4. November 2026 Briefing Callout */}
+      <section className="section border-b border-[#d6cebd] bg-[#14211a] text-[#f7f3eb] on-dark">
         <div className="wrap max-w-6xl space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#2e4a3b] pb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold">
-                {isFr ? "Veille Réglementaire • Novembre 2026" : "Monthly Advisor Briefing • November 2026"}
-              </span>
-            </div>
-            <Link
-              to={`${prefix}/what-changed`}
-              className="text-xs text-[#d6c298] hover:text-white font-medium inline-flex items-center gap-1"
-            >
-              <span>{isFr ? "Lire toutes les 7 analyses de novembre →" : "Read all 7 November updates →"}</span>
+            <span className="eyebrow">
+              {isFr ? "Veille réglementaire • Novembre 2026" : "2026 Money Rules • November Update"}
+            </span>
+            <Link to={`${prefix}/what-changed`} className="arrow-link text-xs">
+              <span>{isFr ? "Lire les 7 mises à jour →" : "Read all 7 updates →"}</span>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="p-4 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-2">
-              <span className="text-[11px] font-mono text-[#d6c298] block">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2 border-t border-[#d6c298]/25 pt-4">
+              <span className="text-xs font-medium text-[#d6c298] block">
                 {isFr ? "Budget fédéral 2026" : "Federal Budget 2026"}
               </span>
-              <h4 className="font-serif text-base text-white font-semibold">
-                {isFr ? "Seuil T1135 à 200 000 $ & REER à vie" : "T1135 $200k Threshold & RRSP-for-Life"}
-              </h4>
-              <p className="text-xs text-[#ece6da]/80 leading-relaxed">
+              <h3 className="font-serif text-xl text-white">
+                {isFr ? "Seuil T1135 à 200 000 $ & REER" : "T1135 $200k Threshold & RRSPs"}
+              </h3>
+              <p className="small text-[#ece6da]/85">
                 {isFr
-                  ? "Le Budget du 5 nov. propose un seuil T1135 doublé à 200 000 $, une date unique au 15 mai (dès 2027) et un incitatif de croissance de 15 M$."
-                  : "Tabled Nov 5: proposes doubling the Form T1135 threshold to $200k, a unified May 15 filing date (from 2027), and RRSP/RRIF merger consultations."}
+                  ? "Propositions du 5 novembre : seuil T1135 porté à 200 000 $, date de cotisation au 15 mai (2027) et consultations REER/FERR."
+                  : "Tabled Nov 5: proposes raising Form T1135 threshold to $200k, a unified May 15 date from 2027, and RRSP/RRIF updates."}
               </p>
             </div>
 
-            <div className="p-4 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-2">
-              <span className="text-[11px] font-mono text-[#d6c298] block">Banque du Canada</span>
-              <h4 className="font-serif text-base text-white font-semibold">
-                {isFr ? "Taux directeur relevé à 2,50 %" : "Overnight Rate Raised to 2.50%"}
-              </h4>
-              <p className="text-xs text-[#ece6da]/80 leading-relaxed">
-                {isFr
-                  ? "Hausse de 25 pb le 28 octobre (taux préférentiel à 4,70 % contre 4,45 %). Impact immédiat sur les marges et hypothèques variables."
-                  : "Raised 25 bps on Oct 28 (prime moves from 4.45% to 4.70%). Variable borrowing and HELOC servicing costs adjust ahead of Dec 9."}
-              </p>
-            </div>
-
-            <div className="p-4 bg-[#2e4a3b]/30 border border-[#d6c298]/20 rounded-[2px] space-y-2">
-              <span className="text-[11px] font-mono text-[#d6c298] block">
-                {isFr ? "ARC 2027 & Taux prescrit 3 %" : "CRA 2027 Limits & 3% Loan Rate"}
+            <div className="space-y-2 border-t border-[#d6c298]/25 pt-4">
+              <span className="text-xs font-medium text-[#d6c298] block">
+                {isFr ? "Banque du Canada" : "Bank of Canada"}
               </span>
-              <h4 className="font-serif text-base text-white font-semibold">
-                {isFr ? "Plafond REER 2027 à 35 390 $" : "2027 RRSP Limit Rises to $35,390"}
-              </h4>
-              <p className="text-xs text-[#ece6da]/80 leading-relaxed">
+              <h3 className="font-serif text-xl text-white">
+                {isFr ? "Taux directeur relevé à 2,50 %" : "Overnight Rate at 2.50%"}
+              </h3>
+              <p className="small text-[#ece6da]/85">
                 {isFr
-                  ? "MGA du RPC à 76 700 $ (MGAP 87 400 $), taux prescrit T4 maintenu à 3 % pour prêts familiaux et inclusion des gains maintenue à 50 %."
-                  : "2027 CPP YMPE hits $76,700 (YAMPE $87,400), Q4 prescribed spousal loan rate holds at 3%, and 50% capital gains inclusion stays in force."}
+                  ? "Hausse de 25 pb le 28 octobre (taux préférentiel à 4,70 %). Impact direct sur les hypothèques variables et marges."
+                  : "Raised 25 bps on Oct 28 (prime at 4.70%). Variable borrowing and HELOC servicing adjust accordingly."}
+              </p>
+            </div>
+
+            <div className="space-y-2 border-t border-[#d6c298]/25 pt-4">
+              <span className="text-xs font-medium text-[#d6c298] block">
+                {isFr ? "Plafonds ARC 2027" : "CRA 2027 Limits"}
+              </span>
+              <h3 className="font-serif text-xl text-white">
+                {isFr ? "Plafond REER 2027 à 35 390 $" : "2027 RRSP Limit: $35,390"}
+              </h3>
+              <p className="small text-[#ece6da]/85">
+                {isFr
+                  ? "MGA du RPC à 76 700 $, taux prescrit T4 maintenu à 3 % pour les prêts familiaux et inclusion des gains à 50 %."
+                  : "2027 CPP YMPE is $76,700, Q4 prescribed rate holds at 3%, and 50% capital gains inclusion stays in force."}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Clear Advisory Philosophy & Closing CTA */}
-      <section className="section py-16 text-center">
+      {/* 5. Closing CTA */}
+      <section className="section text-center">
         <div className="wrap max-w-3xl space-y-5">
           <h2 className="display text-[#1c1b18]">
             {isFr
-              ? "Une décision financière éclairée commence toujours par une question franche."
-              : "A sound financial decision begins with a clear, unbiased question."}
+              ? "Une bonne décision commence par une question claire."
+              : "A sound financial decision starts with a clear question."}
           </h2>
 
-          <p className="lede text-base sm:text-lg text-[#46423a] max-w-xl mx-auto leading-relaxed">
+          <p className="lede measure mx-auto">
             {isFr
-              ? "Que vous deviez renégocier une hypothèque, optimiser la trésorerie de votre société ou protéger les revenus de votre foyer, examinons vos chiffres ensemble."
-              : "Whether managing a mortgage renewal, sheltering corporate retained earnings, or protecting family cash flow, let's look at the numbers together."}
+              ? "Renouvellement hypothécaire, épargne enregistrée ou protection familiale : regardons vos chiffres ensemble."
+              : "Whether reviewing a mortgage renewal, registered accounts, or family protection, let's look at the numbers together."}
           </p>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-5">
             <a
-              href={siteConfig.schedulingUrl || "https://calendly.com/olabel/30min"}
+              href={siteConfig.schedulingUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackBookingClick("home_bottom")}
-              className="btn btn-primary text-sm px-8 py-3 shadow-xs inline-flex items-center gap-2"
+              className="btn btn-primary inline-flex items-center gap-2"
             >
-              <Calendar className="w-4 h-4 text-[#d6c298]" />
-              <span>
-                {isFr ? "Obtenir un second avis sur votre situation" : "Get a Second Opinion on Your Situation"}
-              </span>
+              <Calendar className="w-4 h-4 text-[#d6c298]" aria-hidden="true" />
+              <span>{ctaLabel}</span>
             </a>
 
-            <Link to={`${prefix}/contact`} className="btn btn-ghost text-sm px-6 py-3 border border-[#d6cebd]">
-              {isFr ? "Envoyer une question par courriel →" : "Send a Question via Email →"}
+            <Link to={`${prefix}/contact`} className="arrow-link text-sm sm:text-base">
+              <span>{secondaryCtaLabel}</span>
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
 
-          <p className="text-xs text-[#625d52] pt-2">
+          <p className="small text-[#625d52] pt-2 max-w-xl mx-auto">
             {isFr
-              ? "Ahmed Bello est un représentant indépendant affilié à World Financial Group Assurance du Canada Inc. (WFGIA). Rémunéré à commission sur le placement de produits financiers agréés. Aucun frais de consultation caché, aucune obligation d'achat."
-              : "Ahmed Bello is an independent representative associated with World Financial Group Insurance Agency of Canada Inc. (WFGIA). Compensated through carrier commissions upon product placement. No consultation fees, zero obligation to purchase."}
+              ? "Représentant indépendant affilié à WFGIA, rémunéré par commission lors du placement d'un produit. "
+              : "Independent representative contracted with WFGIA, compensated by carrier commissions upon product placement. "}
+            <Link to={`${prefix}/disclosures`} className="link">
+              {isFr ? "Comment je suis rémunéré" : "How I'm paid"}
+            </Link>
+            .
           </p>
         </div>
       </section>

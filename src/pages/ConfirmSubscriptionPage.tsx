@@ -83,7 +83,7 @@ export const ConfirmSubscriptionPage: React.FC = () => {
   }, [tokenParam]);
 
   return (
-    <div className="py-16 md:py-24">
+    <section className="section">
       <SEO
         title={isFr ? "Abonnement Confirmé | Ahmed Bello" : "Subscription Confirmed | Ahmed Bello"}
         description={
@@ -97,12 +97,12 @@ export const ConfirmSubscriptionPage: React.FC = () => {
       <div className="wrap max-w-2xl text-center space-y-6">
         {loading ? (
           <div className="py-12 space-y-3">
-            <div className="w-10 h-10 border-2 border-[#2e4a3b] border-t-transparent rounded-full animate-spin mx-auto" />
+            <div className="w-10 h-10 border border-[#2e4a3b] border-t-transparent rounded-full animate-spin mx-auto" />
             <p className="text-sm text-[#46423a]">{isFr ? "Vérification cryptographique de votre abonnement..." : "Cryptographically verifying your subscription..."}</p>
           </div>
         ) : error ? (
-          <div className="p-8 bg-[#fcfaf5] border-2 border-[#8a3324] rounded-[2px] space-y-4">
-            <h2 className="font-serif text-2xl text-[#8a3324]">
+          <div className="card-editorial border-[#8a3324] p-8 space-y-4">
+            <h2 className="h2 text-[#8a3324]">
               {isFr ? "Lien invalide ou expiré" : "Invalid or Expired Link"}
             </h2>
             <p className="text-sm text-[#46423a] leading-relaxed">{error}</p>
@@ -114,22 +114,19 @@ export const ConfirmSubscriptionPage: React.FC = () => {
           </div>
         ) : (
           <>
-            <div className="w-16 h-16 rounded-[2px] bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center mx-auto shadow-sm">
+            <div className="w-16 h-16 rounded-[2px] bg-[#2e4a3b] text-[#f7f3eb] flex items-center justify-center mx-auto shadow-xs">
               <CheckCircle2 className="w-8 h-8 text-[#d6c298]" />
             </div>
 
             <div className="space-y-2">
-              <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f]">
+              <span className="eyebrow text-xs text-[#75581f]">
                 {isFr ? "Consentement CASL Confirmé" : "CASL Double Opt-in Confirmed"}
               </span>
-              <h1
-                className="font-serif text-3xl sm:text-4xl text-[#1c1b18] tracking-tight"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
+              <h1 className="h1 text-[#1c1b18]">
                 {isFr ? "Votre abonnement est confirmé" : "Your subscription is confirmed"}
               </h1>
               {verifiedEmail && (
-                <p className="text-sm font-mono text-[#2e4a3b] bg-[#2e4a3b]/10 py-1 px-3 rounded-[2px] inline-block">
+                <p className="text-sm font-medium text-[#2e4a3b] bg-[#2e4a3b]/10 py-1 px-3 rounded-[2px] inline-block">
                   {verifiedEmail}
                 </p>
               )}
@@ -178,6 +175,6 @@ export const ConfirmSubscriptionPage: React.FC = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

@@ -8,6 +8,7 @@ import {
   SITE_URL,
   formatStrictTitle,
   getLanguageUrls,
+  getOgImageForPath,
 } from "../src/config/seoMetadata.ts";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -78,6 +79,7 @@ const allRoutes = [...CORE_ROUTES_SEO, ...dynamicArticleRoutes];
 function renderRouteHtml(r) {
   const isFrench = r.lang === "fr-CA" || r.path.startsWith("/fr");
   const { enUrl, frUrl, canonicalUrl } = getLanguageUrls(r.path);
+  const ogImageUrl = getOgImageForPath(r.path, SITE_URL);
   const robotsValue = r.noIndex
     ? "noindex, nofollow"
     : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
@@ -166,12 +168,24 @@ function renderRouteHtml(r) {
     `<meta property="og:locale:alternate" content="${isFrench ? "en_CA" : "fr_CA"}" />`
   );
   html = html.replace(
+    /<meta\s+property="og:image"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta property="og:image" content="${ogImageUrl}" />`
+  );
+  html = html.replace(
+    /<meta\s+property="og:image:secure_url"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta property="og:image:secure_url" content="${ogImageUrl}" />`
+  );
+  html = html.replace(
     /<meta\s+name="twitter:title"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta name="twitter:title" content="${escapeAttr(r.title)}" />`
   );
   html = html.replace(
     /<meta\s+name="twitter:description"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta name="twitter:description" content="${escapeAttr(r.description)}" />`
+  );
+  html = html.replace(
+    /<meta\s+name="twitter:image"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta name="twitter:image" content="${ogImageUrl}" />`
   );
 
   if (Array.isArray(r.faqs) && r.faqs.length > 0) {

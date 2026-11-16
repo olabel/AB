@@ -5,6 +5,7 @@ import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { trackBookingClick, trackCalculatorCompleted } from "../lib/track.ts";
+import { siteConfig, getCtaLabel } from "../config/site.ts";
 import { getTaxParametersForYear } from "../config/taxParameters.ts";
 import {
   Calculator,
@@ -205,26 +206,22 @@ export const CalculatorsPage: React.FC = () => {
       />
 
       {/* 1. Header */}
-      <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
+      <section className="section border-b border-[#d6cebd]">
         <div className="wrap max-w-5xl space-y-5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] text-xs font-semibold uppercase tracking-wider">
-            <Calculator className="w-3.5 h-3.5 text-[#75581f]" />
-            <span>{isFr ? "Outils de Modélisation Financière" : "Quantitative Decision Models"}</span>
-          </div>
+          <span className="eyebrow block">
+            {isFr ? "Outils de modélisation financière" : "Planning Calculators"}
+          </span>
 
-          <h1
-            className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1c1b18] leading-[1.12] tracking-tight"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <h1 className="h1 text-[#1c1b18]">
             {isFr
               ? "Modélisez vos décisions financières avec rigueur."
               : "Stress-test your financial choices before taking action."}
           </h1>
 
-          <p className="lede text-base sm:text-lg text-[#46423a] leading-relaxed max-w-3xl">
+          <p className="lede measure">
             {isFr
-              ? "Chaque outil ci-dessous est conçu selon les règles et formules officielles de l'ARC, de la Banque du Canada et de la Loi de l'impôt sur le revenu. Sans biais commercial, sans produits imposés."
-              : "Every model below is calibrated to official Canada Revenue Agency statutes, Bank of Canada monetary data, and the Income Tax Act. Unbiased, transparent balance-sheet arithmetic without sales gimmicks."}
+              ? "Basé sur les chiffres publiés par l'ARC pour 2026. Estimations à des fins éducatives seulement."
+              : "Based on published CRA figures for 2026. Estimates for education only."}
           </p>
 
           {/* Calculator Selector Tabs */}
@@ -322,43 +319,38 @@ export const CalculatorsPage: React.FC = () => {
             </button>
           </div>
 
-          {/* Dedicated AMT Calculator Card (Task 1e Registration) */}
-          <div className="mt-4 p-4 sm:p-5 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 bg-[#8a3324]/10 text-[#8a3324] font-mono text-[10px] font-bold uppercase rounded-[2px]">
-                  {isFr ? "Nouveau • Lois C-59 & C-69" : "New • Bills C-59 & C-69"}
-                </span>
-                <span className="text-xs font-semibold text-[#75581f]">
-                  {isFr ? "Calculateur Fédéral Dédié" : "Dedicated Standalone Calculator"}
-                </span>
-              </div>
-              <h3 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-medium leading-snug">
+          {/* Dedicated AMT Calculator Card */}
+          <div className="mt-5 card-editorial p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <span className="eyebrow block text-[#75581f]">
+                {isFr ? "Calculateur fédéral dédié" : "Standalone Tax Estimator"}
+              </span>
+              <h2 className="h3 text-[#1c1b18]">
                 {isFr
                   ? "Simulateur d'Impôt Minimum de Remplacement (IMR)"
                   : "Alternative Minimum Tax (AMT) Calculator Canada"}
-              </h3>
-              <p className="text-xs text-[#46423a] max-w-2xl leading-relaxed">
+              </h2>
+              <p className="small text-[#46423a] max-w-2xl">
                 {isFr
-                  ? "Estimez si la réforme de l'IMR (taux de 20,5 %, inclusion à 100 % des gains, crédit pour dons admis à 80 % sous la loi C-69) déclenche un impôt supplémentaire sur vos ventes d'actifs ou dons importants."
-                  : "Estimate whether Canada's reformed AMT rules (20.5% rate, 100% capital gains inclusion, 80% donation credit allowance under Bill C-69) trigger extra tax on your business exits or major liquidations."}
+                  ? "Estimez si l'impôt minimum de remplacement fédéral s'applique à vos gains en capital, dividendes ou dons importants selon les chiffres publiés pour 2026."
+                  : "Estimate whether federal Alternative Minimum Tax applies to your capital gains, dividends, or major charitable gifts using published 2026 CRA figures."}
               </p>
             </div>
 
             <Link
               to={isFr ? "/fr/calculators/amt" : "/calculators/amt"}
-              className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-xs"
+              className="btn btn-primary text-sm inline-flex items-center gap-2 whitespace-nowrap shrink-0"
             >
-              <Scale className="w-3.5 h-3.5 text-[#d6c298]" />
+              <Scale className="w-4 h-4 text-[#d6c298]" aria-hidden="true" />
               <span>{isFr ? "Ouvrir le simulateur IMR" : "Open AMT Calculator"}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* 2. Main Interactive Calculator Workspace */}
-      <section className="section py-12 md:py-16">
+      <section className="section">
         <div className="wrap max-w-5xl">
           {/* TAB 1: NEWCOMER RUNWAY CALCULATOR */}
           {activeTab === "newcomer" && (
@@ -407,7 +399,7 @@ export const CalculatorsPage: React.FC = () => {
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Solde hypothécaire actuel" : "Current Mortgage Balance"}</span>
-                        <span className="font-mono text-[#2e4a3b] font-bold">{formatCurrency(mortgageBalance)}</span>
+                        <span className="tabular-nums text-[#2e4a3b] font-bold">{formatCurrency(mortgageBalance)}</span>
                       </div>
                       <input
                         type="range"
@@ -424,7 +416,7 @@ export const CalculatorsPage: React.FC = () => {
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                           <span>{isFr ? "Taux actuel" : "Current Rate"}</span>
-                          <span className="font-mono text-[#2e4a3b] font-bold">{currentRate}%</span>
+                          <span className="tabular-nums text-[#2e4a3b] font-bold">{currentRate}%</span>
                         </div>
                         <input
                           type="range"
@@ -440,7 +432,7 @@ export const CalculatorsPage: React.FC = () => {
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                           <span>{isFr ? "Taux de renouvellement" : "Renewal Rate"}</span>
-                          <span className="font-mono text-[#8a3324] font-bold">{renewalRate}%</span>
+                          <span className="tabular-nums text-[#8a3324] font-bold">{renewalRate}%</span>
                         </div>
                         <input
                           type="range"
@@ -458,7 +450,7 @@ export const CalculatorsPage: React.FC = () => {
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                           <span>{isFr ? "Amortissement restant" : "Remaining Amortization"}</span>
-                          <span className="font-mono text-[#1c1b18] font-bold">{amortizationYears} {isFr ? "ans" : "yrs"}</span>
+                          <span className="tabular-nums text-[#1c1b18] font-bold">{amortizationYears} {isFr ? "ans" : "yrs"}</span>
                         </div>
                         <input
                           type="range"
@@ -474,7 +466,7 @@ export const CalculatorsPage: React.FC = () => {
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                           <span>{isFr ? "Épargne CELI disponible" : "Liquid TFSA Reserves"}</span>
-                          <span className="font-mono text-[#75581f] font-bold">{formatCurrency(registeredSavings)}</span>
+                          <span className="tabular-nums text-[#75581f] font-bold">{formatCurrency(registeredSavings)}</span>
                         </div>
                         <input
                           type="range"
@@ -500,13 +492,13 @@ export const CalculatorsPage: React.FC = () => {
                     <div className="grid grid-cols-2 gap-3 border-b border-[#2e4a3b] pb-4">
                       <div>
                         <span className="text-[0.7rem] text-[#ece6da]/70 block">{isFr ? "Paiement actuel" : "Current Payment"}</span>
-                        <span className="text-lg font-mono font-bold">
+                        <span className="text-lg tabular-nums font-bold">
                           {formatCurrency(oldPayment)} {isFr ? "/ mois" : "/ mo"}
                         </span>
                       </div>
                       <div>
                         <span className="text-[0.7rem] text-[#d6c298] block">{isFr ? "Nouveau paiement" : "New Payment"}</span>
-                        <span className="text-xl font-mono font-bold text-white">
+                        <span className="text-xl tabular-nums font-bold text-white">
                           {formatCurrency(newPayment)} {isFr ? "/ mois" : "/ mo"}
                         </span>
                       </div>
@@ -516,7 +508,7 @@ export const CalculatorsPage: React.FC = () => {
                       <span className="text-xs text-[#ece6da]">
                         {isFr ? "Choc mensuel net :" : "Monthly Payment Shock:"}
                       </span>
-                      <span className="font-mono text-base font-bold text-[#f7f3eb]">
+                      <span className="tabular-nums text-base font-bold text-[#f7f3eb]">
                         +{formatCurrency(monthlyPaymentIncrease)} {isFr ? "/ mois" : "/ mo"}
                       </span>
                     </div>
@@ -582,7 +574,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Revenu annuel brut actuel" : "Current Annual Gross Income"}</span>
-                        <span className="font-mono text-[#2e4a3b] font-bold">{formatCurrency(currentIncome)}</span>
+                        <span className="tabular-nums text-[#2e4a3b] font-bold">{formatCurrency(currentIncome)}</span>
                       </div>
                       <input
                         type="range"
@@ -602,7 +594,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Revenu annuel prévu à la retraite" : "Estimated Annual Retirement Income"}</span>
-                        <span className="font-mono text-[#75581f] font-bold">{formatCurrency(retirementIncome)}</span>
+                        <span className="tabular-nums text-[#75581f] font-bold">{formatCurrency(retirementIncome)}</span>
                       </div>
                       <input
                         type="range"
@@ -623,7 +615,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                           <span>{isFr ? "Cotisation annuelle" : "Annual Contribution"}</span>
-                          <span className="font-mono text-[#1c1b18] font-bold">{formatCurrency(annualContribution)}</span>
+                          <span className="tabular-nums text-[#1c1b18] font-bold">{formatCurrency(annualContribution)}</span>
                         </div>
                         <input
                           type="range"
@@ -639,7 +631,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                           <span>{isFr ? "Horizon (années)" : "Horizon (Years)"}</span>
-                          <span className="font-mono text-[#1c1b18] font-bold">{yearsToRetirement} {isFr ? "ans" : "yrs"}</span>
+                          <span className="tabular-nums text-[#1c1b18] font-bold">{yearsToRetirement} {isFr ? "ans" : "yrs"}</span>
                         </div>
                         <input
                           type="range"
@@ -665,11 +657,11 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                     <div className="space-y-3 border-b border-[#2e4a3b] pb-4">
                       <div className="flex justify-between items-center text-xs">
                         <span className="text-[#ece6da]/70">{isFr ? "Valeur nette CELI (100 % libre d'impôt)" : "TFSA Terminal (100% Tax-Free):"}</span>
-                        <span className="font-mono font-bold text-white text-base">{formatCurrency(tfsaTerminal)}</span>
+                        <span className="tabular-nums font-bold text-white text-base">{formatCurrency(tfsaTerminal)}</span>
                       </div>
                       <div className="flex justify-between items-center text-xs">
                         <span className="text-[#ece6da]/70">{isFr ? "Valeur nette REER (remboursement réinvesti)" : "RRSP Terminal (Net of Taxes):"}</span>
-                        <span className="font-mono font-bold text-[#d6c298] text-base">{formatCurrency(rrspAfterTaxTerminal)}</span>
+                        <span className="tabular-nums font-bold text-[#d6c298] text-base">{formatCurrency(rrspAfterTaxTerminal)}</span>
                       </div>
                     </div>
 
@@ -679,7 +671,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                           ? isFr ? "Avantage REER" : "RRSP Advantage"
                           : isFr ? "Avantage CELI" : "TFSA Advantage"}
                       </span>
-                      <span className="text-lg font-mono font-bold text-white">
+                      <span className="text-lg tabular-nums font-bold text-white">
                         {rrspArbitrageDelta >= 0
                           ? `+${formatCurrency(rrspArbitrageDelta)} ${isFr ? "net" : "Net"}`
                           : `+${formatCurrency(Math.abs(rrspArbitrageDelta))} ${isFr ? "net" : "Net"}`}
@@ -737,7 +729,7 @@ Net Tax Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in favor of
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Revenu d'entreprise exploitée activement (BPA)" : "Active Business Income (ABI)"}</span>
-                        <span className="font-mono text-[#2e4a3b] font-bold">{formatCurrency(activeBusinessIncome)}</span>
+                        <span className="tabular-nums text-[#2e4a3b] font-bold">{formatCurrency(activeBusinessIncome)}</span>
                       </div>
                       <input
                         type="range"
@@ -753,7 +745,7 @@ Net Tax Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in favor of
                     <div>
                       <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
                         <span>{isFr ? "Revenu passif de placement annuel (RPAA)" : "Adjusted Aggregate Investment Income (AAII)"}</span>
-                        <span className="font-mono text-[#8a3324] font-bold">{formatCurrency(passiveInvestmentIncome)}</span>
+                        <span className="tabular-nums text-[#8a3324] font-bold">{formatCurrency(passiveInvestmentIncome)}</span>
                       </div>
                       <input
                         type="range"
@@ -793,15 +785,15 @@ Net Tax Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in favor of
                     <div className="space-y-2 border-b border-[#2e4a3b] pb-4 text-xs">
                       <div className="flex justify-between">
                         <span className="text-[#ece6da]/70">{isFr ? "Érosion du plafond DPE (5:1) :" : "SBD Limit Slashed (5:1):"}</span>
-                        <span className="font-mono font-bold text-[#d97768]">-{formatCurrency(sbdGrindAmount)}</span>
+                        <span className="tabular-nums font-bold text-[#d97768]">-{formatCurrency(sbdGrindAmount)}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#ece6da]/70">{isFr ? "Plafond restant à 12,2 % :" : "Remaining Limit at 12.2%:"}</span>
-                        <span className="font-mono font-bold text-white">{formatCurrency(remainingSbdLimit)}</span>
+                        <span className="tabular-nums font-bold text-white">{formatCurrency(remainingSbdLimit)}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#ece6da]/70">{isFr ? "Bénéfice poussé à 26,5 % :" : "Operating Income Pushed to 26.5%:"}</span>
-                        <span className="font-mono font-bold text-[#d6c298]">{formatCurrency(regularTaxedAbi)}</span>
+                        <span className="tabular-nums font-bold text-[#d6c298]">{formatCurrency(regularTaxedAbi)}</span>
                       </div>
                     </div>
 
@@ -809,7 +801,7 @@ Net Tax Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in favor of
                       <span className="text-xs text-[#ece6da]">
                         {isFr ? "Impôt corporatif supplémentaire :" : "Extra Corporate Tax Owed:"}
                       </span>
-                      <span className="font-mono text-base font-bold text-white">
+                      <span className="tabular-nums text-base font-bold text-white">
                         +{formatCurrency(extraCorporateTaxOwing)} {isFr ? "/ an" : "/ yr"}
                       </span>
                     </div>
@@ -838,89 +830,89 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
       </section>
 
       {/* Long-Tail SEO Educational Guide: Tax-Advantaged vs Taxable Compound Growth */}
-      <section className="section py-16 bg-[#fcfaf5] border-t border-[#d6cebd]">
+      <section className="section bg-[#fcfaf5] border-t border-[#d6cebd]">
         <div className="wrap max-w-5xl space-y-8">
           <div className="max-w-3xl space-y-3">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-[#75581f] font-bold block">
-              {isFr ? "Guide Quantitatif & Modélisation Fiscale" : "Quantitative Analysis & Tax Drag Modeling"}
+            <span className="eyebrow block text-[#75581f]">
+              {isFr ? "Guide quantitatif & modélisation fiscale" : "Quantitative Analysis & Tax Drag"}
             </span>
-            <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18]">
+            <h2 className="h2 text-[#1c1b18]">
               {isFr
-                ? "Comparaison de la Croissance Composée à l'Abri de l'Impôt vs Compte Imposable au Canada"
+                ? "Comparaison de la croissance composée à l'abri de l'impôt vs compte imposable au Canada"
                 : "Tax-Advantaged vs Taxable Compound Growth Comparison in Canada"}
             </h2>
-            <p className="text-sm sm:text-base text-[#46423a] leading-relaxed">
+            <p className="small sm:text-base text-[#46423a] leading-relaxed">
               {isFr
-                ? "Au Canada, le frottement fiscal annuel constitue le frein le plus destructeur pour la constitution d'un patrimoine à long terme. Chaque dollar d'intérêt, de dividende étranger ou de gain en capital réalisé dans un compte non enregistré subit une imposition immédiate qui réduit l'effet multiplicateur des intérêts composés."
-                : "In Canadian financial planning, annual tax drag represents the single largest headwind to long-term wealth accumulation. In a non-registered (taxable) account, interest is taxed at 100% of your top marginal rate, foreign dividends lose foreign withholding tax without federal dividend tax credits, and realized capital gains incur taxable events that permanently disrupt compounding velocity."}
+                ? "Au Canada, le frottement fiscal annuel constitue un frein majeur à l'accumulation à long terme. Chaque dollar d'intérêt, de dividende étranger ou de gain en capital réalisé dans un compte non enregistré subit une imposition immédiate qui ralentit les intérêts composés."
+                : "In Canadian financial planning, annual tax drag slows long-term wealth accumulation. In a non-registered (taxable) account, interest is taxed at your marginal rate, foreign dividends lose withholding tax, and realized capital gains trigger ongoing taxable events."}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-5 bg-white border border-[#d6cebd] rounded-[2px] space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[#2e4a3b] font-bold block">
+            <div className="card-editorial p-5 space-y-2">
+              <span className="text-xs uppercase tracking-wider text-[#2e4a3b] font-semibold block">
                 {isFr ? "CELI & CELIAPP (0 % d'impôt)" : "TFSA & FHSA (0% Tax Drag)"}
               </span>
-              <h3 className="font-serif text-lg text-[#1c1b18] font-semibold">
-                {isFr ? "Croissance 100 % Pure" : "Pure Tax-Free Compounding"}
+              <h3 className="font-serif text-lg text-[#1c1b18]">
+                {isFr ? "Croissance sans impôt annuel" : "Pure Tax-Free Compounding"}
               </h3>
-              <p className="text-xs text-[#46423a] leading-relaxed">
+              <p className="small text-[#46423a]">
                 {isFr
-                  ? "Les rendements (intérêts, dividendes, plus-values) fructifient sans aucun frottement fiscal. Les retraits sont non imposables et n'ont aucun impact sur les prestations gouvernementales (PSV, SRG, ACE)."
-                  : "Every dollar of capital gain, eligible Canadian dividend, and fixed income interest compounds with no annual tax drag. Withdrawals never trigger income-tested clawbacks (OAS/GIS/CCB) and regenerate contribution room the following calendar year."}
+                  ? "Les rendements fructifient sans frottement fiscal. Les retraits sont non imposables et n'affectent pas les prestations gouvernementales (SV, SRG, ACE)."
+                  : "Capital gains, dividends, and interest compound without annual tax drag, and withdrawals do not trigger OAS or CCB clawbacks."}
               </p>
             </div>
 
-            <div className="p-5 bg-white border border-[#d6cebd] rounded-[2px] space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[#75581f] font-bold block">
-                {isFr ? "REER (Report d'Impôt)" : "RRSP (Pre-Tax Deferral)"}
+            <div className="card-editorial p-5 space-y-2">
+              <span className="text-xs uppercase tracking-wider text-[#75581f] font-semibold block">
+                {isFr ? "REER (Report d'impôt)" : "RRSP (Pre-Tax Deferral)"}
               </span>
-              <h3 className="font-serif text-lg text-[#1c1b18] font-semibold">
-                {isFr ? "Report d'Impôt avec Effet de Levier" : "Pre-Tax Compounding Power"}
+              <h3 className="font-serif text-lg text-[#1c1b18]">
+                {isFr ? "Report d'impôt" : "Pre-Tax Compounding Power"}
               </h3>
-              <p className="text-xs text-[#46423a] leading-relaxed">
+              <p className="small text-[#46423a]">
                 {isFr
-                  ? "La déduction fiscale immédiate génère un remboursement. En le réinvestissant systématiquement, vous comblez l'impôt payable au décaissement à la retraite, créant un avantage fiscal net si votre tranche baisse."
-                  : "Upfront tax deductions lower taxable earned income immediately. Systematically reinvesting the tax refund neutralizes deferred tax liabilities at withdrawal, creating a net tax advantage when retiring in lower tax brackets."}
+                  ? "La déduction fiscale génère un remboursement immédiat qui, réinvesti, compense l'impôt futur au retrait à la retraite."
+                  : "Upfront deductions generate a refund that offsets future tax at withdrawal when reinvested consistently."}
               </p>
             </div>
 
-            <div className="p-5 bg-white border border-[#d6cebd] rounded-[2px] space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[#8a3324] font-bold block">
-                {isFr ? "Compte Imposable (Frottement Fiscal)" : "Taxable Non-Registered Drag"}
+            <div className="card-editorial p-5 space-y-2">
+              <span className="text-xs uppercase tracking-wider text-[#625d52] font-semibold block">
+                {isFr ? "Compte imposable" : "Taxable Non-Registered"}
               </span>
-              <h3 className="font-serif text-lg text-[#1c1b18] font-semibold">
-                {isFr ? "Érosion Annuelle du Capital" : "Annual Tax Drag"}
+              <h3 className="font-serif text-lg text-[#1c1b18]">
+                {isFr ? "Frottement fiscal annuel" : "Annual Tax Drag"}
               </h3>
-              <p className="text-xs text-[#46423a] leading-relaxed">
+              <p className="small text-[#46423a]">
                 {isFr
-                  ? "Les impôts prélevés chaque année sur les revenus de placement réduisent le rendement effectif net de 1,5 % à 2,8 % par an. Sur 25 ans, plus de 30 % du capital final potentiel est ainsi perdu en impôt."
-                  : "Annual taxation on interest, foreign distributions, and rebalancing reduces your effective net annual return by 1.5% to 2.8%, cutting cumulative final wealth by 30% to 40% over a 25-year horizon."}
+                  ? "L'impôt annuel sur les revenus et rééquilibrages réduit le rendement effectif net de 1,5 % à 2,8 % par an sur de longs horizons."
+                  : "Annual tax on interest, distributions, and rebalancing reduces net annual compounding by 1.5% to 2.8% over long horizons."}
               </p>
             </div>
           </div>
 
           {/* Mathematical Proof Table */}
-          <div className="overflow-x-auto border border-[#d6cebd] rounded-[2px] bg-white">
+          <div className="overflow-x-auto border border-[#d6cebd] rounded-[2px] bg-[#fcfaf5]">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
                 <tr className="bg-[#14211a] text-[#f7f3eb]">
-                  <th className="p-3.5 font-semibold">{isFr ? "Horizon Temporel" : "Horizon"}</th>
-                  <th className="p-3.5 font-semibold">{isFr ? "Cotisation Cumulée (10 000 $/an)" : "Cumulative Principal ($10k/yr)"}</th>
-                  <th className="p-3.5 font-semibold text-[#d6c298]">{isFr ? "Compte Enregistré (7,0 % pur)" : "Tax-Advantaged (7.0% Nominal)"}</th>
-                  <th className="p-3.5 font-semibold text-[#d97768]">{isFr ? "Compte Imposable (4,8 % net d'impôt)" : "Taxable Account (4.8% Net After Drag)"}</th>
-                  <th className="p-3.5 font-semibold text-white">{isFr ? "Capital Préservé à l'Abri" : "Net Wealth Preserved"}</th>
+                  <th className="p-3.5 font-semibold">{isFr ? "Horizon" : "Horizon"}</th>
+                  <th className="p-3.5 font-semibold">{isFr ? "Cotisation cumulée (10 000 $/an)" : "Cumulative Principal ($10k/yr)"}</th>
+                  <th className="p-3.5 font-semibold text-[#d6c298]">{isFr ? "Compte enregistré (7,0 %)" : "Tax-Advantaged (7.0%)"}</th>
+                  <th className="p-3.5 font-semibold">{isFr ? "Compte imposable (4,8 % net)" : "Taxable Account (4.8% Net)"}</th>
+                  <th className="p-3.5 font-semibold text-white">{isFr ? "Écart préservé" : "Net Wealth Preserved"}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#ece6da] font-mono">
+              <tbody className="divide-y divide-[#ece6da] tabular-nums">
                 {proofHorizons.map((row) => (
-                  <tr key={row.years} className="hover:bg-[#fcfaf5]">
+                  <tr key={row.years} className="hover:bg-[#f7f3eb]">
                     <td className="p-3.5 font-sans font-medium text-[#1c1b18]">
-                      {isFr ? `${row.years} Ans` : `${row.years} Years`}
+                      {isFr ? `${row.years} ans` : `${row.years} Years`}
                     </td>
                     <td className="p-3.5 text-[#46423a]">{formatCurrency(row.cumulative)}</td>
                     <td className="p-3.5 font-bold text-[#2e4a3b]">{formatCurrency(row.adv)}</td>
-                    <td className="p-3.5 text-[#8a3324]">{formatCurrency(row.tax)}</td>
+                    <td className="p-3.5 text-[#625d52]">{formatCurrency(row.tax)}</td>
                     <td className="p-3.5 font-bold text-[#2e4a3b]">
                       +{formatCurrency(row.diff)} (+{formatPercent(row.pct)})
                     </td>
@@ -929,49 +921,49 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
               </tbody>
             </table>
           </div>
-          <div className="text-[11px] text-[#625d52] space-y-1.5 pt-1">
+          <div className="small text-[#625d52] space-y-1.5 pt-1">
             <p>
-              <strong className="text-[#1c1b18] not-italic">
+              <strong className="text-[#1c1b18]">
                 {isFr
-                  ? "Formule actuarielle d'annuité due (cotisations au début de chaque année) :"
-                  : "Actuarial Annuity Due Formula (contributions deposited at the start of each year):"}
+                  ? "Formule d'annuité due (cotisations au début de chaque année) :"
+                  : "Annuity Due Formula (contributions at start of each year):"}
               </strong>{" "}
-              <code className="font-mono bg-[#ece6da]/60 px-1.5 py-0.5 rounded text-[#1c1b18] text-[11px]">
+              <code className="font-mono bg-[#ece6da]/60 px-1.5 py-0.5 rounded-[2px] text-[#1c1b18] text-xs">
                 FV = P × (1 + r) × [((1 + r)ⁿ − 1) / r]
               </code>
             </p>
             <p className="italic">
               {isFr
-                ? "Calcul rigoureux : cotisation annuelle P = 10 000 $ versée au début de chaque année sur n années. Le compte enregistré capitalise au taux nominal composé de r = 7,0 % (0 % de frottement fiscal). Le compte imposable capitalise à r = 4,8 % net d'impôt, simulant un frein fiscal annuel de 2,2 % imputable à l'imposition annuelle des intérêts (100 % de la tranche marginale), des dividendes étrangers et de la réalisation périodique des gains en capital. Les montants sont arrondis au dollar le plus proche selon les normes actuarielles."
-                : "Actuarial proof parameters: annual contribution P = $10,000 deposited at the beginning of each year across n years. Tax-advantaged account compounds at r = 7.0% nominal rate with zero annual tax leakage. Taxable non-registered account compounds at r = 4.8% net after tax, reflecting a 2.2% annual drag from ongoing marginal taxation on fixed income interest, non-eligible distributions, and realized rebalancing gains. Values rounded to nearest dollar per standard Canadian actuarial conventions."}
+                ? "Estimation éducative supposant P = 10 000 $/an sur n années (7,0 % enregistré vs 4,8 % après impôt en compte non enregistré)."
+                : "Educational estimate assuming P = $10,000/yr over n years (7.0% tax-sheltered vs 4.8% net after-tax in non-registered investments)."}
             </p>
           </div>
         </div>
       </section>
 
       {/* 3. Advisory CTA */}
-      <section className="section py-16 bg-[#fcfaf5] border-t border-[#d6cebd] text-center">
+      <section className="section bg-[#fcfaf5] border-t border-[#d6cebd] text-center">
         <div className="wrap max-w-3xl space-y-4">
-          <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18]">
+          <h2 className="h2 text-[#1c1b18]">
             {isFr
-              ? "Prêt à stress-tester vos chiffres avec un professionnel agréé ?"
-              : "Ready to stress-test your numbers with an independent professional?"}
+              ? "Besoin d'examiner vos chiffres ensemble ?"
+              : "Want to walk through your numbers together?"}
           </h2>
-          <p className="text-sm text-[#46423a] max-w-xl mx-auto">
+          <p className="lede measure mx-auto">
             {isFr
-              ? "Obtenez un second avis sans pression commerciale pour vérifier vos comptes enregistrés, votre trésorerie ou votre société."
-              : "Ask a quick 15-minute question or get an objective second opinion on your balance sheet, registered shelters, or corporate treasury—zero sales pitch."}
+              ? "Examinez votre situation sans pression pour valider la priorité de vos comptes enregistrés ou de votre trésorerie."
+              : "Review your registered account priorities or cash flow questions in a brief, no-obligation call."}
           </p>
           <div className="pt-2">
             <a
-              href="https://calendly.com/olabel/30min"
+              href={siteConfig.schedulingUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackBookingClick("calculators_page_bottom")}
-              className="btn btn-primary text-sm px-7 py-3 inline-flex items-center gap-2"
+              className="btn btn-primary inline-flex items-center gap-2"
             >
-              <Calendar className="w-4 h-4 text-[#d6c298]" />
-              <span>{isFr ? "Obtenir un second avis (15 min)" : "Get a Second Opinion on Your Situation"}</span>
+              <Calendar className="w-4 h-4 text-[#d6c298]" aria-hidden="true" />
+              <span>{getCtaLabel(isFr)}</span>
             </a>
           </div>
         </div>

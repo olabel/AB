@@ -7,6 +7,7 @@ import path from "path";
 import crypto from "crypto";
 import { saveLeadToDatabase, recordEmailDeliveryStatus, recordSubscriberToDatabase } from "./dbService.ts";
 import { saveSubscriberViaAdmin, saveLeadViaAdmin } from "../server/firebaseAdmin.ts";
+import { siteConfig, getCtaLabel } from "../config/site.ts";
 
 export const DEFAULT_NOTIFICATION_RECIPIENTS = (process.env.CONTACT_TO_EMAIL || "").trim();
 
@@ -879,8 +880,8 @@ export async function processContactSubmission(
         error: "submission_failed",
         message:
           "Your message could not be saved right now. Please reach out directly to Ahmed Bello by phone at +1-506-899-4941 or schedule a conversation via Calendly.",
-        phone: "+1-506-899-4941",
-        calendly: "https://calendly.com/olabel/30min",
+        phone: siteConfig.publicPhone,
+        calendly: siteConfig.schedulingUrl,
       },
     };
   }
@@ -1093,8 +1094,8 @@ Une simple question pour vous aider (répondez directement à ce courriel) :
 ${asset.replyQuestion}
 
 Vous préférez poser une question rapide de vive voix ?
-Poser une question en 15 min (gratuit, sans pression) : https://calendly.com/olabel/30min
-Téléphone direct : +1-506-899-4941 | Courriel : enquiries@ahmedbello.com
+${getCtaLabel(true)} : ${siteConfig.schedulingUrl}
+Téléphone direct : ${siteConfig.publicPhone} | Courriel : ${siteConfig.publicEmail}
 
 Cordialement,
 Ahmed Bello
@@ -1120,8 +1121,8 @@ Quick question — just hit reply to this email:
 ${asset.replyQuestion}
 
 Prefer to talk through one quick detail instead?
-Ask a 15-min question (free, no pitch): https://calendly.com/olabel/30min
-Direct Phone: +1-506-899-4941 | Direct Email: enquiries@ahmedbello.com
+${getCtaLabel(false)}: ${siteConfig.schedulingUrl}
+Direct Phone: ${siteConfig.publicPhone} | Direct Email: ${siteConfig.publicEmail}
 
 Warm regards,
 Ahmed Bello
@@ -1143,8 +1144,8 @@ En attendant ma réponse personnelle :
 2. Si vous le souhaitez, répondez simplement à ce courriel pour préciser votre échéancier principal (moins d'un an ou 2 à 5 ans).
 
 Si vous préférez un échange rapide :
-Poser une question en 15 min (sans pression) : https://calendly.com/olabel/30min
-Téléphone direct : +1-506-899-4941 | Courriel : enquiries@ahmedbello.com
+${getCtaLabel(true)} : ${siteConfig.schedulingUrl}
+Téléphone direct : ${siteConfig.publicPhone} | Courriel : ${siteConfig.publicEmail}
 
 Cordialement,
 Ahmed Bello
@@ -1164,8 +1165,8 @@ While I review your note:
 2. If you want to add one detail so my reply is tailored to your numbers, just hit reply: are you looking at a decision in the next 12 months, or planning 2–5 years ahead?
 
 Prefer a quick conversation instead?
-Ask a 15-min question (free, no pitch): https://calendly.com/olabel/30min
-Direct Telephone: +1-506-899-4941 | Direct Email: enquiries@ahmedbello.com
+${getCtaLabel(false)}: ${siteConfig.schedulingUrl}
+Direct Telephone: ${siteConfig.publicPhone} | Direct Email: ${siteConfig.publicEmail}
 
 Warm regards,
 Ahmed Bello
@@ -1206,8 +1207,8 @@ https://www.ahmedbello.com`;
           error: "delivery_failed",
           message:
             "Your message could not be sent right now. Please reach out directly to Ahmed Bello by phone at +1-506-899-4941 or schedule a conversation via Calendly.",
-          phone: "+1-506-899-4941",
-          calendly: "https://calendly.com/olabel/30min",
+          phone: siteConfig.publicPhone,
+          calendly: siteConfig.schedulingUrl,
         },
       };
     }
@@ -1264,8 +1265,8 @@ https://www.ahmedbello.com`;
         error: "submission_failed",
         message:
           "Your message could not be sent right now. Please reach out directly to Ahmed Bello by phone at +1-506-899-4941 or schedule a conversation via Calendly.",
-        phone: "+1-506-899-4941",
-        calendly: "https://calendly.com/olabel/30min",
+        phone: siteConfig.publicPhone,
+        calendly: siteConfig.schedulingUrl,
       },
     };
   }

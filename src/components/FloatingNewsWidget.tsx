@@ -30,47 +30,41 @@ export const FloatingNewsWidget: React.FC = () => {
 
   return (
     <aside
-      aria-label={isFr ? "Changements récents aux règles financières" : "Recent Canadian money rule updates"}
-      className="fixed right-3 bottom-20 sm:bottom-8 z-40 select-none"
+      aria-label={isFr ? "Règles financières 2026" : "2026 Canadian money rules"}
+      className="hidden md:block fixed right-4 bottom-8 z-40 select-none"
     >
       {/* 1. Hanging Floating Trigger Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="group flex items-center gap-2 p-2.5 bg-[#1a2c22] hover:bg-[#253d30] text-[#f7f3eb] rounded-[2px] border border-[#d6c298]/60 shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer"
-          title={isFr ? "Voir les changements réglementaires récents" : "What Changed in Canadian Money Rules"}
+          className="group flex items-center gap-2 p-2.5 bg-[#1a2c22] hover:bg-[#253d30] text-[#f7f3eb] rounded-[2px] border border-[#d6c298]/60 shadow-xs transition-colors duration-200 cursor-pointer"
+          title={isFr ? "Règles financières 2026" : "2026 Money Rules"}
           aria-expanded={isOpen}
-          aria-label={isFr ? "Changements aux règles" : "Money Rule Changes"}
+          aria-label={isFr ? "Règles financières 2026" : "2026 Money Rules"}
         >
-          <span className="inline-flex h-2 w-2 rounded-[1px] bg-[#d6c298]" aria-hidden="true" />
-
-          <Newspaper className="w-4 h-4 text-[#d6c298] group-hover:scale-105 transition-transform" />
-
-          <span className="hidden group-hover:inline-block pr-1 text-[0.7rem] font-medium tracking-wide text-[#ece6da]">
-            {isFr ? "Règles 2026" : "Rule Updates"}
+          <Newspaper className="w-4 h-4 text-[#d6c298]" aria-hidden="true" />
+          <span className="hidden group-hover:inline-block pr-1 text-xs font-medium text-[#ece6da]">
+            {isFr ? "Règles 2026" : "2026 Money Rules"}
           </span>
         </button>
       )}
 
       {/* 2. Compact Popup Preview */}
       {isOpen && (
-        <div className="w-80 sm:w-88 bg-[#1a2c22] text-[#f7f3eb] border border-[#d6c298]/80 rounded-[2px] shadow-2xl overflow-hidden">
+        <div className="w-80 bg-[#1a2c22] text-[#f7f3eb] border border-[#d6c298]/70 rounded-[2px] shadow-xs overflow-hidden">
           {/* Header */}
           <div className="px-3.5 py-2.5 bg-[#24392e] border-b border-[#2e4a3b] flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex h-2 w-2 rounded-[1px] bg-[#d6c298]" aria-hidden="true" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#d6c298]">
-                {isFr ? "Ce qui a changé (Nov 2026)" : "What Changed (Nov 2026)"}
-              </span>
-            </div>
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#d6c298]">
+              {isFr ? "Règles 2026 (Nov.)" : "2026 Money Rules (Nov)"}
+            </span>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 text-[#ece6da]/70 hover:text-[#f7f3eb] hover:bg-[#2e4a3b] rounded-xs transition-colors cursor-pointer"
+              className="p-1 text-[#ece6da]/70 hover:text-[#f7f3eb] hover:bg-[#2e4a3b] rounded-[2px] transition-colors cursor-pointer"
               title={isFr ? "Fermer" : "Close"}
               aria-label={isFr ? "Fermer" : "Close"}
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
           </div>
 

@@ -5,7 +5,8 @@ import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
-import { trackCtaClick } from "../lib/track.ts";
+import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
+import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 import {
   ArrowRight,
   Scale,
@@ -64,7 +65,7 @@ export const InsightsPage: React.FC = () => {
   });
 
   return (
-    <div className="py-12 md:py-16">
+    <div>
       <SEO
         title={
           isFr
@@ -80,9 +81,9 @@ export const InsightsPage: React.FC = () => {
       />
 
       {/* 1. Header with Editorial Rationale */}
-      <section className="section pb-12 pt-4 border-b border-[#d6cebd]">
+      <section className="section border-b border-[#d6cebd]">
         <div className="wrap max-w-5xl space-y-5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#2e4a3b]">
             <Layers className="w-3.5 h-3.5 text-[#75581f]" />
             <span>
               {isFr
@@ -91,16 +92,13 @@ export const InsightsPage: React.FC = () => {
             </span>
           </div>
 
-          <h1
-            className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1c1b18] leading-[1.12] tracking-tight"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <h1 className="h1 text-[#1c1b18]">
             {isFr
               ? "Analyser les décisions financières à fort enjeu."
               : "Rigorous frameworks for high-stakes financial decisions."}
           </h1>
 
-          <p className="lede text-base sm:text-lg text-[#46423a] leading-relaxed max-w-3xl">
+          <p className="lede measure">
             {isFr
               ? "Notre bibliothèque éducative détaille les plafonds officiels de l'ARC et des régimes enregistrés. Ces essais approfondis examinent la mécanique économique sous-jacente : la gestion de trésorerie corporative, la préservation de la liquidité du bilan familial et l'alignement des incitations professionnelles."
               : "While the education library explains CRA registered limits and basic rules, these long-form essays provide quantitative economic analysis: corporate treasury management, total household balance-sheet liquidity, and distinguishing objective licensing principles from sales rhetoric."}
@@ -161,14 +159,14 @@ export const InsightsPage: React.FC = () => {
 
       {/* 2. Flagship Mega Briefings Duo */}
       {selectedTheme === "all" && (
-        <section className="section py-16 border-b border-[#d6cebd] bg-[#fcfaf5]">
+        <section className="section border-b border-[#d6cebd] bg-[#fcfaf5]">
           <div className="wrap max-w-5xl space-y-8">
             <div className="flex items-center justify-between">
               <div>
                 <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block">
                   {isFr ? "Recherche de fond" : "Flagship Research"}
                 </span>
-                <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18]">
+                <h2 className="h2 text-[#1c1b18]">
                   {isFr ? "Analyses institutionnelles phares" : "Flagship Balance-Sheet Studies"}
                 </h2>
               </div>
@@ -181,22 +179,22 @@ export const InsightsPage: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Flagship 1: CCPC Passive Income Grind */}
               {ccpcEssay && (
-                <div className="p-7 sm:p-8 bg-[#f7f3eb] border-2 border-[#2e4a3b] rounded-[2px] flex flex-col justify-between space-y-5 hover:border-[#1c1b18] transition-all shadow-xs">
+                <div className="card-editorial border-[#2e4a3b]/60 p-7 sm:p-8 flex flex-col justify-between space-y-5 hover:border-[#2e4a3b] transition-colors">
                   <div className="space-y-3.5">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-[#75581f] text-white text-[0.68rem] font-bold uppercase tracking-wider rounded-[2px] inline-flex items-center gap-1">
-                        <Landmark className="w-3 h-3" />
+                      <span className="text-[0.72rem] font-semibold uppercase tracking-wider text-[#75581f] inline-flex items-center gap-1">
+                        <Landmark className="w-3.5 h-3.5" />
                         <span>{isFr ? "Fiscalité corporative" : "Corporate Tax Drag"}</span>
                       </span>
                       <span className="text-xs text-[#625d52]">
-                        {ccpcEssay.readingMinutes} {isFr ? "min de lecture" : "min read"}
+                        &bull; {ccpcEssay.readingMinutes} {isFr ? "min de lecture" : "min read"}
                       </span>
                       <span className="text-xs text-[#75581f] font-medium hidden sm:inline">
                         &bull; {isFr ? "LIR par. 125(5.1)" : "ITA Subsection 125(5.1)"}
                       </span>
                     </div>
 
-                    <h3 className="font-serif text-2xl text-[#1c1b18] leading-tight">
+                    <h3 className="h3 text-[#1c1b18]">
                       <Link
                         to={`${prefix}${ccpcEssay.url}`}
                         className="hover:text-[#2e4a3b] transition-colors"
@@ -209,12 +207,12 @@ export const InsightsPage: React.FC = () => {
                       {isFr ? ARTICLE_FR_SEO[ccpcEssay.slug]?.description || ccpcEssay.description : ccpcEssay.description}
                     </p>
 
-                    <div className="p-3 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
-                      <strong>{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{ccpcEssay.problem}&rdquo;
-                    </div>
+                    <p className="pt-3 border-t border-[#d6cebd] text-xs text-[#46423a]">
+                      <strong className="text-[#1c1b18]">{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{ccpcEssay.problem}&rdquo;
+                    </p>
                   </div>
 
-                  <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between">
+                  <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between gap-2">
                     <Link
                       to={`${prefix}${ccpcEssay.url}`}
                       className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center gap-1.5"
@@ -222,8 +220,8 @@ export const InsightsPage: React.FC = () => {
                       <span>{isFr ? "Lire l'analyse complète" : "Read Strategic Analysis"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
-                    <span className="text-[0.7rem] font-mono text-[#625d52]">
-                      {isFr ? "Étude de cas : 1,8 M$ de capital conservé" : "Case Study: $1.8M Retained Capital"}
+                    <span className="text-[0.72rem] tabular-nums text-[#625d52]">
+                      {isFr ? "Étude : 1,8 M$ conservé" : "Case: $1.8M Retained Capital"}
                     </span>
                   </div>
                 </div>
@@ -231,22 +229,22 @@ export const InsightsPage: React.FC = () => {
 
               {/* Flagship 2: Canadian Mortgage Renewal Shock */}
               {mortgageEssay && (
-                <div className="p-7 sm:p-8 bg-[#f7f3eb] border-2 border-[#2e4a3b] rounded-[2px] flex flex-col justify-between space-y-5 hover:border-[#1c1b18] transition-all shadow-xs">
+                <div className="card-editorial border-[#2e4a3b]/60 p-7 sm:p-8 flex flex-col justify-between space-y-5 hover:border-[#2e4a3b] transition-colors">
                   <div className="space-y-3.5">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-[#2e4a3b] text-white text-[0.68rem] font-bold uppercase tracking-wider rounded-[2px] inline-flex items-center gap-1">
-                        <ShieldAlert className="w-3 h-3" />
+                      <span className="text-[0.72rem] font-semibold uppercase tracking-wider text-[#2e4a3b] inline-flex items-center gap-1">
+                        <ShieldAlert className="w-3.5 h-3.5" />
                         <span>{isFr ? "Trésorerie des ménages" : "Household Liquidity"}</span>
                       </span>
                       <span className="text-xs text-[#625d52]">
-                        {mortgageEssay.readingMinutes} {isFr ? "min de lecture" : "min read"}
+                        &bull; {mortgageEssay.readingMinutes} {isFr ? "min de lecture" : "min read"}
                       </span>
                       <span className="text-xs text-[#75581f] font-medium hidden sm:inline">
                         &bull; {isFr ? "Revue Banque du Canada" : "Bank of Canada Review"}
                       </span>
                     </div>
 
-                    <h3 className="font-serif text-2xl text-[#1c1b18] leading-tight">
+                    <h3 className="h3 text-[#1c1b18]">
                       <Link
                         to={`${prefix}${mortgageEssay.url}`}
                         className="hover:text-[#2e4a3b] transition-colors"
@@ -259,12 +257,12 @@ export const InsightsPage: React.FC = () => {
                       {isFr ? ARTICLE_FR_SEO[mortgageEssay.slug]?.description || mortgageEssay.description : mortgageEssay.description}
                     </p>
 
-                    <div className="p-3 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
-                      <strong>{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{mortgageEssay.problem}&rdquo;
-                    </div>
+                    <p className="pt-3 border-t border-[#d6cebd] text-xs text-[#46423a]">
+                      <strong className="text-[#1c1b18]">{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{mortgageEssay.problem}&rdquo;
+                    </p>
                   </div>
 
-                  <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between">
+                  <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between gap-2">
                     <Link
                       to={`${prefix}${mortgageEssay.url}`}
                       className="btn btn-primary text-xs py-2.5 px-4 inline-flex items-center gap-1.5"
@@ -272,8 +270,8 @@ export const InsightsPage: React.FC = () => {
                       <span>{isFr ? "Lire l'analyse complète" : "Read Strategic Analysis"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
-                    <span className="text-[0.7rem] font-mono text-[#625d52]">
-                      {isFr ? "Étude de cas : Piège de remboursement anticipé de 60k$" : "Case Study: $60k Prepayment Trap"}
+                    <span className="text-[0.72rem] tabular-nums text-[#625d52]">
+                      {isFr ? "Étude : Piège de 60 k$" : "Case: $60k Prepayment Trap"}
                     </span>
                   </div>
                 </div>
@@ -299,13 +297,13 @@ export const InsightsPage: React.FC = () => {
       </section>
 
       {/* 4. Complete Catalog of Strategic Essays */}
-      <section className="section py-16 border-b border-[#d6cebd]">
+      <section className="section border-b border-[#d6cebd]">
         <div className="wrap max-w-5xl space-y-8">
           <div>
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f]">
               {isFr ? "Tous les essais" : "All Briefings & Frameworks"}
             </span>
-            <h2 className="font-serif text-3xl text-[#1c1b18] mt-1">
+            <h2 className="h2 text-[#1c1b18] mt-1">
               {isFr
                 ? "Cadres décisionnels & Études comparatives"
                 : "Foundational Decision Frameworks"}
@@ -323,7 +321,7 @@ export const InsightsPage: React.FC = () => {
               return (
                 <div
                   key={essay.slug}
-                  className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col justify-between space-y-4 hover:border-[#2e4a3b] transition-all"
+                  className="card-editorial p-6 flex flex-col justify-between space-y-4 hover:border-[#2e4a3b] transition-colors"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-xs text-[#625d52]">
@@ -354,7 +352,7 @@ export const InsightsPage: React.FC = () => {
                       </span>
                     </div>
 
-                    <h3 className="font-serif text-xl text-[#1c1b18] leading-snug">
+                    <h3 className="h3 text-[#1c1b18]">
                       <Link to={`${prefix}${essay.url}`} className="hover:text-[#2e4a3b] transition-colors">
                         {isFr ? ARTICLE_FR_SEO[essay.slug]?.title || essay.title : essay.title}
                       </Link>
@@ -364,9 +362,9 @@ export const InsightsPage: React.FC = () => {
                       {isFr ? ARTICLE_FR_SEO[essay.slug]?.description || essay.description : essay.description}
                     </p>
 
-                    <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
-                      <strong>{isFr ? "La question :" : "The Question:"}</strong> {essay.question}
-                    </div>
+                    <p className="pt-3 border-t border-[#ece6da] text-xs text-[#46423a]">
+                      <strong className="text-[#1c1b18]">{isFr ? "La question :" : "The Question:"}</strong> {essay.question}
+                    </p>
                   </div>
 
                   <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between">
@@ -386,7 +384,7 @@ export const InsightsPage: React.FC = () => {
       </section>
 
       {/* 5. Audience Navigation Hubs Shortcut */}
-      <section className="section py-16 bg-[#fcfaf5] border-b border-[#d6cebd]">
+      <section className="section bg-[#fcfaf5] border-b border-[#d6cebd]">
         <div className="wrap max-w-5xl space-y-6">
           <div>
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f]">
@@ -491,7 +489,7 @@ export const InsightsPage: React.FC = () => {
             <div className="flex items-center gap-3">
               <Calculator className="w-6 h-6 text-[#d6c298] shrink-0" />
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                <span className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold block">
                   {isFr ? "Outils de Simulation Fiscale" : "Interactive Decision Simulators"}
                 </span>
                 <p className="text-sm font-serif text-white mt-0.5">
@@ -519,7 +517,7 @@ export const InsightsPage: React.FC = () => {
       </section>
 
       {/* 6. Educational Mailing List with Honest Copy */}
-      <section className="section py-16 border-b border-[#d6cebd] bg-[#f7f3eb]">
+      <section className="section border-b border-[#d6cebd] bg-[#f7f3eb]">
         <div className="wrap max-w-4xl">
           <NewsletterSignup
             source="insights_page"
@@ -534,21 +532,32 @@ export const InsightsPage: React.FC = () => {
       </section>
 
       {/* 7. Closing Consultation CTA */}
-      <section className="section py-20 text-center">
+      <section className="section text-center">
         <div className="wrap max-w-3xl space-y-6">
           <h2 className="display text-[#1c1b18]">
             {isFr
               ? "Une meilleure décision financière commence par une meilleure question."
               : "A better financial decision starts with a better question."}
           </h2>
-          <p className="lede text-base md:text-lg text-[#46423a] max-w-xl mx-auto">
+          <p className="lede measure mx-auto">
             {isFr
               ? "Qu'il s'agisse de gérer le plafond de revenus passifs de votre société, un renouvellement hypothécaire ou la protection de votre famille, commençons par un échange direct."
               : "Whether managing your corporation's passive investment threshold, evaluating a mortgage renewal, or structuring family income protection, let’s start with a direct conversation."}
           </p>
-          <div className="pt-2 flex justify-center">
-            <Link to={`${prefix}/contact`} className="btn btn-primary text-base px-8 py-3">
-              {isFr ? "Démarrer une conversation →" : "Start a Conversation →"}
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-5">
+            {siteConfig.schedulingUrl && (
+              <a
+                href={siteConfig.schedulingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackBookingClick("insights_bottom")}
+                className="btn btn-primary text-base px-8 py-3"
+              >
+                {getCtaLabel(isFr)}
+              </a>
+            )}
+            <Link to={`${prefix}/contact`} className="arrow-link text-sm">
+              {getSecondaryCtaLabel(isFr)} →
             </Link>
           </div>
           <p className="text-xs text-[#625d52]">

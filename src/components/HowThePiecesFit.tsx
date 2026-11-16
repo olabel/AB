@@ -145,7 +145,7 @@ export const HowThePiecesFit: React.FC = () => {
   ];
 
   return (
-    <section className="section py-16 border-b border-[#d6cebd] bg-[#f7f3eb]">
+    <section className="section border-b border-[#d6cebd] bg-[#f7f3eb]">
       <div className="wrap max-w-6xl space-y-10">
         {/* Header Block */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#d6cebd] pb-6">
@@ -164,7 +164,7 @@ export const HowThePiecesFit: React.FC = () => {
             </p>
           </div>
 
-          <div className="hidden lg:flex items-center gap-2 text-xs text-[#75581f] font-mono font-semibold bg-[#ece6da]/50 px-3 py-2 border border-[#d6cebd] rounded-[2px]">
+          <div className="hidden lg:flex items-center gap-2 text-xs text-[#75581f] font-semibold bg-[#ece6da]/50 px-3 py-2 border border-[#d6cebd] rounded-[2px]">
             <Scale className="w-4 h-4 text-[#75581f]" />
             <span>{isFr ? "Planification financière coordonnée" : "Coordinated Financial Planning"}</span>
           </div>
@@ -187,7 +187,7 @@ export const HowThePiecesFit: React.FC = () => {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold tracking-widest text-[#75581f]">
+                    <span className="text-[11px] tabular-nums font-bold tracking-widest text-[#75581f]">
                       {p.tag}
                     </span>
                     <div
@@ -240,7 +240,7 @@ export const HowThePiecesFit: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <RefreshCw className="w-4 h-4 text-[#d6c298]" />
-                <span className="text-xs font-mono uppercase tracking-wider text-[#d6c298] font-semibold">
+                <span className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold">
                   {isFr ? "Simulateur de choc systémique" : "Live Interdependence Test"}
                 </span>
               </div>
@@ -283,7 +283,7 @@ export const HowThePiecesFit: React.FC = () => {
               <p className="text-xs text-red-100/80 leading-relaxed">
                 {current.problemDesc}
               </p>
-              <div className="pt-2 text-[11px] font-mono text-red-300/80 border-t border-red-900/30">
+              <div className="pt-2 text-[11px] font-medium text-red-300/80 border-t border-red-900/30">
                 {isFr ? "Conséquence : Perte de rendement & liquidité restreinte" : "Result: Compromised compounding & emergency illiquidity"}
               </div>
             </div>
@@ -297,7 +297,7 @@ export const HowThePiecesFit: React.FC = () => {
                     {current.solutionTitle}
                   </h4>
                 </div>
-                <span className="text-[10px] font-mono bg-[#d6c298] text-[#14211a] font-bold px-2 py-0.5 rounded-[1px] shrink-0">
+                <span className="text-[10px] tabular-nums bg-[#d6c298] text-[#14211a] font-bold px-2 py-0.5 rounded-[1px] shrink-0">
                   {current.impactMetric}
                 </span>
               </div>
@@ -309,7 +309,7 @@ export const HowThePiecesFit: React.FC = () => {
                 <span>{current.assumptions}</span>
               </div>
               <div className="pt-2 flex items-center justify-between text-[11px] border-t border-[#2e4a3b]">
-                <span className="text-[#d6c298]/80 font-mono">
+                <span className="text-[#d6c298]/80 font-medium">
                   {isFr ? "Piliers mobilisés de concert" : "Synchronized Pillars"}
                 </span>
                 <Link

@@ -182,7 +182,7 @@ export const StructuralCaseStudies: React.FC = () => {
       {/* Active Case View */}
       <div className="p-6 md:p-8 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] space-y-6">
         <div className="space-y-1.5">
-          <span className="text-xs font-mono font-semibold text-[#75581f] uppercase tracking-wider">
+          <span className="eyebrow text-[#75581f]">
             {activeCase.tag}
           </span>
           <h4 className="font-serif text-2xl text-[#1c1b18]">{activeCase.title}</h4>

@@ -8,6 +8,7 @@ import {
   BlindspotItem,
 } from "../content/blindspotsData.ts";
 import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
+import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
 import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 import {
   Search,
@@ -32,13 +33,11 @@ export const CostlyBlindspotsPage: React.FC = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [showAllBlindspots, setShowAllBlindspots] = useState<boolean>(false);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(() => {
     const hashId = typeof window !== "undefined" ? window.location.hash.replace("#", "") : "";
-    const initial: Record<string, boolean> = {
-      "clb-zero-dollar-deposit-resp": true,
-      "cmhc-eco-plus-25-percent-refund": true,
-      "disability-tax-credit-unlocks-six-benefits": true,
-    };
+    const initial: Record<string, boolean> = {};
+    if (BLINDSPOTS_DATA[0]) initial[BLINDSPOTS_DATA[0].id] = true;
     if (hashId) initial[hashId] = true;
     return initial;
   });
@@ -206,10 +205,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
             </span>
           </div>
 
-          <h1
-            className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1c1b18] leading-[1.14] tracking-tight"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <h1 className="h1 text-[#1c1b18]">
             {isFr
               ? "Pièges financiers canadiens que la majorité découvrent trop tard."
               : "Costly Canadian money blindspots most people discover too late."}
@@ -389,8 +385,8 @@ export const CostlyBlindspotsPage: React.FC = () => {
       </section>
 
       {/* Main List Section */}
-      <section className="section py-10">
-        <div className="wrap max-w-5xl space-y-6">
+      <section className="section">
+        <div className="wrap max-w-5xl space-y-5">
           {filteredItems.length === 0 ? (
             <div className="p-10 text-center bg-white border border-[#d6cebd] rounded-[2px] space-y-3">
               <AlertTriangle className="w-8 h-8 text-[#75581f] mx-auto" />
@@ -424,17 +420,24 @@ export const CostlyBlindspotsPage: React.FC = () => {
               const costStake = isFr ? item.costStakeFr : item.costStakeEn;
               const categoryLabel = isFr ? item.categoryFr : item.categoryEn;
               const isCopied = copiedId === item.id;
+              const isHashMatch = location.hash.replace("#", "") === item.id;
+              const isVisuallyFolded =
+                !showAllBlindspots &&
+                !searchQuery.trim() &&
+                selectedCategory === "all" &&
+                idx >= 8 &&
+                !isHashMatch;
 
               return (
                 <React.Fragment key={item.id}>
                   <article
                     id={item.id}
-                    className={`bg-white border rounded-[2px] shadow-xs transition-shadow hover:shadow-sm overflow-hidden scroll-mt-36 ${
-                      isFlagged ? "border-[#2e4a3b] ring-1 ring-[#2e4a3b]/20" : "border-[#d6cebd]"
-                    }`}
+                    className={`card-editorial overflow-hidden scroll-mt-36 transition-shadow hover:shadow-sm ${
+                      isFlagged ? "border-[#2e4a3b]" : ""
+                    } ${isVisuallyFolded ? "hidden" : ""}`}
                   >
                     {/* Card Header & Toggle */}
-                    <div className="p-5 sm:p-6 flex items-start justify-between gap-4 hover:bg-[#fcfaf5]/60 transition-colors">
+                    <div className="p-5 sm:p-6 flex items-start justify-between gap-4 hover:bg-[#f7f3eb]/50 transition-colors">
                       <button
                         type="button"
                         onClick={() => toggleItem(item.id)}
@@ -443,8 +446,8 @@ export const CostlyBlindspotsPage: React.FC = () => {
                       >
                         <div className="space-y-2 flex-1">
                           {/* Quiet Unboxed Metadata */}
-                          <div className="flex items-center gap-2 text-[11px] text-[#625d52] font-mono">
-                            <span className="font-bold text-[#75581f]">
+                          <div className="flex items-center gap-2 text-xs text-[#625d52]">
+                            <span className="tabular-nums font-semibold text-[#75581f]">
                               {String(item.number).padStart(2, "0")}
                             </span>
                             <span aria-hidden="true">/</span>
@@ -485,10 +488,10 @@ export const CostlyBlindspotsPage: React.FC = () => {
                           onClick={(e) => toggleFlag(item.id, e)}
                           aria-pressed={isFlagged}
                           aria-label={isFr ? "Ajouter à ma liste" : "Flag for my checklist"}
-                          className={`inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-medium rounded-[2px] border transition-colors cursor-pointer ${
+                          className={`inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-[2px] border transition-colors cursor-pointer ${
                             isFlagged
                               ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b]"
-                              : "bg-[#fcfaf5] text-[#46423a] border-[#d6cebd] hover:border-[#2e4a3b]"
+                              : "bg-white text-[#46423a] border-[#d6cebd] hover:border-[#2e4a3b]"
                           }`}
                         >
                           {isFlagged ? (
@@ -506,98 +509,102 @@ export const CostlyBlindspotsPage: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Expanded Body Content */}
-                    {isExpanded && (
-                      <div className="px-5 pb-6 sm:px-6 sm:pb-7 pt-2 border-t border-[#ece6da] bg-[#fcfaf5]/30 space-y-5 animate-fadeIn">
-                        {/* Full Explanation */}
-                        <div className="text-xs sm:text-sm text-[#46423a] leading-relaxed space-y-3">
-                          <p>{summary}</p>
+                    {/* CSS-collapsed Body Content (retained in HTML DOM for crawlability) */}
+                    <div
+                      className={
+                        isExpanded
+                          ? "px-5 pb-6 sm:px-6 sm:pb-7 pt-3 border-t border-[#ece6da] bg-white space-y-5"
+                          : "hidden"
+                      }
+                    >
+                      {/* Full Explanation */}
+                      <div className="text-xs sm:text-sm text-[#46423a] leading-relaxed space-y-3">
+                        <p>{summary}</p>
+                      </div>
+
+                      {/* Human Case Story */}
+                      <div className="pt-3 border-t border-[#ece6da] space-y-1.5">
+                        <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#75581f] font-semibold">
+                          <Users className="w-3.5 h-3.5" />
+                          <span>{isFr ? "Exemple concret" : "Real-World Experience"}</span>
+                        </div>
+                        <p className="text-xs sm:text-sm text-[#33302a] leading-relaxed italic">
+                          "{story}"
+                        </p>
+                      </div>
+
+                      {/* Actionable Directive: Do This */}
+                      <div className="p-4 bg-[#14211a] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] space-y-1.5">
+                        <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#d6c298] font-semibold">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#d6c298]" />
+                          <span>{isFr ? "Ce qu'il faut faire :" : "Actionable Step:"}</span>
+                        </div>
+                        <p className="text-xs sm:text-sm text-[#ece6da] leading-relaxed font-medium">
+                          {action}
+                        </p>
+                      </div>
+
+                      {/* Card Footer Actions */}
+                      <div className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs border-t border-[#ece6da]/80">
+                        {/* Tags */}
+                        <div className="flex items-center gap-2 text-[#7d776a] text-xs">
+                          <span>
+                            {(isFr ? item.tagsFr : item.tagsEn).join(" · ")}
+                          </span>
                         </div>
 
-                        {/* Human Case Story Box */}
-                        <div className="p-4 bg-white border border-[#d6cebd] rounded-[2px] space-y-1.5">
-                          <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-[#75581f] font-bold">
-                            <Users className="w-3.5 h-3.5" />
-                            <span>{isFr ? "Exemple concret" : "Real-World Experience"}</span>
-                          </div>
-                          <p className="text-xs text-[#33302a] leading-relaxed italic">
-                            "{story}"
-                          </p>
-                        </div>
+                        {/* Interactive Buttons */}
+                        <div className="flex flex-wrap items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => handleCopy(item)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#d6cebd] hover:border-[#2e4a3b] text-[#46423a] rounded-[2px] transition-colors cursor-pointer"
+                          >
+                            {isCopied ? (
+                              <>
+                                <CheckCircle2 className="w-3.5 h-3.5 text-[#2e4a3b]" />
+                                <span className="text-[#2e4a3b] font-medium">
+                                  {isFr ? "Copié !" : "Copied!"}
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5 text-[#75581f]" />
+                                <span>{isFr ? "Copier l'action" : "Copy takeaway"}</span>
+                              </>
+                            )}
+                          </button>
 
-                        {/* Actionable Directive: Do This */}
-                        <div className="p-4 bg-[#14211a] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] space-y-1.5">
-                          <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-[#d6c298] font-bold">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#d6c298]" />
-                            <span>{isFr ? "Ce qu'il faut faire :" : "Actionable Step:"}</span>
-                          </div>
-                          <p className="text-xs sm:text-sm text-[#ece6da] leading-relaxed font-medium">
-                            {action}
-                          </p>
-                        </div>
-
-                        {/* Card Footer Actions */}
-                        <div className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs border-t border-[#ece6da]/80">
-                          {/* Tags */}
-                          <div className="flex items-center gap-2 text-[#7d776a] text-[11px]">
-                            <span>
-                              {(isFr ? item.tagsFr : item.tagsEn).join(" · ")}
-                            </span>
-                          </div>
-
-                          {/* Interactive Buttons */}
-                          <div className="flex flex-wrap items-center gap-2">
-                            <button
-                              type="button"
-                              onClick={() => handleCopy(item)}
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#d6cebd] hover:border-[#2e4a3b] text-[#46423a] rounded-[2px] transition-colors cursor-pointer"
+                          {item.calculatorTab && (
+                            <Link
+                              to={`${prefix}/calculators?tab=${item.calculatorTab}#calculator-tool`}
+                              onClick={() => trackCtaClick("blindspot_calculator_link", item.id)}
+                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#2e4a3b] text-[#f7f3eb] hover:bg-[#3d6350] rounded-[2px] transition-colors font-medium"
                             >
-                              {isCopied ? (
-                                <>
-                                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2e4a3b]" />
-                                  <span className="text-[#2e4a3b] font-medium">
-                                    {isFr ? "Copié !" : "Copied!"}
-                                  </span>
-                                </>
-                              ) : (
-                                <>
-                                  <Copy className="w-3.5 h-3.5 text-[#75581f]" />
-                                  <span>{isFr ? "Copier l'action" : "Copy takeaway"}</span>
-                                </>
-                              )}
-                            </button>
+                              <span>{isFr ? "Simuler vos chiffres" : "Model in calculator"}</span>
+                              <ArrowRight className="w-3 h-3 text-[#d6c298]" />
+                            </Link>
+                          )}
 
-                            {item.calculatorTab && (
-                              <Link
-                                to={`${prefix}/calculators?tab=${item.calculatorTab}#calculator-tool`}
-                                onClick={() => trackCtaClick("blindspot_calculator_link", item.id)}
-                                className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#2e4a3b] text-[#f7f3eb] hover:bg-[#3d6350] rounded-[2px] transition-colors font-medium"
-                              >
-                                <span>{isFr ? "Simuler vos chiffres" : "Model in calculator"}</span>
-                                <ArrowRight className="w-3 h-3 text-[#d6c298]" />
-                              </Link>
-                            )}
-
-                            {item.relatedPath && !item.calculatorTab && (
-                              <Link
-                                to={`${prefix}${item.relatedPath}`}
-                                className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#2e4a3b] text-[#f7f3eb] hover:bg-[#3d6350] rounded-[2px] transition-colors font-medium"
-                              >
-                                <span>{isFr ? "Lire le guide complet" : "Read related guide"}</span>
-                                <ArrowRight className="w-3 h-3 text-[#d6c298]" />
-                              </Link>
-                            )}
-                          </div>
+                          {item.relatedPath && !item.calculatorTab && (
+                            <Link
+                              to={`${prefix}${item.relatedPath}`}
+                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#2e4a3b] text-[#f7f3eb] hover:bg-[#3d6350] rounded-[2px] transition-colors font-medium"
+                            >
+                              <span>{isFr ? "Lire le guide complet" : "Read related guide"}</span>
+                              <ArrowRight className="w-3 h-3 text-[#d6c298]" />
+                            </Link>
+                          )}
                         </div>
                       </div>
-                    )}
+                    </div>
                   </article>
 
                   {/* Mid-Feed Contextual Lead Capture after card #5 */}
                   {idx === 4 && filteredItems.length > 6 && (
-                    <div className="p-6 bg-[#fcfaf5] border-2 border-[#2e4a3b]/35 rounded-[2px] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div className="card-editorial p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                       <div className="space-y-1 max-w-xl">
-                        <span className="text-[11px] font-mono uppercase tracking-wider text-[#75581f] font-bold block">
+                        <span className="text-xs uppercase tracking-wider text-[#75581f] font-semibold block">
                           {isFr ? "Aide-Mémoire Gratuit" : "Free Personal Checklist"}
                         </span>
                         <h3 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-medium">
@@ -627,6 +634,31 @@ export const CostlyBlindspotsPage: React.FC = () => {
                 </React.Fragment>
               );
             })
+          )}
+
+          {!searchQuery.trim() && selectedCategory === "all" && filteredItems.length > 8 && (
+            <div className="text-center pt-2">
+              <button
+                type="button"
+                onClick={() => setShowAllBlindspots((prev) => !prev)}
+                className="btn btn-ghost text-sm px-6 py-2.5 inline-flex items-center gap-2 cursor-pointer"
+              >
+                <span>
+                  {showAllBlindspots
+                    ? isFr
+                      ? "Réduire la liste"
+                      : "Show fewer blindspots"
+                    : isFr
+                    ? `Afficher tous les ${filteredItems.length} pièges financiers`
+                    : `Show all ${filteredItems.length} blindspots`}
+                </span>
+                {showAllBlindspots ? (
+                  <ChevronUp className="w-4 h-4" aria-hidden="true" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" aria-hidden="true" />
+                )}
+              </button>
+            </div>
           )}
 
           {/* Personalized Blindspots Checklist Email Capture */}
@@ -668,9 +700,9 @@ export const CostlyBlindspotsPage: React.FC = () => {
               />
             )}
             {flaggedIds.length === 0 && !showChecklistForm && (
-              <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="card-editorial p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#75581f] font-bold">
+                  <span className="text-xs uppercase tracking-wider text-[#75581f] font-semibold">
                     {isFr ? "Passez à l'action" : "Turn Reading Into Action"}
                   </span>
                   <h3 className="font-serif text-lg text-[#1c1b18] font-medium">
@@ -701,7 +733,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
       </section>
 
       {/* Advisory Bottom Banner */}
-      <section className="section py-16 bg-[#14211a] text-[#f7f3eb] border-t border-[#2e4a3b] text-center">
+      <section className="section bg-[#14211a] text-[#f7f3eb] border-t border-[#2e4a3b] text-center">
         <div className="wrap max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b] text-[#d6c298] border border-[#d6c298]/30 rounded-[2px] text-xs font-semibold uppercase tracking-wider">
             <ShieldCheck className="w-3.5 h-3.5 text-[#d6c298]" />
@@ -716,21 +748,24 @@ export const CostlyBlindspotsPage: React.FC = () => {
 
           <p className="text-sm text-[#ece6da]/90 max-w-xl mx-auto leading-relaxed">
             {isFr
-              ? "Posez une question rapide de 15 minutes ou obtenez un second avis sans pression commerciale sur vos comptes enregistrés, votre renouvellement hypothécaire ou vos crédits non réclamés."
-              : "Ask a quick 15-minute question or get a second opinion on your registered shelters, mortgage renewal timeline, and uncollected credits—with zero sales pitch."}
+              ? "Obtenez un second avis sans pression commerciale sur vos comptes enregistrés, votre renouvellement hypothécaire ou vos crédits non réclamés."
+              : "Get a second opinion on your registered shelters, mortgage renewal timeline, and uncollected credits—with zero sales pitch."}
           </p>
 
-          <div className="pt-3">
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://calendly.com/olabel/30min"
+              href={siteConfig.schedulingUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackBookingClick("blindspots_bottom_banner")}
               className="btn btn-primary text-sm px-8 py-3.5 inline-flex items-center gap-2 shadow-md"
             >
               <Calendar className="w-4 h-4 text-[#d6c298]" />
-              <span>{isFr ? "Poser une question en 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}</span>
+              <span>{getCtaLabel(isFr)}</span>
             </a>
+            <Link to={`${prefix}/contact`} className="text-sm text-[#d6c298] hover:text-white underline">
+              {getSecondaryCtaLabel(isFr)}
+            </Link>
           </div>
         </div>
       </section>

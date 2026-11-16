@@ -91,7 +91,7 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     path: "/",
     basePath: "/",
     lang: "en-CA",
-    title: "Canadian Wealth & Protection Planning | Ahmed Bello",
+    title: "Ahmed Bello | Financial Planning in Dieppe, NB",
     description:
       "Tax-efficient wealth strategy, income protection, and registered account planning for Canadian families, CCPCs, healthcare pros, and newcomers.",
     heading: "Ahmed Bello | Licensed Financial Solutions Professional",
@@ -130,10 +130,10 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     path: "/what-changed",
     basePath: "/what-changed",
     lang: "en-CA",
-    title: "What Changed in Canadian Money Rules | Ahmed Bello",
+    title: "2026 Money Rules & CRA Updates | Ahmed Bello",
     description:
       "Nov 2026 Canadian money rule updates: Federal Budget 2026, 2027 RRSP limits, BoC 2.50% rate, CRA 3% prescribed rate, OSFI B-20, and 14% tax rules.",
-    heading: "What Changed in Canadian Money Rules",
+    heading: "2026 Canadian Money Rules & Official Updates",
     summary:
       "Verified November 2026 briefing covering Federal Budget 2026 proposals, 2027 CRA limits, Bank of Canada 2.50% policy rate, and OSFI B-20 mortgage rules.",
     priority: "0.9",
@@ -366,7 +366,7 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     path: "/fr",
     basePath: "/",
     lang: "fr-CA",
-    title: "Planification Financière & Protection | Ahmed Bello",
+    title: "Ahmed Bello | Planification financière à Dieppe, NB",
     description:
       "Stratégie patrimoniale fiscalement efficiente et protection du revenu pour familles canadiennes, SPCC, professionnels de santé et nouveaux arrivants.",
     heading: "Ahmed Bello | Professionnel en Solutions Financières Agréé",
@@ -405,10 +405,10 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     path: "/fr/what-changed",
     basePath: "/what-changed",
     lang: "fr-CA",
-    title: "Règles Financières Canadiennes | Ahmed Bello",
+    title: "Règles financières 2026 au Canada | Ahmed Bello",
     description:
       "Mises à jour nov. 2026 : Budget 2026, plafonds REER 2027, taux directeur à 2,50 %, taux prescrit à 3 %, règles BSIF B-20 et fiscalité fédérale.",
-    heading: "Ce qui a changé dans les règles financières canadiennes",
+    heading: "Règles financières canadiennes 2026 et mises à jour",
     summary:
       "Synthèse de novembre 2026 : propositions du Budget 2026, plafonds ARC 2027, taux directeur à 2,50 % et règles hypothécaires BSIF.",
     priority: "0.86",
@@ -848,4 +848,24 @@ export function getCoreRouteSeo(pathname: string): RouteSeoEntry | undefined {
 
 export function getAllIndexableCoreRoutes(): RouteSeoEntry[] {
   return CORE_ROUTES_SEO.filter((r) => !r.noIndex);
+}
+
+/**
+ * Returns the branded 1200x630 OpenGraph image URL for a given route path and page type.
+ */
+export function getOgImageForPath(pathname: string, siteUrl = SITE_URL): string {
+  const basePath = getBasePath(pathname);
+  if (basePath.startsWith("/calculators")) {
+    return `${siteUrl}/brand/og-calculator.png`;
+  }
+  if (
+    basePath.startsWith("/education") ||
+    basePath.startsWith("/insights") ||
+    basePath.startsWith("/costly-blindspots") ||
+    basePath.startsWith("/what-changed") ||
+    basePath.startsWith("/investing/")
+  ) {
+    return `${siteUrl}/brand/og-article.png`;
+  }
+  return `${siteUrl}/brand/og-home.png`;
 }

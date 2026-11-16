@@ -64,11 +64,11 @@ export const FhsaQuickEstimator: React.FC = () => {
   return (
     <section
       id="fhsa-estimator"
-      className="bg-white border-2 border-[#2e4a3b]/40 rounded-[2px] p-6 sm:p-7 space-y-6 shadow-xs scroll-mt-28"
+      className="card-editorial border-[#2e4a3b]/50 p-6 sm:p-7 space-y-6 scroll-mt-28"
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#ece6da] pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-[#75581f] font-bold">
+          <div className="flex items-center gap-2 eyebrow text-[#75581f]">
             <Calculator className="w-3.5 h-3.5" />
             <span>{isFr ? "Simulateur Rapide CELIAPP & RAP" : "Interactive FHSA & HBP Estimator"}</span>
           </div>
@@ -135,7 +135,7 @@ export const FhsaQuickEstimator: React.FC = () => {
                 <label htmlFor="fhsa-carryforward" className="font-semibold text-[#1c1b18]">
                   {isFr ? "Droits inutilisés reportés (max. 8 000 $)" : "Unused room carried from prior year (max $8,000)"}
                 </label>
-                <span className="font-mono font-semibold text-[#2e4a3b]">{formatMoney(effectiveCarryForward)}</span>
+                <span className="tabular-nums font-semibold text-[#2e4a3b]">{formatMoney(effectiveCarryForward)}</span>
               </div>
               <input
                 id="fhsa-carryforward"
@@ -158,7 +158,7 @@ export const FhsaQuickEstimator: React.FC = () => {
               <label htmlFor="fhsa-contrib" className="font-semibold text-[#1c1b18]">
                 {isFr ? "Cotisation prévue cette année" : "Planned FHSA contribution this year"}
               </label>
-              <span className="font-mono font-semibold text-[#2e4a3b]">{formatMoney(plannedContribution)}</span>
+              <span className="tabular-nums font-semibold text-[#2e4a3b]">{formatMoney(plannedContribution)}</span>
             </div>
             <input
               id="fhsa-contrib"

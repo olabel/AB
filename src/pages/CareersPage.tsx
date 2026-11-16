@@ -25,7 +25,7 @@ import {
   BarChart3,
   BookOpen,
 } from "lucide-react";
-import { siteConfig } from "../config/site.ts";
+import { siteConfig, getCtaLabel } from "../config/site.ts";
 import { BrandMark } from "../components/BrandMark.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { TurnstileWidget } from "../components/TurnstileWidget.tsx";
@@ -187,8 +187,8 @@ Candidate Application Details:
         throw new Error(
           data.message ||
             (isFr
-              ? "Impossible de transmettre votre candidature pour le moment. Veuillez contacter Ahmed Bello directement au +1-506-899-4941 ou réserver via Calendly : https://calendly.com/olabel/30min"
-              : "Unable to submit application right now. Please reach out to Ahmed Bello directly at +1-506-899-4941 or book via Calendly: https://calendly.com/olabel/30min")
+              ? `Impossible de transmettre votre candidature pour le moment. Veuillez contacter Ahmed Bello directement au ${siteConfig.publicPhone} ou réserver en ligne : ${siteConfig.schedulingUrl}`
+              : `Unable to submit application right now. Please reach out to Ahmed Bello directly at ${siteConfig.publicPhone} or schedule online: ${siteConfig.schedulingUrl}`)
         );
       }
 
@@ -199,8 +199,8 @@ Candidate Application Details:
       setErrorMessage(
         err.message ||
           (isFr
-            ? "Une erreur inattendue s'est produite. Veuillez contacter Ahmed Bello au +1-506-899-4941 ou prendre rendez-vous sur Calendly : https://calendly.com/olabel/30min"
-            : "An unexpected error occurred. Please contact Ahmed Bello directly at +1-506-899-4941 or schedule via Calendly: https://calendly.com/olabel/30min")
+            ? `Une erreur inattendue s'est produite. Veuillez contacter Ahmed Bello au ${siteConfig.publicPhone} ou réserver en ligne : ${siteConfig.schedulingUrl}`
+            : `An unexpected error occurred. Please contact Ahmed Bello directly at ${siteConfig.publicPhone} or schedule online: ${siteConfig.schedulingUrl}`)
       );
     } finally {
       setSubmitting(false);
@@ -262,7 +262,7 @@ Candidate Application Details:
       ];
 
   return (
-    <div className="py-10 lg:py-16">
+    <section className="section">
       <SEO
         title={isFr ? "Expansion du Cabinet & Carrières | Ahmed Bello" : "Practice Expansion & Careers | Ahmed Bello"}
         description={
@@ -349,10 +349,7 @@ Candidate Application Details:
               </span>
             </div>
 
-            <h1
-              className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.1] text-[#1c1b18] tracking-tight"
-              style={{ fontFamily: "var(--font-serif)" }}
-            >
+            <h1 className="h1 text-[#1c1b18]">
               {isFr
                 ? "Devenez professionnel indépendant en solutions financières au Canada & aux É.-U."
                 : "Become an Independent Financial Professional in Canada & the USA."}
@@ -429,7 +426,7 @@ Candidate Application Details:
                   className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-center px-6 py-3 text-base font-medium inline-flex items-center justify-center gap-2 group"
                 >
                   <Calendar className="w-4 h-4 text-[#75581f]" />
-                  <span>{isFr ? "Réserver un appel d'orientation (30 min)" : "Schedule 30-Min Discovery Call"}</span>
+                  <span>{getCtaLabel(isFr)}</span>
                   <ArrowUpRight className="w-4 h-4 text-[#75581f] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
               )}
@@ -444,7 +441,7 @@ Candidate Application Details:
               <div className="flex items-center justify-between pb-4 border-b border-[#d6c298]/20">
                 <div className="flex items-center gap-2.5">
                   <BrandMark size={28} reversed={true} className="w-7 h-7" />
-                  <span className="font-serif text-lg tracking-tight text-[#f7f3eb]">
+                  <span className="font-serif text-lg text-[#f7f3eb]">
                     {isFr ? "Structure du Cabinet" : "Independent Practice Overview"}
                   </span>
                 </div>
@@ -695,8 +692,8 @@ Candidate Application Details:
             </div>
 
             {/* Independent Brokerage Model */}
-            <div className="p-6 bg-[#fcfaf5] border-2 border-[#2e4a3b] rounded-[2px] shadow-sm flex flex-col justify-between relative">
-              <div className="absolute -top-3 right-5 bg-[#2e4a3b] text-[#f7f3eb] text-[0.7rem] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-[2px]">
+            <div className="card-editorial border-[#2e4a3b] p-6 flex flex-col justify-between relative">
+              <div className="text-[0.7rem] font-semibold uppercase tracking-wider text-[#2e4a3b] mb-2">
                 {isFr ? "Cabinet Indépendant" : "Independent Practice"}
               </div>
               <div>
@@ -1054,8 +1051,8 @@ Candidate Application Details:
               </h3>
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "Un échange exploratoire de 30 minutes avec Ahmed pour valider vos objectifs mutuels, vos disponibilités et votre vision professionnelle."
-                  : "A 30-minute introductory conversation with Ahmed to explore mutual fit, discuss your schedule, and outline career goals."}
+                  ? `Un appel gratuit de ${siteConfig.callDurationMinutes} minutes avec Ahmed pour valider vos objectifs mutuels, vos disponibilités et votre vision professionnelle.`
+                  : `A free ${siteConfig.callDurationMinutes}-minute introductory call with Ahmed to explore mutual fit, discuss your schedule, and outline career goals.`}
               </p>
             </div>
 
@@ -1147,7 +1144,7 @@ Candidate Application Details:
                       : "Ahmed has received your application and will review your profile. You will receive a personal email follow-up within 1 to 2 business days."}
                   </p>
                   {referenceNo && (
-                    <p className="text-xs font-mono text-[#d6c298]">
+                    <p className="text-xs tabular-nums font-medium text-[#d6c298]">
                       {isFr ? "Numéro de référence :" : "Reference Number:"} #{referenceNo}
                     </p>
                   )}
@@ -1155,8 +1152,8 @@ Candidate Application Details:
                     <div className="pt-4 border-t border-[#f7f3eb]/20">
                       <p className="text-xs text-[#d6c298] mb-3">
                         {isFr
-                          ? "Vous souhaitez échanger sans attendre ? Choisissez directement un créneau de 30 minutes dans le calendrier d'Ahmed :"
-                          : "Want to discuss right away? Schedule your 30-minute discovery call directly on Ahmed’s calendar:"}
+                          ? `Vous souhaitez échanger sans attendre ? Réservez directement un appel gratuit de ${siteConfig.callDurationMinutes} minutes dans le calendrier d'Ahmed :`
+                          : `Want to discuss right away? Book a free ${siteConfig.callDurationMinutes}-minute call directly on Ahmed’s calendar:`}
                       </p>
                       <a
                         href={siteConfig.schedulingUrl}
@@ -1166,7 +1163,7 @@ Candidate Application Details:
                         className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs font-semibold px-4 py-2.5 inline-flex items-center gap-2 transition-colors"
                       >
                         <Calendar className="w-4 h-4 text-[#75581f]" />
-                        <span>{isFr ? "Prendre Rendez-vous sur Calendly →" : "Book 30-Min Discovery Call →"}</span>
+                        <span>{getCtaLabel(isFr)}</span>
                       </a>
                     </div>
                   )}
@@ -1485,7 +1482,7 @@ Candidate Application Details:
                       <span>{isFr ? "Vous préférez échanger de vive voix ?" : "Prefer to Speak Directly?"}</span>
                     </div>
                     <h3 className="font-serif text-2xl text-[#f7f3eb] mb-2">
-                      {isFr ? "Réserver un Appel d'Orientation de 30 min" : "Schedule a 30-Min Discovery Call"}
+                      {getCtaLabel(isFr)}
                     </h3>
                     <p className="text-xs text-[#ece6da] leading-relaxed mb-4">
                       {isFr
@@ -1501,7 +1498,7 @@ Candidate Application Details:
                     className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs font-semibold px-4 py-3 text-center inline-flex items-center justify-center gap-2 transition-colors group"
                   >
                     <Calendar className="w-4 h-4 text-[#75581f]" />
-                    <span>{isFr ? "Ouvrir l'agenda Calendly d'Ahmed" : "Open Ahmed’s Calendly Schedule"}</span>
+                    <span>{getCtaLabel(isFr)}</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-[#75581f] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
                 </div>
@@ -1588,6 +1585,6 @@ Candidate Application Details:
           </div>
         </section>
       </div>
-    </div>
+    </section>
   );
 };

@@ -56,10 +56,10 @@ export const RespGrantQuickWidget: React.FC = () => {
   return (
     <section
       id="resp-grant-widget"
-      className="bg-white border-2 border-[#2e4a3b]/40 rounded-[2px] p-6 sm:p-7 space-y-6 shadow-xs scroll-mt-28"
+      className="card-editorial border-[#2e4a3b]/50 p-6 sm:p-7 space-y-6 scroll-mt-28"
     >
       <div className="space-y-1 border-b border-[#ece6da] pb-4">
-        <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-[#75581f] font-bold">
+        <div className="flex items-center gap-2 eyebrow text-[#75581f]">
           <Calculator className="w-3.5 h-3.5" />
           <span>{isFr ? "Calculateur Subvention REEE (15 secondes)" : "15-Second RESP Grant & Catch-Up Check"}</span>
         </div>
@@ -78,7 +78,7 @@ export const RespGrantQuickWidget: React.FC = () => {
               <label htmlFor="resp-age" className="font-semibold text-[#1c1b18]">
                 {isFr ? "Âge de l'enfant cette année" : "Child's age this calendar year"}
               </label>
-              <span className="font-mono font-semibold text-[#2e4a3b]">
+              <span className="tabular-nums font-semibold text-[#2e4a3b]">
                 {childAge} {isFr ? "ans" : "yrs"}
               </span>
             </div>
@@ -102,7 +102,7 @@ export const RespGrantQuickWidget: React.FC = () => {
               <label htmlFor="resp-missed" className="font-semibold text-[#1c1b18]">
                 {isFr ? "Années antérieures sans cotisation" : "Prior years with no RESP contribution"}
               </label>
-              <span className="font-mono font-semibold text-[#2e4a3b]">
+              <span className="tabular-nums font-semibold text-[#2e4a3b]">
                 {missedPriorYears} {isFr ? "an(s)" : "yr(s)"}
               </span>
             </div>
@@ -128,7 +128,7 @@ export const RespGrantQuickWidget: React.FC = () => {
               <label htmlFor="resp-contrib" className="font-semibold text-[#1c1b18]">
                 {isFr ? "Cotisation annuelle prévue" : "Planned RESP contribution this year"}
               </label>
-              <span className="font-mono font-semibold text-[#2e4a3b]">{formatMoney(annualContribution)}</span>
+              <span className="tabular-nums font-semibold text-[#2e4a3b]">{formatMoney(annualContribution)}</span>
             </div>
             <input
               id="resp-contrib"

@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
-import { siteConfig } from "../config/site.ts";
+import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { SEO } from "../components/SEO.tsx";
@@ -224,7 +224,7 @@ export const AudienceHubPage: React.FC = () => {
     .filter(Boolean);
 
   return (
-    <div className="py-12 md:py-16">
+    <section className="section">
       <SEO
         title={isFr ? (currentAudience.metaTitleFr || currentAudience.titleFr) : (currentAudience.metaTitleEn || currentAudience.titleEn)}
         description={isFr ? currentAudience.descriptionFr : currentAudience.descriptionEn}
@@ -254,19 +254,16 @@ export const AudienceHubPage: React.FC = () => {
 
         {/* Hub Header */}
         <header className="pb-12 border-b border-[#d6cebd] space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#2e4a3b]">
             <IconComponent className="w-4 h-4 text-[#75581f]" />
             <span>{isFr ? currentAudience.eyebrowFr : currentAudience.eyebrowEn}</span>
           </div>
 
-          <h1
-            className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1c1b18] leading-[1.12] tracking-tight"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <h1 className="h1 text-[#1c1b18]">
             {isFr ? currentAudience.titleFr : currentAudience.titleEn}
           </h1>
 
-          <p className="text-base sm:text-lg text-[#46423a] leading-relaxed max-w-3xl">
+          <p className="lede measure">
             {isFr ? currentAudience.descriptionFr : currentAudience.descriptionEn}
           </p>
 
@@ -329,7 +326,7 @@ export const AudienceHubPage: React.FC = () => {
         {currentAudience.id === "newcomers" && (
           <section className="py-12 border-b border-[#d6cebd] space-y-6">
             <div className="space-y-3 max-w-4xl">
-              <span className="text-[11px] font-mono uppercase tracking-widest text-[#75581f] font-bold block">
+              <span className="eyebrow text-[#75581f] block">
                 {isFr ? "Guide Pratique d'Intégration Financière" : "Settlement Capital & Liquidity Framework"}
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18] mb-4">
@@ -384,7 +381,7 @@ export const AudienceHubPage: React.FC = () => {
               <div className="flex items-center gap-3">
                 <Calculator className="w-5 h-5 text-[#d6c298] shrink-0" />
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                  <span className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold block">
                     {isFr ? "Simulateur Interactif" : "Interactive Runway Simulator"}
                   </span>
                   <p className="text-sm font-serif text-white mt-0.5">
@@ -409,7 +406,7 @@ export const AudienceHubPage: React.FC = () => {
         {currentAudience.id === "business-owners" && (
           <section className="py-12 border-b border-[#d6cebd] space-y-6">
             <div className="space-y-3 max-w-4xl">
-              <span className="text-[11px] font-mono uppercase tracking-widest text-[#75581f] font-bold block">
+              <span className="eyebrow text-[#75581f] block">
                 {isFr ? "Fiscalité Avancée des Sociétés Privées" : "Corporate Tax Planning & Retained Capital"}
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18] mb-4">
@@ -464,7 +461,7 @@ export const AudienceHubPage: React.FC = () => {
               <div className="flex items-center gap-3">
                 <Calculator className="w-5 h-5 text-[#d6c298] shrink-0" />
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                  <span className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold block">
                     {isFr ? "Simulateur Corporatif Interactif" : "Interactive CCPC Tax Simulator"}
                   </span>
                   <p className="text-sm font-serif text-white mt-0.5">
@@ -494,7 +491,7 @@ export const AudienceHubPage: React.FC = () => {
               <div className="flex items-center gap-3">
                 <Calculator className="w-5 h-5 text-[#d6c298] shrink-0" />
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                  <span className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold block">
                     {isFr ? "Modélisation de Trésorerie Médicale" : "Healthcare Cashflow & Bridge Simulator"}
                   </span>
                   <p className="text-sm font-serif text-white mt-0.5">
@@ -522,7 +519,7 @@ export const AudienceHubPage: React.FC = () => {
               <div className="flex items-center gap-3">
                 <Calculator className="w-5 h-5 text-[#d6c298] shrink-0" />
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                  <span className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold block">
                     {isFr ? "Comparateur Fiscal Familial" : "Registered Account Comparison"}
                   </span>
                   <p className="text-sm font-serif text-white mt-0.5">
@@ -641,31 +638,20 @@ export const AudienceHubPage: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackBookingClick("audience_hub_bottom")}
-              className="btn btn-primary px-8 py-3.5 text-base inline-flex items-center gap-2 shadow-sm"
+              className="btn btn-primary px-8 py-3.5 text-base inline-flex items-center gap-2 shadow-xs"
             >
               <Calendar className="w-4 h-4 text-[#d6c298]" />
-              <span>{isFr ? "Poser une question en 15 min (sans pression) →" : "Ask a 15-Min Question (Free, No Pitch) →"}</span>
+              <span>{getCtaLabel(isFr)}</span>
             </a>
             <p className="text-xs text-[#625d52]">
-              {isFr ? (
-                <>
-                  Vous préférez poser votre question par écrit ?{" "}
-                  <Link to="/fr/contact" className="underline text-[#2e4a3b] font-medium">
-                    Envoyer un message sans engagement
-                  </Link>
-                </>
-              ) : (
-                <>
-                  Prefer to write first?{" "}
-                  <Link to="/contact" className="underline text-[#2e4a3b] font-medium">
-                    Send your questions directly through our contact form
-                  </Link>
-                </>
-              )}
+              {isFr ? "Vous préférez écrire d'abord ? " : "Prefer to write first? "}
+              <Link to={isFr ? "/fr/contact" : "/contact"} className="arrow-link text-xs">
+                {getSecondaryCtaLabel(isFr)} →
+              </Link>
             </p>
           </div>
         </section>
       </div>
-    </div>
+    </section>
   );
 };

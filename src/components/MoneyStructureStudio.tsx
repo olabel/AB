@@ -281,7 +281,7 @@ export const MoneyStructureStudio: React.FC = () => {
                 }`}
               >
                 <span
-                  className={`font-mono text-xs font-semibold block mb-1 ${
+                  className={`tabular-nums text-xs font-semibold tracking-wider block mb-1 ${
                     isSelected ? "text-[#d6c298]" : "text-[#75581f]"
                   }`}
                 >
@@ -296,10 +296,10 @@ export const MoneyStructureStudio: React.FC = () => {
         </div>
 
         {/* Active Tier Detail */}
-        <div className="p-8 bg-[#f7f3eb] border-2 border-[#2e4a3b] rounded-[2px] space-y-6">
+        <div className="p-8 bg-[#f7f3eb] border border-[#2e4a3b] rounded-[2px] space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#d6cebd] pb-4">
             <div>
-              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#75581f]">
+              <span className="eyebrow text-[#75581f]">
                 {isFr ? `Palier ${currentTier.number}` : `Tier ${currentTier.number}`} &bull; {currentTier.category}
               </span>
               <h4 className="font-serif text-2xl md:text-3xl text-[#1c1b18] mt-1">
@@ -394,7 +394,7 @@ export const MoneyStructureStudio: React.FC = () => {
         {/* Active Scenario Comparison Grid */}
         <div className="p-6 bg-[#1a2d24] border border-[#d6c298]/20 rounded-[2px] space-y-6">
           <div className="border-b border-[#d6c298]/20 pb-3">
-            <span className="text-xs text-[#d6c298] uppercase font-mono tracking-wider">
+            <span className="text-xs text-[#d6c298] uppercase font-semibold tracking-wider">
               {isFr ? "Événement simulé" : "Simulated Event"}
             </span>
             <p className="font-serif text-xl text-white mt-1">{currentScenario.description}</p>

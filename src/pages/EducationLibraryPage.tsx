@@ -1,21 +1,30 @@
-import React, { useMemo } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import React, { useMemo, useState, useEffect } from "react";
+import { Link, useSearchParams, useLocation } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
-import { siteConfig } from "../config/site.ts";
-import { Search, X, ArrowRight, Calculator, Stethoscope, Briefcase, Users, Compass } from "lucide-react";
+import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
+import { Search, X, ArrowRight, Calculator, Stethoscope, Briefcase, Users, Compass, ChevronDown, ChevronUp } from "lucide-react";
 import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalculator.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
-import { trackCtaClick } from "../lib/track.ts";
+import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 
 export const EducationLibraryPage: React.FC = () => {
   const { language } = useLanguage();
   const prefix = language === "fr" ? "/fr" : "";
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const [showAllArticles, setShowAllArticles] = useState(false);
+  const [isRunwayOpen, setIsRunwayOpen] = useState(false);
 
   const query = searchParams.get("q") || "";
   const selectedCategory = searchParams.get("category") || "all";
+
+  useEffect(() => {
+    if (location.hash === "#runway-calculator") {
+      setIsRunwayOpen(true);
+    }
+  }, [location.hash]);
 
   const handleSearchChange = (newQ: string) => {
     const next = new URLSearchParams(searchParams);
@@ -152,7 +161,7 @@ export const EducationLibraryPage: React.FC = () => {
           <div className="p-5 sm:p-6 bg-[#14211a] text-[#f7f3eb] border border-[#d6c298]/40 rounded-[2px] shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
             <div className="space-y-1.5 max-w-2xl">
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 bg-[#d6c298]/20 text-[#d6c298] font-mono text-[11px] font-semibold uppercase tracking-wider rounded-[1px]">
+                <span className="px-2 py-0.5 bg-[#d6c298]/20 text-[#d6c298] text-[11px] font-semibold uppercase tracking-wider rounded-[2px]">
                   {language === "fr" ? "Vigilance Réglementaire" : "Statutory Intelligence"}
                 </span>
                 <span className="text-xs text-[#d6c298]/80 font-medium">
@@ -300,7 +309,7 @@ export const EducationLibraryPage: React.FC = () => {
             <div className="flex items-center gap-3">
               <Calculator className="w-6 h-6 text-[#d6c298] shrink-0" />
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
+                <span className="text-[11px] uppercase tracking-wider text-[#d6c298] font-semibold block">
                   {language === "fr" ? "Outils de Décision Quantitatifs" : "Quantitative Decision Calculators"}
                 </span>
                 <p className="text-sm font-serif text-white mt-0.5">
@@ -428,8 +437,8 @@ export const EducationLibraryPage: React.FC = () => {
       </section>
 
       {/* Article Cards Grid or Empty State */}
-      <section className="section py-16">
-        <div className="wrap max-w-5xl">
+      <section className="section">
+        <div className="wrap max-w-5xl space-y-8">
           {filteredArticles.length === 0 ? (
             <div className="p-12 text-center bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4">
               <h3 className="h3 text-[#1c1b18]">
@@ -449,70 +458,142 @@ export const EducationLibraryPage: React.FC = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {filteredArticles.map((art) => {
-                const cat = categories.find((c) => c.id === art.category);
-                const frSeo = isFr ? ARTICLE_FR_SEO[art.slug] : undefined;
-                const displayTitle = frSeo?.title || art.title;
-                const displayDescription = frSeo?.description || art.description;
-                return (
-                  <article
-                    key={art.slug}
-                    className="p-8 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col justify-between hover:border-[#2e4a3b] transition-all group"
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {filteredArticles.map((art, idx) => {
+                  const cat = categories.find((c) => c.id === art.category);
+                  const frSeo = isFr ? ARTICLE_FR_SEO[art.slug] : undefined;
+                  const displayTitle = frSeo?.title || art.title;
+                  const displayDescription = frSeo?.description || art.description;
+                  const isVisuallyFolded =
+                    !showAllArticles &&
+                    !query.trim() &&
+                    selectedCategory === "all" &&
+                    idx >= 6;
+                  return (
+                    <article
+                      key={art.slug}
+                      className={`card-editorial p-6 sm:p-7 flex flex-col justify-between hover:border-[#2e4a3b] transition-colors group ${
+                        isVisuallyFolded ? "hidden" : ""
+                      }`}
+                    >
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-xs text-[#625d52]">
+                          <span className="font-semibold text-[#2e4a3b] uppercase tracking-wider text-[0.7rem]">
+                            {cat?.label || art.category}
+                          </span>
+                          <span>/</span>
+                          <span>
+                            {art.readingMinutes} {language === "fr" ? "min de lecture" : "min read"}
+                          </span>
+                        </div>
+
+                        <h3 className="h3 text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
+                          <Link to={`${prefix}${art.url}`}>{displayTitle}</Link>
+                        </h3>
+
+                        <p className="text-sm text-[#46423a] leading-relaxed">
+                          {displayDescription}
+                        </p>
+
+                        <p className="text-xs text-[#625d52] pt-2 border-t border-[#ece6da]">
+                          <strong className="text-[#1c1b18]">
+                            {language === "fr" ? "La question :" : "The question:"}
+                          </strong>{" "}
+                          {art.question}
+                        </p>
+                      </div>
+
+                      <div className="pt-5 border-t border-[#ece6da] mt-5 flex items-center justify-between">
+                        <Link
+                          to={`${prefix}${art.url}`}
+                          className="text-xs font-semibold text-[#2e4a3b] flex items-center gap-1 group-hover:underline"
+                        >
+                          <span>{language === "fr" ? "Lire l'article" : "Read the article"}</span>
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                        <span className="text-xs text-[#625d52]">
+                          {art.sources.length} {language === "fr" ? "sources officielles" : "sources"}
+                        </span>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+
+              {!query.trim() && selectedCategory === "all" && filteredArticles.length > 6 && (
+                <div className="text-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllArticles((prev) => !prev)}
+                    className="btn btn-ghost text-sm px-6 py-2.5 inline-flex items-center gap-2 cursor-pointer"
                   >
-                    <div className="space-y-3.5">
-                      <div className="flex items-center gap-2 text-xs text-[#625d52]">
-                        <span className="font-semibold text-[#2e4a3b] uppercase tracking-wider text-[0.7rem]">
-                          {cat?.label || art.category}
-                        </span>
-                        <span>/</span>
-                        <span>
-                          {art.readingMinutes} {language === "fr" ? "min de lecture" : "min read"}
-                        </span>
-                      </div>
-
-                      <h3 className="h3 text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug">
-                        <Link to={`${prefix}${art.url}`}>{displayTitle}</Link>
-                      </h3>
-
-                      <p className="text-sm text-[#46423a] leading-relaxed">
-                        {displayDescription}
-                      </p>
-
-                      <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
-                        <strong>{language === "fr" ? "La question :" : "The question:"}</strong> {art.question}
-                      </div>
-                    </div>
-
-                    <div className="pt-6 border-t border-[#ece6da] mt-6 flex items-center justify-between">
-                      <Link
-                        to={`${prefix}${art.url}`}
-                        className="text-xs font-semibold text-[#2e4a3b] flex items-center gap-1 group-hover:underline"
-                      >
-                        <span>{language === "fr" ? "Lire l'article" : "Read the article"}</span>
-                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                      <span className="text-xs text-[#625d52]">
-                        {art.sources.length} {language === "fr" ? "sources officielles" : "sources"}
-                      </span>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+                    <span>
+                      {showAllArticles
+                        ? language === "fr"
+                          ? "Réduire la liste des guides"
+                          : "Show fewer guides"
+                        : language === "fr"
+                        ? `Afficher les ${filteredArticles.length} guides`
+                        : `Show all ${filteredArticles.length} guides`}
+                    </span>
+                    {showAllArticles ? (
+                      <ChevronUp className="w-4 h-4" aria-hidden="true" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" aria-hidden="true" />
+                    )}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
 
-      {/* Interactive Tool: Newcomer Financial Planning Runway Calculator */}
-      <section id="runway-calculator" className="section py-16 bg-[#f7f3eb] border-t border-[#d6cebd]">
-        <div className="wrap max-w-5xl">
-          <NewcomerPlanningCalculator />
+      {/* Interactive Tool: Newcomer Financial Planning Runway Calculator (CSS-collapsible drawer to keep mobile compact while retaining HTML in DOM) */}
+      <section id="runway-calculator" className="section bg-[#f7f3eb] border-t border-[#d6cebd]">
+        <div className="wrap max-w-5xl space-y-6">
+          <div className="card-editorial p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="eyebrow text-xs text-[#75581f] block">
+                {language === "fr" ? "Outil de planification" : "Interactive Planning Tool"}
+              </span>
+              <h2 className="font-serif text-xl sm:text-2xl text-[#1c1b18]">
+                {language === "fr"
+                  ? "Simulateur de réserve financière de 1re année au Canada"
+                  : "First-Year Canadian Financial Runway Calculator"}
+              </h2>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsRunwayOpen((prev) => !prev)}
+              aria-expanded={isRunwayOpen}
+              className="btn btn-ghost text-xs px-4 py-2 inline-flex items-center gap-1.5 shrink-0 cursor-pointer"
+            >
+              <span>
+                {isRunwayOpen
+                  ? language === "fr"
+                    ? "Masquer le calculateur"
+                    : "Hide calculator"
+                  : language === "fr"
+                  ? "Ouvrir le calculateur"
+                  : "Open calculator"}
+              </span>
+              {isRunwayOpen ? (
+                <ChevronUp className="w-4 h-4" aria-hidden="true" />
+              ) : (
+                <ChevronDown className="w-4 h-4" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+          <div className={isRunwayOpen ? "block" : "hidden"}>
+            <NewcomerPlanningCalculator />
+          </div>
         </div>
       </section>
 
       {/* How these guides are written */}
-      <section className="section py-16 bg-[#fcfaf5] border-y border-[#d6cebd]">
+      <section className="section bg-[#fcfaf5] border-y border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-6">
           <h2 className="h2 text-[#1c1b18]">
             {language === "fr" ? "Comment ces guides sont rédigés" : "How these guides are written"}
@@ -557,7 +638,7 @@ export const EducationLibraryPage: React.FC = () => {
       </section>
 
       {/* Didn't find your question? CTA */}
-      <section className="section py-20 text-center">
+      <section className="section text-center">
         <div className="wrap max-w-3xl space-y-6">
           <h2 className="h2 text-[#1c1b18]">
             {language === "fr" ? "Vous n'avez pas trouvé votre question ?" : "Didn’t find your question?"}
@@ -567,9 +648,18 @@ export const EducationLibraryPage: React.FC = () => {
               ? "Dites-moi ce que vous essayez de comprendre. Votre question pourrait faire l'objet du prochain guide, et je pourrai vous orienter vers la bonne ressource statutaire."
               : "Tell me what you are trying to understand. Your question may become the next guide, and I can point you to the right source or professional."}
           </p>
-          <div className="pt-2 flex justify-center">
-            <Link to={`${prefix}/contact`} className="btn btn-primary text-base px-8 py-3">
-              {language === "fr" ? "Démarrer une conversation →" : "Start a Conversation →"}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={siteConfig.schedulingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackBookingClick("education_library_bottom")}
+              className="btn btn-primary text-base px-8 py-3"
+            >
+              {getCtaLabel(isFr)}
+            </a>
+            <Link to={`${prefix}/contact`} className="arrow-link text-sm font-medium text-[#2e4a3b]">
+              {getSecondaryCtaLabel(isFr)} <span aria-hidden="true">→</span>
             </Link>
           </div>
           <p className="text-xs text-[#625d52]">

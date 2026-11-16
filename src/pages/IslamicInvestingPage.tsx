@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
-import { siteConfig } from "../config/site.ts";
+import { siteConfig, getCtaLabel } from "../config/site.ts";
 import {
   ShieldCheck,
   TrendingUp,
@@ -181,8 +181,8 @@ Notes: ${formData.notes || "None"}`;
         throw new Error(
           data.message ||
             (isFr
-              ? "Votre demande n'a pas pu être transmise. Veuillez contacter Ahmed Bello au +1-506-899-4941 ou réserver un appel directement sur Calendly : https://calendly.com/olabel/30min"
-              : "Your request could not be submitted. Please reach out to Ahmed Bello directly at +1-506-899-4941 or schedule on Calendly: https://calendly.com/olabel/30min")
+              ? `Votre demande n'a pas pu être transmise. Veuillez contacter Ahmed Bello au ${siteConfig.publicPhone} ou réserver en ligne : ${siteConfig.schedulingUrl}`
+              : `Your request could not be submitted. Please reach out to Ahmed Bello directly at ${siteConfig.publicPhone} or book online: ${siteConfig.schedulingUrl}`)
         );
       }
 
@@ -193,8 +193,8 @@ Notes: ${formData.notes || "None"}`;
       setFormError(
         err.message ||
           (isFr
-            ? "Une erreur inattendue est survenue. Veuillez joindre Ahmed Bello au +1-506-899-4941 ou réserver sur Calendly."
-            : "An unexpected error occurred. Please contact Ahmed Bello directly at +1-506-899-4941 or book via Calendly.")
+            ? `Une erreur inattendue est survenue. Veuillez joindre Ahmed Bello au ${siteConfig.publicPhone} ou réserver en ligne.`
+            : `An unexpected error occurred. Please contact Ahmed Bello directly at ${siteConfig.publicPhone} or book online.`)
       );
     } finally {
       setIsSubmitting(false);
@@ -202,7 +202,7 @@ Notes: ${formData.notes || "None"}`;
   };
 
   return (
-    <div className="py-8 sm:py-12 md:py-16 bg-[#f7f3eb] px-4 sm:px-6">
+    <section className="section bg-[#f7f3eb]">
       <SEO
         title={
           isFr
@@ -217,10 +217,10 @@ Notes: ${formData.notes || "None"}`;
         canonicalUrl={isFr ? "/fr/investing/islamic-equity" : "/investing/islamic-equity"}
       />
 
-      <div className="wrap max-w-5xl px-0">
+      <div className="wrap max-w-5xl">
         {/* 1. HERO SECTION */}
         <section className="mb-12 sm:mb-16 border-b border-[#d6cebd] pb-10 sm:pb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b]/10 border border-[#2e4a3b]/30 rounded-xs text-xs font-semibold text-[#2e4a3b] uppercase tracking-wider mb-4 sm:mb-5">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#2e4a3b] uppercase tracking-wider mb-4 sm:mb-5">
             <ShieldCheck className="w-4 h-4 text-[#2e4a3b]" />
             <span>
               {isFr
@@ -229,16 +229,13 @@ Notes: ${formData.notes || "None"}`;
             </span>
           </div>
 
-          <h1
-            className="font-serif text-2xl sm:text-4xl lg:text-5xl text-[#1c1b18] tracking-tight mb-4 sm:mb-6 leading-tight"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <h1 className="h1 text-[#1c1b18] mb-4 sm:mb-6">
             {isFr
               ? "Investissement en Actions Islamiques au Canada : Comprendre les Règles, Indices & Abris Fiscaux."
               : "Shari'ah-Compliant Global Equity Index Investing in Canada: Principles, Benchmarks & Tax Shelters."}
           </h1>
 
-          <p className="text-base sm:text-xl text-[#46423a] max-w-3xl leading-relaxed mb-6 sm:mb-8 font-serif">
+          <p className="lede measure mb-6 sm:mb-8 font-serif">
             {isFr
               ? "Une analyse pédagogique et indépendante de l'investissement conforme à la charia selon les normes internationales de l'AAOIFI. Découvrez le fonctionnement des indices mondiaux de référence (comme le MSCI ACWI Islamic), les règles de filtrage de bilan et leur intégration dans vos comptes enregistrés canadiens."
               : "An objective educational framework for Muslim Canadian families and business owners exploring Shari'ah-compliant global equity investing under international AAOIFI standards. Learn how benchmark index tracking works, how balance sheet purification applies, and how registered tax shelters connect."}
@@ -432,7 +429,7 @@ Notes: ${formData.notes || "None"}`;
                 <div className="p-3 bg-white border border-[#d6cebd] rounded-xs">
                   <div className="flex items-center justify-between text-xs font-semibold text-[#1c1b18] mb-1">
                     <span>{isFr ? "Dette totale / Actif total" : "Total Debt / Total Assets"}</span>
-                    <span className="text-[#2e4a3b] font-mono font-bold">&lt; 33.33%</span>
+                    <span className="text-[#2e4a3b] tabular-nums font-bold">&lt; 33.33%</span>
                   </div>
                   <p className="text-[0.72rem] text-[#625d52]">
                     {isFr ? "Exclut les sociétés lourdement endettées dépendantes du crédit bancaire rémunéré par l'intérêt." : "Disqualifies highly leveraged companies dependent on conventional interest financing."}
@@ -442,7 +439,7 @@ Notes: ${formData.notes || "None"}`;
                 <div className="p-3 bg-white border border-[#d6cebd] rounded-xs">
                   <div className="flex items-center justify-between text-xs font-semibold text-[#1c1b18] mb-1">
                     <span>{isFr ? "Liquidités & Titres à intérêt / Actif" : "Cash & Interest Securities / Assets"}</span>
-                    <span className="text-[#2e4a3b] font-mono font-bold">&lt; 33.33%</span>
+                    <span className="text-[#2e4a3b] tabular-nums font-bold">&lt; 33.33%</span>
                   </div>
                   <p className="text-[0.72rem] text-[#625d52]">
                     {isFr ? "Empêche les sociétés de générer d'importants revenus passifs d'intérêts sur leurs dépôts de trésorerie." : "Prevents companies from accumulating passive interest income on treasury deposits."}
@@ -452,7 +449,7 @@ Notes: ${formData.notes || "None"}`;
                 <div className="p-3 bg-white border border-[#d6cebd] rounded-xs">
                   <div className="flex items-center justify-between text-xs font-semibold text-[#1c1b18] mb-1">
                     <span>{isFr ? "Revenus accessoires non conformes" : "Incidental Non-Permissible Revenue"}</span>
-                    <span className="text-[#2e4a3b] font-mono font-bold">&lt; 5.0%</span>
+                    <span className="text-[#2e4a3b] tabular-nums font-bold">&lt; 5.0%</span>
                   </div>
                   <p className="text-[0.72rem] text-[#625d52]">
                     {isFr ? "Obligation de purification trimestrielle (don à des organismes de bienfaisance canadiens) selon les ratios officiels publiés." : "Must be purified quarterly via charitable donations according to published index purification factors."}
@@ -579,7 +576,7 @@ Notes: ${formData.notes || "None"}`;
             <div>
               <div className="flex justify-between text-xs font-semibold mb-2">
                 <span className="text-[#1c1b18]">{isFr ? "Capital Initial :" : "Initial Capital:"}</span>
-                <span className="text-[#2e4a3b] font-mono">${initialCapital.toLocaleString()} CAD</span>
+                <span className="text-[#2e4a3b] tabular-nums">${initialCapital.toLocaleString()} CAD</span>
               </div>
               <input
                 type="range"
@@ -599,7 +596,7 @@ Notes: ${formData.notes || "None"}`;
             <div>
               <div className="flex justify-between text-xs font-semibold mb-2">
                 <span className="text-[#1c1b18]">{isFr ? "Épargne Mensuelle :" : "Monthly Contribution:"}</span>
-                <span className="text-[#2e4a3b] font-mono">${monthlyContribution.toLocaleString()} / mo</span>
+                <span className="text-[#2e4a3b] tabular-nums">${monthlyContribution.toLocaleString()} / mo</span>
               </div>
               <input
                 type="range"
@@ -619,7 +616,7 @@ Notes: ${formData.notes || "None"}`;
             <div>
               <div className="flex justify-between text-xs font-semibold mb-2">
                 <span className="text-[#1c1b18]">{isFr ? "Horizon Temporel :" : "Time Horizon:"}</span>
-                <span className="text-[#2e4a3b] font-mono">{years} {isFr ? "ans" : "years"}</span>
+                <span className="text-[#2e4a3b] tabular-nums">{years} {isFr ? "ans" : "years"}</span>
               </div>
               <input
                 type="range"
@@ -653,7 +650,7 @@ Notes: ${formData.notes || "None"}`;
                   onChange={(e) => setCashInterestRate(Number(e.target.value))}
                   className="w-full accent-[#75581f]"
                 />
-                <span className="font-mono font-bold text-[#1c1b18] w-12 text-right">
+                <span className="tabular-nums font-bold text-[#1c1b18] w-12 text-right">
                   {cashInterestRate.toFixed(2)}%
                 </span>
               </div>
@@ -691,7 +688,7 @@ Notes: ${formData.notes || "None"}`;
                   onChange={(e) => setEstimatedFeeDrag(Number(e.target.value))}
                   className="w-full accent-[#2e4a3b]"
                 />
-                <span className="font-mono font-bold text-[#2e4a3b] w-12 text-right">
+                <span className="tabular-nums font-bold text-[#2e4a3b] w-12 text-right">
                   -{estimatedFeeDrag.toFixed(2)}%
                 </span>
               </div>
@@ -773,7 +770,7 @@ Notes: ${formData.notes || "None"}`;
             </div>
 
             {formSubmitted ? (
-              <div className="p-6 bg-[#1a2c22] border border-[#d6c298] rounded-xs text-center space-y-4 animate-in fade-in duration-300">
+              <div className="p-6 bg-[#1a2c22] border border-[#d6c298] rounded-[2px] text-center space-y-4 rise">
                 <CheckCircle2 className="w-12 h-12 text-[#d6c298] mx-auto" />
                 <h3 className="font-serif text-xl font-bold text-[#f7f3eb]">
                   {isFr ? "Votre demande a été bien reçue" : "Your Consultation Request is Confirmed"}
@@ -784,7 +781,7 @@ Notes: ${formData.notes || "None"}`;
                     : "Thank you for reaching out. Your consultation request has been received securely. Ahmed Bello will review your situation and follow up directly within 1 to 2 business days."}
                 </p>
                 {referenceNo && (
-                  <p className="text-xs font-mono text-[#d6c298]">
+                  <p className="text-xs tabular-nums font-medium text-[#d6c298]">
                     {isFr ? "Numéro de référence :" : "Reference Number:"} #{referenceNo}
                   </p>
                 )}
@@ -795,9 +792,9 @@ Notes: ${formData.notes || "None"}`;
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => trackBookingClick("islamic_investing_success")}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs rounded-xs transition-colors"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs rounded-[2px] transition-colors"
                     >
-                      <span>{isFr ? "Poser une question en 15 min sur Calendly" : "Ask a 15-Min Question on Calendly"}</span>
+                      <span>{getCtaLabel(isFr)}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </a>
                   )}
@@ -823,24 +820,24 @@ Notes: ${formData.notes || "None"}`;
                 />
 
                 {formError && (
-                  <div className="p-4 bg-[#8a2b1d]/30 border border-[#8a2b1d] rounded-xs text-xs text-[#f7c5be] space-y-2">
+                  <div className="p-4 bg-[#8a2b1d]/30 border border-[#8a2b1d] rounded-[2px] text-xs text-[#f7c5be] space-y-2">
                     <p className="font-medium">{formError}</p>
                     <div className="pt-2 border-t border-[#8a2b1d]/40 flex flex-wrap items-center gap-3 text-xs text-[#ece6da]">
                       <span>{isFr ? "Contactez Ahmed directement :" : "Contact Ahmed directly:"}</span>
-                      <a href="tel:+15068994941" className="underline font-semibold text-[#d6c298] inline-flex items-center gap-1">
+                      <a href={`tel:${siteConfig.publicPhone.replace(/[^+\d]/g, "")}`} className="underline font-semibold text-[#d6c298] inline-flex items-center gap-1">
                         <Phone className="w-3 h-3" />
-                        <span>+1 (506) 899-4941</span>
+                        <span>{siteConfig.publicPhone}</span>
                       </a>
                       <span>•</span>
                       <a
-                        href="https://calendly.com/olabel/30min"
+                        href={siteConfig.schedulingUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => trackBookingClick("islamic_investing_error")}
                         className="underline font-semibold text-[#d6c298] inline-flex items-center gap-1"
                       >
                         <Calendar className="w-3 h-3" />
-                        <span>{isFr ? "Question de 15 min sur Calendly" : "Ask a 15-min question on Calendly"}</span>
+                        <span>{getCtaLabel(isFr)}</span>
                       </a>
                     </div>
                   </div>
@@ -1171,6 +1168,6 @@ Notes: ${formData.notes || "None"}`;
           .
         </div>
       </div>
-    </div>
+    </section>
   );
 };

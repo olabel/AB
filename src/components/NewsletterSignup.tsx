@@ -126,10 +126,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
           <span>{isFr ? "Bulletins Éducatifs Périodiques" : "Occasional Educational Briefings"}</span>
         </div>
 
-        <h3
-          className="font-serif text-2xl sm:text-3xl text-[#1c1b18] tracking-tight"
-          style={{ fontFamily: "var(--font-serif)" }}
-        >
+        <h3 className="h3 text-2xl sm:text-3xl text-[#1c1b18]">
           {resolvedTitle}
         </h3>
 

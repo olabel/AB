@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { howIHelpTopics } from "../content/data.ts";
 import { howIHelpTopicsFr } from "../content/howIHelpFr.ts";
@@ -6,28 +6,60 @@ import { Tbc } from "../components/Tbc.tsx";
 import { MoneyStructureStudio } from "../components/MoneyStructureStudio.tsx";
 import { StructuralCaseStudies } from "../components/StructuralCaseStudies.tsx";
 import { StructureDiagnostic } from "../components/StructureDiagnostic.tsx";
-import { ArrowRight, HelpCircle } from "lucide-react";
-import { siteConfig } from "../config/site.ts";
+import { ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
+import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
 import { SEO } from "../components/SEO.tsx";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 
 export const HowIHelpPage: React.FC = () => {
   const { isFr } = useLanguage();
+  const prefix = isFr ? "/fr" : "";
   const location = useLocation();
   const activeTopics = isFr ? howIHelpTopicsFr : howIHelpTopics;
 
-  // Scroll to hash on load or hash change
+  const [openTopics, setOpenTopics] = useState<Record<string, boolean>>(() => {
+    const hashId = typeof window !== "undefined" ? window.location.hash.replace("#", "") : "";
+    const firstId = activeTopics[0]?.id;
+    const init: Record<string, boolean> = {};
+    if (firstId) init[firstId] = true;
+    if (hashId) init[hashId] = true;
+    return init;
+  });
+
+  const toggleTopic = (id: string) => {
+    setOpenTopics((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const expandAllTopics = () => {
+    const all: Record<string, boolean> = {};
+    activeTopics.forEach((topic) => {
+      all[topic.id] = true;
+    });
+    setOpenTopics(all);
+  };
+
+  const collapseAllTopics = () => {
+    setOpenTopics({});
+  };
+
+  // Scroll to hash on load or hash change and expand target topic
   useEffect(() => {
     if (location.hash) {
-      const element = document.getElementById(location.hash.slice(1));
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+      const targetId = location.hash.slice(1);
+      if (activeTopics.some((t) => t.id === targetId)) {
+        setOpenTopics((prev) => ({ ...prev, [targetId]: true }));
       }
+      setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 60);
     } else {
       window.scrollTo(0, 0);
     }
-  }, [location.hash]);
+  }, [location.hash, activeTopics]);
 
   return (
     <div className="py-12 md:py-16">
@@ -65,9 +97,10 @@ export const HowIHelpPage: React.FC = () => {
                 <a
                   key={topic.id}
                   href={`#${topic.id}`}
+                  onClick={() => setOpenTopics((prev) => ({ ...prev, [topic.id]: true }))}
                   className="px-3 py-1.5 bg-[#fcfaf5] border border-[#d6cebd] hover:border-[#2e4a3b] text-xs font-medium text-[#1c1b18] rounded-[2px] transition-colors"
                 >
-                  <span className="font-mono text-[#75581f] mr-1.5">0{i + 1}</span>
+                  <span className="tabular-nums text-[#75581f] font-semibold mr-1.5">0{i + 1}</span>
                   {topic.short}
                 </a>
               ))}
@@ -137,105 +170,153 @@ export const HowIHelpPage: React.FC = () => {
       </section>
 
       {/* 2b. Structural Engineering Studio & Stress Tester */}
-      <section className="section py-16 border-b border-[#d6cebd]">
-        <div className="wrap max-w-4xl space-y-16">
+      <section className="section border-b border-[#d6cebd]">
+        <div className="wrap max-w-4xl space-y-12">
           <MoneyStructureStudio />
           <StructuralCaseStudies />
           <StructureDiagnostic />
         </div>
       </section>
 
-      {/* 3. The 7 Topics */}
-      <section className="section py-16">
-        <div className="wrap max-w-4xl space-y-20">
-          {activeTopics.map((topic, index) => (
-            <article
-              key={topic.id}
-              id={topic.id}
-              className="scroll-mt-28 border-b border-[#d6cebd] pb-16 space-y-8"
-            >
-              <div className="space-y-3">
-                <span className="font-mono text-xs font-semibold text-[#75581f] block">
-                  0{index + 1}
-                </span>
-                <h2 className="h2 text-[#1c1b18] leading-tight">
-                  {topic.question}
-                </h2>
-              </div>
+      {/* 3. The 7 Topics (CSS-collapsible for compact mobile scroll height while staying 100% crawlable in DOM) */}
+      <section className="section">
+        <div className="wrap max-w-4xl space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#d6cebd] pb-4">
+            <div>
+              <span className="eyebrow text-xs text-[#75581f]">
+                {isFr ? "Les 7 questions essentielles" : "Seven Core Questions"}
+              </span>
+              <h2 className="h2 text-[#1c1b18] mt-1">
+                {isFr ? "Explorer chaque décision" : "Walk through each question"}
+              </h2>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <button
+                type="button"
+                onClick={expandAllTopics}
+                className="px-3 py-1.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-colors cursor-pointer"
+              >
+                {isFr ? "Tout développer" : "Expand all"}
+              </button>
+              <button
+                type="button"
+                onClick={collapseAllTopics}
+                className="px-3 py-1.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-colors cursor-pointer"
+              >
+                {isFr ? "Tout réduire" : "Collapse all"}
+              </button>
+            </div>
+          </div>
 
-              {/* Why it matters */}
-              <div className="space-y-2">
-                <h3 className="eyebrow text-xs text-[#2e4a3b]">
-                  {isFr ? "Pourquoi c'est important" : "Why it matters"}
-                </h3>
-                <p className="text-base text-[#1c1b18] leading-relaxed font-serif text-lg">
-                  {topic.why}
-                </p>
-              </div>
+          <div className="space-y-4">
+            {activeTopics.map((topic, index) => {
+              const isOpen = Boolean(openTopics[topic.id]);
+              return (
+                <article
+                  key={topic.id}
+                  id={topic.id}
+                  className="scroll-mt-28 card-editorial overflow-hidden"
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleTopic(topic.id)}
+                    aria-expanded={isOpen}
+                    className="w-full p-5 sm:p-6 text-left flex items-start justify-between gap-4 hover:bg-[#f7f3eb]/60 transition-colors cursor-pointer"
+                  >
+                    <div className="space-y-1.5">
+                      <span className="tabular-nums text-xs font-semibold text-[#75581f] block">
+                        0{index + 1} &middot; {topic.short}
+                      </span>
+                      <h3 className="font-serif text-xl sm:text-2xl text-[#1c1b18] leading-snug font-normal">
+                        {topic.question}
+                      </h3>
+                    </div>
+                    <span className="p-1.5 text-[#625d52] shrink-0 mt-1">
+                      {isOpen ? (
+                        <ChevronUp className="w-5 h-5 text-[#2e4a3b]" aria-hidden="true" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5" aria-hidden="true" />
+                      )}
+                    </span>
+                  </button>
 
-              {/* Key concepts */}
-              <div className="space-y-3">
-                <h3 className="eyebrow text-xs text-[#2e4a3b]">
-                  {isFr ? "Concepts clés à comprendre" : "Key concepts to understand"}
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {topic.concepts.map((concept, cIdx) => (
-                    <div
-                      key={`conc-${cIdx}`}
-                      className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-1"
-                    >
-                      <h4 className="font-semibold text-sm text-[#1c1b18]">
-                        {concept.term}
+                  <div className={isOpen ? "px-5 pb-6 sm:px-6 sm:pb-7 pt-2 border-t border-[#ece6da] space-y-6" : "hidden"}>
+                    {/* Why it matters */}
+                    <div className="space-y-2 pt-2">
+                      <h4 className="eyebrow text-xs text-[#2e4a3b]">
+                        {isFr ? "Pourquoi c'est important" : "Why it matters"}
                       </h4>
-                      <p className="text-xs text-[#625d52] leading-relaxed">
-                        {concept.plain}
+                      <p className="text-[#1c1b18] leading-relaxed font-serif text-lg">
+                        {topic.why}
                       </p>
                     </div>
-                  ))}
-                </div>
-              </div>
 
-              {/* Trade-offs */}
-              <div className="space-y-3">
-                <h3 className="eyebrow text-xs text-[#2e4a3b]">
-                  {isFr ? "Arbitrages à soupeser" : "Trade-offs to explore"}
-                </h3>
-                <ul className="space-y-2 list-none p-0 text-sm text-[#46423a]">
-                  {topic.tradeoffs.map((t, tIdx) => (
-                    <li key={`tr-${tIdx}`} className="flex items-start gap-2">
-                      <span className="text-[#2e4a3b] font-bold">&bull;</span>
-                      <span className="leading-relaxed">{t}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                    {/* Key concepts */}
+                    <div className="space-y-3">
+                      <h4 className="eyebrow text-xs text-[#2e4a3b]">
+                        {isFr ? "Concepts clés à comprendre" : "Key concepts to understand"}
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {topic.concepts.map((concept, cIdx) => (
+                          <div
+                            key={`conc-${cIdx}`}
+                            className="p-4 bg-white border border-[#d6cebd] rounded-[2px] space-y-1"
+                          >
+                            <h5 className="font-semibold text-sm text-[#1c1b18]">
+                              {concept.term}
+                            </h5>
+                            <p className="text-xs text-[#625d52] leading-relaxed">
+                              {concept.plain}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-              {/* A suitable next step */}
-              <div className="p-6 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] space-y-4">
-                <h3 className="eyebrow text-xs text-[#75581f]">
-                  {isFr ? "Une étape logique" : "A suitable next step"}
-                </h3>
-                <div className="flex flex-wrap items-center gap-3">
-                  {topic.next.map((n, nIdx) => (
-                    <Link
-                      key={`next-${nIdx}`}
-                      to={n.href}
-                      className="btn btn-ghost text-xs py-2 px-3.5 bg-white flex items-center gap-1.5"
-                    >
-                      <span>{n.label}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  ))}
-                  <Link
-                    to={isFr ? `/fr/contact?topic=${topic.contactTopic}` : `/contact?topic=${topic.contactTopic}`}
-                    className="btn btn-primary text-xs py-2 px-4"
-                  >
-                    {isFr ? "M'interroger à ce sujet →" : "Ask me about this →"}
-                  </Link>
-                </div>
-              </div>
-            </article>
-          ))}
+                    {/* Trade-offs */}
+                    <div className="space-y-3">
+                      <h4 className="eyebrow text-xs text-[#2e4a3b]">
+                        {isFr ? "Arbitrages à soupeser" : "Trade-offs to explore"}
+                      </h4>
+                      <ul className="space-y-2 list-none p-0 text-sm text-[#46423a]">
+                        {topic.tradeoffs.map((tr, tIdx) => (
+                          <li key={`tr-${tIdx}`} className="flex items-start gap-2">
+                            <span className="text-[#2e4a3b] font-bold">&bull;</span>
+                            <span className="leading-relaxed">{tr}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* A suitable next step */}
+                    <div className="pt-4 border-t border-[#ece6da] space-y-3">
+                      <h4 className="eyebrow text-xs text-[#75581f]">
+                        {isFr ? "Une étape logique" : "A suitable next step"}
+                      </h4>
+                      <div className="flex flex-wrap items-center gap-3">
+                        {topic.next.map((n, nIdx) => (
+                          <Link
+                            key={`next-${nIdx}`}
+                            to={n.href}
+                            className="btn btn-ghost text-xs py-2 px-3.5 bg-white flex items-center gap-1.5"
+                          >
+                            <span>{n.label}</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        ))}
+                        <Link
+                          to={`${prefix}/contact?topic=${topic.contactTopic}`}
+                          className="btn btn-primary text-xs py-2 px-4"
+                        >
+                          {getSecondaryCtaLabel(isFr)} &rarr;
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -254,7 +335,7 @@ export const HowIHelpPage: React.FC = () => {
       </section>
 
       {/* 5. How a Conversation Runs */}
-      <section className="section py-16 bg-[#fcfaf5] border-y border-[#d6cebd]">
+      <section className="section bg-[#fcfaf5] border-y border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-8">
           <div>
             <span className="eyebrow text-xs">{isFr ? "Déroulement d'un échange" : "How a conversation runs"}</span>
@@ -265,11 +346,11 @@ export const HowIHelpPage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs font-mono">
-            <div className="p-3 bg-[#f7f3eb] border-b-2 border-[#2e4a3b]">{isFr ? "1. Comprendre →" : "1. Understand →"}</div>
-            <div className="p-3 bg-[#f7f3eb] border-b-2 border-[#2e4a3b]">{isFr ? "2. Éduquer →" : "2. Educate →"}</div>
-            <div className="p-3 bg-[#f7f3eb] border-b-2 border-[#2e4a3b]">{isFr ? "3. Explorer →" : "3. Explore →"}</div>
-            <div className="p-3 bg-[#f7f3eb] border-b-2 border-[#2e4a3b]">{isFr ? "4. Réviser" : "4. Review"}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs font-medium text-[#1c1b18]">
+            <div className="p-3 bg-[#f7f3eb] border-b border-[#2e4a3b]">{isFr ? "1. Comprendre →" : "1. Understand →"}</div>
+            <div className="p-3 bg-[#f7f3eb] border-b border-[#2e4a3b]">{isFr ? "2. Éduquer →" : "2. Educate →"}</div>
+            <div className="p-3 bg-[#f7f3eb] border-b border-[#2e4a3b]">{isFr ? "3. Explorer →" : "3. Explore →"}</div>
+            <div className="p-3 bg-[#f7f3eb] border-b border-[#2e4a3b]">{isFr ? "4. Réviser" : "4. Review"}</div>
           </div>
 
           <p className="text-sm md:text-base text-[#46423a] leading-relaxed">
@@ -282,7 +363,7 @@ export const HowIHelpPage: React.FC = () => {
             <span>
               {isFr ? "Vous préférez modéliser vos chiffres ? " : "Prefer to model your numbers? "}
               <Link
-                to={isFr ? "/fr/calculators?tab=tfsa-rrsp#calculator-tool" : "/calculators?tab=tfsa-rrsp#calculator-tool"}
+                to={`${prefix}/calculators?tab=tfsa-rrsp#calculator-tool`}
                 onClick={() => trackCtaClick("how_i_help_page", "Calculate your tax-sheltered growth potential")}
                 className="underline font-semibold"
               >
@@ -290,7 +371,7 @@ export const HowIHelpPage: React.FC = () => {
               </Link>
             </span>
             <span>
-              <Link to={isFr ? "/fr/education" : "/education"} className="underline font-medium text-[#46423a]">
+              <Link to={`${prefix}/education`} className="underline font-medium text-[#46423a]">
                 {isFr ? "Consulter notre bibliothèque éducative →" : "Browse the education library →"}
               </Link>
             </span>
@@ -299,7 +380,7 @@ export const HowIHelpPage: React.FC = () => {
       </section>
 
       {/* 6. Closing CTA */}
-      <section className="section py-20 text-center">
+      <section className="section text-center">
         <div className="wrap max-w-3xl space-y-6">
           <h2 className="display text-[#1c1b18]">
             {isFr
@@ -312,21 +393,20 @@ export const HowIHelpPage: React.FC = () => {
               : "If there is a financial decision you are trying to understand, let’s start with the question that matters most to you."}
           </p>
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to={isFr ? "/fr/contact" : "/contact"} className="btn btn-primary text-base px-8 py-3">
-              {isFr ? "Engager la conversation →" : "Start a Conversation →"}
-            </Link>
             {siteConfig.schedulingUrl && (
               <a
                 href={siteConfig.schedulingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackBookingClick("how_i_help_bottom")}
-                className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-base px-6 py-3 inline-flex items-center gap-2"
+                className="btn btn-primary text-base px-8 py-3 inline-flex items-center gap-2"
               >
-                <span>{isFr ? "Réserver 30 min sur Calendly" : "Book 30 Min on Calendly"}</span>
-                <span aria-hidden="true">→</span>
+                <span>{getCtaLabel(isFr)}</span>
               </a>
             )}
+            <Link to={`${prefix}/contact`} className="arrow-link text-sm font-medium text-[#2e4a3b]">
+              {getSecondaryCtaLabel(isFr)} <span aria-hidden="true">→</span>
+            </Link>
           </div>
           <p className="text-xs text-[#625d52]">
             {isFr ? "Sans obligation. Sans pression commerciale." : "No obligation. No sales pressure."}

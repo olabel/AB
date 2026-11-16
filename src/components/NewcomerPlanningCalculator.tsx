@@ -107,7 +107,7 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
 
   return (
     <div
-      className={`bg-[#fcfaf5] border-2 border-[#2e4a3b] p-6 sm:p-8 lg:p-10 rounded-[2px] shadow-sm ${className}`}
+      className={`card-editorial border-[#2e4a3b] p-6 sm:p-8 lg:p-10 ${className}`}
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#d6cebd]">
@@ -120,10 +120,7 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
                 : "Interactive First-Year Runway Planner"}
             </span>
           </div>
-          <h3
-            className="font-serif text-2xl sm:text-3xl text-[#1c1b18] tracking-tight"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <h3 className="h3 text-2xl sm:text-3xl text-[#1c1b18]">
             {isFr
               ? "Calculateur des besoins financiers de 1re année"
               : "Newcomer First-Year Financial Runway Calculator"}
@@ -348,7 +345,7 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
               <span className="text-[0.7rem] uppercase tracking-wider text-[#d6c298] font-semibold">
                 {isFr ? "Bilan de survie financière" : "First-Year Runway Analysis"}
               </span>
-              <span className="text-xs font-mono px-2 py-0.5 bg-white/10 rounded-[2px] text-[#f7f3eb]">
+              <span className="text-xs tabular-nums font-medium px-2 py-0.5 bg-white/10 rounded-[2px] text-[#f7f3eb]">
                 {calculations.runwayMonths} {isFr ? "mois d'autonomie" : "months runway"}
               </span>
             </div>

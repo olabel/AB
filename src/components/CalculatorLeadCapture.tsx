@@ -4,6 +4,7 @@ import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, AlertCircle, Ref
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { trackLeadSubmit, trackBookingClick } from "../lib/track.ts";
 import { TurnstileWidget } from "./TurnstileWidget.tsx";
+import { siteConfig, getCtaLabel } from "../config/site.ts";
 
 interface CalculatorLeadCaptureProps {
   calculatorName: string;
@@ -106,8 +107,8 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
       setErrorMsg(
         err.message ||
           (isFr
-            ? "Impossible d'envoyer le plan pour le moment. Veuillez joindre Ahmed Bello au +1-506-899-4941 ou planifier un appel direct sur Calendly."
-            : "Could not send the plan right now. Please reach out to Ahmed Bello directly at +1-506-899-4941 or schedule a review on Calendly: https://calendly.com/olabel/30min")
+            ? `Impossible d'envoyer le plan pour le moment. Veuillez joindre Ahmed Bello au ${siteConfig.publicPhone} ou planifier un appel direct sur Calendly.`
+            : `Could not send the plan right now. Please reach out to Ahmed Bello directly at ${siteConfig.publicPhone} or schedule a review on Calendly: ${siteConfig.schedulingUrl}`)
       );
     } finally {
       setSubmitting(false);
@@ -121,13 +122,13 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
   return (
     <div
-      className={`mt-6 p-6 sm:p-7 bg-[#fcfaf5] border-2 border-[#2e4a3b]/40 rounded-[2px] space-y-5 shadow-xs relative overflow-hidden ${className}`}
+      className={`mt-6 p-6 sm:p-7 card-editorial border-[#2e4a3b]/50 space-y-5 relative overflow-hidden ${className}`}
     >
       <div className="absolute top-0 left-0 right-0 h-1 bg-[#2e4a3b]" />
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#ece6da] pb-4">
         <div>
-          <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block mb-0.5">
+          <span className="eyebrow text-[#75581f] block mb-0.5">
             {customSubheading || (isFr ? "Conserver vos résultats" : "Save Your Calculations")}
           </span>
           <h4 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-medium leading-snug">
@@ -136,19 +137,19 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
         </div>
 
         <a
-          href="https://calendly.com/olabel/30min"
+          href={siteConfig.schedulingUrl}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackBookingClick("calculator_lead_capture")}
-          className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shadow-xs shrink-0"
+          className="btn btn-primary text-xs py-2 px-3.5 inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
         >
           <Calendar className="w-3.5 h-3.5 text-[#d6c298]" />
-          <span>{isFr ? "Question de 15 min (sans pression)" : "Ask a 15-Min Question (Free, No Pitch)"}</span>
+          <span>{getCtaLabel(isFr)}</span>
         </a>
       </div>
 
       {submitted ? (
-        <div className="p-5 sm:p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-4 shadow-sm animate-fadeIn">
+        <div className="p-5 sm:p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-4 shadow-sm rise">
           <div className="flex items-start gap-3">
             <CheckCircle2 className="w-6 h-6 text-[#d6c298] shrink-0 mt-0.5" />
             <div className="space-y-1.5 flex-1">
@@ -173,14 +174,14 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
           <div className="pt-3 border-t border-[#f7f3eb]/20 flex flex-wrap items-center gap-3">
             <a
-              href="https://calendly.com/olabel/30min"
+              href={siteConfig.schedulingUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackBookingClick("calculator_lead_capture_confirmed")}
               className="btn bg-[#d6c298] text-[#14211a] hover:bg-white text-xs py-2 px-3.5 inline-flex items-center gap-1.5 font-semibold transition-colors"
             >
               <Calendar className="w-3.5 h-3.5" />
-              <span>{isFr ? "Obtenir un second avis sur Calendly" : "Get a Second Opinion on Your Situation"}</span>
+              <span>{getCtaLabel(isFr)}</span>
             </a>
             <a
               href={`mailto:enquiries@ahmedbello.com?subject=${encodeURIComponent(`Plan: ${calculatorName}`)}&body=${encodeURIComponent(`Reader: ${firstName || "Reader"} (${email})\n\n${summaryText}`)}`}
@@ -204,7 +205,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           {errorMsg && (
             <div
               role="alert"
-              className="p-3.5 bg-[#fdf0ed] border border-[#d97768] text-[#8a3324] text-xs rounded-[2px] space-y-2 animate-fadeIn"
+              className="p-3.5 bg-[#fdf0ed] border border-[#d97768] text-[#8a3324] text-xs rounded-[2px] space-y-2 rise"
             >
               <div className="flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 text-[#8a3324] shrink-0 mt-0.5" />
@@ -212,19 +213,19 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
               </div>
               <div className="pt-2 border-t border-[#d97768]/30 flex flex-wrap items-center gap-2.5 text-[#1c1b18] text-xs">
                 <span className="font-semibold">{isFr ? "Contact direct :" : "Direct Contact:"}</span>
-                <a href="tel:+15068994941" className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1">
+                <a href={`tel:${siteConfig.publicPhone.replace(/[^+\d]/g, "")}`} className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1">
                   <Phone className="w-3 h-3" />
-                  <span>+1 (506) 899-4941</span>
+                  <span>{siteConfig.publicPhone}</span>
                 </a>
                 <span>•</span>
                 <a
-                  href="https://calendly.com/olabel/30min"
+                  href={siteConfig.schedulingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline font-semibold text-[#2e4a3b] inline-flex items-center gap-1"
                 >
                   <Calendar className="w-3 h-3" />
-                  <span>{isFr ? "Question de 15 min sur Calendly" : "Ask a 15-min question on Calendly"}</span>
+                  <span>{getCtaLabel(isFr)}</span>
                 </a>
               </div>
             </div>
