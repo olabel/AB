@@ -1550,9 +1550,9 @@ const rawArticles: Article[] = [
     "overview": [
       "Over $350 billion in Canadian residential mortgages originated during the historic sub-2.5% rate window are confronting renewal at rates 250 to 350 basis points higher. For an average Canadian household carrying a $500,000 balance, this translates to an immediate payment shock of $600 to $1,200 per month. The intuitive, emotionally seductive reaction advocated across mainstream internet forums is simple: \"Raid your investments, pay down the debt, and secure a guaranteed return equal to your mortgage rate.\"",
       "Yet from an institutional balance-sheet perspective, this conventional wisdom commits a critical error: it evaluates debt in a vacuum rather than assessing total household capital efficiency. A home is an illiquid asset. It cannot buy groceries, cover an unexpected medical emergency, or sustain mortgage service during a temporary career interruption. When a family liquidates liquid capital to prepay mortgage principal, they convert liquid sovereignty into illiquid drywall.",
-      "The asymmetry deepens when registered accounts are involved. An RRSP withdrawal is not merely taxed at your full marginal income tax rate (triggering immediate withholding tax of up to 30% plus top-up liability at tax filing); it permanently extinguishes that contribution room forever. You cannot \"re-contribute\" those funds when rates stabilize. You have effectively paid the Canada Revenue Agency up to 40%–53% in frictional tax leakage simply to reduce a 5% debt.",
-      "Even within a Tax-Free Savings Account (TFSA), where contribution room is recovered the following calendar year, the opportunity cost is mathematically punishing. A $50,000 TFSA compounded over 15 to 20 years in a balanced global portfolio at a historic 6.5% real return grows completely tax-free to over $176,000. Using that $50,000 to prepay a 5.2% mortgage saves interest over the 5-year term, but deprives the family of irreplaceable tax-free compounding that would otherwise fund their retirement and insulate them from future Old Age Security (OAS) clawbacks.",
-      "A disciplined treasury framework treats personal balance sheets like household capital structures: maintain adequate operating liquidity, match asset duration with liabilities, and never sacrifice high-tax-value registered shelters to solve a short-term cashflow friction that could be managed through structured amortization, budget realignments, or dedicated non-registered liquidity buffers."
+      "The asymmetry deepens when registered accounts are involved. An RRSP withdrawal is not merely taxed at your full marginal income tax rate (triggering immediate withholding tax of up to 30% plus top-up liability at tax filing); it permanently extinguishes that contribution room forever. You cannot \"re-contribute\" those funds when rates stabilize. You have effectively paid the Canada Revenue Agency up to 40%–53% in preventable tax drag simply to reduce a 5% debt.",
+      "Even within a Tax-Free Savings Account (TFSA), where contribution room is recovered the following calendar year, the opportunity cost is substantial. A $50,000 TFSA compounded over 15 to 20 years in a balanced global portfolio at a historic 6.5% real return grows completely tax-free to over $176,000. Using that $50,000 to prepay a 5.2% mortgage saves interest over the 5-year term, but deprives the family of irreplaceable tax-free compounding that would otherwise fund their retirement and insulate them from future Old Age Security (OAS) clawbacks.",
+      "A disciplined balance-sheet approach treats personal assets and debts like an integrated whole: maintain adequate operating liquidity, match asset duration with liabilities, and never sacrifice high-tax-value registered shelters to solve a short-term cash-flow crunch that could be managed through extended amortization, budget adjustments, or dedicated non-registered liquidity buffers."
     ],
     "example": {
       "title": "Case Study: The $60,000 Prepayment Dilemma (15-Year Horizon)",
@@ -1640,8 +1640,8 @@ const rawArticles: Article[] = [
       "For Canadian business owners, physicians, dentists, consultants, and contractors who operate through a Canadian-Controlled Private Corporation (CCPC), the Small Business Deduction (SBD) is one of the most powerful tax provisions in the Income Tax Act. Under federal rules and provincial coordination, the first $500,000 of active business income (ABI) is taxed at a combined small business rate of roughly 9% to 12.2% (depending on the province), compared to the general corporate tax rate of 26.5% to 31%. This creates an immediate annual tax savings of up to $90,000 to $100,000 on $500,000 of operating profit.",
       "However, under statutory rules enacted in Subsection 125(5.1) of the Income Tax Act, that preferential tax shelter begins grinding down as soon as the corporation (and any associated corporations) earns more than $50,000 of Adjusted Aggregate Investment Income (AAII) in a taxation year. For every $1 of AAII earned above the $50,000 threshold, the corporation's $500,000 business limit is reduced by $5. By the time passive income reaches $150,000, the small business deduction is completely eliminated ($500,000 limit reduced to zero).",
       "The practical consequence is severe. Consider a medical corporation or operating company that earns $500,000 in active operational profits and holds $2,000,000 in retained investment capital. If that portfolio generates a 5% yield ($100,000 in passive interest and dividends), the corporation has exceeded the threshold by $50,000. Under the 5:1 formula, its small business deduction limit is slashed by $250,000. The first $250,000 of operating income is taxed at the small business rate (12.2% in Ontario), while the remaining $250,000 is immediately pushed into the general corporate rate (26.5%). That single passive portfolio return adds an immediate $35,750 in extra corporate income taxes on business earnings.",
-      "Compounding this friction is the front-end taxation of corporate passive returns themselves. In Canada, passive investment income earned inside a CCPC is deliberately taxed at high initial rates (50.17% in Ontario, consisting of basic corporate tax plus additional refundable Part I tax and Part IV tax on portfolio dividends) to prevent wealthy individuals from deferring personal tax indefinitely inside holding companies. While a portion of this tax is refundable upon paying taxable dividends through the Refundable Dividend Tax on Hand (RDTOH) mechanism, when combined with the 5:1 active business income grind, the effective marginal tax drag on incremental passive earnings can exceed 70% to 80%.",
-      "Sophisticated corporate wealth architecture solves this through four recognized mechanisms: (1) Corporate-owned tax-exempt life insurance and segregated fund policies, where cash surrender values accumulate tax-sheltered without generating AAII and payout flows tax-free through the Capital Dividend Account (CDA); (2) Individual Pension Plans (IPPs) and Retirement Compensation Arrangements (RCAs) that deduct corporate contributions and shift capital into dedicated registered retirement trusts; (3) Capital Dividend Account crystallizations that extract historical non-taxable capital gains out of the corporation tax-free; and (4) Strategic asset location, holding growth-oriented equities rather than high-turnover interest or non-eligible dividend instruments inside the corporate holding company."
+      "Compounding this tax burden is the front-end taxation of corporate passive returns themselves. In Canada, passive investment income earned inside a CCPC is deliberately taxed at high initial rates (50.17% in Ontario, consisting of basic corporate tax plus additional refundable Part I tax and Part IV tax on portfolio dividends) to prevent wealthy individuals from deferring personal tax indefinitely inside holding companies. While a portion of this tax is refundable upon paying taxable dividends through the Refundable Dividend Tax on Hand (RDTOH) mechanism, when combined with the 5:1 active business income grind, the effective marginal tax drag on incremental passive earnings can exceed 70% to 80%.",
+      "Experienced corporate tax planners address this through four recognized mechanisms: (1) Corporate-owned tax-exempt life insurance and segregated fund policies, where cash surrender values accumulate tax-sheltered without generating AAII and payout flows tax-free through the Capital Dividend Account (CDA); (2) Individual Pension Plans (IPPs) and Retirement Compensation Arrangements (RCAs) that deduct corporate contributions and shift capital into dedicated registered retirement trusts; (3) Capital Dividend Account crystallizations that extract historical non-taxable capital gains out of the corporation tax-free; and (4) Strategic asset location, holding growth-oriented equities rather than high-turnover interest or non-eligible dividend instruments inside the corporate holding company."
     ],
     "example": {
       "title": "Corporate Balance-Sheet Comparison: Operating Company with $1.8M Retained Capital",
@@ -1712,7 +1712,7 @@ const rawArticles: Article[] = [
       "savings-or-debt-first"
     ],
     "contactTopic": "investing",
-    "invitationAbout": "navigating the $50,000 corporate passive income threshold and structuring corporate retained capital",
+    "invitationAbout": "managing the $50,000 corporate passive income threshold and structuring corporate retained capital",
     "url": "/insights/canadian-ccpc-passive-income-grind-sbd-tax-trap",
     "readingMinutes": 6
   },
@@ -1973,17 +1973,17 @@ const rawArticles: Article[] = [
   "description": "Combine the $40,000 FHSA and $60,000 RRSP Home Buyers' Plan for a first home, plus the 15-year HBP repayment rules in Canada.",
   "question": "Can I use both the FHSA and the RRSP Home Buyers' Plan together to buy a home in Canada, and what is the optimal sequence to maximize tax deductions?",
   "category": "registered-accounts",
-  "figuresAsOf": "2025/2026 tax year (incorporating Budget 2024 Bill C-59 legislation)",
+  "figuresAsOf": "2026 tax year (incorporating Budget 2024 Bill C-59 legislation)",
   "problem": "Prospective Canadian home buyers frequently treat the First Home Savings Account (FHSA) and the Registered Retirement Savings Plan (RRSP) Home Buyers' Plan (HBP) as mutually exclusive options. In reality, Canadian tax law permits qualifying first-time home buyers to utilize both programs concurrently, expanding down-payment purchasing power. Without a structured accumulation and withdrawal timeline, however, purchasers risk misallocating annual contribution limits, triggering avoidable tax clawbacks, or leaving tens of thousands of dollars in compounding tax refunds on the table.",
   "overview": [
     "Under Subsection 146.6 of the Income Tax Act, the First Home Savings Account (FHSA) allows qualifying Canadian residents to contribute up to $8,000 annually, to a lifetime ceiling of $40,000. Contributions generate a dollar-for-dollar deduction against personal taxable income, and qualifying withdrawals to purchase a first home are 100 percent tax-free, with zero mandatory repayment back into the plan. In contrast, Subsection 146.02 governs the Home Buyers' Plan (HBP), which allows individuals to withdraw funds from their RRSP to purchase or build a qualifying home. In Federal Budget 2024, the federal government officially expanded the HBP withdrawal limit from $35,000 to $60,000 per person, effective April 16, 2024.",
     "Because the Income Tax Act contains no restriction preventing the concurrent use of both programs, a single first-time home buyer can deploy up to $100,000 toward a home purchase: $40,000 from an FHSA plus $60,000 from an RRSP via the HBP. For a married or common-law couple where both partners qualify as first-time home buyers, the combined purchasing pool reaches up to $200,000 ($80,000 combined FHSA plus $120,000 combined HBP).",
-    "A crucial distinction between the two regimes lies in their post-purchase capital obligations. Only qualifying FHSA withdrawals are truly tax-free: once withdrawn for an eligible home, the capital never needs to be repaid to the account, and the accumulated investment growth is permanently sheltered from taxation. In contrast, HBP withdrawals are not tax-free money—they represent a loan from your own RRSP that you repay over 15 years. Every dollar drawn under the HBP must be repaid into an RRSP according to a statutory schedule. To assist recent buyers, Budget 2024 introduced a temporary repayment deferral: individuals making an HBP withdrawal between January 1, 2022, and December 31, 2025, have their 15-year repayment window postponed to begin in the fifth year following the withdrawal year, rather than the second year.",
+    "An important distinction between the two regimes lies in their post-purchase capital obligations. Only qualifying FHSA withdrawals are truly tax-free: once withdrawn for an eligible home, the capital never needs to be repaid to the account, and the accumulated investment growth is permanently sheltered from taxation. In contrast, HBP withdrawals are not tax-free money—they represent a loan from your own RRSP that you repay over 15 years. Every dollar drawn under the HBP must be repaid into an RRSP according to a statutory schedule. To assist recent buyers, Budget 2024 introduced a temporary repayment deferral: individuals making an HBP withdrawal between January 1, 2022, and December 31, 2025, have their 15-year repayment window postponed to begin in the fifth year following the withdrawal year, rather than the second year.",
     "The financial leverage of this dual-structure strategy is greatly enhanced by the reinvestment of tax refunds. Because contributions to both the FHSA and RRSP generate immediate marginal tax deductions, a taxpayer in a 40 percent marginal bracket who contributes $8,000 to an FHSA and $12,000 to an RRSP generates an immediate $8,000 tax refund ($20,000 total contributions multiplied by 40 percent). When that refund is systematically injected back into the subsequent year's contribution room, the compounding acceleration allows buyers to accumulate a full down payment significantly faster than through an ordinary non-registered high-interest savings account.",
     "Finally, timing rules must be strictly observed. While FHSA funds can technically be contributed and withdrawn within the same tax year as long as the account was opened before purchase, RRSP funds must remain on deposit for at least 90 calendar days prior to an HBP withdrawal to remain tax-deductible under Subsection 146.02(2). Furthermore, unused annual FHSA room carries forward up to a maximum of $8,000 per year (for a maximum single-year contribution of $16,000), meaning individuals should open an FHSA immediately upon qualifying, even with a nominal initial deposit, to start accumulating annual room."
   ],
   "example": {
-    "title": "Three-Year Stacking Roadmap for a Professional Couple",
+    "title": "Three-Year Stacking Timeline for a Professional Couple",
     "intro": "Consider an Ontario couple where each partner earns $95,000 annually (approximate marginal tax rate of 37.91 percent). Over a three-year structured timeline, they prioritize maximizing both their individual FHSAs and funding their RRSPs toward the expanded $60,000 HBP ceiling, systematically reinvesting all tax refunds.",
     "table": {
       "head": [
@@ -2097,18 +2097,18 @@ const rawArticles: Article[] = [
   "description": "Mathematical breakeven comparison of claiming CPP early at 60 (-36%) versus deferring to 70 (+42%), CPI indexing and RRSP bridging.",
   "question": "At what exact age does deferring the Canada Pension Plan (CPP) to age 65 or age 70 break even, and when does taking it early make mathematical sense?",
   "category": "retirement",
-  "figuresAsOf": "2025/2026 statutory rates (0.6% monthly pre-65 penalty, 0.7% monthly post-65 enhancement, YMPE and YAMPE benchmarks)",
+  "figuresAsOf": "2026 statutory rates (0.6% monthly pre-65 penalty, 0.7% monthly post-65 enhancement; 2026 YMPE $74,600 & YAMPE $85,000)",
   "problem": "The prevailing default among Canadian retirees has historically been to claim Canada Pension Plan (CPP) benefits immediately upon turning 60, motivated by fear of leaving money on the table or distrust of government solvency. This decision permanently locks in a 36 percent reduction in baseline pension income. With life expectancies expanding and private defined benefit corporate pensions disappearing, CPP represents one of the only guaranteed, CPI-indexed, risk-free lifetime annuities available to Canadians. Treating CPP timing as an emotional choice rather than a balance-sheet asset allocation decision frequently costs households tens of thousands of dollars in guaranteed real income.",
   "overview": [
     "Under Section 46 of the Canada Pension Plan Act, an individual's retirement pension is calculated based on lifetime earnings relative to the Yearly Maximum Pensionable Earnings (YMPE). The statutory normal retirement age is 65. If a Canadian elects to begin receiving CPP benefits prior to age 65, their monthly payment is reduced by exactly 0.6 percent for each month before their 65th birthday. Claiming at the earliest permissible age of 60 translates to a permanent 36 percent lifetime reduction (60 months multiplied by 0.6 percent).",
     "Conversely, if an individual defers taking CPP beyond age 65, their monthly pension increases by 0.7 percent for every month of delay up to age 70. Deferring to age 70 yields a permanent 42 percent lifetime increase (60 months multiplied by 0.7 percent). When comparing an age 70 start date against an age 60 start date, the ratio of guaranteed monthly cash flow is 1.42 divided by 0.64, which equals 2.21875. In simple terms: for every dollar received per month by claiming at 60, deferring to age 70 pays approximately $2.22 per month for life, fully indexed to inflation.",
     "The central analytical question for any retiree is the actuarial breakeven age. In purely nominal, unindexed cash-flow terms, delaying CPP from age 60 to age 65 breaks even at approximately age 73 to 74. Delaying from age 65 to age 70 breaks even at age 81 to 82. However, these simplistic nominal comparisons severely understate the true value of delay. Because CPP benefits are legally adjusted each January based on the Consumer Price Index (CPI), the real purchasing power of the delayed benefit grows every year. When adjusting for inflation and incorporating a conservative real return of 2 to 3 percent on alternative portfolio capital, the real breakeven age for delaying to 70 sits between age 82 and 84.",
     "According to the Office of the Chief Actuary of Canada, a 65-year-old Canadian male currently has a 50 percent probability of living past age 87, and a 65-year-old female has a 50 percent probability of living past age 89. For a couple both aged 65, there is a greater than 70 percent probability that at least one spouse will survive beyond age 90. Because actuarial life expectancies exceed the breakeven thresholds by several years, the vast majority of healthy Canadians receive substantially greater lifetime wealth by deferring CPP.",
-    "A sophisticated retirement architecture executes an RRSP bridge strategy. Rather than claiming CPP at 60 to preserve an investment portfolio, the retiree draws down their taxable RRSP or RRIF accounts between ages 60 and 70 to fund living expenses, while allowing their CPP entitlement to compound at the guaranteed 8.4 percent annual statutory enhancement rate. This maneuver burns down taxable retirement accounts at lower marginal rates, reduces the size of mandatory RRIF minimum withdrawals at age 71, and significantly mitigates the risk of Old Age Security (OAS) recovery tax (clawback) in later retirement."
+    "A coordinated retirement drawdown plan executes an RRSP bridge strategy. Rather than claiming CPP at 60 to preserve an investment portfolio, the retiree draws down their taxable RRSP or RRIF accounts between ages 60 and 70 to fund living expenses, while allowing their CPP entitlement to compound at the guaranteed 8.4 percent annual statutory enhancement rate. This maneuver burns down taxable retirement accounts at lower marginal rates, reduces the size of mandatory RRIF minimum withdrawals at age 71, and significantly mitigates the risk of Old Age Security (OAS) recovery tax (clawback) in later retirement."
   ],
   "example": {
     "title": "Lifetime Income Comparison: Age 60 vs 65 vs 70 Start Dates",
-    "intro": "Consider an individual eligible for the 2025/2026 maximum monthly CPP entitlement of $1,400 at age 65. The table below illustrates their monthly benefit and cumulative lifetime receipts at various longevity milestones.",
+    "intro": "Consider an individual receiving an illustrative baseline monthly CPP entitlement of $1,400 at age 65. The table below illustrates their monthly benefit and cumulative lifetime receipts at various longevity milestones.",
     "table": {
       "head": [
         "Pension Starting Age",
@@ -2214,18 +2214,18 @@ const rawArticles: Article[] = [
 {
   "slug": "canadian-alternative-minimum-tax-amt-high-earners-guide",
   "kind": "insight",
-  "title": "The Canadian Alternative Minimum Tax (AMT): Navigating the Post-2024 Tax Reform",
+  "title": "The Canadian Alternative Minimum Tax (AMT): Understanding the Post-2024 Tax Reform",
   "seoTitle": "Canada AMT guide: 20.5% rate & key rules",
   "description": "How Canada's post-2024 Alternative Minimum Tax (Bills C-59 & C-69) taxes capital gains at 100%, allows 80% of donation credits, and affects exits.",
   "question": "How does the post-2024 Alternative Minimum Tax (AMT) change tax liability on business exits, real estate sales, and major charitable donations in Canada?",
   "category": "decision-making",
   "figuresAsOf": "2024–2026 tax years (Income Tax Act s. 127.5 & s. 127.531; Bills C-59 & C-69)",
-  "problem": "For over three decades, the Canadian Alternative Minimum Tax (AMT) operated quietly in the background, rarely affecting mainstream entrepreneurs or everyday investors. Effective for tax years 2024 and beyond, the federal government enacted sweeping structural reforms through Bill C-59 and Bill C-69. The flat AMT rate rose from 15 percent to 20.5 percent, the capital gains inclusion rate for AMT purposes was elevated to 100 percent, most non-refundable tax credits were reduced to a 50 percent allowance, and the charitable donation tax credit was set at 80 percent. High-income Canadians selling incorporated businesses, realizing substantial capital gains on property, or executing legacy philanthropic gifts now face unexpected upfront tax liabilities.",
+  "problem": "For over three decades, the Canadian Alternative Minimum Tax (AMT) operated quietly in the background, rarely affecting mainstream entrepreneurs or everyday investors. Effective for tax years 2024 and beyond, the federal government enacted major structural reforms through Bill C-59 and Bill C-69. The flat AMT rate rose from 15 percent to 20.5 percent, the capital gains inclusion rate for AMT purposes was elevated to 100 percent, most non-refundable tax credits were reduced to a 50 percent allowance, and the charitable donation tax credit was set at 80 percent. High-income Canadians selling incorporated businesses, realizing substantial capital gains on property, or executing legacy philanthropic gifts now face unexpected upfront tax liabilities.",
   "overview": [
     "Under Section 127.5 of the Income Tax Act, the Alternative Minimum Tax (AMT) is a parallel tax calculation that runs alongside the ordinary Part I income tax computation. The taxpayer must calculate their liability under both systems and pay whichever amount is higher. Under the historical pre-2024 framework, AMT applied a 15 percent flat rate to adjusted taxable income exceeding a fixed $40,000 basic exemption, with capital gains included at 80 percent.",
-    "Bills C-59 and C-69 fundamentally reconstructed this architecture with three simultaneous changes: First, the federal AMT rate was increased from 15 percent to 20.5 percent, aligning it directly with the second federal marginal tax bracket. Second, the basic AMT exemption was increased from $40,000 to the lower threshold of the fourth federal tax bracket (indexed annually: $173,205 in 2024, $177,882 in 2025, and $181,440 in 2026). While this large exemption protects modest middle-class taxpayers, it concentrates the burden on high-net-worth individuals and significant single-year liquidity events.",
+    "Bills C-59 and C-69 fundamentally overhauled these rules with three simultaneous changes: First, the federal AMT rate was increased from 15 percent to 20.5 percent, aligning it directly with the second federal marginal tax bracket. Second, the basic AMT exemption was increased from $40,000 to the lower threshold of the fourth federal tax bracket (indexed annually: $173,205 in 2024, $177,882 in 2025, and $181,440 in 2026). While this large exemption protects modest middle-class taxpayers, it concentrates the burden on high-net-worth individuals and significant single-year liquidity events.",
     "Third, the base of income subject to AMT was drastically broadened. Capital gains are now included at 100 percent under the AMT formula, compared to the 50 percent regular inclusion rate. Furthermore, the capital gains deduction claimed under the Lifetime Capital Gains Exemption (LCGE) for Qualified Small Business Corporation (QSBC) shares is now subject to a 30 percent inclusion in the AMT base. Most non-refundable tax credits can only offset 50 percent of their standard value when computing AMT, while under Subsection 127.531(c) (enacted via Bill C-69), individuals may claim 80 percent of the federal charitable donation tax credit.",
-    "The interaction with charitable giving still creates friction for major donors. Under standard tax rules, donating publicly traded securities with accrued gains eliminates capital gains tax entirely and produces a full donation tax credit. Under the reformed AMT, 30 percent of the capital gains on donated publicly traded securities are brought into the AMT base, and the resulting charitable donation credit is capped at 80 percent against minimum tax (while other non-refundable credits are capped at 50 percent). A donor executing a major securities gift in a year with low ordinary income can still face an unexpected cash tax bill.",
+    "The interaction with charitable giving can still create tax exposure for major donors. Under standard tax rules, donating publicly traded securities with accrued gains eliminates capital gains tax entirely and produces a full donation tax credit. Under the reformed AMT, 30 percent of the capital gains on donated publicly traded securities are brought into the AMT base, and the resulting charitable donation credit is capped at 80 percent against minimum tax (while other non-refundable credits are capped at 50 percent). A donor executing a major securities gift in a year with low ordinary income can still face an unexpected cash tax bill.",
     "While AMT is theoretically not a permanent tax because it can be carried forward for up to seven subsequent tax years under Section 120.2 to offset regular Part I tax, recovery is far from guaranteed. To recover prior AMT paid, an individual must generate sufficient regular taxable income in those seven years where regular tax exceeds minimum tax. For entrepreneurs who retire immediately following the sale of their business, or investors whose subsequent income consists primarily of tax-sheltered dividends or capital returns, the AMT effectively becomes a permanent capital cost."
   ],
   "example": {
@@ -2347,12 +2347,12 @@ const rawArticles: Article[] = [
   "heldForReview": true,
   "kind": "insight",
   "title": "Corporate Life Insurance for CCPCs: Tax-Free Capital Extraction via the CDA",
-  "seoTitle": "Corporate Life Insurance & CDA: Tax-Free Retained Earnings for CCPCs",
+  "seoTitle": "Corporate life insurance & CDA for CCPCs",
   "description": "How Canadian-Controlled Private Corporations (CCPCs) utilize exempt life insurance and segregated funds to bypass the 50.17% passive income tax and extract capital through the Capital Dividend Account.",
   "question": "How can incorporated business owners and physicians in Canada shelter passive surplus and transfer corporate wealth to heirs tax-free using the Capital Dividend Account?",
   "category": "investing",
-  "figuresAsOf": "2025/2026 corporate tax rates, Subsection 89(1) CDA definition, Subsection 125(5.1) SBD grind rules",
-  "problem": "Incorporated professionals and business owners operating through Canadian-Controlled Private Corporations (CCPCs) face a punishing tax landscape on passive investment growth. Corporate investment earnings (interest, foreign dividends, and realized capital gains) incur an upfront refundable tax rate exceeding 50 percent. Furthermore, passive investment income between $50,000 and $150,000 grinds down the small business deduction at a 5-to-1 ratio, exposing active corporate operating revenue to full general corporate tax rates. When retained profits are eventually distributed to shareholders as personal non-eligible dividends, combined personal tax rates can exceed 48 to 54 percent. Without proactive balance-sheet restructuring, corporate retained earnings suffer massive double-tax erosion.",
+  "figuresAsOf": "2026 corporate tax rates, Subsection 89(1) CDA definition, Subsection 125(5.1) SBD grind rules",
+  "problem": "Incorporated professionals and business owners operating through Canadian-Controlled Private Corporations (CCPCs) face steep tax rules on passive investment growth. Corporate investment earnings (interest, foreign dividends, and realized capital gains) incur an upfront refundable tax rate exceeding 50 percent. Furthermore, passive investment income between $50,000 and $150,000 grinds down the small business deduction at a 5-to-1 ratio, exposing active corporate operating revenue to full general corporate tax rates. When retained profits are eventually distributed to shareholders as personal non-eligible dividends, combined personal tax rates can exceed 48 to 54 percent. Without proactive balance-sheet restructuring, corporate retained earnings suffer massive double-tax erosion.",
   "overview": [
     "Under Canadian tax law, retained earnings left inside a Canadian-Controlled Private Corporation (CCPC) after paying the active small business tax rate (ranging from 9 percent to 12.2 percent depending on the province) represent low-cost capital for business reinvestment. However, once those funds are allocated into passive investment portfolios (such as stocks, bonds, or high-interest accounts), they trigger Part I tax, additional refundable tax (ART), and refundable portion of Part I tax, resulting in an immediate aggregate tax rate of 50.17 percent (in Ontario, New Brunswick, and British Columbia) to over 54 percent in other jurisdictions.",
     "Exacerbating this tax drag is Subsection 125(5.1) of the Income Tax Act, enacted to penalize CCPCs holding passive assets. If a corporation and its associated entities earn more than $50,000 of Adjusted Aggregate Investment Income (AAII) in a taxation year, the corporation's $500,000 Small Business Deduction (SBD) active income limit is reduced by $5 for every $1 of investment income over $50,000. Once AAII reaches $150,000, the small business limit is completely eliminated, causing the business's active operating income to be taxed at general corporate rates of 27 to 31 percent rather than the preferential 9 to 12.2 percent rate.",
@@ -2482,11 +2482,11 @@ const rawArticles: Article[] = [
   "description": "How to sequence RESP Educational Assistance Payments ($8,000 13-week limit) and tax-free PSE capital without losing CESG grants.",
   "question": "What is the difference between an EAP and a PSE withdrawal from an RESP, and how do parents withdraw funds without paying unnecessary taxes or repaying grants?",
   "category": "family",
-  "figuresAsOf": "2025/2026 statutory rules (Budget 2023 $8,000 13-week limit, Subsection 146.1 ITA)",
+  "figuresAsOf": "2026 statutory rules (Budget 2023 $8,000 13-week limit, Subsection 146.1 ITA)",
   "problem": "Millions of Canadian parents diligently contribute to Registered Education Savings Plans (RESPs) to capture the Canada Education Savings Grant (CESG), yet a staggering number make costly mistakes when their child enters university or college. Conflating original capital contributions with government grant and investment growth money frequently leads to excessive taxable student income, accidental forfeiture of grant funds, or punitive penalty taxes on unused earnings. Establishing a clear distinction between Educational Assistance Payments (EAPs) and Post-Secondary Education Capital (PSE) is essential to legally eliminating taxes across the entire educational lifecycle.",
   "overview": [
     "Under Section 146.1 of the Income Tax Act, every Registered Education Savings Plan (RESP) contains two fundamentally distinct pools of money that follow entirely different tax and legal rules upon withdrawal. The first pool is Post-Secondary Education Capital (PSE), which consists entirely of the subscriber's original contributions. Because contributions were made with after-tax money, PSE capital belongs to the subscriber and can be returned to either the subscriber or the student at any time with zero Canadian income tax and zero reporting to the CRA.",
-    "The second pool is the Educational Assistance Payment (EAP), which comprises the Canada Education Savings Grant (CESG), the Canada Learning Bond (CLB), provincial educational incentives, and all accumulated investment growth earned across the plan's lifetime. When an EAP is withdrawn, it is legally taxable in the hands of the student beneficiary (reported on a T4A tax slip in Box 042). Because students typically have modest summer incomes and are entitled to the basic personal amount ($15,705+ federally in 2024/2025) plus substantial tuition tax credits, EAPs can almost always be absorbed completely tax-free if withdrawn strategically.",
+    "The second pool is the Educational Assistance Payment (EAP), which comprises the Canada Education Savings Grant (CESG), the Canada Learning Bond (CLB), provincial educational incentives, and all accumulated investment growth earned across the plan's lifetime. When an EAP is withdrawn, it is legally taxable in the hands of the student beneficiary (reported on a T4A tax slip in Box 042). Because students typically have modest summer incomes and are entitled to the basic personal amount ($16,452 federally in 2026) plus substantial tuition tax credits, EAPs can almost always be absorbed completely tax-free if withdrawn strategically.",
     "A key statutory restriction governs the timing of initial withdrawals. Under Subsection 146.1(2), effective since the Budget 2023 amendment, the maximum EAP withdrawal permitted during the first 13 consecutive weeks of post-secondary enrollment is $8,000 for a qualifying educational program (full-time studies), or $4,000 for a specified educational program (the CRA's statutory classification requiring at least 12 hours per month of courses for 3 consecutive weeks). However, there is zero limit on how much PSE capital can be withdrawn during those first 13 weeks. Once the student successfully completes 13 consecutive weeks of enrollment, the $8,000 cap is permanently lifted, allowing parents to withdraw any remaining EAP balance up to the actual costs of their education.",
     "The most critical operational rule is to aggressively draw down all EAP funds before touching PSE capital. If a student drops out, changes programs, or completes their degree early with remaining funds in the RESP, any unused CESG grant money must be refunded to the Government of Canada under the Canada Education Savings Regulations. Unused investment growth can only be extracted as an Accumulated Income Payment (AIP), which incurs regular marginal income tax plus an additional 20 percent statutory penalty tax under Part X.5 of the Act.",
     "To avoid the punitive 20 percent AIP tax if a child does not pursue post-secondary education, Subsection 146.1(1.1) permits a subscriber to roll over up to $50,000 of accumulated income directly into their own or their spouse's RRSP, provided they have available RRSP contribution room and the RESP has been open for at least 10 years with all beneficiaries having reached age 21. By front-loading EAP withdrawals during the first two years of post-secondary studies, parents ensure that government grants and investment growth are completely exhausted while the student is in a near-zero tax bracket, leaving the safe, non-taxable PSE capital intact for later withdrawal."
@@ -2509,23 +2509,23 @@ const rawArticles: Article[] = [
           "$16,000 ($8,000 first 13 wks + $8,000 term 2)",
           "$2,000 (housing setup)",
           "$25,000 ($9k job + $16k EAP)",
-          "~$23,700 ($15.7k basic + $8k tuition)",
-          "~$130 (negligible)"
+          "~$24,452 ($16,452 basic + $8k tuition)",
+          "~$77 (negligible)"
         ],
         [
           "Year 2",
           "$16,000 (unrestricted EAP)",
           "$2,000",
           "$25,000",
-          "~$23,700 credits",
-          "~$130"
+          "~$24,452 credits",
+          "~$77"
         ],
         [
           "Year 3",
           "$4,000 (exhausts all remaining EAP & grants)",
           "$14,000",
           "$13,000 ($9k job + $4k EAP)",
-          "~$23,700 credits (accumulates carryover)",
+          "~$24,452 credits (accumulates carryover)",
           "$0"
         ],
         [
@@ -2533,7 +2533,7 @@ const rawArticles: Article[] = [
           "$0 (all grants & growth fully spent)",
           "$18,000 (final tuition & graduation)",
           "$9,000 (summer job only)",
-          "~$23,700 credits (saves for post-grad career)",
+          "~$24,452 credits (saves for post-grad career)",
           "$0"
         ],
         [
@@ -2542,7 +2542,7 @@ const rawArticles: Article[] = [
           "$36,000 total PSE (100% extracted)",
           "$72,000 total educational funding",
           "Zero grants forfeited / zero AIP penalties",
-          "Under $300 total tax across 4 years"
+          "Under $200 total tax across 4 years"
         ]
       ]
     },
@@ -2619,7 +2619,7 @@ const rawArticles: Article[] = [
   "description": "Learn CRA spousal attribution rules (ITA 74.1), prescribed rate loan exceptions (74.5(2)), and the strict January 30 interest deadline.",
   "question": "How can married Canadian couples legally shift taxable investment returns to the lower-earning spouse without triggering CRA attribution penalties?",
   "category": "investing",
-  "figuresAsOf": "Q1 2026",
+  "figuresAsOf": "2026 (3% CRA Prescribed Rate)",
   "problem": "Directly gifting investment capital to a lower-earning spouse triggers Canada's anti-avoidance attribution rules, causing all interest, dividends, and capital gains to be taxed back to the higher earner at top marginal brackets.",
   "overview": [
     "Under Subsections 74.1(1) and 74.2(1) of the Income Tax Act (ITA), when an individual transfers or lends property directly or indirectly to a spouse or common-law partner, any income or capital gain generated from that property is attributed back to the transferor and taxed at the transferor's marginal tax rate. This statutory rule exists specifically to prevent high-income earners from arbitrarily shifting passive investment returns to lower-income household members.",
@@ -2714,10 +2714,10 @@ const rawArticles: Article[] = [
     }
   ],
   "tradeoffs": [
-    "If investment returns in a given year fall below the prescribed interest rate, Spouse B must still pay the full prescribed interest to Spouse A, resulting in negative tax arbitrage.",
+    "If investment returns in a given year fall below the prescribed interest rate, Spouse B must still pay the full prescribed interest to Spouse A, resulting in a net tax loss.",
     "Establishing the structure requires legal documentation (written promissory note with clear repayment terms) and separate bank/investment accounts to avoid commingling funds.",
     "Spouse B must make the interest payment from their own independent funds (such as employment earnings, investment proceeds, or personal savings), not with money gifted from Spouse A.",
-    "Tracking interest deductions on Line 22100 and declaring interest income on Line 12100 requires meticulous annual tax filing and maintaining proof of payment for CRA review."
+    "Tracking interest deductions on Line 22100 and declaring interest income on Line 12100 requires careful annual tax filing and maintaining proof of payment for CRA review."
   ],
   "questions": [
     "What is the current CRA prescribed interest rate under Regulation 4301 for the current quarter?",
@@ -2761,17 +2761,17 @@ const rawArticles: Article[] = [
   "description": "How the Old Age Security recovery tax (ITA s. 180.2) works, pension income splitting, TFSA timing, and deferral past age 65.",
   "question": "At what income level does the CRA claw back your Old Age Security pension, and how can retirees structure their withdrawals to preserve benefits?",
   "category": "retirement",
-  "figuresAsOf": "2025/2026",
+  "figuresAsOf": "2026 CRA & ESDC OAS Recovery Thresholds",
   "problem": "Retirees who experience large mandatory RRIF minimums, capital gains, or non-registered dividend gross-ups inadvertently cross CRA's Net World Income threshold, losing 15 cents of OAS pension for every dollar earned above the ceiling.",
   "overview": [
-    "The Old Age Security (OAS) recovery tax, colloquially known as the OAS clawback, is an additional tax levied under Part I.2 (Section 180.2) of the Income Tax Act. If a Canadian retiree's Net World Income (Line 23600 of the T1 personal return) exceeds the annual threshold—$90,997 for the 2024 tax year and $93,208 for the 2025 tax year—they must repay 15 percent of every dollar of income above the threshold, up to the full amount of OAS received.",
-    "Crucially, the clawback calculation is based strictly on individual Net World Income (Line 23600), not household income. A couple with $180,000 of evenly split income ($90,000 each) pays zero OAS recovery tax, whereas a couple where one spouse earns $150,000 and the other earns $30,000 experiences a near-total loss of the higher earner's OAS pension.",
+    "The Old Age Security (OAS) recovery tax, colloquially known as the OAS clawback, is an additional tax levied under Part I.2 (Section 180.2) of the Income Tax Act. If a Canadian retiree's Net World Income (Line 23600 of the T1 personal return) exceeds the annual threshold—$93,454 for the 2025 tax year and $95,323 for the 2026 tax year—they must repay 15 percent of every dollar of income above the threshold, up to the full amount of OAS received.",
+    "Importantly, the clawback calculation is based strictly on individual Net World Income (Line 23600), not household income. A couple with $180,000 of evenly split income ($90,000 each) pays zero OAS recovery tax, whereas a couple where one spouse earns $150,000 and the other earns $30,000 experiences a near-total loss of the higher earner's OAS pension.",
     "A widespread trap for retirees is the taxable gross-up on eligible Canadian dividends. For income tax calculation purposes, the CRA requires Canadian eligible dividends to be grossed up by 38 percent on Line 12000, which enters Line 23600. Even though the dividend tax credit reduces actual income tax payable on Line 42000, Line 23600 reflects the grossed-up figure, artificially accelerating OAS recovery tax.",
     "Strategic mitigation relies on four non-speculative structural levers: pension income splitting under Section 60.03, voluntary deferral of OAS under Subsection 5(7.1) of the Old Age Security Act (delaying up to age 70 for a permanent 36 percent increase), tactical RRSP meltdown drawdowns between ages 60 and 71 before OAS begins, and utilizing TFSA withdrawals (which generate zero taxable income on Line 23600)."
   ],
   "example": {
     "title": "Case Study: Restructuring Retirement Cash Flows for a $1.2M Household",
-    "intro": "Consider a retired 68-year-old couple (Pat and Morgan) in New Brunswick. Pat has a $700,000 RRIF and a $300,000 non-registered equity portfolio yielding 4% eligible dividends ($12,000 actual dividends). Morgan has a small $200,000 RRSP and receives modest CPP. Before tax optimization, Pat withdraws $95,000 from the RRIF to cover household lifestyle and mortgages, plus receives $16,560 of grossed-up dividends ($12,000 x 1.38) and $12,000 in CPP, pushing Pat's Line 23600 income to $123,560—well above the $93,208 threshold.",
+    "intro": "Consider a retired 68-year-old couple (Pat and Morgan) in New Brunswick. Pat has a $700,000 RRIF and a $300,000 non-registered equity portfolio yielding 4% eligible dividends ($12,000 actual dividends). Morgan has a small $200,000 RRSP and receives modest CPP. Before tax optimization, Pat withdraws $95,000 from the RRIF to cover household lifestyle and mortgages, plus receives $16,560 of grossed-up dividends ($12,000 x 1.38) and $12,000 in CPP, pushing Pat's Line 23600 income to $123,560—well above the $95,323 threshold.",
     "table": {
       "head": [
         "Income Component",
@@ -2807,18 +2807,18 @@ const rawArticles: Article[] = [
         [
           "Pat's Final Line 23600 Net World Income",
           "$123,560",
-          "$67,000 (Well below the $93,208 threshold)",
-          "Under threshold by $26,208"
+          "$67,000 (Well below the $95,323 threshold)",
+          "Under threshold by $28,323"
         ],
         [
-          "Excess Above $93,208 Threshold",
-          "$30,352 ($123,560 - $93,208)",
+          "Excess Above $95,323 Threshold",
+          "$28,237 ($123,560 - $95,323)",
           "$0",
           "Zero excess"
         ],
         [
           "Annual OAS Recovery Tax (15% of excess)",
-          "$4,552.80 clawed back from OAS pension",
+          "$4,235.55 clawed back from OAS pension",
           "$0 clawback (100% of OAS pension retained)",
           "Full OAS pension preserved"
         ],
@@ -2832,10 +2832,10 @@ const rawArticles: Article[] = [
     },
     "notes": [
       "Under Section 60.03 of the ITA, eligible pension income (including RRIF and LIF payments after age 65) can be split up to 50 percent with a spouse, directly reducing the transferor's Line 23600 income and shifting it to the transferee's Line 11500.",
-      "Because Morgan's post-split income is $45,500, Morgan stays more than $47,000 below the OAS clawback threshold while also enjoying the $2,000 Pension Income Tax Credit.",
-      "By substituting $20,000 of taxable RRIF withdrawals with $20,000 of accumulated TFSA savings, Pat maintains the exact same $107,000 gross lifestyle cash flow while completely eliminating the $4,552 annual penalty."
+      "Because Morgan's post-split income is $45,500, Morgan stays more than $49,800 below the OAS clawback threshold while also enjoying the $2,000 Pension Income Tax Credit.",
+      "By substituting $20,000 of taxable RRIF withdrawals with $20,000 of accumulated TFSA savings, Pat maintains the exact same $107,000 gross lifestyle cash flow while completely eliminating the $4,236 annual penalty."
     ],
-    "conclusion": "Through pension income splitting, non-registered dividend reallocation, and strategic TFSA timing, the couple completely eliminated a $4,550+ annual penalty, preserving 100 percent of their Old Age Security benefits."
+    "conclusion": "Through pension income splitting, non-registered dividend reallocation, and strategic TFSA timing, the couple completely eliminated a $4,235+ annual penalty, preserving 100 percent of their Old Age Security benefits."
   },
   "misunderstandings": [
     {
@@ -2903,12 +2903,12 @@ const rawArticles: Article[] = [
 {
   "slug": "credit-cards-loans-lines-of-credit-repayment-strategies",
   "kind": "guide",
-  "title": "Debt Repayment Architecture: Credit Cards, Personal Loans, and Lines of Credit",
+  "title": "Debt Repayment Strategies: Credit Cards, Personal Loans, and Lines of Credit",
   "seoTitle": "Debt repayment: cards, loans & LOCs",
   "description": "Compare the Debt Avalanche and Snowball methods, credit utilization effects, and line of credit consolidation rules in Canada.",
   "question": "What is the most cost-effective and structurally sound strategy to pay off credit cards, personal loans, and lines of credit in Canada?",
   "category": "debt-credit",
-  "figuresAsOf": "2025/2026 Canadian banking regulations (FCAC) and credit reporting frameworks",
+  "figuresAsOf": "2026 Canadian banking regulations (FCAC) and credit reporting frameworks",
   "problem": "Most Canadians carry debt across multiple fragmented instruments: 19.99% to 24.99% credit cards, 8% to 14% personal loans, and prime-plus lines of credit. Paying arbitrary amounts across different accounts traps cash flow in daily compound interest, stretches repayment over decades, and impairs credit scores through high utilization ratios.",
   "overview": [
     "Canadian credit card debt is mathematically predatory because interest compounds daily on your average daily balance rather than monthly. If an account carries an Annual Percentage Rate (APR) of 20.99%, the daily rate is approximately 0.0575 percent. Furthermore, making only the contractual minimum payment (typically the interest plus 1 percent of the principal balance, or $10) ensures that roughly 80 to 90 percent of every dollar paid goes directly to servicing interest rather than reducing the balance.",
@@ -3026,7 +3026,7 @@ const rawArticles: Article[] = [
     "consumer-proposals-explained"
   ],
   "contactTopic": "debt",
-  "invitationAbout": "structuring an aggressive, mathematical debt elimination roadmap for your household",
+  "invitationAbout": "building a practical debt elimination plan for your household",
   "url": "/education/credit-cards-loans-lines-of-credit-repayment-strategies",
   "readingMinutes": 10
 },
@@ -3038,7 +3038,7 @@ const rawArticles: Article[] = [
   "description": "How OSFI Guideline B-20 stress-tests buyers, how fixed IRD penalties differ from variable, and 25 vs 30-year amortization costs.",
   "question": "How does the Government of Canada qualify home buyers, what determines whether fixed or variable rates win, and how does amortization impact total interest?",
   "category": "registered-accounts",
-  "figuresAsOf": "2025/2026 OSFI B-20 regulations, CMHC insurance guidelines, and federal 30-year amortization expansions",
+  "figuresAsOf": "2026 OSFI B-20 regulations, CMHC insurance guidelines, and federal 30-year amortization expansions",
   "problem": "Prospective home buyers often focus exclusively on the lowest headline contract rate, ignoring the statutory stress test qualification formula, the severe penalty asymmetry of bank IRDs, and the hundreds of thousands of dollars in lifetime interest dictated by amortization selection.",
   "overview": [
     "Under the Office of the Superintendent of Financial Institutions (OSFI) Guideline B-20, every federally regulated mortgage lender in Canada must stress-test prospective borrowers. Buyers must prove they can service mortgage payments at a qualifying rate equal to their contract rate plus 2.00 percent, or the national qualifying floor of 5.25 percent, whichever is higher. Concurrently, lenders must enforce strict debt-service caps: Gross Debt Service (GDS) must not exceed 39 percent of gross household income (covering mortgage principal, interest, property taxes, and heating costs), while Total Debt Service (TDS) must not exceed 44 percent (incorporating all other consumer debt obligations, such as auto loans and credit cards).",
@@ -3154,17 +3154,17 @@ const rawArticles: Article[] = [
   "description": "Compare unsecured personal lines of credit and HELOCs: OSFI 65% LTV limits, home title risk, and interest deductibility under ITA 20(1)(c).",
   "question": "Should I use an unsecured Personal Line of Credit or a Home Equity Line of Credit (HELOC), and what are the legal, collateral, and tax implications?",
   "category": "debt-credit",
-  "figuresAsOf": "2025/2026 OSFI B-20 lending guidelines and CRA tax deductibility rulings",
+  "figuresAsOf": "2026 OSFI B-20 lending guidelines, Bank of Canada 4.70% Prime rate, and CRA tax deductibility rulings",
   "problem": "Borrowers frequently choose between a Personal Line of Credit (PLC) and a HELOC based solely on headline interest rates, without understanding that a HELOC encumbers the title to their primary residence, involves upfront legal and appraisal costs, and carries severe foreclosure risks if cash flow is disrupted.",
   "overview": [
     "An Unsecured Personal Line of Credit (PLC) and a Home Equity Line of Credit (HELOC) represent two distinct classes of revolving credit under Canadian banking law. An unsecured PLC is an open-ended credit facility backed solely by the borrower's personal signature, income verification, and credit history. Because no physical asset serves as collateral, the lender assumes higher default risk, pricing the facility at a wider spread above the bank Prime rate (typically Prime + 2.0% to Prime + 5.0%). In contrast, a HELOC is a secured credit agreement registered as a collateral mortgage charge against the title of residential real estate at the provincial land registry.",
-    "Because a HELOC is backed by residential property, Canadian financial institutions offer significantly lower interest rates (typically Prime + 0.50% to Prime + 1.00%). However, this lower interest rate introduces systemic risk: if you default on a HELOC, the lender possesses statutory power-of-sale and foreclosure rights to seize and sell your primary residence to satisfy the debt. Under an unsecured PLC, a defaulting borrower faces credit score damage and civil collection litigation, but their home title remains free of direct bank liens.",
+    "Because a HELOC is backed by residential property, Canadian financial institutions offer significantly lower interest rates (typically Prime + 0.50% to Prime + 1.00%). However, this lower interest rate introduces collateral foreclosure risk: if you default on a HELOC, the lender possesses statutory power-of-sale and foreclosure rights to seize and sell your primary residence to satisfy the debt. Under an unsecured PLC, a defaulting borrower faces credit score damage and civil collection litigation, but their home title remains free of direct bank liens.",
     "Federal banking regulations strictly limit how much home equity Canadians can access. Under OSFI Guideline B-20, a standalone revolving HELOC cannot exceed 65 percent of the property's appraised fair market value (Loan-to-Value, or LTV). When combined with an amortizing first mortgage within a Combined Loan Plan (CLP), total authorized borrowing can reach up to 80 percent LTV, but any borrowing exceeding 65 percent must be placed into a scheduled amortizing repayment schedule. Establishing a HELOC also requires upfront administrative capital: borrowers must pay for a professional property appraisal ($350 to $500) and legal title registration fees ($600 to $1,000). An unsecured PLC carries zero setup costs.",
     "Finally, borrowers must understand the statutory tax rules governing borrowed money. Under Paragraph 20(1)(c) of the Canadian Income Tax Act, interest on borrowed money is tax-deductible only if the funds are directly used for the purpose of earning taxable investment or business income (such as buying non-registered dividend equities or investing in active business operations). The collateral used to secure the loan is legally irrelevant; whether you draw from a personal line of credit or a HELOC, if you use the proceeds to buy a personal vehicle or deposit into a TFSA or RRSP, the interest is 100 percent non-deductible."
   ],
   "example": {
     "title": "Cost and Risk Comparison: $50,000 Borrowing Facility Over 3 Years",
-    "intro": "Consider a homeowner in Calgary needing a $50,000 facility for home improvements and emergency backup, comparing an Unsecured Personal Line of Credit against a Home Equity Line of Credit. Assume a bank Prime rate of 5.95%.",
+    "intro": "Consider a homeowner in Calgary needing a $50,000 facility for home improvements and emergency backup, comparing an Unsecured Personal Line of Credit against a Home Equity Line of Credit. Assume a chartered bank Prime rate of 4.70% (late 2026).",
     "table": {
       "head": [
         "Feature / Cost Driver",
@@ -3175,8 +3175,8 @@ const rawArticles: Article[] = [
       "rows": [
         [
           "Interest Rate Pricing",
-          "Prime + 3.00% (8.95% APR)",
-          "Prime + 0.50% (6.45% APR)",
+          "Prime + 3.00% (7.70% APR)",
+          "Prime + 0.50% (5.20% APR)",
           "HELOC interest is 2.50% cheaper"
         ],
         [
@@ -3199,14 +3199,14 @@ const rawArticles: Article[] = [
         ],
         [
           "Annual Interest Cost on $50k Draw",
-          "$4,475 / year",
-          "$3,225 / year",
+          "$3,850 / year",
+          "$2,600 / year",
           "HELOC saves $1,250 in annual interest"
         ],
         [
           "Three-Year Net Cost (Including Setup)",
-          "$13,425 total interest",
-          "$10,825 ($9,675 interest + $1,150 fees)",
+          "$11,550 total interest",
+          "$8,950 ($7,800 interest + $1,150 fees)",
           "HELOC saves $2,600 over 3 years"
         ]
       ]
@@ -3214,7 +3214,7 @@ const rawArticles: Article[] = [
     "notes": [
       "For small or short-term borrowing under $15,000, the $1,150 in upfront HELOC legal and appraisal fees often wipes out any interest rate savings.",
       "For larger long-term borrowing ($50,000+), the HELOC delivers substantial interest savings despite setup fees.",
-      "If the $50,000 is invested in taxable dividend-paying stocks, the interest is tax-deductible on Line 22100 under both options, reducing the after-tax interest rate to 5.10% (PLC) and 3.68% (HELOC) at a 43% marginal tax rate."
+      "If the $50,000 is invested in taxable dividend-paying stocks, the interest is tax-deductible on Line 22100 under both options, reducing the after-tax interest rate to 4.39% (PLC) and 2.96% (HELOC) at a 43% marginal tax rate."
     ],
     "conclusion": "An unsecured PLC is superior for short-term liquidity and avoiding liens on your home, while a HELOC is the cost-effective vehicle for large, long-term capital deployments or tax-deductible investment structures."
   },
@@ -3284,17 +3284,17 @@ const rawArticles: Article[] = [
   "description": "Calculate the tax refund from a $10,000 RRSP contribution across Canadian brackets, plus effects on the Canada Child Benefit.",
   "question": "How much tax refund will I get from a $10,000 RRSP contribution in Canada, and how does my income bracket change the calculation?",
   "category": "registered-accounts",
-  "figuresAsOf": "2025/2026 indexed federal and provincial marginal tax brackets (CRA)",
+  "figuresAsOf": "2026 indexed federal (14% lowest rate) and provincial marginal tax brackets (CRA)",
   "problem": "Many Canadians treat an RRSP refund as a flat percentage or free money from the government, failing to realize that tax savings equal their exact combined marginal tax rate, that the refund is simply deferred tax that will be owed upon retirement withdrawal, and that lower earners may gain more through income-tested family benefits than high-bracket tax relief.",
   "overview": [
     "Under Section 146 of the Canadian Income Tax Act, a contribution to a Registered Retirement Savings Plan (RRSP) is deductible against your total taxable income (Line 15000). The resulting cash tax savings is not a flat statutory rebate; it is calculated by multiplying your contribution amount by your top combined marginal tax rate (federal plus provincial tax brackets). Because Canada operates a progressive tax system, a $10,000 deduction saves significantly more cash for a high earner than for an entry-level worker.",
-    "Furthermore, a $10,000 contribution can cross marginal bracket thresholds. For example, if your taxable income is $118,000 in Ontario and the federal bracket changes at $115,000, your $10,000 contribution reduces $3,000 of income at the higher 43.41% combined rate and $7,000 at the lower 37.91% rate. The resulting refund is the exact weighted blend of the two brackets.",
+    "Furthermore, a $10,000 contribution can cross marginal bracket thresholds. For example, if your taxable income is $120,000 in Ontario and the 2026 federal bracket changes at $117,045, your $10,000 contribution reduces $2,955 of income at the higher 43.41% combined rate and $7,045 at the lower 37.91% rate. The resulting refund is the exact weighted blend of the two brackets.",
     "A powerful secondary advantage often overlooked by Canadian families is the effect of RRSP deductions on income-tested federal and provincial benefits. By reducing your Net World Income on Line 23600 of your T1 return, a $10,000 RRSP deduction directly lowers your Adjusted Family Net Income (AFNI). For households receiving the Canada Child Benefit (CCB), every dollar of reduced net income can increase non-taxable CCB payments by 3.2% to 8.0%, adding an extra $320 to $800 in tax-free cash alongside the income tax refund.",
     "Finally, contributing to an RRSP is legally distinct from claiming the deduction. Under Subsection 146(5), you can contribute capital to your RRSP today to begin sheltering investment growth from annual taxes, but choose to defer claiming the tax deduction on Schedule 7 to a future calendar year when you anticipate entering a significantly higher tax bracket."
   ],
   "example": {
     "title": "Exact Tax Savings on a $10,000 RRSP Contribution Across Income Brackets",
-    "intro": "The following table illustrates the immediate cash tax refund generated by a $10,000 RRSP contribution across five representative Canadian income levels in Ontario, British Columbia, and Alberta.",
+    "intro": "The following table illustrates the immediate cash tax refund generated by a $10,000 RRSP contribution across five representative 2026 Canadian income levels in Ontario, British Columbia, and Alberta (keeping all $10,000 inside a single bracket).",
     "table": {
       "head": [
         "Gross Annual Income",
@@ -3305,48 +3305,48 @@ const rawArticles: Article[] = [
       ],
       "rows": [
         [
-          "$55,000 (Entry Career / Trades)",
-          "24.15%",
-          "$2,415",
-          "$2,270",
-          "$2,500"
+          "$50,000 (Entry Career / Trades)",
+          "19.05%",
+          "$1,905",
+          "$1,960",
+          "$2,200"
         ],
         [
           "$85,000 (Mid-Level Professional)",
-          "31.48%",
-          "$3,148",
-          "$3,100",
+          "29.65%",
+          "$2,965",
+          "$2,820",
           "$3,050"
         ],
         [
-          "$120,000 (Senior Professional)",
+          "$130,000 (Senior Professional)",
           "43.41%",
           "$4,341",
-          "$38.29% ($3,829)",
-          "$36.00% ($3,600)"
+          "38.29% ($3,829)",
+          "36.00% ($3,600)"
         ],
         [
-          "$175,000 (Executive / Specialized)",
-          "48.29%",
-          "$4,829",
-          "$45.80% ($4,580)",
-          "$41.00% ($4,100)"
+          "$205,000 (Executive / Specialized)",
+          "47.97%",
+          "$4,797",
+          "45.80% ($4,580)",
+          "42.00% ($4,200)"
         ],
         [
-          "$250,000+ (High Earner / Physician)",
+          "$270,000+ (High Earner / Physician)",
           "53.53%",
           "$5,353",
-          "$53.50% ($5,350)",
-          "$48.00% ($4,800)"
+          "53.50% ($5,350)",
+          "47.00% ($4,700)"
         ]
       ]
     },
     "notes": [
-      "Tax calculations reflect combined federal and provincial marginal brackets including surtaxes.",
-      "For a family earning $85,000 with two children under age 6, a $10,000 RRSP contribution also increases Canada Child Benefit (CCB) payments by approximately $570 over the following benefit year, bringing total financial recovery to $3,718 (37.2% effective benefit).",
+      "Tax calculations reflect 2026 combined federal (14% lowest bracket) and provincial marginal brackets including Ontario surtaxes.",
+      "For a family earning $85,000 with two children under age 6, a $10,000 RRSP contribution also increases Canada Child Benefit (CCB) payments by approximately $570 over the following benefit year, bringing total financial recovery to $3,535 (35.4% effective benefit).",
       "Reinvesting the $4,341 tax refund back into a TFSA or the following year's RRSP accelerates retirement wealth by over 40 percent compared to spending the refund."
     ],
-    "conclusion": "A $10,000 RRSP contribution generates between $2,400 and $5,350 in immediate cash tax savings, and systematically reinvesting that refund transforms a simple tax deduction into a powerful wealth-building engine."
+    "conclusion": "A $10,000 RRSP contribution generates between $1,905 and $5,353 in immediate cash tax savings, and systematically reinvesting that refund transforms a simple tax deduction into a powerful long-term savings multiplier."
   },
   "misunderstandings": [
     {
@@ -3355,7 +3355,7 @@ const rawArticles: Article[] = [
     },
     {
       "myth": "A $10,000 RRSP contribution always reduces your taxes by $10,000.",
-      "reality": "A $10,000 contribution reduces your taxable income by $10,000, which reduces your taxes by your marginal rate (typically $2,500 to $5,350)."
+      "reality": "A $10,000 contribution reduces your taxable income by $10,000, which reduces your taxes by your marginal rate (typically $1,905 to $5,353 in 2026)."
     },
     {
       "myth": "You must claim your RRSP tax deduction in the year you make the contribution.",
@@ -3363,7 +3363,7 @@ const rawArticles: Article[] = [
     },
     {
       "myth": "Everyone should prioritize an RRSP over a TFSA to get a tax refund.",
-      "reality": "If your taxable income is in the lowest tax bracket (under $55,000), a TFSA is usually superior because your current tax refund is small, and TFSA withdrawals in retirement will never claw back Old Age Security (OAS) or GIS benefits."
+      "reality": "If your taxable income is in the lowest federal tax bracket (under $58,523 in 2026), a TFSA is usually superior because your current tax refund is small, and TFSA withdrawals in retirement will never claw back Old Age Security (OAS) or GIS benefits."
     }
   ],
   "tradeoffs": [
@@ -3402,7 +3402,7 @@ const rawArticles: Article[] = [
     "oas-clawback-mitigation-threshold-canadian-retirees"
   ],
   "contactTopic": "accounts",
-  "invitationAbout": "calculating your exact RRSP marginal tax savings and refund reinvestment roadmap",
+  "invitationAbout": "calculating your exact RRSP marginal tax savings and refund reinvestment plan",
   "url": "/education/how-much-tax-do-i-save-with-a-10000-rrsp-contribution",
   "readingMinutes": 9
 },
@@ -3414,12 +3414,12 @@ const rawArticles: Article[] = [
   "description": "A priority framework for choosing between TFSA, RRSP, and FHSA based on marginal tax brackets, home buying plans, and employer matches.",
   "question": "If I have limited savings each month, which registered account should I fund first: TFSA, RRSP, or FHSA?",
   "category": "registered-accounts",
-  "figuresAsOf": "2025/2026 CRA contribution limits ($7,000 TFSA, $8,000 FHSA, $32,490 RRSP cap)",
+  "figuresAsOf": "2026 CRA contribution limits ($7,000 TFSA, $8,000 FHSA, $33,810 RRSP cap)",
   "problem": "Canadians are bombarded with competing advice to maximize the TFSA, RRSP, and FHSA simultaneously. Without a clear sequential decision rule based on income brackets, time horizon, and purchasing goals, savers misallocate capital: trapping money in RRSPs when they need short-term liquidity, or skipping the FHSA and losing tens of thousands in tax-free home-buying grants.",
   "overview": [
     "Canada's three primary registered investment vehicles—the Tax-Free Savings Account (TFSA, ITA Section 146.2), the Registered Retirement Savings Plan (RRSP, ITA Section 146), and the First Home Savings Account (FHSA, ITA Section 146.6)—provide distinct tax sheltering advantages at different stages of capital accumulation. The FHSA is mathematically superior to both because it combines the pre-tax contribution deduction of an RRSP with the 100 percent tax-free qualifying withdrawal of a TFSA. For qualifying home buyers, the FHSA is universally the top priority.",
     "The golden rule of Canadian savings is that an employer matching program in a Group RRSP or pension plan always comes first. If your employer offers a 50 percent or 100 percent match on contributions up to 4 to 6 percent of your salary, capturing that match provides an immediate, risk-free 50% to 100% return on your money that exceeds any registered account tax benefit.",
-    "Once employer matches and the FHSA (if applicable) are funded, the decision between the TFSA and RRSP is governed primarily by your current marginal tax bracket compared to your expected tax bracket in retirement. If your current taxable income exceeds $105,000 (placing you in federal tax brackets of 26 percent or higher, with combined provincial rates between 38% and 53%), the upfront tax deduction of the RRSP delivers substantial arbitrage. If your taxable income is below $55,000, the TFSA is mathematically superior: the current deduction is worth little, and TFSA withdrawals in retirement will never claw back income-tested benefits like Old Age Security (OAS) or the Guaranteed Income Supplement (GIS).",
+    "Once employer matches and the FHSA (if applicable) are funded, the decision between the TFSA and RRSP is governed primarily by your current marginal tax bracket compared to your expected tax bracket in retirement. If your current taxable income exceeds $105,000 (placing you in higher combined federal-provincial brackets between 38% and 53%), the upfront tax deduction of the RRSP delivers a significant tax-rate advantage. If your taxable income is below $58,523 (lowest 14% federal bracket), the TFSA is mathematically superior: the current deduction is worth little, and TFSA withdrawals in retirement will never claw back income-tested benefits like Old Age Security (OAS) or the Guaranteed Income Supplement (GIS).",
     "Finally, liquidity requirements must dictate allocation. Capital placed into an RRSP is effectively locked; any withdrawal triggers immediate withholding taxes (10% to 30%) and permanently destroys that contribution room. In contrast, funds withdrawn from a TFSA can be accessed anytime with zero tax, and the full dollar amount of the withdrawal is added back to your TFSA contribution room on January 1 of the following calendar year. Emergency buffers and near-term savings must always reside in a TFSA rather than an RRSP."
   ],
   "example": {
@@ -3589,7 +3589,7 @@ const rawArticles: Article[] = [
   "tradeoffs": [
     "Filing Form RC727 immediately eliminates ongoing 1% monthly penalties, but requires coordinating with your financial institution before funds are released.",
     "Transferring excess FHSA amounts to an RRSP cures the over-contribution without triggering immediate taxable income, but consumes valuable RRSP deduction room.",
-    "Liquidating an FHSA prior to departing Canada eliminates cross-border reporting friction, but converts tax-free growth into taxable income if not transferred to an RRSP."
+    "Liquidating an FHSA prior to departing Canada eliminates cross-border reporting complexity, but converts tax-free growth into taxable income if not transferred to an RRSP."
   ],
   "questions": [
     "Did you contribute to more than one financial institution's FHSA in the current tax calendar year?",
@@ -3642,13 +3642,13 @@ const rawArticles: Article[] = [
   "problem": "Canadians moving to the United States on work visas (TN, H-1B, L-1) or obtaining Green Cards routinely bring their Tax-Free Savings Accounts (TFSAs), assuming they remain tax-sheltered. Under the Internal Revenue Code (IRC), the TFSA is completely unrecognized as a pension or retirement account under Article XVIII of the Canada-U.S. Tax Treaty. The IRS classifies the TFSA as a Foreign Grantor Trust under IRC Sections 671–679, triggering mandatory annual filings of Form 3520 and Form 3520-A. Missing the March 15 deadline for Form 3520-A carries an automatic minimum penalty of $10,000 or 5% of gross trust value, while Form 3520 carries penalties of up to 35% of gross assets.",
   "overview": [
     "Why the Canada-U.S. Tax Treaty Ignores the TFSA: Under Article XVIII of the Canada-U.S. Income Tax Convention, Canadian RRSPs and RRIFs receive explicit cross-border recognition; their tax-deferred status is preserved for U.S. federal tax purposes without requiring complex trust disclosures (formalized under IRS Revenue Procedure 2014-55). However, because the TFSA was created in 2009—long after the last treaty protocol—it was never incorporated. For U.S. tax purposes, a TFSA is treated as an ordinary, fully taxable foreign entity.",
-    "The Foreign Grantor Trust Classification (Forms 3520 & 3520-A): Because the Canadian resident created the TFSA and retains full control over contributions, investments, and distributions, the IRS classifies it as a foreign grantor trust under IRC Sections 671 through 679. This mandates two onerous informational filings: (1) Form 3520-A (Annual Information Return of Foreign Trust With a U.S. Owner), due on March 15—a full month before regular individual tax returns; and (2) Form 3520 (Annual Return To Report Transactions With Foreign Trusts and Receipt of Certain Foreign Gifts), filed alongside your Form 1040 by April 15. The penalties for non-compliance under IRC Section 6677 are confiscatory: $10,000 or 35% of the gross trust value for Form 3520, and $10,000 or 5% of gross assets for Form 3520-A.",
-    "The PFIC Double-Nightmare (Form 8621): If your TFSA holds Canadian mutual funds, segregated funds, or Canadian-domiciled ETFs (e.g., TSX:XIU, VCN, XEQT), the U.S. tax trap deepens dramatically. The IRS treats these foreign pooled vehicles as Passive Foreign Investment Companies (PFICs) under IRC Section 1291. PFIC gains are taxed at the highest ordinary income tax rates (up to 37%), combined with non-deductible compounded interest charges for every day the asset was held. Each Canadian ETF requires a separate IRS Form 8621, often costing $500 to $1,500 per fund in cross-border accounting fees.",
+    "The Foreign Grantor Trust Classification (Forms 3520 & 3520-A): Because the Canadian resident created the TFSA and retains full control over contributions, investments, and distributions, the IRS classifies it as a foreign grantor trust under IRC Sections 671 through 679. This mandates two onerous informational filings: (1) Form 3520-A (Annual Information Return of Foreign Trust With a U.S. Owner), due on March 15—a full month before regular individual tax returns; and (2) Form 3520 (Annual Return To Report Transactions With Foreign Trusts and Receipt of Certain Foreign Gifts), filed alongside your Form 1040 by April 15. The penalties for non-compliance under IRC Section 6677 are severe: $10,000 or 35% of the gross trust value for Form 3520, and $10,000 or 5% of gross assets for Form 3520-A.",
+    "The PFIC Double Trap (Form 8621): If your TFSA holds Canadian mutual funds, segregated funds, or Canadian-domiciled ETFs (e.g., TSX:XIU, VCN, XEQT), the U.S. tax trap deepens dramatically. The IRS treats these foreign pooled vehicles as Passive Foreign Investment Companies (PFICs) under IRC Section 1291. PFIC gains are taxed at the highest ordinary income tax rates (up to 37%), combined with non-deductible compounded interest charges for every day the asset was held. Each Canadian ETF requires a separate IRS Form 8621, often costing $500 to $1,500 per fund in cross-border accounting fees.",
     "FBAR (FinCEN Form 114) and Form 8938 (FATCA) Mandates: In addition to trust reporting, a TFSA must be reported on FinCEN Form 114 (FBAR) if your aggregate foreign financial accounts exceed $10,000 USD at any point during the calendar year. Willful failure to report an FBAR carries civil penalties of $100,000 or 50% of the account balance per violation. Depending on filing status and asset level, it must also be reported on IRS Form 8938 under FATCA.",
     "The Practical Solution: Complete Liquidation Prior to Departure: Because Canadian tax law allows tax-free withdrawals from a TFSA without any departure tax (unlike non-registered assets which face deemed disposition under Section 128.1), the overwhelming consensus among cross-border CPAs is to completely liquidate the TFSA prior to establishing U.S. tax residency. The cash can then be transferred to a high-yield U.S. savings account, invested in U.S.-domiciled ETFs, or deployed into a 401(k) / IRA. If the Canadian emigrant returns to Canada in the future, their historical TFSA contribution room is fully restored on January 1st following their re-establishment of Canadian tax residency."
   ],
   "example": {
-    "title": "Cross-Border Matrix: Canadian Accounts Under IRS / CRA Tax Law",
+    "title": "Cross-Border Comparison: Canadian Accounts Under IRS / CRA Tax Law",
     "intro": "A Canadian software engineer with $65,000 in a TFSA, $90,000 in an RRSP, and $35,000 in an FHSA moves from Toronto to Seattle on an H-1B visa. Here is how the IRS and CRA treat each account.",
     "table": {
       "head": ["Canadian Account Type", "CRA Tax Status on Departure", "IRS Account Classification", "Mandatory IRS Tax Filings", "Recommended Cross-Border Strategy"],
@@ -3685,7 +3685,7 @@ const rawArticles: Article[] = [
   ],
   "tradeoffs": [
     "Liquidating your TFSA before moving eliminates all IRS trust reporting penalties and PFIC accounting costs, but forfeits Canadian tax-sheltered compounding while abroad.",
-    "Holding individual U.S. or Canadian stocks inside an RRSP preserves tax-deferred growth under the Treaty, but Canadian mutual funds inside non-registered accounts create severe PFIC friction.",
+    "Holding individual U.S. or Canadian stocks inside an RRSP preserves tax-deferred growth under the Treaty, but Canadian mutual funds inside non-registered accounts create severe PFIC tax compliance costs.",
     "Rolling an FHSA into an RRSP before departing Canada avoids the 25% non-resident withholding tax on liquidation, but permanently locks the capital into retirement rules."
   ],
   "questions": [
@@ -3743,7 +3743,7 @@ const rawArticles: Article[] = [
     "The 5-for-1 Grind Formula: For every $1 of AAII exceeding $50,000, your corporation's $500,000 small business limit is reduced by $5 in the following taxation year. For example, if your holding company or operating company generates $70,000 in passive investment income, the excess over $50,000 is $20,000. The clawback is $20,000 x 5 = $100,000. Your SBD limit drops from $500,000 to $400,000. The remaining $100,000 of active operating earnings is pushed into the general corporate tax bracket, triggering an immediate extra tax liability.",
     "The Complete Elimination Point ($150,000 AAII): When AAII reaches $150,000, the total clawback is ($150,000 - $50,000) x 5 = $500,000. The Small Business Deduction is 100% eliminated. All active corporate earnings from dollar one are taxed at the general corporate rate (26.5% to 29% depending on province), stripping away roughly $70,000 to $84,000 in annual corporate working capital.",
     "Associated Corporation Rules: You cannot evade the clawback by creating a separate holding company ('Holdco') or family trust. Under Section 256 of the Income Tax Act, passive investment income across all associated corporations is aggregated. If your Holdco earns $60,000 in investment income, it directly grinds down the Small Business Deduction of your operating company ('Opco').",
-    "Strategic Mitigations: Corporate-Owned Life Insurance & Alternative Allocations: Incorporated owners use several legitimate structural strategies to navigate the $50,000 threshold: (1) Corporate-Owned Permanent Life Insurance: Cash values accumulating inside an exempt life insurance policy under Section 148 of the ITA grow on a tax-deferred basis and are explicitly excluded from AAII calculations; (2) Individual Pension Plans (IPPs) or RCA structures which move retained earnings into registered corporate retirement trusts; and (3) Strategic capital dividend distributions via the Capital Dividend Account (CDA) to clear out historical balances."
+    "Strategic Mitigations: Corporate-Owned Life Insurance & Alternative Allocations: Incorporated owners use several legitimate structural strategies to manage the $50,000 threshold: (1) Corporate-Owned Permanent Life Insurance: Cash values accumulating inside an exempt life insurance policy under Section 148 of the ITA grow on a tax-deferred basis and are explicitly excluded from AAII calculations; (2) Individual Pension Plans (IPPs) or RCA structures which move retained earnings into registered corporate retirement trusts; and (3) Strategic capital dividend distributions via the Capital Dividend Account (CDA) to clear out historical balances."
   ],
   "example": {
     "title": "The 5-for-1 Small Business Deduction (SBD) Grind Schedule",
@@ -3829,7 +3829,7 @@ const rawArticles: Article[] = [
   "kind": "insight",
   "category": "family",
   "description": "Canada cancelled the proposed 66.7% hike in 2025, keeping a 50% inclusion rate—yet Section 70(5) at death still creates large cottage bills.",
-  "figuresAsOf": "2025/2026 CRA Capital Gains Framework (50% Inclusion Retained)",
+  "figuresAsOf": "2026 CRA Capital Gains Framework (50% Inclusion Retained)",
   "question": "Why does Section 70(5) deemed disposition still create major estate tax bills on family cottages even with the 50% inclusion rate retained?",
   "problem": "For generations, Canadian families have passed down cottages and vacation properties assuming capital gains could be managed informally. In Budget 2024, Ottawa proposed raising the capital gains inclusion rate from 50% to 66.67% above $250,000, creating widespread alarm among cottage owners. On March 21, 2025, the federal government cancelled that proposed increase—keeping the statutory inclusion rate at a flat 50%. Even at 50%, however, Section 70(5) of the Income Tax Act deems every non-exempt property sold at Fair Market Value upon the second spouse's death. On a cottage bought decades ago for $150,000 and now worth $950,000, an $800,000 gain creates $400,000 in taxable income and over $214,000 in terminal tax—still enough to force a sale without liquidity planning.",
   "overview": [
@@ -3940,7 +3940,7 @@ const rawArticles: Article[] = [
     "Strategic Renewal Playbook: 120 Days to Maturity: Do not wait for your existing lender's renewal letter to arrive 30 days before maturity. Begin shopping 120 days prior to term expiry. Obtain formal straight-switch quotes from independent mortgage brokers and competing Schedule I/II banks. With the stress test removed, you can use a verified competing rate offer as leverage to force your existing lender into a rate match, or execute the switch and save thousands in annual interest."
   ],
   "example": {
-    "title": "Straight-Switch Qualification Matrix: What Is Permitted vs What Triggers the Stress Test",
+    "title": "Straight-Switch Qualification Rules: What Is Permitted vs What Triggers the Stress Test",
     "intro": "A homeowner with an uninsured conventional mortgage of $480,000 (home value $800,000, 18 years remaining on original 25-year amortization) approaches maturity.",
     "table": {
       "head": ["Renewal / Switch Scenario", "Principal Balance", "Amortization Term", "OSFI Stress Test Required?", "Lender Underwriting Impact"],
@@ -4023,13 +4023,13 @@ const rawArticles: Article[] = [
   "kind": "insight",
   "category": "decision-making",
   "description": "Updated Canadian tax breakdown: 50% capital gains inclusion retained after the 2025 cancellation, $1.25M LCGE, CEI rules, and 20.5% AMT.",
-  "figuresAsOf": "2025/2026 CRA & Department of Finance Tax Rules",
-  "question": "What actually changed after the March 2025 cancellation of Canada's proposed capital gains hike, alongside the $1.25M LCGE and 20.5% AMT overhaul?",
-  "problem": "After Budget 2024 proposed raising the capital gains inclusion rate to 66.67% above $250,000 for individuals and from dollar one for corporations and trusts, investors and CCPC owners restructured balance sheets for a steeper tax regime. On March 21, 2025, the federal government formally cancelled that proposed inclusion rate increase—meaning the statutory inclusion rate remains a flat 50%. Meanwhile, the higher $1,250,000 Lifetime Capital Gains Exemption (LCGE) and the post-2024 Alternative Minimum Tax (AMT) overhaul under Bills C-59 and C-69 remain key planning factors.",
+  "figuresAsOf": "2026 CRA & Department of Finance Tax Rules",
+  "question": "What actually changed after the March 2025 cancellation of Canada's proposed capital gains hike, alongside the $1.25M+ LCGE and 20.5% AMT overhaul?",
+  "problem": "After Budget 2024 proposed raising the capital gains inclusion rate to 66.67% above $250,000 for individuals and from dollar one for corporations and trusts, investors and CCPC owners prepared for a steeper tax regime. On March 21, 2025, the federal government formally cancelled that proposed inclusion rate increase—meaning the statutory inclusion rate remains a flat 50%. Meanwhile, the enhanced Lifetime Capital Gains Exemption ($1,250,000 base indexed to $1,275,000 in 2026) and the post-2024 Alternative Minimum Tax (AMT) overhaul under Bills C-59 and C-69 remain key planning factors.",
   "overview": [
     "Capital Gains Inclusion Rate Retained at 50% (March 2025 Cancellation): On March 21, 2025, Ottawa announced the cancellation of the proposed increase to the capital gains inclusion rate from 50% to 66.67%. As confirmed by CRA administration, capital gains realized by individuals, personal trusts, and Canadian-Controlled Private Corporations (CCPCs) remain subject to the standard 50% inclusion rate. In top provincial brackets (~53.5% Ontario), the personal top effective tax rate on capital gains remains ~26.77% rather than rising to 35.7%.",
     "CCPC Capital Dividend Account (CDA) Preserved at 50%: For Canadian-Controlled Private Corporations and holding companies, retaining the 50% inclusion rate preserved the full 50% non-taxable portion credited to the Capital Dividend Account (CDA). Half of a realized corporate capital gain continues to be extractable tax-free by shareholders under Subsection 89(1), while the taxable 50% remains part of Aggregate Investment Income (and subject to the $50,000 AAII Small Business Deduction clawback threshold under Section 125(5.1)).",
-    "The $1,250,000 Lifetime Capital Gains Exemption (LCGE): Effective for dispositions on or after June 25, 2024, the LCGE ceiling for Qualified Small Business Corporation (QSBC) shares and qualified farm or fishing property increased to $1,250,000 (indexed starting in 2026). This higher lifetime exemption still allows eligible founders to shelter substantial business-exit gains from regular Part I tax.",
+    "The $1.25M+ Lifetime Capital Gains Exemption (LCGE): Effective for dispositions on or after June 25, 2024, the LCGE ceiling for Qualified Small Business Corporation (QSBC) shares and qualified farm or fishing property increased to $1,250,000 (indexed to $1,275,000 for 2026). This higher lifetime exemption still allows eligible founders to shelter substantial business-exit gains from regular Part I tax.",
     "Status of the Canadian Entrepreneurs' Incentive (CEI): Announced in Budget 2024 alongside the now-cancelled capital gains inclusion hike, the CEI proposed a 33.33% inclusion rate on up to $2,000,000 of qualifying non-professional founder share gains over 2025–2029. Following the cancellation of the inclusion-rate legislation in March 2025, business owners should verify current statutory status with their tax advisor rather than assuming the CEI applies.",
     "The Alternative Minimum Tax (AMT) Overhaul Under Section 127.5: Enacted via Bills C-59 and C-69 for 2024 and subsequent years, the federal AMT statutory rate jumped from 15% to 20.5%, with an annually indexed 4th-bracket basic exemption ($173,205 in 2024, $177,882 in 2025, $181,440 in 2026). Under AMT, capital gains are included at 100%, 30% of LCGE-exempt gains enter the base, most non-refundable credits are allowed at 50%, and charitable donation tax credits are allowed at 80% (ITA s. 127.531(c)). Large liquidity events and major stock donations can therefore trigger upfront AMT even with the regular 50% inclusion rate."
   ],
@@ -4112,34 +4112,34 @@ const rawArticles: Article[] = [
 {
   "slug": "prescribed-rate-spousal-loans-tax-arbitrage-guide",
   "seoTitle": "Prescribed rate spousal loans: Jan 30 rule",
-  "title": "Prescribed Rate Spousal Loans: Capitalizing on the 4% Window Before the CRA Reset",
+  "title": "Prescribed Rate Spousal Loans: Locking in the 3% Window Before the CRA Reset",
   "kind": "guide",
   "category": "registered-accounts",
   "description": "How formal CRA prescribed rate demand loans under ITA Section 74.5(2) bypass attribution rules, plus the strict January 30 payment rule.",
-  "figuresAsOf": "2026 CRA Prescribed Rate Framework",
+  "figuresAsOf": "2026 CRA Prescribed Rate Framework (3% Base Rate)",
   "question": "How does a formal prescribed rate spousal loan under Section 74.5(2) legally bypass attribution rules and split investment income between spouses?",
-  "problem": "In Canada, high-earning individuals in top marginal tax brackets (50% to 54%) face severe tax drag when investing non-registered capital. Attempting to transfer funds to a lower-earning or non-earning spouse triggers the attribution rules of the Income Tax Act (Sections 74.1 and 74.2): all future dividends, interest, and capital gains are attributed back and taxed in the hands of the higher-earning spouse. However, Section 74.5(2) contains an explicit statutory safe harbour: if the higher-earning spouse extends a bona fide demand loan at the official CRA prescribed interest rate in effect at the loan's inception, attribution is permanently eliminated for the life of the loan. With recent Bank of Canada rate cuts driving the CRA prescribed rate down to 4%, high-net-worth couples have a prime mathematical window to establish permanent spousal lending structures.",
+  "problem": "In Canada, high-earning individuals in top marginal tax brackets (50% to 54%) face severe tax drag when investing non-registered capital. Attempting to transfer funds to a lower-earning or non-earning spouse triggers the attribution rules of the Income Tax Act (Sections 74.1 and 74.2): all future dividends, interest, and capital gains are attributed back and taxed in the hands of the higher-earning spouse. However, Section 74.5(2) contains an explicit statutory safe harbour: if the higher-earning spouse extends a bona fide demand loan at the official CRA prescribed interest rate in effect at the loan's inception, attribution is permanently eliminated for the life of the loan. With the 2026 CRA prescribed rate standing at 3%, high-net-worth couples have a favourable window to establish permanent spousal lending structures.",
   "overview": [
     "The Attribution Hurdle: ITA Sections 74.1 and 74.2: Canadian tax legislation is built on an individual filing system, not joint spousal returns. Without attribution rules, a spouse in the 53% bracket could simply hand $500,000 to their partner in the 20% bracket, slashing household investment tax by more than half. Sections 74.1(1) and 74.2 dictate that any income or capital gain generated from gifted or transferred property is attributed back and taxed as if the transferring spouse earned it directly.",
     "The Section 74.5(2) Safe Harbour: How the Loan Works: Under ITA Subsection 74.5(2), attribution does not apply if three strict legal conditions are met: (1) A formal, written demand promissory note is executed between the spouses; (2) The interest rate charged is equal to or greater than the CRA prescribed rate (governed by Section 4301 of the Income Tax Regulations) in effect at the time the loan is made; and (3) The borrower pays the annual interest to the lender every single year on or before January 30 of the following calendar year.",
-    "The 'Locked-In For Life' Advantage: One of the most powerful aspects of a prescribed rate loan is that the rate is fixed for the duration of the loan. Even if the CRA prescribed rate later climbs to 6% or 8%, a loan established at 4% remains legally valid at 4% indefinitely. Conversely, existing loans created when the prescribed rate was 6% can be formally collapsed and re-issued at 4%, reducing the annual interest hurdle rate.",
+    "The 'Locked-In For Life' Advantage: One of the most powerful aspects of a prescribed rate loan is that the rate is fixed for the duration of the loan. Even if the CRA prescribed rate later climbs to 5% or 6%, a loan established at 3% remains legally valid at 3% indefinitely. Conversely, existing loans created when the prescribed rate was 5% or 6% can be formally collapsed and re-issued at 3%, reducing the annual interest hurdle rate.",
     "The Fatal January 30 Deadline: Zero Grace Period: The annual interest payment is an absolute statutory cliff. The borrowing spouse must physically pay the accrued interest to the lending spouse by January 30 of the subsequent year. If payment is made on January 31, or if a cheque bounces, the loan permanently fails. Attribution immediately re-attaches for that taxation year and every subsequent year in perpetuity. There is no CRA relief or late-filing forgiveness.",
-    "Mathematical Hurdle Rate & Tax Arbitrage: The strategy produces net positive tax arbitrage whenever the portfolio's after-tax total return exceeds the 4% interest rate. The lending spouse declares the 4% interest received as taxable income. The borrowing spouse deducts the 4% interest paid as a carrying charge against investment income under Section 20(1)(c). All excess returns (dividends, interest, capital gains) are taxed in the hands of the lower-income spouse at their lower marginal rates."
+    "Mathematical Hurdle Rate & Tax Savings: The strategy produces net positive household tax savings whenever the portfolio's after-tax total return exceeds the 3% interest rate. The lending spouse declares the 3% interest received as taxable income. The borrowing spouse deducts the 3% interest paid as a carrying charge against investment income under Section 20(1)(c). All excess returns (dividends, interest, capital gains) are taxed in the hands of the lower-income spouse at their lower marginal rates."
   ],
   "example": {
-    "title": "Spousal Loan Arbitrage: $500,000 Portfolio with 6.50% Balanced Return",
-    "intro": "Higher-earning spouse (53.50% top marginal rate) loans $500,000 at the 4% CRA prescribed rate to lower-earning spouse (20.00% marginal rate). The portfolio yields $32,500 annual total return (4.00% eligible Canadian dividends and 2.50% capital gains).",
+    "title": "Spousal Loan Comparison: $500,000 Portfolio with 6.50% Balanced Return",
+    "intro": "Higher-earning spouse (53.50% top marginal rate) loans $500,000 at the 3% CRA prescribed rate to lower-earning spouse (20.00% marginal rate). The portfolio yields $32,500 annual total return (4.00% eligible Canadian dividends and 2.50% capital gains).",
     "table": {
       "head": ["Component / Tax Calculation", "Without Spousal Loan (Higher Earner)", "With Spousal Loan (Lower Earner Structure)", "Household Net Tax Difference"],
       "rows": [
-        ["Principal Capital Lended", "$500,000 invested directly", "$500,000 via formal 4% demand note", "Zero capital erosion"],
+        ["Principal Capital Loaned", "$500,000 invested directly", "$500,000 via formal 3% demand note", "Zero capital erosion"],
         ["Gross Portfolio Return (6.5%)", "$32,500", "$32,500", "Identical gross return"],
-        ["Prescribed Interest Paid (4%)", "$0", "$20,000 paid to lender by Jan 30", "Deductible carrying charge"],
-        ["Tax on Lender (4% Interest)", "$0", "$10,700 ($20k × 53.5%)", "Tax paid by higher earner"],
-        ["Borrower Interest Deduction", "$0", "-$4,000 tax deduction ($20k × 20%)", "Reduces lower earner income"],
+        ["Prescribed Interest Paid (3%)", "$0", "$15,000 paid to lender by Jan 30", "Deductible carrying charge"],
+        ["Tax on Lender (3% Interest)", "$0", "$8,025 ($15k × 53.5%)", "Tax paid by higher earner"],
+        ["Borrower Interest Deduction", "$0", "-$3,000 tax deduction ($15k × 20%)", "Reduces lower earner income"],
         ["Borrower Tax on $32.5k Return", "$0", "$3,900 (Eligible dividend credit & 50% cap gain)", "Taxed at low bracket"],
         ["Higher Earner Direct Tax", "$12,850 (Taxed at 53.5% bracket)", "$0 (No attribution under 74.5(2))", "Eliminates high-bracket tax"],
-        ["Total Annual Household Tax", "$12,850", "$10,600 ($10,700 - $4,000 + $3,900)", "SAVINGS: $2,250 / year"]
+        ["Total Annual Household Tax", "$12,850", "$8,925 ($8,025 - $3,000 + $3,900)", "SAVINGS: $3,925 / year"]
       ]
     },
     "notes": [
@@ -4147,7 +4147,7 @@ const rawArticles: Article[] = [
       "The loan can be structured with a family trust as borrower to split income across multiple adult beneficiaries or grandchildren attending university.",
       "Promissory note and bank transfer records must be preserved in case of CRA audit verification."
     ],
-    "conclusion": "A prescribed rate loan turns non-registered wealth accumulation into an institutional income-splitting engine, permanently locking in tax-advantaged compound growth for lower-earning family members."
+    "conclusion": "A prescribed rate loan turns non-registered investing into an effective household income-splitting method, locking in lower-bracket taxation on future compound growth for lower-earning family members."
   },
   "misunderstandings": [
     {
@@ -4168,15 +4168,15 @@ const rawArticles: Article[] = [
     }
   ],
   "tradeoffs": [
-    "Locking in a 4% prescribed rate provides predictable, permanent income splitting, but requires portfolio returns to reliably exceed 4% to achieve positive tax arbitrage.",
-    "Legal and legal drafting costs for the promissory note ($500 to $1,500) must be weighed against projected annual tax savings for portfolios under $250,000.",
+    "Locking in a 3% prescribed rate provides predictable, permanent income splitting, but requires portfolio returns to reliably exceed 3% to produce net positive tax savings.",
+    "Legal drafting costs for the promissory note ($500 to $1,500) must be weighed against projected annual tax savings for portfolios under $250,000.",
     "Rigorous administrative tracking is mandatory every January to transfer interest and document bank statements for CRA audit compliance."
   ],
   "questions": [
     "What is the exact marginal tax bracket spread between you and your spouse or adult children?",
-    "Does your non-registered investment portfolio produce sufficient annual liquidity to service the 4% interest payment before January 30?",
+    "Does your non-registered investment portfolio produce sufficient annual liquidity to service the 3% interest payment before January 30?",
     "Have you drafted a formal demand promissory note specifying the exact prescribed interest rate and repayment terms?",
-    "Is your existing prescribed rate loan established at an older 5% or 6% rate that could be refinanced to 4%?"
+    "Is your existing prescribed rate loan established at an older 4%, 5%, or 6% rate that could be refinanced to 3%?"
   ],
   "sources": [
     {
@@ -4202,7 +4202,7 @@ const rawArticles: Article[] = [
     "savings-or-debt-first"
   ],
   "contactTopic": "investing",
-  "invitationAbout": "structuring prescribed rate spousal loans and non-registered tax arbitrage",
+  "invitationAbout": "structuring prescribed rate spousal loans and non-registered tax bracket splitting",
   "url": "/education/prescribed-rate-spousal-loans-tax-arbitrage-guide",
   "readingMinutes": 10
 },
@@ -4223,7 +4223,7 @@ const rawArticles: Article[] = [
     "The Regulation 8517 Maximum Transfer Value (MTV) Formula: The Income Tax Act prevents members from rolling an unlimited commuted value tax-free into a locked-in plan. Under ITR 8517, the tax-sheltered transfer limit is calculated by multiplying the member's accrued annual lifetime pension by a prescribed age factor (ranging from 9.0 for members under 50, to 10.4 at age 55, up to 12.4 at age 65). Any dollar of the commuted value exceeding the MTV limit is designated as an 'excess cash payment' and subject to immediate lump-sum withholding tax (up to 30% federally, plus provincial adjustments).",
     "Sheltering the Excess Cash: Strategic RRSP Offset: If a member's commuted value is $650,000 and the MTV allows only $450,000 to transfer into a LIRA, the remaining $200,000 is paid out in cash. If taken with no offset, the entire $200,000 is added to taxable income in that calendar year, triggering top-bracket taxation (often over 50%). However, if the member has accumulated unused RRSP contribution room, they can direct the plan administrator to transfer the cash surplus directly into an RRSP using Form T2151, generating a dollar-for-dollar tax deduction that completely neutralizes the taxable income spike.",
     "The Pension Adjustment Reversal (PAR) Multiplier: When you participate in a defined benefit pension, your annual RRSP contribution room is curtailed by a 'Pension Adjustment' (PA) reported on your T4. When you terminate employment and commute your pension, the actual value of your benefit may be less than the cumulative PAs deducted from your record. The plan administrator calculates a Pension Adjustment Reversal (PAR) and reports it to the CRA, which immediately credits back and restores lost RRSP contribution room for the current tax year.",
-    "The Decision Framework: Guaranteed Annuity vs. Portfolio Autonomy: Choosing between a deferred pension and a commuted value is an asset allocation and estate decision. A deferred pension provides guaranteed, indexed, non-market risk income backed by substantial institutional solvency. In contrast, a commuted value provides total portfolio autonomy, eliminates solvency risk, and crucially allows remaining capital upon death to roll to surviving heirs rather than terminating with the retiree and spouse."
+    "The Decision Framework: Guaranteed Annuity vs. Portfolio Autonomy: Choosing between a deferred pension and a commuted value is an asset allocation and estate decision. A deferred pension provides guaranteed, indexed, non-market risk income backed by substantial institutional solvency. In contrast, a commuted value provides total portfolio autonomy, eliminates solvency risk, and importantly allows remaining capital upon death to roll to surviving heirs rather than terminating with the retiree and spouse."
   ],
   "sections": [
     {
@@ -4349,7 +4349,7 @@ const rawArticles: Article[] = [
       "LIRA funds cannot be withdrawn as cash until early retirement age (usually 55) unless qualifying under provincial financial hardship unlocking provisions.",
       "The choice between a deferred pension and commuted value must be submitted within 60 to 90 days of receiving the employer termination statement."
     ],
-    "conclusion": "A commuted value transfer can dramatically increase household estate flexibility, but failing to plan for the ITR 8517 Maximum Transfer Value cliff can trigger catastrophic immediate taxation."
+    "conclusion": "A commuted value transfer can dramatically increase household estate flexibility, but failing to plan for the ITR 8517 Maximum Transfer Value cliff can trigger an unexpectedly large immediate tax bill."
   },
   "misunderstandings": [
     {

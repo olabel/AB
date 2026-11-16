@@ -293,7 +293,7 @@ export const CalculatorsPage: React.FC = () => {
                   {isFr ? "CELI vs REER" : "TFSA vs RRSP"}
                 </span>
                 <span className={`text-[0.68rem] block ${activeTab === "tfsa-rrsp" ? "text-[#ece6da]/80" : "text-[#625d52]"}`}>
-                  {isFr ? "Arbitrage fiscal" : "Tax rate arbitrage"}
+                  {isFr ? "Écart de taux marginal" : "Tax bracket spread"}
                 </span>
               </div>
             </button>
@@ -555,7 +555,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
             </div>
           )}
 
-          {/* TAB 3: TFSA VS RRSP ARBITRAGE CALCULATOR */}
+          {/* TAB 3: TFSA VS RRSP COMPARISON CALCULATOR */}
           {activeTab === "tfsa-rrsp" && (
             <div className="space-y-6">
               <div className="border-b border-[#ece6da] pb-3">
@@ -563,7 +563,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                   {isFr ? "Optimisation Fiscale des Régimes Enregistrés" : "Registered Tax Shelter Optimizer"}
                 </span>
                 <h2 className="font-serif text-2xl text-[#1c1b18]">
-                  {isFr ? "Calculateur d'Arbitrage CELI vs REER" : "TFSA vs. RRSP Tax Rate Arbitrage Calculator"}
+                  {isFr ? "Comparateur d'Impôt CELI vs REER" : "TFSA vs. RRSP Tax Bracket Comparison Calculator"}
                 </h2>
                 <p className="text-xs sm:text-sm text-[#625d52]">
                   {isFr
@@ -628,7 +628,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                         <input
                           type="range"
                           min={2000}
-                          max={31560}
+                          max={33810}
                           step={500}
                           value={annualContribution}
                           onChange={(e) => setAnnualContribution(Number(e.target.value))}
@@ -687,8 +687,8 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                       <p className="text-[0.7rem] text-[#ece6da]/80 mt-1">
                         {currentMarginalRate > retirementMarginalRate
                           ? isFr
-                            ? "Le REER profite d'un arbitrage fiscal favorable car votre taux marginal actuel dépasse celui prévu à la retraite."
-                            : "The RRSP creates positive tax arbitrage because your current marginal tax bracket exceeds your expected retirement bracket."
+                            ? "Le REER procure un avantage fiscal net car votre taux marginal actuel dépasse celui prévu à la retraite."
+                            : "The RRSP creates a tax-rate advantage because your current marginal tax bracket exceeds your expected retirement bracket."
                           : isFr
                             ? "Le CELI est supérieur ou équivalent, et offre une liquidité totale sans risque de récupération de la SV (OAS)."
                             : "The TFSA matches or exceeds the RRSP, providing full liquidity without triggering OAS clawbacks."}
@@ -699,13 +699,13 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
               </div>
 
               <CalculatorLeadCapture
-                calculatorName="TFSA vs RRSP Arbitrage Optimizer"
+                calculatorName="TFSA vs RRSP Comparison Calculator"
                 summaryText={`Current Income: $${currentIncome.toLocaleString()} (${(currentMarginalRate * 100).toFixed(0)}% marginal rate)
 Retirement Income: $${retirementIncome.toLocaleString()} (${(retirementMarginalRate * 100).toFixed(0)}% marginal rate)
 Annual Contribution: $${annualContribution.toLocaleString()} over ${yearsToRetirement} years at ${assumedReturn}% return
 TFSA Terminal Value: $${tfsaTerminal.toLocaleString()} (100% tax-free)
 RRSP Terminal Value (Net of Taxes): $${rrspAfterTaxTerminal.toLocaleString()}
-Net Arbitrage Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in favor of ${rrspArbitrageDelta >= 0 ? "RRSP" : "TFSA"}`}
+Net Tax Advantage: $${Math.abs(rrspArbitrageDelta).toLocaleString()} in favor of ${rrspArbitrageDelta >= 0 ? "RRSP" : "TFSA"}`}
               />
             </div>
           )}
@@ -867,21 +867,21 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
                   ? "Les rendements (intérêts, dividendes, plus-values) fructifient sans aucun frottement fiscal. Les retraits sont non imposables et n'ont aucun impact sur les prestations gouvernementales (PSV, SRG, ACE)."
-                  : "Every dollar of capital gain, eligible Canadian dividend, and fixed income interest compounds with zero friction. Withdrawals never trigger income-tested clawbacks (OAS/GIS/CCB) and regenerate contribution room the following calendar year."}
+                  : "Every dollar of capital gain, eligible Canadian dividend, and fixed income interest compounds with no annual tax drag. Withdrawals never trigger income-tested clawbacks (OAS/GIS/CCB) and regenerate contribution room the following calendar year."}
               </p>
             </div>
 
             <div className="p-5 bg-white border border-[#d6cebd] rounded-[2px] space-y-2">
               <span className="text-[10px] font-mono uppercase tracking-wider text-[#75581f] font-bold block">
-                {isFr ? "REER (Déduction & Arbitrage)" : "RRSP (Tax Arbitrage Model)"}
+                {isFr ? "REER (Report d'Impôt)" : "RRSP (Pre-Tax Deferral)"}
               </span>
               <h3 className="font-serif text-lg text-[#1c1b18] font-semibold">
                 {isFr ? "Report d'Impôt avec Effet de Levier" : "Pre-Tax Compounding Power"}
               </h3>
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
-                  ? "La déduction fiscale immédiate génère un remboursement. En le réinvestissant systématiquement, vous comblez l'impôt payable au décaissement à la retraite, créant un arbitrage positif si votre tranche baisse."
-                  : "Upfront tax deductions lower taxable earned income immediately. Systematically reinvesting the tax refund neutralizes deferred tax liabilities at withdrawal, capturing significant positive arbitrage when retiring in lower tax brackets."}
+                  ? "La déduction fiscale immédiate génère un remboursement. En le réinvestissant systématiquement, vous comblez l'impôt payable au décaissement à la retraite, créant un avantage fiscal net si votre tranche baisse."
+                  : "Upfront tax deductions lower taxable earned income immediately. Systematically reinvesting the tax refund neutralizes deferred tax liabilities at withdrawal, creating a net tax advantage when retiring in lower tax brackets."}
               </p>
             </div>
 
@@ -890,12 +890,12 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
                 {isFr ? "Compte Imposable (Frottement Fiscal)" : "Taxable Non-Registered Drag"}
               </span>
               <h3 className="font-serif text-lg text-[#1c1b18] font-semibold">
-                {isFr ? "Érosion Annuelle du Capital" : "Annual Compounding Friction"}
+                {isFr ? "Érosion Annuelle du Capital" : "Annual Tax Drag"}
               </h3>
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
                   ? "Les impôts prélevés chaque année sur les revenus de placement réduisent le rendement effectif net de 1,5 % à 2,8 % par an. Sur 25 ans, plus de 30 % du capital final potentiel est ainsi perdu en impôt."
-                  : "Annual taxation on interest, foreign distributions, and rebalancing slices between 1.5% and 2.8% off your effective net annual return, confiscating upwards of 30% to 40% of cumulative final wealth over a 25-year investment horizon."}
+                  : "Annual taxation on interest, foreign distributions, and rebalancing reduces your effective net annual return by 1.5% to 2.8%, cutting cumulative final wealth by 30% to 40% over a 25-year horizon."}
               </p>
             </div>
           </div>

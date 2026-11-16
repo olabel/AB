@@ -158,14 +158,14 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     id: "newcomers",
     slug: "newcomers",
     aliases: ["immigrants", "new-to-canada"],
-    titleEn: "First-Year Financial Blueprint for Newcomers to Canada (Runway & Credit Guide)",
-    titleFr: "Plan Financier de 1re Année pour Nouveaux Arrivants au Canada (Piste & Crédit)",
-    metaTitleEn: "Newcomer Financial Blueprint Canada | Ahmed Bello",
-    metaTitleFr: "Plan Financier Nouveaux Arrivants | Ahmed Bello",
+    titleEn: "First-Year Financial Guide for Newcomers to Canada (Runway & Credit)",
+    titleFr: "Guide Financier de 1re Année pour Nouveaux Arrivants au Canada (Piste & Crédit)",
+    metaTitleEn: "Newcomer Financial Guide Canada | Ahmed Bello",
+    metaTitleFr: "Guide Financier Nouveaux Arrivants | Ahmed Bello",
     eyebrowEn: "Audience Hub: Newcomers to Canada",
     eyebrowFr: "Carrefour thématique : Nouveaux arrivants",
     descriptionEn:
-      "Navigate Canadian banking, credit building, emergency reserves, and tax-sheltered accounts with our step-by-step financial framework.",
+      "Understand Canadian banking, credit building, cash reserves, and tax-sheltered accounts with our step-by-step first-year guide.",
     descriptionFr:
       "Bâtissez votre crédit canadien, structurez vos réserves de subsistance et optimisez vos régimes enregistrés dès votre première année.",
     icon: Compass,
@@ -358,7 +358,7 @@ export const AudienceHubPage: React.FC = () => {
 
               <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
                 <h3 className="font-serif text-base font-bold text-[#1c1b18]">
-                  {isFr ? "2. Construction du Dossier de Crédit" : "2. Credit Bureau Architecture"}
+                  {isFr ? "2. Construction du Dossier de Crédit" : "2. Building Canadian Credit"}
                 </h3>
                 <p className="text-xs text-[#46423a] leading-relaxed">
                   {isFr
@@ -523,7 +523,7 @@ export const AudienceHubPage: React.FC = () => {
                 <Calculator className="w-5 h-5 text-[#d6c298] shrink-0" />
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-wider text-[#d6c298] font-bold block">
-                    {isFr ? "Simulateur d'Arbitrage Familial" : "Family Wealth & Tax Arbitrage"}
+                    {isFr ? "Comparateur Fiscal Familial" : "Registered Account Comparison"}
                   </span>
                   <p className="text-sm font-serif text-white mt-0.5">
                     {isFr

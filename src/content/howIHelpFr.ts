@@ -26,7 +26,7 @@ export const howIHelpTopicsFr: HowIHelpTopic[] = [
     ],
     tradeoffs: [
       "Rembourser une dette procure un rendement garanti mais réduit la liquidité immédiate. Épargner préserve des liquidités mais peut rapporter moins que l'intérêt payé.",
-      "Hiérarchiser les priorités implique d'en faire attendre certaines. L'arbitrage consiste à déterminer lesquelles, et pour combien de temps.",
+      "Hiérarchiser les priorités implique d'en faire attendre certaines. Le choix consiste à déterminer lesquelles, et pour combien de temps.",
       "Un plan simple que vous suivrez réellement a plus de valeur qu'une stratégie complexe irréaliste sur papier."
     ],
     next: [
@@ -161,7 +161,7 @@ export const howIHelpTopicsFr: HowIHelpTopic[] = [
     id: "debt",
     short: "Gérer et restructurer la dette",
     question: "Comment aborder mes dettes sans compromettre mon avenir ?",
-    why: "Toutes les dettes ne se valent pas. Confondre une hypothèque à taux modéré avec un solde de carte de crédit à 20 % mène à des erreurs d'arbitrage coûteuses.",
+    why: "Toutes les dettes ne se valent pas. Confondre une hypothèque à taux modéré avec un solde de carte de crédit à 20 % mène à des erreurs de priorité coûteuses.",
     concepts: [
       {
         term: "Dette à intérêt élevé",

@@ -747,7 +747,7 @@ ${unmodelledDisclaimer}`;
             <p className="text-xs text-[#625d52] pt-1 leading-relaxed">
               {isFr
                 ? "Résultat : Alexandre doit verser 5 078 $ d'IMR fédéral supplémentaire en 2026. Cependant, ces 5 078 $ constituent un crédit de report d'IMR en vertu de l'article 120.2 de la LIR, récupérable sur les 7 années suivantes dès que son impôt régulier dépassera son IMR."
-                : "Result: Alex pays $5,078 in additional federal AMT for 2026. Crucially, this $5,078 is not permanently lost: under Section 120.2 of the Income Tax Act, it creates an AMT carry-forward credit recoverable against regular tax over the next 7 years."}
+                : "Result: Alex pays $5,078 in additional federal AMT for 2026. Importantly, this $5,078 is not permanently lost: under Section 120.2 of the Income Tax Act, it creates an AMT carry-forward credit recoverable against regular tax over the next 7 years."}
             </p>
           </div>
         </div>
@@ -832,12 +832,12 @@ ${unmodelledDisclaimer}`;
                 <h3 className="font-serif text-lg sm:text-xl font-medium text-[#f7f3eb]">
                   {isFr
                     ? "L'impôt minimum de remplacement canadien : Guide pour hauts revenus"
-                    : "The Canadian Alternative Minimum Tax (AMT): Navigating Post-2024 Reform"}
+                    : "The Canadian Alternative Minimum Tax (AMT): Understanding Post-2024 Reforms"}
                 </h3>
                 <p className="text-xs text-[#ece6da] max-w-xl">
                   {isFr
                     ? "Explorez notre analyse détaillée sur l'exemption pour gains en capital (EDGC), la vente d'actions admissibles de petite entreprise et les stratégies de dons philanthropiques."
-                    : "Read our comprehensive briefing on Lifetime Capital Gains Exemption (LCGE) friction, QSBC share exits, and structured philanthropic donation sequencing."}
+                    : "Read our comprehensive briefing on Lifetime Capital Gains Exemption (LCGE) rules, QSBC share exits, and structured philanthropic donation sequencing."}
                 </p>
               </div>
 

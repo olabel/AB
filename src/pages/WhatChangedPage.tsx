@@ -128,7 +128,7 @@ const RULE_CHANGES: RuleChangeItem[] = [
     month: "November",
     year: 2026,
     category: "corporate",
-    categoryLabelEn: "Corporate & Wealth Architecture",
+    categoryLabelEn: "Corporate & Personal Tax",
     categoryLabelFr: "Fiscalité corporative & Patrimoine",
     titleEn: "Budget 2026 Corporate Rules: $15M Canada Growth Incentive, Productivity Mega Deduction & SBD Planning",
     titleFr: "Budget 2026 pour les sociétés : Incitatif de croissance de 15 M$, méga-déduction et gestion DPE",

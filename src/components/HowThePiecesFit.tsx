@@ -110,10 +110,10 @@ export const HowThePiecesFit: React.FC = () => {
       idx: 1,
       icon: Home,
       tag: isFr ? "PILIER 02" : "PILLAR 02",
-      title: isFr ? "Architecture Hypothécaire & Dette" : "Debt & Mortgage Architecture",
+      title: isFr ? "Gestion Hypothécaire & Dette" : "Debt & Mortgage Planning",
       subtitle: isFr ? "Optimisation du coût du passif" : "Liability Cost Optimization",
       items: isFr
-        ? ["Évaluation de transferts simples (BSIF B-20)", "Arbitrage fixe vs variable & amortissement", "Élimination des dettes tournantes à taux élevé"]
+        ? ["Évaluation de transferts simples (BSIF B-20)", "Comparatif taux fixe c. variable et amortissement", "Élimination des dettes tournantes à taux élevé"]
         : ["Straight-switch evaluation under OSFI B-20", "Fixed vs variable spread & amortization discipline", "Eliminating high-interest consumer debt drag"],
       link: `${prefix}/calculators`,
       note: isFr ? "Prêts et hypothèques arrangés par l'entremise de courtiers ou prêteurs hypothécaires agréés." : "Mortgage lending arranged through licensed third-party mortgage brokers/lenders.",
@@ -126,7 +126,7 @@ export const HowThePiecesFit: React.FC = () => {
       subtitle: isFr ? "Ordre optimal de cotisation" : "Optimal Capital Allocation Order",
       items: isFr
         ? ["CELIAPP prioritaire (40 000 $ déductibles & exonérés)", "REER avec réinvestissement systématique du retour", "CELI pour croissance perpétuelle libre d'impôt"]
-        : ["FHSA first-dollar priority ($40k tax-deductible/free)", "RRSP tax arbitrage with refund reinvestment", "TFSA perpetual tax-free compound compounding"],
+        : ["FHSA first-dollar priority ($40k tax-deductible/free)", "RRSP tax deferral with refund reinvestment", "TFSA perpetual tax-free growth"],
       link: `${prefix}/calculators`,
       note: isFr ? "Modélisation éducative de l'ordre d'allocation des régimes fiscaux canadiens." : "Educational modeling of Canadian registered account sequencing and tax brackets.",
     },
@@ -152,7 +152,7 @@ export const HowThePiecesFit: React.FC = () => {
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#2e4a3b]/10 text-[#2e4a3b] border border-[#2e4a3b]/25 rounded-[2px] text-[11px] font-semibold uppercase tracking-wider">
               <Layers className="w-3.5 h-3.5" />
-              <span>{isFr ? "Méthodologie Systémique" : "Systemic Architecture"}</span>
+              <span>{isFr ? "Approche Globale" : "Integrated Method"}</span>
             </div>
             <h2 className="display text-[#1c1b18] text-2xl sm:text-3xl md:text-4xl">
               {isFr ? "Comment les pièces s'articulent" : "How the pieces fit together"}
@@ -166,7 +166,7 @@ export const HowThePiecesFit: React.FC = () => {
 
           <div className="hidden lg:flex items-center gap-2 text-xs text-[#75581f] font-mono font-semibold bg-[#ece6da]/50 px-3 py-2 border border-[#d6cebd] rounded-[2px]">
             <Scale className="w-4 h-4 text-[#75581f]" />
-            <span>{isFr ? "Architecture patrimoniale intégrée" : "Integrated Wealth Architecture"}</span>
+            <span>{isFr ? "Planification financière coordonnée" : "Coordinated Financial Planning"}</span>
           </div>
         </div>
 

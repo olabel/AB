@@ -449,7 +449,7 @@ export const ArticlePage: React.FC = () => {
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#2e4a3b] shrink-0 mt-0.5" />
                   <p>
-                    <strong>{isFr ? "L'enjeu central :" : "The Core Friction:"}</strong> {article.problem}
+                    <strong>{isFr ? "L'enjeu central :" : "The Core Issue:"}</strong> {article.problem}
                   </p>
                 </div>
                 <div className="flex items-start gap-2.5">

@@ -158,7 +158,7 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "en-CA",
     title: "Financial Insights & Strategic Essays | Ahmed Bello",
     description:
-      "Deep-dive analytical essays on Canadian mortgage renewals, CCPC passive income limits, capital gains, and family wealth architecture.",
+      "Analytical essays on Canadian mortgage renewals, CCPC passive income limits, capital gains, and family financial planning.",
     heading: "Financial Insights & Strategic Essays",
     summary:
       "Comprehensive analytical essays examining Canadian mortgage renewals, statutory liquidity reserves, corporate tax rules, and estate planning.",
@@ -171,10 +171,10 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "en-CA",
     title: "Financial Planning for Healthcare | Ahmed Bello",
     description:
-      "Financial education for Canadian doctors, nurses, and medical professionals navigating licensing, incorporation, and income protection.",
+      "Financial education for Canadian doctors, nurses, and medical professionals managing licensing, incorporation, and income protection.",
     heading: "Financial Planning for Healthcare Workers & Physicians",
     summary:
-      "Strategies for incorporated physicians, nurses, and internationally trained medical professionals navigating Canadian taxes and income protection.",
+      "Strategies for incorporated physicians, nurses, and internationally trained medical professionals handling Canadian taxes and income protection.",
     priority: "0.85",
     changefreq: "weekly",
   },
@@ -208,10 +208,10 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     path: "/for/newcomers",
     basePath: "/for/newcomers",
     lang: "en-CA",
-    title: "Newcomer Financial Blueprint Canada | Ahmed Bello",
+    title: "Newcomer Financial Guide Canada | Ahmed Bello",
     description:
-      "Navigate Canadian banking, credit building, emergency reserves, and TFSA, RRSP, and FHSA rules with our first-year newcomer roadmap.",
-    heading: "First-Year Financial Roadmap for Newcomers to Canada",
+      "Understand Canadian banking, credit building, cash reserves, and TFSA, RRSP, and FHSA rules with our first-year newcomer guide.",
+    heading: "First-Year Financial Guide for Newcomers to Canada",
     summary:
       "Step-by-step guidance on building Canadian credit history, setting up liquid reserves, and opening registered tax-sheltered accounts.",
     priority: "0.85",
@@ -366,7 +366,7 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     path: "/fr",
     basePath: "/",
     lang: "fr-CA",
-    title: "Architecture Financière & Protection | Ahmed Bello",
+    title: "Planification Financière & Protection | Ahmed Bello",
     description:
       "Stratégie patrimoniale fiscalement efficiente et protection du revenu pour familles canadiennes, SPCC, professionnels de santé et nouveaux arrivants.",
     heading: "Ahmed Bello | Professionnel en Solutions Financières Agréé",
@@ -483,10 +483,10 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     path: "/fr/for/newcomers",
     basePath: "/for/newcomers",
     lang: "fr-CA",
-    title: "Plan Financier Nouveaux Arrivants | Ahmed Bello",
+    title: "Guide Financier Nouveaux Arrivants | Ahmed Bello",
     description:
       "Bâtissez votre crédit canadien, structurez vos réserves de liquidité et ouvrez vos comptes CELI, REER et CELIAPP dès la première année.",
-    heading: "Feuille de Route Financière pour Nouveaux Arrivants",
+    heading: "Guide Financier de 1re Année pour Nouveaux Arrivants",
     summary:
       "Guide pratique pour établir votre crédit canadien, sécuriser vos réserves et utiliser les régimes enregistrés.",
     priority: "0.81",
@@ -679,7 +679,7 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
   },
   "cpp-oas-start-age": {
     seoTitle: "RPC et SV : quel âge de début choisir ?",
-    title: "RPC et Sécurité de la vieillesse : l'impact de l'âge de début",
+    title: "RPC et Sécurité de la vieillesse : âge de début",
     description:
       "Le RPC débute entre 60 et 70 ans et la SV entre 65 et 70 ans. Écart mathématique mensuel et critères réels pour décider.",
   },
@@ -789,7 +789,7 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
     seoTitle: "CELI, REER ou CELIAPP : ordre de priorité",
     title: "CELI vs REER vs CELIAPP : quel compte prioriser d'abord ?",
     description:
-      "Matrice décisionnelle classant CELI, REER et CELIAPP selon le revenu imposable, l'achat d'une maison et la contrepartie d'employeur.",
+      "Guide de décision classant CELI, REER et CELIAPP selon le revenu imposable, l'achat immobilier et la contrepartie d'employeur.",
   },
   "accidental-fhsa-over-contributions-non-resident-freezes": {
     seoTitle: "Surcotisation CELIAPP et formulaire RC727",
@@ -811,7 +811,7 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
   },
   "66-percent-capital-gains-tax-family-cottage-trap": {
     seoTitle: "Chalet familial, art. 70(5) et T2091",
-    title: "Chalet familial : disposition présumée au décès et formulaire T2091",
+    title: "Chalet familial : art. 70(5) et formulaire T2091",
     description:
       "Avec le taux d'inclusion maintenu à 50 %, l'art. 70(5) au décès et les choix T2091 créent d'importantes factures sur les chalets.",
   },
@@ -823,9 +823,9 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
   },
   "canada-federal-budget-capital-gains-cei-amt-analysis": {
     seoTitle: "Gains à 50 %, ICE et réforme de l'IMR",
-    title: "Gains en capital à 50 %, ECGC à 1,25 M$, ICE et réforme IMR",
+    title: "Gains en capital à 50 %, ECGC à 1,275 M$ et réforme IMR",
     description:
-      "Bilan fiscal canadien à jour : annulation de la hausse à 66,7 % (maintien à 50 %), ECGC à 1,25 M$, Incitatif aux entrepreneurs et IMR.",
+      "Bilan fiscal canadien à jour : maintien à 50 % des gains, ECGC indexée à 1,275 M$, Incitatif aux entrepreneurs et IMR.",
   },
   "prescribed-rate-spousal-loans-tax-arbitrage-guide": {
     seoTitle: "Prêts au taux prescrit et date du 30 janv.",
@@ -835,7 +835,7 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
   },
   "pension-commuted-value-transfer-par-tax-planning": {
     seoTitle: "Valeur de rachat d'un régime de pension",
-    title: "Valeur de rachat de pension et facteur d'équivalence rectifié",
+    title: "Valeur de rachat de pension et FER au Canada",
     description:
       "Comment est calculée la valeur de rachat d'un régime à prestations déterminées, l'effet des taux et les plafonds de transfert fiscal.",
   },

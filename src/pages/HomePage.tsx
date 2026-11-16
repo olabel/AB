@@ -30,8 +30,8 @@ export const HomePage: React.FC = () => {
       <SEO
         title={
           isFr
-            ? "Architecture Financière & Protection du Revenu | Ahmed Bello Solutions Financières"
-            : "Canadian Wealth & Protection Architecture | Ahmed Bello Financial Solutions"
+            ? "Planification Financière & Protection | Ahmed Bello"
+            : "Canadian Wealth & Protection Planning | Ahmed Bello"
         }
         description={
           isFr
@@ -58,7 +58,7 @@ export const HomePage: React.FC = () => {
               <h1 className="display text-[#1c1b18] leading-[1.08] tracking-tight">
                 {isFr ? (
                   <>
-                    Architecture financière pour{" "}
+                    Planification financière pour{" "}
                     <span className="font-serif italic font-normal text-[#2e4a3b]">
                       familles, entrepreneurs
                     </span>{" "}
@@ -66,7 +66,7 @@ export const HomePage: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    Financial architecture for{" "}
+                    Financial planning for{" "}
                     <span className="font-serif italic font-normal text-[#2e4a3b]">
                       families, business owners
                     </span>{" "}
@@ -183,7 +183,7 @@ export const HomePage: React.FC = () => {
             <p className="text-xs sm:text-sm text-[#625d52] max-w-md">
               {isFr
                 ? "Nous accompagnons quatre profils distincts aux prises avec des décisions financières canadiennes stratégiques."
-                : "Focused financial architecture designed around specific, high-stakes Canadian balance-sheet crossroads."}
+                : "Focused financial planning built around specific, high-stakes Canadian balance-sheet crossroads."}
             </p>
           </div>
 
@@ -227,7 +227,7 @@ export const HomePage: React.FC = () => {
                 <p className="text-xs text-[#46423a] leading-relaxed">
                   {isFr
                     ? "Éviter le piège de la réduction 5:1 de la DPE au-delà de 50 000 $ de revenus passifs (art. 125(5.1)) et extractions par Compte de dividendes en capital (CDC)."
-                    : "Navigating the $50,000 corporate passive income clawback under Section 125(5.1), Capital Dividend Account (CDA) extraction, and retained earnings sheltering."}
+                    : "Managing the $50,000 corporate passive income clawback under Section 125(5.1), Capital Dividend Account (CDA) extraction, and retained earnings sheltering."}
                 </p>
               </div>
               <div className="pt-4 flex items-center gap-1 text-xs font-semibold text-[#2e4a3b]">
@@ -287,7 +287,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2.5 How the Pieces Fit: Architectural Balance-Sheet Integration */}
+      {/* 2.5 How the Pieces Fit: Coordinated Balance-Sheet Planning */}
       <HowThePiecesFit />
 
       {/* 3. Interactive Decision Models Strip */}
@@ -348,7 +348,7 @@ export const HomePage: React.FC = () => {
             >
               <span className="font-mono text-xs text-[#75581f] font-semibold block mb-1">03</span>
               <h4 className="font-serif text-base text-[#1c1b18] font-bold">
-                {isFr ? "Arbitrage CELI vs REER" : "TFSA vs RRSP"}
+                {isFr ? "Comparatif CELI vs REER" : "TFSA vs RRSP"}
               </h4>
               <p className="text-[0.72rem] text-[#625d52] mt-1">
                 {isFr
@@ -467,7 +467,7 @@ export const HomePage: React.FC = () => {
           <p className="lede text-base sm:text-lg text-[#46423a] max-w-xl mx-auto leading-relaxed">
             {isFr
               ? "Que vous deviez renégocier une hypothèque, optimiser la trésorerie de votre société ou protéger les revenus de votre foyer, examinons vos chiffres ensemble."
-              : "Whether navigating a mortgage renewal, sheltering corporate retained earnings, or protecting family cash flow, let's look at the numbers together."}
+              : "Whether managing a mortgage renewal, sheltering corporate retained earnings, or protecting family cash flow, let's look at the numbers together."}
           </p>
 
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">

@@ -409,7 +409,7 @@ Candidate Application Details:
             <p className="text-xs text-[#625d52] italic">
               {isFr
                 ? "*Transparence intégrale : Notre programme de mentorat n'exige aucun droit de franchise ni frais de scolarité. Les candidats acquittent directement leurs droits d'examen officiels auprès des régulateurs provinciaux (cours du PAAP/LLQP) ou d'État. Nous fournissons les plans d'études, les examens blancs et l'accompagnement complet."
-                : "*Full transparency: No tuition or desk fees are charged by our mentorship program. Candidates pay their official provincial or state exam/registration fees directly to the regulatory body, and we provide study roadmaps, mock tests, and mentorship support."}
+                : "*Full transparency: No tuition or desk fees are charged by our mentorship program. Candidates pay their official provincial or state exam/registration fees directly to the regulatory body, and we provide study guides, mock tests, and mentorship support."}
             </p>
 
             {/* Hero CTAs */}
@@ -445,7 +445,7 @@ Candidate Application Details:
                 <div className="flex items-center gap-2.5">
                   <BrandMark size={28} reversed={true} className="w-7 h-7" />
                   <span className="font-serif text-lg tracking-tight text-[#f7f3eb]">
-                    {isFr ? "Architecture du Cabinet" : "Independent Practice Blueprint"}
+                    {isFr ? "Structure du Cabinet" : "Independent Practice Overview"}
                   </span>
                 </div>
                 <span className="text-[0.65rem] uppercase font-bold tracking-widest text-[#d6c298] bg-[#2e4a3b]/60 px-2 py-0.5 rounded-[2px]">
@@ -458,11 +458,11 @@ Candidate Application Details:
                 {[
                   {
                     id: "architecture",
-                    label: isFr ? "Architecture Ouverte" : "Open Architecture",
+                    label: isFr ? "Multi-Assureurs" : "Multi-Carrier Access",
                   },
                   {
                     id: "progression",
-                    label: isFr ? "Plan en 3 étapes" : "3-Stage Roadmap",
+                    label: isFr ? "Plan en 3 étapes" : "3-Stage Path",
                   },
                   {
                     id: "compensation",
@@ -769,7 +769,7 @@ Candidate Application Details:
             <p className="text-[#46423a] text-base leading-relaxed">
               {isFr
                 ? "Nous offrons des parcours d'études structurés et un mentorat sur mesure aux professionnels motivés souhaitant bâtir leur cabinet indépendant au Canada et aux É.-U."
-                : "We provide structured educational blueprints and dedicated mentorship for motivated candidates entering independent financial solutions practice across Canada."}
+                : "We provide structured educational guides and dedicated mentorship for motivated candidates entering independent financial solutions practice across Canada."}
             </p>
           </div>
 
@@ -806,7 +806,7 @@ Candidate Application Details:
                 <p className="text-sm text-[#46423a] leading-relaxed">
                   {isFr
                     ? "Nous parrainons votre admissibilité réglementaire et vous fournissons des plans de travail clairs, des révisions et des examens blancs pour réussir le PAAP/LLQP canadien avec assurance."
-                    : "We sponsor your regulatory eligibility and provide comprehensive study blueprints, practice exams, and coaching so you pass your Canadian LLQP exam with confidence."}
+                    : "We sponsor your regulatory eligibility and provide comprehensive study guides, practice exams, and coaching so you pass your Canadian LLQP exam with confidence."}
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#ece6da] text-xs text-[#75581f] font-medium">
@@ -821,7 +821,7 @@ Candidate Application Details:
                   <Compass className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl text-[#1c1b18] mb-2">
-                  {isFr ? "3. Véritable Ingénierie Financière Pratique" : "3. Real Financial Architecture"}
+                  {isFr ? "3. Planification Financière Pratique" : "3. Practical Financial Planning"}
                 </h3>
                 <p className="text-sm text-[#46423a] leading-relaxed">
                   {isFr
@@ -830,7 +830,7 @@ Candidate Application Details:
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#ece6da] text-xs text-[#2e4a3b] font-medium">
-                {isFr ? "Ingénierie patrimoniale concrète" : "Comprehensive Solutions Architecture"}
+                {isFr ? "Analyse patrimoniale concrète" : "Comprehensive Client Planning"}
               </div>
             </div>
 
@@ -894,7 +894,7 @@ Candidate Application Details:
               <p className="text-sm text-[#46423a]">
                 {isFr
                   ? "Sélectionnez votre situation et votre disponibilité pour découvrir votre plan d'action personnalisé vers l'agrément et le lancement de votre cabinet."
-                  : "Select your location and situation to see your customized roadmap to licensing and agency launch."}
+                  : "Select your location and situation to see your personalized path to licensing and agency launch."}
               </p>
             </div>
 
@@ -1008,7 +1008,7 @@ Candidate Application Details:
                       : quizTime === "part_time"
                       ? isFr
                         ? "Parcours du soir en 90 jours : Modules d'études complets, examens blancs réguliers et mentorat hebdomadaire."
-                        : "Structured 90-day evening roadmap: Free study modules, mock test reviews, and weekly mentorship."
+                        : "Structured 90-day evening schedule: Free study modules, mock test reviews, and weekly mentorship."
                       : isFr
                       ? "Accélération plein temps : Parrainage réglementaire immédiat et lancement accompagné rapide sur le terrain."
                       : "Accelerated full-time sprint: Complete licensing sponsorship and early field launch."}
@@ -1029,7 +1029,7 @@ Candidate Application Details:
         <section className="py-16 border-b border-[#d6cebd]">
           <div className="max-w-3xl mb-12">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f]">
-              {isFr ? "La Feuille de Route" : "The Roadmap"}
+              {isFr ? "Parcours en 4 étapes" : "The 4-Step Path"}
             </span>
             <h2
               className="font-serif text-3xl sm:text-4xl text-[#1c1b18] mt-2 mb-3"

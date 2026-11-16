@@ -143,7 +143,7 @@ export const STATIC_NEWS: NewsItem[] = [
   {
     id: "fcac-mortgage-protection-guidelines",
     title: "Financial Consumer Agency of Canada: Enhanced Mortgage Protection and Renewal Rights",
-    excerpt: "The FCAC updated compliance expectations for federally regulated banks, requiring early notification windows (up to 6 months prior to maturity) and tailored relief options for Canadian mortgagors navigating renewals.",
+    excerpt: "The FCAC updated compliance expectations for federally regulated banks, requiring early notification windows (up to 6 months prior to maturity) and tailored relief options for Canadian mortgagors preparing for mortgage renewals.",
     imageUrl: "/images/news/statcan_economy.jpg",
     link: "https://www.canada.ca/en/financial-consumer-agency.html",
     pubDate: "2026-10-28T12:00:00Z",

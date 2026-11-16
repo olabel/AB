@@ -131,7 +131,7 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
           <p className="text-xs sm:text-sm text-[#46423a] mt-1 max-w-2xl leading-relaxed">
             {isFr
               ? "Évaluez l'épargne initiale nécessaire pour couvrir vos coûts de subsistance, l'évaluation de vos diplômes et les examens professionnels avant le début de votre plein revenu."
-              : "Estimate the realistic savings needed to navigate credential recognition, provincial licensing exams, and living expenses before your Canadian professional income begins."}
+              : "Estimate the realistic savings needed to cover credential recognition, provincial licensing exams, and living expenses before your Canadian professional income begins."}
           </p>
         </div>
 

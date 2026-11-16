@@ -102,8 +102,8 @@ export const InsightsPage: React.FC = () => {
 
           <p className="lede text-base sm:text-lg text-[#46423a] leading-relaxed max-w-3xl">
             {isFr
-              ? "Notre bibliothèque éducative détaille les plafonds officiels de l'ARC et des régimes enregistrés. Ces essais approfondis examinent la mécanique économique sous-jacente : l'architecture de trésorerie d'entreprise, la préservation de la liquidité du bilan familial et l'alignement des incitations professionnelles."
-              : "While the education library explains CRA registered limits and basic rules, these long-form essays provide quantitative economic analysis: corporate treasury architecture, total household balance-sheet liquidity, and distinguishing objective licensing principles from sales rhetoric."}
+              ? "Notre bibliothèque éducative détaille les plafonds officiels de l'ARC et des régimes enregistrés. Ces essais approfondis examinent la mécanique économique sous-jacente : la gestion de trésorerie corporative, la préservation de la liquidité du bilan familial et l'alignement des incitations professionnelles."
+              : "While the education library explains CRA registered limits and basic rules, these long-form essays provide quantitative economic analysis: corporate treasury management, total household balance-sheet liquidity, and distinguishing objective licensing principles from sales rhetoric."}
           </p>
 
           {/* Quick Filter Tabs */}
@@ -496,7 +496,7 @@ export const InsightsPage: React.FC = () => {
                 </span>
                 <p className="text-sm font-serif text-white mt-0.5">
                   {isFr
-                    ? "Modélisez vos décisions financières avec rigueur : piste de subsistance, arbitrage fiscal et SPCC."
+                    ? "Modélisez vos décisions financières avec rigueur : piste de subsistance, comparatif fiscal et SPCC."
                     : "Quantify your numbers against official CRA rules before executing major financial decisions."}
                 </p>
               </div>
