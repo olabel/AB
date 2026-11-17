@@ -28,14 +28,14 @@ export const HowThePiecesFit: React.FC = () => {
       tabTitle: isFr ? "1. Choc de Renouvellement Hypothécaire" : "1. Mortgage Renewal Shock",
       badge: isFr ? "Scénario : Hausse de mensualité à l'échéance" : "Scenario: Payment Spike at Maturity",
       problemTitle: isFr
-        ? "L'erreur classique en vase clos : Vider son CELI pour rembourser du capital"
-        : "The Silo Mistake: Raiding the TFSA to Pay Down Principal",
+        ? "Erreur fréquente : vider son CELI pour rembourser du capital"
+        : "Common Mistake: Raiding the TFSA to Pay Down Principal",
       problemDesc: isFr
         ? "Face à une hausse des taux au renouvellement, des emprunteurs liquident précipitamment un CELI investi pour effectuer un remboursement anticipé. Ils sacrifient ainsi la croissance composée à l'abri de l'impôt et compromettent leur réserve de liquidités en cas de coup dur."
         : "Faced with renewal payment increases, borrowers reflexively liquidate equity-growth TFSAs to make lump-sum payments. This permanently impairs compounding tax-free growth and leaves the household illiquid if an emergency strikes.",
       solutionTitle: isFr
-        ? "L'approche coordonnée : Évaluation de transfert & réalignement de trésorerie"
-        : "The Coordinated Approach: Switch Evaluation & Cash Flow Realignment",
+        ? "Approche coordonnée : évaluation de transfert & réalignement de trésorerie"
+        : "Coordinated Approach: Switch Evaluation & Cash Flow Realignment",
       solutionDesc: isFr
         ? "En coordination avec votre courtier hypothécaire agréé, nous évaluons les options de transfert sans requalification au stress test (BSIF B-20). Nous modélisons l'impact global sur votre budget, structurons le remboursement des dettes non déductibles et préservons votre CELI, en réinvestissant les retours d'impôt REER/CELIAPP."
         : "In coordination with your licensed mortgage broker, we evaluate straight-switch options without stress test requalification under OSFI Guideline B-20. We model overall balance-sheet cash flow, eliminate high-interest liabilities, and protect compounding TFSA assets, coordinating tax refunds to absorb payment changes.",
@@ -50,14 +50,14 @@ export const HowThePiecesFit: React.FC = () => {
       tabTitle: isFr ? "2. Piège des 50k$ de Placements SPCC" : "2. Corporate $50k Passive Trap",
       badge: isFr ? "Scénario : 70 000 $ de revenus passifs dans la société" : "Scenario: $70,000 AAII in Corporate Holdings",
       problemTitle: isFr
-        ? "L'erreur classique en vase clos : Accumuler des liquidités passives imposées à taux fort"
-        : "The Silo Mistake: Stashing Excess Retained Earnings in Corporate GICs",
+        ? "Erreur fréquente : accumuler des placements passifs imposés à taux élevé"
+        : "Common Mistake: Holding Excess Retained Earnings in Corporate GICs",
       problemDesc: isFr
         ? "Selon l'article 125(5.1) de la LIR, chaque dollar de revenu passif au-delà de 50 000 $ réduit la Déduction pour petite entreprise (DPE) de 5 $. Avec 70 000 $ de passif, la société perd 100 000 $ d'accès au taux PME de 9 % et voit cette tranche imposée au taux général de 26,5 %."
         : "Under ITA Section 125(5.1), every $1 of corporate passive investment income above $50,000 claws back $5 of the Small Business Deduction. At $70,000 of passive income, $100,000 of active business profits are pushed from the 9% SBD rate to the 26.5% general corporate rate.",
       solutionTitle: isFr
-        ? "L'approche coordonnée : Collaboration CPA, optimisation CDC & abri corporatif"
-        : "The Coordinated Approach: CPA Collaboration, CDA Extraction & Corporate Protection",
+        ? "Approche coordonnée : collaboration CPA, CDC & abri corporatif"
+        : "Coordinated Approach: CPA Collaboration, CDA Extraction & Corporate Protection",
       solutionDesc: isFr
         ? "De concert avec votre expert-comptable (CPA) qui prépare vos déclarations fiscales et élections de dividendes en capital (CDC), nous modélisons les surplus de trésorerie pour maximiser vos régimes enregistrés personnels et évaluer des solutions de protection et d'assurance exonérées adaptées aux sociétés."
         : "Working alongside your independent corporate CPA who prepares corporate tax filings and CDA dividend elections, we model surplus treasury flows, coordinate personal TFSA/RRSP maximization, and evaluate corporately held tax-exempt wealth protection solutions.",
@@ -72,8 +72,8 @@ export const HowThePiecesFit: React.FC = () => {
       tabTitle: isFr ? "3. Choc Médical ou Invalidité Imprévue" : "3. Unexpected Medical/Disability Event",
       badge: isFr ? "Scénario : 6 mois d'arrêt d'activité professionnelle" : "Scenario: 6-Month Absence from Professional Practice",
       problemTitle: isFr
-        ? "L'erreur classique en vase clos : Liquidations de détresse d'actifs REER/CELI"
-        : "The Silo Mistake: Distress Liquidation of RRSP & Real Estate Assets",
+        ? "Erreur fréquente : devoir vendre des placements REER ou CELI dans l'urgence"
+        : "Common Mistake: Forced Withdrawal from RRSP & Registered Assets",
       problemDesc: isFr
         ? "Sans couverture invalidité adaptée, un arrêt de travail imprévu contraint le foyer à décaisser des REER avec retenue fiscale immédiate et imposition au taux marginal le plus élevé, tout en risquant des défauts de paiement de dettes."
         : "Without adequate income protection, an illness or injury forces clinicians or entrepreneurs to liquidate registered accounts at peak tax brackets (up to 53.53%), defaulting on credit facilities and permanently damaging their balance sheet.",
@@ -246,8 +246,8 @@ export const HowThePiecesFit: React.FC = () => {
               </div>
               <p className="text-xs text-[#ece6da]/70 mt-1">
                 {isFr
-                  ? "Choisissez un événement financier pour voir comment une réaction en silo détruit de la valeur vs. une réponse coordonnée :"
-                  : "Select a Canadian financial milestone to observe how a silo reaction destroys value vs. an integrated solution:"}
+                  ? "Choisissez un événement financier pour comparer un choix isolé à une réponse coordonnée :"
+                  : "Select a Canadian financial event to compare an isolated reaction with a coordinated plan:"}
               </p>
             </div>
 
@@ -255,8 +255,9 @@ export const HowThePiecesFit: React.FC = () => {
               {(["mortgage_shock", "corporate_aaii", "income_disruption"] as ScenarioId[]).map((scId) => (
                 <button
                   key={scId}
+                  type="button"
                   onClick={() => setActiveScenario(scId)}
-                  className={`text-[11px] px-3 py-1.5 rounded-[1px] font-medium transition-all ${
+                  className={`text-[11px] px-3 py-1.5 rounded-[1px] font-medium transition-all cursor-pointer ${
                     activeScenario === scId
                       ? "bg-[#d6c298] text-[#14211a] font-bold shadow-xs"
                       : "text-[#ece6da]/80 hover:text-white"
@@ -272,7 +273,7 @@ export const HowThePiecesFit: React.FC = () => {
 
           {/* Scenario Details Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* Left: The Costly Trap (Silo) */}
+            {/* Left: The Costly Trap */}
             <div className="lg:col-span-5 bg-[#251515]/60 border border-red-900/40 p-5 rounded-[2px] space-y-3">
               <div className="flex items-center gap-2 text-red-300">
                 <AlertTriangle className="w-4 h-4 shrink-0 text-red-400" />

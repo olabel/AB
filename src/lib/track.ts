@@ -55,7 +55,7 @@ export function trackLeadSubmit(topic: string): void {
 }
 
 /**
- * Fire newsletter_submit when a user registers for the Intentional Wealth Briefing
+ * Fire newsletter_submit when a user registers for the Canadian Money Rules Briefing
  */
 export function trackNewsletterSubmit(source: string = "footer"): void {
   safeTrack("newsletter_submit", { source });

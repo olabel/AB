@@ -116,8 +116,8 @@ export const HomePage: React.FC = () => {
 
               <p className="lede measure">
                 {isFr
-                  ? "J'aide les ménages, entrepreneurs et professionnels de la santé au Canada à coordonner leurs comptes enregistrés, leur protection du revenu et leur fiscalité. Chaque rencontre débute par un examen simple de vos chiffres et priorités, sans engagement."
-                  : "I help Canadian families, business owners, and healthcare professionals coordinate their registered accounts, income protection, and tax decisions. Every engagement starts with a plain-language look at your numbers and priorities—with zero obligation."}
+                  ? "J'aide les ménages, entrepreneurs et professionnels de la santé au Canada à coordonner leurs comptes enregistrés, leur protection du revenu et leur fiscalité. Chaque rencontre débute par un examen simple de vos chiffres et priorités, à votre rythme."
+                  : "I help Canadian families, business owners, and healthcare professionals coordinate their registered accounts, income protection, and tax decisions. Every engagement starts with a plain-language look at your numbers and priorities, at your own pace."}
               </p>
 
               {/* Single Primary Button + Single Text Link */}
@@ -201,7 +201,7 @@ export const HomePage: React.FC = () => {
             <p className="small text-[#625d52] max-w-md">
               {isFr
                 ? "Un accompagnement structuré autour de quatre réalités financières canadiennes précises."
-                : "Structured planning tailored to four common Canadian financial crossroads."}
+                : "Structured planning built around four common Canadian financial crossroads."}
             </p>
           </div>
 
@@ -399,7 +399,7 @@ export const HomePage: React.FC = () => {
               {isFr ? "Veille réglementaire • Novembre 2026" : "2026 Money Rules • November Update"}
             </span>
             <Link to={`${prefix}/what-changed`} className="arrow-link text-xs">
-              <span>{isFr ? "Lire les 7 mises à jour →" : "Read all 7 updates →"}</span>
+              <span>{isFr ? "Lire les 6 mises à jour →" : "Read all 6 updates →"}</span>
             </Link>
           </div>
 

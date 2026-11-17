@@ -50,7 +50,7 @@ export const RespGrantQuickWidget: React.FC = () => {
     `Planned Annual RESP Contribution: ${formatMoney(annualContribution)}`,
     `Estimated Basic CESG Match This Year (20%): ${formatMoney(basicCesgThisYear)}`,
     `Projected Basic CESG Through Age 17 (capped at $7,200 lifetime): ${formatMoney(projectedBasicLifetime)}`,
-    `Family Income / Benefit Profile: ${incomeTier === "lower" ? "Lower-income profile — review Canada Learning Bond ($500 yr 1 + $100/yr to $2,000) and Additional CESG" : "Standard / verify Additional CESG tiers on Canada.ca"}`,
+    `Family Income / Benefit Profile: ${incomeTier === "lower" ? "Lower-income profile: review Canada Learning Bond ($500 yr 1 + $100/yr to $2,000) and Additional CESG" : "Standard / verify Additional CESG tiers on Canada.ca"}`,
   ].join("\n");
 
   return (

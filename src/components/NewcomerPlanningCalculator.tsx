@@ -140,14 +140,14 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
           <button
             type="button"
             onClick={() => applyPreset("physician_nurse")}
-            className="px-2.5 py-1 text-xs bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-[#f7f3eb] border border-[#d6cebd] rounded-[2px] transition-colors"
+            className="px-2.5 py-1 text-xs bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-[#f7f3eb] border border-[#d6cebd] rounded-[2px] transition-colors cursor-pointer"
           >
             {isFr ? "Médecin / Infirmier" : "Doctor / Nurse"}
           </button>
           <button
             type="button"
             onClick={() => applyPreset("it_engineer")}
-            className="px-2.5 py-1 text-xs bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-[#f7f3eb] border border-[#d6cebd] rounded-[2px] transition-colors"
+            className="px-2.5 py-1 text-xs bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-[#f7f3eb] border border-[#d6cebd] rounded-[2px] transition-colors cursor-pointer"
           >
             {isFr ? "Génie / Informatique" : "Engineer / IT"}
           </button>
@@ -186,9 +186,9 @@ export const NewcomerPlanningCalculator: React.FC<NewcomerPlanningCalculatorProp
               className="w-full accent-[#2e4a3b] cursor-pointer"
             />
             <div className="flex justify-between text-[0.7rem] text-[#625d52]">
-              <span>3 {isFr ? "mois" : "mos"} (Rapide)</span>
-              <span>12 {isFr ? "mois" : "mos"} (Moyenne santé)</span>
-              <span>24 {isFr ? "mois" : "mos"} (Spécialités)</span>
+              <span>{isFr ? "3 mois (Rapide)" : "3 mos (Fast)"}</span>
+              <span>{isFr ? "12 mois (Moyenne santé)" : "12 mos (Healthcare avg.)"}</span>
+              <span>{isFr ? "24 mois (Spécialités)" : "24 mos (Specialties)"}</span>
             </div>
           </div>
 

@@ -190,7 +190,7 @@ export const CalculatorsPage: React.FC = () => {
   const extraCorporateTaxOwing = Math.round(Math.max(0, actualTax - standardTax));
 
   return (
-    <div className="py-12 md:py-16">
+    <div>
       <SEO
         title={
           isFr
@@ -232,7 +232,7 @@ export const CalculatorsPage: React.FC = () => {
                 setActiveTab("newcomer");
                 trackCalculatorCompleted("newcomer");
               }}
-              className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between ${
+              className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between cursor-pointer ${
                 activeTab === "newcomer"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] shadow-xs"
                   : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -255,7 +255,7 @@ export const CalculatorsPage: React.FC = () => {
                 setActiveTab("mortgage");
                 trackCalculatorCompleted("mortgage");
               }}
-              className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between ${
+              className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between cursor-pointer ${
                 activeTab === "mortgage"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] shadow-xs"
                   : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -278,7 +278,7 @@ export const CalculatorsPage: React.FC = () => {
                 setActiveTab("tfsa-rrsp");
                 trackCalculatorCompleted("tfsa-rrsp");
               }}
-              className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between ${
+              className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between cursor-pointer ${
                 activeTab === "tfsa-rrsp"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] shadow-xs"
                   : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -301,7 +301,7 @@ export const CalculatorsPage: React.FC = () => {
                 setActiveTab("ccpc-passive");
                 trackCalculatorCompleted("ccpc-passive");
               }}
-              className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between ${
+              className={`p-3.5 text-left rounded-[2px] border transition-all flex flex-col justify-between cursor-pointer ${
                 activeTab === "ccpc-passive"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] shadow-xs"
                   : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -952,7 +952,7 @@ Extra Annual Corporate Tax Due to Passive Drag: +$${extraCorporateTaxOwing.toLoc
           <p className="lede measure mx-auto">
             {isFr
               ? "Examinez votre situation sans pression pour valider la priorité de vos comptes enregistrés ou de votre trésorerie."
-              : "Review your registered account priorities or cash flow questions in a brief, no-obligation call."}
+              : "Review your registered account priorities or cash flow questions in a brief, clear call."}
           </p>
           <div className="pt-2">
             <a

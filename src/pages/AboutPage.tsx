@@ -137,7 +137,7 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Optional Credentials Section — Rendered ONLY when siteConfig.credentials has non-empty values */}
+      {/* Optional Credentials Section - Rendered ONLY when siteConfig.credentials has non-empty values */}
       {showCredentials && (
         <section id="licensing-disclosures" className="section border-b border-[#d6cebd]">
           <div className="wrap max-w-3xl space-y-6">
@@ -296,7 +296,7 @@ export const AboutPage: React.FC = () => {
             </Link>
           </div>
           <p className="small text-[#625d52]">
-            {isFr ? "Aucune obligation. Zéro pression commerciale." : "No obligation. No sales pressure."}
+            {isFr ? "Des explications claires, à votre rythme." : "Plain-language guidance, at your own pace."}
           </p>
         </div>
       </section>

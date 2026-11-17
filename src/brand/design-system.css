@@ -412,6 +412,24 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
   }
+
+  /* Slim reading progress bar without inline width styles */
+  .read-progress-bar {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    background: rgba(214, 206, 189, 0.4);
+  }
+  .read-progress-bar::-webkit-progress-bar {
+    background: rgba(214, 206, 189, 0.4);
+  }
+  .read-progress-bar::-webkit-progress-value {
+    background: var(--color-forest);
+    transition: width 150ms ease-out;
+  }
+  .read-progress-bar::-moz-progress-bar {
+    background: var(--color-forest);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

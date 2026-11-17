@@ -7,6 +7,7 @@ import {
   recordConfirmedSubscriber,
   verifySubscriptionToken,
 } from "../services/contactEmailService.ts";
+import { siteConfig } from "../config/site.ts";
 
 /**
  * Strict Origin / Referer Validation:
@@ -159,16 +160,14 @@ export async function handleContactSubmission(req: any, res: any) {
   }
   rawBody = rawBody || {};
 
-  // Cloudflare Turnstile token validation
+  // Cloudflare Turnstile token validation (fails closed in production when unconfigured)
   const turnstileToken = rawBody.turnstileToken || rawBody["cf-turnstile-response"];
-  if (process.env.TURNSTILE_SECRET_KEY) {
-    const isHuman = await verifyTurnstileToken(turnstileToken, clientIp);
-    if (!isHuman) {
-      return res.status(403).json({
-        error: "captcha_failed",
-        message: "Bot verification challenge was unsuccessful. Please refresh and try again.",
-      });
-    }
+  const isHuman = await verifyTurnstileToken(turnstileToken, clientIp);
+  if (!isHuman) {
+    return res.status(403).json({
+      error: "captcha_failed",
+      message: "Bot verification challenge was unsuccessful. Please refresh and try again.",
+    });
   }
 
   if ((req.path === "/api/subscribe" || req.url?.includes("/api/subscribe")) && !rawBody.topic) {
@@ -183,11 +182,11 @@ export async function handleContactSubmission(req: any, res: any) {
     console.error("[CONFIG ERROR]: CONTACT_TO_EMAIL environment variable is missing or empty.");
     return res.status(500).json({
       error: "service_unavailable",
-      message: "Contact submission service is temporarily unavailable. Please schedule a meeting directly or call +1-506-899-4941.",
+      message: `Contact submission service is temporarily unavailable. Please schedule a meeting directly or call ${siteConfig.publicPhone}.`,
     });
   }
 
-  const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || "Ahmed Bello <enquiries@ahmedbello.com>";
+  const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || siteConfig.defaultFromEmail;
 
   const result = await processContactSubmission(
     rawBody,

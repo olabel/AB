@@ -25,7 +25,7 @@ function getSemanticFallbackHtml(pathname: string): string {
         <h1>${escapeHtml(core?.heading || "About Ahmed Bello | Licensed Financial Solutions Professional")}</h1>
         <p>${escapeHtml(core?.summary || "Independent financial educator helping individuals and families across Canada understand registered accounts (TFSA, RRSP, FHSA), debt repayment, and income protection.")}</p>
         <h2>Direct Contact</h2>
-        <p>Email: enquiries@ahmedbello.com | Phone: +1-506-899-4941 | Schedule: https://calendly.com/olabel/30min</p>
+        <p>Email: ${escapeHtml(siteConfig.publicEmail)} | Phone: ${escapeHtml(siteConfig.publicPhone)} | Schedule: ${escapeHtml(siteConfig.schedulingUrl)}</p>
       </main>
     `;
   }
@@ -33,12 +33,12 @@ function getSemanticFallbackHtml(pathname: string): string {
     return `
       <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
         <h1>${escapeHtml(core?.heading || "Start a Conversation with Ahmed Bello")}</h1>
-        <p>${escapeHtml(core?.summary || "Ask a question about your Canadian mortgage renewal, registered accounts (TFSA, RRSP, FHSA), income protection, or newcomer finances with zero sales pressure.")}</p>
+        <p>${escapeHtml(core?.summary || "Ask a question about your Canadian mortgage renewal, registered accounts (TFSA, RRSP, FHSA), income protection, or newcomer finances with clear, plain-language explanations.")}</p>
         <ul>
-          <li><strong>Email:</strong> enquiries@ahmedbello.com</li>
-          <li><strong>Direct Telephone:</strong> +1-506-899-4941</li>
-          <li><strong>Schedule:</strong> <a href="https://calendly.com/olabel/30min">Schedule 30-Minute Intro Call</a></li>
-          <li><strong>Location:</strong> Moncton, NB, Canada</li>
+          <li><strong>Email:</strong> ${escapeHtml(siteConfig.publicEmail)}</li>
+          <li><strong>Direct Telephone:</strong> ${escapeHtml(siteConfig.publicPhone)}</li>
+          <li><strong>Schedule:</strong> <a href="${escapeAttr(siteConfig.schedulingUrl)}">${escapeHtml(siteConfig.ctaLabelEn)}</a></li>
+          <li><strong>Location:</strong> Dieppe, NB, Canada</li>
         </ul>
       </main>
     `;
@@ -46,8 +46,8 @@ function getSemanticFallbackHtml(pathname: string): string {
   if (p === "/what-changed" || p === "/fr/what-changed") {
     return `
       <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
-        <h1>${escapeHtml(core?.heading || "What Changed in Canadian Money Rules")}</h1>
-        <p>${escapeHtml(core?.summary || "Monthly Canadian financial intelligence briefing by Ahmed Bello: Bank of Canada policy rates, OSFI Guideline B-20 uninsured mortgage straight-switch rules, CRA registered limits, and federal tax amendments.")}</p>
+        <h1>${escapeHtml(core?.heading || "2026 Canadian Money Rules & Official Updates")}</h1>
+        <p>${escapeHtml(core?.summary || "Monthly Canadian financial briefing by Ahmed Bello: Bank of Canada policy rates, OSFI Guideline B-20 uninsured mortgage straight-switch rules, CRA registered limits, and federal tax amendments.")}</p>
       </main>
     `;
   }
@@ -56,7 +56,7 @@ function getSemanticFallbackHtml(pathname: string): string {
       <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
         <h1>${escapeHtml(core?.heading || "Costly Canadian Money Blindspots")}</h1>
         <p>${escapeHtml(core?.summary || "A compendium of verified Canadian financial rules, overlooked government grants, and tax mechanisms covering the Canada Learning Bond, CMHC Eco Plus refunds, FHSA clocks, RRSP deferral, and retirement timing.")}</p>
-        <p>Ahmed Bello, Licensed Financial Solutions Professional | Moncton, New Brunswick | Licensed Across Canada.</p>
+        <p>Ahmed Bello, Licensed Financial Solutions Professional | Dieppe, New Brunswick | Independent Practice.</p>
       </main>
     `;
   }
@@ -412,6 +412,7 @@ const siteWidePerson = {
     "@id": `${siteConfig.siteUrl}/#organization`,
   },
   url: `${siteConfig.siteUrl}/`,
+  ...(siteConfig.socialProfiles.length > 0 ? { sameAs: siteConfig.socialProfiles } : {}),
 };
 
 const siteWideWebSite = {

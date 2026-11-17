@@ -417,7 +417,7 @@ export const AudienceHubPage: React.FC = () => {
               <p className="text-sm sm:text-base text-[#46423a] leading-relaxed">
                 {isFr
                   ? "En vertu du paragraphe 125(5.1) de la Loi de l'impôt sur le revenu (LIR), chaque tranche de 1 $ de revenu de placement passif (RPAA) au-delà de 50 000 $ réduit le plafond de la Déduction pour petite entreprise (DPE) de 5 $. Lorsque les placements passifs atteignent 150 000 $, le plafond de 500 000 $ est intégralement éliminé, forçant vos bénéfices d'exploitation au taux d'imposition général de 26,5 % (ou plus selon la province) au lieu du taux préférentiel de 9 % ou 12,2 %."
-                  : "Under Subsection 125(5.1) of the federal Income Tax Act, every $1 of corporate passive investment income—technically known as Adjusted Aggregate Investment Income (AAII)—exceeding $50,000 erodes $5 of your Canadian-Controlled Private Corporation's (CCPC) Small Business Deduction (SBD) limit. Once passive income reaches $150,000, your entire $500,000 active business limit is wiped out, forcing active operational profits from the 9% federal small business rate up to the 26.5%+ general corporate rate."}
+                  : "Under Subsection 125(5.1) of the federal Income Tax Act, every $1 of corporate passive investment income (Adjusted Aggregate Investment Income, or AAII) exceeding $50,000 erodes $5 of your Canadian-Controlled Private Corporation's (CCPC) Small Business Deduction (SBD) limit. Once passive income reaches $150,000, your entire $500,000 active business limit is wiped out, forcing active operational profits from the 9% federal small business rate up to the 26.5%+ general corporate rate."}
               </p>
             </div>
 
@@ -622,15 +622,15 @@ export const AudienceHubPage: React.FC = () => {
 
         {/* Direct Consultation Zone */}
         <section className="py-12 text-center bg-[#fcfaf5] border border-[#d6cebd] p-8 rounded-[2px] mt-12 space-y-4">
-          <h3 className="font-serif text-2xl sm:text-3xl text-[#1c1b18]">
+          <h2 className="font-serif text-2xl sm:text-3xl text-[#1c1b18]">
             {isFr
               ? "Vous avez une question précise sur votre situation ?"
               : "Have a Specific Question About Your Circumstances?"}
-          </h3>
+          </h2>
           <p className="text-sm text-[#46423a] max-w-xl mx-auto leading-relaxed">
             {isFr
-              ? "Discutez directement avec Ahmed Bello pour examiner vos options fiscales, de protection ou d'épargne enregistrée au Canada sans aucune pression commerciale."
-              : "Start an honest conversation with Ahmed Bello to review your Canadian tax, protection, and registered accounts strategy with zero sales pressure."}
+              ? "Discutez directement avec Ahmed Bello pour examiner vos options fiscales, de protection ou d'épargne enregistrée au Canada en toute clarté."
+              : "Start a clear conversation with Ahmed Bello to review your Canadian tax, protection, and registered accounts options."}
           </p>
           <div className="pt-2 flex flex-col items-center justify-center gap-3">
             <a

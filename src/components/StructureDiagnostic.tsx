@@ -278,7 +278,7 @@ export const StructureDiagnostic: React.FC = () => {
                 setAnswers({});
                 setIsCompleted(false);
               }}
-              className="text-xs text-[#625d52] underline flex items-center gap-1 hover:text-[#1c1b18]"
+              className="text-xs text-[#625d52] underline flex items-center gap-1 hover:text-[#1c1b18] cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>{isFr ? "Refaire le bilan" : "Retake checkup"}</span>

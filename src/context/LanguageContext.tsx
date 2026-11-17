@@ -61,8 +61,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Trust Badges
     badge_independent: "Independent Practice",
-    badge_licensed: "Licensed Across Canada",
-    badge_no_pressure: "Zero Sales Pressure",
+    badge_licensed: "Licensed in Canada",
+    badge_no_pressure: "Plain-Language Guidance",
 
     // Topics & Highlights
     topic_newcomers: "Newcomers' First-Year Steps",
@@ -92,7 +92,7 @@ const translations: Record<Language, Record<string, string>> = {
     meta_copy_link: "Copy link",
 
     // Newsletter
-    newsletter_title: "The Intentional Wealth Briefing",
+    newsletter_title: "Canadian Money Rules Briefing",
     newsletter_sub: "Monthly plain-language breakdowns of Canadian tax rules and family financial strategy. No spam.",
 
     // Footer
@@ -149,8 +149,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Trust Badges
     badge_independent: "Pratique indépendante",
-    badge_licensed: "Agréé partout au Canada",
-    badge_no_pressure: "Zéro pression commerciale",
+    badge_licensed: "Agréé au Canada",
+    badge_no_pressure: "Explications en langage clair",
 
     // Topics & Highlights
     topic_newcomers: "Nouveaux arrivants : 1re année",
@@ -180,7 +180,7 @@ const translations: Record<Language, Record<string, string>> = {
     meta_copy_link: "Copier le lien",
 
     // Newsletter
-    newsletter_title: "Le Point Financier Intentionnel",
+    newsletter_title: "Le Point sur les Règles Financières",
     newsletter_sub: "Analyses mensuelles en langage clair sur les règles fiscales canadiennes et la stratégie familiale. Zéro pourriel.",
 
     // Footer

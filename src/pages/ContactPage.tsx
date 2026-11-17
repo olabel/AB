@@ -221,8 +221,8 @@ export const ContactPage: React.FC = () => {
         title={isFr ? "Démarrer une Conversation | Ahmed Bello" : "Start a Conversation | Ahmed Bello"}
         description={
           isFr
-            ? "Posez vos questions sur la fiscalité canadienne, le CELI, REER, CELIAPP ou la protection financière sans pression commerciale."
-            : "Ask your financial questions about Canadian tax rules, TFSA, RRSP, FHSA, and household liquidity. Direct personal response without sales pressure."
+            ? "Posez vos questions sur la fiscalité canadienne, le CELI, REER, CELIAPP ou la protection financière en langage clair."
+            : "Ask your financial questions about Canadian tax rules, TFSA, RRSP, FHSA, and household liquidity. Direct personal response in plain language."
         }
         canonicalUrl={isFr ? "/fr/contact" : "/contact"}
       />
@@ -273,8 +273,8 @@ export const ContactPage: React.FC = () => {
                 </div>
                 <p className="text-xs text-[#46423a] leading-relaxed border-t border-[#d6cebd] pt-3">
                   {isFr
-                    ? "« Chaque demande envoyée via ce formulaire est reçue et examinée directement par moi-même. Vous recevrez une réponse éducative et factuelle, sans pression commerciale ni argumentaire imprévu. »"
-                    : "“Every enquiry sent through this form is received and reviewed directly by me. You will receive an educational, evidence-based response without sales pressure or unsolicited pitches.”"}
+                    ? "« Chaque demande envoyée via ce formulaire est reçue et examinée directement par moi-même. Vous recevrez une réponse éducative et factuelle basée sur les règles officielles. »"
+                    : "“Every enquiry sent through this form is received and reviewed directly by me. You will receive an educational, evidence-based response grounded in official Canadian rules.”"}
                 </p>
               </div>
 
@@ -342,7 +342,7 @@ export const ContactPage: React.FC = () => {
               <div className="pt-3 border-t border-[#ece6da] flex items-center justify-between text-[0.75rem] text-[#625d52]">
                 <span>{isFr ? "Aucune séquence de vente automatisée" : "No automated marketing sequences"}</span>
                 <span className="font-semibold text-[#2e4a3b]">
-                  {isFr ? "Zéro pression commerciale" : "No sales pressure"}
+                  {isFr ? "Réponse directe" : "Direct response"}
                 </span>
               </div>
             </div>
@@ -468,8 +468,8 @@ export const ContactPage: React.FC = () => {
                       </strong>
                       <span>
                         {isFr
-                          ? "Vous recevrez une réponse éducative par courriel, sans argumentaire forcé ni pourriel commercial."
-                          : "You will receive an educational, factual answer by email without high-pressure sales pitches."}
+                          ? "Vous recevrez une réponse éducative par courriel axée sur vos chiffres et les règles officielles."
+                          : "You will receive an educational, factual answer by email focused on your numbers and official rules."}
                       </span>
                     </div>
                   </div>
@@ -485,7 +485,7 @@ export const ContactPage: React.FC = () => {
                       setStatus("idle");
                       setMessage("");
                     }}
-                    className="text-[#625d52] hover:text-[#1c1b18] underline ml-auto"
+                    className="text-[#625d52] hover:text-[#1c1b18] underline ml-auto cursor-pointer"
                   >
                     {isFr ? "Envoyer un autre message" : "Send another message"}
                   </button>
@@ -506,7 +506,7 @@ export const ContactPage: React.FC = () => {
                   tabIndex={-1}
                   autoComplete="off"
                   aria-hidden="true"
-                  style={{ display: "none", position: "absolute", left: "-9999px" }}
+                  className="hidden"
                 />
 
                 {/* Accessible Error Summary */}
@@ -727,7 +727,7 @@ export const ContactPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="btn btn-primary text-xs sm:text-sm py-3 px-8 w-full sm:w-auto text-center font-medium shadow-xs"
+                    className="btn btn-primary text-xs sm:text-sm py-3 px-8 w-full sm:w-auto text-center font-medium shadow-xs cursor-pointer"
                   >
                     {status === "submitting"
                       ? isFr

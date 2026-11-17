@@ -179,7 +179,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
   );
 
   return (
-    <div className="py-12 md:py-16">
+    <div>
       <SEO
         title={
           isFr
@@ -189,7 +189,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
         description={
           isFr
             ? "Règles financières méconnues au Canada : subventions oubliées, délais de prescription et pièges fiscaux découverts trop tard. Démarches concrètes."
-            : "Verified Canadian financial blindspots, missed government grants, and costly tax traps that families and professionals discover too late. Actionable steps."
+            : "Verified Canadian financial blindspots, missed government grants, and costly tax traps that families and professionals discover too late, with clear next steps."
         }
         canonicalUrl={isFr ? "/fr/costly-blindspots" : "/costly-blindspots"}
         jsonLd={itemListJsonLd}
@@ -214,7 +214,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
           <p className="lede text-base sm:text-lg text-[#46423a] leading-relaxed max-w-3xl">
             {isFr
               ? `Au Canada, le manque d'information sur les programmes publics, les délais de prescription et les règles fiscales coûte des milliards de dollars chaque année aux contribuables. Voici ${BLINDSPOTS_DATA.length} réalités vérifiées, documentées avec leurs lois et démarches concrètes, régulièrement mises à jour.`
-              : `In Canadian personal finance, not knowing statutory rules isn't harmless—it is quietly expensive. From unclaimed children's bonds and 25% mortgage rebates to estate traps and clawback thresholds, here are ${BLINDSPOTS_DATA.length} verified provisions every Canadian should master, updated as regulations evolve.`}
+              : `In Canadian personal finance, not knowing statutory rules isn't harmless; it is quietly expensive. From unclaimed children's bonds and 25% mortgage rebates to estate traps and clawback thresholds, here are ${BLINDSPOTS_DATA.length} verified provisions every Canadian should master, updated as regulations evolve.`}
           </p>
 
           {/* Value Anchor Metric Badges */}
@@ -256,7 +256,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
       </section>
 
       {/* Filter and Search Controls */}
-      <section className="section py-6 bg-[#fcfaf5] border-b border-[#d6cebd] sticky top-20 z-20 shadow-xs">
+      <section className="py-6 bg-[#fcfaf5] border-b border-[#d6cebd] sticky top-20 z-20 shadow-xs">
         <div className="wrap max-w-5xl space-y-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             {/* Search Input */}
@@ -283,7 +283,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-[#625d52] hover:text-[#1c1b18]"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-[#625d52] hover:text-[#1c1b18] cursor-pointer"
                 >
                   ✕
                 </button>
@@ -300,14 +300,14 @@ export const CostlyBlindspotsPage: React.FC = () => {
               <button
                 type="button"
                 onClick={expandAll}
-                className="px-2.5 py-1 bg-white border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-colors"
+                className="px-2.5 py-1 bg-white border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-colors cursor-pointer"
               >
                 {isFr ? "Tout ouvrir" : "Expand All"}
               </button>
               <button
                 type="button"
                 onClick={collapseAll}
-                className="px-2.5 py-1 bg-white border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-colors"
+                className="px-2.5 py-1 bg-white border border-[#d6cebd] rounded-[2px] hover:border-[#2e4a3b] transition-colors cursor-pointer"
               >
                 {isFr ? "Tout fermer" : "Collapse All"}
               </button>
@@ -353,11 +353,11 @@ export const CostlyBlindspotsPage: React.FC = () => {
                       : flaggedIds.length === 1
                       ? "blindspot flagged"
                       : "blindspots flagged"}
-                  </strong>{" "}
-                  —{" "}
+                  </strong>
+                  :{" "}
                   {isFr
                     ? "envoyez-vous ces actions par courriel ou vérifiez-les avec Ahmed."
-                    : "email yourself these tailored action steps or review them with Ahmed."}
+                    : "email yourself these selected action steps or review them with Ahmed."}
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
@@ -390,9 +390,9 @@ export const CostlyBlindspotsPage: React.FC = () => {
           {filteredItems.length === 0 ? (
             <div className="p-10 text-center bg-white border border-[#d6cebd] rounded-[2px] space-y-3">
               <AlertTriangle className="w-8 h-8 text-[#75581f] mx-auto" />
-              <h3 className="font-serif text-lg text-[#1c1b18]">
+              <h2 className="font-serif text-lg text-[#1c1b18]">
                 {isFr ? "Aucun résultat trouvé" : "No matching blindspots found"}
-              </h3>
+              </h2>
               <p className="text-xs text-[#625d52]">
                 {isFr
                   ? "Essayez d'autres mots-clés ou réinitialisez le filtre de catégorie."
@@ -404,7 +404,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
                   setSearchQuery("");
                   setSelectedCategory("all");
                 }}
-                className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-xs px-4 py-2 mt-2"
+                className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-xs px-4 py-2 mt-2 cursor-pointer"
               >
                 {isFr ? "Réinitialiser les filtres" : "Reset Filters"}
               </button>
@@ -533,11 +533,11 @@ export const CostlyBlindspotsPage: React.FC = () => {
                         </p>
                       </div>
 
-                      {/* Actionable Directive: Do This */}
+                      {/* Concrete Next Step: Do This */}
                       <div className="p-4 bg-[#14211a] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] space-y-1.5">
                         <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#d6c298] font-semibold">
                           <CheckCircle2 className="w-3.5 h-3.5 text-[#d6c298]" />
-                          <span>{isFr ? "Ce qu'il faut faire :" : "Actionable Step:"}</span>
+                          <span>{isFr ? "Ce qu'il faut faire :" : "Step to Take:"}</span>
                         </div>
                         <p className="text-xs sm:text-sm text-[#ece6da] leading-relaxed font-medium">
                           {action}
@@ -607,11 +607,11 @@ export const CostlyBlindspotsPage: React.FC = () => {
                         <span className="text-xs uppercase tracking-wider text-[#75581f] font-semibold block">
                           {isFr ? "Aide-Mémoire Gratuit" : "Free Personal Checklist"}
                         </span>
-                        <h3 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-medium">
+                        <h2 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-medium">
                           {isFr
                             ? "Cochez les points qui vous concernent (« À vérifier ») et recevez votre plan d'action"
                             : "Flag any blindspot with “Applies to me” and email yourself the exact action steps"}
-                        </h3>
+                        </h2>
                         <p className="text-xs text-[#625d52]">
                           {isFr
                             ? "Aucun appel requis pour commencer : sélectionnez les règles pertinentes pendant votre lecture."
@@ -705,15 +705,15 @@ export const CostlyBlindspotsPage: React.FC = () => {
                   <span className="text-xs uppercase tracking-wider text-[#75581f] font-semibold">
                     {isFr ? "Passez à l'action" : "Turn Reading Into Action"}
                   </span>
-                  <h3 className="font-serif text-lg text-[#1c1b18] font-medium">
+                  <h2 className="font-serif text-lg text-[#1c1b18] font-medium">
                     {isFr
                       ? "Vous ne voulez pas perdre ces démarches ?"
                       : "Want a copy of your personalized blindspot action steps?"}
-                  </h3>
+                  </h2>
                   <p className="text-xs text-[#625d52]">
                     {isFr
                       ? "Cliquez sur « À vérifier » sur les cartes ci-dessus ou demandez directement le top 5 par courriel."
-                      : "Click “Applies to me” on any card above—or request the Top 5 high-impact checklist directly."}
+                      : "Click “Applies to me” on any card above, or request the Top 5 high-impact checklist directly."}
                   </p>
                 </div>
                 <button
@@ -748,8 +748,8 @@ export const CostlyBlindspotsPage: React.FC = () => {
 
           <p className="text-sm text-[#ece6da]/90 max-w-xl mx-auto leading-relaxed">
             {isFr
-              ? "Obtenez un second avis sans pression commerciale sur vos comptes enregistrés, votre renouvellement hypothécaire ou vos crédits non réclamés."
-              : "Get a second opinion on your registered shelters, mortgage renewal timeline, and uncollected credits—with zero sales pitch."}
+              ? "Obtenez un second avis clair sur vos comptes enregistrés, votre renouvellement hypothécaire ou vos crédits non réclamés."
+              : "Get a second opinion on your registered shelters, mortgage renewal timeline, and uncollected credits, in plain language."}
           </p>
 
           <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-4">

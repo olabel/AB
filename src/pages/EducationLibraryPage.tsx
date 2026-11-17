@@ -87,7 +87,7 @@ export const EducationLibraryPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="py-12 md:py-16">
+    <div>
       <SEO
         title={isFr ? "Bibliothèque d'éducation financière | Ahmed Bello" : "Financial Education Library | Ahmed Bello"}
         description={
@@ -140,7 +140,7 @@ export const EducationLibraryPage: React.FC = () => {
       </section>
 
       {/* Targeted Topic Clusters: Specialized Situation & Profession Hubs */}
-      <section className="section py-12 bg-[#fcfaf5] border-b border-[#d6cebd]">
+      <section className="section bg-[#fcfaf5] border-b border-[#d6cebd]">
         <div className="wrap max-w-6xl space-y-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
@@ -153,7 +153,7 @@ export const EducationLibraryPage: React.FC = () => {
               <p className="text-sm text-[#46423a] mt-1.5 max-w-2xl leading-relaxed">
                 {language === "fr"
                   ? "Accédez directement à nos synthèses statutaires, règles de comptes et outils d'analyse conçus pour votre réalité financière."
-                  : "Explore curated statutory rules, registered account strategies, and simulators tailored for your specific stage of life or career."}
+                  : "Explore curated statutory rules, registered account strategies, and simulators built for your specific stage of life or career."}
               </p>
             </div>
           </div>
@@ -337,7 +337,7 @@ export const EducationLibraryPage: React.FC = () => {
       </section>
 
       {/* Filter and Search Bar */}
-      <section className="section py-8 bg-[#fcfaf5] border-b border-[#d6cebd]">
+      <section className="py-8 bg-[#fcfaf5] border-b border-[#d6cebd]">
         <div className="wrap max-w-5xl space-y-6">
           {/* Keyword Search Input */}
           <div className="relative max-w-xl">
@@ -364,7 +364,7 @@ export const EducationLibraryPage: React.FC = () => {
                 type="button"
                 onClick={() => handleSearchChange("")}
                 aria-label={language === "fr" ? "Effacer la recherche" : "Clear search query"}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#625d52] hover:text-[#1c1b18]"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#625d52] hover:text-[#1c1b18] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -381,7 +381,7 @@ export const EducationLibraryPage: React.FC = () => {
                 type="button"
                 onClick={() => handleCategorySelect("all")}
                 aria-pressed={selectedCategory === "all"}
-                className={`px-3 py-1.5 text-xs font-medium rounded-[2px] border transition-colors ${
+                className={`px-3 py-1.5 text-xs font-medium rounded-[2px] border transition-colors cursor-pointer ${
                   selectedCategory === "all"
                     ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b]"
                     : "bg-[#f7f3eb] text-[#1c1b18] border-[#d6cebd] hover:border-[#8d8677]"
@@ -400,7 +400,7 @@ export const EducationLibraryPage: React.FC = () => {
                     type="button"
                     onClick={() => handleCategorySelect(cat.id)}
                     aria-pressed={isSelected}
-                    className={`px-3 py-1.5 text-xs font-medium rounded-[2px] border transition-colors ${
+                    className={`px-3 py-1.5 text-xs font-medium rounded-[2px] border transition-colors cursor-pointer ${
                       isSelected
                         ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b]"
                         : "bg-[#f7f3eb] text-[#1c1b18] border-[#d6cebd] hover:border-[#8d8677]"
@@ -427,7 +427,7 @@ export const EducationLibraryPage: React.FC = () => {
                 onClick={() => {
                   setSearchParams({});
                 }}
-                className="underline text-[#2e4a3b] hover:text-[#1c1b18]"
+                className="underline text-[#2e4a3b] hover:text-[#1c1b18] cursor-pointer"
               >
                 {language === "fr" ? "Réinitialiser les filtres" : "Reset filters"}
               </button>
@@ -441,9 +441,9 @@ export const EducationLibraryPage: React.FC = () => {
         <div className="wrap max-w-5xl space-y-8">
           {filteredArticles.length === 0 ? (
             <div className="p-12 text-center bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4">
-              <h3 className="h3 text-[#1c1b18]">
+              <h2 className="h3 text-[#1c1b18]">
                 {language === "fr" ? "Aucun article trouvé" : "No articles found"}
-              </h3>
+              </h2>
               <p className="text-sm text-[#625d52] max-w-md mx-auto">
                 {language === "fr"
                   ? "Aucun guide ne correspond à vos critères de recherche. Essayez un autre terme ou réinitialisez le filtre."
@@ -452,7 +452,7 @@ export const EducationLibraryPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSearchParams({})}
-                className="btn btn-primary text-xs py-2 px-4"
+                className="btn btn-primary text-xs py-2 px-4 cursor-pointer"
               >
                 {language === "fr" ? "Afficher tous les articles" : "Show all articles"}
               </button>
@@ -663,7 +663,7 @@ export const EducationLibraryPage: React.FC = () => {
             </Link>
           </div>
           <p className="text-xs text-[#625d52]">
-            {language === "fr" ? "Aucune obligation. Zéro pression commerciale." : "No obligation. No sales pressure."}
+            {language === "fr" ? "Des explications claires, à votre rythme." : "Plain-language guidance, at your own pace."}
           </p>
         </div>
       </section>

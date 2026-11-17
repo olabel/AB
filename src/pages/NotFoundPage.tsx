@@ -7,7 +7,7 @@ export const NotFoundPage: React.FC = () => {
   const { isFr } = useLanguage();
 
   return (
-    <div className="section py-24 text-center">
+    <div className="section text-center">
       <SEO
         title={isFr ? "Page non trouvée (404) | Ahmed Bello" : "Page Not Found (404) | Ahmed Bello"}
         description={isFr ? "La page demandée est introuvable." : "The page or article you were looking for doesn’t exist or has moved."}

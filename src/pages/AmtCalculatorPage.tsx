@@ -192,7 +192,7 @@ ${unmodelledDisclaimer}`;
       ];
 
   return (
-    <div className="py-12 md:py-16">
+    <div>
       <SEO
         title={
           isFr
@@ -527,7 +527,7 @@ ${unmodelledDisclaimer}`;
                     <button
                       type="button"
                       onClick={loadSampleScenario}
-                      className="btn btn-primary w-full text-sm"
+                      className="btn btn-primary w-full text-sm cursor-pointer"
                     >
                       {isFr ? "Charger le scénario exemple (gain de 500 k$)" : "Load sample scenario ($500k gain)"}
                     </button>
@@ -666,7 +666,7 @@ ${unmodelledDisclaimer}`;
       </section>
 
       {/* Hypothetical Worked Example Section */}
-      <section className="section py-12 bg-[#fcfaf5] border-t border-[#d6cebd]">
+      <section className="section bg-[#fcfaf5] border-t border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-6">
           <div className="border-b border-[#ece6da] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -679,7 +679,7 @@ ${unmodelledDisclaimer}`;
               <p className="text-xs sm:text-sm text-[#625d52] mt-1">
                 {isFr
                   ? "Démonstration chiffrée selon les barèmes fédéraux 2026 et les règles des lois C-59 et C-69."
-                  : "Step-by-step arithmetic calibrated strictly to 2026 federal brackets and Bills C-59 and C-69 statutory rules."}
+                  : "Step-by-step arithmetic calculated using published 2026 federal brackets and Bills C-59 and C-69 rules."}
               </p>
             </div>
             <button
@@ -688,7 +688,7 @@ ${unmodelledDisclaimer}`;
                 loadSampleScenario();
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-xs px-3.5 py-2 shrink-0 self-start sm:self-auto"
+              className="btn btn-ghost border border-[#d6cebd] hover:border-[#2e4a3b] text-xs px-3.5 py-2 shrink-0 self-start sm:self-auto cursor-pointer"
             >
               {isFr ? "Charger dans le calculateur ↑" : "Load into calculator ↑"}
             </button>
@@ -788,7 +788,7 @@ ${unmodelledDisclaimer}`;
       </section>
 
       {/* Plain-Language Explanations */}
-      <section className="section py-12 md:py-16">
+      <section className="section">
         <div className="wrap max-w-4xl space-y-10">
           <div className="space-y-3">
             <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block">
@@ -888,7 +888,7 @@ ${unmodelledDisclaimer}`;
       </section>
 
       {/* 5 FAQ Accordions */}
-      <section className="section py-12 bg-[#fcfaf5] border-t border-[#d6cebd]">
+      <section className="section bg-[#fcfaf5] border-t border-[#d6cebd]">
         <div className="wrap max-w-4xl space-y-6">
           <div className="border-b border-[#ece6da] pb-3">
             <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block mb-1">
@@ -910,7 +910,7 @@ ${unmodelledDisclaimer}`;
                   <button
                     type="button"
                     onClick={() => toggleFaq(idx)}
-                    className="w-full p-4 text-left flex items-center justify-between gap-3 hover:bg-[#fcfaf5] transition-colors"
+                    className="w-full p-4 text-left flex items-center justify-between gap-3 hover:bg-[#fcfaf5] transition-colors cursor-pointer"
                   >
                     <span className="font-serif text-sm sm:text-base font-semibold text-[#1c1b18] leading-snug">
                       {faq.q}

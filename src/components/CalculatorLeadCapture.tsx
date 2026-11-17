@@ -184,7 +184,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
               <span>{getCtaLabel(isFr)}</span>
             </a>
             <a
-              href={`mailto:enquiries@ahmedbello.com?subject=${encodeURIComponent(`Plan: ${calculatorName}`)}&body=${encodeURIComponent(`Reader: ${firstName || "Reader"} (${email})\n\n${summaryText}`)}`}
+              href={`mailto:${siteConfig.publicEmail}?subject=${encodeURIComponent(`Plan: ${calculatorName}`)}&body=${encodeURIComponent(`Reader: ${firstName || "Reader"} (${email})\n\n${summaryText}`)}`}
               className="text-xs text-[#d6c298] hover:text-white underline inline-flex items-center gap-1 py-1"
             >
               <Mail className="w-3.5 h-3.5" />
@@ -193,7 +193,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
             <button
               type="button"
               onClick={handleReset}
-              className="text-xs text-[#ece6da] hover:text-white underline inline-flex items-center gap-1 py-2 px-2 ml-auto"
+              className="text-xs text-[#ece6da] hover:text-white underline inline-flex items-center gap-1 py-2 px-2 ml-auto cursor-pointer"
             >
               <RefreshCw className="w-3 h-3" />
               <span>{isFr ? "Calculer un autre scénario" : "Calculate another scenario"}</span>
@@ -271,7 +271,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           </div>
 
           {/* Invisible Honeypot anti-spam trap */}
-          <div className="hidden" aria-hidden="true" style={{ display: "none" }}>
+          <div className="hidden" aria-hidden="true">
             <label htmlFor={`calc-hp-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}>Leave blank</label>
             <input
               id={`calc-hp-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
@@ -350,7 +350,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
             <span className="text-[0.68rem] text-[#75581f] flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-              <span>{isFr ? "Strictement confidentiel • Zéro vente forcée" : "Strictly Confidential • Zero Sales Pressure"}</span>
+              <span>{isFr ? "Confidentiel • Usage éducatif uniquement" : "Confidential • Educational Use Only"}</span>
             </span>
           </div>
         </form>

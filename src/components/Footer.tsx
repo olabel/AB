@@ -30,12 +30,9 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-14 border-b border-[#d6c298]/20">
           {/* Col 1: Brand & Practice Profile (Cols 1-4) */}
           <div className="lg:col-span-4 flex flex-col gap-4">
-            <Link to={isFr ? "/fr" : "/"} className="flex items-center gap-3 group text-decoration-none">
+            <Link to={isFr ? "/fr" : "/"} className="flex items-center gap-3 group no-underline">
               <BrandMark size={34} reversed={true} className="w-8.5 h-8.5 shrink-0" />
-              <span
-                className="font-serif text-2xl text-[#f7f3eb] group-hover:text-[#d6c298] transition-colors"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
+              <span className="font-serif text-2xl text-[#f7f3eb] group-hover:text-[#d6c298] transition-colors">
                 Ahmed Bello
               </span>
             </Link>

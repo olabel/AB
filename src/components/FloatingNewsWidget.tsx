@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext.tsx";
-import { Newspaper, X, ExternalLink, ChevronRight } from "lucide-react";
-import { STATIC_NEWS } from "../content/newsData.ts";
+import { Newspaper, X, ChevronRight } from "lucide-react";
 
 export const FloatingNewsWidget: React.FC = () => {
   const { isFr } = useLanguage();
@@ -77,7 +76,7 @@ export const FloatingNewsWidget: React.FC = () => {
               <span className="text-[#ece6da]/70">Nov 2026</span>
             </div>
 
-            <h4 className="font-serif text-sm font-semibold text-[#f7f3eb] leading-snug">
+            <h2 className="font-serif text-sm font-semibold text-[#f7f3eb] leading-snug">
               <Link
                 to={`${prefix}/what-changed`}
                 onClick={() => setIsOpen(false)}
@@ -87,11 +86,11 @@ export const FloatingNewsWidget: React.FC = () => {
                   ? "Budget 2026, plafond REER 2027 à 35 390 $ & taux directeur porté à 2,50 %"
                   : "Budget 2026 Proposals, 2027 RRSP $35,390 Limit & BoC Rate Raised to 2.50%"}
               </Link>
-            </h4>
+            </h2>
             <p className="text-xs text-[#d6cebd] line-clamp-2">
               {isFr
-                ? "Consultez les 7 mises à jour vérifiées de novembre : seuil T1135, taux prescrit à 3 % et règles hypothécaires."
-                : "Read 7 verified November updates covering T1135, CRA 3% spousal loan rates, and OSFI B-20 rules."}
+                ? "Consultez les 6 mises à jour vérifiées de novembre : seuil T1135, taux prescrit à 3 % et règles hypothécaires."
+                : "Read 6 verified November updates covering T1135, CRA 3% spousal loan rates, and OSFI B-20 rules."}
             </p>
           </div>
 
@@ -100,7 +99,7 @@ export const FloatingNewsWidget: React.FC = () => {
             <Link
               to={`${prefix}/what-changed`}
               onClick={() => setIsOpen(false)}
-              className="w-full inline-flex items-center justify-center gap-1.5 py-1.5 px-3 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs rounded-xs transition-colors text-center"
+              className="w-full inline-flex items-center justify-center gap-1.5 py-1.5 px-3 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs rounded-[2px] transition-colors text-center"
             >
               <span>{isFr ? "Lire la revue réglementaire complète" : "Read Full Advisor Briefing"}</span>
               <ChevronRight className="w-3.5 h-3.5" />

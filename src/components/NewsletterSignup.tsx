@@ -4,6 +4,7 @@ import { Mail, CheckCircle2, ArrowRight, ShieldCheck } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { trackNewsletterSubmit } from "../lib/track.ts";
 import { TurnstileWidget } from "./TurnstileWidget.tsx";
+import { siteConfig } from "../config/site.ts";
 
 interface NewsletterSignupProps {
   title?: string;
@@ -32,12 +33,12 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
 
   const resolvedTitle =
     title ||
-    (isFr ? "Le Bulletin d'Éducation Financière" : "The Intentional Wealth Briefing");
+    (isFr ? "Le Point sur les Règles Financières" : "Canadian Money Rules Briefing");
   const resolvedDescription =
     description ||
     (isFr
-      ? "Analyses pratiques en langage clair lorsque les règles fiscales canadiennes, les plafonds enregistrés annuels (CELI, REER, CELIAPP) ou les politiques de retraite publique évoluent. Aucune vente forcée. Désabonnement en tout temps."
-      : "Occasional plain-language briefings when key Canadian tax rules, annual registered account limits (TFSA/RRSP/FHSA), or public pension policies are updated. Zero sales pitches. Unsubscribe anytime.");
+      ? "Analyses pratiques en langage clair lorsque les règles fiscales canadiennes, les plafonds enregistrés annuels (CELI, REER, CELIAPP) ou les politiques de retraite publique évoluent. Désabonnement en tout temps."
+      : "Occasional plain-language briefings when key Canadian tax rules, annual registered account limits (TFSA/RRSP/FHSA), or public pension policies change. Unsubscribe anytime.");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,8 +106,8 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
       setErrorMsg(
         err.message ||
           (isFr
-            ? "Impossible de finaliser votre inscription pour le moment. Contactez Ahmed Bello directement au +1-506-899-4941 ou à enquiries@ahmedbello.com."
-            : "Could not complete your subscription right now. Please reach out to Ahmed Bello directly at +1-506-899-4941 or enquiries@ahmedbello.com.")
+            ? `Impossible de finaliser votre inscription pour le moment. Contactez Ahmed Bello directement au ${siteConfig.publicPhone} ou à ${siteConfig.publicEmail}.`
+            : `Could not complete your subscription right now. Please reach out to Ahmed Bello directly at ${siteConfig.publicPhone} or ${siteConfig.publicEmail}.`)
       );
     } finally {
       setSubmitting(false);
@@ -253,7 +254,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
           <ShieldCheck className="w-3.5 h-3.5 text-[#2e4a3b]" />
           {isFr ? "Conformité stricte LCAP" : "Strict CASL Compliance"}
         </span>
-        <span>{isFr ? "Zéro pourriel / Aucune vente" : "Zero Spam / No Sales Pitches"}</span>
+        <span>{isFr ? "Contenu strictement éducatif" : "Educational Updates Only"}</span>
         <span>{isFr ? "Désabonnement en 1 clic" : "1-Click Easy Unsubscribe"}</span>
       </div>
     </div>

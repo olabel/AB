@@ -7,8 +7,8 @@ import { trackCalculatorCompleted, trackCtaClick } from "../lib/track.ts";
 
 const MARGINAL_BRACKETS = [
   { id: "low", rate: 0.20, labelEn: "~20% (Under ~$57k income)", labelFr: "~20 % (Revenu < ~57 k$)" },
-  { id: "mid", rate: 0.30, labelEn: "~30% ($57k – $115k income)", labelFr: "~30 % (57 k$ – 115 k$)" },
-  { id: "upper", rate: 0.43, labelEn: "~43% ($115k – $180k income)", labelFr: "~43 % (115 k$ – 180 k$)" },
+  { id: "mid", rate: 0.30, labelEn: "~30% ($57k to $115k income)", labelFr: "~30 % (57 k$ à 115 k$)" },
+  { id: "upper", rate: 0.43, labelEn: "~43% ($115k to $180k income)", labelFr: "~43 % (115 k$ à 180 k$)" },
   { id: "top", rate: 0.50, labelEn: "~50% ($180k+ income)", labelFr: "~50 % (Revenu > 180 k$)" },
 ];
 

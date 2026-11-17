@@ -178,7 +178,7 @@ export const Header: React.FC = () => {
         <div className="wrap py-2 flex items-center justify-between gap-3">
           <p className="text-[#ece6da] truncate">
             <span className="text-[#d6c298] font-semibold mr-2">
-              {isFr ? "Nov. 2026 — Règles financières :" : "Nov 2026 Money Rules:"}
+              {isFr ? "Nov. 2026 | Règles financières :" : "Nov 2026 Money Rules:"}
             </span>
             <span>
               {isFr
@@ -202,14 +202,11 @@ export const Header: React.FC = () => {
             {/* Brand Logo & Name */}
             <Link
               to={prefix || "/"}
-              className="flex items-center gap-3 group text-decoration-none"
+              className="flex items-center gap-3 group no-underline"
               aria-label="Ahmed Bello - Home"
             >
               <BrandMark size={34} className="w-[34px] h-[34px] shrink-0" />
-              <span
-                className="font-serif text-[1.5rem] tracking-[-0.01em] text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors whitespace-nowrap"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
+              <span className="font-serif text-[1.5rem] tracking-[-0.01em] text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors whitespace-nowrap">
                 Ahmed Bello
               </span>
             </Link>
@@ -396,13 +393,10 @@ export const Header: React.FC = () => {
                   <Link
                     to={prefix || "/"}
                     onClick={closeMobileMenu}
-                    className="flex items-center gap-3 text-decoration-none"
+                    className="flex items-center gap-3 no-underline"
                   >
                     <BrandMark size={34} className="w-[34px] h-[34px]" />
-                    <span
-                      className="font-serif text-[1.5rem] tracking-[-0.01em] text-[#1c1b18]"
-                      style={{ fontFamily: "var(--font-serif)" }}
-                    >
+                    <span className="font-serif text-[1.5rem] tracking-[-0.01em] text-[#1c1b18]">
                       Ahmed Bello
                     </span>
                   </Link>
@@ -496,7 +490,7 @@ export const Header: React.FC = () => {
                 {/* Folded Briefing Strip (replaces FloatingNewsWidget on mobile) */}
                 <div className="p-4 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-1.5">
                   <span className="eyebrow block text-[#75581f]">
-                    {isFr ? "Règles financières — Nov. 2026" : "2026 Money Rules — Nov Update"}
+                    {isFr ? "Règles financières (nov. 2026)" : "2026 Money Rules (Nov Update)"}
                   </span>
                   <p className="text-sm font-serif text-[#1c1b18]">
                     {isFr

@@ -26,12 +26,12 @@ export const VALID_PROVINCES = [
   "Saskatchewan",
   "Yukon",
   "National (Canada & US)",
-  "United States — Northeast",
-  "United States — Southeast",
-  "United States — Midwest",
-  "United States — Southwest",
-  "United States — West Coast",
-  "United States — Other State",
+  "United States - Northeast",
+  "United States - Southeast",
+  "United States - Midwest",
+  "United States - Southwest",
+  "United States - West Coast",
+  "United States - Other State",
 ];
 
 export const VALID_TOPICS = [
@@ -507,7 +507,7 @@ export function buildWelcomeActionAsset(
           title: "3 Checks Before Funding Your Next Contribution",
           steps: [
             "Confirm exact room inside CRA My Account (and remember any 2026 TFSA withdrawals do not restore room until January 1, avoiding the 1%/month over-contribution penalty).",
-            "Compare your marginal bracket today vs. expected retirement income—especially if Old Age Security recovery tax or child-benefit income testing applies.",
+            "Compare your marginal bracket today vs. expected retirement income, especially if Old Age Security recovery tax or child-benefit income testing applies.",
             "If picking RRSP for the upfront deduction ($33,810 max in 2026 at 18% of prior-year income), set aside or reinvest the refund immediately rather than absorbing it into lifestyle spending.",
           ],
           replyQuestion:
@@ -596,7 +596,7 @@ export function buildWelcomeActionAsset(
   if (s.includes("pension") || topic === "pension-checklist") {
     return isFr
       ? {
-          subjectPrefix: "Votre Grille d'Aide à la Décision — Rente Commuée",
+          subjectPrefix: "Votre Grille d'Aide à la Décision : Rente Commuée",
           title: "3 vérifications avant l'échéance de votre relevé de cessation",
           steps: [
             "Notez la date limite stricte indiquée sur votre trousse d'option de retraite (souvent 60 à 90 jours après la cessation d'emploi).",
@@ -649,7 +649,7 @@ export async function processContactSubmission(
   clientIp: string,
   resendApiKey: string | undefined,
   contactToEmail: string = DEFAULT_NOTIFICATION_RECIPIENTS,
-  contactFromEmail: string = "Ahmed Bello <enquiries@ahmedbello.com>"
+  contactFromEmail: string = siteConfig.defaultFromEmail
 ): Promise<ContactServiceResult> {
   // 1. IP Rate Limiting
   if (!checkIpRateLimit(clientIp)) {
@@ -736,15 +736,23 @@ export async function processContactSubmission(
     QC: "Quebec",
     SK: "Saskatchewan",
     YT: "Yukon",
-    "UNITED STATES - NORTHEAST": "United States — Northeast",
-    "UNITED STATES - SOUTHEAST": "United States — Southeast",
-    "UNITED STATES - MIDWEST": "United States — Midwest",
-    "UNITED STATES - SOUTHWEST": "United States — Southwest",
-    "UNITED STATES - WEST COAST": "United States — West Coast",
-    "UNITED STATES - OTHER STATE": "United States — Other State",
+    "UNITED STATES - NORTHEAST": "United States - Northeast",
+    "UNITED STATES - SOUTHEAST": "United States - Southeast",
+    "UNITED STATES - MIDWEST": "United States - Midwest",
+    "UNITED STATES - SOUTHWEST": "United States - Southwest",
+    "UNITED STATES - WEST COAST": "United States - West Coast",
+    "UNITED STATES - OTHER STATE": "United States - Other State",
   };
-  if (province && PROVINCE_MAP[province.toUpperCase()]) {
-    province = PROVINCE_MAP[province.toUpperCase()];
+  if (province) {
+    const normalizedProvinceKey = province.replace(/\u2014/g, "-").toUpperCase();
+    if (PROVINCE_MAP[normalizedProvinceKey]) {
+      province = PROVINCE_MAP[normalizedProvinceKey];
+    } else if (province.includes("\u2014")) {
+      const normalizedProvince = province.replace(/\u2014/g, "-");
+      if (VALID_PROVINCES.includes(normalizedProvince)) {
+        province = normalizedProvince;
+      }
+    }
   }
 
   // 5. Validation
@@ -879,7 +887,7 @@ export async function processContactSubmission(
       body: {
         error: "submission_failed",
         message:
-          "Your message could not be saved right now. Please reach out directly to Ahmed Bello by phone at +1-506-899-4941 or schedule a conversation via Calendly.",
+          `Your message could not be saved right now. Please reach out directly to Ahmed Bello by phone at ${siteConfig.publicPhone} or schedule a conversation via Calendly.`,
         phone: siteConfig.publicPhone,
         calendly: siteConfig.schedulingUrl,
       },
@@ -889,7 +897,7 @@ export async function processContactSubmission(
   // 7. Dispatch to advisor
   let emailSubject = `Financial Enquiry: ${firstName} (${province}) - ${topic}`;
   if (isNewsletter) {
-    emailSubject = `Intentional Wealth Briefing Subscriber: ${email}`;
+    emailSubject = `Canadian Money Rules Briefing Subscriber: ${email}`;
   } else if (isMentorship) {
     emailSubject = `New Agent Mentorship Application: ${firstName} (${province})`;
   } else if (isCalculator) {
@@ -899,7 +907,7 @@ export async function processContactSubmission(
   const advisorEmailBody = `
 ${
   isNewsletter
-    ? "=== NEW INTENTIONAL WEALTH BRIEFING SUBSCRIBER ==="
+    ? "=== NEW CANADIAN MONEY RULES BRIEFING SUBSCRIBER ==="
     : isMentorship
     ? "=== NEW INDEPENDENT AGENT MENTORSHIP APPLICATION ==="
     : isCalculator
@@ -935,7 +943,7 @@ Origin: https://www.ahmedbello.com
       status: 500,
       body: {
         error: "service_unavailable",
-        message: "Contact delivery service is temporarily unavailable. Please schedule a meeting directly or call +1-506-899-4941.",
+        message: `Contact delivery service is temporarily unavailable. Please schedule a meeting directly or call ${siteConfig.publicPhone}.`,
       },
     };
   }
@@ -1044,28 +1052,28 @@ Merci de votre demande d'inscription au bulletin d'éducation financière sur ah
 Pour confirmer votre adresse courriel et recevoir nos résumés pratiques lorsque les règles fiscales canadiennes ou les plafonds des comptes enregistrés (CELI / REER / CELIAPP) changent, veuillez valider votre inscription :
 https://www.ahmedbello.com/fr/confirm-subscription?token=${encodeURIComponent(subToken)}
 
-Question rapide (répondez simplement à ce courriel) : quel objectif financier compte le plus pour votre foyer cette année — l'achat d'une propriété, la réduction d'impôt ou la préparation de la retraite ?
+Question rapide (répondez simplement à ce courriel) : quel objectif financier compte le plus pour votre foyer cette année (achat d'une propriété, réduction d'impôt ou préparation de la retraite) ?
 
 Cordialement,
 Ahmed Bello
 Professionnel agréé en solutions financières
-Moncton (Nouveau-Brunswick), Canada
+Dieppe (Nouveau-Brunswick), Canada
 https://www.ahmedbello.com/fr`;
           } else {
             confirmationSubject = "Confirm your subscription: Canadian Financial Education | Ahmed Bello";
             confirmationBody = `Hello ${firstName},
 
-Thank you for requesting to join the Intentional Wealth Briefing through ahmedbello.com.
+Thank you for requesting to join the Canadian Money Rules Briefing through ahmedbello.com.
 
 To confirm your email address and activate your subscription to receive occasional plain-language briefings when key Canadian tax rules, annual registered account limits (TFSA/RRSP/FHSA), or public pension policies are updated, please verify your interest:
 https://www.ahmedbello.com/confirm-subscription?token=${encodeURIComponent(subToken)}
 
-Quick question — just hit reply: which goal matters most for your household over the next 12 months (buying a home, lowering tax, family protection, or retirement readiness)?
+Quick question (just hit reply): which goal matters most for your household over the next 12 months (buying a home, lowering tax, family protection, or retirement readiness)?
 
 Warm regards,
 Ahmed Bello
 Licensed Financial Solutions Professional
-Moncton, New Brunswick, Canada
+Dieppe, New Brunswick, Canada
 https://www.ahmedbello.com`;
           }
         } else if (isCalculator) {
@@ -1100,7 +1108,7 @@ Téléphone direct : ${siteConfig.publicPhone} | Courriel : ${siteConfig.publicE
 Cordialement,
 Ahmed Bello
 Professionnel agréé en solutions financières
-Moncton (Nouveau-Brunswick), Canada
+Dieppe (Nouveau-Brunswick), Canada
 https://www.ahmedbello.com/fr`;
           } else {
             confirmationBody = `Hello ${firstName},
@@ -1117,7 +1125,7 @@ ${message}
 ${asset.title}:
 ${asset.steps.map((s, idx) => `${idx + 1}. ${s}`).join("\n")}
 
-Quick question — just hit reply to this email:
+Quick question (just hit reply to this email):
 ${asset.replyQuestion}
 
 Prefer to talk through one quick detail instead?
@@ -1127,7 +1135,7 @@ Direct Phone: ${siteConfig.publicPhone} | Direct Email: ${siteConfig.publicEmail
 Warm regards,
 Ahmed Bello
 Licensed Financial Solutions Professional
-Moncton, New Brunswick, Canada
+Dieppe, New Brunswick, Canada
 https://www.ahmedbello.com`;
           }
         } else {
@@ -1150,7 +1158,7 @@ Téléphone direct : ${siteConfig.publicPhone} | Courriel : ${siteConfig.publicE
 Cordialement,
 Ahmed Bello
 Professionnel agréé en solutions financières
-Moncton (Nouveau-Brunswick), Canada
+Dieppe (Nouveau-Brunswick), Canada
 https://www.ahmedbello.com/fr`;
           } else {
             confirmationSubject = `Confirmation: I received your enquiry (#${referenceNo}) | Ahmed Bello`;
@@ -1161,8 +1169,8 @@ Thank you for reaching out through ahmedbello.com. This confirms I have safely r
 Reference Number: #${referenceNo}
 
 While I review your note:
-1. I personally review every message in order and reply with plain-language educational clarity—no sales pitch.
-2. If you want to add one detail so my reply is tailored to your numbers, just hit reply: are you looking at a decision in the next 12 months, or planning 2–5 years ahead?
+1. I personally review every message in order and reply in plain language with clear facts.
+2. If you want to add one detail so my reply fits your numbers, just hit reply: are you looking at a decision in the next 12 months, or planning 2–5 years ahead?
 
 Prefer a quick conversation instead?
 ${getCtaLabel(false)}: ${siteConfig.schedulingUrl}
@@ -1171,7 +1179,7 @@ Direct Telephone: ${siteConfig.publicPhone} | Direct Email: ${siteConfig.publicE
 Warm regards,
 Ahmed Bello
 Licensed Financial Solutions Professional
-Moncton, New Brunswick, Canada
+Dieppe, New Brunswick, Canada
 https://www.ahmedbello.com`;
           }
         }
@@ -1184,7 +1192,7 @@ https://www.ahmedbello.com`;
           },
           body: JSON.stringify({
             from: contactFromEmail,
-            reply_to: "enquiries@ahmedbello.com",
+            reply_to: siteConfig.publicEmail,
             to: [email],
             subject: confirmationSubject,
             text: confirmationBody,
@@ -1206,7 +1214,7 @@ https://www.ahmedbello.com`;
         body: {
           error: "delivery_failed",
           message:
-            "Your message could not be sent right now. Please reach out directly to Ahmed Bello by phone at +1-506-899-4941 or schedule a conversation via Calendly.",
+            `Your message could not be sent right now. Please reach out directly to Ahmed Bello by phone at ${siteConfig.publicPhone} or schedule a conversation via Calendly.`,
           phone: siteConfig.publicPhone,
           calendly: siteConfig.schedulingUrl,
         },
@@ -1264,7 +1272,7 @@ https://www.ahmedbello.com`;
       body: {
         error: "submission_failed",
         message:
-          "Your message could not be sent right now. Please reach out directly to Ahmed Bello by phone at +1-506-899-4941 or schedule a conversation via Calendly.",
+          `Your message could not be sent right now. Please reach out directly to Ahmed Bello by phone at ${siteConfig.publicPhone} or schedule a conversation via Calendly.`,
         phone: siteConfig.publicPhone,
         calendly: siteConfig.schedulingUrl,
       },

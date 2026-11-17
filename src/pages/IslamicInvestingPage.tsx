@@ -243,7 +243,7 @@ Notes: ${formData.notes || "None"}`;
 
           {/* Institutional Knowledge Matrix */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5 mb-8">
-            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
+            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px]">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold block mb-1">
                 {isFr ? "Indice de Référence" : "Benchmark Standard"}
               </span>
@@ -253,7 +253,7 @@ Notes: ${formData.notes || "None"}`;
               <span className="text-[0.7rem] text-[#625d52]">{isFr ? "Actions mondiales filtrées" : "Global Screened Equities"}</span>
             </div>
 
-            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
+            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px]">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold block mb-1">
                 {isFr ? "Cadre de Gouvernance" : "Screening Standard"}
               </span>
@@ -263,17 +263,17 @@ Notes: ${formData.notes || "None"}`;
               <span className="text-[0.7rem] text-[#625d52]">{isFr ? "Comité Sharia indépendant" : "Independent Shariah Board"}</span>
             </div>
 
-            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
+            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px]">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold block mb-1">
                 {isFr ? "Abris Fiscaux Canadiens" : "Eligible Tax Shelters"}
               </span>
               <span className="font-serif text-base font-bold text-[#1c1b18] block">
-                TFSA, RRSP, FHSA
+                {isFr ? "CELI, REER, CELIAPP" : "TFSA, RRSP, FHSA"}
               </span>
               <span className="text-[0.7rem] text-[#625d52]">{isFr ? "REEE & Sociétés (SPCC)" : "RESP & Corporate CCPCs"}</span>
             </div>
 
-            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
+            <div className="p-3.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px]">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-semibold block mb-1">
                 {isFr ? "Accès Indépendant" : "Access Facilitation"}
               </span>
@@ -287,7 +287,7 @@ Notes: ${formData.notes || "None"}`;
           <div className="flex flex-wrap items-center gap-4">
             <a
               href="#screening-methodology"
-              className="px-5 py-3 bg-[#2e4a3b] hover:bg-[#253d30] text-[#f7f3eb] font-semibold text-sm rounded-xs transition-colors shadow-xs inline-flex items-center gap-2"
+              className="px-5 py-3 bg-[#2e4a3b] hover:bg-[#253d30] text-[#f7f3eb] font-semibold text-sm rounded-[2px] transition-colors shadow-xs inline-flex items-center gap-2"
             >
               <Scale className="w-4 h-4 text-[#d6c298]" />
               <span>{isFr ? "Méthodologie de Filtrage de l'Indice" : "Explore Benchmark Screening Principles"}</span>
@@ -295,7 +295,7 @@ Notes: ${formData.notes || "None"}`;
 
             <a
               href="#simulator"
-              className="px-5 py-3 bg-[#fcfaf5] hover:bg-[#ece6da] text-[#1c1b18] border border-[#d6cebd] font-medium text-sm rounded-xs transition-colors inline-flex items-center gap-2"
+              className="px-5 py-3 bg-[#fcfaf5] hover:bg-[#ece6da] text-[#1c1b18] border border-[#d6cebd] font-medium text-sm rounded-[2px] transition-colors inline-flex items-center gap-2"
             >
               <Calculator className="w-4 h-4 text-[#2e4a3b]" />
               <span>{isFr ? "Simulateur Comparatif Équilibré" : "Balanced Multi-Scenario Simulator"}</span>
@@ -304,7 +304,7 @@ Notes: ${formData.notes || "None"}`;
         </section>
 
         {/* 2. THE MATHEMATICAL REALITY OF IDLE CASH & INFLATION */}
-        <section className="mb-16 p-6 sm:p-8 bg-[#1a2c22] text-[#f7f3eb] rounded-xs border border-[#2e4a3b] relative overflow-hidden">
+        <section className="mb-16 p-6 sm:p-8 bg-[#1a2c22] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] relative overflow-hidden">
           <div className="max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#d6c298]">
               <AlertTriangle className="w-4 h-4 text-[#d6c298]" />
@@ -324,15 +324,15 @@ Notes: ${formData.notes || "None"}`;
             </p>
 
             <div className="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div className="p-3 bg-[#24392e] rounded-xs border border-[#2e4a3b]">
+              <div className="p-3 bg-[#24392e] rounded-[2px] border border-[#2e4a3b]">
                 <div className="text-[#d6c298] font-bold text-sm mb-0.5">{isFr ? "Exclusion du Riba" : "Zero Interest Debt"}</div>
                 <div className="text-[#ece6da]/80">{isFr ? "Élimination des obligations et banques d'intérêt" : "Zero conventional debt or bond financing"}</div>
               </div>
-              <div className="p-3 bg-[#24392e] rounded-xs border border-[#2e4a3b]">
+              <div className="p-3 bg-[#24392e] rounded-[2px] border border-[#2e4a3b]">
                 <div className="text-[#d6c298] font-bold text-sm mb-0.5">{isFr ? "Économie Réelle" : "Real Enterprise"}</div>
                 <div className="text-[#ece6da]/80">{isFr ? "Participation productive au capital d'entreprises" : "Direct ownership in productive global companies"}</div>
               </div>
-              <div className="p-3 bg-[#24392e] rounded-xs border border-[#2e4a3b]">
+              <div className="p-3 bg-[#24392e] rounded-[2px] border border-[#2e4a3b]">
                 <div className="text-[#d6c298] font-bold text-sm mb-0.5">{isFr ? "Transparence Pédagogique" : "Educational Clarity"}</div>
                 <div className="text-[#ece6da]/80">{isFr ? "Aucun produit exclusif ou vendeur captif" : "Independent multi-carrier education"}</div>
               </div>
@@ -360,7 +360,7 @@ Notes: ${formData.notes || "None"}`;
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Screen 1: Sector Exclusions */}
-            <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-4">
+            <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#75581f]">
                 <Scale className="w-4 h-4 text-[#2e4a3b]" />
                 <span>{isFr ? "Étape 1 : Exclusions Sectorielles Strictes" : "Tier 1: Business Activity Exclusions"}</span>
@@ -409,7 +409,7 @@ Notes: ${formData.notes || "None"}`;
             </div>
 
             {/* Screen 2: Financial Balance Sheet Ratios */}
-            <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-4">
+            <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#75581f]">
                 <Landmark className="w-4 h-4 text-[#2e4a3b]" />
                 <span>{isFr ? "Étape 2 : Ratios Financiers de Bilan" : "Tier 2: Balance Sheet Financial Screening"}</span>
@@ -426,17 +426,17 @@ Notes: ${formData.notes || "None"}`;
               </p>
 
               <div className="space-y-3 pt-1">
-                <div className="p-3 bg-white border border-[#d6cebd] rounded-xs">
+                <div className="p-3 bg-white border border-[#d6cebd] rounded-[2px]">
                   <div className="flex items-center justify-between text-xs font-semibold text-[#1c1b18] mb-1">
                     <span>{isFr ? "Dette totale / Actif total" : "Total Debt / Total Assets"}</span>
                     <span className="text-[#2e4a3b] tabular-nums font-bold">&lt; 33.33%</span>
                   </div>
                   <p className="text-[0.72rem] text-[#625d52]">
-                    {isFr ? "Exclut les sociétés lourdement endettées dépendantes du crédit bancaire rémunéré par l'intérêt." : "Disqualifies highly leveraged companies dependent on conventional interest financing."}
+                    {isFr ? "Exclut les sociétés lourdement endettées dépendantes du crédit bancaire rémunéré par l'intérêt." : "Disqualifies heavily indebted companies dependent on conventional interest financing."}
                   </p>
                 </div>
 
-                <div className="p-3 bg-white border border-[#d6cebd] rounded-xs">
+                <div className="p-3 bg-white border border-[#d6cebd] rounded-[2px]">
                   <div className="flex items-center justify-between text-xs font-semibold text-[#1c1b18] mb-1">
                     <span>{isFr ? "Liquidités & Titres à intérêt / Actif" : "Cash & Interest Securities / Assets"}</span>
                     <span className="text-[#2e4a3b] tabular-nums font-bold">&lt; 33.33%</span>
@@ -446,7 +446,7 @@ Notes: ${formData.notes || "None"}`;
                   </p>
                 </div>
 
-                <div className="p-3 bg-white border border-[#d6cebd] rounded-xs">
+                <div className="p-3 bg-white border border-[#d6cebd] rounded-[2px]">
                   <div className="flex items-center justify-between text-xs font-semibold text-[#1c1b18] mb-1">
                     <span>{isFr ? "Revenus accessoires non conformes" : "Incidental Non-Permissible Revenue"}</span>
                     <span className="text-[#2e4a3b] tabular-nums font-bold">&lt; 5.0%</span>
@@ -460,7 +460,7 @@ Notes: ${formData.notes || "None"}`;
           </div>
         </section>
 
-        {/* 5. CANADIAN REGISTERED TAX SHELTERS - NUANCED & PRECISE */}
+        {/* 5. CANADIAN REGISTERED TAX SHELTERS - DETAILED & PRECISE */}
         <section className="mb-16">
           <div className="mb-8">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
@@ -479,7 +479,7 @@ Notes: ${formData.notes || "None"}`;
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <div className="flex items-center gap-2 text-[#2e4a3b] font-bold text-sm">
                 <ShieldCheck className="w-4 h-4 text-[#75581f]" />
                 <span>TFSA (CELI)</span>
@@ -487,11 +487,11 @@ Notes: ${formData.notes || "None"}`;
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
                   ? "Les gains en capital et retraits sont totalement exemptés de l'impôt canadien. Note : une retenue à la source étrangère (ex. 15 % sur les dividendes d'actions internationales) peut s'appliquer sans donner droit à un crédit pour impôt étranger dans un CELI."
-                  : "Capital gains and qualifying withdrawals are 100% exempt from Canadian income taxes. Nuance: foreign dividend withholding taxes (such as 15% non-resident tax on international equities) may be deducted at source and cannot be claimed as a Canadian foreign tax credit inside a TFSA."}
+                  : "Capital gains and qualifying withdrawals are 100% exempt from Canadian income taxes. Note: foreign dividend withholding taxes (such as 15% non-resident tax on international equities) may be deducted at source and cannot be claimed as a Canadian foreign tax credit inside a TFSA."}
               </p>
             </div>
 
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <div className="flex items-center gap-2 text-[#2e4a3b] font-bold text-sm">
                 <Building2 className="w-4 h-4 text-[#75581f]" />
                 <span>RRSP (REER)</span>
@@ -503,7 +503,7 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
 
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <div className="flex items-center gap-2 text-[#2e4a3b] font-bold text-sm">
                 <Home className="w-4 h-4 text-[#75581f]" />
                 <span>FHSA (CELIAPP)</span>
@@ -515,7 +515,7 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
 
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <div className="flex items-center gap-2 text-[#2e4a3b] font-bold text-sm">
                 <GraduationCap className="w-4 h-4 text-[#75581f]" />
                 <span>RESP (REEE)</span>
@@ -527,7 +527,7 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
 
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <div className="flex items-center gap-2 text-[#2e4a3b] font-bold text-sm">
                 <Briefcase className="w-4 h-4 text-[#75581f]" />
                 <span>{isFr ? "Sociétés de Gestion (SPCC)" : "Corporate Holding (CCPC)"}</span>
@@ -539,7 +539,7 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
 
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <div className="flex items-center gap-2 text-[#2e4a3b] font-bold text-sm">
                 <Lock className="w-4 h-4 text-[#75581f]" />
                 <span>{isFr ? "Structures de Contrats Distincts" : "Segregated Contract Features"}</span>
@@ -554,7 +554,7 @@ Notes: ${formData.notes || "None"}`;
         </section>
 
         {/* 6. FAIR & BALANCED MULTI-SCENARIO SIMULATOR */}
-        <section id="simulator" className="mb-16 p-6 sm:p-8 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs">
+        <section id="simulator" className="mb-16 p-6 sm:p-8 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px]">
           <div className="max-w-3xl mb-8">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
               {isFr ? "Outil Pédagogique Transparent" : "Transparent Educational Tool"}
@@ -635,7 +635,7 @@ Notes: ${formData.notes || "None"}`;
           </div>
 
           {/* Secondary Controls: Cash Rate & Equity Scenario */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-[#f2ecdf] border border-[#d6cebd] rounded-xs mb-8 text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-[#f2ecdf] border border-[#d6cebd] rounded-[2px] mb-8 text-xs">
             <div>
               <label className="font-semibold text-[#1c1b18] block mb-1">
                 {isFr ? "Taux d'Épargne Réel / CPG :" : "Savings / GIC Interest Rate:"}
@@ -666,7 +666,7 @@ Notes: ${formData.notes || "None"}`;
               <select
                 value={equityScenario}
                 onChange={(e) => setEquityScenario(e.target.value as any)}
-                className="w-full py-1.5 px-2 bg-white border border-[#d6cebd] rounded-xs text-xs"
+                className="w-full py-1.5 px-2 bg-white border border-[#d6cebd] rounded-[2px] text-xs"
               >
                 <option value="conservative">{isFr ? "Conservateur : 4,5 %" : "Conservative: 4.5% gross"}</option>
                 <option value="balanced">{isFr ? "Équilibré : 6,5 %" : "Balanced: 6.5% gross"}</option>
@@ -699,7 +699,7 @@ Notes: ${formData.notes || "None"}`;
           </div>
 
           {/* Results Comparison Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 bg-white border border-[#d6cebd] rounded-xs mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 bg-white border border-[#d6cebd] rounded-[2px] mb-6">
             <div className="space-y-1">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#625d52] font-semibold block">
                 {isFr ? "Total Épargné (Principal)" : "Total Capital Injected"}
@@ -712,7 +712,7 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
 
-            <div className="space-y-1 p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-xs">
+            <div className="space-y-1 p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px]">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#75581f] font-bold block">
                 {isFr ? `Épargne à ${cashInterestRate}% (Nominal)` : `Savings @ ${cashInterestRate}% (Nominal)`}
               </span>
@@ -726,7 +726,7 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
 
-            <div className="space-y-1 p-3 bg-[#2e4a3b]/5 border border-[#2e4a3b]/30 rounded-xs">
+            <div className="space-y-1 p-3 bg-[#2e4a3b]/5 border border-[#2e4a3b]/30 rounded-[2px]">
               <span className="text-[0.68rem] uppercase tracking-wider text-[#2e4a3b] font-bold block">
                 {isFr ? `Actions Islamiques (${netEquityReturn.toFixed(1)} % Net)` : `Islamic Equity (${netEquityReturn.toFixed(1)}% Net)`}
               </span>
@@ -750,10 +750,10 @@ Notes: ${formData.notes || "None"}`;
         </section>
 
         {/* 7. OBJECTIVE CONSULTATION REQUEST FORM */}
-        <section id="lead-form" className="mb-16 p-6 sm:p-10 bg-[#14211a] text-[#f7f3eb] rounded-xs border border-[#2e4a3b] shadow-xl">
+        <section id="lead-form" className="mb-16 p-6 sm:p-10 bg-[#14211a] text-[#f7f3eb] rounded-[2px] border border-[#2e4a3b] shadow-xl">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8 space-y-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#d6c298]/15 border border-[#d6c298]/40 rounded-xs text-[0.7rem] font-semibold uppercase tracking-wider text-[#d6c298]">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#d6c298]/15 border border-[#d6c298]/40 rounded-[2px] text-[0.7rem] font-semibold uppercase tracking-wider text-[#d6c298]">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#d6c298]" />
                 <span>{isFr ? "Accompagnement Éducatif Indépendant" : "Independent Educational Consultation"}</span>
               </div>
@@ -855,7 +855,7 @@ Notes: ${formData.notes || "None"}`;
                       value={formData.fullName}
                       onChange={handleFormChange}
                       placeholder={isFr ? "ex. Tariq Mansoor" : "e.g. Tariq Mansoor"}
-                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
+                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                     />
                   </div>
 
@@ -870,7 +870,7 @@ Notes: ${formData.notes || "None"}`;
                       value={formData.email}
                       onChange={handleFormChange}
                       placeholder="tariq@example.com"
-                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
+                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                     />
                   </div>
                 </div>
@@ -887,7 +887,7 @@ Notes: ${formData.notes || "None"}`;
                       value={formData.phone}
                       onChange={handleFormChange}
                       placeholder="(506) 000-0000"
-                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
+                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                     />
                   </div>
 
@@ -900,7 +900,7 @@ Notes: ${formData.notes || "None"}`;
                       required
                       value={formData.province}
                       onChange={handleFormChange}
-                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
+                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
                     >
                       {CANADIAN_PROVINCES.map((p) => (
                         <option key={p} value={p}>
@@ -919,8 +919,8 @@ Notes: ${formData.notes || "None"}`;
                       name="city"
                       value={formData.city}
                       onChange={handleFormChange}
-                      placeholder={isFr ? "ex. Moncton" : "e.g. Moncton"}
-                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
+                      placeholder={isFr ? "ex. Dieppe" : "e.g. Dieppe"}
+                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                     />
                   </div>
                 </div>
@@ -934,12 +934,12 @@ Notes: ${formData.notes || "None"}`;
                       name="accountType"
                       value={formData.accountType}
                       onChange={handleFormChange}
-                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
+                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
                     >
-                      <option value="tfsa">{isFr ? "CELI (TFSA) — Croissance libre d'impôt" : "TFSA (CELI) - Tax-Free Growth"}</option>
-                      <option value="rrsp">{isFr ? "REER (RRSP) — Déductible d'impôt" : "RRSP (REER) - Tax-Deductible"}</option>
-                      <option value="fhsa">{isFr ? "CELIAPP (FHSA) — Première habitation" : "FHSA (CELIAPP) - First Home Savings"}</option>
-                      <option value="resp">{isFr ? "REEE (RESP) — Épargne-études" : "RESP (REEE) - Children's Education"}</option>
+                      <option value="tfsa">{isFr ? "CELI (TFSA) : Croissance libre d'impôt" : "TFSA (CELI) - Tax-Free Growth"}</option>
+                      <option value="rrsp">{isFr ? "REER (RRSP) : Déductible d'impôt" : "RRSP (REER) - Tax-Deductible"}</option>
+                      <option value="fhsa">{isFr ? "CELIAPP (FHSA) : Première habitation" : "FHSA (CELIAPP) - First Home Savings"}</option>
+                      <option value="resp">{isFr ? "REEE (RESP) : Épargne-études" : "RESP (REEE) - Children's Education"}</option>
                       <option value="corporate">{isFr ? "Société de portefeuille / SPCC" : "Corporate Holding / CCPC (Société)"}</option>
                       <option value="transfer">{isFr ? "Transfert direct depuis une autre institution" : "Direct Transfer from Existing Institution"}</option>
                       <option value="multiple">{isFr ? "Plusieurs comptes / Stratégie globale" : "Multiple Accounts / Comprehensive Strategy"}</option>
@@ -954,13 +954,13 @@ Notes: ${formData.notes || "None"}`;
                       name="estimatedAmount"
                       value={formData.estimatedAmount}
                       onChange={handleFormChange}
-                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
+                      className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-xs text-[#f7f3eb] focus:outline-none focus:border-[#d6c298]"
                     >
-                      <option value="monthly-500">{isFr ? "300 $ – 1 000 $ / mois (cotisations régulières)" : "$300 - $1,000 / month (PAC / Recurring)"}</option>
-                      <option value="10k-25k">{isFr ? "10 000 $ – 25 000 $" : "$10,000 - $25,000"}</option>
-                      <option value="25k-50k">{isFr ? "25 000 $ – 50 000 $" : "$25,000 - $50,000"}</option>
-                      <option value="50k-100k">{isFr ? "50 000 $ – 100 000 $" : "$50,000 - $100,000"}</option>
-                      <option value="100k-250k">{isFr ? "100 000 $ – 250 000 $" : "$100,000 - $250,000"}</option>
+                      <option value="monthly-500">{isFr ? "300 $ à 1 000 $ / mois (cotisations régulières)" : "$300 - $1,000 / month (PAC / Recurring)"}</option>
+                      <option value="10k-25k">{isFr ? "10 000 $ à 25 000 $" : "$10,000 - $25,000"}</option>
+                      <option value="25k-50k">{isFr ? "25 000 $ à 50 000 $" : "$25,000 - $50,000"}</option>
+                      <option value="50k-100k">{isFr ? "50 000 $ à 100 000 $" : "$50,000 - $100,000"}</option>
+                      <option value="100k-250k">{isFr ? "100 000 $ à 250 000 $" : "$100,000 - $250,000"}</option>
                       <option value="250k+">{isFr ? "250 000 $+ (Société / Patrimoine élevé)" : "$250,000+ (Corporate / High Net Worth)"}</option>
                     </select>
                   </div>
@@ -978,7 +978,7 @@ Notes: ${formData.notes || "None"}`;
                     value={formData.currentBank}
                     onChange={handleFormChange}
                     placeholder={isFr ? "ex. Liquidités chez RBC, REER chez TD, etc." : "e.g. Idle cash in chequing, existing RRSP at TD, etc."}
-                    className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
+                    className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                   />
                 </div>
 
@@ -996,7 +996,7 @@ Notes: ${formData.notes || "None"}`;
                         ? "Précisez vos objectifs, questions sur la certification de conformité ou le calendrier de transfert..."
                         : "Describe your family goals, questions about AAOIFI screening, or transfer timing..."
                     }
-                    className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-xs text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
+                    className="w-full px-3 py-2 bg-[#1a2c22] border border-[#2e4a3b] rounded-[2px] text-xs text-[#f7f3eb] placeholder-[#ece6da]/40 focus:outline-none focus:border-[#d6c298]"
                   ></textarea>
                 </div>
 
@@ -1008,7 +1008,7 @@ Notes: ${formData.notes || "None"}`;
                       name="consentPrivacy"
                       checked={formData.consentPrivacy}
                       onChange={handleFormChange}
-                      className="mt-0.5 accent-[#d6c298] h-4 w-4 rounded-xs shrink-0"
+                      className="mt-0.5 accent-[#d6c298] h-4 w-4 rounded-[2px] shrink-0"
                     />
                     <span>
                       {isFr ? (
@@ -1037,7 +1037,7 @@ Notes: ${formData.notes || "None"}`;
                       name="consentEducational"
                       checked={formData.consentEducational}
                       onChange={handleFormChange}
-                      className="mt-0.5 accent-[#d6c298] h-4 w-4 rounded-xs shrink-0"
+                      className="mt-0.5 accent-[#d6c298] h-4 w-4 rounded-[2px] shrink-0"
                     />
                     <span>
                       {isFr
@@ -1056,7 +1056,7 @@ Notes: ${formData.notes || "None"}`;
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 px-4 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs sm:text-sm rounded-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md disabled:opacity-50"
+                    className="w-full py-3 px-4 bg-[#d6c298] hover:bg-[#e4d4b3] text-[#1a2c22] font-semibold text-xs sm:text-sm rounded-[2px] transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md disabled:opacity-50"
                   >
                     <span>
                       {isSubmitting
@@ -1068,15 +1068,15 @@ Notes: ${formData.notes || "None"}`;
 
                 <p className="text-[0.68rem] text-[#ece6da]/60 text-center pt-2">
                   {isFr
-                    ? "Vos données demeurent strictement confidentielles. Aucune obligation. Aucune démarche commerciale agressive."
-                    : "Strictly confidential. No spam. No aggressive sales pressure. Independent financial education."}
+                    ? "Vos données demeurent strictement confidentielles. Aucune sollicitation commerciale."
+                    : "Strictly confidential. No spam. Plain-language financial education."}
                 </p>
               </form>
             )}
           </div>
         </section>
 
-        {/* 8. FREQUENTLY ASKED QUESTIONS - NUANCED & VERIFIED */}
+        {/* 8. FREQUENTLY ASKED QUESTIONS - DETAILED & VERIFIED */}
         <section className="mb-16">
           <div className="mb-8">
             <span className="eyebrow text-xs uppercase tracking-wider text-[#75581f] block mb-1">
@@ -1090,7 +1090,7 @@ Notes: ${formData.notes || "None"}`;
           </div>
 
           <div className="space-y-4">
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <h3 className="font-serif text-base font-bold text-[#1c1b18] flex items-center gap-2">
                 <HelpCircle className="w-4 h-4 text-[#2e4a3b]" />
                 <span>
@@ -1106,7 +1106,7 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
 
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <h3 className="font-serif text-base font-bold text-[#1c1b18] flex items-center gap-2">
                 <HelpCircle className="w-4 h-4 text-[#2e4a3b]" />
                 <span>
@@ -1122,7 +1122,7 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
 
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <h3 className="font-serif text-base font-bold text-[#1c1b18] flex items-center gap-2">
                 <HelpCircle className="w-4 h-4 text-[#2e4a3b]" />
                 <span>
@@ -1138,7 +1138,7 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
 
-            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-xs space-y-2">
+            <div className="p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-2">
               <h3 className="font-serif text-base font-bold text-[#1c1b18] flex items-center gap-2">
                 <HelpCircle className="w-4 h-4 text-[#2e4a3b]" />
                 <span>

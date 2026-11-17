@@ -102,9 +102,9 @@ export const ConfirmSubscriptionPage: React.FC = () => {
           </div>
         ) : error ? (
           <div className="card-editorial border-[#8a3324] p-8 space-y-4">
-            <h2 className="h2 text-[#8a3324]">
+            <h1 className="h2 text-[#8a3324]">
               {isFr ? "Lien invalide ou expiré" : "Invalid or Expired Link"}
-            </h2>
+            </h1>
             <p className="text-sm text-[#46423a] leading-relaxed">{error}</p>
             <div className="pt-2">
               <Link to={isFr ? "/fr" : "/"} className="btn btn-primary text-xs py-2.5 px-6">
@@ -138,9 +138,9 @@ export const ConfirmSubscriptionPage: React.FC = () => {
           <div className="flex items-start gap-3">
             <ShieldCheck className="w-5 h-5 text-[#2e4a3b] shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <h3 className="font-serif text-base text-[#1c1b18] font-semibold">
+              <h2 className="font-serif text-base text-[#1c1b18] font-semibold">
                 {isFr ? "Ce que vous recevrez" : "What to expect"}
-              </h3>
+              </h2>
               <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
                 {isFr
                   ? "Vous recevrez des analyses éducatives ponctuelles exclusivement lors de modifications importantes des règles fiscales canadiennes de l'ARC, des plafonds des régimes enregistrés (CELI, REER, CELIAPP) ou des politiques de retraite publique."
@@ -152,9 +152,9 @@ export const ConfirmSubscriptionPage: React.FC = () => {
           <div className="flex items-start gap-3 pt-3 border-t border-[#ece6da]">
             <Mail className="w-5 h-5 text-[#75581f] shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <h3 className="font-serif text-base text-[#1c1b18] font-semibold">
+              <h2 className="font-serif text-base text-[#1c1b18] font-semibold">
                 {isFr ? "Notre engagement déontologique" : "No commercial spam"}
-              </h3>
+              </h2>
               <p className="text-xs sm:text-sm text-[#46423a] leading-relaxed">
                 {isFr
                   ? "Aucune séquence automatisée de vente, aucun produit propriétaire imposé, et vous pouvez vous désabonner à tout moment d'un simple clic."

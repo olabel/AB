@@ -288,7 +288,7 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "en-CA",
     title: "Start a Financial Conversation | Ahmed Bello",
     description:
-      "Start a plain-language financial conversation with Ahmed Bello, Licensed Financial Solutions Professional. Ask questions with zero sales pressure.",
+      "Send a financial question directly to Ahmed Bello on TFSA, RRSP, FHSA, income protection, or mortgage renewals with clear, plain-language answers.",
     heading: "Start a Conversation with Ahmed Bello",
     summary:
       "Send your questions about Canadian registered accounts, income protection, debt repayment, or newcomer finances directly to Ahmed Bello.",
@@ -563,7 +563,7 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "fr-CA",
     title: "Démarrer une Conversation | Ahmed Bello",
     description:
-      "Échangez directement avec Ahmed Bello, professionnel agréé en solutions financières. Posez vos questions sans pression commerciale.",
+      "Échangez directement avec Ahmed Bello sur vos comptes CELI, REER, CELIAPP, votre protection ou votre hypothèque, avec des réponses claires.",
     heading: "Démarrer une Conversation avec Ahmed Bello",
     summary:
       "Posez vos questions sur les régimes enregistrés, la protection du revenu ou vos démarches financières au Canada.",

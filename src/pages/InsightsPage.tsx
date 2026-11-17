@@ -112,7 +112,7 @@ export const InsightsPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setSelectedTheme("all")}
-              className={`text-xs px-3 py-1.5 rounded-[2px] border transition-colors ${
+              className={`text-xs px-3 py-1.5 rounded-[2px] border transition-colors cursor-pointer ${
                 selectedTheme === "all"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] font-semibold"
                   : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -123,7 +123,7 @@ export const InsightsPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setSelectedTheme("corporate-tax")}
-              className={`text-xs px-3 py-1.5 rounded-[2px] border transition-colors ${
+              className={`text-xs px-3 py-1.5 rounded-[2px] border transition-colors cursor-pointer ${
                 selectedTheme === "corporate-tax"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] font-semibold"
                   : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -134,7 +134,7 @@ export const InsightsPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setSelectedTheme("mortgages-liquidity")}
-              className={`text-xs px-3 py-1.5 rounded-[2px] border transition-colors ${
+              className={`text-xs px-3 py-1.5 rounded-[2px] border transition-colors cursor-pointer ${
                 selectedTheme === "mortgages-liquidity"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] font-semibold"
                   : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -145,7 +145,7 @@ export const InsightsPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setSelectedTheme("decision-frameworks")}
-              className={`text-xs px-3 py-1.5 rounded-[2px] border transition-colors ${
+              className={`text-xs px-3 py-1.5 rounded-[2px] border transition-colors cursor-pointer ${
                 selectedTheme === "decision-frameworks"
                   ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] font-semibold"
                   : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -287,8 +287,8 @@ export const InsightsPage: React.FC = () => {
           <Scale className="w-8 h-8 text-[#d6c298] mx-auto opacity-80" />
           <blockquote className="font-serif text-xl sm:text-2xl text-[#f7f3eb] italic leading-relaxed max-w-3xl mx-auto">
             {isFr
-              ? "« La finance personnelle conventionnelle évalue la dette et les placements en vase clos. La planification institutionnelle évalue l'ensemble du bilan patrimonial, reconnaissant que la liquidité et les abris fiscaux enregistrés possèdent une valeur d'option économique irremplaçable. »"
-              : "“Conventional personal finance evaluates debts and investments in isolated silos. Institutional planning evaluates the total balance sheet, recognizing that liquid capital and registered tax shelters carry irreplaceable economic option value that simplistic interest arithmetic ignores.”"}
+              ? "« La finance personnelle conventionnelle évalue la dette et les placements séparément. La planification globale évalue l'ensemble du bilan patrimonial, reconnaissant que la liquidité et les abris fiscaux enregistrés possèdent une valeur d'option économique irremplaçable. »"
+              : "“Conventional personal finance evaluates debts and investments in isolation. Comprehensive planning evaluates the total balance sheet, recognizing that liquid capital and registered tax shelters carry irreplaceable economic option value that simplistic interest arithmetic ignores.”"}
           </blockquote>
           <p className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold">
             - Ahmed Bello, Licensed Financial Solutions Professional
@@ -521,11 +521,11 @@ export const InsightsPage: React.FC = () => {
         <div className="wrap max-w-4xl">
           <NewsletterSignup
             source="insights_page"
-            title={isFr ? "Le Point Financier Intentionnel" : "The Intentional Wealth Briefing"}
+            title={isFr ? "Le Point sur les Règles Financières" : "Canadian Money Rules Briefing"}
             description={
               isFr
-                ? "Recevez des analyses ponctuelles lors de modifications législatives importantes de l'ARC, des plafonds enregistrés ou des règles provinciales. Zéro pourriel commercial."
-                : "Receive occasional research briefings strictly when significant Canadian statutory tax changes, CRA registered limits, or financial regulations occur. Zero sales spam."
+                ? "Recevez des analyses ponctuelles lors de modifications législatives importantes de l'ARC, des plafonds enregistrés ou des règles provinciales."
+                : "Receive occasional research briefings strictly when significant Canadian statutory tax changes, CRA registered limits, or financial regulations occur."
             }
           />
         </div>
@@ -562,8 +562,8 @@ export const InsightsPage: React.FC = () => {
           </div>
           <p className="text-xs text-[#625d52]">
             {isFr
-              ? "Aucune obligation. Zéro pression commerciale. Accompagnement indépendant au Canada."
-              : "No obligation. Zero sales pressure. Independent guidance across Canada."}
+              ? "Explications claires et accompagnement indépendant au Canada."
+              : "Plain-language, independent guidance across Canada."}
           </p>
         </div>
       </section>

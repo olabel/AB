@@ -136,19 +136,12 @@ export const ArticlePage: React.FC = () => {
   return (
     <article className="py-12 lg:py-16 relative">
       {/* Scroll-Linked Reading Progress Bar (Fixed at top of viewport) */}
-      <div
-        role="progressbar"
-        aria-valuenow={Math.round(scrollProgress)}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label="Reading progress"
-        className="fixed top-0 left-0 right-0 z-50 h-[3.5px] bg-[#d6cebd]/40 pointer-events-none"
-      >
-        <div
-          className="h-full bg-[#2e4a3b] transition-[width] duration-150 ease-out"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
+      <progress
+        value={Math.round(scrollProgress)}
+        max={100}
+        aria-label={isFr ? "Progression de lecture" : "Reading progress"}
+        className="read-progress-bar fixed top-0 left-0 right-0 z-50 w-full h-[3.5px] pointer-events-none"
+      />
 
       <SEO
         title={localizedSeoTitle}
@@ -347,7 +340,7 @@ export const ArticlePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="btn btn-ghost w-full py-2.5 text-xs flex items-center justify-center gap-2"
+                  className="btn btn-ghost w-full py-2.5 text-xs flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {copied ? (
                     <>
@@ -376,7 +369,7 @@ export const ArticlePage: React.FC = () => {
                     : article.slug === "tfsa-vs-rrsp" || article.slug === "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first"
                     ? isFr
                       ? "Comparez CELI et REER selon votre tranche fiscale actuelle et recevez votre aide-mémoire par courriel."
-                      : "Check whether TFSA or RRSP fits your bracket better and get your tailored tax checklist by email."
+                      : "Check whether TFSA or RRSP fits your bracket better and get your personal tax checklist by email."
                     : article.slug === "resp-basics"
                     ? isFr
                       ? "Estimez la SCEE (20 %) et vos droits de rattrapage jusqu'à 1 000 $/an selon l'âge de votre enfant."
@@ -386,8 +379,8 @@ export const ArticlePage: React.FC = () => {
                       ? "Calculez votre coussin de liquidités de 1re année au Canada et recevez votre plan par courriel."
                       : "Map your first-year Canadian cash runway and email yourself a step-by-step settlement checklist."
                     : isFr
-                    ? `Vous avez une question sur ${article.invitationAbout} ? Demandez un second avis sans pression.`
-                    : `Have a specific question about ${article.invitationAbout}? Get a direct, no-pressure second opinion.`}
+                    ? `Vous avez une question sur ${article.invitationAbout} ? Demandez un second avis direct et objectif.`
+                    : `Have a specific question about ${article.invitationAbout}? Get a direct, objective second opinion.`}
                 </p>
                 <div className="flex flex-col gap-2 pt-1">
                   {article.slug === "fhsa-explained" && (
@@ -536,7 +529,7 @@ export const ArticlePage: React.FC = () => {
                     type="button"
                     onClick={handleCopyLink}
                     aria-label="Copy link"
-                    className="p-1.5 bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-white border border-[#d6cebd] rounded-[2px] text-[#46423a] transition-colors inline-flex items-center gap-1 text-[0.7rem] font-semibold"
+                    className="p-1.5 bg-[#f7f3eb] hover:bg-[#2e4a3b] hover:text-white border border-[#d6cebd] rounded-[2px] text-[#46423a] transition-colors inline-flex items-center gap-1 text-[0.7rem] font-semibold cursor-pointer"
                   >
                     <Copy className="w-3 h-3" />
                     <span>{copied ? (isFr ? "Copié !" : "Copied!") : (isFr ? "Copier" : "Copy")}</span>
@@ -567,9 +560,9 @@ export const ArticlePage: React.FC = () => {
                   <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Outil interactif" : "Interactive Decision Tool"}
                   </span>
-                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                  <h2 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
                     {isFr ? "Simulateur d'Impôt Minimum de Remplacement (IMR)" : "Alternative Minimum Tax (AMT) Calculator Canada"}
-                  </h4>
+                  </h2>
                   <p className="text-xs text-[#46423a]">
                     {isFr
                       ? "Modélisez l'impact des règles des lois C-59 et C-69 sur vos gains en capital, vos dons et le report sur 7 ans."
@@ -594,11 +587,11 @@ export const ArticlePage: React.FC = () => {
                   <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Calculateur & Liste CELIAPP" : "Interactive Tool & Opening Checklist"}
                   </span>
-                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                  <h2 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
                     {isFr
                       ? "Simuler votre remboursement d'impôt CELIAPP et le cumul RAP (100 000 $)"
                       : "Estimate your FHSA tax refund and $100k FHSA + HBP stacking"}
-                  </h4>
+                  </h2>
                   <p className="text-xs text-[#46423a]">
                     {isFr
                       ? "Vérifiez vos droits reportés (plafond de 8 000 $) et recevez l'aide-mémoire d'ouverture par courriel."
@@ -623,11 +616,11 @@ export const ArticlePage: React.FC = () => {
                   <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Vérification en 15 secondes" : "15-Second Account Check & Checklist"}
                   </span>
-                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                  <h2 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
                     {isFr
                       ? "Comparez CELI vs REER selon votre tranche fiscale et recevez la synthèse"
                       : "See how TFSA vs. RRSP compares at your bracket & get the tax checklist"}
-                  </h4>
+                  </h2>
                   <p className="text-xs text-[#46423a]">
                     {isFr
                       ? "Comparez les plafonds 2026 (CELI 7 000 $, REER jusqu'à 33 810 $) et obtenez les vérifications clés par courriel."
@@ -652,11 +645,11 @@ export const ArticlePage: React.FC = () => {
                   <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Calculateur Subvention REEE (15 sec)" : "15-Second RESP Grant & Catch-Up Check"}
                   </span>
-                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                  <h2 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
                     {isFr
                       ? "Estimez la SCEE (20 %) et les droits de rattrapage pour votre enfant"
                       : "Calculate your child's CESG match & unused catch-up room"}
-                  </h4>
+                  </h2>
                   <p className="text-xs text-[#46423a]">
                     {isFr
                       ? "Vérifiez la règle jusqu'à 1 000 $/an en rattrapage, les critères des 16-17 ans et le BEC par courriel."
@@ -681,11 +674,11 @@ export const ArticlePage: React.FC = () => {
                   <span className="text-xs uppercase font-semibold tracking-wider text-[#75581f]">
                     {isFr ? "Planificateur 1re Année & Liste" : "Interactive Runway Tool & Checklist"}
                   </span>
-                  <h4 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
+                  <h2 className="font-serif text-base sm:text-lg text-[#1c1b18] font-semibold">
                     {isFr
                       ? "Calculez votre autonomie financière de 1re année au Canada"
                       : "Model your first-year Canadian cash runway & settlement buffer"}
-                  </h4>
+                  </h2>
                   <p className="text-xs text-[#46423a]">
                     {isFr
                       ? "Intégrez vos délais d'équivalence, vos frais mensuels et recevez la liste d'actions des 90 premiers jours."
@@ -1041,17 +1034,17 @@ export const ArticlePage: React.FC = () => {
                 <div className="p-6 bg-[#2e4a3b] text-[#f7f3eb] rounded-[2px] space-y-3 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
                   <div className="space-y-1">
                     <span className="text-[0.68rem] uppercase tracking-wider text-[#d6c298] font-semibold block">
-                      {isFr ? "Accompagnement Sans Pression" : "Independent Pension Review"}
+                      {isFr ? "Révision Indépendante" : "Independent Pension Review"}
                     </span>
-                    <h4 className="font-serif text-lg font-medium text-[#f7f3eb]">
+                    <h2 className="font-serif text-lg font-medium text-[#f7f3eb]">
                       {isFr
                         ? "Besoin d'un second regard indépendant sur votre relevé de cessation ?"
                         : "Need an independent review of your pension termination statement?"}
-                    </h4>
+                    </h2>
                     <p className="text-xs text-[#ece6da]">
                       {isFr
                         ? "Obtenez un second avis objectif sur vos plafonds de transfert ITR 8517, le montant PAR et l'impact fiscal lors d'un échange rapide."
-                        : "Get an objective second opinion on your ITR 8517 Maximum Transfer Value, PAR capacity, and tax impact with zero sales pitch."}
+                        : "Get an objective second opinion on your ITR 8517 Maximum Transfer Value, PAR capacity, and tax impact before deciding."}
                     </p>
                   </div>
 
@@ -1082,15 +1075,15 @@ export const ArticlePage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="h3 text-[#1c1b18] text-xl sm:text-2xl font-serif">
+                <h2 className="h3 text-[#1c1b18] text-xl sm:text-2xl font-serif">
                   {isFr
                     ? "Pas certain de la structure ou du compte adapté à votre situation ? Posez votre question ici."
                     : "Not sure which account or strategy fits your situation? Ask here."}
-                </h3>
+                </h2>
                 <p className="text-sm text-[#46423a] mt-2 leading-relaxed">
                   {isFr
-                    ? `Les règles fiscales canadiennes et les plafonds de cotisation dépendent de votre situation précise. Posez votre question sur « ${article.invitationAbout} » : Ahmed vous répondra personnellement avec des explications claires et sans pression commerciale.`
-                    : `Canadian tax rules, registered shelters, and liquidity limits depend on your exact household situation. Ask your specific question about “${article.invitationAbout}” : Ahmed reviews and responds directly with evidence-based education and no sales pitch.`}
+                    ? `Les règles fiscales canadiennes et les plafonds de cotisation dépendent de votre situation précise. Posez votre question sur « ${article.invitationAbout} » : Ahmed vous répondra personnellement avec des explications claires et factuelles.`
+                    : `Canadian tax rules, registered shelters, and liquidity limits depend on your exact household situation. Ask your specific question about “${article.invitationAbout}”: Ahmed reviews and responds directly with evidence-based education.`}
                 </p>
               </div>
 
@@ -1122,7 +1115,7 @@ export const ArticlePage: React.FC = () => {
             {/* 10. Related Articles */}
             {relatedArticles.length > 0 && (
               <section className="pt-8 border-t border-[#d6cebd] space-y-6 no-print">
-                <h3 className="h3 text-[#1c1b18]">{isFr ? "Lectures recommandées" : "Related reading"}</h3>
+                <h2 className="h3 text-[#1c1b18]">{isFr ? "Lectures recommandées" : "Related reading"}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {relatedArticles.map((rel) => {
                     if (!rel) return null;
@@ -1137,9 +1130,9 @@ export const ArticlePage: React.FC = () => {
                           <span className="text-[0.7rem] uppercase tracking-wider font-semibold text-[#2e4a3b] block mb-2">
                             {relCat?.label || rel.category}
                           </span>
-                          <h4 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug mb-2">
+                          <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug mb-2">
                             {isFr ? ARTICLE_FR_SEO[rel.slug]?.title || rel.title : rel.title}
-                          </h4>
+                          </h3>
                           <p className="text-xs text-[#625d52] line-clamp-3 mb-4">
                             {rel.question}
                           </p>

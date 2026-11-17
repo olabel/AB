@@ -64,12 +64,12 @@ const CANADIAN_PROVINCES = [
 ];
 
 const US_REGIONS = [
-  "United States — Northeast",
-  "United States — Southeast",
-  "United States — Midwest",
-  "United States — Southwest",
-  "United States — West Coast",
-  "United States — Other State",
+  "United States - Northeast",
+  "United States - Southeast",
+  "United States - Midwest",
+  "United States - Southwest",
+  "United States - West Coast",
+  "United States - Other State",
 ];
 
 export const CareersPage: React.FC = () => {
@@ -118,7 +118,7 @@ export const CareersPage: React.FC = () => {
       setFormData((prev) => {
         const next = { ...prev, [name]: value };
         if (name === "country") {
-          next.jurisdiction = value === "Canada" ? "New Brunswick" : "United States — Northeast";
+          next.jurisdiction = value === "Canada" ? "New Brunswick" : "United States - Northeast";
         }
         return next;
       });
@@ -433,11 +433,11 @@ Candidate Application Details:
             </div>
           </div>
 
-          {/* Unique Hero Visual: Architectural Practice Portal & Ecosystem Blueprint */}
+          {/* Unique Hero Visual: Architectural Practice Portal & Ecosystem Overview */}
           <div className="lg:col-span-5 flex justify-center">
             <div className="w-full max-w-md bg-[#14211a] text-[#f7f3eb] border border-[#2e4a3b]/60 p-6 rounded-[2px] shadow-xl relative overflow-hidden">
 
-              {/* Blueprint Header */}
+              {/* Portal Header */}
               <div className="flex items-center justify-between pb-4 border-b border-[#d6c298]/20">
                 <div className="flex items-center gap-2.5">
                   <BrandMark size={28} reversed={true} className="w-7 h-7" />
@@ -450,7 +450,7 @@ Candidate Application Details:
                 </span>
               </div>
 
-              {/* Interactive Blueprint Navigation Tabs */}
+              {/* Interactive Overview Navigation Tabs */}
               <div className="grid grid-cols-3 gap-1.5 pt-4 pb-4">
                 {[
                   {
@@ -470,7 +470,7 @@ Candidate Application Details:
                     key={t.id}
                     type="button"
                     onClick={() => setActiveTab(t.id as any)}
-                    className={`py-1.5 px-2 text-[0.7rem] font-semibold rounded-[2px] transition-colors ${
+                    className={`py-1.5 px-2 text-[0.7rem] font-semibold rounded-[2px] transition-colors cursor-pointer ${
                       activeTab === t.id
                         ? "bg-[#d6c298] text-[#14211a]"
                         : "bg-[#2e4a3b]/30 text-[#ece6da]/80 hover:bg-[#2e4a3b]/50"
@@ -603,7 +603,7 @@ Candidate Application Details:
                 </div>
               )}
 
-              {/* Blueprint Footer Strip */}
+              {/* Portal Footer Strip */}
               <div className="mt-4 pt-3 border-t border-[#d6c298]/20 flex items-center justify-between text-[0.7rem] text-[#ece6da]/70">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#d6c298]" />
@@ -626,7 +626,6 @@ Candidate Application Details:
             </span>
             <h2
               className="font-serif text-3xl sm:text-4xl text-[#1c1b18] mt-2 mb-3"
-              style={{ fontFamily: "var(--font-serif)" }}
             >
               {isFr
                 ? "Comprendre le courtage indépendant face à la représentation exclusive d'une institution"
@@ -728,7 +727,7 @@ Candidate Application Details:
                       <strong>{isFr ? "Relation de confiance directe : " : "Direct client relationships: "}</strong>
                       {isFr
                         ? "Bâtissez des relations professionnelles pérennes avec les familles et chefs d'entreprise au fil des décennies."
-                        : "Foster enduring professional relationships with families and business owners over decades."}
+                        : "Build enduring professional relationships with families and business owners over decades."}
                     </span>
                   </li>
                   <li className="flex items-start gap-2.5">
@@ -759,7 +758,6 @@ Candidate Application Details:
             </span>
             <h2
               className="font-serif text-3xl sm:text-4xl text-[#1c1b18] mt-2 mb-3"
-              style={{ fontFamily: "var(--font-serif)" }}
             >
               {isFr ? "Les 5 Piliers Fondamentaux de notre Mentorat" : "The 5 Pillars of Our Mentorship Program"}
             </h2>
@@ -882,7 +880,6 @@ Candidate Application Details:
               </span>
               <h2
                 className="font-serif text-3xl sm:text-4xl text-[#1c1b18] mt-2 mb-3"
-                style={{ fontFamily: "var(--font-serif)" }}
               >
                 {isFr
                   ? "La pratique financière indépendante correspond-elle à votre projet ?"
@@ -911,7 +908,7 @@ Candidate Application Details:
                         key={opt.id}
                         type="button"
                         onClick={() => setQuizCountry(opt.id)}
-                        className={`w-full text-left p-3 text-xs rounded-[2px] border transition-colors flex items-center justify-between ${
+                        className={`w-full text-left p-3 text-xs rounded-[2px] border transition-colors flex items-center justify-between cursor-pointer ${
                           quizCountry === opt.id
                             ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] font-semibold"
                             : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -939,7 +936,7 @@ Candidate Application Details:
                         key={opt.id}
                         type="button"
                         onClick={() => setQuizStatus(opt.id)}
-                        className={`w-full text-left p-3 text-xs rounded-[2px] border transition-colors flex items-center justify-between ${
+                        className={`w-full text-left p-3 text-xs rounded-[2px] border transition-colors flex items-center justify-between cursor-pointer ${
                           quizStatus === opt.id
                             ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] font-semibold"
                             : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -966,7 +963,7 @@ Candidate Application Details:
                         key={opt.id}
                         type="button"
                         onClick={() => setQuizTime(opt.id)}
-                        className={`w-full text-left p-3 text-xs rounded-[2px] border transition-colors flex items-center justify-between ${
+                        className={`w-full text-left p-3 text-xs rounded-[2px] border transition-colors flex items-center justify-between cursor-pointer ${
                           quizTime === opt.id
                             ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] font-semibold"
                             : "bg-[#fcfaf5] text-[#1c1b18] border-[#d6cebd] hover:border-[#2e4a3b]"
@@ -1030,7 +1027,6 @@ Candidate Application Details:
             </span>
             <h2
               className="font-serif text-3xl sm:text-4xl text-[#1c1b18] mt-2 mb-3"
-              style={{ fontFamily: "var(--font-serif)" }}
             >
               {isFr
                 ? "Du premier échange au professionnel indépendant agréé"
@@ -1105,7 +1101,6 @@ Candidate Application Details:
                 </span>
                 <h2
                   className="font-serif text-3xl sm:text-4xl text-[#1c1b18] mt-2 mb-3"
-                  style={{ fontFamily: "var(--font-serif)" }}
                 >
                   {isFr ? "Postuler au Programme de Mentorat" : "Apply for the Educational Mentorship"}
                 </h2>
@@ -1456,7 +1451,7 @@ Candidate Application Details:
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="btn btn-primary w-full py-3 text-sm font-medium flex items-center justify-center gap-2 mt-4"
+                    className="btn btn-primary w-full py-3 text-sm font-medium flex items-center justify-center gap-2 mt-4 cursor-pointer"
                   >
                     {submitting ? (
                       <span>{isFr ? "Transmission en cours..." : "Submitting Application..."}</span>
@@ -1481,9 +1476,9 @@ Candidate Application Details:
                       <Clock className="w-3 h-3" />
                       <span>{isFr ? "Vous préférez échanger de vive voix ?" : "Prefer to Speak Directly?"}</span>
                     </div>
-                    <h3 className="font-serif text-2xl text-[#f7f3eb] mb-2">
+                    <h2 className="font-serif text-2xl text-[#f7f3eb] mb-2">
                       {getCtaLabel(isFr)}
-                    </h3>
+                    </h2>
                     <p className="text-xs text-[#ece6da] leading-relaxed mb-4">
                       {isFr
                         ? "Prenez rendez-vous directement dans le calendrier d'Ahmed pour discuter du modèle de cabinet, des étapes d'agrément dans votre province ou État et des modalités du coaching."
@@ -1506,9 +1501,9 @@ Candidate Application Details:
 
               {/* Direct Practice Contact Details */}
               <div className="p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4">
-                <h4 className="font-serif text-lg text-[#1c1b18]">
+                <h2 className="font-serif text-lg text-[#1c1b18]">
                   {isFr ? "Bureau de Mentorat Professionnel" : "Practice Mentorship Office"}
-                </h4>
+                </h2>
                 <div className="space-y-3 text-xs text-[#46423a]">
                   {siteConfig.publicPhone && (
                     <div className="flex items-center gap-2.5">
@@ -1552,7 +1547,6 @@ Candidate Application Details:
             </span>
             <h2
               className="font-serif text-3xl sm:text-4xl text-[#1c1b18] mt-2 mb-3"
-              style={{ fontFamily: "var(--font-serif)" }}
             >
               {isFr
                 ? "Questions Fréquentes sur le Mentorat & l'Agrément"

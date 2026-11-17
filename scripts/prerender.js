@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { articles } from "../src/content/data.ts";
+import { siteConfig } from "../src/config/site.ts";
 import {
   CORE_ROUTES_SEO,
   ARTICLE_FR_SEO,
@@ -94,10 +95,10 @@ function renderRouteHtml(r) {
   const profValue = isFrench
     ? "Ahmed Bello, professionnel en solutions financières agréé"
     : "Ahmed Bello, Licensed Financial Solutions Professional";
-  const licensingLabel = isFrench ? "Permis :" : "Licensing:";
+  const licensingLabel = isFrench ? "Pratique :" : "Practice:";
   const licensingValue = isFrench
-    ? "Pratique indépendante &bull; Autorisé partout au Canada"
-    : "Independent Practice &bull; Licensed Across Canada";
+    ? "Pratique indépendante &bull; Dieppe (N.-B.), Canada"
+    : "Independent Practice &bull; Dieppe, NB, Canada";
   const telLabel = isFrench ? "Téléphone direct :" : "Direct Telephone:";
   const emailLabel = isFrench ? "Courriel :" : "Email:";
   const footerNote = isFrench
@@ -117,8 +118,8 @@ function renderRouteHtml(r) {
           <h2 style="font-size:1.2rem;margin-top:0;">${contactHeading}</h2>
           <p><strong>${profLabel}</strong> ${profValue}</p>
           <p><strong>${licensingLabel}</strong> ${licensingValue}</p>
-          <p><strong>${telLabel}</strong> +1-506-899-4941</p>
-          <p><strong>${emailLabel}</strong> enquiries@ahmedbello.com</p>
+          <p><strong>${telLabel}</strong> ${escapeHtml(siteConfig.publicPhone)}</p>
+          <p><strong>${emailLabel}</strong> ${escapeHtml(siteConfig.publicEmail)}</p>
         </div>
       </main>
       <footer style="margin-top:2rem;padding-top:1rem;border-top:1px solid #d6cebd;font-size:0.8rem;color:#625d52;">

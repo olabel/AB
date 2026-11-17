@@ -63,11 +63,11 @@ const RULE_CHANGES: RuleChangeItem[] = [
     ahmedAnalysisEn:
       "My Take: For professionals holding US ETFs in non-registered brokerage accounts or international assets after immigrating to Canada, raising the Form T1135 cost threshold from $100,000 to $200,000 (once enacted) removes a frequent $2,500 late-filing penalty trap. Equally important for planning: Budget measures are proposals until Royal Assent, so do not skip current $100,000 T1135 reporting rules for 2025 or 2026 returns, and keep watching the RRSP-for-life consultation for future age-71 decumulation flexibility.",
     ahmedAnalysisFr:
-      "Mon analyse : Pour les familles et nouveaux arrivants détenant des FNB américains hors régime enregistré ou des actifs à l'étranger, le relèvement proposé du seuil T1135 à 200 000 $ réduira un piège fréquent de pénalités (jusqu'à 2 500 $/an). Attention toutefois : ces annonces budgétaires demeurent des propositions jusqu'à leur sanction royale — continuez de respecter le seuil actuel de 100 000 $ pour 2025–2026.",
+      "Mon analyse : Pour les familles et nouveaux arrivants détenant des FNB américains hors régime enregistré ou des actifs à l'étranger, le relèvement proposé du seuil T1135 à 200 000 $ réduira un piège fréquent de pénalités (jusqu'à 2 500 $/an). Attention toutefois : ces annonces budgétaires demeurent des propositions jusqu'à leur sanction royale ; continuez de respecter le seuil actuel de 100 000 $ pour 2025-2026.",
     actionItemsEn: [
       "Keep tracking non-registered foreign asset cost basis against the existing $100,000 CAD threshold until the $200,000 proposal is enacted into law.",
-      "Note the proposed unified May 15 T1 deadline applies starting with the 2027 taxation year — 2026 returns remain due April 30, 2027 (June 15 to file for self-employed, taxes still due April 30).",
-      "Review how higher instalment thresholds ($7,500 outside Quebec; $4,500 in Quebec) and RRSP-for-life consultations could streamline retirement cash flow.",
+      "Note the proposed unified May 15 T1 deadline applies starting with the 2027 taxation year; 2026 returns remain due April 30, 2027 (June 15 to file for self-employed, taxes still due April 30).",
+      "Review how higher instalment thresholds ($7,500 outside Quebec; $4,500 in Quebec) and RRSP-for-life consultations could simplify retirement cash flow.",
     ],
     actionItemsFr: [
       "Continuez de surveiller le coût de vos biens étrangers hors REER/CELI par rapport au seuil actuel de 100 000 $ tant que la loi n'est pas sanctionnée.",
@@ -137,7 +137,7 @@ const RULE_CHANGES: RuleChangeItem[] = [
     summaryFr:
       "Tout en maintenant le taux d'inclusion des gains en capital à 50 % et l'exonération cumulative des gains en capital (ECGC) à 1,25 M$, le Budget 2026 propose deux incitatifs corporatifs majeurs : l'Incitatif de croissance du Canada (exonérant jusqu'à 15 M$ de gains en capital sur des actions admissibles émises entre le 5 novembre 2026 et 2037) ainsi que la Méga-déduction pour la productivité (abaissant le taux effectif marginal sur les investissements admissibles de 13 % à 6,4 %).",
     ahmedAnalysisEn:
-      "My Take: Incorporated owners face a widening gap between operating reinvestment and passive portfolio buildup inside a CCPC. While new qualifying share capital and capital-expenditure deductions are richly rewarded, passive investment portfolios above $50,000 in Adjusted Aggregate Investment Income (AAII) still face the 5-for-1 Small Business Deduction grind under ITA s. 125(5.1) — and realized capital gains still interact with personal AMT on sale.",
+      "My Take: Incorporated owners face a widening gap between operating reinvestment and passive portfolio buildup inside a CCPC. While new qualifying share capital and capital-expenditure deductions are richly rewarded, passive investment portfolios above $50,000 in Adjusted Aggregate Investment Income (AAII) still face the 5-for-1 Small Business Deduction grind under ITA s. 125(5.1), and realized capital gains still interact with personal AMT on sale.",
     ahmedAnalysisFr:
       "Mon analyse : Pour les entrepreneurs incorporés, l'écart se creuse entre le réinvestissement productif et l'accumulation passive. Les portefeuilles passifs dépassant 50 000 $ de revenus (RPRA) continuent de réduire le plafond de la déduction accordée aux petites entreprises (DPE) à raison de 5 $ pour 1 $, rendant la planification fiscale corporative essentielle.",
     actionItemsEn: [
@@ -251,7 +251,7 @@ const RULE_CHANGES: RuleChangeItem[] = [
     summaryFr:
       "En vertu de la ligne directrice B-20 du BSIF, les prêteurs fédéraux appliquent des limites de portefeuille basées sur un ratio prêt-revenu de 4,5x pour les nouveaux prêts non assurés, en plus du test de résistance (taux de qualification minimal). Toutefois, au renouvellement, les transferts simples (sans hausse du capital ni allongement d'amortissement) d'hypothèques non assurées entre prêteurs fédéraux demeurent exemptés du test de résistance. Le BSIF a également précisé que les mises à jour CAR sur les immeubles locatifs visent les réserves des banques et non l'admissibilité des emprunteurs sous B-20.",
     ahmedAnalysisEn:
-      "My Take: Homebuyers stretching for a first purchase feel the 4.5x LTI lender cap most sharply in high-price metros, making down-payment sizing critical. Meanwhile, renewing homeowners who aren't increasing their mortgage balance have genuine bargaining leverage: lenders know you can complete a straight switch without re-qualifying under the stress test, so solicit written renewal offers 120 days early rather than accepting an uncompetitive auto-renewal letter.",
+      "My Take: Homebuyers stretching for a first purchase feel the 4.5x LTI lender cap most sharply in high-price metros, making down-payment sizing critical. Meanwhile, renewing homeowners who aren't increasing their mortgage balance have a strong bargaining position: lenders know you can complete a straight switch without re-qualifying under the stress test, so solicit written renewal offers 120 days early rather than accepting an uncompetitive auto-renewal letter.",
     ahmedAnalysisFr:
       "Mon analyse : Les acheteurs dans les marchés onéreux ressentent davantage le plafond de 4,5x le revenu chez les prêteurs fédéraux, d'où l'importance de la mise de fonds. En revanche, les propriétaires en renouvellement conservent un fort levier : demandez des soumissions écrites 120 jours avant l'échéance plutôt que d'accepter passivement l'offre initiale de votre banque.",
     actionItemsEn: [
@@ -289,7 +289,7 @@ const RULE_CHANGES: RuleChangeItem[] = [
     summaryFr:
       "Pour l'année d'imposition 2026, le premier palier fédéral s'établit à 14,0 % (jusqu'à 58 523 $, montant personnel de base de 16 452 $), tandis que les gains importants restent soumis à l'IMR réformé (lois C-59 et C-69 : taux de 20,5 %, exemption 2026 de 181 440 $, inclusion à 100 % des gains en capital et crédit pour dons admis à 80 %). En parallèle, l'ARC vérifie les feuillets T4FHSA (pénalité de 1 %/mois sans formulaire RC727) et le cumul CELIAPP 40 000 $ + RAP 60 000 $ demeure pleinement en vigueur.",
     ahmedAnalysisEn:
-      "My Take: Every year brings a mismatch between headline tax brackets and actual net exposure on big life events — selling a rental or private shares can trigger federal AMT even with the 50% regular inclusion rate, while opening two FHSAs across separate institutions still triggers CRA's 1%/month penalty. Use dedicated calculators to stress-test capital events and registered room before acting.",
+      "My Take: Every year brings a mismatch between headline tax brackets and actual net exposure on big life events: selling a rental or private shares can trigger federal AMT even with the 50% regular inclusion rate, while opening two FHSAs across separate institutions still triggers CRA's 1%/month penalty. Use dedicated calculators to stress-test capital events and registered room before acting.",
     ahmedAnalysisFr:
       "Mon analyse : L'écart entre le taux marginal courant et l'impôt réel lors d'une grande transaction demeure sous-estimé : une vente d'immeuble ou d'actions peut déclencher l'IMR malgré le maintien de l'inclusion régulière à 50 %, et deux CELIAPP ouverts dans des banques distinctes s'additionnent sur le même NAS.",
     actionItemsEn: [
@@ -385,7 +385,11 @@ export const WhatChangedPage: React.FC = () => {
             <span aria-hidden="true">&bull;</span>
             <span>{isFr ? "Mis à jour : 14 novembre 2026" : "Updated: November 14, 2026"}</span>
             <span aria-hidden="true">&bull;</span>
-            <span>{isFr ? "7 analyses réglementaires" : "7 regulatory updates analyzed"}</span>
+            <span>
+              {isFr
+                ? `${RULE_CHANGES.length} analyses réglementaires`
+                : `${RULE_CHANGES.length} regulatory updates analyzed`}
+            </span>
           </div>
 
           <p className="text-xs text-[#625d52] leading-relaxed pt-1">
@@ -431,7 +435,7 @@ export const WhatChangedPage: React.FC = () => {
           {filteredChanges.map((item) => (
             <article
               key={item.id}
-              className="bg-[#f2ece1] border border-[#d6cebd] rounded-xs p-6 sm:p-8 space-y-6 shadow-xs relative"
+              className="bg-[#f2ece1] border border-[#d6cebd] rounded-[2px] p-6 sm:p-8 space-y-6 shadow-xs relative"
             >
               {/* Card Meta & Header */}
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#d6cebd]/60 pb-4">
@@ -510,16 +514,13 @@ export const WhatChangedPage: React.FC = () => {
         </div>
 
         {/* Bottom Practice Banner */}
-        <section className="bg-[#14211a] text-[#f7f3eb] rounded-xs p-8 sm:p-10 border border-[#2e4a3b] space-y-5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b] border border-[#d6c298]/30 rounded-xs text-[11px] text-[#d6c298] font-medium tracking-wide">
+        <section className="bg-[#14211a] text-[#f7f3eb] rounded-[2px] p-8 sm:p-10 border border-[#2e4a3b] space-y-5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2e4a3b] border border-[#d6c298]/30 rounded-[2px] text-[11px] text-[#d6c298] font-medium tracking-wide">
             <ShieldCheck className="w-3.5 h-3.5 text-[#d6c298]" />
             <span>{isFr ? "Accompagnement Personnalisé" : "Personalized Financial Review"}</span>
           </div>
 
-          <h2
-            className="text-2xl sm:text-3xl font-serif text-[#f7f3eb] leading-snug"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <h2 className="text-2xl sm:text-3xl font-serif text-[#f7f3eb] leading-snug">
             {isFr
               ? "Une de ces nouvelles règles a-t-elle un impact sur votre foyer ?"
               : "Did one of these regulatory changes impact your household or business?"}
@@ -527,8 +528,8 @@ export const WhatChangedPage: React.FC = () => {
 
           <p className="text-sm sm:text-base text-[#d6cebd] max-w-2xl leading-relaxed">
             {isFr
-              ? "Que vous ayez une hypothèque à renouveler, des comptes enregistrés à optimiser ou une société à structurer, discutons-en sans frais ni pression de vente."
-              : "Whether you have an upcoming mortgage renewal, registered accounts to balance, or a Canadian corporation to protect, let's review your exact numbers with zero obligation."}
+              ? "Que vous ayez une hypothèque à renouveler, des comptes enregistrés à optimiser ou une société à structurer, regardons vos chiffres clairement ensemble."
+              : "Whether you have an upcoming mortgage renewal, registered accounts to balance, or a Canadian corporation to protect, let's walk through your exact numbers."}
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-5">

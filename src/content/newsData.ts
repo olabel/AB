@@ -131,7 +131,7 @@ export const STATIC_NEWS: NewsItem[] = [
   {
     id: "cmhc-rental-construction-trends",
     title: "CMHC Housing Review: Purpose-Built Rental Completions Reach Multi-Year High in Major Metros",
-    excerpt: "Canada Mortgage and Housing Corporation's latest report highlights an acceleration in multi-unit residential construction starts in Toronto, Montreal, Calgary, and Moncton, moderating prime rental price pressures.",
+    excerpt: "Canada Mortgage and Housing Corporation's latest report highlights an acceleration in multi-unit residential construction starts in Toronto, Montreal, Calgary, and Halifax, moderating prime rental price pressures.",
     imageUrl: "/images/news/housing_growth.jpg",
     link: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research",
     pubDate: "2026-10-29T14:00:00Z",
@@ -143,7 +143,7 @@ export const STATIC_NEWS: NewsItem[] = [
   {
     id: "fcac-mortgage-protection-guidelines",
     title: "Financial Consumer Agency of Canada: Enhanced Mortgage Protection and Renewal Rights",
-    excerpt: "The FCAC updated compliance expectations for federally regulated banks, requiring early notification windows (up to 6 months prior to maturity) and tailored relief options for Canadian mortgagors preparing for mortgage renewals.",
+    excerpt: "The FCAC updated compliance expectations for federally regulated banks, requiring early notification windows (up to 6 months prior to maturity) and structured relief options for Canadian mortgagors preparing for mortgage renewals.",
     imageUrl: "/images/news/statcan_economy.jpg",
     link: "https://www.canada.ca/en/financial-consumer-agency.html",
     pubDate: "2026-10-28T12:00:00Z",

@@ -62,7 +62,7 @@ export const HowIHelpPage: React.FC = () => {
   }, [location.hash, activeTopics]);
 
   return (
-    <div className="py-12 md:py-16">
+    <div>
       <SEO
         title={isFr ? "Comment J'Aide | Éducation Financière" : "How I Help | Financial Guidance"}
         description={
@@ -110,7 +110,7 @@ export const HowIHelpPage: React.FC = () => {
       </section>
 
       {/* 2. What to Expect (Scope) */}
-      <section id="scope" className="section py-16 border-b border-[#d6cebd] bg-[#fcfaf5]">
+      <section id="scope" className="section border-b border-[#d6cebd] bg-[#fcfaf5]">
         <div className="wrap max-w-4xl space-y-10">
           <div>
             <span className="eyebrow text-xs">{isFr ? "À quoi vous attendre" : "What to expect"}</span>
@@ -133,7 +133,7 @@ export const HowIHelpPage: React.FC = () => {
               <p className="text-xs text-[#46423a] leading-relaxed">
                 {isFr
                   ? "Ce site web et toute discussion générale. Nous expliquons les concepts, les règles fiscales et les compromis afin que vous puissiez juger par vous-même. Cela ne constitue pas un conseil personnalisé ni une recommandation d'achat."
-                  : "This website, and any conversation that stays general. I explain concepts, rules and trade-offs so you can judge them yourself. It is not tailored to your situation and it is not a recommendation."}
+                  : "This website, and any conversation that stays general. I explain concepts, rules and trade-offs so you can judge them yourself. It is not specific to your situation and it is not a recommendation."}
               </p>
             </div>
 
@@ -409,7 +409,7 @@ export const HowIHelpPage: React.FC = () => {
             </Link>
           </div>
           <p className="text-xs text-[#625d52]">
-            {isFr ? "Sans obligation. Sans pression commerciale." : "No obligation. No sales pressure."}
+            {isFr ? "Des explications claires, à votre rythme." : "Plain-language guidance, at your own pace."}
           </p>
         </div>
       </section>

@@ -176,7 +176,7 @@ export const DecisionMap: React.FC = () => {
                   role="tab"
                   aria-selected={isSelected}
                   onClick={() => setSelectedNodeId(node.id)}
-                  className={`text-left p-2.5 text-xs font-medium rounded-[2px] border transition-all ${
+                  className={`text-left p-2.5 text-xs font-medium rounded-[2px] border transition-all cursor-pointer ${
                     isSelected
                       ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b] shadow-xs"
                       : "bg-[#f7f3eb] text-[#1c1b18] border-[#d6cebd] hover:border-[#8d8677]"
