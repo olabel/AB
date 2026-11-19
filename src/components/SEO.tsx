@@ -9,6 +9,7 @@ import {
   getLanguageUrls,
   getOgImageForPath,
 } from "../config/seoMetadata.ts";
+import { buildRouteJsonLd } from "../config/schema.ts";
 
 export interface SEOProps {
   title?: string;
@@ -136,6 +137,7 @@ export const SEO: React.FC<SEOProps> = ({
     setMetaTag("property", "og:locale", isFr ? "fr_CA" : "en_CA");
     setMetaTag("property", "og:locale:alternate", isFr ? "en_CA" : "fr_CA");
     setMetaTag("property", "og:image", resolvedImage);
+    setMetaTag("property", "og:image:secure_url", resolvedImage);
 
     setMetaTag("name", "twitter:card", "summary_large_image");
     setMetaTag("name", "twitter:title", finalTitle);
@@ -154,26 +156,39 @@ export const SEO: React.FC<SEOProps> = ({
       removeMetaTag("property", "article:modified_time");
     }
 
+    // Always clear SSR/static prerendered JSON-LD blocks so SPA navigation never leaves stale or duplicate @id graphs
+    document.querySelectorAll('script[data-prerender-jsonld="true"]').forEach((el) => el.remove());
+
     let scriptTag = document.getElementById("route-jsonld") as HTMLScriptElement | null;
-    if (jsonLd) {
-      document.querySelectorAll('script[data-prerender-jsonld="true"]').forEach((el) => el.remove());
-      if (!scriptTag) {
-        scriptTag = document.createElement("script");
-        scriptTag.id = "route-jsonld";
-        scriptTag.type = "application/ld+json";
-        document.head.appendChild(scriptTag);
-      }
-      const data = Array.isArray(jsonLd) ? { "@context": "https://schema.org", "@graph": jsonLd } : jsonLd;
-      scriptTag.text = JSON.stringify(data);
-    } else if (scriptTag) {
-      scriptTag.remove();
+    if (!scriptTag) {
+      scriptTag = document.createElement("script");
+      scriptTag.id = "route-jsonld";
+      scriptTag.type = "application/ld+json";
+      document.head.appendChild(scriptTag);
     }
+
+    const resolvedJsonLd = jsonLd
+      ? Array.isArray(jsonLd)
+        ? { "@context": "https://schema.org", "@graph": jsonLd }
+        : jsonLd
+      : buildRouteJsonLd({
+          pathname: path,
+          title: finalTitle,
+          description: finalDescription,
+          heading: routeSeo?.heading,
+          isFr,
+          noIndex: finalNoIndex,
+        });
+
+    scriptTag.text = JSON.stringify(resolvedJsonLd);
 
     return () => {
       const tag = document.getElementById("route-jsonld");
       if (tag) tag.remove();
     };
   }, [
+    path,
+    routeSeo?.heading,
     finalTitle,
     finalDescription,
     currentCanonical,

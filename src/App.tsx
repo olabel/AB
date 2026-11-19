@@ -65,13 +65,60 @@ function LanguageRouteSync() {
   return null;
 }
 
+class AppErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(): { hasError: boolean } {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: unknown) {
+    console.warn("[UI Recovery]:", error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-[#f7f3eb] text-[#1c1b18] p-6 text-center">
+          <div className="max-w-md space-y-4 bg-[#fcfaf5] border border-[#d6cebd] p-8 rounded-[2px]">
+            <h1 className="font-serif text-2xl text-[#1c1b18]">Something interrupted this view</h1>
+            <p className="text-sm text-[#46423a]">
+              Please reload the page to continue, or return to the homepage.
+            </p>
+            <div className="pt-2 flex justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => window.location.reload()}
+                className="btn btn-primary text-xs px-4 py-2"
+              >
+                Reload page
+              </button>
+              <a href="/" className="btn btn-ghost text-xs px-4 py-2">
+                Home
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function App() {
   return (
-    <LanguageProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <LanguageRouteSync />
-        <div className="min-h-screen flex flex-col bg-[#f7f3eb] text-[#1c1b18] antialiased selection:bg-[#2e4a3b] selection:text-[#f7f3eb]">
+    <AppErrorBoundary>
+      <LanguageProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <LanguageRouteSync />
+          <div className="min-h-screen flex flex-col bg-[#f7f3eb] text-[#1c1b18] antialiased selection:bg-[#2e4a3b] selection:text-[#f7f3eb]">
           <Header />
           <DraftBanner />
           <FloatingNewsWidget />
@@ -202,8 +249,12 @@ export default function App() {
           <Footer />
           <MobileBookingBar />
         </div>
-        <Analytics />
+        {typeof window !== "undefined" &&
+          (window.location.hostname === "ahmedbello.com" ||
+            window.location.hostname === "www.ahmedbello.com" ||
+            window.location.hostname.endsWith(".vercel.app")) && <Analytics />}
       </BrowserRouter>
-    </LanguageProvider>
+      </LanguageProvider>
+    </AppErrorBoundary>
   );
 }

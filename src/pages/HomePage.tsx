@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { BrandMark } from "../components/BrandMark.tsx";
 import { Portrait } from "../components/Portrait.tsx";
 import { SEO } from "../components/SEO.tsx";
+import { buildRouteJsonLd } from "../config/schema.ts";
 import { HowThePiecesFit } from "../components/HowThePiecesFit.tsx";
+import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { trackBookingClick } from "../lib/track.ts";
@@ -23,62 +25,30 @@ export const HomePage: React.FC = () => {
   const ctaLabel = getCtaLabel(isFr);
   const secondaryCtaLabel = getSecondaryCtaLabel(isFr);
 
-  const personNode: Record<string, any> = {
-    "@type": "Person",
-    "@id": `${siteConfig.siteUrl}/#person`,
-    name: siteConfig.name,
-    jobTitle: siteConfig.designation,
-    telephone: siteConfig.publicPhone,
-    email: siteConfig.publicEmail,
-    image: `${siteConfig.siteUrl}${siteConfig.portrait}`,
-    worksFor: {
-      "@id": `${siteConfig.siteUrl}/#organization`,
-    },
-    url: `${siteConfig.siteUrl}${prefix || "/"}`,
-  };
+  const homeTitle = isFr
+    ? "Ahmed Bello | Planification financière à Dieppe, NB"
+    : "Ahmed Bello | Financial Planning in Dieppe, NB";
+  const homeDescription = isFr
+    ? "Planification financière, protection du revenu et stratégies CELI, REER et CELIAPP pour familles, entrepreneurs et nouveaux arrivants au Canada."
+    : "Financial planning, income protection, and registered account strategy for Canadian families, business owners, healthcare professionals, and newcomers.";
+  const canonicalPath = isFr ? "/fr" : "/";
 
-  if (Array.isArray(siteConfig.socialProfiles) && siteConfig.socialProfiles.length > 0) {
-    personNode.sameAs = siteConfig.socialProfiles;
-  }
-
-  const homeJsonLd = [
-    {
-      "@type": "FinancialService",
-      "@id": `${siteConfig.siteUrl}/#organization`,
-      name: "Ahmed Bello Financial Solutions",
-      url: `${siteConfig.siteUrl}/`,
-      logo: `${siteConfig.siteUrl}/brand/icon-512.png`,
-      image: `${siteConfig.siteUrl}${siteConfig.portrait}`,
-      telephone: siteConfig.publicPhone,
-      email: siteConfig.publicEmail,
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Dieppe",
-        addressRegion: "NB",
-        addressCountry: "CA",
-      },
-      areaServed: {
-        "@type": "Country",
-        name: "Canada",
-      },
-    },
-    personNode,
-  ];
+  const homeJsonLd = buildRouteJsonLd({
+    pathname: canonicalPath,
+    title: homeTitle,
+    description: homeDescription,
+    heading: isFr
+      ? "Ahmed Bello | Professionnel en Solutions Financières Agréé"
+      : "Ahmed Bello | Licensed Financial Solutions Professional",
+    isFr,
+  });
 
   return (
     <div className="bg-[#f7f3eb]">
       <SEO
-        title={
-          isFr
-            ? "Ahmed Bello | Planification financière à Dieppe, NB"
-            : "Ahmed Bello | Financial Planning in Dieppe, NB"
-        }
-        description={
-          isFr
-            ? "Planification financière, protection du revenu familial et stratégies CELI, REER et CELIAPP pour familles, entrepreneurs, professionnels de santé et nouveaux arrivants."
-            : "Financial planning, income protection, and registered account strategy for Canadian families, business owners, healthcare professionals, and newcomers."
-        }
-        canonicalUrl={isFr ? "/fr" : "/"}
+        title={homeTitle}
+        description={homeDescription}
+        canonicalUrl={canonicalPath}
         jsonLd={homeJsonLd}
       />
 
@@ -388,6 +358,57 @@ export const HomePage: React.FC = () => {
               <span>{isFr ? "Voir les pièges financiers" : "View costly blindspots"} →</span>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* 3.5. Inline Lead-Magnet / Checklist Capture */}
+      <section className="section border-b border-[#d6cebd] bg-[#fcfaf5]">
+        <div className="wrap max-w-4xl">
+          <div className="space-y-2 mb-6">
+            <span className="eyebrow block">
+              {isFr ? "Aide-mémoire gratuit • Édition 2026" : "Free 2026 Checklist • No Call Required"}
+            </span>
+            <h2 className="h2 text-[#1c1b18]">
+              {isFr
+                ? "Pas encore prêt pour un appel ? Recevez l'aide-mémoire financier 2026."
+                : "Not ready for a call? Start with the 2026 Canadian Money Check."}
+            </h2>
+            <p className="body text-[#46423a] max-w-2xl">
+              {isFr
+                ? "Recevez par courriel les plafonds 2026 (CELI, REER, CELIAPP), les points clés avant un renouvellement hypothécaire et les échéances fiscales à ne pas manquer."
+                : "Get a plain-language email breakdown of 2026 TFSA, RRSP, and FHSA limits, mortgage renewal checks, and missed CRA credit deadlines."}
+            </p>
+          </div>
+
+          <CalculatorLeadCapture
+            calculatorName="2026 Canadian Money & Tax Checklist"
+            analyticsCalculatorName="home_checklist"
+            analyticsTopic="general"
+            topic="general"
+            className="!mt-0"
+            summaryText={
+              isFr
+                ? [
+                    "Aide-mémoire financier canadien 2026 (demandé depuis l'accueil) :",
+                    "1. Plafonds 2026 : CELI 7 000 $, REER jusqu'à 33 810 $, CELIAPP 8 000 $/an.",
+                    "2. Renouvellement hypothécaire : évaluation du choc de mensualité et comparaison avec la liquidité CELI.",
+                    "3. Pièges fréquents : subventions REEE inutilisées, remboursement SCHL écoénergétique (24 mois) et règle des 10 ans T1-ADJ.",
+                  ].join("\n")
+                : [
+                    "2026 Canadian Money & Tax Checklist (requested from homepage):",
+                    "1. 2026 Limits: TFSA $7,000, RRSP up to $33,810, FHSA $8,000/yr ($16,000 max with carry-forward once opened).",
+                    "2. Mortgage Renewal Check: Compare higher monthly payments vs. keeping liquid emergency savings in a TFSA.",
+                    "3. Missed Money Checks: Unused RESP grants, CMHC 25% energy-efficient refund (24-month window), and 10-year CRA T1-ADJ adjustments.",
+                  ].join("\n")
+            }
+            customSubheading={isFr ? "Envoi immédiat par courriel" : "Sent Directly to Your Inbox"}
+            customHeading={
+              isFr
+                ? "Recevoir la liste de vérification 2026 par courriel"
+                : "Email me the 2026 Canadian Money & Tax Checklist"
+            }
+            customButtonLabel={isFr ? "Envoyer mon aide-mémoire" : "Email Me the Checklist"}
+          />
         </div>
       </section>
 

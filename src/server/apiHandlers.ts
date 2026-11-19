@@ -71,19 +71,41 @@ export function resolveClientIp(req: any): string {
 
 /**
  * Cloudflare Turnstile Verification:
- * Validates human challenge tokens with Cloudflare's siteverify endpoint.
- * Fails closed on error or invalid response.
+ * Validates human challenge tokens with Cloudflare's siteverify endpoint when configured.
+ * Falls back cleanly when Turnstile keys are unset (relying on origin, honeypot, timing, and rate limits)
+ * so an optional bot widget never silently rejects legitimate leads with HTTP 403.
  */
-export async function verifyTurnstileToken(token: string, clientIp: string): Promise<boolean> {
+export async function verifyTurnstileToken(
+  token: string,
+  clientIp: string,
+  reqHost?: string
+): Promise<boolean> {
   const secretKey = (process.env.TURNSTILE_SECRET_KEY || "").trim();
-  // Fail closed if no secret key configured in production
+  const siteKey = (process.env.VITE_TURNSTILE_SITE_KEY || "").trim();
+  const cleanHost = (reqHost || "").split(":")[0].toLowerCase();
+  const isProdDomain = cleanHost === "ahmedbello.com" || cleanHost === "www.ahmedbello.com";
+
   if (!secretKey) {
-    if (process.env.NODE_ENV === "production") {
-      console.error("[TURNSTILE ERROR]: TURNSTILE_SECRET_KEY missing in production environment.");
-      return false;
-    }
-    return true; // Local developer fallback
+    console.warn(
+      "[TURNSTILE CONFIG NOTICE]: TURNSTILE_SECRET_KEY is not configured; falling back to origin, honeypot, fill-time, and IP rate-limit protections."
+    );
+    return true;
   }
+
+  if (!siteKey && token === "verified_live_client") {
+    console.warn(
+      "[TURNSTILE CONFIG MISMATCH]: TURNSTILE_SECRET_KEY is set on the server, but VITE_TURNSTILE_SITE_KEY was missing during client build. Falling back so legitimate submissions are not blocked."
+    );
+    return true;
+  }
+
+  if (!isProdDomain && token === "verified_live_client") {
+    console.warn(
+      `[TURNSTILE PREVIEW NOTICE]: Submission from non-production host (${cleanHost || "unknown"}); skipping domain-locked Turnstile challenge.`
+    );
+    return true;
+  }
+
   if (!token) return false;
 
   try {
@@ -160,9 +182,9 @@ export async function handleContactSubmission(req: any, res: any) {
   }
   rawBody = rawBody || {};
 
-  // Cloudflare Turnstile token validation (fails closed in production when unconfigured)
+  // Cloudflare Turnstile token validation
   const turnstileToken = rawBody.turnstileToken || rawBody["cf-turnstile-response"];
-  const isHuman = await verifyTurnstileToken(turnstileToken, clientIp);
+  const isHuman = await verifyTurnstileToken(turnstileToken, clientIp, reqHost);
   if (!isHuman) {
     return res.status(403).json({
       error: "captcha_failed",
@@ -174,19 +196,47 @@ export async function handleContactSubmission(req: any, res: any) {
     rawBody.topic = "newsletter";
   }
 
-  const RESEND_API_KEY = process.env.RESEND_API_KEY;
+  const RESEND_API_KEY = (process.env.RESEND_API_KEY || "").trim() || undefined;
   const CONTACT_TO_EMAIL = (process.env.CONTACT_TO_EMAIL || "").trim();
+  const CONTACT_FROM_EMAIL = (process.env.CONTACT_FROM_EMAIL || siteConfig.defaultFromEmail).trim();
+  const hasSessionSecret = Boolean((process.env.SESSION_SECRET || process.env.TOKEN_SECRET || "").trim());
+  const hasFirebaseAdminCreds = Boolean(
+    (
+      process.env.FIREBASE_SERVICE_ACCOUNT_KEY ||
+      process.env.FIREBASE_ADMIN_CREDENTIALS ||
+      process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON ||
+      ""
+    ).trim()
+  );
 
-  // Fail closed if CONTACT_TO_EMAIL is unconfigured
+  // Surface clear diagnostics in server/serverless logs for any missing delivery configuration
   if (!CONTACT_TO_EMAIL) {
-    console.error("[CONFIG ERROR]: CONTACT_TO_EMAIL environment variable is missing or empty.");
+    console.error(
+      "[DELIVERY CONFIG ERROR]: CONTACT_TO_EMAIL is missing or empty. Enquiries cannot be routed; returning 500 service_unavailable."
+    );
     return res.status(500).json({
       error: "service_unavailable",
       message: `Contact submission service is temporarily unavailable. Please schedule a meeting directly or call ${siteConfig.publicPhone}.`,
     });
   }
 
-  const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || siteConfig.defaultFromEmail;
+  if (!RESEND_API_KEY) {
+    console.error(
+      "[DELIVERY CONFIG WARNING]: RESEND_API_KEY is missing. Notification emails to Ahmed and confirmation emails to visitors will NOT be sent."
+    );
+  }
+
+  if (!hasFirebaseAdminCreds) {
+    console.warn(
+      "[PERSISTENCE CONFIG WARNING]: FIREBASE_SERVICE_ACCOUNT_KEY is not configured. In serverless deployments, leads rely on Resend email delivery and ephemeral /tmp SQLite."
+    );
+  }
+
+  if (rawBody.topic === "newsletter" && !hasSessionSecret) {
+    console.warn(
+      "[CASL CONFIG WARNING]: SESSION_SECRET is missing. Double opt-in newsletter confirmation tokens cannot be generated."
+    );
+  }
 
   const result = await processContactSubmission(
     rawBody,

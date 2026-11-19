@@ -41,11 +41,11 @@ export const AboutPage: React.FC = () => {
   return (
     <div>
       <SEO
-        title={isFr ? "À Propos d'Ahmed Bello | Professionnel Agréé" : "About Ahmed Bello | Licensed Financial Solutions"}
+        title={isFr ? "À Propos d'Ahmed Bello | Solutions Canada" : "About Ahmed Bello | Financial Solutions Canada"}
         description={
           isFr
-            ? "Éducateur financier indépendant aidant les familles et particuliers au Canada à comprendre les régimes enregistrés (CELI, REER) et la prévoyance."
-            : "Independent Canadian financial educator helping individuals and families understand registered accounts (TFSA, RRSP, FHSA), insurance, and money decisions."
+            ? "Éducateur financier indépendant aidant les familles au Canada à comprendre les régimes enregistrés (CELI, REER) et la protection."
+            : "Independent Canadian financial educator helping families understand registered accounts (TFSA, RRSP, FHSA), insurance, and money decisions."
         }
         canonicalUrl={isFr ? "/fr/about" : "/about"}
       />

@@ -6,13 +6,16 @@ import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import { articles } from "./src/content/data.ts";
+import { BLINDSPOTS_DATA } from "./src/content/blindspotsData.ts";
 import { DRAFT_MODE, siteConfig } from "./src/config/site.ts";
 import {
   ARTICLE_FR_SEO,
   formatStrictTitle,
   getCoreRouteSeo,
   getLanguageUrls,
+  getOgImageForPath,
 } from "./src/config/seoMetadata.ts";
+import { buildRouteJsonLd } from "./src/config/schema.ts";
 
 dotenv.config();
 
@@ -96,7 +99,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
   res.setHeader(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=(), payment=(), usb=(), vr=()"
+    "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
   );
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST");
@@ -271,6 +274,11 @@ app.get("/api/news", async (_req: Request, res: Response) => {
 // --------------------------------------------------------------------------
 app.all("/api/confirm-subscription", handleConfirmSubscription);
 
+// Prevent Express HTML fallback from ever being served for /_vercel/* analytics paths
+app.get("/_vercel/*", (_req: Request, res: Response) => {
+  res.status(204).type("application/javascript; charset=utf-8").end();
+});
+
 // --------------------------------------------------------------------------
 // 5.1. Strict 301 Canonical URL Normalization & Alias Redirects
 // --------------------------------------------------------------------------
@@ -361,175 +369,13 @@ interface RouteMeta {
   url: string;
   enUrl: string;
   frUrl: string;
+  ogImage: string;
   lang: "en-CA" | "fr-CA";
   noIndex: boolean;
   isNotFound?: boolean;
-  jsonLd: Record<string, any>[];
-}
-
-const siteWideFinancialService = {
-  "@context": "https://schema.org",
-  "@type": "FinancialService",
-  "@id": `${siteConfig.siteUrl}/#organization`,
-  name: "Ahmed Bello Financial Solutions",
-  url: `${siteConfig.siteUrl}/`,
-  logo: `${siteConfig.siteUrl}/brand/icon-512.png`,
-  image: `${siteConfig.siteUrl}${siteConfig.headshotUrl}`,
-  telephone: siteConfig.publicPhone,
-  email: siteConfig.publicEmail,
-  description:
-    "Tax-efficient wealth accumulation, family capital preservation, and financial strategy for Canadian families, CCPC business owners, and newcomers.",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Dieppe",
-    addressRegion: "NB",
-    addressCountry: "CA",
-  },
-  areaServed: {
-    "@type": "Country",
-    name: "Canada",
-  },
-  knowsAbout: [
-    "Tax-Free Savings Account (TFSA)",
-    "Registered Retirement Savings Plan (RRSP)",
-    "First Home Savings Account (FHSA)",
-    "CCPC Small Business Deduction Tax Efficiency",
-    "Halal & Islamic Investing Canada",
-    "Newcomer Financial Planning Canada",
-  ],
-};
-
-const siteWidePerson = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": `${siteConfig.siteUrl}/#person`,
-  name: "Ahmed Bello",
-  jobTitle: "Licensed Financial Solutions Professional",
-  telephone: siteConfig.publicPhone,
-  email: siteConfig.publicEmail,
-  image: `${siteConfig.siteUrl}${siteConfig.headshotUrl}`,
-  worksFor: {
-    "@id": `${siteConfig.siteUrl}/#organization`,
-  },
-  url: `${siteConfig.siteUrl}/`,
-  ...(siteConfig.socialProfiles.length > 0 ? { sameAs: siteConfig.socialProfiles } : {}),
-};
-
-const siteWideWebSite = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": `${siteConfig.siteUrl}/#website`,
-  name: "Ahmed Bello",
-  url: `${siteConfig.siteUrl}/`,
-  description: "Plain-language Canadian financial education on registered accounts, insurance, and family money decisions.",
-  publisher: {
-    "@id": `${siteConfig.siteUrl}/#person`,
-  },
-};
-
-function buildCoreJsonLd(cleanPath: string, heading: string, isFrench: boolean): Record<string, any>[] {
-  const { canonicalUrl } = getLanguageUrls(cleanPath);
-  if (cleanPath === "/" || cleanPath === "/fr") {
-    return [siteWideWebSite, siteWideFinancialService, siteWidePerson];
-  }
-  if (cleanPath === "/education" || cleanPath === "/fr/education") {
-    return [
-      siteWideWebSite,
-      siteWideFinancialService,
-      {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        name: heading,
-        url: canonicalUrl,
-        hasPart: articles
-          .filter((a) => a.kind === "guide")
-          .map((a) => ({
-            "@type": "Article",
-            name: isFrench ? ARTICLE_FR_SEO[a.slug]?.title || a.title : a.title,
-            url: `${siteConfig.siteUrl}${isFrench ? `/fr${a.url}` : a.url}`,
-          })),
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: isFrench ? "Accueil" : "Home", item: isFrench ? `${siteConfig.siteUrl}/fr` : `${siteConfig.siteUrl}/` },
-          { "@type": "ListItem", position: 2, name: isFrench ? "Éducation Financière" : "Financial Education", item: canonicalUrl },
-        ],
-      },
-    ];
-  }
-  if (cleanPath === "/insights" || cleanPath === "/fr/insights") {
-    return [
-      siteWideWebSite,
-      siteWideFinancialService,
-      {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        name: heading,
-        url: canonicalUrl,
-        hasPart: articles
-          .filter((a) => a.kind === "insight")
-          .map((a) => ({
-            "@type": "Article",
-            name: isFrench ? ARTICLE_FR_SEO[a.slug]?.title || a.title : a.title,
-            url: `${siteConfig.siteUrl}${isFrench ? `/fr${a.url}` : a.url}`,
-          })),
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: isFrench ? "Accueil" : "Home", item: isFrench ? `${siteConfig.siteUrl}/fr` : `${siteConfig.siteUrl}/` },
-          { "@type": "ListItem", position: 2, name: isFrench ? "Perspectives" : "Insights", item: canonicalUrl },
-        ],
-      },
-    ];
-  }
-  if (cleanPath === "/calculators" || cleanPath === "/fr/calculators" || cleanPath === "/calculators/amt" || cleanPath === "/fr/calculators/amt") {
-    return [
-      siteWideWebSite,
-      siteWideFinancialService,
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        name: cleanPath.includes("/amt")
-          ? isFrench
-            ? "Calculateur d'Impôt Minimum de Remplacement (IMR)"
-            : "Alternative Minimum Tax (AMT) Calculator Canada"
-          : isFrench
-          ? "Simulateurs Financiers Canadiens"
-          : "Canadian Financial Decision Calculators",
-        url: canonicalUrl,
-        applicationCategory: "FinanceApplication",
-        operatingSystem: "All",
-      },
-    ];
-  }
-  if (cleanPath === "/about" || cleanPath === "/fr/about" || cleanPath === "/careers" || cleanPath === "/fr/careers") {
-    return [siteWideWebSite, siteWidePerson, siteWideFinancialService];
-  }
-  if (cleanPath === "/contact" || cleanPath === "/fr/contact") {
-    return [
-      siteWideWebSite,
-      siteWideFinancialService,
-      {
-        "@context": "https://schema.org",
-        "@type": "ContactPage",
-        name: heading,
-        url: canonicalUrl,
-        contactPoint: {
-          "@type": "ContactPoint",
-          email: siteConfig.publicEmail,
-          telephone: siteConfig.publicPhone,
-          contactType: "customer service",
-          areaServed: "CA",
-          availableLanguage: ["English", "French"],
-        },
-      },
-    ];
-  }
-  return [siteWideWebSite, siteWideFinancialService];
+  articlePublishedTime?: string;
+  articleModifiedTime?: string;
+  jsonLd: Record<string, any>;
 }
 
 function getRouteMetadata(pathname: string): RouteMeta {
@@ -552,6 +398,7 @@ function getRouteMetadata(pathname: string): RouteMeta {
       const headline = isFrench ? frSeo?.title || article.title : article.title;
       const articlePath = isFrench ? `/fr${article.url}` : article.url;
       const { enUrl, frUrl, canonicalUrl } = getLanguageUrls(articlePath);
+      const ogImage = getOgImageForPath(articlePath, siteConfig.siteUrl);
 
       return {
         title,
@@ -560,72 +407,19 @@ function getRouteMetadata(pathname: string): RouteMeta {
         url: canonicalUrl,
         enUrl,
         frUrl,
+        ogImage,
         lang,
         noIndex: false,
-        jsonLd: [
-          siteWideWebSite,
-          siteWidePerson,
-          {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline,
-            description,
-            datePublished: article.datePublished || "2025-01-15T08:00:00-05:00",
-            dateModified: article.dateModified || "2026-11-05T09:00:00-05:00",
-            isAccessibleForFree: true,
-            inLanguage: lang,
-            author: siteWidePerson,
-            publisher: siteWideFinancialService,
-            mainEntityOfPage: {
-              "@type": "WebPage",
-              "@id": canonicalUrl,
-            },
-            about: {
-              "@type": "Thing",
-              name: article.category,
-            },
-            citation: article.sources.map((s) => ({
-              "@type": "CreativeWork",
-              name: s.label,
-              url: s.url,
-            })),
-            speakable: {
-              "@type": "SpeakableSpecification",
-              cssSelector: ["h1", ".lede", "#overview"],
-            },
-          },
-          {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: isFrench ? "Accueil" : "Home",
-                item: isFrench ? `${siteConfig.siteUrl}/fr` : `${siteConfig.siteUrl}/`,
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name:
-                  article.kind === "guide"
-                    ? isFrench
-                      ? "Éducation Financière"
-                      : "Financial Education"
-                    : isFrench
-                    ? "Perspectives"
-                    : "Insights",
-                item: `${siteConfig.siteUrl}${isFrench ? "/fr" : ""}/${article.kind === "guide" ? "education" : "insights"}`,
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: headline,
-                item: canonicalUrl,
-              },
-            ],
-          },
-        ],
+        articlePublishedTime: article.datePublished || "2025-01-15T08:00:00-05:00",
+        articleModifiedTime: article.dateModified || "2026-11-05T09:00:00-05:00",
+        jsonLd: buildRouteJsonLd({
+          pathname: articlePath,
+          title,
+          description,
+          heading: headline,
+          isFr: isFrench,
+          article,
+        }),
       };
     }
   }
@@ -634,6 +428,31 @@ function getRouteMetadata(pathname: string): RouteMeta {
   const coreSeo = getCoreRouteSeo(cleanPath);
   if (coreSeo) {
     const { enUrl, frUrl, canonicalUrl } = getLanguageUrls(cleanPath);
+    const ogImage = getOgImageForPath(cleanPath, siteConfig.siteUrl);
+    const isFrCore = coreSeo.lang === "fr-CA";
+    const collectionItems =
+      cleanPath === "/education" || cleanPath === "/fr/education"
+        ? articles
+            .filter((a) => a.kind === "guide")
+            .map((a) => ({
+              name: isFrCore ? ARTICLE_FR_SEO[a.slug]?.title || a.title : a.title,
+              url: `${isFrCore ? "/fr" : ""}${a.url}`,
+            }))
+        : cleanPath === "/insights" || cleanPath === "/fr/insights"
+        ? articles
+            .filter((a) => a.kind === "insight")
+            .map((a) => ({
+              name: isFrCore ? ARTICLE_FR_SEO[a.slug]?.title || a.title : a.title,
+              url: `${isFrCore ? "/fr" : ""}${a.url}`,
+            }))
+        : cleanPath === "/costly-blindspots" || cleanPath === "/fr/costly-blindspots"
+        ? BLINDSPOTS_DATA.map((item) => ({
+            name: isFrCore ? item.titleFr : item.titleEn,
+            description: isFrCore ? item.summaryFr : item.summaryEn,
+            url: `${isFrCore ? "/fr" : ""}/costly-blindspots#${item.id}`,
+          }))
+        : undefined;
+
     return {
       title: formatStrictTitle(coreSeo.title),
       description: coreSeo.description,
@@ -641,9 +460,18 @@ function getRouteMetadata(pathname: string): RouteMeta {
       url: canonicalUrl,
       enUrl,
       frUrl,
+      ogImage,
       lang: coreSeo.lang,
       noIndex: Boolean(coreSeo.noIndex),
-      jsonLd: buildCoreJsonLd(cleanPath, coreSeo.heading, coreSeo.lang === "fr-CA"),
+      jsonLd: buildRouteJsonLd({
+        pathname: cleanPath,
+        title: formatStrictTitle(coreSeo.title),
+        description: coreSeo.description,
+        heading: coreSeo.heading,
+        isFr: isFrCore,
+        noIndex: Boolean(coreSeo.noIndex),
+        collectionItems,
+      }),
     };
   }
 
@@ -658,10 +486,15 @@ function getRouteMetadata(pathname: string): RouteMeta {
     url: canonicalUrl,
     enUrl,
     frUrl,
+    ogImage: `${siteConfig.siteUrl}/brand/og-home.png`,
     lang,
     noIndex: true,
     isNotFound: true,
-    jsonLd: [siteWideWebSite],
+    jsonLd: buildRouteJsonLd({
+      pathname: cleanPath,
+      noIndex: true,
+      isFr: isFrench,
+    }),
   };
 }
 
@@ -715,6 +548,14 @@ function injectHeadMetadata(html: string, pathname: string): string {
     `<meta property="og:locale:alternate" content="${meta.lang === "fr-CA" ? "en_CA" : "fr_CA"}" />`
   );
   transformed = transformed.replace(
+    /<meta\s+property="og:image"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta property="og:image" content="${escapeAttr(meta.ogImage)}" />`
+  );
+  transformed = transformed.replace(
+    /<meta\s+property="og:image:secure_url"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta property="og:image:secure_url" content="${escapeAttr(meta.ogImage)}" />`
+  );
+  transformed = transformed.replace(
     /<meta\s+name="twitter:title"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta name="twitter:title" content="${escapeAttr(meta.title)}" />`
   );
@@ -722,12 +563,22 @@ function injectHeadMetadata(html: string, pathname: string): string {
     /<meta\s+name="twitter:description"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta name="twitter:description" content="${escapeAttr(meta.description)}" />`
   );
+  transformed = transformed.replace(
+    /<meta\s+name="twitter:image"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta name="twitter:image" content="${escapeAttr(meta.ogImage)}" />`
+  );
 
-  // Inject route-specific JSON-LD schemas (marked so hydrated client SEO swaps cleanly without duplicates)
+  // Remove base template JSON-LD so each route serves a single unified @graph script
+  transformed = transformed.replace(/<script\s+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, "");
+
   let extraTags = "";
-  meta.jsonLd.forEach((schema) => {
-    extraTags += `\n    <script type="application/ld+json" data-prerender-jsonld="true">${escapeJsonLd(schema)}</script>`;
-  });
+  if (meta.articlePublishedTime) {
+    extraTags += `\n    <meta property="article:published_time" content="${escapeAttr(meta.articlePublishedTime)}" />`;
+  }
+  if (meta.articleModifiedTime) {
+    extraTags += `\n    <meta property="article:modified_time" content="${escapeAttr(meta.articleModifiedTime)}" />`;
+  }
+  extraTags += `\n    <script type="application/ld+json" data-prerender-jsonld="true">${escapeJsonLd(meta.jsonLd)}</script>`;
 
   transformed = transformed.replace("</head>", `${extraTags}\n  </head>`);
 

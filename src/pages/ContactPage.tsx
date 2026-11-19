@@ -55,12 +55,10 @@ export const ContactPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const topicParam = searchParams.get("topic") || "";
 
-  // Find prefilled topic from URL
+  // Find prefilled topic from URL, defaulting cleanly to general enquiry
   const initialTopic = TOPIC_OPTIONS.some((t) => t.id === topicParam)
     ? topicParam
-    : topicParam === "education"
-    ? "general"
-    : "";
+    : "general";
 
   const [formLoadedAt] = useState<number>(() => Date.now());
   const [firstName, setFirstName] = useState("");
@@ -69,7 +67,6 @@ export const ContactPage: React.FC = () => {
   const [province, setProvince] = useState("");
   const [topic, setTopic] = useState(initialTopic);
   const [message, setMessage] = useState("");
-  const [consentPrivacy, setConsentPrivacy] = useState(false);
   const [consentEducational, setConsentEducational] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -110,11 +107,9 @@ export const ContactPage: React.FC = () => {
     const cleanPhone = sanitizeInput(phone);
 
     const unicodeNameRegex = /^[\p{L}\p{M}\s'’‘.-]{1,80}$/u;
-    if (!cleanFirst) {
-      errors.firstName = isFr ? "Veuillez indiquer votre prénom." : "Please provide your first name.";
-    } else if (cleanFirst.length > 80) {
+    if (cleanFirst.length > 80) {
       errors.firstName = isFr ? "Le prénom doit comporter moins de 80 caractères." : "First name must be under 80 characters.";
-    } else if (!unicodeNameRegex.test(cleanFirst)) {
+    } else if (cleanFirst && !unicodeNameRegex.test(cleanFirst)) {
       errors.firstName = isFr ? "Le prénom contient des caractères non autorisés." : "First name contains invalid characters.";
     }
 
@@ -130,20 +125,12 @@ export const ContactPage: React.FC = () => {
       errors.phone = isFr ? "Format de téléphone invalide (ou laissez vide)." : "Please enter a valid phone number or leave blank.";
     }
 
-    if (!province || !PROVINCES_AND_TERRITORIES.includes(province)) {
-      errors.province = isFr ? "Veuillez sélectionner votre province ou territoire." : "Please select your province or territory.";
-    }
-
-    if (!topic || !TOPIC_OPTIONS.some((t) => t.id === topic)) {
-      errors.topic = isFr ? "Veuillez sélectionner un sujet financier." : "Please select a main financial topic.";
+    if (province && !PROVINCES_AND_TERRITORIES.includes(province)) {
+      errors.province = isFr ? "Veuillez sélectionner une province valide ou laisser optionnel." : "Please select a valid province or leave optional.";
     }
 
     if (message.length > 1500) {
       errors.message = isFr ? "Le message ne doit pas dépasser 1 500 caractères." : "Message must not exceed 1,500 characters.";
-    }
-
-    if (!consentPrivacy) {
-      errors.consentPrivacy = isFr ? "Vous devez accepter l'avis de confidentialité pour envoyer le formulaire." : "You must agree to the privacy notice before submitting.";
     }
 
     return errors;
@@ -163,6 +150,7 @@ export const ContactPage: React.FC = () => {
     setStatus("submitting");
 
     const generatedRef = "ENQ-" + Math.floor(100000 + Math.random() * 900000);
+    const resolvedTopic = topic && TOPIC_OPTIONS.some((t) => t.id === topic) ? topic : "general";
 
     // Dispatch directly to Server Backend (/api/contact)
     try {
@@ -172,13 +160,13 @@ export const ContactPage: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          firstName: sanitizeInput(firstName),
+          firstName: sanitizeInput(firstName) || "Reader",
           email: sanitizeInput(email),
           phone: sanitizeInput(phone),
-          province,
-          topic,
+          province: province || "National (Canada & US)",
+          topic: resolvedTopic,
           message: sanitizeInput(message),
-          consentPrivacy,
+          consentPrivacy: true,
           consentEducational,
           honeypot,
           website_hp: honeypot,
@@ -430,8 +418,12 @@ export const ContactPage: React.FC = () => {
                     </span>
                     <h2 className="h3 text-[#2e4a3b] text-xl sm:text-2xl font-serif">
                       {isFr
-                        ? `Merci, ${firstName} : Votre message a été transmis`
-                        : `Thank You, ${firstName}: Your Message Was Sent`}
+                        ? firstName.trim()
+                          ? `Merci, ${firstName.trim()} : Votre message a été transmis`
+                          : "Merci : Votre message a été transmis"
+                        : firstName.trim()
+                        ? `Thank You, ${firstName.trim()}: Your Message Was Sent`
+                        : "Thank You: Your Message Was Sent"}
                     </h2>
                   </div>
                 </div>
@@ -440,8 +432,8 @@ export const ContactPage: React.FC = () => {
                   <MailCheck className="w-5 h-5 text-[#2e4a3b] shrink-0 mt-0.5" />
                   <p className="text-xs sm:text-sm text-[#1c1b18] leading-relaxed">
                     {isFr
-                      ? `Merci, ${firstName}. Votre demande a été reçue en toute sécurité. Ahmed Bello examine personnellement les questions entrantes et vous répondra avec des explications factuelles d'ici 1 à 2 jours ouvrables.`
-                      : `Thank you, ${firstName}. Your enquiry has been received securely. Ahmed Bello personally reviews incoming questions and will follow up with objective educational insights within 1–2 business days.`}
+                      ? `${firstName.trim() ? `Merci, ${firstName.trim()}. ` : ""}Votre demande a été reçue en toute sécurité. Ahmed Bello examine personnellement les questions entrantes et vous répondra avec des explications factuelles d'ici 1 à 2 jours ouvrables.`
+                      : `${firstName.trim() ? `Thank you, ${firstName.trim()}. ` : ""}Your enquiry has been received securely. Ahmed Bello personally reviews incoming questions and will follow up with objective educational insights within 1–2 business days.`}
                   </p>
                 </div>
 
@@ -550,25 +542,8 @@ export const ContactPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* First Name & Email */}
+                {/* Email (Required) & First Name (Optional) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="field-firstName" className="block text-xs font-semibold text-[#1c1b18] mb-1">
-                      {isFr ? "Votre prénom *" : "Your first name *"}
-                    </label>
-                    <input
-                      id="field-firstName"
-                      type="text"
-                      required
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      placeholder={isFr ? "ex. Sarah ou Jean" : "e.g. Sarah or Michael"}
-                      className={`w-full text-xs p-2.5 bg-white border rounded-[2px] focus:outline-none ${
-                        fieldErrors.firstName ? "border-[#8f2a1d]" : "border-[#d6cebd] focus:border-[#2e4a3b]"
-                      }`}
-                    />
-                  </div>
-
                   <div>
                     <label htmlFor="field-email" className="block text-xs font-semibold text-[#1c1b18] mb-1">
                       {isFr ? "Adresse courriel *" : "Email address *"}
@@ -585,75 +560,29 @@ export const ContactPage: React.FC = () => {
                       }`}
                     />
                   </div>
-                </div>
 
-                {/* Phone & Province */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="field-phone" className="block text-xs font-semibold text-[#1c1b18] mb-1">
-                      {isFr ? "Téléphone (optionnel)" : "Telephone (optional)"}
+                    <label htmlFor="field-firstName" className="block text-xs font-semibold text-[#1c1b18] mb-1">
+                      {isFr ? "Prénom (optionnel)" : "First name (optional)"}
                     </label>
                     <input
-                      id="field-phone"
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+1-506-000-0000"
-                      className="w-full text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
+                      id="field-firstName"
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder={isFr ? "ex. Sarah ou Jean" : "e.g. Sarah or Michael"}
+                      className={`w-full text-xs p-2.5 bg-white border rounded-[2px] focus:outline-none ${
+                        fieldErrors.firstName ? "border-[#8f2a1d]" : "border-[#d6cebd] focus:border-[#2e4a3b]"
+                      }`}
                     />
                   </div>
-
-                  <div>
-                    <label htmlFor="field-province" className="block text-xs font-semibold text-[#1c1b18] mb-1">
-                      {isFr ? "Province ou territoire *" : "Province or territory *"}
-                    </label>
-                    <select
-                      id="field-province"
-                      required
-                      value={province}
-                      onChange={(e) => setProvince(e.target.value)}
-                      className={`w-full text-xs p-2.5 bg-white border rounded-[2px] focus:outline-none ${
-                        fieldErrors.province ? "border-[#8f2a1d]" : "border-[#d6cebd] focus:border-[#2e4a3b]"
-                      }`}
-                    >
-                      <option value="">{isFr ? "Sélectionnez votre région..." : "Select province..."}</option>
-                      {PROVINCES_AND_TERRITORIES.map((p) => (
-                        <option key={p} value={p}>
-                          {p}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
                 </div>
 
-                {/* Topic Selection */}
-                <div>
-                  <label htmlFor="field-topic" className="block text-xs font-semibold text-[#1c1b18] mb-1">
-                    {isFr ? "Sujet financier principal *" : "Main financial topic *"}
-                  </label>
-                  <select
-                    id="field-topic"
-                    required
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
-                    className={`w-full text-xs p-2.5 bg-white border rounded-[2px] focus:outline-none ${
-                      fieldErrors.topic ? "border-[#8f2a1d]" : "border-[#d6cebd] focus:border-[#2e4a3b]"
-                    }`}
-                  >
-                    <option value="">{isFr ? "Sélectionnez un sujet..." : "Select topic..."}</option>
-                    {TOPIC_OPTIONS.map((t) => (
-                      <option key={t.id} value={t.id}>
-                        {isFr ? t.labelFr : t.labelEn}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Message Textarea */}
+                {/* Message Textarea (Primary Prompt) */}
                 <div>
                   <div className="flex justify-between items-center mb-1">
                     <label htmlFor="field-message" className="text-xs font-semibold text-[#1c1b18]">
-                      {isFr ? "Votre message ou question (optionnel)" : "Your message or question (optional)"}
+                      {isFr ? "Votre question ou message" : "Your question or message"}
                     </label>
                     <span className="text-[0.7rem] text-[#625d52]">
                       {message.length} / 1500
@@ -666,47 +595,74 @@ export const ContactPage: React.FC = () => {
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder={
                       isFr
-                        ? "Décrivez brièvement votre situation ou votre question..."
-                        : "Describe what you're trying to figure out or understand..."
+                        ? "Décrivez brièvement ce que vous souhaitez éclaircir..."
+                        : "Describe what you are trying to figure out or understand..."
                     }
                     className="w-full text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
                   />
                 </div>
 
+                {/* Optional Context Fields (Topic, Province, Phone) */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+                  <div>
+                    <label htmlFor="field-topic" className="block text-xs font-semibold text-[#46423a] mb-1">
+                      {isFr ? "Sujet (optionnel)" : "Topic (optional)"}
+                    </label>
+                    <select
+                      id="field-topic"
+                      value={topic}
+                      onChange={(e) => setTopic(e.target.value)}
+                      className="w-full text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
+                    >
+                      {TOPIC_OPTIONS.map((t) => (
+                        <option key={t.id} value={t.id}>
+                          {isFr ? t.labelFr : t.labelEn}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="field-province" className="block text-xs font-semibold text-[#46423a] mb-1">
+                      {isFr ? "Province (optionnel)" : "Province (optional)"}
+                    </label>
+                    <select
+                      id="field-province"
+                      value={province}
+                      onChange={(e) => setProvince(e.target.value)}
+                      className={`w-full text-xs p-2.5 bg-white border rounded-[2px] focus:outline-none ${
+                        fieldErrors.province ? "border-[#8f2a1d]" : "border-[#d6cebd] focus:border-[#2e4a3b]"
+                      }`}
+                    >
+                      <option value="">{isFr ? "Partout au Canada" : "Anywhere in Canada"}</option>
+                      {PROVINCES_AND_TERRITORIES.map((p) => (
+                        <option key={p} value={p}>
+                          {p}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="field-phone" className="block text-xs font-semibold text-[#46423a] mb-1">
+                      {isFr ? "Téléphone (optionnel)" : "Phone (optional)"}
+                    </label>
+                    <input
+                      id="field-phone"
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="+1-506-000-0000"
+                      className="w-full text-xs p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b]"
+                    />
+                  </div>
+                </div>
+
                 {/* Turnstile Widget (renders silently or verifies if production key is set) */}
                 <TurnstileWidget onVerify={(token) => setTurnstileToken(token)} />
 
-                {/* Consent Checkboxes */}
+                {/* Optional Educational Briefing Opt-in + Clear Privacy Notice */}
                 <div className="space-y-3 pt-2 border-t border-[#ece6da]">
-                  <label className="flex items-start gap-2.5 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      required
-                      checked={consentPrivacy}
-                      onChange={(e) => setConsentPrivacy(e.target.checked)}
-                      className="mt-0.5 accent-[#2e4a3b]"
-                    />
-                    <span className="text-xs text-[#46423a] leading-relaxed">
-                      {isFr ? (
-                        <>
-                          J'accepte que mes renseignements soient utilisés pour répondre à ma demande selon l'
-                          <Link to="/fr/privacy" className="underline text-[#2e4a3b]">
-                            avis de confidentialité
-                          </Link>{" "}
-                          conforme à la législation canadienne. *
-                        </>
-                      ) : (
-                        <>
-                          I understand that my information will be used to respond to my enquiry in accordance with the{" "}
-                          <Link to="/privacy" className="underline text-[#2e4a3b]">
-                            privacy notice
-                          </Link>{" "}
-                          and Canadian privacy principles. *
-                        </>
-                      )}
-                    </span>
-                  </label>
-
                   <label className="flex items-start gap-2.5 cursor-pointer">
                     <input
                       type="checkbox"
@@ -716,10 +672,33 @@ export const ContactPage: React.FC = () => {
                     />
                     <span className="text-xs text-[#46423a] leading-relaxed">
                       {isFr
-                        ? "J'accepte également de recevoir les résumés mensuels lors de changements importants des règles fiscales de l'ARC (désabonnement possible en 1 clic)."
-                        : "I would also like to receive occasional plain-language briefings when Canadian tax rules or registered account limits change (unsubscribe anytime)."}
+                        ? "Optionnel : Envoyez-moi aussi les résumés ponctuels lors de changements des règles fiscales canadiennes (désabonnement en 1 clic)."
+                        : "Optional: Also send me occasional plain-language updates when Canadian tax rules or registered account limits change (unsubscribe anytime)."}
                     </span>
                   </label>
+
+                  <p className="text-[0.72rem] text-[#625d52] flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#2e4a3b] shrink-0" />
+                    <span>
+                      {isFr ? (
+                        <>
+                          En envoyant ce message, vous acceptez qu'il soit utilisé pour vous répondre selon notre{" "}
+                          <Link to="/fr/privacy" className="underline text-[#2e4a3b]">
+                            avis de confidentialité
+                          </Link>
+                          .
+                        </>
+                      ) : (
+                        <>
+                          By sending this question, you agree we may use your details to reply in accordance with our{" "}
+                          <Link to="/privacy" className="underline text-[#2e4a3b]">
+                            privacy notice
+                          </Link>
+                          .
+                        </>
+                      )}
+                    </span>
+                  </p>
                 </div>
 
                 {/* Submit Button */}

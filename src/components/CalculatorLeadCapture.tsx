@@ -32,7 +32,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
   const { isFr } = useLanguage();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-  const [consent, setConsent] = useState(false);
+  const [optInBriefings, setOptInBriefings] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [formLoadedAt] = useState<number>(Date.now());
@@ -48,15 +48,6 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
     const cleanEmail = email.trim();
     if (!cleanEmail || !cleanEmail.includes("@")) {
       setErrorMsg(isFr ? "Veuillez entrer une adresse courriel valide." : "Please enter a valid email address.");
-      return;
-    }
-
-    if (!consent) {
-      setErrorMsg(
-        isFr
-          ? "Veuillez cocher la case de consentement LCAP ci-dessous avant d'envoyer votre plan."
-          : "Please check the consent box below before submitting to receive your plan."
-      );
       return;
     }
 
@@ -84,7 +75,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
             ? `Calculated Plan: ${calculatorName}\n\nSummary Breakdown:\n${summaryText}`
             : `Request for: ${calculatorName}`,
           consentPrivacy: true,
-          consentEducational: consent,
+          consentEducational: optInBriefings,
           turnstileToken,
           formLoadedAt,
           honeypot,
@@ -96,8 +87,8 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
       const data = await response.json().catch(() => ({}));
 
-      if (!response.ok && data.error && data.error !== "delivery_failed") {
-        throw new Error(data.message || (isFr ? "Impossible d'enregistrer le plan." : "Unable to record plan."));
+      if ((!response.ok && data?.error !== "delivery_failed") || data?.success === false) {
+        throw new Error(data?.message || (isFr ? "Impossible d'enregistrer le plan." : "Unable to record plan."));
       }
 
       setReferenceNo(data.referenceNo || generatedRef);
@@ -287,46 +278,29 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           {/* Turnstile Human Verification Challenge */}
           <TurnstileWidget onVerify={(token) => setTurnstileToken(token)} />
 
-          {/* CASL Compliance Checkbox placed prominently before submit */}
-          <div
-            className={`p-3 rounded-[2px] border transition-colors ${
-              !consent && errorMsg
-                ? "bg-[#fdf0ed] border-[#d97768]"
-                : "bg-white/60 border-[#e3dccf]"
-            }`}
-          >
-            <div className="flex items-start gap-2.5">
-              <input
-                id={`calc-consent-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
-                type="checkbox"
-                required
-                checked={consent}
-                onChange={(e) => setConsent(e.target.checked)}
-                className="mt-0.5 accent-[#2e4a3b] w-4 h-4 cursor-pointer"
-              />
-              <label
-                htmlFor={`calc-consent-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
-                className="text-[0.72rem] text-[#46423a] leading-relaxed cursor-pointer select-none"
-              >
-                {isFr ? (
-                  <>
-                    <strong className="text-[#1c1b18]">Consentement LCAP :</strong> J'accepte de recevoir une copie de ce plan personnalisé et des résumés éducatifs ponctuels d'Ahmed Bello Solutions Financières selon la législation canadienne contre les pourriels (LCAP). Désabonnement instantané en 1 clic. Consultez l'
-                    <Link to="/fr/privacy" className="underline hover:text-[#2e4a3b] font-medium">
-                      avis de confidentialité
-                    </Link>
-                    .
-                  </>
-                ) : (
-                  <>
-                    <strong className="text-[#1c1b18]">CASL Consent:</strong> I consent to receive a copy of this customized calculation plan and occasional educational briefings from Ahmed Bello Financial Solutions under Canada’s Anti-Spam Legislation (CASL). Unsubscribe anytime with 1 click. Read the{" "}
-                    <Link to="/privacy" className="underline hover:text-[#2e4a3b] font-medium">
-                      privacy notice
-                    </Link>
-                    .
-                  </>
-                )}
-              </label>
-            </div>
+          {/* Optional educational briefing opt-in (never blocks requested breakdown delivery) */}
+          <div className="flex items-start gap-2.5 pt-1">
+            <input
+              id={`calc-optin-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+              type="checkbox"
+              checked={optInBriefings}
+              onChange={(e) => setOptInBriefings(e.target.checked)}
+              className="mt-0.5 accent-[#2e4a3b] w-4 h-4 cursor-pointer"
+            />
+            <label
+              htmlFor={`calc-optin-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+              className="text-[0.75rem] text-[#46423a] leading-relaxed cursor-pointer select-none"
+            >
+              {isFr ? (
+                <>
+                  <span className="font-medium text-[#1c1b18]">Optionnel :</span> Envoyez-moi aussi les mises à jour ponctuelles lorsque les règles fiscales canadiennes ou les plafonds CELI/REER/CELIAPP changent (désabonnement en 1 clic).
+                </>
+              ) : (
+                <>
+                  <span className="font-medium text-[#1c1b18]">Optional:</span> Also send me occasional plain-language updates when Canadian tax rules or TFSA/RRSP/FHSA limits change (unsubscribe with 1 click anytime).
+                </>
+              )}
+            </label>
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
@@ -348,9 +322,25 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
               )}
             </button>
 
-            <span className="text-[0.68rem] text-[#75581f] flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-              <span>{isFr ? "Confidentiel • Usage éducatif uniquement" : "Confidential • Educational Use Only"}</span>
+            <span className="text-[0.7rem] text-[#625d52] flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#2e4a3b] shrink-0" />
+              <span>
+                {isFr ? (
+                  <>
+                    Utilisé uniquement pour cette synthèse &middot;{" "}
+                    <Link to="/fr/privacy" className="underline hover:text-[#2e4a3b]">
+                      Avis de confidentialité
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    Used only to email this breakdown &middot;{" "}
+                    <Link to="/privacy" className="underline hover:text-[#2e4a3b]">
+                      Privacy notice
+                    </Link>
+                  </>
+                )}
+              </span>
             </span>
           </div>
         </form>

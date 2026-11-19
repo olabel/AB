@@ -7,6 +7,7 @@ import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalcul
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
+import { buildRouteJsonLd } from "../config/schema.ts";
 import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 
 export const EducationLibraryPage: React.FC = () => {
@@ -86,28 +87,37 @@ export const EducationLibraryPage: React.FC = () => {
     return counts;
   }, []);
 
+  const guideCollectionItems = useMemo(
+    () =>
+      articles
+        .filter((a) => a.kind === "guide")
+        .map((a) => ({
+          name: isFr ? ARTICLE_FR_SEO[a.slug]?.title || a.title : a.title,
+          url: `${prefix}${a.url}`,
+        })),
+    [isFr, prefix]
+  );
+
+  const seoTitle = isFr
+    ? "Bibliothèque d'Éducation Financière | Ahmed Bello"
+    : "Canadian Financial Education Library | Ahmed Bello";
+  const seoDesc = isFr
+    ? "Guides pratiques sur les comptes enregistrés canadiens (CELI, REER, CELIAPP), l'assurance vie, le crédit et les finances familiales."
+    : "Plain-language guides on Canadian registered accounts (TFSA, RRSP, FHSA), life insurance, credit building, and household money fundamentals.";
+
   return (
     <div>
       <SEO
-        title={isFr ? "Bibliothèque d'éducation financière | Ahmed Bello" : "Financial Education Library | Ahmed Bello"}
-        description={
-          isFr
-            ? "Guides pratiques sur les comptes enregistrés canadiens (CELI, REER, CELIAPP), l'assurance vie, le crédit et les finances familiales."
-            : "Plain-language guides on Canadian registered accounts (TFSA, RRSP, FHSA), life insurance, credit building, and household money fundamentals."
-        }
+        title={seoTitle}
+        description={seoDesc}
         canonicalUrl={isFr ? "/fr/education" : "/education"}
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          inLanguage: isFr ? "fr-CA" : "en-CA",
-          name: isFr
-            ? "Bibliothèque d'Éducation Financière | Ahmed Bello"
-            : "Canadian Financial Education Library | Ahmed Bello",
-          description: isFr
-            ? "Guides pratiques sur les comptes enregistrés canadiens (CELI, REER, CELIAPP), l'assurance vie, le crédit et les finances familiales."
-            : "Plain-language guides on Canadian registered accounts (TFSA, RRSP, FHSA), life insurance, credit building, and household money fundamentals.",
-          url: `${siteConfig.siteUrl}${prefix}/education`,
-        }}
+        jsonLd={buildRouteJsonLd({
+          pathname: `${prefix}/education`,
+          title: seoTitle,
+          description: seoDesc,
+          isFr,
+          collectionItems: guideCollectionItems,
+        })}
       />
 
       {/* Header */}

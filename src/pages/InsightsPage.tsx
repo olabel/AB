@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { articles } from "../content/data.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { NewsletterSignup } from "../components/NewsletterSignup.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
+import { buildRouteJsonLd } from "../config/schema.ts";
 import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
 import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 import {
@@ -64,20 +65,35 @@ export const InsightsPage: React.FC = () => {
     return true;
   });
 
+  const collectionItems = useMemo(
+    () =>
+      allEssays.map((e) => ({
+        name: isFr ? ARTICLE_FR_SEO[e.slug]?.title || e.title : e.title,
+        url: `${prefix}${e.url}`,
+      })),
+    [allEssays, isFr, prefix]
+  );
+
+  const seoTitle = isFr
+    ? "Perspectives & Analyses Stratégiques | Ahmed Bello"
+    : "Financial Insights & Strategic Essays | Ahmed Bello";
+  const seoDesc = isFr
+    ? "Essais analytiques sur le renouvellement hypothécaire canadien, les seuils de revenu passif des SPCC et la transmission patrimoniale."
+    : "Analytical essays on Canadian mortgage renewals, CCPC passive income limits, capital gains, and family financial planning.";
+
   return (
     <div>
       <SEO
-        title={
-          isFr
-            ? "Perspectives & Analyses Stratégiques | Ahmed Bello"
-            : "Strategic Financial Essays & Insights | Ahmed Bello"
-        }
-        description={
-          isFr
-            ? "Analyses économiques approfondies : plafond de 50 000 $ de revenus passifs des SPCC, choc du renouvellement hypothécaire canadien et critères indépendants."
-            : "Deep-dive analytical essays on the Canadian CCPC $50,000 passive income limit, mortgage renewal liquidity shock, and evaluating financial advice."
-        }
+        title={seoTitle}
+        description={seoDesc}
         canonicalUrl={`${prefix}/insights`}
+        jsonLd={buildRouteJsonLd({
+          pathname: `${prefix}/insights`,
+          title: seoTitle,
+          description: seoDesc,
+          isFr,
+          collectionItems,
+        })}
       />
 
       {/* 1. Header with Editorial Rationale */}

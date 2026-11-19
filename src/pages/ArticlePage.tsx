@@ -27,6 +27,7 @@ import { trackBookingClick, trackCtaClick } from "../lib/track.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
+import { buildRouteJsonLd } from "../config/schema.ts";
 
 const TOPIC_LABELS: Record<string, { en: string; fr: string }> = {
   accounts: { en: "Canadian Registered Accounts (TFSA / RRSP / FHSA)", fr: "Comptes enregistrés canadiens (CELI / REER / CELIAPP)" },
@@ -92,9 +93,36 @@ export const ArticlePage: React.FC = () => {
   const showCredentials = hasSiteCredentials();
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+    const url = typeof window !== "undefined" ? window.location.href : "";
+    if (!url) return;
+
+    const markCopied = () => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    };
+
+    const fallbackCopy = () => {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = url;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        markCopied();
+      } catch {
+        // Clipboard access restricted in current context; ignore gracefully
+      }
+    };
+
+    if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(url).then(markCopied).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
   };
 
   const pageUrl =
@@ -106,15 +134,6 @@ export const ArticlePage: React.FC = () => {
 
   const sections = [
     { id: "overview", label: isFr ? "Vue d'ensemble" : "Overview" },
-    ...(article.sections
-      ? article.sections.map((s, idx) => ({
-          id: s.id || `section-${idx}`,
-          label: s.h2,
-        }))
-      : []),
-    ...(article.checklist ? [{ id: "checklist", label: article.checklist.title }] : []),
-    ...(article.faqs ? [{ id: "faqs", label: isFr ? "Foire aux questions" : "Frequently Asked Questions" }] : []),
-    ...(article.example ? [{ id: "example", label: isFr ? "Exemple hypothétique" : "Hypothetical example" }] : []),
     ...(article.slug === "fhsa-explained"
       ? [{ id: "fhsa-estimator", label: isFr ? "Simulateur CELIAPP" : "FHSA Tax Estimator" }]
       : []),
@@ -127,6 +146,15 @@ export const ArticlePage: React.FC = () => {
     ...(article.slug === "new-to-canada-money-basics" || article.slug === "internationally-trained-doctors-nurses-first-year"
       ? [{ id: "newcomer-calculator", label: isFr ? "Planificateur 1re année" : "Newcomer Runway Calculator" }]
       : []),
+    ...(article.sections
+      ? article.sections.map((s, idx) => ({
+          id: s.id || `section-${idx}`,
+          label: s.h2,
+        }))
+      : []),
+    ...(article.checklist ? [{ id: "checklist", label: article.checklist.title }] : []),
+    ...(article.faqs ? [{ id: "faqs", label: isFr ? "Foire aux questions" : "Frequently Asked Questions" }] : []),
+    ...(article.example ? [{ id: "example", label: isFr ? "Exemple hypothétique" : "Hypothetical example" }] : []),
     { id: "misunderstandings", label: isFr ? "Idées reçues fréquentes" : "Common misunderstandings" },
     { id: "tradeoffs", label: isFr ? "Compromis et limites" : "Trade-offs and limitations" },
     { id: "questions", label: isFr ? "Questions à considérer" : "Questions to consider" },
@@ -150,58 +178,14 @@ export const ArticlePage: React.FC = () => {
         ogType="article"
         articlePublishedTime={article.datePublished || "2025-01-15T08:00:00-05:00"}
         articleModifiedTime={article.dateModified || "2026-11-05T09:00:00-05:00"}
-        jsonLd={(() => {
-          const articleSchema = {
-            "@type": "Article",
-            inLanguage: isFr ? "fr-CA" : "en-CA",
-            headline: localizedSeoTitle,
-            description: localizedDescription,
-            datePublished: article.datePublished || "2025-01-15T08:00:00-05:00",
-            dateModified: article.dateModified || "2026-11-05T09:00:00-05:00",
-            author: {
-              "@type": "Person",
-              name: "Ahmed Bello",
-              jobTitle: "Licensed Financial Solutions Professional",
-              url: siteConfig.siteUrl,
-            },
-            publisher: {
-              "@type": "Person",
-              name: "Ahmed Bello",
-            },
-            mainEntityOfPage: {
-              "@type": "WebPage",
-              "@id": `${siteConfig.siteUrl}${prefix}${article.url}`,
-            },
-            citation: article.sources.map((s) => ({
-              "@type": "CreativeWork",
-              name: s.label,
-              url: s.url,
-            })),
-          };
-          if (article.faqs && article.faqs.length > 0) {
-            return {
-              "@context": "https://schema.org",
-              "@graph": [
-                articleSchema,
-                {
-                  "@type": "FAQPage",
-                  mainEntity: article.faqs.map((faq) => ({
-                    "@type": "Question",
-                    name: faq.question,
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: faq.answer,
-                    },
-                  })),
-                },
-              ],
-            };
-          }
-          return {
-            "@context": "https://schema.org",
-            ...articleSchema,
-          };
-        })()}
+        jsonLd={buildRouteJsonLd({
+          pathname: `${prefix}${article.url}`,
+          title: localizedSeoTitle,
+          description: localizedDescription,
+          heading: localizedTitle,
+          isFr,
+          article,
+        })}
       />
 
       <div className="wrap">
@@ -713,6 +697,38 @@ export const ArticlePage: React.FC = () => {
               ))}
             </section>
 
+            {/* 2a. Surfaced Contextual Interactive Widgets (High Visibility After Overview) */}
+            {(article.slug === "internationally-trained-doctors-nurses-first-year" ||
+              article.slug === "new-to-canada-money-basics") && (
+              <section id="newcomer-calculator" className="pt-2 scroll-mt-28">
+                <NewcomerPlanningCalculator
+                  defaultProfession={
+                    article.slug === "internationally-trained-doctors-nurses-first-year"
+                      ? "healthcare"
+                      : "general"
+                  }
+                />
+              </section>
+            )}
+
+            {article.slug === "fhsa-explained" && (
+              <div className="pt-2">
+                <FhsaQuickEstimator />
+              </div>
+            )}
+
+            {(article.slug === "tfsa-vs-rrsp" || article.slug === "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first") && (
+              <div className="pt-2">
+                <TfsaVsRrspQuickWidget />
+              </div>
+            )}
+
+            {article.slug === "resp-basics" && (
+              <div className="pt-2">
+                <RespGrantQuickWidget />
+              </div>
+            )}
+
             {/* 2b. Structured H2 Sections (if provided) */}
             {article.sections &&
               article.sections.map((sec, sIdx) => (
@@ -848,38 +864,6 @@ export const ArticlePage: React.FC = () => {
                   </div>
                 )}
               </section>
-            )}
-
-            {/* Contextual Interactive Calculator Module */}
-            {(article.slug === "internationally-trained-doctors-nurses-first-year" ||
-              article.slug === "new-to-canada-money-basics") && (
-              <section id="newcomer-calculator" className="pt-2 scroll-mt-28">
-                <NewcomerPlanningCalculator
-                  defaultProfession={
-                    article.slug === "internationally-trained-doctors-nurses-first-year"
-                      ? "healthcare"
-                      : "general"
-                  }
-                />
-              </section>
-            )}
-
-            {article.slug === "fhsa-explained" && (
-              <div className="pt-2">
-                <FhsaQuickEstimator />
-              </div>
-            )}
-
-            {(article.slug === "tfsa-vs-rrsp" || article.slug === "tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first") && (
-              <div className="pt-2">
-                <TfsaVsRrspQuickWidget />
-              </div>
-            )}
-
-            {article.slug === "resp-basics" && (
-              <div className="pt-2">
-                <RespGrantQuickWidget />
-              </div>
             )}
 
             {/* 4. Common Misunderstandings (Myth / Reality) */}

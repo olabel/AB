@@ -32,6 +32,8 @@ interface AudienceConfig {
   eyebrowFr: string;
   descriptionEn: string;
   descriptionFr: string;
+  seoDescriptionEn?: string;
+  seoDescriptionFr?: string;
   icon: React.ComponentType<{ className?: string }>;
   curatedSlugs: string[];
   showCalculator?: boolean;
@@ -47,7 +49,7 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     aliases: ["health-workers", "doctors-nurses"],
     titleEn: "Financial Guidance for Healthcare Workers & Internationally Trained Doctors and Nurses",
     titleFr: "Orientation financière pour professionnels de la santé, médecins et infirmiers formés à l'étranger",
-    metaTitleEn: "Financial Guidance for Healthcare | Ahmed Bello",
+    metaTitleEn: "Financial Planning for Healthcare | Ahmed Bello",
     metaTitleFr: "Orientation Financière Santé | Ahmed Bello",
     eyebrowEn: "Audience Hub: Healthcare & Medical Professionals",
     eyebrowFr: "Carrefour thématique : Professionnels de la santé",
@@ -55,6 +57,10 @@ const AUDIENCES: Record<string, AudienceConfig> = {
       "Licensing delays, credential recognition fees, and income gaps make your first years in Canada unique. Learn how to structure your cashflow runway, protect your income, and understand tax residency rules.",
     descriptionFr:
       "Les délais d'équivalence, les frais d'examens et le décalage de revenus rendent vos premières années au Canada uniques. Structurez vos réserves de subsistance et vos comptes enregistrés.",
+    seoDescriptionEn:
+      "Financial education for Canadian doctors, nurses, and medical professionals managing licensing, incorporation, and income protection.",
+    seoDescriptionFr:
+      "Planification pour médecins, infirmières et diplômés internationaux en santé au Canada : équivalences, fiscalité et protection.",
     icon: Stethoscope,
     curatedSlugs: [
       "internationally-trained-doctors-nurses-first-year",
@@ -130,6 +136,10 @@ const AUDIENCES: Record<string, AudienceConfig> = {
       "Balancing mortgage renewal payments with registered savings (TFSA, RRSP, FHSA), education savings (RESP), and income protection for primary breadwinners.",
     descriptionFr:
       "Équilibrer les paiements hypothécaires avec l'épargne enregistrée (CELI, REER, CELIAPP), les études des enfants (REEE) et la protection du revenu familial.",
+    seoDescriptionEn:
+      "Practical financial education for Canadian families: RESP grants, term life insurance, mortgage renewals, and estate planning basics.",
+    seoDescriptionFr:
+      "Planification familiale au Canada : subventions REEE, assurance temporaire, renouvellement hypothécaire et transfert successoral.",
     icon: Users,
     curatedSlugs: [
       "canadian-mortgage-renewal-shock-liquidity-trap",
@@ -227,7 +237,11 @@ export const AudienceHubPage: React.FC = () => {
     <section className="section">
       <SEO
         title={isFr ? (currentAudience.metaTitleFr || currentAudience.titleFr) : (currentAudience.metaTitleEn || currentAudience.titleEn)}
-        description={isFr ? currentAudience.descriptionFr : currentAudience.descriptionEn}
+        description={
+          isFr
+            ? currentAudience.seoDescriptionFr || currentAudience.descriptionFr
+            : currentAudience.seoDescriptionEn || currentAudience.descriptionEn
+        }
         canonicalUrl={isFr ? `/fr/for/${currentAudience.slug}` : `/for/${currentAudience.slug}`}
       />
       <div className="wrap max-w-5xl">

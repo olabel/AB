@@ -8,7 +8,6 @@ export const FloatingNewsWidget: React.FC = () => {
   const location = useLocation();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isDismissed, setIsDismissed] = useState(false);
 
   // Hide on what-changed pages and all article / reading guides to preserve reading focus
   const isHiddenPage =
@@ -21,7 +20,7 @@ export const FloatingNewsWidget: React.FC = () => {
     location.pathname.startsWith("/insights") ||
     location.pathname.startsWith("/fr/insights");
 
-  if (isHiddenPage || isDismissed) {
+  if (isHiddenPage) {
     return null;
   }
 

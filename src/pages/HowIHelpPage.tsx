@@ -50,12 +50,13 @@ export const HowIHelpPage: React.FC = () => {
       if (activeTopics.some((t) => t.id === targetId)) {
         setOpenTopics((prev) => ({ ...prev, [targetId]: true }));
       }
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         const element = document.getElementById(targetId);
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
         }
       }, 60);
+      return () => clearTimeout(timer);
     } else {
       window.scrollTo(0, 0);
     }
@@ -64,11 +65,15 @@ export const HowIHelpPage: React.FC = () => {
   return (
     <div>
       <SEO
-        title={isFr ? "Comment J'Aide | Éducation Financière" : "How I Help | Financial Guidance"}
+        title={
+          isFr
+            ? "Comment J'Accompagne Vos Décisions | Ahmed Bello"
+            : "How I Help: Structured Financial Guidance | Ahmed Bello"
+        }
         description={
           isFr
-            ? "Découvrez notre approche fondée sur la clarté : où allouer votre prochain dollar, protection du revenu et préparation de vos objectifs familiaux."
-            : "Explore our education-first process: where the next dollar goes, income protection trade-offs, and family milestones without product sales push."
+            ? "Approche d'Ahmed Bello : priorisation des objectifs, régimes enregistrés (CELI, REER), protection du revenu et stratégies de dette."
+            : "Explore Ahmed Bello's educational framework: goal prioritization, registered tax shelters, family income protection, and debt strategies in Canada."
         }
         canonicalUrl={isFr ? "/fr/how-i-help" : "/how-i-help"}
       />

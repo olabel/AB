@@ -206,13 +206,13 @@ Notes: ${formData.notes || "None"}`;
       <SEO
         title={
           isFr
-            ? "Investissement Islamique au Canada | Ahmed Bello"
-            : "Islamic Investing in Canada: An Education Guide | Ahmed Bello"
+            ? "Investissement Islamique Canada | Ahmed Bello"
+            : "Islamic Equity Investing in Canada | Ahmed Bello"
         }
         description={
           isFr
-            ? "Guide éducatif objectif sur l'investissement en actions islamiques selon les normes AAOIFI, le filtrage des bilans et les régimes canadiens (CELI, REER, CELIAPP)."
-            : "Objective educational guide on Shari'ah-compliant global equity index investing under AAOIFI standards, balance sheet screening, and Canadian registered accounts (TFSA, RRSP, FHSA)."
+            ? "Guide éducatif sur les actions mondiales conformes à la charia selon les normes AAOIFI dans vos comptes CELI, REER, CELIAPP et REEE."
+            : "Educational guide on Shari'ah-compliant global equity investing under AAOIFI standards and Canadian TFSA, RRSP, FHSA, and RESP accounts."
         }
         canonicalUrl={isFr ? "/fr/investing/islamic-equity" : "/investing/islamic-equity"}
       />

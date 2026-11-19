@@ -49,8 +49,12 @@ export const ConfirmSubscriptionPage: React.FC = () => {
             setVerifiedEmail(data.email || "");
             setLoading(false);
             trackSubscriptionConfirmed();
-            localStorage.setItem("ahmed_bello_subscriber_confirmed", data.email || "confirmed");
-            localStorage.setItem("ahmed_bello_subscriber_date", new Date().toISOString());
+            try {
+              localStorage.setItem("ahmed_bello_subscriber_confirmed", data.email || "confirmed");
+              localStorage.setItem("ahmed_bello_subscriber_date", new Date().toISOString());
+            } catch {
+              // Ignore storage denial in sandboxed or privacy-restricted iframes
+            }
           }
         } else {
           if (isMounted) {

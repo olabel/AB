@@ -6,6 +6,7 @@ import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { calculateFederalAmt, type AmtInput, type AmtResult } from "../lib/amt.ts";
 import { getTaxParametersForYear, AMT_FIGURES_AS_OF } from "../config/taxParameters.ts";
 import { siteConfig, getCtaLabel } from "../config/site.ts";
+import { buildRouteJsonLd } from "../config/schema.ts";
 import { trackBookingClick, trackCalculatorCompleted } from "../lib/track.ts";
 import {
   Calculator,
@@ -191,20 +192,26 @@ ${unmodelledDisclaimer}`;
         },
       ];
 
+  const seoTitle = isFr
+    ? "Calculateur d'IMR au Canada | Ahmed Bello"
+    : "Alternative Minimum Tax Calculator Canada | Ahmed Bello";
+  const seoDesc = isFr
+    ? "Estimez si l'impôt minimum de remplacement fédéral (IMR) s'applique à vos gains en capital, dividendes et dons de bienfaisance."
+    : "Estimate whether Canada's alternative minimum tax applies to you. Free calculator for capital gains, dividends, donations and carry-forward.";
+
   return (
     <div>
       <SEO
-        title={
-          isFr
-            ? "Calculateur d'Impôt Minimum de Remplacement | Ahmed Bello"
-            : "Alternative Minimum Tax Calculator Canada | Ahmed Bello"
-        }
-        description={
-          isFr
-            ? "Estimez si l'impôt minimum de remplacement canadien (IMR) s'applique à vos gains, dividendes et dons. Simulateur fédéral gratuit."
-            : "Estimate whether Canada's alternative minimum tax applies to you. Free calculator for capital gains, dividends, donations and carry-forward."
-        }
+        title={seoTitle}
+        description={seoDesc}
         canonicalUrl={isFr ? "/fr/calculators/amt" : "/calculators/amt"}
+        jsonLd={buildRouteJsonLd({
+          pathname: isFr ? "/fr/calculators/amt" : "/calculators/amt",
+          title: seoTitle,
+          description: seoDesc,
+          isFr,
+          faqs: faqs.map((f) => ({ question: f.q, answer: f.a })),
+        })}
       />
 
       {/* Hero Header */}
@@ -323,8 +330,9 @@ ${unmodelledDisclaimer}`;
                     type="number"
                     min={0}
                     step={1000}
-                    value={employmentIncome}
-                    onChange={(e) => setEmploymentIncome(Number(e.target.value) || 0)}
+                    placeholder="0"
+                    value={employmentIncome === 0 ? "" : employmentIncome}
+                    onChange={(e) => setEmploymentIncome(Math.max(0, Number(e.target.value) || 0))}
                     className="w-full p-2.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b] tabular-nums text-xs"
                   />
                   <p className="text-[11px] text-[#625d52] mt-0.5">
@@ -348,8 +356,9 @@ ${unmodelledDisclaimer}`;
                     type="number"
                     min={0}
                     step={5000}
-                    value={realizedCapitalGains}
-                    onChange={(e) => setRealizedCapitalGains(Number(e.target.value) || 0)}
+                    placeholder="0"
+                    value={realizedCapitalGains === 0 ? "" : realizedCapitalGains}
+                    onChange={(e) => setRealizedCapitalGains(Math.max(0, Number(e.target.value) || 0))}
                     className="w-full p-2.5 bg-white border border-[#d6cebd] rounded-[2px] focus:outline-none focus:border-[#2e4a3b] tabular-nums text-xs"
                   />
                   <p className="text-[11px] text-[#625d52]">
@@ -370,8 +379,9 @@ ${unmodelledDisclaimer}`;
                       type="number"
                       min={0}
                       step={1000}
-                      value={eligibleDividends}
-                      onChange={(e) => setEligibleDividends(Number(e.target.value) || 0)}
+                      placeholder="0"
+                      value={eligibleDividends === 0 ? "" : eligibleDividends}
+                      onChange={(e) => setEligibleDividends(Math.max(0, Number(e.target.value) || 0))}
                       className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                     />
                     <p className="text-[10px] text-[#625d52] mt-0.5">
@@ -388,8 +398,9 @@ ${unmodelledDisclaimer}`;
                       type="number"
                       min={0}
                       step={1000}
-                      value={nonEligibleDividends}
-                      onChange={(e) => setNonEligibleDividends(Number(e.target.value) || 0)}
+                      placeholder="0"
+                      value={nonEligibleDividends === 0 ? "" : nonEligibleDividends}
+                      onChange={(e) => setNonEligibleDividends(Math.max(0, Number(e.target.value) || 0))}
                       className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                     />
                     <p className="text-[10px] text-[#625d52] mt-0.5">
@@ -409,8 +420,9 @@ ${unmodelledDisclaimer}`;
                       type="number"
                       min={0}
                       step={1000}
-                      value={otherIncome}
-                      onChange={(e) => setOtherIncome(Number(e.target.value) || 0)}
+                      placeholder="0"
+                      value={otherIncome === 0 ? "" : otherIncome}
+                      onChange={(e) => setOtherIncome(Math.max(0, Number(e.target.value) || 0))}
                       className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                     />
                     <p className="text-[10px] text-[#625d52] mt-0.5">
@@ -427,8 +439,9 @@ ${unmodelledDisclaimer}`;
                       type="number"
                       min={0}
                       step={500}
-                      value={deductions}
-                      onChange={(e) => setDeductions(Number(e.target.value) || 0)}
+                      placeholder="0"
+                      value={deductions === 0 ? "" : deductions}
+                      onChange={(e) => setDeductions(Math.max(0, Number(e.target.value) || 0))}
                       className="w-full p-2 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                     />
                     <p className="text-[10px] text-[#625d52] mt-0.5">
@@ -453,8 +466,9 @@ ${unmodelledDisclaimer}`;
                     type="number"
                     min={0}
                     step={1000}
-                    value={donations}
-                    onChange={(e) => setDonations(Number(e.target.value) || 0)}
+                    placeholder="0"
+                    value={donations === 0 ? "" : donations}
+                    onChange={(e) => setDonations(Math.max(0, Number(e.target.value) || 0))}
                     className="w-full p-2.5 bg-white border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                   />
                   <p className="text-[11px] text-[#625d52] mt-0.5">
@@ -480,8 +494,9 @@ ${unmodelledDisclaimer}`;
                     type="number"
                     min={0}
                     step={1000}
-                    value={priorYearAmtCarryForward}
-                    onChange={(e) => setPriorYearAmtCarryForward(Number(e.target.value) || 0)}
+                    placeholder="0"
+                    value={priorYearAmtCarryForward === 0 ? "" : priorYearAmtCarryForward}
+                    onChange={(e) => setPriorYearAmtCarryForward(Math.max(0, Number(e.target.value) || 0))}
                     className="w-full p-2.5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] tabular-nums text-xs"
                   />
                   <p className="text-[11px] text-[#625d52] mt-0.5">

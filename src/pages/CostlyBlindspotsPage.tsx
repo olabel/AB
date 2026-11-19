@@ -9,6 +9,7 @@ import {
 } from "../content/blindspotsData.ts";
 import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
+import { buildRouteJsonLd } from "../config/schema.ts";
 import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 import {
   Search,
@@ -42,16 +43,16 @@ export const CostlyBlindspotsPage: React.FC = () => {
     return initial;
   });
   const [flaggedIds, setFlaggedIds] = useState<string[]>([]);
-  const [showChecklistForm, setShowChecklistForm] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   useEffect(() => {
     const hashId = location.hash.replace("#", "");
     if (hashId && BLINDSPOTS_DATA.some((item) => item.id === hashId)) {
       setExpandedItems((prev) => ({ ...prev, [hashId]: true }));
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         document.getElementById(hashId)?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 80);
+      return () => clearTimeout(timer);
     }
   }, [location.hash]);
 
@@ -92,10 +93,32 @@ export const CostlyBlindspotsPage: React.FC = () => {
     const label = isFr ? "Démarche clé" : "Key Takeaway";
     const textToCopy = `${title}\n\n${label}: ${action}\n\nhttps://www.ahmedbello.com${prefix}/costly-blindspots#${item.id}`;
 
-    if (navigator?.clipboard?.writeText) {
-      navigator.clipboard.writeText(textToCopy);
+    const markCopied = () => {
       setCopiedId(item.id);
       setTimeout(() => setCopiedId(null), 2500);
+    };
+
+    const fallbackCopy = () => {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = textToCopy;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        markCopied();
+      } catch {
+        // Ignore clipboard denial in restricted iframe contexts
+      }
+    };
+
+    if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(textToCopy).then(markCopied).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
     }
   };
 
@@ -158,39 +181,34 @@ export const CostlyBlindspotsPage: React.FC = () => {
     });
   }, [selectedCategory, searchQuery, isFr]);
 
+  const seoTitle = isFr
+    ? "Pièges Financiers Coûteux au Canada | Ahmed Bello"
+    : "Costly Canadian Money Blindspots | Ahmed Bello";
+  const seoDesc = isFr
+    ? "Règles financières méconnues au Canada : subventions oubliées, délais légaux et pièges fiscaux découverts trop tard. Actions concrètes."
+    : "Verified Canadian financial blindspots, overlooked government grants, and tax traps that families and professionals discover too late.";
+
   const itemListJsonLd = useMemo(
-    () => ({
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      name: isFr ? "Pièges Financiers Coûteux au Canada" : "Costly Canadian Money Blindspots",
-      description: isFr
-        ? "Guide exhaustif des règles financières statutaires souvent découvertes trop tard par les familles, acheteurs et retraités au Canada."
-        : "Comprehensive intelligence guide on statutory rules, benefits, and tax mechanisms Canadians discover too late.",
-      numberOfItems: BLINDSPOTS_DATA.length,
-      itemListElement: BLINDSPOTS_DATA.map((item, idx) => ({
-        "@type": "ListItem",
-        position: idx + 1,
-        name: isFr ? item.titleFr : item.titleEn,
-        description: isFr ? item.summaryFr : item.summaryEn,
-        url: `https://www.ahmedbello.com${isFr ? "/fr" : ""}/costly-blindspots#${item.id}`,
-      })),
-    }),
-    [isFr]
+    () =>
+      buildRouteJsonLd({
+        pathname: isFr ? "/fr/costly-blindspots" : "/costly-blindspots",
+        title: seoTitle,
+        description: seoDesc,
+        isFr,
+        collectionItems: BLINDSPOTS_DATA.map((item) => ({
+          name: isFr ? item.titleFr : item.titleEn,
+          description: isFr ? item.summaryFr : item.summaryEn,
+          url: `${prefix}/costly-blindspots#${item.id}`,
+        })),
+      }),
+    [isFr, prefix, seoDesc, seoTitle]
   );
 
   return (
     <div>
       <SEO
-        title={
-          isFr
-            ? "Pièges Financiers Coûteux au Canada | Ahmed Bello"
-            : "Costly Canadian Money Blindspots | Ahmed Bello"
-        }
-        description={
-          isFr
-            ? "Règles financières méconnues au Canada : subventions oubliées, délais de prescription et pièges fiscaux découverts trop tard. Démarches concrètes."
-            : "Verified Canadian financial blindspots, missed government grants, and costly tax traps that families and professionals discover too late, with clear next steps."
-        }
+        title={seoTitle}
+        description={seoDesc}
         canonicalUrl={isFr ? "/fr/costly-blindspots" : "/costly-blindspots"}
         jsonLd={itemListJsonLd}
       />
@@ -364,7 +382,6 @@ export const CostlyBlindspotsPage: React.FC = () => {
                 <a
                   href="#blindspots-checklist-capture"
                   onClick={() => {
-                    setShowChecklistForm(true);
                     trackCtaClick("blindspots_bar", "email_flagged_checklist");
                   }}
                   className="px-3 py-1.5 bg-[#d6c298] text-[#14211a] hover:bg-white rounded-[2px] font-semibold transition-colors"
@@ -621,7 +638,6 @@ export const CostlyBlindspotsPage: React.FC = () => {
                       <a
                         href="#blindspots-checklist-capture"
                         onClick={() => {
-                          setShowChecklistForm(true);
                           trackCtaClick("blindspots_midfeed", "jump_to_checklist_capture");
                         }}
                         className="btn btn-primary text-xs py-2.5 px-4 whitespace-nowrap shrink-0 inline-flex items-center gap-1.5"
@@ -661,73 +677,42 @@ export const CostlyBlindspotsPage: React.FC = () => {
             </div>
           )}
 
-          {/* Personalized Blindspots Checklist Email Capture */}
+          {/* Personalized Blindspots Checklist Email Capture (Visible by Default) */}
           <div id="blindspots-checklist-capture" className="scroll-mt-32 pt-2">
-            {(flaggedIds.length > 0 || showChecklistForm) && (
-              <CalculatorLeadCapture
-                calculatorName={
-                  flaggedIds.length > 0
-                    ? `Personal Canadian Blindspots Checklist (${flaggedIds.length} flagged)`
-                    : "Top 5 Canadian Financial Blindspots Checklist"
-                }
-                analyticsCalculatorName="blindspots_checklist"
-                analyticsTopic="general"
-                topic="general"
-                summaryText={checklistSummary}
-                customSubheading={
-                  flaggedIds.length > 0
-                    ? isFr
-                      ? `${flaggedIds.length} Point(s) Sélectionné(s)`
-                      : `${flaggedIds.length} Blindspot(s) Selected`
-                    : isFr
-                    ? "Liste Pratique Gratuite"
-                    : "Free Practical Checklist"
-                }
-                customHeading={
-                  flaggedIds.length > 0
-                    ? isFr
-                      ? `M'envoyer mes ${flaggedIds.length} démarches sélectionnées par courriel`
-                      : `Email me my ${flaggedIds.length} flagged blindspot action steps`
-                    : isFr
-                    ? "Recevoir les 5 oublis financiers les plus fréquents et leurs démarches"
-                    : "Email me the Top 5 Costly Blindspots & Action Steps"
-                }
-                customButtonLabel={
-                  isFr
-                    ? "Recevoir ma liste d'actions par courriel"
-                    : "Email Me My Blindspots Action List"
-                }
-              />
-            )}
-            {flaggedIds.length === 0 && !showChecklistForm && (
-              <div className="card-editorial p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div className="space-y-1">
-                  <span className="text-xs uppercase tracking-wider text-[#75581f] font-semibold">
-                    {isFr ? "Passez à l'action" : "Turn Reading Into Action"}
-                  </span>
-                  <h2 className="font-serif text-lg text-[#1c1b18] font-medium">
-                    {isFr
-                      ? "Vous ne voulez pas perdre ces démarches ?"
-                      : "Want a copy of your personalized blindspot action steps?"}
-                  </h2>
-                  <p className="text-xs text-[#625d52]">
-                    {isFr
-                      ? "Cliquez sur « À vérifier » sur les cartes ci-dessus ou demandez directement le top 5 par courriel."
-                      : "Click “Applies to me” on any card above, or request the Top 5 high-impact checklist directly."}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowChecklistForm(true);
-                    trackCtaClick("blindspots_bottom_prompt", "open_checklist_form");
-                  }}
-                  className="btn btn-primary text-xs py-2.5 px-4 whitespace-nowrap shrink-0 cursor-pointer"
-                >
-                  {isFr ? "Recevoir le Top 5 par courriel" : "Get Top 5 Checklist by Email"}
-                </button>
-              </div>
-            )}
+            <CalculatorLeadCapture
+              calculatorName={
+                flaggedIds.length > 0
+                  ? `Personal Canadian Blindspots Checklist (${flaggedIds.length} flagged)`
+                  : "Top 5 Canadian Financial Blindspots Checklist"
+              }
+              analyticsCalculatorName="blindspots_checklist"
+              analyticsTopic="general"
+              topic="general"
+              summaryText={checklistSummary}
+              customSubheading={
+                flaggedIds.length > 0
+                  ? isFr
+                    ? `${flaggedIds.length} Point(s) Sélectionné(s)`
+                    : `${flaggedIds.length} Blindspot(s) Selected`
+                  : isFr
+                  ? "Liste Pratique Gratuite"
+                  : "Free Practical Checklist"
+              }
+              customHeading={
+                flaggedIds.length > 0
+                  ? isFr
+                    ? `M'envoyer mes ${flaggedIds.length} démarches sélectionnées par courriel`
+                    : `Email me my ${flaggedIds.length} flagged blindspot action steps`
+                  : isFr
+                  ? "Recevoir les 5 oublis financiers les plus fréquents et leurs démarches"
+                  : "Email me the Top 5 Costly Blindspots & Action Steps"
+              }
+              customButtonLabel={
+                isFr
+                  ? "Recevoir ma liste d'actions par courriel"
+                  : "Email Me My Blindspots Action List"
+              }
+            />
           </div>
         </div>
       </section>
