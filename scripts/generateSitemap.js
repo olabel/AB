@@ -27,6 +27,7 @@ const CORE_ROUTE_LASTMOD = {
   "/calculators": "2026-11-05",
   "/calculators/amt": "2026-11-05",
   "/investing/islamic-equity": "2026-11-05",
+  "/atlantic-canada": "2026-11-18",
   "/about": "2026-11-05",
   "/careers": "2026-11-05",
   "/contact": "2026-11-05",

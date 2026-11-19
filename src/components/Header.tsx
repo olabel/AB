@@ -46,6 +46,10 @@ export const Header: React.FC = () => {
       label: isFr ? "Investissement islamique" : "Islamic Equity Investing",
       href: `${prefix}/investing/islamic-equity`,
     },
+    {
+      label: isFr ? "Dieppe & Canada atlantique" : "Dieppe, NB & Atlantic Canada",
+      href: `${prefix}/atlantic-canada`,
+    },
   ];
 
   const toolsLinks = [
@@ -64,7 +68,8 @@ export const Header: React.FC = () => {
     location.pathname.startsWith(`${prefix}/what-changed`) ||
     location.pathname.startsWith(`${prefix}/costly-blindspots`) ||
     location.pathname.startsWith(`${prefix}/insights`) ||
-    location.pathname.startsWith(`${prefix}/investing`);
+    location.pathname.startsWith(`${prefix}/investing`) ||
+    location.pathname.startsWith(`${prefix}/atlantic-canada`);
 
   const isToolsActive = location.pathname.startsWith(`${prefix}/calculators`);
 

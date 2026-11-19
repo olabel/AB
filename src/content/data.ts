@@ -1,4 +1,5 @@
 import type { Article, Category, DecisionMapData, HowIHelpTopic, AboutData } from "./types.ts";
+import { atlanticAndNicheArticles } from "./atlanticAndNicheArticles.ts";
 
 export const categories: Category[] = [
   {
@@ -4410,12 +4411,14 @@ const rawArticles: Article[] = [
 }
 ];
 
+const allRawArticles: Article[] = [...rawArticles, ...atlanticAndNicheArticles];
+
 // Active public articles with verified publication and modification timestamps for search engines
-export const articles: Article[] = rawArticles
+export const articles: Article[] = allRawArticles
   .filter((a) => !a.heldForReview)
   .map((a) => ({
     ...a,
     datePublished: a.datePublished || "2025-01-15T08:00:00-05:00",
     dateModified: a.dateModified || "2026-11-05T09:00:00-05:00",
   }));
-export const heldArticles: Article[] = rawArticles.filter((a) => a.heldForReview);
+export const heldArticles: Article[] = allRawArticles.filter((a) => a.heldForReview);

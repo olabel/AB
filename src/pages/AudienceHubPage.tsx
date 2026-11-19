@@ -101,11 +101,12 @@ const AUDIENCES: Record<string, AudienceConfig> = {
       "Optimisez la fiscalité de votre société, gérez le seuil de revenus passifs de la DPE et extrayez du capital en franchise d'impôt.",
     icon: Briefcase,
     curatedSlugs: [
+      "new-brunswick-ccpc-corporate-tax-small-business-strategy",
+      "canadian-ccpc-passive-income-grind-sbd-tax-trap",
       "tfsa-vs-rrsp",
       "term-vs-permanent-life-insurance",
       "savings-or-debt-first",
       "questions-before-any-financial-product",
-      "canadian-mortgage-renewal-shock-liquidity-trap",
     ],
     showCalculator: false,
     keyTakeawaysEn: [
@@ -142,12 +143,12 @@ const AUDIENCES: Record<string, AudienceConfig> = {
       "Planification familiale au Canada : subventions REEE, assurance temporaire, renouvellement hypothécaire et transfert successoral.",
     icon: Users,
     curatedSlugs: [
+      "dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates",
+      "halal-tfsa-rrsp-fhsa-investing-canada",
       "canadian-mortgage-renewal-shock-liquidity-trap",
       "fhsa-explained",
       "tfsa-vs-rrsp",
       "resp-basics",
-      "income-depends-on-you",
-      "term-vs-permanent-life-insurance",
     ],
     showCalculator: false,
     keyTakeawaysEn: [
@@ -180,6 +181,7 @@ const AUDIENCES: Record<string, AudienceConfig> = {
       "Bâtissez votre crédit canadien, structurez vos réserves de subsistance et optimisez vos régimes enregistrés dès votre première année.",
     icon: Compass,
     curatedSlugs: [
+      "atlantic-canada-newcomer-aip-money-guide",
       "new-to-canada-money-basics",
       "internationally-trained-doctors-nurses-first-year",
       "tfsa-vs-rrsp",

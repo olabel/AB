@@ -551,6 +551,26 @@ Notes: ${formData.notes || "None"}`;
               </p>
             </div>
           </div>
+
+          <div className="mt-6 p-5 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#75581f] block">
+                {isFr ? "Guide pratique approfondi" : "Step-by-Step Companion Guide"}
+              </span>
+              <p className="text-sm font-serif text-[#1c1b18]">
+                {isFr
+                  ? "Consultez les règles de purification des dividendes et le traitement annuel de la Zakat sur les comptes CELI, REER et CELIAPP."
+                  : "Read our complete guide on dividend purification and annual Zakah calculations across TFSA, RRSP, and FHSA accounts."}
+              </p>
+            </div>
+            <Link
+              to={`${isFr ? "/fr" : ""}/education/halal-tfsa-rrsp-fhsa-investing-canada`}
+              className="arrow-link text-sm whitespace-nowrap shrink-0"
+            >
+              <span>{isFr ? "Lire le guide Halal CELI/REER" : "Read the Halal TFSA & Zakah guide"}</span>
+              <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         </section>
 
         {/* 6. FAIR & BALANCED MULTI-SCENARIO SIMULATOR */}

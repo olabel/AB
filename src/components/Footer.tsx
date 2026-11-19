@@ -133,6 +133,16 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to={`${prefix}/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates`} className="hover:text-white transition-colors">
+                  {isFr ? "Achat maison Dieppe & Moncton" : "Dieppe & Moncton Homebuyers"}
+                </Link>
+              </li>
+              <li>
+                <Link to={`${prefix}/education/halal-tfsa-rrsp-fhsa-investing-canada`} className="hover:text-white transition-colors">
+                  {isFr ? "Investir Halal (CELI / REER)" : "Halal TFSA & RRSP Guide"}
+                </Link>
+              </li>
+              <li>
                 <Link to={`${prefix}/calculators?tab=newcomer#calculator-tool`} className="hover:text-white transition-colors">
                   {isFr ? "Planificateur pour nouveaux arrivants" : "Newcomer Planning Calculator"}
                 </Link>
@@ -172,6 +182,14 @@ export const Footer: React.FC = () => {
               <li>
                 <Link to={`${prefix}/for/newcomers`} className="hover:text-white transition-colors">
                   {isFr ? "Nouveaux arrivants au Canada" : "Newcomers to Canada"}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={`${prefix}/atlantic-canada`}
+                  className="text-[#d6c298] hover:text-white transition-colors font-medium"
+                >
+                  {isFr ? "Dieppe, N.-B. & Canada atlantique" : "Dieppe, NB & Atlantic Canada"}
                 </Link>
               </li>
             </ul>

@@ -260,6 +260,18 @@ export const HomePage: React.FC = () => {
               </span>
             </Link>
           </div>
+
+          <div className="pt-4 border-t border-[#d6cebd] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <p className="small text-[#46423a]">
+              {isFr
+                ? "Établi à Dieppe, N.-B. : consultez nos repères provinciaux sur les sociétés SPCC, l'homologation et les droits immobiliers au Canada atlantique."
+                : "Practising from Dieppe, NB: compare corporate small business taxes, property transfer rules, and probate across Atlantic Canada."}
+            </p>
+            <Link to={`${prefix}/atlantic-canada`} className="arrow-link text-sm shrink-0">
+              <span>{isFr ? "Guide Dieppe & Canada atlantique" : "Dieppe & Atlantic Canada guide"}</span>
+              <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         </div>
       </section>
 

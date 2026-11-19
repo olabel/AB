@@ -329,11 +329,11 @@ export const EducationLibraryPage: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="shrink-0">
+            <div className="md:shrink-0">
               <Link
                 to={`${prefix}/calculators?tab=tfsa-rrsp#calculator-tool`}
                 onClick={() => trackCtaClick("education_library_banner", "Compare registered versus taxable growth")}
-                className="btn btn-primary text-xs px-5 py-2.5 inline-flex items-center gap-2 whitespace-nowrap"
+                className="btn btn-primary text-xs px-5 py-2.5 inline-flex items-center justify-center gap-2 sm:whitespace-nowrap text-center max-w-full"
               >
                 <span>
                   {language === "fr"

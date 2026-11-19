@@ -69,6 +69,7 @@ function renderSiteNav(isFr, altPath) {
     { href: `${prefix}/costly-blindspots`, label: isFr ? "Pièges financiers" : "Costly Blindspots" },
     { href: `${prefix}/calculators`, label: isFr ? "Simulateurs" : "Tools" },
     { href: `${prefix}/calculators/amt`, label: isFr ? "Calculateur IMR" : "AMT Calculator" },
+    { href: `${prefix}/atlantic-canada`, label: isFr ? "Canada atlantique" : "Atlantic Canada" },
     { href: `${prefix}/about`, label: isFr ? "À propos" : "About" },
     { href: `${prefix}/contact`, label: isFr ? "Contact" : "Contact" },
     { href: altPath, label: isFr ? "English" : "Français" },
@@ -355,6 +356,29 @@ function renderCoreBody(r, isFr) {
     `;
   }
 
+  if (basePath === "/atlantic-canada") {
+    return `
+      <section>
+        <h2>${isFr ? "Quatre règles provinciales du Nouveau-Brunswick et de l'Atlantique" : "Four Atlantic Canada Rules That Change Household Math"}</h2>
+        <ul>
+          <li><strong>${isFr ? "Nouveau-Brunswick (Dieppe / Moncton) :" : "New Brunswick Property Transfer Tax:"}</strong> ${isFr ? "Droit provincial de transfert immobilier de 1,0 % sans exemption générale pour premier acheteur." : "1.0% provincial Real Property Transfer Tax with no general first-time buyer rebate."}</li>
+          <li><strong>${isFr ? "Impôt des sociétés (SPCC) au N.-B. :" : "NB Small Business Corporate Tax Rate:"}</strong> ${isFr ? "11,5 % combinés (2,5 % N.-B. + 9,0 % fédéral) jusqu'à 500 000 $, puis 29,0 % lorsque les revenus passifs érodent la DPE au-delà de 50 000 $." : "11.5% combined (2.5% NB + 9.0% federal) on the first $500,000, climbing toward 29.0% when passive income exceeds $50,000."}</li>
+          <li><strong>${isFr ? "Frais d'homologation :" : "Estate Probate Fees:"}</strong> ${isFr ? "0,5 % au Nouveau-Brunswick (5 $ par 1 000 $ > 20 000 $) contre ~1,695 % en Nouvelle-Écosse (> 100 000 $)." : "~0.5% in New Brunswick ($5 per $1,000 over $20,000) vs. ~1.695% in Nova Scotia (over $100,000)."}</li>
+          <li><strong>${isFr ? "Nouveaux arrivants (PICA) :" : "Atlantic Immigration Program (AIP):"}</strong> ${isFr ? "Budget réel d'arrivée (véhicule d'hiver, lettre d'assurance auto et Assurance-maladie du N.-B.)." : "Real 90-day settlement cash buffers, winter vehicles, foreign auto experience letters, and NB Medicare transitions."}</li>
+        </ul>
+      </section>
+      <section>
+        <h2>${isFr ? "Guides spécialisés pour l'Atlantique" : "Targeted Regional & Niche Guides"}</h2>
+        <ul>
+          <li><a href="${prefix}/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates">${isFr ? "Premier achat immobilier à Dieppe et Moncton (CELIAPP, RAP et taxe de 1 %)" : "First-Time Homebuyer Strategy in Dieppe, Moncton & New Brunswick"}</a></li>
+          <li><a href="${prefix}/insights/new-brunswick-ccpc-corporate-tax-small-business-strategy">${isFr ? "Impôt SPCC au Nouveau-Brunswick, seuil passif de 50 000 $ et CDC" : "New Brunswick CCPC Small Business Tax, $50k SBD & Probate Strategy"}</a></li>
+          <li><a href="${prefix}/education/atlantic-canada-newcomer-aip-money-guide">${isFr ? "Finances des nouveaux arrivants à Dieppe, Moncton et en Atlantique (PICA)" : "Newcomer Finances in Dieppe, Moncton & Atlantic Canada (AIP Guide)"}</a></li>
+          <li><a href="${prefix}/education/halal-tfsa-rrsp-fhsa-investing-canada">${isFr ? "Investir conforme à la charia au Canada : CELI, REER, CELIAPP et Zakat" : "Halal Investing in Canada: TFSA, RRSP, FHSA & Zakah Guide"}</a></li>
+        </ul>
+      </section>
+    `;
+  }
+
   if (basePath.startsWith("/for/")) {
     return `
       <section>
@@ -526,6 +550,28 @@ function renderRouteHtml(r) {
       description: isFrench ? item.summaryFr : item.summaryEn,
       url: `${isFrench ? "/fr" : ""}/costly-blindspots#${item.id}`,
     }));
+  } else if (basePath === "/atlantic-canada") {
+    r.faqs = isFrench
+      ? [
+          {
+            question: "Les acheteurs d'une première maison au Nouveau-Brunswick ont-ils droit à une exemption de droits de mutation ?",
+            answer: "Non. Le Nouveau-Brunswick perçoit un impôt provincial sur le transfert de biens réels de 1,0 % sans remboursement provincial général pour les premiers acheteurs.",
+          },
+          {
+            question: "Quel est le taux d'impôt des petites entreprises (SPCC) au Nouveau-Brunswick en 2026 ?",
+            answer: "Une SPCC admissible paie 11,5 % combinés (2,5 % N.-B. + 9,0 % fédéral) sur les premiers 500 000 $, taux qui grimpe jusqu'à 29,0 % si les revenus passifs réduisent la DPE au-delà de 50 000 $.",
+          },
+        ]
+      : [
+          {
+            question: "Do first-time home buyers in Dieppe, Moncton, or New Brunswick receive a transfer tax rebate?",
+            answer: "No. New Brunswick charges a 1.0% provincial Real Property Transfer Tax with no general first-time buyer exemption.",
+          },
+          {
+            question: "What is the New Brunswick small business corporate tax rate on a CCPC?",
+            answer: "Qualifying Canadian-controlled private corporations in New Brunswick pay an 11.5% combined rate (2.5% NB + 9.0% federal) on the first $500,000 of active income before passive income clawbacks above $50,000.",
+          },
+        ];
   }
 
   const routeJsonLd = buildRouteJsonLd({

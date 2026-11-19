@@ -154,17 +154,22 @@ export function buildRouteJsonLd({
       addressRegion: "NB",
       addressCountry: "CA",
     },
-    areaServed: {
-      "@type": "Country",
-      name: "Canada",
-    },
+    areaServed: [
+      { "@type": "City", name: "Dieppe" },
+      { "@type": "City", name: "Moncton" },
+      { "@type": "AdministrativeArea", name: "New Brunswick" },
+      { "@type": "AdministrativeArea", name: "Nova Scotia" },
+      { "@type": "AdministrativeArea", name: "Prince Edward Island" },
+      { "@type": "AdministrativeArea", name: "Newfoundland and Labrador" },
+      { "@type": "Country", name: "Canada" },
+    ],
     knowsAbout: [
       "Tax-Free Savings Account (TFSA)",
       "Registered Retirement Savings Plan (RRSP)",
       "First Home Savings Account (FHSA)",
       "CCPC Small Business Deduction Tax Efficiency",
       "Halal & Islamic Investing Canada",
-      "Newcomer Financial Planning Canada",
+      "Newcomer & Atlantic Immigration Program (AIP) Financial Planning",
     ],
   };
 

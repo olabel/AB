@@ -257,6 +257,19 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     changefreq: "weekly",
   },
   {
+    path: "/atlantic-canada",
+    basePath: "/atlantic-canada",
+    lang: "en-CA",
+    title: "Financial Planning Dieppe, Moncton & NB | Ahmed Bello",
+    description:
+      "Financial planning in Dieppe, Moncton, NB and Atlantic Canada: 2.5% NB CCPC tax, transfer taxes, probate fees, AIP settlement, and TFSA/RRSP strategy.",
+    heading: "Financial Planning in Dieppe, Moncton & Atlantic Canada",
+    summary:
+      "Provincial corporate tax, 1.0% New Brunswick Real Property Transfer Tax, probate rules across NB/NS/PEI/NL, and Atlantic Immigration Program planning.",
+    priority: "0.95",
+    changefreq: "weekly",
+  },
+  {
     path: "/about",
     basePath: "/about",
     lang: "en-CA",
@@ -528,6 +541,19 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     heading: "Investissement Islamique au Canada : Cadre Éducatif",
     summary:
       "Comprendre le filtrage éthique islamique, les indices de référence et les comptes enregistrés canadiens.",
+    priority: "0.90",
+    changefreq: "weekly",
+  },
+  {
+    path: "/fr/atlantic-canada",
+    basePath: "/atlantic-canada",
+    lang: "fr-CA",
+    title: "Planification Financière Dieppe & N.-B. | Ahmed Bello",
+    description:
+      "Planification financière à Dieppe, Moncton et en Atlantique : impôt SPCC N.-B. (2,5 %), droits immobiliers, homologation, AIP et comptes CELI/REER.",
+    heading: "Planification financière à Dieppe, Moncton et au Canada atlantique",
+    summary:
+      "Impôt des sociétés en Atlantique, droit de transfert foncier au N.-B. (1,0 %), frais d'homologation et préparation financière PICA.",
     priority: "0.90",
     changefreq: "weekly",
   },
@@ -838,6 +864,30 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
     title: "Valeur de rachat de pension et FER au Canada",
     description:
       "Comment est calculée la valeur de rachat d'un régime à prestations déterminées, l'effet des taux et les plafonds de transfert fiscal.",
+  },
+  "atlantic-canada-newcomer-aip-money-guide": {
+    seoTitle: "Guide PICA Nouveaux Arrivants Moncton & NB",
+    title: "Finances des nouveaux arrivants à Dieppe, Moncton et en Atlantique",
+    description:
+      "Fonds PICA face au coût réel à Dieppe et Moncton : Assurance-maladie du N.-B., lettres d'assurance auto, crédit et règles CELI/REER.",
+  },
+  "new-brunswick-ccpc-corporate-tax-small-business-strategy": {
+    seoTitle: "Impôt SPCC Nouveau-Brunswick & seuil 50 k$",
+    title: "SPCC au Nouveau-Brunswick : taux de 11,5 %, seuil de 50 000 $ et CDC",
+    description:
+      "Protégez le taux PME de 11,5 % au Nouveau-Brunswick contre la réduction passive de 50 000 $ et réduisez l'homologation grâce au CDC.",
+  },
+  "halal-tfsa-rrsp-fhsa-investing-canada": {
+    seoTitle: "Investir Halal Canada : CELI, REER, Zakat",
+    title: "Investir conforme à la charia au Canada : CELI, REER, CELIAPP et Zakat",
+    description:
+      "Comment bâtir un patrimoine sans intérêt (Riba) au Canada : critères AAOIFI, purification des dividendes et Zakat sur CELI, REER et CELIAPP.",
+  },
+  "dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates": {
+    seoTitle: "Premier achat maison Dieppe, Moncton & N.-B.",
+    title: "Acheter une première maison à Dieppe, Moncton et au Nouveau-Brunswick",
+    description:
+      "Mise de fonds réelle à Dieppe et Moncton : taxe de transfert foncier de 1,0 % au N.-B. sans rabais 1er acheteur, cumul CELIAPP/RAP et SCHL Éco.",
   },
 };
 

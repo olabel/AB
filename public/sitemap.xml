@@ -119,6 +119,15 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/investing/islamic-equity"/>
   </url>
   <url>
+    <loc>https://www.ahmedbello.com/atlantic-canada</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/atlantic-canada"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/atlantic-canada"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/atlantic-canada"/>
+  </url>
+  <url>
     <loc>https://www.ahmedbello.com/about</loc>
     <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
@@ -297,6 +306,15 @@
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/investing/islamic-equity"/>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/investing/islamic-equity"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/investing/islamic-equity"/>
+  </url>
+  <url>
+    <loc>https://www.ahmedbello.com/fr/atlantic-canada</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/atlantic-canada"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/atlantic-canada"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/atlantic-canada"/>
   </url>
   <url>
     <loc>https://www.ahmedbello.com/fr/about</loc>
@@ -954,5 +972,77 @@
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/education/pension-commuted-value-transfer-par-tax-planning"/>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/education/pension-commuted-value-transfer-par-tax-planning"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/education/pension-commuted-value-transfer-par-tax-planning"/>
+  </url>
+  <url>
+    <loc>https://www.ahmedbello.com/education/atlantic-canada-newcomer-aip-money-guide</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/education/atlantic-canada-newcomer-aip-money-guide"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/education/atlantic-canada-newcomer-aip-money-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/education/atlantic-canada-newcomer-aip-money-guide"/>
+  </url>
+  <url>
+    <loc>https://www.ahmedbello.com/fr/education/atlantic-canada-newcomer-aip-money-guide</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.81</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/education/atlantic-canada-newcomer-aip-money-guide"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/education/atlantic-canada-newcomer-aip-money-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/education/atlantic-canada-newcomer-aip-money-guide"/>
+  </url>
+  <url>
+    <loc>https://www.ahmedbello.com/insights/new-brunswick-ccpc-corporate-tax-small-business-strategy</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/insights/new-brunswick-ccpc-corporate-tax-small-business-strategy"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/insights/new-brunswick-ccpc-corporate-tax-small-business-strategy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/insights/new-brunswick-ccpc-corporate-tax-small-business-strategy"/>
+  </url>
+  <url>
+    <loc>https://www.ahmedbello.com/fr/insights/new-brunswick-ccpc-corporate-tax-small-business-strategy</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.76</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/insights/new-brunswick-ccpc-corporate-tax-small-business-strategy"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/insights/new-brunswick-ccpc-corporate-tax-small-business-strategy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/insights/new-brunswick-ccpc-corporate-tax-small-business-strategy"/>
+  </url>
+  <url>
+    <loc>https://www.ahmedbello.com/education/halal-tfsa-rrsp-fhsa-investing-canada</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/education/halal-tfsa-rrsp-fhsa-investing-canada"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/education/halal-tfsa-rrsp-fhsa-investing-canada"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/education/halal-tfsa-rrsp-fhsa-investing-canada"/>
+  </url>
+  <url>
+    <loc>https://www.ahmedbello.com/fr/education/halal-tfsa-rrsp-fhsa-investing-canada</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.81</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/education/halal-tfsa-rrsp-fhsa-investing-canada"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/education/halal-tfsa-rrsp-fhsa-investing-canada"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/education/halal-tfsa-rrsp-fhsa-investing-canada"/>
+  </url>
+  <url>
+    <loc>https://www.ahmedbello.com/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates"/>
+  </url>
+  <url>
+    <loc>https://www.ahmedbello.com/fr/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.81</priority>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.ahmedbello.com/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates"/>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.ahmedbello.com/fr/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ahmedbello.com/education/dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates"/>
   </url>
 </urlset>
