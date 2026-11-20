@@ -15,8 +15,8 @@ export const siteConfig = {
   privacyEmail: "privacy@ahmedbello.com",
   tagline: "Your money questions are connected. The answers should be, too.",
   footerBrandLine: "Understand your money. Make informed decisions. Build with intention.",
-  portrait: "/assets/aistudio/headshot1_0b740ccc.webp",
-  headshotUrl: "/assets/aistudio/headshot1_0b740ccc.webp",
+  portrait: "/assets/aistudio/unnamed_dd5949a8.webp",
+  headshotUrl: "/assets/aistudio/unnamed_dd5949a8.webp",
 
   // Standardized primary call-to-action language & duration (single source of truth)
   callDurationMinutes: 15,
