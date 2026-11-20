@@ -138,11 +138,12 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     descriptionFr:
       "Équilibrer les paiements hypothécaires avec l'épargne enregistrée (CELI, REER, CELIAPP), les études des enfants (REEE) et la protection du revenu familial.",
     seoDescriptionEn:
-      "Practical financial education for Canadian families: RESP grants, term life insurance, mortgage renewals, and estate planning basics.",
+      "Practical financial education for Canadian families: RESP & RDSP grants, term life insurance, mortgage renewals, and estate planning basics.",
     seoDescriptionFr:
-      "Planification familiale au Canada : subventions REEE, assurance temporaire, renouvellement hypothécaire et transfert successoral.",
+      "Planification familiale au Canada : subventions REEE et REEI, assurance temporaire, renouvellement hypothécaire et transfert successoral.",
     icon: Users,
     curatedSlugs: [
+      "rdsp-canada-disability-savings-grants-bonds-guide",
       "dieppe-moncton-first-time-homebuyer-fhsa-nb-rebates",
       "halal-tfsa-rrsp-fhsa-investing-canada",
       "canadian-mortgage-renewal-shock-liquidity-trap",
@@ -154,13 +155,13 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     keyTakeawaysEn: [
       "Avoid liquidating registered tax shelters (TFSA/RRSP) to pay down mortgage principal without modeling 15-year compounding.",
       "Eligible first-time buyers can combine $40k FHSA + $60k RRSP HBP for up to $100k per person ($200k per couple) tax-free.",
-      "The Canada Education Savings Grant (CESG) provides a 20% match on the first $2,500 contributed annually to an RESP.",
+      "The RDSP offers up to 300% in Grants ($70k cap) and $1,000/yr Bonds ($20k cap) for DTC-eligible residents, while the RESP pays a 20% match.",
       "Individual level term insurance keeps coverage steady and pays tax-free to family beneficiaries, unlike bank mortgage insurance.",
     ],
     keyTakeawaysFr: [
       "Évitez de liquider vos régimes enregistrés (CELI/REER) pour rembourser votre hypothèque sans comparer le rendement à long terme.",
       "Combinez 40 000 $ en CELIAPP et 60 000 $ en RAP pour jusqu'à 100 000 $ non imposables par acheteur (200 000 $ par couple).",
-      "La Subvention canadienne pour l'épargne-études (SCEE) offre une bonification de 20 % sur les premiers 2 500 $ cotisés au REEE.",
+      "Le REEI verse jusqu'à 300 % de subventions (70 000 $ max.) et 1 000 $/an en bons (20 000 $ max.) avec le CIPH, tandis que le REEE bonifie de 20 %.",
       "L'assurance temporaire individuelle verse un capital fixe non imposable à votre famille, contrairement à l'assurance prêt bancaire.",
     ],
   },

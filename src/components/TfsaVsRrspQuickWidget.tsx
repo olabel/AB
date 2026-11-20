@@ -6,10 +6,10 @@ import { CalculatorLeadCapture } from "./CalculatorLeadCapture.tsx";
 import { trackCalculatorCompleted, trackCtaClick } from "../lib/track.ts";
 
 const TAX_BRACKETS = [
-  { id: "low", rate: 0.20, labelEn: "~20% (Under ~$57k income)", labelFr: "~20 % (Revenu < ~57 k$)" },
-  { id: "mid", rate: 0.30, labelEn: "~30% ($57k to $115k income)", labelFr: "~30 % (57 k$ à 115 k$)" },
-  { id: "upper", rate: 0.43, labelEn: "~43% ($115k to $180k income)", labelFr: "~43 % (115 k$ à 180 k$)" },
-  { id: "top", rate: 0.50, labelEn: "~50% ($180k+ income)", labelFr: "~50 % (Revenu > 180 k$)" },
+  { id: "low", rate: 0.20, labelEn: "~20% (Under ~$58.5k income)", labelFr: "~20 % (Revenu < ~58,5 k$)" },
+  { id: "mid", rate: 0.30, labelEn: "~30% ($58.5k to $117k income)", labelFr: "~30 % (58,5 k$ à 117 k$)" },
+  { id: "upper", rate: 0.43, labelEn: "~43% ($117k to $181.4k income)", labelFr: "~43 % (117 k$ à 181,4 k$)" },
+  { id: "top", rate: 0.50, labelEn: "~50% ($181.4k+ income)", labelFr: "~50 % (Revenu > 181,4 k$)" },
 ];
 
 type HorizonGoal = "retirement" | "flexible" | "first-home";
@@ -81,7 +81,7 @@ export const TfsaVsRrspQuickWidget: React.FC = () => {
     }).format(val);
 
   const summaryText = [
-    `Annual Contribution Modeled: ${formatMoney(contribution)} (2026 CRA TFSA limit: $7,000; RRSP max: 18% of prior-year income up to $33,810)`,
+    `Annual Contribution Modeled: ${formatMoney(contribution)} (2026 TFSA limit: $7,000; RRSP max: $33,810 in 2026 / $35,390 in 2027)`,
     `Current Illustrative Marginal Tax Rate: ${Math.round(currentRate * 100)}%`,
     `Primary Goal: ${goal}`,
     `Expected Retirement Tax Rate vs Today: ${futureRate} (~${Math.round(projectedFutureTaxRate * 100)}%)`,
@@ -282,8 +282,8 @@ export const TfsaVsRrspQuickWidget: React.FC = () => {
         <CheckCircle2 className="w-3.5 h-3.5 text-[#2e4a3b] shrink-0 mt-0.5" />
         <span>
           {isFr
-            ? "Illustration éducative uniquement (plafond CELI 2026 de 7 000 $, plafond REER 2026 jusqu'à 33 810 $ à 18 % du revenu gagné antérieur). Vérifiez vos droits exacts dans Mon dossier ARC."
-            : "Educational illustration only (2026 TFSA annual limit $7,000; 2026 RRSP limit 18% of prior-year earned income up to $33,810). Verify your exact contribution room in CRA My Account."}
+            ? "Illustration éducative uniquement (plafond CELI 2026 de 7 000 $, plafond REER de 33 810 $ en 2026 et 35 390 $ en 2027 à 18 % du revenu gagné antérieur). Vérifiez vos droits exacts dans Mon dossier ARC."
+            : "Educational illustration only (2026 TFSA limit $7,000; RRSP limit $33,810 in 2026 and $35,390 in 2027 at 18% of prior-year earned income). Verify your exact contribution room in CRA My Account."}
         </span>
       </p>
 

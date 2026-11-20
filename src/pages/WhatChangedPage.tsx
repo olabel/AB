@@ -133,9 +133,9 @@ const RULE_CHANGES: RuleChangeItem[] = [
     titleEn: "Budget 2026 Corporate Rules: $15M Canada Growth Incentive, Productivity Mega Deduction & SBD Planning",
     titleFr: "Budget 2026 pour les sociétés : Incitatif de croissance de 15 M$, méga-déduction et gestion DPE",
     summaryEn:
-      "Alongside retaining Canada's 50% capital gains inclusion rate and the enacted $1.25 million Lifetime Capital Gains Exemption (LCGE), Budget 2026 proposes two major corporate tax incentives: the Canada Growth Incentive (exempting up to $15 million in capital gains on qualifying shares of qualifying Canadian corporations issued on or after November 5, 2026 and before 2037), an expanded small business rollover, and the Productivity Mega Deduction (reducing the marginal effective tax rate on qualifying new business investments from 13% to 6.4%).",
+      "Alongside retaining Canada's 50% capital gains inclusion rate and the $1.25 million base Lifetime Capital Gains Exemption (indexed to $1,275,000 for 2026), Budget 2026 proposes two major corporate tax incentives: the Canada Growth Incentive (exempting up to $15 million in capital gains on qualifying shares of qualifying Canadian corporations issued on or after November 5, 2026 and before 2037), an expanded small business rollover, and the Productivity Mega Deduction (reducing the marginal effective tax rate on qualifying new business investments from 13% to 6.4%).",
     summaryFr:
-      "Tout en maintenant le taux d'inclusion des gains en capital à 50 % et l'exonération cumulative des gains en capital (ECGC) à 1,25 M$, le Budget 2026 propose deux incitatifs corporatifs majeurs : l'Incitatif de croissance du Canada (exonérant jusqu'à 15 M$ de gains en capital sur des actions admissibles émises entre le 5 novembre 2026 et 2037) ainsi que la Méga-déduction pour la productivité (abaissant le taux effectif marginal sur les investissements admissibles de 13 % à 6,4 %).",
+      "Tout en maintenant le taux d'inclusion des gains en capital à 50 % et l'exonération cumulative des gains en capital (ECGC) de base de 1,25 M$ (indexée à 1 275 000 $ en 2026), le Budget 2026 propose deux incitatifs corporatifs majeurs : l'Incitatif de croissance du Canada (exonérant jusqu'à 15 M$ de gains en capital sur des actions admissibles émises entre le 5 novembre 2026 et 2037) ainsi que la Méga-déduction pour la productivité (abaissant le taux effectif marginal sur les investissements admissibles de 13 % à 6,4 %).",
     ahmedAnalysisEn:
       "My Take: Incorporated owners face a widening gap between operating reinvestment and passive portfolio buildup inside a CCPC. While new qualifying share capital and capital-expenditure deductions are richly rewarded, passive investment portfolios above $50,000 in Adjusted Aggregate Investment Income (AAII) still face the 5-for-1 Small Business Deduction grind under ITA s. 125(5.1), and realized capital gains still interact with personal AMT on sale.",
     ahmedAnalysisFr:
@@ -383,7 +383,7 @@ export const WhatChangedPage: React.FC = () => {
               {isFr ? "Vérifié par Ahmed Bello" : "Compiled & verified by Ahmed Bello"}
             </span>
             <span aria-hidden="true">&bull;</span>
-            <span>{isFr ? "Mis à jour : 14 novembre 2026" : "Updated: November 14, 2026"}</span>
+            <span>{isFr ? "Mis à jour : 20 novembre 2026" : "Updated: November 20, 2026"}</span>
             <span aria-hidden="true">&bull;</span>
             <span>
               {isFr

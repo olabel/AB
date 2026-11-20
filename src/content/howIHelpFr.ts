@@ -41,7 +41,7 @@ export const howIHelpTopicsFr: HowIHelpTopic[] = [
     id: "accounts",
     short: "Régimes enregistrés",
     question: "Que devrais-je comprendre avant de choisir un compte enregistré ?",
-    why: "Le CELI, le REER, le CELIAPP et le REEE protègent chacun vos investissements de l'impôt, mais à des moments différents et selon des règles distinctes. Choisir par habitude ou selon l'offre par défaut peut entraîner des pertes d'avantages fiscaux ou de flexibilité.",
+    why: "Le CELI, le REER, le CELIAPP, le REEE et le REEI protègent chacun vos investissements de l'impôt, mais à des moments différents et selon des règles distinctes de subventions et de retrait. Choisir par habitude ou selon l'offre par défaut peut entraîner des pertes de subventions, d'avantages fiscaux ou de flexibilité.",
     concepts: [
       {
         term: "Impôt différé vs non imposable",
@@ -73,6 +73,10 @@ export const howIHelpTopicsFr: HowIHelpTopic[] = [
       {
         label: "Guide : Tout comprendre sur le CELIAPP",
         href: "/fr/education/fhsa-explained"
+      },
+      {
+        label: "Guide : REEI, subventions et bons",
+        href: "/fr/education/rdsp-canada-disability-savings-grants-bonds-guide"
       }
     ],
     contactTopic: "accounts"

@@ -364,8 +364,8 @@ export const EducationLibraryPage: React.FC = () => {
               onChange={(e) => handleSearchChange(e.target.value)}
               placeholder={
                 language === "fr"
-                  ? "Rechercher par sujet, compte ou question (ex. CELI, REER, dette, pension)..."
-                  : "Search by topic, account, or question (e.g., TFSA, debt, pension)..."
+                  ? "Rechercher par sujet, compte ou question (ex. CELI, REEI, dette, pension)..."
+                  : "Search by topic, account, or question (e.g., TFSA, RDSP, debt, pension)..."
               }
               className="field pl-10 pr-9 text-sm w-full bg-white"
             />

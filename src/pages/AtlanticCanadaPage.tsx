@@ -45,7 +45,7 @@ const ATLANTIC_BENCHMARKS: ProvinceBenchmark[] = [
   {
     provinceEn: "Nova Scotia (Halifax Regional Municipality & Province-Wide)",
     provinceFr: "Nouvelle-Écosse (Halifax et ensemble de la province)",
-    smallBizRate: "1.5% / 2.5% (10.5%–11.5% combined)",
+    smallBizRate: "1.5% up to $700k (10.5% <=$500k; 16.5% $500k-$700k)",
     generalCorpRate: "14.0% (29.0% combined)",
     transferTaxEn: "0.5% to 1.5% municipal Deed Transfer Tax (1.5% in HRM)",
     transferTaxFr: "0,5 % à 1,5 % taxe municipale (1,5 % à Halifax)",
@@ -55,17 +55,17 @@ const ATLANTIC_BENCHMARKS: ProvinceBenchmark[] = [
   {
     provinceEn: "Prince Edward Island (Charlottetown & Summerside)",
     provinceFr: "Île-du-Prince-Édouard (Charlottetown et Summerside)",
-    smallBizRate: "1.0% (10.0% combined)",
-    generalCorpRate: "16.0% (31.0% combined)",
-    transferTaxEn: "1.0% over $30,000 (first-time buyer exemption eligible)",
-    transferTaxFr: "1,0 % au-delà de 30 000 $ (exemption 1er acheteur admissible)",
+    smallBizRate: "1.0% up to $600k (10.0% <=$500k)",
+    generalCorpRate: "15.0% (30.0% combined)",
+    transferTaxEn: "1.0% over $30,000 (full FTHB exemption, no price cap)",
+    transferTaxFr: "1,0 % au-delà de 30 000 $ (exonération 1er acheteur sans plafond)",
     probateFeeEn: "Flat tiers up to $400 + $4 per $1,000 (~0.4%) above $100,000",
     probateFeeFr: "Paliers jusqu'à 400 $ + 4 $ par 1 000 $ (~0,4 %) > 100 000 $",
   },
   {
     provinceEn: "Newfoundland and Labrador (St. John's & Corner Brook)",
     provinceFr: "Terre-Neuve-et-Labrador (St. John's et Corner Brook)",
-    smallBizRate: "2.5% (11.5% combined)",
+    smallBizRate: "2.0% (11.0% combined; cut Jan 1, 2026)",
     generalCorpRate: "15.0% (30.0% combined)",
     transferTaxEn: "Registry registration fee schedule ($100 base + $0.40/$100 > $500)",
     transferTaxFr: "Droits d'enregistrement foncier (100 $ + 0,40 $ par 100 $ > 500 $)",
@@ -357,7 +357,7 @@ export const AtlanticCanadaPage: React.FC = () => {
               <thead>
                 <tr className="bg-[#14211a] text-[#f7f3eb]">
                   <th className="p-3.5 font-semibold">{isFr ? "Province" : "Province & Cities"}</th>
-                  <th className="p-3.5 font-semibold">{isFr ? "PME (jusqu'à 500 k$)" : "Small Business Tax (<$500k)"}</th>
+                  <th className="p-3.5 font-semibold">{isFr ? "Taux PME (DPE)" : "Small Business Tax (SBD)"}</th>
                   <th className="p-3.5 font-semibold">{isFr ? "Taux général SPCC" : "General Corp Rate"}</th>
                   <th className="p-3.5 font-semibold">{isFr ? "Droits immobiliers" : "Property Transfer Tax"}</th>
                   <th className="p-3.5 font-semibold">{isFr ? "Frais d'homologation" : "Estate Probate Fees"}</th>

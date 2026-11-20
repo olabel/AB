@@ -167,6 +167,7 @@ export function buildRouteJsonLd({
       "Tax-Free Savings Account (TFSA)",
       "Registered Retirement Savings Plan (RRSP)",
       "First Home Savings Account (FHSA)",
+      "Registered Disability Savings Plan (RDSP)",
       "CCPC Small Business Deduction Tax Efficiency",
       "Halal & Islamic Investing Canada",
       "Newcomer & Atlantic Immigration Program (AIP) Financial Planning",

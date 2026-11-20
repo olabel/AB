@@ -103,7 +103,7 @@ export const CalculatorsPage: React.FC = () => {
   // --------------------------------------------------------------------------
   const [mortgageBalance, setMortgageBalance] = useState<number>(480000);
   const [currentRate, setCurrentRate] = useState<number>(2.49);
-  const [renewalRate, setRenewalRate] = useState<number>(5.29);
+  const [renewalRate, setRenewalRate] = useState<number>(4.89);
   const [amortizationYears, setAmortizationYears] = useState<number>(22);
   const [registeredSavings, setRegisteredSavings] = useState<number>(50000);
 
@@ -614,13 +614,13 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
-                          <span>{isFr ? "Cotisation annuelle" : "Annual Contribution"}</span>
+                          <span>{isFr ? "Cotisation annuelle (max. REER 2026: 33 810 $)" : "Annual Contribution (2026 RRSP cap: $33,810)"}</span>
                           <span className="tabular-nums text-[#1c1b18] font-bold">{formatCurrency(annualContribution)}</span>
                         </div>
                         <input
                           type="range"
                           min={2000}
-                          max={33810}
+                          max={35390}
                           step={500}
                           value={annualContribution}
                           onChange={(e) => setAnnualContribution(Number(e.target.value))}

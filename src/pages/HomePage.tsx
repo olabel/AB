@@ -187,8 +187,8 @@ export const HomePage: React.FC = () => {
                 </h3>
                 <p className="small text-[#46423a]">
                   {isFr
-                    ? "Renouvellement hypothécaire, cumul CELIAPP et RAP, REEE et protection du revenu familial."
-                    : "Mortgage renewals, pooling FHSA and RRSP Home Buyers' Plan room, RESPs, and family income protection."}
+                    ? "Renouvellement hypothécaire, cumul CELIAPP et RAP, REEE, REEI et protection du revenu familial."
+                    : "Mortgage renewals, FHSA + RRSP HBP pooling, RESPs & RDSP disability grants, and family income protection."}
                 </p>
               </div>
               <span className="pt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#2e4a3b]">

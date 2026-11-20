@@ -1,11 +1,12 @@
 import type { Article, Category, DecisionMapData, HowIHelpTopic, AboutData } from "./types.ts";
 import { atlanticAndNicheArticles } from "./atlanticAndNicheArticles.ts";
+import { rdspArticle } from "./rdspArticle.ts";
 
 export const categories: Category[] = [
   {
     "id": "registered-accounts",
     "label": "Canadian registered accounts",
-    "blurb": "TFSA, RRSP, FHSA and RESP rules and trade-offs."
+    "blurb": "TFSA, RRSP, FHSA, RESP and RDSP rules and trade-offs."
   },
   {
     "id": "investing",
@@ -196,7 +197,7 @@ export const howIHelpTopics: HowIHelpTopic[] = [
     "id": "accounts",
     "short": "Registered accounts",
     "question": "What should I understand before choosing a registered account?",
-    "why": "The TFSA, RRSP, FHSA and RESP can each shelter investments from tax, but at different moments and under different rules. Choosing by habit, or by whatever was offered first, can cost flexibility or tax you did not intend to give up.",
+    "why": "The TFSA, RRSP, FHSA, RESP and RDSP can each shelter investments from tax, but at different moments and under different grant and withdrawal rules. Choosing by habit, or by whatever was offered first, can cost grants, flexibility, or tax you did not intend to give up.",
     "concepts": [
       {
         "term": "Contribution room",
@@ -228,6 +229,10 @@ export const howIHelpTopics: HowIHelpTopic[] = [
       {
         "label": "Read: The FHSA explained",
         "href": "/education/fhsa-explained"
+      },
+      {
+        "label": "Read: RDSP Grants, Bonds & Rules",
+        "href": "/education/rdsp-canada-disability-savings-grants-bonds-guide"
       }
     ],
     "contactTopic": "accounts"
@@ -1315,7 +1320,7 @@ const rawArticles: Article[] = [
         ]
       },
       "notes": [
-        "CRA’s own example makes the same point: a person who became a resident in 2024 had only the 2024 limit of $7,000 available.",
+        "CRA’s own example makes the same point: a person who became a resident in 2026 had only the 2026 limit of $7,000 available.",
         "Contributing more than your room is an over-contribution, taxed at 1% per month on the excess."
       ]
     },
@@ -1557,7 +1562,7 @@ const rawArticles: Article[] = [
     ],
     "example": {
       "title": "Case Study: The $60,000 Prepayment Dilemma (15-Year Horizon)",
-      "intro": "Consider an Ontario household renewing a $500,000 mortgage at 5.4% interest. They have $60,000 saved inside their TFSAs earning an average 6.5% return. They compare withdrawing $60,000 to make an immediate lump-sum mortgage prepayment versus preserving their TFSA and restructuring cashflow.",
+      "intro": "Consider an Ontario household renewing a $500,000 mortgage under an illustrative 5.4% uninsured renewal scenario (vs. Q4 2026 insured fixed tiers near 4.39%-4.59% and uninsured near 4.89%-5.39%). They hold $60,000 in TFSAs earning an illustrative 6.5% return and compare withdrawing $60,000 to prepay principal against keeping the TFSA invested.",
       "table": {
         "head": ["Metric", "Strategy A: Liquidate TFSA for Mortgage Prepayment", "Strategy B: Preserve TFSA & Restructure Cashflow"],
         "rows": [
@@ -1570,7 +1575,7 @@ const rawArticles: Article[] = [
         ]
       },
       "notes": [
-        "Figures assume a 5.4% 5-year renewal renewing into long-term 4.5% rate thereafter, and a conservative 6.5% annual return within the TFSA.",
+        "Figures illustrate an initial 5.4% 5-year renewal renewing into a 4.5% long-term rate thereafter, contrasted with a 6.5% TFSA return.",
         "Strategy B results in over $105,000 greater net family net worth at year 15, while preserving uninterrupted emergency liquidity throughout the renewal cycle."
       ]
     },
@@ -1612,7 +1617,7 @@ const rawArticles: Article[] = [
       },
       {
         "label": "Statistics Canada: National Balance Sheet and Financial Flow Accounts",
-        "url": "https://www150.statcan.gc.ca/n1/daily-quotidien/240912/dq240912a-eng.htm",
+        "url": "https://www150.statcan.gc.ca/n1/en/subjects/economic_accounts/national_balance_sheet_and_financial_flow_accounts",
         "note": "Official Canadian household net worth, debt-to-income, and asset liquidity statistics."
       }
     ],
@@ -1819,7 +1824,7 @@ const rawArticles: Article[] = [
   "problem": "A physician or nurse trained abroad often arrives with years of experience and no Canadian licence yet. The risk is not a lack of skill. It is a gap between the day your costs start and the day your professional income does, and nobody can tell you exactly how long that gap will be.",
   "overview": [
     "Plan around the gap, not the salary. Your regulator sets the steps, fees and order for licensing in your province, and the timeline can change. A sensible first-year plan asks how many months your savings can cover if recognition takes longer than hoped.",
-    "Tax residency starts early. CRA says you become a resident for income tax purposes when you have enough residential ties in Canada, and that for most newcomers this starts the first day you live here. Your first return is due after the year you arrive. CRA\u2019s own example: someone who arrived in 2025 files that return by April 30, 2026. The deadline is June 15 if you or your spouse or common-law partner are self-employed. CRA also uses your return to work out benefits and credits, even if you have no income to report, and says you can apply for benefits and credits as soon as you arrive if you meet the eligibility criteria.",
+    "Tax residency starts early. CRA says you become a resident for income tax purposes when you have enough residential ties in Canada, and that for most newcomers this starts the first day you live here. Your first return is due after the year you arrive. CRA\u2019s example: someone who arrived in 2026 files that return by April 30, 2027. The deadline is June 15 if you or your spouse or common-law partner are self-employed (with any taxes owing still due April 30). CRA also uses your return to calculate benefits and credits even if you have no income to report.",
     "Savings you bring with you. A Canadian resident who holds specified foreign property with a total cost of more than CAD $100,000 at any time in the year files Form T1135 with their tax return. The test uses cost, not market value. You do not file it for the year you first become a resident. In later years, the cost of property you owned on arrival is its fair market value on the day you became a resident. The rules are technical, so a tax professional is the right person to confirm what applies to you.",
     "Registered accounts start from zero. TFSA room begins on the day you become a resident, if you are 18 or older, and nothing accumulates for the years before. The 2026 limit is $7,000. RRSP room is generally built from 18% of your earned income in the previous year, up to the annual maximum, so it can be small in your first year. An FHSA requires you to be a resident, 18 or older, and a first-time home buyer as CRA defines it, and you give the issuer your Social Insurance Number.",
     "Credit starts here too. The Financial Consumer Agency of Canada (FCAC) says Canadian credit scores usually range from 300 to 900 and come from reports kept by two main bureaus, Equifax and TransUnion. It notes that a limited credit history may make it harder to borrow, get a credit card or rent a home. Do not assume your history from home carries over; ask each lender what it will consider.",
@@ -1979,55 +1984,55 @@ const rawArticles: Article[] = [
   "overview": [
     "Under Subsection 146.6 of the Income Tax Act, the First Home Savings Account (FHSA) allows qualifying Canadian residents to contribute up to $8,000 annually, to a lifetime ceiling of $40,000. Contributions generate a dollar-for-dollar deduction against personal taxable income, and qualifying withdrawals to purchase a first home are 100 percent tax-free, with zero mandatory repayment back into the plan. In contrast, Subsection 146.02 governs the Home Buyers' Plan (HBP), which allows individuals to withdraw funds from their RRSP to purchase or build a qualifying home. In Federal Budget 2024, the federal government officially expanded the HBP withdrawal limit from $35,000 to $60,000 per person, effective April 16, 2024.",
     "Because the Income Tax Act contains no restriction preventing the concurrent use of both programs, a single first-time home buyer can deploy up to $100,000 toward a home purchase: $40,000 from an FHSA plus $60,000 from an RRSP via the HBP. For a married or common-law couple where both partners qualify as first-time home buyers, the combined purchasing pool reaches up to $200,000 ($80,000 combined FHSA plus $120,000 combined HBP).",
-    "An important distinction between the two regimes lies in their post-purchase capital obligations. Only qualifying FHSA withdrawals are truly tax-free: once withdrawn for an eligible home, the capital never needs to be repaid to the account, and the accumulated investment growth is permanently sheltered from taxation. In contrast, HBP withdrawals are not tax-free money; they represent a loan from your own RRSP that you repay over 15 years. Every dollar drawn under the HBP must be repaid into an RRSP according to a statutory schedule. To assist recent buyers, Budget 2024 introduced a temporary repayment deferral: individuals making an HBP withdrawal between January 1, 2022, and December 31, 2025, have their 15-year repayment window postponed to begin in the fifth year following the withdrawal year, rather than the second year.",
+    "An important distinction between the two regimes lies in their post-purchase capital obligations. Only qualifying FHSA withdrawals are truly tax-free: once withdrawn for an eligible home, the capital never needs to be repaid to the account, and the accumulated investment growth is permanently sheltered from taxation. In contrast, HBP withdrawals are not tax-free money; they represent a loan from your own RRSP that you repay over 15 years. Every dollar drawn under the HBP must be repaid into an RRSP according to a statutory schedule. Under federal relief originally introduced in Budget 2024 and extended through December 31, 2028, individuals making their first HBP withdrawal between January 1, 2022, and December 31, 2028, have their 15-year repayment window postponed to begin in the fifth year following the withdrawal year rather than the second year.",
     "The financial benefit of this dual-account approach is greatly enhanced by the reinvestment of tax refunds. Because contributions to both the FHSA and RRSP generate immediate marginal tax deductions, a taxpayer in a 40 percent marginal bracket who contributes $8,000 to an FHSA and $12,000 to an RRSP generates an immediate $8,000 tax refund ($20,000 total contributions multiplied by 40 percent). When that refund is systematically injected back into the subsequent year's contribution room, the compounding acceleration allows buyers to accumulate a full down payment significantly faster than through an ordinary non-registered high-interest savings account.",
     "Finally, timing rules must be strictly observed. While FHSA funds can technically be contributed and withdrawn within the same tax year as long as the account was opened before purchase, RRSP funds must remain on deposit for at least 90 calendar days prior to an HBP withdrawal to remain tax-deductible under Subsection 146.02(2). Furthermore, unused annual FHSA room carries forward up to a maximum of $8,000 per year (for a maximum single-year contribution of $16,000), meaning individuals should open an FHSA immediately upon qualifying, even with a nominal initial deposit, to start accumulating annual room."
   ],
   "example": {
     "title": "Three-Year Stacking Timeline for a Professional Couple",
-    "intro": "Consider an Ontario couple where each partner earns $95,000 annually (approximate marginal tax rate of 37.91 percent). Over a three-year structured timeline, they prioritize maximizing both their individual FHSAs and funding their RRSPs toward the expanded $60,000 HBP ceiling, systematically reinvesting all tax refunds.",
+    "intro": "Consider an Ontario couple where each partner earns $140,000 annually (sitting in the 2026 Ontario combined marginal bracket of 43.41 percent on income between $117,045 and $150,000). Over a three-year structured timeline, each deducts $18,000 annually ($8,000 FHSA plus $10,000 RRSP, keeping taxable income at $122,000 and cleanly within the 43.41 percent bracket) while recycling all tax refunds.",
     "table": {
       "head": [
         "Year",
         "Combined Contributions (FHSA + RRSP)",
-        "Tax Refund Generated (37.91% Rate)",
-        "Cumulative Down Payment Capital (Including Growth at 4%)",
+        "Tax Refund Generated (43.41% Rate)",
+        "Cumulative Down Payment Capital (4% Start-of-Year Compounding)",
         "Net Out-of-Pocket Family Cost"
       ],
       "rows": [
         [
           "Year 1",
           "$16,000 FHSA + $20,000 RRSP ($36,000 total)",
-          "$13,648",
-          "$36,720",
-          "$22,352"
+          "$15,628",
+          "$37,440",
+          "$20,372"
         ],
         [
           "Year 2",
           "$16,000 FHSA + $20,000 RRSP (funded with prior refund)",
-          "$13,648",
-          "$76,188",
-          "$22,352"
+          "$15,628",
+          "$76,378",
+          "$20,372"
         ],
         [
           "Year 3",
           "$16,000 FHSA + $20,000 RRSP",
-          "$13,648",
-          "$118,235",
-          "$22,352"
+          "$15,628",
+          "$116,873",
+          "$20,372"
         ],
         [
           "Closing Day Total",
           "$48,000 FHSA + $60,000 RRSP ($108,000 principal)",
-          "$40,944 total refunds captured",
-          "$122,965 total cash down payment",
-          "$67,056 net after-tax cost"
+          "$46,884 total refunds captured",
+          "$116,873 total cash down payment",
+          "$61,116 net after-tax cost"
         ]
       ]
     },
     "notes": [
-      "Assumes a conservative 4 percent annual return in high-interest capital preservation assets within the registered accounts.",
-      "By stacking both vehicles and recycling the $40,944 in tax refunds, the couple accumulated over $122,000 in liquid equity with only $67,056 of actual net after-tax cash outflow.",
+      "Assumes contributions made at the start of each year earning a conservative 4 percent annual return inside registered capital-preservation assets.",
+      "By stacking both vehicles and recycling the $46,884 in tax refunds, the couple accumulated $116,873 in liquid equity with $61,116 of actual net after-tax family cash outflow.",
       "On closing, they make qualifying FHSA withdrawals with zero repayment liability and initiate HBP withdrawals of $30,000 each, leaving ample room up to the $60,000 per-person statutory cap."
     ],
     "conclusion": "Stacking the FHSA and HBP allows first-time buyers to capture thousands of dollars in government tax subsidies, drastically shortening the time required to meet down payment benchmarks."
@@ -2231,7 +2236,7 @@ const rawArticles: Article[] = [
   ],
   "example": {
     "title": "Tax Liability on a $1,500,000 Business Equity Liquidity Event",
-    "intro": "Consider an entrepreneur selling private corporate shares with an accrued capital gain of $1,500,000, claiming the Lifetime Capital Gains Exemption (LCGE) on approximately $1,016,836 of the gain (2024 pre-June 25 reference), with standard deductions. The table contrasts their tax position under the old AMT regime versus the post-2024 reformed framework.",
+    "intro": "Consider an entrepreneur selling private corporate shares in 2026 with an accrued capital gain of $1,500,000, claiming the 2026 indexed Lifetime Capital Gains Exemption (LCGE) of $1,275,000, with standard deductions. The table contrasts their tax position under the old AMT regime versus the post-2024 reformed framework.",
     "table": {
       "head": [
         "Component",
@@ -2262,7 +2267,7 @@ const rawArticles: Article[] = [
           "LCGE Inclusion in AMT Base",
           "0% direct inclusion",
           "30.0% inclusion of exempt amount",
-          "Brings ~$305,000 of exempt gains into AMT base"
+          "Brings $382,500 of 2026 LCGE gain into AMT base"
         ],
         [
           "Donation / Credit Allowances",
@@ -2914,7 +2919,7 @@ const rawArticles: Article[] = [
   "overview": [
     "Canadian credit card debt is mathematically predatory because interest compounds daily on your average daily balance rather than monthly. If an account carries an Annual Percentage Rate (APR) of 20.99%, the daily rate is approximately 0.0575 percent. Furthermore, making only the contractual minimum payment (typically the interest plus 1 percent of the principal balance, or $10) ensures that roughly 80 to 90 percent of every dollar paid goes directly to servicing interest rather than reducing the balance.",
     "Systematic debt elimination requires an intentional choice between two structured execution models: the Debt Avalanche and the Debt Snowball. The Debt Avalanche allocates every surplus dollar toward the debt with the highest annual interest rate while paying minimums on all other facilities. This method is mathematically optimal, minimizing total cash interest paid and accelerating full debt freedom. The Debt Snowball allocates surplus cash to the smallest account balance first, delivering immediate psychological wins that sustain long-term behavioral discipline.",
-    "For individuals with stable credit scores (typically 680 or higher), structural interest reduction offers an immediate multiplier. Consolidating credit card balances onto an unsecured personal line of credit (priced at Prime plus 2.5% to 4.5%) or a fixed-rate consolidation loan instantly cuts the interest drag in half. However, this strategy only works if the borrower closes or physically freezes the refinanced credit cards; otherwise, borrowers risk the revolving trap of running up new credit card balances while still servicing the consolidation loan.",
+    "For individuals with stable credit scores (typically 680 or higher), structural interest reduction offers an immediate multiplier. Consolidating credit card balances onto an unsecured personal line of credit (typically priced around Prime plus 2.5% to 5.0%, or roughly 7.2% to 9.7% at Q4 2026's 4.70% Prime) or a fixed-rate consolidation loan cuts interest drag sharply. However, this strategy only works if the borrower closes or physically freezes the refinanced credit cards; otherwise, borrowers risk running up new card balances while still servicing the consolidation loan.",
     "Finally, debt repayment must protect personal credit scores. Equifax and TransUnion heavily weigh credit utilization (the percentage of available revolving limit being used). Exceeding 30 percent utilization on any single card or across total aggregate limits depresses credit scores, restricting access to lower borrowing rates. Paying down revolving credit balances directly improves credit ratings, helping secure lower borrowing terms across the entire balance sheet."
   ],
   "example": {
@@ -3289,7 +3294,7 @@ const rawArticles: Article[] = [
   "problem": "Many Canadians treat an RRSP refund as a flat percentage or free money from the government, failing to realize that tax savings equal their exact combined marginal tax rate, that the refund is simply deferred tax that will be owed upon retirement withdrawal, and that lower earners may gain more through income-tested family benefits than high-bracket tax relief.",
   "overview": [
     "Under Section 146 of the Canadian Income Tax Act, a contribution to a Registered Retirement Savings Plan (RRSP) is deductible against your total taxable income (Line 15000). The resulting cash tax savings is not a flat statutory rebate; it is calculated by multiplying your contribution amount by your top combined marginal tax rate (federal plus provincial tax brackets). Because Canada operates a progressive tax system, a $10,000 deduction saves significantly more cash for a high earner than for an entry-level worker.",
-    "Furthermore, a $10,000 contribution can cross marginal bracket thresholds. For example, if your taxable income is $120,000 in Ontario and the 2026 federal bracket changes at $117,045, your $10,000 contribution reduces $2,955 of income at the higher 43.41% combined rate and $7,045 at the lower 37.91% rate. The resulting refund is the exact weighted blend of the two brackets.",
+    "Furthermore, a $10,000 contribution can cross marginal bracket thresholds. For example, if your taxable income is $122,000 in Ontario and the 2026 federal bracket changes at $117,045 (while Ontario's second surtax kicks in above $111,814), your $10,000 contribution reduces $4,955 of income at the higher 43.41% combined rate and $5,045 at the lower 37.91% rate. The resulting refund is the exact weighted blend of the two brackets.",
     "A powerful secondary advantage often overlooked by Canadian families is the effect of RRSP deductions on income-tested federal and provincial benefits. By reducing your Net World Income on Line 23600 of your T1 return, a $10,000 RRSP deduction directly lowers your Adjusted Family Net Income (AFNI). For households receiving the Canada Child Benefit (CCB), every dollar of reduced net income can increase non-taxable CCB payments by 3.2% to 8.0%, adding an extra $320 to $800 in tax-free cash alongside the income tax refund.",
     "Finally, contributing to an RRSP is legally distinct from claiming the deduction. Under Subsection 146(5), you can contribute capital to your RRSP today to begin sheltering investment growth from annual taxes, but choose to defer claiming the tax deduction on Schedule 7 to a future calendar year when you anticipate entering a significantly higher tax bracket."
   ],
@@ -3748,7 +3753,7 @@ const rawArticles: Article[] = [
   ],
   "example": {
     "title": "The 5-for-1 Small Business Deduction (SBD) Grind Schedule",
-    "intro": "How increasing passive investment income (AAII) reduces the $500,000 SBD limit and increases corporate tax liabilities on $500,000 of active business income in Ontario/New Brunswick (12.2% small business rate vs 26.5% general rate).",
+    "intro": "How increasing passive investment income (AAII) reduces the $500,000 SBD limit and increases corporate tax liabilities on $500,000 of active business income in Ontario (12.2% small business rate vs 26.5% general rate; New Brunswick corporations face a wider 17.5% spread from 11.5% to 29.0%).",
     "table": {
       "head": ["Adjusted Passive Income (AAII)", "Excess Over $50k", "SBD Grind ($5 per $1)", "Remaining SBD Limit", "Active Income at General Rate", "Extra Corporate Tax Drag"],
       "rows": [
@@ -4020,18 +4025,18 @@ const rawArticles: Article[] = [
 {
   "slug": "canada-federal-budget-capital-gains-cei-amt-analysis",
   "seoTitle": "Capital gains at 50%, LCGE, CEI & AMT",
-  "title": "Canadian Capital Gains After 2025: 50% Inclusion Retained, $1.25M LCGE, and AMT Reform",
+  "title": "Canadian Capital Gains in 2026: 50% Inclusion Retained, $1.275M LCGE & AMT Reform",
   "kind": "insight",
   "category": "decision-making",
-  "description": "Updated Canadian tax breakdown: 50% capital gains inclusion retained after the 2025 cancellation, $1.25M LCGE, CEI rules, and 20.5% AMT.",
+  "description": "Updated 2026 Canadian tax rules: 50% capital gains inclusion retained, $1.275M indexed LCGE, Budget 2026 growth incentive, and 20.5% AMT.",
   "figuresAsOf": "2026 CRA & Department of Finance Tax Rules",
-  "question": "What actually changed after the March 2025 cancellation of Canada's proposed capital gains hike, alongside the $1.25M+ LCGE and 20.5% AMT overhaul?",
-  "problem": "After Budget 2024 proposed raising the capital gains inclusion rate to 66.67% above $250,000 for individuals and from dollar one for corporations and trusts, investors and CCPC owners prepared for a steeper tax regime. On March 21, 2025, the federal government formally cancelled that proposed inclusion rate increase, meaning the statutory inclusion rate remains a flat 50%. Meanwhile, the enhanced Lifetime Capital Gains Exemption ($1,250,000 base indexed to $1,275,000 in 2026) and the post-2024 Alternative Minimum Tax (AMT) overhaul under Bills C-59 and C-69 remain key planning factors.",
+  "question": "What applies in 2026 after the cancellation of Canada's proposed capital gains hike, alongside the $1.275M indexed LCGE, Budget 2026, and 20.5% AMT?",
+  "problem": "After Budget 2024 proposed raising the capital gains inclusion rate to 66.67% above $250,000 for individuals and from dollar one for corporations and trusts, investors and CCPC owners prepared for a steeper tax regime. On March 21, 2025, the federal government formally cancelled that proposed increase, and Federal Budget 2026 (November 5, 2026) kept the flat 50% statutory inclusion rate in place. Meanwhile, the 2026 indexed Lifetime Capital Gains Exemption ($1,275,000, up from June 2024's $1,250,000 base), Budget 2026's proposed Canada Growth Incentive, and the post-2024 Alternative Minimum Tax (AMT) under Bills C-59 and C-69 remain key planning factors.",
   "overview": [
-    "Capital Gains Inclusion Rate Retained at 50% (March 2025 Cancellation): On March 21, 2025, Ottawa announced the cancellation of the proposed increase to the capital gains inclusion rate from 50% to 66.67%. As confirmed by CRA administration, capital gains realized by individuals, personal trusts, and Canadian-Controlled Private Corporations (CCPCs) remain subject to the standard 50% inclusion rate. In top provincial brackets (~53.5% Ontario), the personal top effective tax rate on capital gains remains ~26.77% rather than rising to 35.7%.",
+    "Capital Gains Inclusion Rate Retained at 50% (March 2025 Cancellation): On March 21, 2025, Ottawa announced the cancellation of the proposed increase to the capital gains inclusion rate from 50% to 66.67%. As confirmed by CRA administration and unchanged in Budget 2026, capital gains realized by individuals, personal trusts, and Canadian-Controlled Private Corporations (CCPCs) remain subject to the standard 50% inclusion rate. In top provincial brackets (~53.53% Ontario), the personal top effective tax rate on capital gains remains ~26.77%.",
     "CCPC Capital Dividend Account (CDA) Preserved at 50%: For Canadian-Controlled Private Corporations and holding companies, retaining the 50% inclusion rate preserved the full 50% non-taxable portion credited to the Capital Dividend Account (CDA). Half of a realized corporate capital gain continues to be extractable tax-free by shareholders under Subsection 89(1), while the taxable 50% remains part of Aggregate Investment Income (and subject to the $50,000 AAII Small Business Deduction clawback threshold under Section 125(5.1)).",
-    "The $1.25M+ Lifetime Capital Gains Exemption (LCGE): Effective for dispositions on or after June 25, 2024, the LCGE ceiling for Qualified Small Business Corporation (QSBC) shares and qualified farm or fishing property increased to $1,250,000 (indexed to $1,275,000 for 2026). This higher lifetime exemption still allows eligible founders to shelter substantial business-exit gains from regular Part I tax.",
-    "Status of the Canadian Entrepreneurs' Incentive (CEI): Announced in Budget 2024 alongside the now-cancelled capital gains inclusion hike, the CEI proposed a 33.33% inclusion rate on up to $2,000,000 of qualifying non-professional founder share gains over 2025–2029. Following the cancellation of the inclusion-rate legislation in March 2025, business owners should verify current statutory status with their tax advisor rather than assuming the CEI applies.",
+    "The $1.275M Lifetime Capital Gains Exemption (LCGE): Effective for dispositions on or after June 25, 2024, the LCGE ceiling for Qualified Small Business Corporation (QSBC) shares and qualified farm or fishing property increased to $1,250,000 and indexed to $1,275,000 for 2026. This lifetime exemption still allows eligible founders to shelter substantial business-exit gains from regular Part I tax.",
+    "Canadian Entrepreneurs' Incentive (CEI) & Budget 2026 Canada Growth Incentive: Announced in Budget 2024 alongside the cancelled inclusion hike, the old CEI proposed a lower inclusion rate on $2,000,000 of founder gains. On November 5, 2026, Federal Budget 2026 proposed replacing earlier concepts with a new $15,000,000 Canada Growth Incentive exempting qualifying capital gains on newly issued shares (on or after November 5, 2026 and before 2037) alongside an expanded small business rollover; because Budget measures remain proposals until Royal Assent, confirm statutory eligibility with your tax CPA.",
     "The Alternative Minimum Tax (AMT) Overhaul Under Section 127.5: Enacted via Bills C-59 and C-69 for 2024 and subsequent years, the federal AMT statutory rate jumped from 15% to 20.5%, with an annually indexed 4th-bracket basic exemption ($173,205 in 2024, $177,882 in 2025, $181,440 in 2026). Under AMT, capital gains are included at 100%, 30% of LCGE-exempt gains enter the base, most non-refundable credits are allowed at 50%, and charitable donation tax credits are allowed at 80% (ITA s. 127.531(c)). Large liquidity events and major stock donations can therefore trigger upfront AMT even with the regular 50% inclusion rate."
   ],
   "example": {
@@ -4043,12 +4048,12 @@ const rawArticles: Article[] = [
         ["Individual (Retained 50% Rule)", "$1,000,000", "$500,000 (50% flat)", "N/A (Personal)", "$267,650", "26.77%"],
         ["Individual (Cancelled 66.7% Proposal)", "$1,000,000", "$625,000 ($125k + $500k)", "N/A (Personal)", "$334,562 (avoided)", "33.46% (cancelled)"],
         ["CCPC Portfolio Gain (Retained 50%)", "$1,000,000", "$500,000 (50% flat)", "$500,000 (50% tax-free CDA)", "$250,850 (corporate part I)", "25.09% (before RDTOH)"],
-        ["Founder QSBC Exit ($1.25M LCGE)", "$1,000,000", "$0 regular Part I tax", "N/A (QSBC Sale)", "$0 regular (check Form T691 AMT)", "Check 30% LCGE AMT"]
+        ["Founder QSBC Exit ($1.275M LCGE)", "$1,000,000", "$0 regular Part I tax", "N/A (QSBC Sale)", "$0 regular (check Form T691 AMT)", "Check 30% LCGE AMT"]
       ]
     },
     "notes": [
       "Individual figures apply Ontario's ~53.53% top combined marginal tax rate; provincial rates vary.",
-      "Although regular Part I tax is $0 on an LCGE-sheltered $1,000,000 QSBC gain, 30% of the exempt gain ($300,000) enters the AMT calculation under Section 127.5.",
+      "Although regular Part I tax is $0 on an LCGE-sheltered $1,000,000 QSBC gain, 30% of the exempt gain ($300,000; or up to $382,500 on a full $1.275M claim) enters the AMT calculation under Section 127.5.",
       "Retaining the 50% rule preserves the full 50% CCPC Capital Dividend Account (CDA) credit rather than compressing it to 33.33%."
     ],
     "conclusion": "Cancelling the 66.67% inclusion increase restored certainty around the 50% rule and the 50% corporate CDA, yet founders and high-income donors must still model the 20.5% AMT before realizing large gains."
@@ -4059,8 +4064,8 @@ const rawArticles: Article[] = [
       "reality": "While proposed in Budget 2024, the federal government formally cancelled the inclusion rate increase on March 21, 2025. The capital gains inclusion rate remains 50%."
     },
     {
-      "myth": "Because the 66.67% hike was cancelled, the $1.25M Lifetime Capital Gains Exemption disappeared too.",
-      "reality": "The government confirmed the enhanced $1.25M LCGE limit remained in place for qualifying small business shares and farm/fishing property."
+      "myth": "Because the 66.67% hike was cancelled, the enhanced Lifetime Capital Gains Exemption disappeared too.",
+      "reality": "The government confirmed the enhanced $1.25M LCGE limit remained in place and indexed to $1,275,000 for 2026 qualifying small business shares and farm/fishing property."
     },
     {
       "myth": "Donating publicly traded shares to charity is exempt from all taxes under AMT.",
@@ -4074,19 +4079,19 @@ const rawArticles: Article[] = [
   "tradeoffs": [
     "Realizing large personal capital gains in one year still requires checking whether the 100% AMT inclusion triggers minimum tax above regular Part I tax.",
     "Holding passive investments inside a CCPC preserves the 50% CDA credit on gains, but the taxable 50% continues to count toward the $50,000 AAII Small Business Deduction clawback.",
-    "Claiming the $1.25M LCGE eliminates regular tax on qualifying shares, but requires generating sufficient ordinary income over seven years to recover any AMT paid."
+    "Claiming the $1.275M LCGE eliminates regular tax on qualifying shares, but requires generating sufficient ordinary income over seven years to recover any AMT paid."
   ],
   "questions": [
     "Does my capital transaction rely on the retained 50% inclusion rate, or could 100% AMT inclusion still trigger Form T691 minimum tax?",
-    "If selling QSBC shares using the $1.25M LCGE, what will my upfront federal AMT liability be?",
+    "If selling QSBC shares using the $1.275M LCGE in 2026, what will my upfront federal AMT liability be?",
     "If corporate investments realize capital gains, how does the 50% taxable portion affect our Section 125(5.1) $50,000 passive income limit?",
     "Are we staging large charitable share gifts over multiple tax years to stay below the AMT exemption?"
   ],
   "sources": [
     {
-      "label": "Department of Finance Canada - Cancellation of Proposed Capital Gains Inclusion Increase (March 2025)",
+      "label": "Department of Finance Canada - Cancellation of Proposed Capital Gains Inclusion Increase (March 2025) & Budget 2026",
       "url": "https://www.canada.ca/en/department-finance.html",
-      "note": "March 21, 2025 announcement retaining the 50% capital gains inclusion rate while preserving the $1.25M LCGE."
+      "note": "Retaining the 50% capital gains inclusion rate, $1,275,000 indexed 2026 LCGE, and proposed Budget 2026 growth incentives."
     },
     {
       "label": "Canada Revenue Agency (CRA) - Line 12700 Capital Gains Guidance",
@@ -4411,7 +4416,7 @@ const rawArticles: Article[] = [
 }
 ];
 
-const allRawArticles: Article[] = [...rawArticles, ...atlanticAndNicheArticles];
+const allRawArticles: Article[] = [rdspArticle, ...rawArticles, ...atlanticAndNicheArticles];
 
 // Active public articles with verified publication and modification timestamps for search engines
 export const articles: Article[] = allRawArticles

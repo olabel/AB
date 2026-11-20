@@ -13,7 +13,7 @@ export const atlanticAndNicheArticles: Article[] = [
     category: "newcomers",
     figuresAsOf: "Figures verified as of November 2026",
     problem:
-      "Under the federal Atlantic Immigration Program (AIP), applicants with a validated job offer only need to show 12.5% of the Low Income Cut-Off (just over $3,900 for a single applicant or ~$7,300 for a family of four). Once families land in Dieppe, Moncton, Fredericton, or Halifax, upfront rental deposits, a winter vehicle, higher uncredited auto insurance, and professional licensing fees can consume that minimum within 45 days.",
+      "Under the federal Atlantic Immigration Program (AIP), applicants with a validated job offer only need to show 12.5% of the Low Income Cut-Off ($3,815 for a single applicant or $7,090 for a family of four under 2026 IRCC tables). Once families land in Dieppe, Moncton, Fredericton, or Halifax, upfront rental deposits, a winter vehicle, higher uncredited auto insurance, and professional licensing fees can consume that minimum within 45 days.",
     overview: [
       "Greater Moncton and Dieppe have become two of the fastest-growing bilingual landing hubs in Atlantic Canada because housing remains more accessible than in Toronto or Vancouver and employers actively endorse skilled newcomers through the Atlantic Immigration Program (AIP) and provincial nominee streams.",
       "What surprises most families is not the ongoing monthly cost of groceries or utilities, which can feel manageable once paycheques begin. It is the concentrated cash outflow during weeks one through twelve, compounded by provincial waiting rules, vehicle dependency, and credit history starting from zero.",
@@ -84,7 +84,7 @@ export const atlanticAndNicheArticles: Article[] = [
     example: {
       title: "Hypothetical 90-Day Cash Flow Budget: Family of Three Settling in Dieppe, NB (AIP)",
       intro:
-        "A couple with one child arrives under AIP with one endorsed healthcare/logistics job offer at $72,000/year. Notice why the IRCC minimum proof-of-funds (~$6,000 for a family of three with a job offer) differs sharply from real upfront settlement outlay.",
+        "A couple with one child arrives under AIP with one endorsed healthcare/logistics job offer at $72,000/year. Notice why the IRCC minimum proof-of-funds ($5,840 for a family of three under 2026 tables) differs sharply from real upfront settlement outlay.",
       table: {
         head: ["First-90-Day Settlement Item", "Realistic Greater Moncton Cost", "Cash-Flow Planning Note"],
         rows: [
@@ -93,7 +93,7 @@ export const atlanticAndNicheArticles: Article[] = [
           ["Annual auto + tenant insurance upfront deposit", "$2,800", "Drops significantly when home-country claims letter is accepted"],
           ["Utilities, winter clothing, furniture & groceries (90 days)", "$4,800", "Includes NB Power setup, winter boots/coats & school supplies"],
           ["Emergency buffer + transitional health bridge", "$4,000", "Covers unexpected dental/clinic needs during Medicare card wait"],
-          ["Total Realistic 90-Day Settlement Liquidity", "$29,700", "Nearly 5x the minimum AIP proof-of-funds exemption threshold"]
+          ["Total Realistic 90-Day Settlement Liquidity", "$29,700", "~5.1x the $5,840 3-person AIP proof-of-funds threshold"]
         ]
       },
       notes: [
@@ -192,7 +192,7 @@ export const atlanticAndNicheArticles: Article[] = [
         h2: "Four Practical Levers to Manage Corporate AAII & Retain Liquidity",
         paragraphs: [
           "Working alongside your New Brunswick CPA, incorporated owners typically evaluate four statutory levers before passive income breaches $50,000:",
-          "1. Maximize Personal TFSA and RRSP Shelters First: Paying yourself sufficient T4 salary (up to ~$187,000–$196,000 to generate maximum 2026/2027 RRSP room) shifts future compounding out of the corporate passive-income net and into personal tax-exempt or tax-deferred wrappers.",
+          "1. Maximize Personal TFSA and RRSP Shelters First: Paying yourself sufficient T4 salary ($187,833 for the 2026 RRSP cap of $33,810, or $196,611 for the 2027 cap of $35,390) shifts future compounding out of the corporate passive-income net and into personal tax-exempt or tax-deferred wrappers.",
           "2. Realize Corporate Capital Gains Selectively: Capital gains inside a CCPC only enter AAII when realized (sold). Emphasizing low-turnover, tax-deferred equity structures inside a corporate account avoids premature passive income spikes compared to corporate GICs generating 100% annual interest.",
           "3. Individual Pension Plans (IPPs) for High-Earning Owners Aged 40+: Employer-funded contributions into a CRA-registered IPP are tax-deductible to the company and grow inside a pension shelter completely outside the $50,000 AAII calculation.",
           "4. Corporate-Owned Permanent Life Insurance & Capital Dividend Account (CDA): Deposits inside an exempt permanent life policy shelter cash value growth from annual AAII taxation. Upon death, the tax-free death benefit minus the policy's Adjusted Cost Basis (ACB) credits the company's Capital Dividend Account, allowing surviving family shareholders in New Brunswick or Nova Scotia to extract substantial proceeds personally at 0% income tax."
@@ -482,7 +482,7 @@ export const atlanticAndNicheArticles: Article[] = [
       "First-time home buyers across Dieppe, Moncton, and Riverview routinely budget strictly for a 5% down payment based on national personal-finance calculators. Because New Brunswick assesses a 1.0% provincial Real Property Transfer Tax with zero broad first-time homebuyer exemption (unlike Ontario or PEI), many buyers face an unexpected $4,000+ cash shortfall at the lawyer's office days before closing.",
     overview: [
       "Greater Moncton continues to attract local young families, healthcare staff, and relocating Canadians because detached and semi-detached prices in Dieppe, Riverview, and Moncton allow realistic entry compared with major metropolitan markets.",
-      "Still, saving for closing requires understanding New Brunswick's exact closing rules alongside federal tax shelters. Unlike Ontario (up to $4,000 first-time land transfer rebate) or Prince Edward Island (full first-time buyer transfer tax exemption up to statutory limits), New Brunswick requires 1.0% cash upfront on the greater of the purchase price or municipal property assessment.",
+      "Still, saving for closing requires understanding New Brunswick's exact closing rules alongside federal tax shelters. Unlike Ontario (up to $4,000 first-time land transfer rebate) or Prince Edward Island (full first-time buyer transfer tax exemption with no purchase-price cap under 183-day occupancy rules), New Brunswick requires 1.0% cash upfront on the greater of the purchase price or municipal property assessment.",
       "Coordinating the First Home Savings Account (FHSA), the $60,000 RRSP Home Buyers' Plan (HBP), New Brunswick's non-refundable Home Buyers' Amount federal credit, and the CMHC Eco Plus 25% insurance refund turns closing day from a liquidity scramble into a disciplined plan."
     ],
     sections: [

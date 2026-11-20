@@ -143,6 +143,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to={`${prefix}/education/rdsp-canada-disability-savings-grants-bonds-guide`} className="hover:text-white transition-colors">
+                  {isFr ? "REEI & Subventions" : "RDSP Grants & Bonds"}
+                </Link>
+              </li>
+              <li>
                 <Link to={`${prefix}/calculators?tab=newcomer#calculator-tool`} className="hover:text-white transition-colors">
                   {isFr ? "Planificateur pour nouveaux arrivants" : "Newcomer Planning Calculator"}
                 </Link>

@@ -197,7 +197,7 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "en-CA",
     title: "Financial Guidance for Families | Ahmed Bello",
     description:
-      "Practical financial education for Canadian families: RESP grants, term life insurance, mortgage renewals, and estate planning basics.",
+      "Practical financial education for Canadian families: RESP & RDSP grants, term life insurance, mortgage renewals, and estate planning basics.",
     heading: "Financial Decision-Making for Canadian Families",
     summary:
       "Maximizing the Canada Education Savings Grant (CESG), sizing term insurance, and balancing mortgage payoff with registered savings.",
@@ -485,7 +485,7 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "fr-CA",
     title: "Orientation Financière Familles | Ahmed Bello",
     description:
-      "Planification familiale au Canada : subvention REEE, assurance temporaire, renouvellement hypothécaire et transfert successoral.",
+      "Planification familiale au Canada : subventions REEE et REEI, assurance temporaire, renouvellement hypothécaire et transfert successoral.",
     heading: "Décisions Financières pour les Familles au Canada",
     summary:
       "Maximisation des subventions REEE (SCEE et BEC), assurance vie temporaire et équilibre hypothèque-retraite.",
@@ -888,6 +888,12 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
     title: "Acheter une première maison à Dieppe, Moncton et au Nouveau-Brunswick",
     description:
       "Mise de fonds réelle à Dieppe et Moncton : taxe de transfert foncier de 1,0 % au N.-B. sans rabais 1er acheteur, cumul CELIAPP/RAP et SCHL Éco.",
+  },
+  "rdsp-canada-disability-savings-grants-bonds-guide": {
+    seoTitle: "REEI Canada : subventions, bons et règles",
+    title: "Le REEI au Canada : jusqu'à 90 000 $ en subventions, bons et règles clés",
+    description:
+      "Comment le REEI canadien transforme 1 500 $ en 5 000 $, évite la reprise 3 pour 1 sur 10 ans et réinitialise le seuil à 19 ans.",
   },
 };
 
