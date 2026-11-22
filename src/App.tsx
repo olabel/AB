@@ -6,7 +6,6 @@ import { Footer } from "./components/Footer.tsx";
 import { DraftBanner } from "./components/Tbc.tsx";
 import { FloatingNewsWidget } from "./components/FloatingNewsWidget.tsx";
 import { MobileBookingBar } from "./components/MobileBookingBar.tsx";
-import { Analytics } from "@vercel/analytics/react";
 import {
   disclosuresData,
   privacyData,
@@ -37,6 +36,7 @@ import { LegalPage } from "./pages/LegalPage.tsx";
 import { CalculatorsPage } from "./pages/CalculatorsPage.tsx";
 import { AmtCalculatorPage } from "./pages/AmtCalculatorPage.tsx";
 import { CostlyBlindspotsPage } from "./pages/CostlyBlindspotsPage.tsx";
+import { DocumentSigningPage } from "./pages/DocumentSigningPage.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
 
 function ScrollToTop() {
@@ -112,6 +112,167 @@ class AppErrorBoundary extends React.Component<
   }
 }
 
+function AppShell() {
+  const location = useLocation();
+  const isSigningWorkspace =
+    location.pathname === "/sign" ||
+    location.pathname === "/fr/sign" ||
+    location.pathname === "/client-signature" ||
+    location.pathname === "/fr/client-signature";
+
+  const routesTree = (
+    <Routes>
+      {/* Client Hand-Signature & Document Assembly Workspace (EN & FR) */}
+      <Route path="/sign" element={<DocumentSigningPage />} />
+      <Route path="/fr/sign" element={<DocumentSigningPage />} />
+      <Route path="/client-signature" element={<DocumentSigningPage />} />
+      <Route path="/fr/client-signature" element={<DocumentSigningPage />} />
+
+      {/* English Canonical Routes */}
+      <Route path="/" element={<HomePage />} />
+      <Route path="/how-i-help" element={<HowIHelpPage />} />
+      <Route path="/education" element={<EducationLibraryPage />} />
+      <Route path="/education/:slug" element={<ArticlePage />} />
+      <Route path="/insights/:slug" element={<ArticlePage />} />
+      <Route path="/insights" element={<InsightsPage />} />
+      <Route path="/what-changed" element={<WhatChangedPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/careers" element={<CareersPage />} />
+      <Route path="/for/:audience" element={<AudienceHubPage />} />
+      <Route path="/investing/islamic-equity" element={<IslamicInvestingPage />} />
+      <Route path="/atlantic-canada" element={<AtlanticCanadaPage />} />
+      <Route path="/calculators" element={<CalculatorsPage />} />
+      <Route path="/calculators/amt" element={<AmtCalculatorPage />} />
+      <Route path="/costly-blindspots" element={<CostlyBlindspotsPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/confirm-subscription" element={<ConfirmSubscriptionPage />} />
+
+      {/* French Canonical Routes */}
+      <Route path="/fr" element={<HomePage />} />
+      <Route path="/fr/how-i-help" element={<HowIHelpPage />} />
+      <Route path="/fr/education" element={<EducationLibraryPage />} />
+      <Route path="/fr/education/:slug" element={<ArticlePage />} />
+      <Route path="/fr/insights/:slug" element={<ArticlePage />} />
+      <Route path="/fr/insights" element={<InsightsPage />} />
+      <Route path="/fr/what-changed" element={<WhatChangedPage />} />
+      <Route path="/fr/about" element={<AboutPage />} />
+      <Route path="/fr/careers" element={<CareersPage />} />
+      <Route path="/fr/for/:audience" element={<AudienceHubPage />} />
+      <Route path="/fr/investing/islamic-equity" element={<IslamicInvestingPage />} />
+      <Route path="/fr/atlantic-canada" element={<AtlanticCanadaPage />} />
+      <Route path="/fr/calculators" element={<CalculatorsPage />} />
+      <Route path="/fr/calculators/amt" element={<AmtCalculatorPage />} />
+      <Route path="/fr/costly-blindspots" element={<CostlyBlindspotsPage />} />
+      <Route path="/fr/contact" element={<ContactPage />} />
+      <Route path="/fr/confirm-subscription" element={<ConfirmSubscriptionPage />} />
+
+      {/* Legal and standards routes (EN & FR) */}
+      <Route
+        path="/disclosures"
+        element={
+          <LegalPage
+            pageType="disclosures"
+            data={disclosuresData}
+            eyebrow="Disclosures & Regulatory Transparency"
+          />
+        }
+      />
+      <Route
+        path="/fr/disclosures"
+        element={
+          <LegalPage
+            pageType="disclosures"
+            data={disclosuresDataFr}
+            eyebrow="Divulgations & Transparence Réglementaire"
+          />
+        }
+      />
+      <Route
+        path="/privacy"
+        element={
+          <LegalPage
+            pageType="privacy"
+            data={privacyData}
+            eyebrow="Privacy Notice"
+          />
+        }
+      />
+      <Route
+        path="/fr/privacy"
+        element={
+          <LegalPage
+            pageType="privacy"
+            data={privacyDataFr}
+            eyebrow="Avis de Confidentialité"
+          />
+        }
+      />
+      <Route
+        path="/standards"
+        element={
+          <LegalPage
+            pageType="standards"
+            data={standardsData}
+            eyebrow="Editorial Standards"
+          />
+        }
+      />
+      <Route
+        path="/fr/standards"
+        element={
+          <LegalPage
+            pageType="standards"
+            data={standardsDataFr}
+            eyebrow="Normes Éditoriales"
+          />
+        }
+      />
+      <Route
+        path="/terms"
+        element={
+          <LegalPage
+            pageType="terms"
+            data={termsData}
+            eyebrow="Terms of Use"
+          />
+        }
+      />
+      <Route
+        path="/fr/terms"
+        element={
+          <LegalPage
+            pageType="terms"
+            data={termsDataFr}
+            eyebrow="Conditions d'Utilisation"
+          />
+        }
+      />
+
+      {/* Catch-all 404 */}
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
+  );
+
+  if (isSigningWorkspace) {
+    return routesTree;
+  }
+
+  return (
+    <>
+      <div className="min-h-screen flex flex-col bg-[#f7f3eb] text-[#1c1b18] antialiased selection:bg-[#2e4a3b] selection:text-[#f7f3eb]">
+        <Header />
+        <DraftBanner />
+        <FloatingNewsWidget />
+        <main id="main-content" className="flex-1 focus:outline-none pb-16 sm:pb-0" tabIndex={-1}>
+          {routesTree}
+        </main>
+        <Footer />
+        <MobileBookingBar />
+      </div>
+    </>
+  );
+}
+
 export default function App() {
   return (
     <AppErrorBoundary>
@@ -119,144 +280,8 @@ export default function App() {
         <BrowserRouter>
           <ScrollToTop />
           <LanguageRouteSync />
-          <div className="min-h-screen flex flex-col bg-[#f7f3eb] text-[#1c1b18] antialiased selection:bg-[#2e4a3b] selection:text-[#f7f3eb]">
-          <Header />
-          <DraftBanner />
-          <FloatingNewsWidget />
-          <main id="main-content" className="flex-1 focus:outline-none pb-16 sm:pb-0" tabIndex={-1}>
-            <Routes>
-                {/* English Canonical Routes */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/how-i-help" element={<HowIHelpPage />} />
-                <Route path="/education" element={<EducationLibraryPage />} />
-                <Route path="/education/:slug" element={<ArticlePage />} />
-                <Route path="/insights/:slug" element={<ArticlePage />} />
-                <Route path="/insights" element={<InsightsPage />} />
-                <Route path="/what-changed" element={<WhatChangedPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/careers" element={<CareersPage />} />
-                <Route path="/for/:audience" element={<AudienceHubPage />} />
-                <Route path="/investing/islamic-equity" element={<IslamicInvestingPage />} />
-                <Route path="/atlantic-canada" element={<AtlanticCanadaPage />} />
-                <Route path="/calculators" element={<CalculatorsPage />} />
-                <Route path="/calculators/amt" element={<AmtCalculatorPage />} />
-                <Route path="/costly-blindspots" element={<CostlyBlindspotsPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/confirm-subscription" element={<ConfirmSubscriptionPage />} />
-
-                {/* French Canonical Routes */}
-                <Route path="/fr" element={<HomePage />} />
-                <Route path="/fr/how-i-help" element={<HowIHelpPage />} />
-                <Route path="/fr/education" element={<EducationLibraryPage />} />
-                <Route path="/fr/education/:slug" element={<ArticlePage />} />
-                <Route path="/fr/insights/:slug" element={<ArticlePage />} />
-                <Route path="/fr/insights" element={<InsightsPage />} />
-                <Route path="/fr/what-changed" element={<WhatChangedPage />} />
-                <Route path="/fr/about" element={<AboutPage />} />
-                <Route path="/fr/careers" element={<CareersPage />} />
-                <Route path="/fr/for/:audience" element={<AudienceHubPage />} />
-                <Route path="/fr/investing/islamic-equity" element={<IslamicInvestingPage />} />
-                <Route path="/fr/atlantic-canada" element={<AtlanticCanadaPage />} />
-                <Route path="/fr/calculators" element={<CalculatorsPage />} />
-                <Route path="/fr/calculators/amt" element={<AmtCalculatorPage />} />
-                <Route path="/fr/costly-blindspots" element={<CostlyBlindspotsPage />} />
-                <Route path="/fr/contact" element={<ContactPage />} />
-                <Route path="/fr/confirm-subscription" element={<ConfirmSubscriptionPage />} />
-
-                {/* Legal and standards routes (EN & FR) */}
-                <Route
-                  path="/disclosures"
-                  element={
-                    <LegalPage
-                      pageType="disclosures"
-                      data={disclosuresData}
-                      eyebrow="Disclosures & Regulatory Transparency"
-                    />
-                  }
-                />
-                <Route
-                  path="/fr/disclosures"
-                  element={
-                    <LegalPage
-                      pageType="disclosures"
-                      data={disclosuresDataFr}
-                      eyebrow="Divulgations & Transparence Réglementaire"
-                    />
-                  }
-                />
-                <Route
-                  path="/privacy"
-                  element={
-                    <LegalPage
-                      pageType="privacy"
-                      data={privacyData}
-                      eyebrow="Privacy Notice"
-                    />
-                  }
-                />
-                <Route
-                  path="/fr/privacy"
-                  element={
-                    <LegalPage
-                      pageType="privacy"
-                      data={privacyDataFr}
-                      eyebrow="Avis de Confidentialité"
-                    />
-                  }
-                />
-                <Route
-                  path="/standards"
-                  element={
-                    <LegalPage
-                      pageType="standards"
-                      data={standardsData}
-                      eyebrow="Editorial Standards"
-                    />
-                  }
-                />
-                <Route
-                  path="/fr/standards"
-                  element={
-                    <LegalPage
-                      pageType="standards"
-                      data={standardsDataFr}
-                      eyebrow="Normes Éditoriales"
-                    />
-                  }
-                />
-                <Route
-                  path="/terms"
-                  element={
-                    <LegalPage
-                      pageType="terms"
-                      data={termsData}
-                      eyebrow="Terms of Use"
-                    />
-                  }
-                />
-                <Route
-                  path="/fr/terms"
-                  element={
-                    <LegalPage
-                      pageType="terms"
-                      data={termsDataFr}
-                      eyebrow="Conditions d'Utilisation"
-                    />
-                  }
-                />
-
-                {/* Catch-all 404 */}
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-          </main>
-          <Footer />
-          <MobileBookingBar />
-        </div>
-        {typeof window !== "undefined" &&
-          (window.location.hostname === "ahmedbello.com" ||
-            window.location.hostname === "www.ahmedbello.com" ||
-            window.location.hostname.endsWith(".vercel.app")) && <Analytics />}
-      </BrowserRouter>
+          <AppShell />
+        </BrowserRouter>
       </LanguageProvider>
     </AppErrorBoundary>
   );

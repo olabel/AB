@@ -61,6 +61,10 @@ export const Header: React.FC = () => {
       label: isFr ? "Calculateur d'IMR fédéral" : "Federal AMT Calculator",
       href: `${prefix}/calculators/amt`,
     },
+    {
+      label: isFr ? "Signature client (PDF)" : "Client Hand-Signature Tool",
+      href: `${prefix}/sign`,
+    },
   ];
 
   const isLearnActive =
@@ -71,7 +75,9 @@ export const Header: React.FC = () => {
     location.pathname.startsWith(`${prefix}/investing`) ||
     location.pathname.startsWith(`${prefix}/atlantic-canada`);
 
-  const isToolsActive = location.pathname.startsWith(`${prefix}/calculators`);
+  const isToolsActive =
+    location.pathname.startsWith(`${prefix}/calculators`) ||
+    location.pathname.startsWith(`${prefix}/sign`);
 
   const handleLanguageToggle = () => {
     const isCurrentlyFrench = location.pathname.startsWith("/fr");

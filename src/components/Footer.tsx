@@ -113,6 +113,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to={`${prefix}/sign`} className="hover:text-white transition-colors">
+                  {isFr ? "Outil de signature client (PDF)" : "Client Hand-Signature Tool"}
+                </Link>
+              </li>
+              <li>
                 <Link to={`${prefix}/education/tfsa-vs-rrsp`} className="hover:text-white transition-colors">
                   {isFr ? "CELI vs REER" : "TFSA vs RRSP Guide"}
                 </Link>

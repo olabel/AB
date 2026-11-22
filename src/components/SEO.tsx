@@ -115,12 +115,16 @@ export const SEO: React.FC<SEOProps> = ({
       link.setAttribute("href", href);
     };
 
+    const isIntakeHost =
+      typeof window !== "undefined" &&
+      window.location.hostname.toLowerCase() === "intake.ahmedbello.com";
+
     setMetaTag("name", "description", finalDescription);
     setMetaTag(
       "name",
       "robots",
-      finalNoIndex
-        ? "noindex, nofollow"
+      finalNoIndex || isIntakeHost
+        ? "noindex, nofollow, noarchive"
         : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
     );
 

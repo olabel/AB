@@ -371,6 +371,18 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
       "Your email address has been verified for Canadian financial education briefings.",
     noIndex: true,
   },
+  {
+    path: "/sign",
+    basePath: "/sign",
+    lang: "en-CA",
+    title: "Client Hand-Signature & PDF Assembly Tool | Ahmed Bello",
+    description:
+      "Paperless client hand-signature workspace for touch and stylus PDF execution, optional advisor attestation, and client-side SHA-256 verification.",
+    heading: "Client Hand-Signature & Document Assembly Tool",
+    summary:
+      "Client-side touch and stylus PDF signature capture tool with optional advisor attestation and SHA-256 output checksum.",
+    noIndex: true,
+  },
 
   // =========================================================================
   // FRENCH CORE ROUTES
@@ -658,6 +670,18 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     heading: "Préférences d'Abonnement Confirmées",
     summary:
       "Votre adresse courriel a été confirmée pour recevoir les analyses éducatives canadiennes.",
+    noIndex: true,
+  },
+  {
+    path: "/fr/sign",
+    basePath: "/sign",
+    lang: "fr-CA",
+    title: "Outil de signature manuscrite client | Ahmed Bello",
+    description:
+      "Outil client sans papier pour signature tactile ou au stylet sur PDF avec empreinte SHA-256 et attestation facultative du conseiller.",
+    heading: "Outil de signature manuscrite et d'assemblage PDF",
+    summary:
+      "Capture tactile et stylet de signature client sur PDF avec attestation facultative et somme de contrôle SHA-256 côté navigateur.",
     noIndex: true,
   },
 ];

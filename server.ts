@@ -96,23 +96,25 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Content-Security-Policy", cspDirectives);
   res.setHeader("X-Content-Type-Options", "nosniff");
   // Omit X-Frame-Options to allow embedding within the AI Studio preview iframe
-  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Referrer-Policy", "no-referrer");
   res.setHeader(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    "camera=(), microphone=(), geolocation=(), payment=()"
   );
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204);
+  if (
+    req.hostname?.toLowerCase() === "intake.ahmedbello.com" ||
+    req.path === "/sign" ||
+    req.path === "/fr/sign" ||
+    req.path === "/client-signature" ||
+    req.path === "/fr/client-signature"
+  ) {
+    res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
   }
 
   if (isProduction || req.secure || req.headers["x-forwarded-proto"] === "https") {
     res.setHeader(
       "Strict-Transport-Security",
-      "max-age=31536000; includeSubDomains; preload"
+      "max-age=63072000; includeSubDomains; preload"
     );
   }
 

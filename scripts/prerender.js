@@ -477,7 +477,7 @@ function renderRouteHtml(r) {
   const { enUrl, frUrl, canonicalUrl } = getLanguageUrls(r.path);
   const ogImageUrl = getOgImageForPath(r.path, SITE_URL);
   const robotsValue = r.noIndex
-    ? "noindex, nofollow"
+    ? "noindex, nofollow, noarchive"
     : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 
   const roleLabel = isFrench

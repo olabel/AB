@@ -21,7 +21,13 @@ export function isOriginAuthorized(originOrReferer?: string, reqHost?: string): 
     const host = parsed.hostname.toLowerCase();
 
     // Exact authorized production domains
-    if (host === "ahmedbello.com" || host === "www.ahmedbello.com") return true;
+    if (
+      host === "ahmedbello.com" ||
+      host === "www.ahmedbello.com" ||
+      host === "intake.ahmedbello.com"
+    ) {
+      return true;
+    }
     if (host === "localhost" || host === "127.0.0.1") return true;
 
     // Direct match against incoming host header (for specific preview or custom host)
@@ -83,7 +89,10 @@ export async function verifyTurnstileToken(
   const secretKey = (process.env.TURNSTILE_SECRET_KEY || "").trim();
   const siteKey = (process.env.VITE_TURNSTILE_SITE_KEY || "").trim();
   const cleanHost = (reqHost || "").split(":")[0].toLowerCase();
-  const isProdDomain = cleanHost === "ahmedbello.com" || cleanHost === "www.ahmedbello.com";
+  const isProdDomain =
+    cleanHost === "ahmedbello.com" ||
+    cleanHost === "www.ahmedbello.com" ||
+    cleanHost === "intake.ahmedbello.com";
 
   if (!secretKey) {
     console.warn(

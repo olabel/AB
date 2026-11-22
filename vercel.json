@@ -2,57 +2,46 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "ahmedbello.com"
-        }
-      ],
-      "destination": "https://www.ahmedbello.com/:path*",
-      "permanent": true
-    },
-    { "source": "/news", "destination": "/what-changed", "permanent": true },
-    { "source": "/financial-news", "destination": "/what-changed", "permanent": true },
-    { "source": "/fr/news", "destination": "/fr/what-changed", "permanent": true },
-    { "source": "/fr/financial-news", "destination": "/fr/what-changed", "permanent": true },
-    { "source": "/blindspots", "destination": "/costly-blindspots", "permanent": true },
-    { "source": "/fr/blindspots", "destination": "/fr/costly-blindspots", "permanent": true },
-    { "source": "/financial-calculators", "destination": "/calculators", "permanent": true },
-    { "source": "/fr/financial-calculators", "destination": "/fr/calculators", "permanent": true },
-    { "source": "/fr/simulateurs", "destination": "/fr/calculators", "permanent": true },
-    { "source": "/health-workers", "destination": "/for/healthcare", "permanent": true },
-    { "source": "/doctors-nurses", "destination": "/for/healthcare", "permanent": true },
-    { "source": "/for/health-workers", "destination": "/for/healthcare", "permanent": true },
-    { "source": "/for/doctors-nurses", "destination": "/for/healthcare", "permanent": true },
-    { "source": "/fr/health-workers", "destination": "/fr/for/healthcare", "permanent": true },
-    { "source": "/fr/doctors-nurses", "destination": "/fr/for/healthcare", "permanent": true },
-    { "source": "/fr/for/health-workers", "destination": "/fr/for/healthcare", "permanent": true },
-    { "source": "/fr/for/doctors-nurses", "destination": "/fr/for/healthcare", "permanent": true },
-    { "source": "/for/entrepreneurs", "destination": "/for/business-owners", "permanent": true },
-    { "source": "/for/incorporated", "destination": "/for/business-owners", "permanent": true },
-    { "source": "/fr/for/entrepreneurs", "destination": "/fr/for/business-owners", "permanent": true },
-    { "source": "/fr/for/incorporated", "destination": "/fr/for/business-owners", "permanent": true },
-    { "source": "/for/immigrants", "destination": "/for/newcomers", "permanent": true },
-    { "source": "/for/new-to-canada", "destination": "/for/newcomers", "permanent": true },
-    { "source": "/fr/for/immigrants", "destination": "/fr/for/newcomers", "permanent": true },
-    { "source": "/fr/for/new-to-canada", "destination": "/fr/for/newcomers", "permanent": true },
-    { "source": "/for/parents", "destination": "/for/families", "permanent": true },
-    { "source": "/fr/for/parents", "destination": "/fr/for/families", "permanent": true },
-    { "source": "/for/muslim-investors", "destination": "/investing/islamic-equity", "permanent": true },
-    { "source": "/fr/for/muslim-investors", "destination": "/fr/investing/islamic-equity", "permanent": true },
-    { "source": "/become-an-agent", "destination": "/careers", "permanent": true },
-    { "source": "/fr/become-an-agent", "destination": "/fr/careers", "permanent": true }
-  ],
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=()"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+        }
+      ]
+    },
     {
       "source": "/api/(.*)",
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://www.ahmedbello.com"
+          "value": "https://intake.ahmedbello.com"
         },
         {
           "key": "Access-Control-Allow-Methods",
@@ -65,45 +54,11 @@
       ]
     },
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=31536000; includeSubDomains; preload"
-        }
-      ]
-    },
-    {
       "source": "/robots.txt",
       "headers": [
         {
           "key": "Content-Type",
           "value": "text/plain; charset=utf-8"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400"
-        }
-      ]
-    },
-    {
-      "source": "/sitemap.xml",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/xml; charset=utf-8"
         },
         {
           "key": "Cache-Control",
@@ -121,11 +76,11 @@
       ]
     },
     {
-      "source": "/(.*)\\.(ico|png|jpg|jpeg|svg|webp|woff|woff2)",
+      "source": "/fonts/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400, stale-while-revalidate=604800"
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     },
@@ -134,7 +89,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
+          "value": "no-store, no-cache, must-revalidate"
         }
       ]
     },
@@ -143,7 +98,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
+          "value": "no-store, no-cache, must-revalidate"
         }
       ]
     }
@@ -154,7 +109,7 @@
       "destination": "/api/$1"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!assets/|brand/|fonts/|api/|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/index.html"
     }
   ]
