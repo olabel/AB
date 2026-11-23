@@ -457,8 +457,8 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
                   {isFr
-                    ? "Sélectionnez un champ puis cliquez sur l'aperçu PDF ou ajustez les coordonnées (0 à 1)."
-                    : "Select a slot and tap anywhere on the PDF preview to place it, or fine-tune normalized coordinates (0.00 - 1.00)."}
+                    ? "Sélectionnez un champ, faites-le glisser ou tirez le coin sur l'aperçu PDF pour ajuster sa taille et sa position."
+                    : "Select any slot, drag the box or its bottom-right corner on the PDF preview, or adjust dimensions below."}
                 </p>
               </div>
               <button
@@ -476,6 +476,17 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
             <div className="divide-y divide-slate-200 border border-slate-200 rounded-md">
               {slots.map((slot, idx) => {
                 const isSelected = slot.id === selectedSlot?.id;
+                const applyPresetBox = (w: number, h: number) => {
+                  const clampedX = Number(Math.min(slot.x, Math.max(0.01, 0.99 - w)).toFixed(2));
+                  const clampedY = Number(Math.min(slot.y, Math.max(0.01, 0.99 - h)).toFixed(2));
+                  onUpdateSlot(slot.id, {
+                    x: clampedX,
+                    y: clampedY,
+                    width: w,
+                    height: h,
+                  });
+                };
+
                 return (
                   <div
                     key={slot.id}
@@ -501,7 +512,38 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
                         />
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        {/* Required vs Optional Switch */}
+                        <div
+                          className="inline-flex rounded border border-slate-300 bg-white p-0.5 text-xs"
+                          role="group"
+                          aria-label={isFr ? "Exigence du champ" : "Slot requirement"}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <button
+                            type="button"
+                            onClick={() => onUpdateSlot(slot.id, { optional: false })}
+                            className={`min-h-[32px] px-2.5 py-1 rounded-xs font-medium transition-colors cursor-pointer ${
+                              !slot.optional
+                                ? "bg-[#0f2942] text-white"
+                                : "text-slate-600 hover:text-slate-900"
+                            }`}
+                          >
+                            {isFr ? "Requise" : "Required"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => onUpdateSlot(slot.id, { optional: true })}
+                            className={`min-h-[32px] px-2.5 py-1 rounded-xs font-medium transition-colors cursor-pointer ${
+                              slot.optional
+                                ? "bg-slate-700 text-white"
+                                : "text-slate-600 hover:text-slate-900"
+                            }`}
+                          >
+                            {isFr ? "Facultative" : "Optional"}
+                          </button>
+                        </div>
+
                         <label className="text-xs text-slate-600 flex items-center gap-1.5">
                           <span>{isFr ? "Page" : "Page"}</span>
                           <input
@@ -533,20 +575,21 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-2 text-xs">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                       <label className="space-y-1">
                         <span className="text-slate-500 block">X</span>
                         <input
                           type="number"
-                          step="0.02"
+                          step="0.01"
                           min="0"
-                          max="0.95"
+                          max={Number(Math.max(0.01, 0.99 - slot.width).toFixed(2))}
                           value={slot.x}
-                          onChange={(e) =>
+                          onChange={(e) => {
+                            const maxX = Math.max(0.01, 0.99 - slot.width);
                             onUpdateSlot(slot.id, {
-                              x: Math.max(0, Math.min(0.95, Number(e.target.value) || 0)),
-                            })
-                          }
+                              x: Number(Math.max(0, Math.min(maxX, Number(e.target.value) || 0)).toFixed(2)),
+                            });
+                          }}
                           className="w-full min-h-[36px] px-2 py-1 font-mono tabular-nums bg-white border border-slate-300 rounded text-slate-900"
                         />
                       </label>
@@ -554,15 +597,16 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
                         <span className="text-slate-500 block">Y</span>
                         <input
                           type="number"
-                          step="0.02"
+                          step="0.01"
                           min="0"
-                          max="0.95"
+                          max={Number(Math.max(0.01, 0.99 - slot.height).toFixed(2))}
                           value={slot.y}
-                          onChange={(e) =>
+                          onChange={(e) => {
+                            const maxY = Math.max(0.01, 0.99 - slot.height);
                             onUpdateSlot(slot.id, {
-                              y: Math.max(0, Math.min(0.95, Number(e.target.value) || 0)),
-                            })
-                          }
+                              y: Number(Math.max(0, Math.min(maxY, Number(e.target.value) || 0)).toFixed(2)),
+                            });
+                          }}
                           className="w-full min-h-[36px] px-2 py-1 font-mono tabular-nums bg-white border border-slate-300 rounded text-slate-900"
                         />
                       </label>
@@ -570,15 +614,15 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
                         <span className="text-slate-500 block">{isFr ? "Larg." : "Width"}</span>
                         <input
                           type="number"
-                          step="0.02"
+                          step="0.01"
                           min="0.08"
-                          max="0.9"
+                          max="0.95"
                           value={slot.width}
-                          onChange={(e) =>
-                            onUpdateSlot(slot.id, {
-                              width: Math.max(0.08, Math.min(0.9, Number(e.target.value) || 0.2)),
-                            })
-                          }
+                          onChange={(e) => {
+                            const nextW = Number(Math.max(0.08, Math.min(0.95, Number(e.target.value) || 0.2)).toFixed(2));
+                            const nextX = Number(Math.min(slot.x, Math.max(0.01, 0.99 - nextW)).toFixed(2));
+                            onUpdateSlot(slot.id, { width: nextW, x: nextX });
+                          }}
                           className="w-full min-h-[36px] px-2 py-1 font-mono tabular-nums bg-white border border-slate-300 rounded text-slate-900"
                         />
                       </label>
@@ -588,17 +632,95 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
                           type="number"
                           step="0.01"
                           min="0.04"
-                          max="0.5"
+                          max="0.55"
                           value={slot.height}
-                          onChange={(e) =>
-                            onUpdateSlot(slot.id, {
-                              height: Math.max(0.04, Math.min(0.5, Number(e.target.value) || 0.08)),
-                            })
-                          }
+                          onChange={(e) => {
+                            const nextH = Number(Math.max(0.04, Math.min(0.55, Number(e.target.value) || 0.08)).toFixed(2));
+                            const nextY = Number(Math.min(slot.y, Math.max(0.01, 0.99 - nextH)).toFixed(2));
+                            onUpdateSlot(slot.id, { height: nextH, y: nextY });
+                          }}
                           className="w-full min-h-[36px] px-2 py-1 font-mono tabular-nums bg-white border border-slate-300 rounded text-slate-900"
                         />
                       </label>
                     </div>
+
+                    {/* Visual Box Adjustment Controls for Active Slot */}
+                    {isSelected && (
+                      <div className="pt-2 border-t border-slate-200/80 space-y-2.5">
+                        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                          <span className="font-medium text-slate-700">
+                            {isFr ? "Format du cadre" : "Box Size Presets"}
+                          </span>
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => applyPresetBox(0.24, 0.07)}
+                              className="min-h-[30px] px-2.5 py-1 rounded border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 font-medium cursor-pointer"
+                            >
+                              {isFr ? "Compact (Initiales)" : "Compact (Initials)"}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => applyPresetBox(0.44, 0.1)}
+                              className="min-h-[30px] px-2.5 py-1 rounded border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 font-medium cursor-pointer"
+                            >
+                              {isFr ? "Standard" : "Standard"}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => applyPresetBox(0.62, 0.12)}
+                              className="min-h-[30px] px-2.5 py-1 rounded border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 font-medium cursor-pointer"
+                            >
+                              {isFr ? "Large" : "Wide"}
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                          <label className="space-y-1">
+                            <div className="flex justify-between text-slate-600 font-mono tabular-nums">
+                              <span>{isFr ? "Largeur du cadre" : "Box Width"}</span>
+                              <span>{Math.round(slot.width * 100)}%</span>
+                            </div>
+                            <input
+                              type="range"
+                              aria-label={isFr ? "Largeur du cadre" : "Box Width"}
+                              min={0.08}
+                              max={0.95}
+                              step={0.01}
+                              value={slot.width}
+                              onChange={(e) => {
+                                const nextW = Number(Number(e.target.value).toFixed(2));
+                                const nextX = Number(Math.min(slot.x, Math.max(0.01, 0.99 - nextW)).toFixed(2));
+                                onUpdateSlot(slot.id, { width: nextW, x: nextX });
+                              }}
+                              className="w-full accent-[#0f2942] cursor-pointer"
+                            />
+                          </label>
+
+                          <label className="space-y-1">
+                            <div className="flex justify-between text-slate-600 font-mono tabular-nums">
+                              <span>{isFr ? "Hauteur du cadre" : "Box Height"}</span>
+                              <span>{Math.round(slot.height * 100)}%</span>
+                            </div>
+                            <input
+                              type="range"
+                              aria-label={isFr ? "Hauteur du cadre" : "Box Height"}
+                              min={0.04}
+                              max={0.4}
+                              step={0.01}
+                              value={slot.height}
+                              onChange={(e) => {
+                                const nextH = Number(Number(e.target.value).toFixed(2));
+                                const nextY = Number(Math.min(slot.y, Math.max(0.01, 0.99 - nextH)).toFixed(2));
+                                onUpdateSlot(slot.id, { height: nextH, y: nextY });
+                              }}
+                              className="w-full accent-[#0f2942] cursor-pointer"
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -633,7 +755,7 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
         <div className="lg:col-span-5 space-y-3 lg:sticky lg:top-24">
           <div className="flex items-center justify-between gap-2 text-xs text-slate-600">
             <span className="font-semibold text-slate-900 uppercase tracking-wider">
-              {isFr ? "Aperçu des placements" : "Interactive Placement Preview"}
+              {isFr ? "Aperçu interactif des zones" : "Interactive Box Placement Preview"}
             </span>
             {setup.pageCount > 0 && (
               <div className="flex items-center gap-1.5 font-mono tabular-nums">
@@ -662,16 +784,27 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
             )}
           </div>
 
+          {basePdfBytes && (
+            <p className="text-xs text-slate-500">
+              {isFr
+                ? "Glissez le cadre actif pour déplacer, tirez le coin inférieur droit pour redimensionner ou touchez la page."
+                : "Drag the highlighted box to reposition, drag its bottom-right corner handle to resize, or tap the page."}
+            </p>
+          )}
+
           <PdfPagePreview
             pdfBytes={basePdfBytes}
             pageNumber={previewPage}
             slotsOnPage={slots.filter((s) => s.pageNumber === previewPage)}
             activeSlotId={selectedSlot?.id || null}
             onTapPlaceSlot={handleTapPlace}
+            onSelectSlot={(id) => setActiveSlotId(id)}
+            onAdjustSlot={(id, patch) => onUpdateSlot(id, patch)}
+            isFr={isFr}
             emptyMessage={
               isFr
                 ? "Téléversez un PDF ou cliquez sur « Utiliser le PDF exemple » pour visualiser et ajuster vos zones de signature."
-                : "Upload a base PDF or click Use Built-In Sample PDF to inspect pages and tap to position signature slots."
+                : "Upload a base PDF or click Use Built-In Sample PDF to inspect pages and drag or resize signature boxes."
             }
           />
         </div>

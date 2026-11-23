@@ -50,6 +50,7 @@ function createDefaultSlots(): SignatureSlotConfig[] {
       id: "slot-primary-signature",
       label: "Client Primary Signature",
       pageNumber: 1,
+      optional: false,
       x: 0.08,
       y: 0.72,
       width: 0.44,
@@ -59,6 +60,7 @@ function createDefaultSlots(): SignatureSlotConfig[] {
       id: "slot-acknowledgement-initials",
       label: "Client Initials / Acknowledgement",
       pageNumber: 2,
+      optional: true,
       x: 0.6,
       y: 0.72,
       width: 0.3,
@@ -213,6 +215,7 @@ export const DocumentSigningPage: React.FC = () => {
         id: `slot-custom-${Date.now()}`,
         label: isFr ? `Initiales / Signature ${nextNum}` : `Additional Signature ${nextNum}`,
         pageNumber: defaultPage,
+        optional: false,
         x: 0.1,
         y: Math.min(0.8, 0.25 + ((nextNum - 1) % 4) * 0.15),
         width: 0.36,
@@ -347,7 +350,7 @@ export const DocumentSigningPage: React.FC = () => {
     {
       id: "output",
       num: setup.includeAdvisorAttestation ? "04" : "03",
-      label: isFr ? "Document final" : "Output",
+      label: isFr ? "PDF final" : "Output",
     },
   ];
 
@@ -355,11 +358,9 @@ export const DocumentSigningPage: React.FC = () => {
     if (target === "setup") return true;
     if (target === "sign") return Boolean(basePdfBytes && setup.formCode.trim() && setup.clientNames.trim());
     if (target === "attestation") {
-      return (
-        setup.includeAdvisorAttestation &&
-        Boolean(basePdfBytes) &&
-        slots.every((s) => Boolean(capturedBySlot[s.id]))
-      );
+      const allRequiredSigned = slots.every((s) => Boolean(s.optional) || Boolean(capturedBySlot[s.id]));
+      const anySigned = slots.some((s) => Boolean(capturedBySlot[s.id]));
+      return setup.includeAdvisorAttestation && Boolean(basePdfBytes) && allRequiredSigned && anySigned;
     }
     if (target === "output") return Boolean(assemblyResult);
     return false;

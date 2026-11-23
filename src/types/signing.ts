@@ -31,6 +31,8 @@ export interface SignatureSlotConfig {
   id: string;
   label: string;
   pageNumber: number; // 1-indexed
+  /** If true, this slot can be skipped without blocking document assembly */
+  optional?: boolean;
   /** Normalized coordinates (0.0 to 1.0 relative to top-left of target page) */
   x: number;
   y: number;

@@ -707,24 +707,54 @@ export async function assembleSignedPdf(params: {
     for (const slot of slots) {
       if (y < 230) break;
       const cap = capturedBySlot[slot.id];
-      if (!cap) continue;
-      attPage.drawText(toWinAnsiSafeText(slot.label, 36) || "Signature Slot", { x: 50, y, size: 8.5, font: fontRegular, color: slate900 });
-      attPage.drawText(`p. ${slot.pageNumber}`, { x: 242, y, size: 8.5, font: fontRegular, color: slate900 });
-      attPage.drawText(toWinAnsiSafeText(cap.pointerType.toUpperCase(), 12), { x: 280, y, size: 8.5, font: fontRegular, color: slate900 });
-      attPage.drawText(toWinAnsiSafeText(cap.capturedAtIso.replace("T", " ").slice(0, 19), 24), {
-        x: 326,
+      const baseLabel = toWinAnsiSafeText(slot.label, 34) || "Signature Slot";
+      attPage.drawText(slot.optional ? `${baseLabel.slice(0, 28)} (Opt.)` : baseLabel, {
+        x: 50,
         y,
         size: 8.5,
         font: fontRegular,
-        color: slate600,
+        color: slate900,
       });
-      attPage.drawText(toWinAnsiSafeText(cap.strokeHash.slice(0, 14), 16), {
-        x: 448,
+      attPage.drawText(`p. ${slot.pageNumber}`, {
+        x: 242,
         y,
         size: 8.5,
         font: fontRegular,
-        color: slate600,
+        color: slate900,
       });
+      if (!cap) {
+        attPage.drawText("SKIPPED", { x: 280, y, size: 8.5, font: fontRegular, color: slate600 });
+        attPage.drawText("Optional slot omitted", {
+          x: 326,
+          y,
+          size: 8.5,
+          font: fontRegular,
+          color: slate600,
+        });
+        attPage.drawText("-", { x: 448, y, size: 8.5, font: fontRegular, color: slate600 });
+      } else {
+        attPage.drawText(toWinAnsiSafeText(cap.pointerType.toUpperCase(), 12), {
+          x: 280,
+          y,
+          size: 8.5,
+          font: fontRegular,
+          color: slate900,
+        });
+        attPage.drawText(toWinAnsiSafeText(cap.capturedAtIso.replace("T", " ").slice(0, 19), 24), {
+          x: 326,
+          y,
+          size: 8.5,
+          font: fontRegular,
+          color: slate600,
+        });
+        attPage.drawText(toWinAnsiSafeText(cap.strokeHash.slice(0, 14), 16), {
+          x: 448,
+          y,
+          size: 8.5,
+          font: fontRegular,
+          color: slate600,
+        });
+      }
       y -= 16;
     }
 

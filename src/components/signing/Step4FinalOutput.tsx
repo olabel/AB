@@ -210,7 +210,7 @@ export const Step4FinalOutput: React.FC<Step4FinalOutputProps> = ({
             </div>
           </div>
 
-          <PdfPagePreview pdfBytes={result.pdfBytes} pageNumber={previewPage} targetWidth={800} />
+          <PdfPagePreview pdfBytes={result.pdfBytes} pageNumber={previewPage} targetWidth={800} isFr={isFr} />
         </div>
       </div>
     </div>

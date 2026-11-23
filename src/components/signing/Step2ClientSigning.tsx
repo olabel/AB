@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowLeft, ArrowRight, CheckCircle2, Circle } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Circle, SkipForward } from "lucide-react";
 import type {
   CapturedSignature,
   DocumentSetupState,
@@ -36,7 +36,15 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
 
   const safeIndex = Math.min(activeIndex, Math.max(0, slots.length - 1));
   const currentSlot = slots[safeIndex];
-  const allConfirmed = slots.every((s) => Boolean(capturedBySlot[s.id]));
+
+  const requiredSlots = slots.filter((s) => !s.optional);
+  const optionalSlots = slots.filter((s) => Boolean(s.optional));
+  const confirmedRequiredCount = requiredSlots.filter((s) => Boolean(capturedBySlot[s.id])).length;
+  const confirmedOptionalCount = optionalSlots.filter((s) => Boolean(capturedBySlot[s.id])).length;
+
+  const allRequiredConfirmed = requiredSlots.every((s) => Boolean(capturedBySlot[s.id]));
+  const hasAtLeastOneSignature = slots.some((s) => Boolean(capturedBySlot[s.id]));
+  const canProceed = allRequiredConfirmed && hasAtLeastOneSignature;
 
   // Prevent reusing any stroke hash already confirmed on a DIFFERENT slot
   const otherSlotHashes = new Set<string>(
@@ -46,21 +54,54 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
       .filter((h): h is string => Boolean(h))
   );
 
+  const advanceToNextUnsigned = (excludeId: string) => {
+    const nextUnsignedAfter = slots.findIndex(
+      (s, idx) => idx > safeIndex && s.id !== excludeId && !capturedBySlot[s.id]
+    );
+    if (nextUnsignedAfter !== -1) {
+      setActiveIndex(nextUnsignedAfter);
+      return true;
+    }
+    const anyUnsignedRequired = slots.findIndex(
+      (s) => s.id !== excludeId && !s.optional && !capturedBySlot[s.id]
+    );
+    if (anyUnsignedRequired !== -1) {
+      setActiveIndex(anyUnsignedRequired);
+      return true;
+    }
+    const anyUnsignedOther = slots.findIndex(
+      (s) => s.id !== excludeId && !capturedBySlot[s.id]
+    );
+    if (anyUnsignedOther !== -1) {
+      setActiveIndex(anyUnsignedOther);
+      return true;
+    }
+    return false;
+  };
+
   const handleConfirm = (captured: CapturedSignature) => {
     onConfirmSlotSignature(currentSlot.id, captured);
-    // Automatically advance to next unconfirmed slot if one remains
-    const nextUnsigned = slots.findIndex(
-      (s, idx) => idx > safeIndex && !capturedBySlot[s.id]
+    advanceToNextUnsigned(currentSlot.id);
+  };
+
+  const handleSkipOptional = () => {
+    if (!currentSlot?.optional) return;
+    const nextRequired = slots.findIndex(
+      (s) => s.id !== currentSlot.id && !s.optional && !capturedBySlot[s.id]
     );
-    if (nextUnsigned !== -1) {
-      setActiveIndex(nextUnsigned);
-    } else {
-      const anyUnsigned = slots.findIndex(
-        (s) => s.id !== currentSlot.id && !capturedBySlot[s.id]
-      );
-      if (anyUnsigned !== -1) {
-        setActiveIndex(anyUnsigned);
-      }
+    if (nextRequired !== -1) {
+      setActiveIndex(nextRequired);
+      return;
+    }
+    const nextOtherOptional = slots.findIndex(
+      (s, idx) => idx > safeIndex && s.id !== currentSlot.id && !capturedBySlot[s.id]
+    );
+    if (nextOtherOptional !== -1) {
+      setActiveIndex(nextOtherOptional);
+      return;
+    }
+    if (canProceed) {
+      onFinishSigning();
     }
   };
 
@@ -81,8 +122,24 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
         </div>
 
         <div className="text-xs font-mono tabular-nums text-slate-600">
-          {Object.keys(capturedBySlot).length} / {slots.length}{" "}
-          {isFr ? "confirmées" : "slots confirmed"}
+          {requiredSlots.length > 0 ? (
+            <>
+              {confirmedRequiredCount} / {requiredSlots.length}{" "}
+              {isFr ? "requises confirmées" : "required confirmed"}
+              {optionalSlots.length > 0 && (
+                <>
+                  {" · "}
+                  {confirmedOptionalCount} / {optionalSlots.length}{" "}
+                  {isFr ? "facultatives" : "optional"}
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              {Object.keys(capturedBySlot).length} / {slots.length}{" "}
+              {isFr ? "confirmées" : "slots confirmed"}
+            </>
+          )}
         </div>
       </div>
 
@@ -117,6 +174,7 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
               )}
               <span>
                 {idx + 1}. {slot.label}
+                {slot.optional ? (isFr ? " (Facultatif)" : " (Optional)") : ""}
               </span>
               <span className="opacity-70 font-mono tabular-nums text-xs">
                 p.{slot.pageNumber}
@@ -145,6 +203,7 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
             slotsOnPage={slots.filter((s) => s.pageNumber === targetPage)}
             activeSlotId={currentSlot.id}
             capturedBySlot={capturedBySlot}
+            isFr={isFr}
           />
         </div>
 
@@ -155,12 +214,21 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
               {isFr
                 ? `Champ ${safeIndex + 1} sur ${slots.length} · Page ${targetPage}`
                 : `Slot ${safeIndex + 1} of ${slots.length} · Page ${targetPage}`}
+              {currentSlot.optional && (
+                <span className="ml-2 font-sans font-semibold text-slate-600">
+                  {isFr ? "· Facultatif (peut être ignoré)" : "· Optional (skip if not applicable)"}
+                </span>
+              )}
             </p>
             <h3 className="text-lg font-semibold text-slate-900">{currentSlot.label}</h3>
             <p className="text-xs text-slate-600">
-              {isFr
-                ? "Signez directement avec votre doigt ou stylet dans le cadre ci-dessous."
-                : "Draw your signature or initials directly inside the signing box below using stylus or touch."}
+              {currentSlot.optional
+                ? isFr
+                  ? "Apposez les initiales à la main ci-dessous si nécessaires, ou passez directement à l'étape finale."
+                  : "Draw hand initials below if needed for this form, or skip directly to final PDF assembly."
+                : isFr
+                  ? "Signez directement avec votre doigt ou stylet dans le cadre ci-dessous."
+                  : "Draw your signature directly inside the signing box below using stylus or touch."}
             </p>
           </div>
 
@@ -186,23 +254,36 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
               <span>{isFr ? "Retour à la configuration" : "Back to Setup"}</span>
             </button>
 
-            <button
-              type="button"
-              onClick={onFinishSigning}
-              disabled={!allConfirmed}
-              className="min-h-[48px] inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-md bg-[#0f2942] hover:bg-[#163859] text-white disabled:opacity-45 disabled:pointer-events-none transition-colors whitespace-nowrap cursor-pointer"
-            >
-              <span>
-                {setup.includeAdvisorAttestation
-                  ? isFr
-                    ? "Continuer vers l'attestation du conseiller"
-                    : "Continue to Advisor Attestation"
-                  : isFr
-                    ? "Assembler le PDF final"
-                    : "Assemble Final Signed PDF"}
-              </span>
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              {currentSlot.optional && !capturedBySlot[currentSlot.id] && (
+                <button
+                  type="button"
+                  onClick={handleSkipOptional}
+                  className="min-h-[44px] inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-md border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 transition-colors whitespace-nowrap cursor-pointer"
+                >
+                  <SkipForward className="w-4 h-4" aria-hidden="true" />
+                  <span>{isFr ? "Passer (facultatif)" : "Skip Optional Slot"}</span>
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={onFinishSigning}
+                disabled={!canProceed}
+                className="min-h-[48px] inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-md bg-[#0f2942] hover:bg-[#163859] text-white disabled:opacity-45 disabled:pointer-events-none transition-colors whitespace-nowrap cursor-pointer"
+              >
+                <span>
+                  {setup.includeAdvisorAttestation
+                    ? isFr
+                      ? "Continuer vers l'attestation du conseiller"
+                      : "Continue to Advisor Attestation"
+                    : isFr
+                      ? "Assembler le PDF final"
+                      : "Assemble Final Signed PDF"}
+                </span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
