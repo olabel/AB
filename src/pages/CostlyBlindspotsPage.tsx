@@ -24,6 +24,7 @@ import {
   Users,
   BookmarkCheck,
   Bookmark,
+  Share2,
 } from "lucide-react";
 
 export const CostlyBlindspotsPage: React.FC = () => {
@@ -44,6 +45,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
   });
   const [flaggedIds, setFlaggedIds] = useState<string[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [copiedLinkId, setCopiedLinkId] = useState<string | null>(null);
 
   useEffect(() => {
     const hashId = location.hash.replace("#", "");
@@ -103,17 +105,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
     setExpandedItems({});
   };
 
-  const handleCopy = (item: BlindspotItem) => {
-    const title = isFr ? item.titleFr : item.titleEn;
-    const action = isFr ? item.actionFr : item.actionEn;
-    const label = isFr ? "Démarche clé" : "Key Takeaway";
-    const textToCopy = `${title}\n\n${label}: ${action}\n\nhttps://www.ahmedbello.com${prefix}/costly-blindspots#${item.id}`;
-
-    const markCopied = () => {
-      setCopiedId(item.id);
-      setTimeout(() => setCopiedId(null), 2500);
-    };
-
+  const writeClipboardText = (textToCopy: string, onSuccess: () => void) => {
     const fallbackCopy = () => {
       try {
         const ta = document.createElement("textarea");
@@ -125,17 +117,39 @@ export const CostlyBlindspotsPage: React.FC = () => {
         ta.select();
         document.execCommand("copy");
         document.body.removeChild(ta);
-        markCopied();
+        onSuccess();
       } catch {
         // Ignore clipboard denial in restricted iframe contexts
       }
     };
 
     if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(textToCopy).then(markCopied).catch(fallbackCopy);
+      navigator.clipboard.writeText(textToCopy).then(onSuccess).catch(fallbackCopy);
     } else {
       fallbackCopy();
     }
+  };
+
+  const handleCopy = (item: BlindspotItem) => {
+    const title = isFr ? item.titleFr : item.titleEn;
+    const action = isFr ? item.actionFr : item.actionEn;
+    const label = isFr ? "Démarche clé" : "Key Takeaway";
+    const textToCopy = `${title}\n\n${label}: ${action}\n\nhttps://www.ahmedbello.com${prefix}/costly-blindspots#${item.id}`;
+
+    writeClipboardText(textToCopy, () => {
+      setCopiedId(item.id);
+      setTimeout(() => setCopiedId((prev) => (prev === item.id ? null : prev)), 2500);
+    });
+  };
+
+  const handleShareTip = (item: BlindspotItem, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    const deepLink = `https://www.ahmedbello.com${prefix}/costly-blindspots#${item.id}`;
+    trackCtaClick("blindspot_share_tip", item.id);
+    writeClipboardText(deepLink, () => {
+      setCopiedLinkId(item.id);
+      setTimeout(() => setCopiedLinkId((prev) => (prev === item.id ? null : prev)), 2500);
+    });
   };
 
   const categoryCounts = useMemo(() => {
@@ -592,6 +606,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
               const costStake = isFr ? item.costStakeFr : item.costStakeEn;
               const categoryLabel = isFr ? item.categoryFr : item.categoryEn;
               const isCopied = copiedId === item.id;
+              const isLinkCopied = copiedLinkId === item.id;
               const isHashMatch = location.hash.replace("#", "") === item.id;
               const isVisuallyFolded =
                 !showAllBlindspots &&
@@ -609,7 +624,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
                     } ${isVisuallyFolded ? "hidden" : ""}`}
                   >
                     {/* Card Header & Toggle */}
-                    <div className="p-5 sm:p-6 flex items-start justify-between gap-4 hover:bg-[#f7f3eb]/50 transition-colors">
+                    <div className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 hover:bg-[#f7f3eb]/50 transition-colors">
                       <button
                         type="button"
                         onClick={() => toggleItem(item.id)}
@@ -654,13 +669,36 @@ export const CostlyBlindspotsPage: React.FC = () => {
                         </span>
                       </button>
 
-                      <div className="flex items-center shrink-0 mt-1">
+                      <div className="flex items-center gap-2 shrink-0 self-end sm:self-start sm:mt-1">
+                        <button
+                          type="button"
+                          onClick={(e) => handleShareTip(item, e)}
+                          aria-label={isFr ? "Partager ce conseil" : "Share Tip"}
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-[2px] border transition-colors whitespace-nowrap cursor-pointer ${
+                            isLinkCopied
+                              ? "bg-[#eef4f0] text-[#2e4a3b] border-[#2e4a3b]"
+                              : "bg-white text-[#46423a] border-[#d6cebd] hover:border-[#2e4a3b]"
+                          }`}
+                        >
+                          {isLinkCopied ? (
+                            <>
+                              <CheckCircle2 className="w-3.5 h-3.5 text-[#2e4a3b]" />
+                              <span>{isFr ? "Lien copié !" : "Link Copied!"}</span>
+                            </>
+                          ) : (
+                            <>
+                              <Share2 className="w-3.5 h-3.5 text-[#75581f]" />
+                              <span>{isFr ? "Partager" : "Share Tip"}</span>
+                            </>
+                          )}
+                        </button>
+
                         <button
                           type="button"
                           onClick={(e) => toggleFlag(item.id, e)}
                           aria-pressed={isFlagged}
                           aria-label={isFr ? "Ajouter à ma liste" : "Flag for my checklist"}
-                          className={`inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-[2px] border transition-colors cursor-pointer ${
+                          className={`inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-[2px] border transition-colors whitespace-nowrap cursor-pointer ${
                             isFlagged
                               ? "bg-[#2e4a3b] text-[#f7f3eb] border-[#2e4a3b]"
                               : "bg-white text-[#46423a] border-[#d6cebd] hover:border-[#2e4a3b]"
