@@ -57,22 +57,22 @@ const RULE_CHANGES: RuleChangeItem[] = [
     titleEn: "Budget 2026 Proposals: Form T1135 Threshold Raised to $200k, Unified May 15 Filing & RRSP-for-Life Study",
     titleFr: "Budget fédéral 2026 : seuil T1135 porté à 200 000 $, date unique au 15 mai et étude REER à vie",
     summaryEn:
-      "Tabled on November 5, 2026, Federal Budget 2026 (\"Masters of Our Destiny\") left general personal and corporate income tax rates unchanged while proposing major administrative shifts: doubling the Form T1135 foreign property reporting threshold from $100,000 to $200,000 CAD cost (with simplified reporting up to $500,000), moving to a single unified May 15 T1 filing and payment deadline for all individuals starting with the 2027 tax year, raising tax instalment thresholds ($7,500 outside Quebec; $4,500 in Quebec), and launching consultations on merging RRSP and RRIF rules into an \"RRSP-for-life.\"",
+      "Tabled on November 5, 2026, Federal Budget 2026 (\"Masters of Our Destiny\") left general personal and corporate income tax rates unchanged while proposing major administrative shifts: doubling the Form T1135 foreign property reporting threshold from $100,000 to $200,000 CAD cost (with simplified reporting up to $500,000 for tax years ending after 2026), moving to a unified May 15 T1 filing and payment deadline starting with the 2027 tax year, raising tax instalment thresholds ($7,500 outside Quebec; $4,500 in Quebec) starting in 2028, and launching consultations (open through January 8, 2027) on an \"RRSP-for-life\" that removes mandatory age-71 RRIF conversion while keeping mandatory minimum withdrawals after 71.",
     summaryFr:
-      "Déposé le 5 novembre 2026, le Budget fédéral 2026 (« Maîtres chez nous ») maintient les taux généraux d'impôt des particuliers et des sociétés tout en proposant des changements administratifs notables : doublement du seuil de déclaration T1135 (biens étrangers) de 100 000 $ à 200 000 $ CA, instauration d'une date limite unique au 15 mai pour toutes les déclarations T1 et paiements à compter de 2027, relèvement des seuils d'acomptes provisionnels (7 500 $ hors Québec ; 4 500 $ au Québec) et consultations sur un « REER à vie » fusionnant REER et FERR.",
+      "Déposé le 5 novembre 2026, le Budget fédéral 2026 (« Maîtres chez nous ») maintient les taux généraux d'impôt tout en proposant des changements administratifs majeurs : doublement du seuil T1135 (biens étrangers) de 100 000 $ à 200 000 $ CA (déclaration simplifiée jusqu'à 500 000 $ après 2026), date unique au 15 mai pour les T1 et paiements à compter de l'année 2027, relèvement des seuils d'acomptes provisionnels (7 500 $ hors Québec ; 4 500 $ au Québec) dès 2028 et consultations jusqu'au 8 janvier 2027 sur un « REER à vie » supprimant la conversion obligatoire à 71 ans tout en maintenant les retraits minimums annuels.",
     ahmedAnalysisEn:
-      "My Take: For professionals holding US ETFs in non-registered brokerage accounts or international assets after immigrating to Canada, raising the Form T1135 cost threshold from $100,000 to $200,000 (once enacted) removes a frequent $2,500 late-filing penalty trap. Equally important for planning: Budget measures are proposals until Royal Assent, so do not skip current $100,000 T1135 reporting rules for 2025 or 2026 returns, and keep watching the RRSP-for-life consultation for future age-71 decumulation flexibility.",
+      "My Take: For professionals holding US ETFs in non-registered brokerage accounts or international assets after immigrating to Canada, raising the Form T1135 cost threshold from $100,000 to $200,000 (for tax years ending after 2026 once enacted) removes a frequent $2,500 late-filing penalty trap. Equally important for planning: Budget measures are proposals until Royal Assent, so continue following existing $100,000 T1135 rules for 2025–2026 returns, and remember the proposed RRSP-for-life still preserves mandatory minimum withdrawals past age 71.",
     ahmedAnalysisFr:
-      "Mon analyse : Pour les familles et nouveaux arrivants détenant des FNB américains hors régime enregistré ou des actifs à l'étranger, le relèvement proposé du seuil T1135 à 200 000 $ réduira un piège fréquent de pénalités (jusqu'à 2 500 $/an). Attention toutefois : ces annonces budgétaires demeurent des propositions jusqu'à leur sanction royale ; continuez de respecter le seuil actuel de 100 000 $ pour 2025-2026.",
+      "Mon analyse : Pour les familles et nouveaux arrivants détenant des FNB américains hors régime enregistré ou des actifs étrangers, le relèvement proposé du seuil T1135 à 200 000 $ (après 2026 une fois sanctionné) éliminera un piège fréquent de pénalités (jusqu'à 2 500 $/an). Ces annonces restent toutefois des propositions jusqu'à la sanction royale : respectez le seuil de 100 000 $ pour 2025-2026, et retenez que les retraits minimums après 71 ans demeureraient obligatoires sous le REER à vie.",
     actionItemsEn: [
-      "Keep tracking non-registered foreign asset cost basis against the existing $100,000 CAD threshold until the $200,000 proposal is enacted into law.",
-      "Note the proposed unified May 15 T1 deadline applies starting with the 2027 taxation year; 2026 returns remain due April 30, 2027 (June 15 to file for self-employed, taxes still due April 30).",
-      "Review how higher instalment thresholds ($7,500 outside Quebec; $4,500 in Quebec) and RRSP-for-life consultations could simplify retirement cash flow.",
+      "Keep tracking non-registered foreign asset cost basis against the existing $100,000 CAD threshold for 2025–2026 returns until the $200,000 proposal (tax years ending after 2026) is enacted.",
+      "Note the proposed unified May 15 T1 deadline applies starting with the 2027 taxation year (spring 2028); 2026 returns remain due April 30, 2027 (June 15 to file for self-employed, taxes still due April 30).",
+      "Review how 2028 instalment thresholds ($7,500 outside Quebec; $4,500 in Quebec) and RRSP-for-life minimum-withdrawal rules affect retirement cash flow.",
     ],
     actionItemsFr: [
-      "Continuez de surveiller le coût de vos biens étrangers hors REER/CELI par rapport au seuil actuel de 100 000 $ tant que la loi n'est pas sanctionnée.",
-      "Retenez que la date unique du 15 mai ne viserait qu'à partir de l'année fiscale 2027 ; pour 2026, l'échéance usuelle du 30 avril s'applique.",
-      "Évaluez l'impact futur d'un « REER à vie » sur votre stratégie de décaissement à 71 ans.",
+      "Continuez de surveiller vos biens étrangers hors REER/CELI par rapport au seuil actuel de 100 000 $ pour 2025-2026 tant que la loi n'est pas sanctionnée.",
+      "Retenez que la date unique du 15 mai ne viserait qu'à partir de l'année fiscale 2027 (printemps 2028) ; pour 2026, l'échéance du 30 avril s'applique.",
+      "Tenez compte des seuils d'acomptes 2028 (7 500 $ hors Québec ; 4 500 $ au Québec) et des retraits minimums maintenus après 71 ans dans vos projections.",
     ],
     relatedLink: {
       toEn: "/education/new-to-canada-money-basics",
@@ -92,25 +92,25 @@ const RULE_CHANGES: RuleChangeItem[] = [
     category: "tax",
     categoryLabelEn: "Registered Shelters & CPP Indexation",
     categoryLabelFr: "Régimes enregistrés & Plafonds RRQ/RPC",
-    titleEn: "CRA Announces 2027 Registered Limits: RRSP Rises to $35,390, YMPE to $76,700 & YAMPE to $87,400",
-    titleFr: "Plafonds 2027 publiés par l'ARC : REER porté à 35 390 $, MGA à 76 700 $ et MGAP à 87 400 $",
+    titleEn: "CRA Confirms 2027 Limits: TFSA Rises to $7,500, RRSP to $35,390, YMPE $76,700 & YAMPE $87,400",
+    titleFr: "Plafonds 2027 confirmés par l'ARC : CELI à 7 500 $, REER à 35 390 $, MGA 76 700 $ & MGAP 87 400 $",
     summaryEn:
-      "The Canada Revenue Agency (CRA) published the official 2027 registered plan and pensionable earnings limits. The 2027 RRSP dollar limit rises to $35,390 (up from $33,810 in 2026), requiring $196,611 of 2026 earned income to generate the maximum new room. The 2027 Money Purchase (MP) limit (which sets the 2028 RRSP limit) increases to $36,390, while CPP Year's Maximum Pensionable Earnings (YMPE) climbs to $76,700 (2026: $74,600) and the second earnings ceiling (YAMPE / CPP2) climbs to $87,400 (2026: $85,000). The confirmed 2026 TFSA annual limit is $7,000 ($109,000 cumulative since 2009), with CRA's official 2027 TFSA dollar limit announcement due in late November/early December.",
+      "Driven by CRA's 2.6% inflation indexation factor for 2027, the Tax-Free Savings Account (TFSA) annual limit rises to $7,500 on January 1, 2027 (up from $7,000 for 2024–2026), bringing cumulative lifetime TFSA room since 2009 to $116,500 ($109,000 through 2026). Separately, the 2027 RRSP dollar limit rises to $35,390 (up from $33,810 in 2026, requiring $196,611 of 2026 earned income), the 2027 Money Purchase limit climbs to $36,390, CPP YMPE climbs to $76,700 (2026: $74,600), and CPP2 YAMPE climbs to $87,400 (2026: $85,000).",
     summaryFr:
-      "L'ARC a publié les plafonds officiels des régimes enregistrés et du RPC pour 2027. Le plafond REER 2027 grimpe à 35 390 $ (contre 33 810 $ en 2026), exigeant 196 611 $ de revenu gagné en 2026 pour obtenir le maximum. Le plafond à cotisations déterminées 2027 (qui détermine le plafond REER 2028) atteint 36 390 $, le MGA du RPC monte à 76 700 $ (2026 : 74 600 $) et le MGAP (RPC2) à 87 400 $ (2026 : 85 000 $). Le plafond CELI confirmé pour 2026 est de 7 000 $ (109 000 $ cumulatifs depuis 2009), en attente de la confirmation annuelle de l'ARC pour 2027.",
+      "Porté par le facteur d'indexation de 2,6 % de l'ARC pour 2027, le plafond annuel du CELI passe à 7 500 $ le 1er janvier 2027 (contre 7 000 $ de 2024 à 2026), portant les droits cumulatifs depuis 2009 à 116 500 $ (109 000 $ jusqu'en 2026). Parallèlement, le plafond REER 2027 grimpe à 35 390 $ (contre 33 810 $ en 2026, exigeant 196 611 $ de revenu gagné en 2026), le plafond CD 2027 atteint 36 390 $, le MGA du RPC monte à 76 700 $ (2026 : 74 600 $) et le MGAP (RPC2) à 87 400 $ (2026 : 85 000 $).",
     ahmedAnalysisEn:
-      "My Take: With 2026 RRSP space capped at $33,810 and 2027 climbing to $35,390, high earners and incorporated professionals paying themselves T4 salary need to weigh CPP/CPP2 payroll costs at the $87,400 ceiling against dividend mixes and corporate investment strategies. Also keep the year-end TFSA rule in mind: if you plan to withdraw TFSA cash soon for a home closing or lump-sum expense, completing the withdrawal by December 31 restores that room on January 1 instead of locking it out for a full year.",
+      "My Take: Having 2027's $7,500 TFSA boost confirmed gives households an extra $500 per adult of tax-free shelter on January 1 alongside 2027's higher $35,390 RRSP cap. Remember the timing rule before year-end: if you plan to draw TFSA cash soon for a home closing or lump-sum expense, completing the withdrawal by December 31 restores that room on January 1 alongside your new $7,500 allocation.",
     ahmedAnalysisFr:
-      "Mon analyse : Avec un plafond REER 2027 à 35 390 $ et un plafond RPC2 (MGAP) à 87 400 $, les propriétaires de société qui se versent un salaire T4 doivent rééquilibrer leur mix salaire/dividendes. Côté CELI, si vous prévoyez un retrait d'ici quelques semaines, effectuez-le avant le 31 décembre pour récupérer vos droits dès le 1er janvier.",
+      "Mon analyse : La confirmation du passage du CELI à 7 500 $ en 2027 offre 500 $ supplémentaires d'abri fiscal par adulte dès le 1er janvier, en plus du plafond REER porté à 35 390 $. Rappel de fin d'année : tout retrait CELI effectué avant le 31 décembre régénère vos droits le 1er janvier en s'additionnant à la nouvelle tranche de 7 500 $.",
     actionItemsEn: [
-      "Verify your exact 2026 RRSP deduction limit on your Notice of Assessment before the early-2027 deadline, rather than relying on next year's $35,390 cap.",
-      "Schedule any planned near-term TFSA withdrawals before December 31 so withdrawn room re-opens on January 1.",
-      "Factor 2027 YMPE ($76,700) and YAMPE ($87,400) payroll deductions into household cash-flow and owner-manager compensation planning.",
+      "Verify your exact 2026 RRSP deduction limit ($33,810 max) on your Notice of Assessment before the early-2027 deadline; budget for the $35,390 ceiling next tax year.",
+      "Schedule any planned near-term TFSA withdrawals before December 31 so withdrawn room re-opens on January 1 along with the new $7,500 2027 annual room.",
+      "Factor 2027 YMPE ($76,700) and YAMPE ($87,400) payroll deductions into household cash-flow and owner-manager T4/dividend compensation planning.",
     ],
     actionItemsFr: [
-      "Vérifiez votre plafond REER exact de 2026 sur votre avis de cotisation dans Mon dossier ARC avant la date limite.",
-      "Planifiez tout retrait CELI prévu à court terme avant le 31 décembre pour libérer vos droits au 1er janvier.",
-      "Intégrez les nouveaux plafonds MGA (76 700 $) et MGAP (87 400 $) dans la planification salariale ou de flux de trésorerie.",
+      "Vérifiez votre plafond REER exact de 2026 (max. 33 810 $) sur votre avis de cotisation dans Mon dossier ARC ; prévoyez 35 390 $ pour l'an prochain.",
+      "Planifiez tout retrait CELI prévu à court terme avant le 31 décembre pour libérer vos droits au 1er janvier avec la nouvelle tranche de 7 500 $.",
+      "Intégrez les nouveaux plafonds MGA (76 700 $) et MGAP (87 400 $) dans la planification salariale T4/dividendes et les flux de trésorerie.",
     ],
     relatedLink: {
       toEn: "/education/tfsa-vs-rrsp-vs-fhsa-which-to-maximize-first",
@@ -119,7 +119,7 @@ const RULE_CHANGES: RuleChangeItem[] = [
       labelFr: "Comparer l'ordre de priorité CELI / REER / CELIAPP",
     },
     officialSource: {
-      label: "Canada Revenue Agency - MP, DB, RRSP, DPSP, ALDA & YMPE/YAMPE Limits",
+      label: "Canada Revenue Agency - MP, DB, RRSP, DPSP, ALDA, TFSA & YMPE/YAMPE Limits",
       url: "https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html",
     },
   },
@@ -130,24 +130,24 @@ const RULE_CHANGES: RuleChangeItem[] = [
     category: "corporate",
     categoryLabelEn: "Corporate & Personal Tax",
     categoryLabelFr: "Fiscalité corporative & Patrimoine",
-    titleEn: "Budget 2026 Corporate Rules: $15M Canada Growth Incentive, Productivity Mega Deduction & SBD Planning",
-    titleFr: "Budget 2026 pour les sociétés : Incitatif de croissance de 15 M$, méga-déduction et gestion DPE",
+    titleEn: "Budget 2026 Corporate Rules: $15M Canada Growth Incentive, Pro-Corp Exclusions & SBD Planning",
+    titleFr: "Budget 2026 pour les sociétés : Incitatif de croissance de 15 M$, exclusions et gestion DPE",
     summaryEn:
-      "Alongside retaining Canada's 50% capital gains inclusion rate and the $1.25 million base Lifetime Capital Gains Exemption (indexed to $1,275,000 for 2026), Budget 2026 proposes two major corporate tax incentives: the Canada Growth Incentive (exempting up to $15 million in capital gains on qualifying shares of qualifying Canadian corporations issued on or after November 5, 2026 and before 2037), an expanded small business rollover, and the Productivity Mega Deduction (reducing the marginal effective tax rate on qualifying new business investments from 13% to 6.4%).",
+      "Alongside retaining Canada's 50% capital gains inclusion rate and the $1.25 million base Lifetime Capital Gains Exemption (indexed to $1,275,000 for 2026), Budget 2026 proposes the Productivity Mega Deduction (lowering the marginal effective tax rate on qualifying new business investments from 13% to 6.4%), an expanded small-business rollover, and the $15 million Canada Growth Incentive on qualifying shares issued November 5, 2026 through 2036 (under $100M asset limits and a 36-month hold). Crucially, professional corporations (medicine, law, accounting, engineering, architecture, and consulting) and skill-based service practices are expressly excluded from the $15M CGI.",
     summaryFr:
-      "Tout en maintenant le taux d'inclusion des gains en capital à 50 % et l'exonération cumulative des gains en capital (ECGC) de base de 1,25 M$ (indexée à 1 275 000 $ en 2026), le Budget 2026 propose deux incitatifs corporatifs majeurs : l'Incitatif de croissance du Canada (exonérant jusqu'à 15 M$ de gains en capital sur des actions admissibles émises entre le 5 novembre 2026 et 2037) ainsi que la Méga-déduction pour la productivité (abaissant le taux effectif marginal sur les investissements admissibles de 13 % à 6,4 %).",
+      "Tout en maintenant l'inclusion des gains en capital à 50 % et l'ECGC indexée à 1 275 000 $ en 2026, le Budget 2026 propose la Méga-déduction pour la productivité (taux effectif ramené de 13 % à 6,4 %) et l'Incitatif de croissance du Canada (exonérant jusqu'à 15 M$ de gains sur actions admissibles émises entre le 5 novembre 2026 et 2037, sous réserve d'un actif sous 100 M$ et d'une détention de 36 mois). Point crucial : les sociétés professionnelles (médecins, avocats, comptables, ingénieurs, consultants) en sont expressément exclues.",
     ahmedAnalysisEn:
-      "My Take: Incorporated owners face a widening gap between operating reinvestment and passive portfolio buildup inside a CCPC. While new qualifying share capital and capital-expenditure deductions are richly rewarded, passive investment portfolios above $50,000 in Adjusted Aggregate Investment Income (AAII) still face the 5-for-1 Small Business Deduction grind under ITA s. 125(5.1), and realized capital gains still interact with personal AMT on sale.",
+      "My Take: Incorporated physicians, lawyers, and consultants must read the fine print carefully: professional corporations cannot rely on the $15M Canada Growth Incentive on an exit, making existing LCGE qualification ($1,275,000 in 2026) and passive-income management even more vital. Across all CCPCs, passive portfolios above $50,000 in Adjusted Aggregate Investment Income (AAII) still face the 5-for-1 Small Business Deduction grind under ITA s. 125(5.1), and realized gains still interact with personal AMT.",
     ahmedAnalysisFr:
-      "Mon analyse : Pour les entrepreneurs incorporés, l'écart se creuse entre le réinvestissement productif et l'accumulation passive. Les portefeuilles passifs dépassant 50 000 $ de revenus (RPRA) continuent de réduire le plafond de la déduction accordée aux petites entreprises (DPE) à raison de 5 $ pour 1 $, rendant la planification fiscale corporative essentielle.",
+      "Mon analyse : Les médecins, avocats et consultants incorporés doivent lire les exclusions de près : les sociétés professionnelles n'ont pas accès à l'exonération de 15 M$ de l'Incitatif de croissance, ce qui rend la gestion de l'ECGC (1 275 000 $ en 2026) et des revenus passifs encore plus déterminante. Tout portefeuille passif dépassant 50 000 $ de RPAA continue de réduire la DPE à raison de 5 $ pour 1 $ sous le par. 125(5.1).",
     actionItemsEn: [
       "Audit T2 Schedule 7 Adjusted Aggregate Investment Income (AAII) to monitor proximity to the $50,000 SBD passive-income grind threshold.",
-      "Consult your corporate tax CPA on eligibility criteria before assuming new share issuances qualify under the proposed $15M Canada Growth Incentive or enhanced rollover.",
+      "Do not assume a medical, legal, accounting, or consulting corporation qualifies for the proposed $15M Canada Growth Incentive—verify statutory exclusions with your CPA.",
       "Coordinate corporate Capital Dividend Account (CDA) payouts alongside personal AMT thresholds before executing asset or share sales.",
     ],
     actionItemsFr: [
       "Vérifiez l'annexe 7 de votre T2 pour mesurer la proximité du seuil de 50 000 $ de revenu passif réduisant la DPE.",
-      "Validez les critères exacts avec votre CPA fiscaliste avant toute émission d'actions visant l'Incitatif de croissance proposé.",
+      "Ne présumez jamais qu'une société médicale, juridique ou de services-conseils est admissible à l'Incitatif de croissance de 15 M$ ; validez avec votre CPA.",
       "Coordonnez les versements du Compte de dividendes en capital (CDC) avec l'IMR personnel avant toute transaction importante.",
     ],
     relatedLink: {
@@ -282,12 +282,12 @@ const RULE_CHANGES: RuleChangeItem[] = [
     category: "corporate",
     categoryLabelEn: "2026 Marginal Rates, AMT & Home Buyers",
     categoryLabelFr: "Taux 2026, IMR & Premiers acheteurs",
-    titleEn: "2026 Federal Tax Rules: 14% Lowest Bracket, $181,440 AMT Exemption, Form RC727 & $60k HBP",
-    titleFr: "Règles fédérales 2026 : palier de base à 14 %, exemption IMR à 181 440 $, RC727 et RAP à 60 000 $",
+    titleEn: "2026–2027 Federal Tax Rules: 14% Lowest Bracket, $181,440/$186,157 AMT Exemption & $60k HBP",
+    titleFr: "Règles fédérales 2026-2027 : palier de base à 14 %, exemption IMR (181 440 $/186 157 $) et RAP 60 000 $",
     summaryEn:
-      "For the 2026 taxation year, Canada's lowest federal marginal rate sits at 14.0% (on taxable income up to $58,523, with a $16,452 Basic Personal Amount), while large capital realizations fall under the post-2024 Alternative Minimum Tax (Bills C-59 & C-69: 20.5% flat rate, $181,440 exemption for 2026, 100% capital gains inclusion, and 80% charitable donation tax credit allowance). Separately, CRA's T4FHSA data-matching is enforcing 1%/month excess penalties (Form RC727), and the $60,000 HBP + $40,000 FHSA stacking rules remain active for first-time buyers.",
+      "For 2026, Canada's lowest federal marginal rate is 14.0% on taxable income up to $58,523 ($16,452 Basic Personal Amount), indexing 2.6% for 2027 to $60,044 ($16,879 max BPA). Large capital realizations fall under the post-2024 Alternative Minimum Tax (Bills C-59 & C-69: 20.5% flat rate, $181,440 exemption in 2026 / $186,157 in 2027, 100% capital gains inclusion, and 80% donation credit allowance). Separately, CRA's T4FHSA matching enforces 1%/month excess penalties (Form RC727), and $60,000 HBP + $40,000 FHSA stacking remains active.",
     summaryFr:
-      "Pour l'année d'imposition 2026, le premier palier fédéral s'établit à 14,0 % (jusqu'à 58 523 $, montant personnel de base de 16 452 $), tandis que les gains importants restent soumis à l'IMR réformé (lois C-59 et C-69 : taux de 20,5 %, exemption 2026 de 181 440 $, inclusion à 100 % des gains en capital et crédit pour dons admis à 80 %). En parallèle, l'ARC vérifie les feuillets T4FHSA (pénalité de 1 %/mois sans formulaire RC727) et le cumul CELIAPP 40 000 $ + RAP 60 000 $ demeure pleinement en vigueur.",
+      "Pour 2026, le premier palier fédéral est de 14,0 % jusqu'à 58 523 $ (MPB de 16 452 $), s'indexant de 2,6 % en 2027 à 60 044 $ (MPB max. de 16 879 $). Les gains importants restent soumis à l'IMR réformé (20,5 %, exemption de 181 440 $ en 2026 et 186 157 $ en 2027, inclusion à 100 % des gains et crédit pour dons admis à 80 %). Côté habitation, l'ARC contrôle les feuillets T4FHSA (1 %/mois via RC727) et le cumul CELIAPP 40 000 $ + RAP 60 000 $ demeure en vigueur.",
     ahmedAnalysisEn:
       "My Take: Every year brings a mismatch between headline tax brackets and actual net exposure on big life events: selling a rental or private shares can trigger federal AMT even with the 50% regular inclusion rate, while opening two FHSAs across separate institutions still triggers CRA's 1%/month penalty. Use dedicated calculators to stress-test capital events and registered room before acting.",
     ahmedAnalysisFr:
@@ -330,12 +330,12 @@ export const WhatChangedPage: React.FC = () => {
         title={
           isFr
             ? "Règles financières 2026 au Canada | Ahmed Bello"
-            : "2026 Money Rules in Canada | Ahmed Bello"
+            : "2026 Money Rules & CRA Updates | Ahmed Bello"
         }
         description={
           isFr
-            ? "Mises à jour nov. 2026 : Budget 2026, plafonds REER 2027, taux directeur à 2,50 %, taux prescrit à 3 %, règles BSIF B-20 et fiscalité fédérale."
-            : "Nov 2026 Canadian money rule updates: Federal Budget 2026, 2027 RRSP limits, BoC 2.50% rate, CRA 3% prescribed rate, OSFI B-20, and 14% tax rules."
+            ? "Mises à jour nov. 2026 : Budget 2026, CELI 2027 à 7 500 $ et REER à 35 390 $, taux directeur à 2,50 %, taux prescrit à 3 % et BSIF B-20."
+            : "Nov 2026 Canadian money rules: Federal Budget 2026, 2027 $7,500 TFSA & $35,390 RRSP limits, BoC 2.50% rate, CRA 3% rate, and OSFI B-20 rules."
         }
         canonicalUrl={isFr ? "/fr/what-changed" : "/what-changed"}
       />
@@ -383,7 +383,7 @@ export const WhatChangedPage: React.FC = () => {
               {isFr ? "Vérifié par Ahmed Bello" : "Compiled & verified by Ahmed Bello"}
             </span>
             <span aria-hidden="true">&bull;</span>
-            <span>{isFr ? "Mis à jour : 20 novembre 2026" : "Updated: November 20, 2026"}</span>
+            <span>{isFr ? "Mis à jour : 24 novembre 2026" : "Updated: November 24, 2026"}</span>
             <span aria-hidden="true">&bull;</span>
             <span>
               {isFr

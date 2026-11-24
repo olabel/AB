@@ -220,8 +220,8 @@ export const CalculatorsPage: React.FC = () => {
 
           <p className="lede measure">
             {isFr
-              ? "Basé sur les chiffres publiés par l'ARC pour 2026. Estimations à des fins éducatives seulement."
-              : "Based on published CRA figures for 2026. Estimates for education only."}
+              ? "Basé sur les chiffres publiés par l'ARC (plafonds 2026 et indexation 2027). Estimations à des fins éducatives seulement."
+              : "Based on published CRA figures (2026 ceilings and confirmed 2027 indexation). Estimates for education only."}
           </p>
 
           {/* Calculator Selector Tabs */}
@@ -614,7 +614,7 @@ TFSA Prepayment Dilemma: $${registeredSavings.toLocaleString()} would save ~$${m
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <div className="flex justify-between text-xs font-medium text-[#1c1b18] mb-1.5">
-                          <span>{isFr ? "Cotisation annuelle (max. REER 2026: 33 810 $)" : "Annual Contribution (2026 RRSP cap: $33,810)"}</span>
+                          <span>{isFr ? "Cotisation annuelle (REER : 33 810 $ en 2026 / 35 390 $ en 2027)" : "Annual Contribution (RRSP cap: $33,810 '26 / $35,390 '27)"}</span>
                           <span className="tabular-nums text-[#1c1b18] font-bold">{formatCurrency(annualContribution)}</span>
                         </div>
                         <input

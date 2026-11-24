@@ -193,8 +193,8 @@ export const Header: React.FC = () => {
             </span>
             <span>
               {isFr
-                ? "Budget fédéral 2026, taux directeur à 2,50 % et plafonds REER 2027."
-                : "Federal Budget 2026, BoC 2.50% rate, and 2027 RRSP limits."}
+                ? "Budget 2026, taux directeur à 2,50 %, CELI 2027 à 7 500 $ & REER à 35 390 $."
+                : "Budget 2026, BoC 2.50% rate, 2027 TFSA $7,500 & RRSP $35,390."}
             </span>
           </p>
           <Link
@@ -505,8 +505,8 @@ export const Header: React.FC = () => {
                   </span>
                   <p className="text-sm font-serif text-[#1c1b18]">
                     {isFr
-                      ? "Budget 2026, plafond REER 2027 à 35 390 $ et taux directeur à 2,50 %."
-                      : "Budget 2026 proposals, 2027 RRSP $35,390 limit & BoC 2.50% policy rate."}
+                      ? "Budget 2026, CELI 2027 à 7 500 $, REER à 35 390 $ et taux directeur à 2,50 %."
+                      : "Budget 2026 proposals, 2027 TFSA $7,500 / RRSP $35,390 & BoC 2.50% rate."}
                   </p>
                   <Link
                     to={`${prefix}/what-changed`}

@@ -324,8 +324,8 @@ function renderCoreBody(r, isFr) {
         <h2>${isFr ? "Outils de planification canadiens" : "Canadian Planning Simulators"}</h2>
         <p>${
           isFr
-            ? "Basé sur les chiffres officiels publiés par l'ARC pour 2026 : plafond CELI 7 000 $, plafond REER 33 810 $, plafond annuel CELIAPP 8 000 $ (40 000 $ à vie), exemption de base de l'IMR de 181 440 $ à un taux fédéral de 20,5 %."
-            : "Based on published 2026 CRA figures: $7,000 TFSA annual limit, $33,810 RRSP ceiling, $8,000 FHSA annual / $40,000 lifetime cap, 20.5% federal AMT rate above the $181,440 indexed exemption (Bills C-59 and C-69)."
+            ? "Basé sur les chiffres officiels publiés par l'ARC : plafond CELI 7 000 $ (7 500 $ en 2027), plafond REER 33 810 $ (35 390 $ en 2027), plafond annuel CELIAPP 8 000 $ (40 000 $ à vie), exemption de base de l'IMR de 181 440 $ (2026) à un taux fédéral de 20,5 %."
+            : "Based on published CRA figures: $7,000 TFSA annual limit ($7,500 for 2027), $33,810 RRSP ceiling ($35,390 for 2027), $8,000 FHSA annual / $40,000 lifetime cap, 20.5% federal AMT rate above the $181,440 2026 indexed exemption (Bills C-59 and C-69)."
         }</p>
         <ul>
           <li><a href="${prefix}/calculators?tab=newcomer">${isFr ? "Planificateur de réserve de 1re année" : "Newcomer First-Year Cash Runway Simulator"}</a></li>

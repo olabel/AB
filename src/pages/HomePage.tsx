@@ -29,19 +29,23 @@ export const HomePage: React.FC = () => {
     ? "Ahmed Bello | Planification financière à Dieppe, NB"
     : "Ahmed Bello | Financial Planning in Dieppe, NB";
   const homeDescription = isFr
-    ? "Planification financière, protection du revenu et stratégies CELI, REER et CELIAPP pour familles, entrepreneurs et nouveaux arrivants au Canada."
-    : "Financial planning, income protection, and registered account strategy for Canadian families, business owners, healthcare professionals, and newcomers.";
+    ? "Stratégie patrimoniale fiscalement efficiente et protection du revenu pour familles canadiennes, SPCC, professionnels de santé et nouveaux arrivants."
+    : "Tax-efficient wealth strategy, income protection, and registered account planning for Canadian families, CCPCs, healthcare pros, and newcomers.";
   const canonicalPath = isFr ? "/fr" : "/";
 
-  const homeJsonLd = buildRouteJsonLd({
-    pathname: canonicalPath,
-    title: homeTitle,
-    description: homeDescription,
-    heading: isFr
-      ? "Ahmed Bello | Professionnel en Solutions Financières Agréé"
-      : "Ahmed Bello | Licensed Financial Solutions Professional",
-    isFr,
-  });
+  const homeJsonLd = React.useMemo(
+    () =>
+      buildRouteJsonLd({
+        pathname: canonicalPath,
+        title: homeTitle,
+        description: homeDescription,
+        heading: isFr
+          ? "Ahmed Bello | Professionnel en Solutions Financières Agréé"
+          : "Ahmed Bello | Licensed Financial Solutions Professional",
+        isFr,
+      }),
+    [canonicalPath, homeDescription, homeTitle, isFr]
+  );
 
   return (
     <div className="bg-[#f7f3eb]">
@@ -402,13 +406,13 @@ export const HomePage: React.FC = () => {
               isFr
                 ? [
                     "Aide-mémoire financier canadien 2026 (demandé depuis l'accueil) :",
-                    "1. Plafonds 2026 : CELI 7 000 $, REER jusqu'à 33 810 $, CELIAPP 8 000 $/an.",
+                    "1. Plafonds : CELI 7 000 $ (7 500 $ en 2027), REER jusqu'à 33 810 $ (35 390 $ en 2027), CELIAPP 8 000 $/an.",
                     "2. Renouvellement hypothécaire : évaluation du choc de mensualité et comparaison avec la liquidité CELI.",
                     "3. Pièges fréquents : subventions REEE inutilisées, remboursement SCHL écoénergétique (24 mois) et règle des 10 ans T1-ADJ.",
                   ].join("\n")
                 : [
                     "2026 Canadian Money & Tax Checklist (requested from homepage):",
-                    "1. 2026 Limits: TFSA $7,000, RRSP up to $33,810, FHSA $8,000/yr ($16,000 max with carry-forward once opened).",
+                    "1. Limits: TFSA $7,000 ($7,500 in 2027), RRSP up to $33,810 ($35,390 in 2027), FHSA $8,000/yr ($16,000 max with carry-forward once opened).",
                     "2. Mortgage Renewal Check: Compare higher monthly payments vs. keeping liquid emergency savings in a TFSA.",
                     "3. Missed Money Checks: Unused RESP grants, CMHC 25% energy-efficient refund (24-month window), and 10-year CRA T1-ADJ adjustments.",
                   ].join("\n")
@@ -432,7 +436,7 @@ export const HomePage: React.FC = () => {
               {isFr ? "Veille réglementaire • Novembre 2026" : "2026 Money Rules • November Update"}
             </span>
             <Link to={`${prefix}/what-changed`} className="arrow-link text-xs">
-              <span>{isFr ? "Lire les 6 mises à jour →" : "Read all 6 updates →"}</span>
+              <span>{isFr ? "Lire les 7 mises à jour →" : "Read all 7 updates →"}</span>
             </Link>
           </div>
 
@@ -446,8 +450,8 @@ export const HomePage: React.FC = () => {
               </h3>
               <p className="small text-[#ece6da]/85">
                 {isFr
-                  ? "Propositions du 5 novembre : seuil T1135 porté à 200 000 $, date de cotisation au 15 mai (2027) et consultations REER/FERR."
-                  : "Tabled Nov 5: proposes raising Form T1135 threshold to $200k, a unified May 15 date from 2027, and RRSP/RRIF updates."}
+                  ? "Propositions du 5 novembre : seuil T1135 porté à 200 000 $, date de cotisation au 15 mai (2027) et consultations REER à vie."
+                  : "Tabled Nov 5: proposes raising Form T1135 threshold to $200k, a unified May 15 date from 2027, and RRSP-for-life study."}
               </p>
             </div>
 
@@ -470,12 +474,12 @@ export const HomePage: React.FC = () => {
                 {isFr ? "Plafonds ARC 2027" : "CRA 2027 Limits"}
               </span>
               <h3 className="font-serif text-xl text-white">
-                {isFr ? "Plafond REER 2027 à 35 390 $" : "2027 RRSP Limit: $35,390"}
+                {isFr ? "CELI 7 500 $ & REER 35 390 $" : "2027 TFSA $7,500 & RRSP $35,390"}
               </h3>
               <p className="small text-[#ece6da]/85">
                 {isFr
                   ? "MGA du RPC à 76 700 $, taux prescrit T4 maintenu à 3 % pour les prêts familiaux et inclusion des gains à 50 %."
-                  : "2027 CPP YMPE is $76,700, Q4 prescribed rate holds at 3%, and 50% capital gains inclusion stays in force."}
+                  : "2027 CPP YMPE reaches $76,700, Q4 prescribed rate holds at 3%, and 50% capital gains inclusion stays in force."}
               </p>
             </div>
           </div>

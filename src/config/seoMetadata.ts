@@ -132,10 +132,10 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "en-CA",
     title: "2026 Money Rules & CRA Updates | Ahmed Bello",
     description:
-      "Nov 2026 Canadian money rule updates: Federal Budget 2026, 2027 RRSP limits, BoC 2.50% rate, CRA 3% prescribed rate, OSFI B-20, and 14% tax rules.",
+      "Nov 2026 Canadian money rules: Federal Budget 2026, 2027 $7,500 TFSA & $35,390 RRSP limits, BoC 2.50% rate, CRA 3% rate, and OSFI B-20 rules.",
     heading: "2026 Canadian Money Rules & Official Updates",
     summary:
-      "Verified November 2026 briefing covering Federal Budget 2026 proposals, 2027 CRA limits, Bank of Canada 2.50% policy rate, and OSFI B-20 mortgage rules.",
+      "Verified November 2026 briefing covering Federal Budget 2026 proposals, confirmed 2027 TFSA ($7,500) and RRSP ($35,390) limits, and Bank of Canada 2.50% rate.",
     priority: "0.9",
     changefreq: "monthly",
   },
@@ -444,10 +444,10 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
     lang: "fr-CA",
     title: "Règles financières 2026 au Canada | Ahmed Bello",
     description:
-      "Mises à jour nov. 2026 : Budget 2026, plafonds REER 2027, taux directeur à 2,50 %, taux prescrit à 3 %, règles BSIF B-20 et fiscalité fédérale.",
+      "Mises à jour nov. 2026 : Budget 2026, CELI 2027 à 7 500 $ et REER à 35 390 $, taux directeur à 2,50 %, taux prescrit à 3 % et BSIF B-20.",
     heading: "Règles financières canadiennes 2026 et mises à jour",
     summary:
-      "Synthèse de novembre 2026 : propositions du Budget 2026, plafonds ARC 2027, taux directeur à 2,50 % et règles hypothécaires BSIF.",
+      "Synthèse de novembre 2026 : propositions du Budget 2026, plafonds 2027 (CELI 7 500 $, REER 35 390 $), taux directeur à 2,50 % et règles BSIF.",
     priority: "0.86",
     changefreq: "monthly",
   },

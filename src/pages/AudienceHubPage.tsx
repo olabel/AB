@@ -92,13 +92,17 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     titleEn: "CCPC Tax Efficiency & $50k SBD Passive Income Strategy | Ahmed Bello",
     titleFr: "Efficience Fiscale des SPCC & Plafond DPE de 50 000 $ | Ahmed Bello",
     metaTitleEn: "CCPC Tax Efficiency & SBD Strategy | Ahmed Bello",
-    metaTitleFr: "Efficience Fiscale des SPCC & DPE | Ahmed Bello",
+    metaTitleFr: "Efficience Fiscale SPCC & DPE | Ahmed Bello",
     eyebrowEn: "Audience Hub: Business Owners & CCPCs",
     eyebrowFr: "Carrefour thématique : Propriétaires d'entreprises",
     descriptionEn:
       "Optimize your corporate tax exposure, manage the small business deduction passive income threshold, and extract capital tax-efficiently.",
     descriptionFr:
       "Optimisez la fiscalité de votre société, gérez le seuil de revenus passifs de la DPE et extrayez du capital en franchise d'impôt.",
+    seoDescriptionEn:
+      "Understand corporate tax integration, the $50,000 small business passive income threshold, CDA extraction, and succession planning.",
+    seoDescriptionFr:
+      "Optimisez la fiscalité de votre société, gérez le seuil de 50 000 $ de revenus passifs de la DPE et structurez le CDC.",
     icon: Briefcase,
     curatedSlugs: [
       "new-brunswick-ccpc-corporate-tax-small-business-strategy",
@@ -180,6 +184,10 @@ const AUDIENCES: Record<string, AudienceConfig> = {
       "Understand Canadian banking, credit building, cash reserves, and tax-sheltered accounts with our step-by-step first-year guide.",
     descriptionFr:
       "Bâtissez votre crédit canadien, structurez vos réserves de subsistance et optimisez vos régimes enregistrés dès votre première année.",
+    seoDescriptionEn:
+      "Understand Canadian banking, credit building, cash reserves, and TFSA, RRSP, and FHSA rules with our first-year newcomer guide.",
+    seoDescriptionFr:
+      "Bâtissez votre crédit canadien, structurez vos réserves de liquidité et ouvrez vos comptes CELI, REER et CELIAPP dès la première année.",
     icon: Compass,
     curatedSlugs: [
       "atlantic-canada-newcomer-aip-money-guide",

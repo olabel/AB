@@ -82,14 +82,14 @@ export const FloatingNewsWidget: React.FC = () => {
                 className="hover:text-[#d6c298] transition-colors"
               >
                 {isFr
-                  ? "Budget 2026, plafond REER 2027 à 35 390 $ & taux directeur porté à 2,50 %"
-                  : "Budget 2026 Proposals, 2027 RRSP $35,390 Limit & BoC Rate Raised to 2.50%"}
+                  ? "Budget 2026, CELI 2027 à 7 500 $, REER à 35 390 $ & taux directeur à 2,50 %"
+                  : "Budget 2026 Proposals, 2027 TFSA $7,500 & RRSP $35,390, BoC Rate 2.50%"}
               </Link>
             </h2>
             <p className="text-xs text-[#d6cebd] line-clamp-2">
               {isFr
-                ? "Consultez les 6 mises à jour vérifiées de novembre : seuil T1135, taux prescrit à 3 % et règles hypothécaires."
-                : "Read 6 verified November updates covering T1135, CRA 3% spousal loan rates, and OSFI B-20 rules."}
+                ? "Consultez les 7 mises à jour vérifiées de novembre : seuil T1135, taux prescrit à 3 % et règles hypothécaires."
+                : "Read all 7 verified November updates covering T1135, CRA 3% spousal loan rates, and OSFI B-20 rules."}
             </p>
           </div>
 
