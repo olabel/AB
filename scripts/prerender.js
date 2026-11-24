@@ -683,7 +683,7 @@ let notFoundHtml = template
   )
   .replace(
     /<meta\s+name="robots"\s+content="[\s\S]*?"\s*\/?>/i,
-    `<meta name="robots" content="noindex, nofollow" />`
+    `<meta name="robots" content="noindex, nofollow, noarchive" />`
   )
   .replace(
     /<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/?>/i,

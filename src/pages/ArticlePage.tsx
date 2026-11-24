@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { articles, categories } from "../content/data.ts";
 import { Tbc } from "../components/Tbc.tsx";
@@ -161,6 +161,19 @@ export const ArticlePage: React.FC = () => {
     { id: "sources", label: isFr ? `Sources officielles (${article.sources.length})` : `Sources (${article.sources.length})` },
   ];
 
+  const articleJsonLd = useMemo(
+    () =>
+      buildRouteJsonLd({
+        pathname: `${prefix}${article.url}`,
+        title: localizedSeoTitle,
+        description: localizedDescription,
+        heading: localizedTitle,
+        isFr,
+        article,
+      }),
+    [prefix, article, localizedSeoTitle, localizedDescription, localizedTitle, isFr]
+  );
+
   return (
     <article className="py-12 lg:py-16 relative">
       {/* Scroll-Linked Reading Progress Bar (Fixed at top of viewport) */}
@@ -178,14 +191,7 @@ export const ArticlePage: React.FC = () => {
         ogType="article"
         articlePublishedTime={article.datePublished || "2025-01-15T08:00:00-05:00"}
         articleModifiedTime={article.dateModified || "2026-11-05T09:00:00-05:00"}
-        jsonLd={buildRouteJsonLd({
-          pathname: `${prefix}${article.url}`,
-          title: localizedSeoTitle,
-          description: localizedDescription,
-          heading: localizedTitle,
-          isFr,
-          article,
-        })}
+        jsonLd={articleJsonLd}
       />
 
       <div className="wrap">

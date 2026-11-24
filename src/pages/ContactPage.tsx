@@ -209,8 +209,8 @@ export const ContactPage: React.FC = () => {
         title={isFr ? "Démarrer une Conversation | Ahmed Bello" : "Start a Conversation | Ahmed Bello"}
         description={
           isFr
-            ? "Posez vos questions sur la fiscalité canadienne, le CELI, REER, CELIAPP ou la protection financière en langage clair."
-            : "Ask your financial questions about Canadian tax rules, TFSA, RRSP, FHSA, and household liquidity. Direct personal response in plain language."
+            ? "Échangez directement avec Ahmed Bello sur vos comptes CELI, REER, CELIAPP, votre protection ou votre hypothèque, avec des réponses claires."
+            : "Send a financial question directly to Ahmed Bello on TFSA, RRSP, FHSA, income protection, or mortgage renewals with clear, plain-language answers."
         }
         canonicalUrl={isFr ? "/fr/contact" : "/contact"}
       />

@@ -267,8 +267,8 @@ Candidate Application Details:
         title={isFr ? "Expansion du Cabinet & Carrières | Ahmed Bello" : "Practice Expansion & Careers | Ahmed Bello"}
         description={
           isFr
-            ? "Programme de mentorat pour le cours du PAAP/LLQP et formation pour professionnels indépendants en solutions financières au Canada."
-            : "Mentorship and licensing support for aspiring independent financial solutions professionals in Canada. LLQP preparation and practice development."
+            ? "Accompagnement éducatif et préparation aux examens provinciaux du PQAP pour bâtir une pratique financière indépendante au Canada."
+            : "Canadian provincial LLQP licensing support, case co-planning, and independent financial practice mentorship with Ahmed Bello."
         }
         canonicalUrl={isFr ? "/fr/careers" : "/careers"}
         jsonLd={{

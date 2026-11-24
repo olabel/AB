@@ -294,8 +294,8 @@ export const FhsaQuickEstimator: React.FC = () => {
         <CheckCircle2 className="w-3.5 h-3.5 text-[#2e4a3b] shrink-0 mt-0.5" />
         <span>
           {isFr
-            ? "Estimation éducative uniquement basée sur les plafonds fédéraux de l'ARC (8 000 $/an, 40 000 $ à vie, report max. 8 000 $, plafond RAP de 60 000 $). Le remboursement réel dépend de votre revenu imposable provincial exact et du moment où vous réclamez la déduction."
-            : "Educational estimate only using published CRA limits ($8,000 annual / $40,000 lifetime FHSA cap, $8,000 carry-forward cap, and $60,000 RRSP HBP limit). Actual tax savings depend on your exact provincial marginal bracket and deduction timing."}
+            ? "Estimation éducative uniquement basée sur les plafonds fédéraux 2026 de l'ARC (8 000 $/an, 40 000 $ à vie, report max. 8 000 $, plafond RAP de 60 000 $ et remboursement de TPS pour premier acheteur jusqu'à 50 000 $ sur les constructions neuves). Les cotisations CELIAPP suivent l'année civile du 1er janvier au 31 décembre (sans délai de 60 jours)."
+            : "Educational estimate only using published 2026 CRA limits ($8,000 annual / $40,000 lifetime FHSA cap, $8,000 carry-forward cap, and $60,000 RRSP HBP limit). Qualifying new builds up to $1M can also stack the March 2026 First-Time Home Buyers' GST Rebate (up to $50,000). FHSA deposits follow the Jan 1–Dec 31 calendar year with no 60-day extension."}
         </span>
       </p>
 

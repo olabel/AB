@@ -63,6 +63,22 @@ export const CostlyBlindspotsPage: React.FC = () => {
     }));
   };
 
+  const jumpToBlindspot = (id: string) => {
+    setSelectedCategory("all");
+    setSearchQuery("");
+    setShowAllBlindspots(true);
+    setExpandedItems((prev) => ({
+      ...prev,
+      [id]: true,
+    }));
+    trackCtaClick("blindspots_quick_start", id);
+    if (typeof window !== "undefined") {
+      window.setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 60);
+    }
+  };
+
   const toggleFlag = (id: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     setFlaggedIds((prev) => {
@@ -404,6 +420,145 @@ export const CostlyBlindspotsPage: React.FC = () => {
       {/* Main List Section */}
       <section className="section">
         <div className="wrap max-w-5xl space-y-5">
+          {/* High-Impact Quick-Start Priority Strip */}
+          {selectedCategory === "all" && !searchQuery.trim() && (
+            <div className="p-5 sm:p-6 bg-[#fcfaf5] border border-[#d6cebd] rounded-[2px] space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-[#ece6da] pb-3">
+                <div>
+                  <span className="text-xs uppercase tracking-wider text-[#75581f] font-semibold block">
+                    {isFr ? "Par où commencer" : "Where to Start"}
+                  </span>
+                  <h2 className="font-serif text-lg sm:text-xl text-[#1c1b18] font-medium">
+                    {isFr
+                      ? "Cinq leviers à fort impact à vérifier ou partager en priorité"
+                      : "Five high-impact rules most worth checking or sharing first"}
+                  </h2>
+                </div>
+                <span className="text-xs text-[#625d52]">
+                  {isFr
+                    ? "Cliquez sur une carte pour ouvrir la règle complète"
+                    : "Select any card to jump directly to the full rule"}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <button
+                  type="button"
+                  onClick={() => jumpToBlindspot("clb-zero-dollar-deposit-resp")}
+                  className="text-left p-3.5 bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-colors cursor-pointer group"
+                >
+                  <div className="flex items-center justify-between text-xs font-semibold text-[#75581f] mb-1">
+                    <span>#01 · {isFr ? "Enfants & Famille" : "Kids & Family"}</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#2e4a3b] opacity-70 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                  <p className="text-xs sm:text-sm font-medium text-[#1c1b18] leading-snug">
+                    {isFr
+                      ? "REEE à 0 $ + Bon d'études canadien jusqu'à 2 000 $"
+                      : "$0-deposit RESP + up to $2,000 Canada Learning Bond"}
+                  </p>
+                </button>
+
+                <div className="p-3.5 bg-white border border-[#d6cebd] rounded-[2px] flex flex-col justify-between gap-2">
+                  <div>
+                    <div className="text-xs font-semibold text-[#75581f] mb-1">
+                      #04 &amp; #05 · {isFr ? "Premier achat" : "Home Buying"}
+                    </div>
+                    <p className="text-xs sm:text-sm font-medium text-[#1c1b18] leading-snug">
+                      {isFr
+                        ? "25 % de remise SCHL et jusqu'à 50 000 $ de TPS remboursée"
+                        : "25% CMHC Eco Plus refund & up to $50,000 GST rebate"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs font-medium text-[#2e4a3b] pt-1 border-t border-[#ece6da]">
+                    <button
+                      type="button"
+                      onClick={() => jumpToBlindspot("cmhc-eco-plus-25-percent-refund")}
+                      className="hover:underline cursor-pointer"
+                    >
+                      {isFr ? "Lire #04 →" : "Open #04 →"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => jumpToBlindspot("first-time-home-buyer-gst-rebate")}
+                      className="hover:underline cursor-pointer"
+                    >
+                      {isFr ? "Lire #05 →" : "Open #05 →"}
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => jumpToBlindspot("disability-tax-credit-unlocks-six-benefits")}
+                  className="text-left p-3.5 bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-colors cursor-pointer group"
+                >
+                  <div className="flex items-center justify-between text-xs font-semibold text-[#75581f] mb-1">
+                    <span>#11 · {isFr ? "Prestations" : "Benefits"}</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#2e4a3b] opacity-70 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                  <p className="text-xs sm:text-sm font-medium text-[#1c1b18] leading-snug">
+                    {isFr
+                      ? "Le CIPH (T2201) débloque 6+ programmes (REEI, PCPH)"
+                      : "Disability Tax Credit unlocks 6+ programs & ~10-yr refunds"}
+                  </p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => jumpToBlindspot("gis-suspension-unfiled-taxes")}
+                  className="text-left p-3.5 bg-white border border-[#d6cebd] hover:border-[#2e4a3b] rounded-[2px] transition-colors cursor-pointer group"
+                >
+                  <div className="flex items-center justify-between text-xs font-semibold text-[#8a3324] mb-1">
+                    <span>#18 · {isFr ? "Aînés" : "Seniors"}</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#2e4a3b] opacity-70 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                  <p className="text-xs sm:text-sm font-medium text-[#1c1b18] leading-snug">
+                    {isFr
+                      ? "Les aînés perdent leur SRG chaque mois de juillet sans déclaration"
+                      : "Seniors lose GIS payments every July from an unfiled tax return"}
+                  </p>
+                </button>
+
+                <div className="p-3.5 bg-white border border-[#d6cebd] rounded-[2px] flex flex-col justify-between gap-2 md:col-span-2">
+                  <div>
+                    <div className="text-xs font-semibold text-[#75581f] mb-1">
+                      #09 &amp; #10 {isFr ? "jumelés avec #14" : "paired with #14"} ·{" "}
+                      {isFr ? "Revenu modeste & Déclaration gratuite" : "Modest Income & Free Filing"}
+                    </div>
+                    <p className="text-xs sm:text-sm font-medium text-[#1c1b18] leading-snug">
+                      {isFr
+                        ? "Prestation pour l'épicerie bonifiée (+25 %) et ACT (jusqu'à 2 869 $), débloquées via les cliniques d'impôt gratuites (PCBMI)"
+                        : "Renamed Canada Groceries & Essentials Benefit (+25%) & CWB (up to $2,869), unlocked automatically via free CVITP tax clinics"}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-[#2e4a3b] pt-1 border-t border-[#ece6da]">
+                    <button
+                      type="button"
+                      onClick={() => jumpToBlindspot("canada-groceries-and-essentials-benefit")}
+                      className="hover:underline cursor-pointer"
+                    >
+                      {isFr ? "Lire #09 (Épicerie) →" : "Open #09 (Groceries) →"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => jumpToBlindspot("canada-workers-benefit-refundable-credit")}
+                      className="hover:underline cursor-pointer"
+                    >
+                      {isFr ? "Lire #10 (ACT) →" : "Open #10 (CWB) →"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => jumpToBlindspot("free-cvitp-tax-clinics")}
+                      className="hover:underline cursor-pointer"
+                    >
+                      {isFr ? "Lire #14 (Cliniques gratuites) →" : "Open #14 (Free Clinics) →"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {filteredItems.length === 0 ? (
             <div className="p-10 text-center bg-white border border-[#d6cebd] rounded-[2px] space-y-3">
               <AlertTriangle className="w-8 h-8 text-[#75581f] mx-auto" />

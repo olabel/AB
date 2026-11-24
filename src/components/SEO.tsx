@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { siteConfig } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
@@ -71,6 +71,21 @@ export const SEO: React.FC<SEOProps> = ({
   const finalDescription = description || routeSeo?.description || defaultDescription;
   const finalOgType = ogType || routeSeo?.ogType || "website";
   const finalNoIndex = typeof noIndex === "boolean" ? noIndex : Boolean(routeSeo?.noIndex);
+
+  const resolvedJsonLd = jsonLd
+    ? Array.isArray(jsonLd)
+      ? { "@context": "https://schema.org", "@graph": jsonLd }
+      : jsonLd
+    : buildRouteJsonLd({
+        pathname: path,
+        title: finalTitle,
+        description: finalDescription,
+        heading: routeSeo?.heading,
+        isFr,
+        noIndex: finalNoIndex,
+      });
+
+  const jsonLdString = useMemo(() => JSON.stringify(resolvedJsonLd), [resolvedJsonLd]);
 
   useEffect(() => {
     document.title = finalTitle;
@@ -171,28 +186,11 @@ export const SEO: React.FC<SEOProps> = ({
       document.head.appendChild(scriptTag);
     }
 
-    const resolvedJsonLd = jsonLd
-      ? Array.isArray(jsonLd)
-        ? { "@context": "https://schema.org", "@graph": jsonLd }
-        : jsonLd
-      : buildRouteJsonLd({
-          pathname: path,
-          title: finalTitle,
-          description: finalDescription,
-          heading: routeSeo?.heading,
-          isFr,
-          noIndex: finalNoIndex,
-        });
-
-    scriptTag.text = JSON.stringify(resolvedJsonLd);
-
-    return () => {
-      const tag = document.getElementById("route-jsonld");
-      if (tag) tag.remove();
-    };
+    if (scriptTag.text !== jsonLdString) {
+      scriptTag.text = jsonLdString;
+    }
   }, [
     path,
-    routeSeo?.heading,
     finalTitle,
     finalDescription,
     currentCanonical,
@@ -200,7 +198,7 @@ export const SEO: React.FC<SEOProps> = ({
     frUrl,
     finalOgType,
     resolvedImage,
-    jsonLd,
+    jsonLdString,
     isFr,
     finalNoIndex,
     articlePublishedTime,

@@ -671,157 +671,158 @@ const rawArticles: Article[] = [
   {
     "slug": "fhsa-explained",
     "kind": "guide",
-    "title": "The FHSA explained: deductions, limits and qualifying withdrawals",
-    "seoTitle": "FHSA Canada: Limits, Tax Savings and Rules",
-    "description": "2026 CRA FHSA guide: $8,000 annual limit, $40,000 lifetime cap, carry-forward clock, and $100,000 HBP stacking for Canadian first-time home buyers.",
-    "question": "How does a First Home Savings Account work, and what are its limits?",
+    "title": "The FHSA explained: 2026 limits, opening-clock trap, and tax-free withdrawals",
+    "seoTitle": "FHSA Canada: 2026 Limits, Rules & Tax Savings",
+    "description": "2026 CRA FHSA guide: $8,000 annual / $40,000 lifetime cap, $0 opening clock, $60k HBP stacking, up to $50k new-home GST rebate, and Form RC725.",
+    "question": "How does a First Home Savings Account work in 2026, and what rules catch buyers off guard?",
     "category": "registered-accounts",
-    "figuresAsOf": "CRA statutory limits (2026); confirm current rules before acting",
-    "dateModified": "2026-11-14T09:00:00-05:00",
-    "problem": "The FHSA borrows features from both the RRSP and the TFSA, which makes it easy to misread, especially when carry-forward room begins accumulating, how to stack it with the $60,000 Home Buyers' Plan, and what happens if you do not buy a home.",
+    "figuresAsOf": "CRA 2026 statutory limits & March 2026 First-Time Home Buyers' GST Rebate; confirm current rules before acting",
+    "dateModified": "2026-11-24T09:00:00-05:00",
+    "problem": "Most people treat the First Home Savings Account like a TFSA and assume room piles up while they wait. In reality, your FHSA clock stays frozen at zero until you open an account, over-contributions carry no $2,000 RRSP cushion, and contributions made in January or February never count toward last year's tax return.",
     "overview": [
-      "The First Home Savings Account (FHSA) is a registered account for saving toward a first home in Canada. Eligible contributions are tax-deductible like an RRSP, investment growth inside the account is tax-free, and withdrawals used to purchase a qualifying first home are 100% tax-free like a TFSA, with no repayment required.",
-      "The annual contribution limit is $8,000 and the lifetime limit is $40,000. Unlike a TFSA, contribution room does NOT accumulate simply by turning 18: unused annual room only begins carrying forward after you formally open your first FHSA, up to a strict $8,000 carry-forward cap.",
-      "To open an FHSA, you generally must be a resident of Canada, at least 18 years old (or age of majority in your province to contract), and meet the CRA first-time home buyer test (neither you nor your spouse or common-law partner lived in a home you owned as a principal residence during the year you open the account or the previous four calendar years).",
-      "Combining the FHSA with the Home Buyers' Plan (HBP): You can legally combine both the FHSA and the RRSP Home Buyers' Plan for the exact same qualifying home purchase. With the expanded $60,000 HBP limit, an individual buyer can mobilize $40,000 from an FHSA plus $60,000 from an RRSP ($100,000 principal before growth; $200,000 for an eligible couple)."
+      "Two friends turned 25 the same week. Maya opened a no-fee FHSA in December with $100 and left it in a cash savings ETF. Her friend waited two years until she felt ready to invest $8,000. When both finally compared statements, Maya already had $16,000 of available FHSA room ready to use, while her friend had permanently lost two calendar years of carry-forward room.",
+      "The First Home Savings Account (FHSA) combines the strongest tax breaks of Canada's two older accounts: contributions lower your taxable income just like an RRSP, investment growth inside the account is never taxed, and qualifying withdrawals for a first home come out 100% tax-free like a TFSA, with zero repayment.",
+      "The annual limit is $8,000 and the lifetime cap is $40,000. To open one, you must be a Canadian tax resident, at least 18 (and the age of majority in your province or territory to sign a contract), and a first-time home buyer, meaning neither you nor your spouse or common-law partner lived in a home either of you owned as a principal residence during the current year or the previous four calendar years.",
+      "For a 2026 first purchase, three federal pieces stack together: up to $40,000 (plus tax-free growth) from an FHSA, up to $60,000 per buyer from an RRSP under the Home Buyers' Plan ($100,000 individual / $200,000 eligible couple before growth), and the First-Time Home Buyers' GST Rebate enacted in March 2026 (refunding up to $50,000 of federal GST on eligible new builds up to $1 million)."
     ],
     "sections": [
       {
         "id": "opening-clock",
-        "h2": "1. The Opening-Year Rule Most First-Time Buyers Miss",
+        "h2": "1. Open It Early, Even With a Token Deposit",
         "paragraphs": [
-          "The single most common FHSA mistake in Canada is waiting until you have $8,000 saved before opening an account. Under CRA rules, FHSA participation room does not exist prior to the calendar year you open your first FHSA.",
-          "If you open an account in December with even a nominal deposit ($10 or $100), you lock in that calendar year's $8,000 room immediately and can carry that unused $8,000 into the next year, giving you $16,000 of total contribution capacity on January 1. Wait until January to open, and the prior year's $8,000 room is permanently lost."
+          "Under a TFSA, contribution room automatically builds up from age 18 whether you have an account or not. Under an FHSA, zero room exists before the calendar year you open your first account.",
+          "If you open a no-fee FHSA before December 31 with $10 or $100, you capture that calendar year's full $8,000 participation room. Unclaimed room carries forward up to $8,000, giving you $16,000 of total room on January 1. Wait past December 31 to open the account, and that entire prior year's $8,000 shelter is gone for good."
         ]
       },
       {
         "id": "carry-forward-and-overcontributions",
-        "h2": "2. How the $8,000 Carry-Forward Cap Works (and Excess Tax Risks)",
+        "h2": "2. Carry-Forward Limits and the Zero-Cushion Excess Penalty",
         "paragraphs": [
-          "Only up to $8,000 of unused FHSA participation room can carry forward from one calendar year to the next, making $16,000 the absolute maximum contribution room in any single calendar year ($8,000 current year + $8,000 carried forward).",
-          "Unlike the RRSP's $2,000 lifetime over-contribution buffer, the FHSA has ZERO grace margin. Any excess FHSA amount is penalized at 1% per month until corrected via a withdrawal, designated transfer, or new January 1 room."
+          "Unused FHSA participation room carries forward strictly up to $8,000 into the next calendar year, capping single-year contribution capacity at $16,000 ($8,000 current year plus $8,000 carried forward). If you open in Year 1 with $0 and contribute $0 again in Year 2, your room entering Year 3 is still $16,000, not $24,000.",
+          "Unlike an RRSP (which gives you a $2,000 lifetime grace buffer), the FHSA gives you zero margin for error. Every dollar over your available room faces a 1% monthly excess tax until you remove it with CRA Form RC727 or earn new January 1 room. Also watch the calendar cutoff: FHSA contributions must settle between January 1 and December 31 to count for that tax year; the RRSP first-60-days rule does not apply."
         ]
       },
       {
-        "id": "deduction-timing",
-        "h2": "3. Claiming the Deduction Now vs. Carrying It Forward",
+        "id": "deduction-timing-and-stacking",
+        "h2": "3. Stacking FHSA, HBP, and Timing Your Tax Deduction",
         "paragraphs": [
-          "Contributing to an FHSA creates tax-deductible room against your income, but you are not required to claim the deduction in the exact year you contribute. Undeducted FHSA contributions can be carried forward indefinitely and claimed in a higher-income future tax year.",
-          "Note that direct transfers from an RRSP into an FHSA count against your $8,000/$40,000 FHSA limits, do NOT generate a second tax deduction, and do NOT restore the RRSP room you originally used."
+          "You do not have to claim your FHSA deduction in the year you deposit the cash. If you earn $55,000 today while starting out, you can contribute $8,000 now to shelter the growth, then carry the deduction forward on Schedule 15 until your income climbs into a higher marginal bracket.",
+          "Two practical distinctions matter when coordinating down-payment money. First, direct transfers from an existing RRSP to an FHSA count against your $8,000/$40,000 FHSA room, give no new tax deduction, and do not restore RRSP room. Second, you can withdraw both your full FHSA and up to $60,000 under the RRSP Home Buyers' Plan (HBP) for the exact same home, provided any fresh RRSP deposits have sat in the RRSP at least 90 days before withdrawal. FHSA money is never repaid; HBP money is repaid to your RRSP over 15 years (starting in the fifth year for 2022–2028 first withdrawals)."
         ]
       },
       {
         "id": "qualifying-withdrawals-and-exit",
-        "h2": "4. Qualifying Withdrawals, Closing Deadlines, and Unused Balances",
+        "h2": "4. Form RC725 Deadlines, the 30-Day Window, and What If You Don't Buy?",
         "paragraphs": [
-          "To make a tax-free qualifying withdrawal using CRA Form RC725, you must have a written agreement to buy or build a qualifying home in Canada before October 1 of the year following the withdrawal and occupy it as your principal residence within one year. Your maximum participation period ends December 31 of the earliest of: the 15th anniversary of opening your first FHSA, the year you turn 71, or the year after your first qualifying withdrawal.",
-          "If you decide not to buy a home, your savings are not trapped: any unused FHSA balance can be transferred directly to your RRSP or RRIF tax-free without consuming your existing RRSP contribution room."
+          "To take money out tax-free, file CRA Form RC725 with your financial institution. You must have a written agreement to buy or build a qualifying Canadian home before October 1 of the year after the withdrawal and intend to occupy it as your principal residence within one year. If closing moves faster than paperwork, CRA still allows a qualifying withdrawal up to 30 days after taking title to the home. Your account stays active at most until December 31 of the earliest of three dates: its 15th anniversary, the year you turn 71, or the year after your first qualifying withdrawal.",
+          "If life changes and you choose to keep renting, your money is never penalized or stuck. You can transfer any unused FHSA balance (contributions plus years of investment growth) directly to your RRSP or RRIF tax-deferred, without using up a single dollar of your regular RRSP contribution room."
         ]
       }
     ],
     "checklist": {
       "title": "First-Time Home Buyer FHSA Action Checklist",
       "items": [
-        "Verify CRA first-time home buyer eligibility (look at the current year plus the previous 4 calendar years for both you and your spouse/common-law partner).",
-        "Open at least one no-fee FHSA before December 31 (even with a small deposit) to activate your $8,000 carry-forward clock.",
-        "Keep cash earmarked for a purchase within 1–3 years in liquid, principal-protected vehicles inside the FHSA rather than volatile equities.",
-        "Coordinate RRSP Home Buyers' Plan ($60,000) and FHSA ($40,000 + growth) timelines early so funds inside the RRSP satisfy the 90-day HBP seasoning rule.",
-        "File Schedule 15 with your T1 return every year after opening your FHSA so CRA tracks your carry-forward room accurately."
+        "Confirm first-time buyer status: neither you nor your spouse/common-law partner owned and lived in a home during the current year or prior 4 calendar years.",
+        "Open a no-fee FHSA before December 31 with at least a token deposit so your $8,000 carry-forward clock starts running.",
+        "Make all intended current-year deposits on or before December 31 (there is no 60-day extension into January or February).",
+        "Keep cash needed inside 1 to 3 years in high-interest cash ETFs, money market funds, or GICs matching your closing date, not volatile equities.",
+        "File Schedule 15 with every T1 tax return after opening an FHSA—even in years you contributed $0—so CRA accurately records your carry-forward room.",
+        "When closing nears, submit Form RC725 within 30 days of taking ownership, coordinate any 90-day-seasoned HBP funds ($60,000 cap), and confirm builder/CRA eligibility for the March 2026 First-Time Home Buyers' GST Rebate."
       ]
     },
     "faqs": [
       {
-        "question": "Can I open an FHSA if I don't have $8,000 to deposit right away?",
-        "answer": "Yes. Most Canadian financial institutions allow you to open an FHSA with $0 or a small initial deposit. Opening the account starts your $8,000 annual room accumulation clock so unused room can carry forward into next year."
+        "question": "Can I open an FHSA if I only have $50 or $100 right now?",
+        "answer": "Yes. Most Canadian brokerages and banks let you open an FHSA with $0 or a small deposit. Opening the account starts your participation clock so that year's $8,000 room exists and can carry forward into next year."
       },
       {
-        "question": "How much can I carry forward in an FHSA each year?",
-        "answer": "Unused FHSA participation room carries forward up to a maximum of $8,000 from prior years since opening your first FHSA. Because your current-year limit is $8,000, the highest annual limit you can contribute in a single year is $16,000."
+        "question": "How much unused FHSA room can I carry forward?",
+        "answer": "Up to $8,000 of unused participation room from prior open years carries forward into the next year. Combined with the current year's $8,000 limit, $16,000 is the maximum contribution room in any single calendar year."
       },
       {
-        "question": "Can I use both an FHSA and the RRSP Home Buyers' Plan (HBP) for the same home?",
-        "answer": "Yes. CRA rules permit combining a tax-free qualifying FHSA withdrawal with a $60,000 RRSP Home Buyers' Plan withdrawal for the exact same qualifying first home purchase. FHSA withdrawals never need to be repaid, whereas HBP withdrawals must be repaid to your RRSP over 15 years."
+        "question": "Can I use my FHSA, the $60,000 Home Buyers' Plan, and the 2026 GST rebate on one home?",
+        "answer": "Yes. CRA allows combining tax-free qualifying FHSA withdrawals (up to $40,000 contributed plus growth) with a $60,000 RRSP Home Buyers' Plan withdrawal on the same purchase, and newly built homes up to $1 million (phasing out to $1.5 million) can separately qualify for the First-Time Home Buyers' GST Rebate worth up to $50,000."
       },
       {
-        "question": "What happens to my FHSA if I never buy a home?",
-        "answer": "You can transfer the full balance (contributions plus tax-free growth) directly to your RRSP or RRIF on a tax-deferred basis without needing available RRSP room. If instead you withdraw cash for a non-qualifying reason, withholding tax applies and the withdrawal is added to taxable income."
+        "question": "What happens if I decide never to buy a home?",
+        "answer": "You can transfer the entire balance (principal plus investment gains) directly into your RRSP or RRIF tax-deferred without consuming any of your existing RRSP contribution room. Simply cashing it out as a non-qualifying withdrawal triggers withholding tax and adds the full amount to taxable income."
       },
       {
-        "question": "Does a spouse owning a home disqualify me from opening an FHSA?",
-        "answer": "Yes, if you lived in that spouse or common-law partner's owned home as your principal place of residence at any time during the calendar year or the preceding four calendar years."
+        "question": "My partner owns the home we live in, can I still open an FHSA?",
+        "answer": "No. To open an FHSA, you cannot have lived in a home owned by your spouse or common-law partner as your principal residence during the opening year or any of the preceding four calendar years."
       },
       {
-        "question": "What if I contribute in the same year: does it count for the prior tax year like an RRSP?",
-        "answer": "No. Unlike the RRSP first-60-days rule, FHSA contributions must be made between January 1 and December 31 to qualify as a deduction for that specific calendar tax year."
+        "question": "Do January or February FHSA contributions count for last year's tax return like an RRSP?",
+        "answer": "No. Only FHSA contributions made between January 1 and December 31 are deductible for that calendar year. Deposits in January or February apply to the new calendar year."
       }
     ],
     "example": {
-      "title": "How the carry-forward cap works",
-      "intro": "Hypothetical figures. You open an FHSA in 2026 and contribute $2,000 that year, then $5,000 in 2027.",
+      "title": "Why Opening Two Years Earlier Doubles Available Room ($16,000 vs $8,000)",
+      "intro": "Hypothetical figures comparing two 25-year-olds earning $75,000 (roughly 30% combined marginal tax bracket) who buy in Year 3. Person A opens with $100 in Year 1; Person B waits until Year 3 when she has saved $16,000.",
       "table": {
         "head": [
           "Year",
-          "Room available",
-          "Contributed",
-          "Carried to next year"
+          "Person A (Opens Year 1 with $100)",
+          "Person B (Waits Until Year 3)",
+          "Tax Impact & Room Result"
         ],
         "rows": [
           [
-            "2026",
-            "$8,000",
-            "$2,000",
-            "$6,000"
+            "Year 1 (Dec)",
+            "Deposits $100 ($7,900 unused)",
+            "Account not opened ($0 room)",
+            "Person A locks in $7,900 carry-forward; Person B loses $8,000 forever"
           ],
           [
-            "2027",
-            "$14,000 ($8,000 + $6,000)",
-            "$5,000",
-            "$8,000 (capped; $9,000 was unused)"
+            "Year 2",
+            "Deposits $0 ($15,900 total unused; $8,000 carry-forward cap applies)",
+            "Account not opened ($0 room)",
+            "Both carry $8,000 max into next year if open; Person B still at $0"
           ],
           [
-            "2028",
-            "$16,000 ($8,000 + $8,000)",
-            "None",
-            "None"
+            "Year 3 (Purchase Year)",
+            "Deposits $16,000 ($8,000 new + $8,000 carried)",
+            "Opens and deposits $8,000 max ($8,000 must go elsewhere)",
+            "Person A deducts $16,000 (~$4,800 refund) vs Person B's $8,000 (~$2,400 refund)"
           ]
         ]
       },
       "notes": [
-        "Carry-forward is capped at $8,000, so unused room above that amount is not carried.",
-        "The $40,000 lifetime limit applies regardless of any carried-forward room.",
-        "Deductions can generally be claimed in a later year rather than the year of contribution. Check CRA's current guidance for how this works for your situation."
+        "Because carry-forward from prior open years is capped at $8,000, leaving an account at $100 for one empty year builds up the full $16,000 ceiling, whereas leaving it untouched for two full calendar years still caps carry-forward at $8,000.",
+        "The $40,000 lifetime contribution limit applies regardless of carry-forward timing.",
+        "Undeducted contributions can be claimed in a later higher-income tax year; always file Schedule 15 annually after opening."
       ]
     },
     "misunderstandings": [
       {
-        "myth": "It is just a TFSA for houses.",
-        "reality": "Unlike a TFSA, FHSA contributions are generally tax-deductible, and the qualifying-withdrawal rules are specific to buying a first home."
+        "myth": "I shouldn't bother opening an FHSA until I save a few thousand dollars.",
+        "reality": "Room only begins generating in the calendar year you open the account. Opening in December with $100 creates $8,000 of immediate room that rolls into January ($16,000 total)."
       },
       {
-        "myth": "I can keep the account forever.",
-        "reality": "It must close by the earliest of the 15-year, age-71 or post-withdrawal deadlines."
+        "myth": "I can contribute in February before the RRSP deadline and deduct it on last year's taxes.",
+        "reality": "FHSA tax deductions strictly follow the January 1 to December 31 calendar year. Contributions made in January or February belong to the new tax year."
       },
       {
-        "myth": "Unused room builds up without limit.",
-        "reality": "Carry-forward is limited to $8,000 from one year to the next."
+        "myth": "There is a $2,000 over-contribution buffer just like an RRSP.",
+        "reality": "The FHSA has zero grace buffer. Even a $100 excess balance is taxed at 1% per month until withdrawn (Form RC727) or absorbed on January 1."
       },
       {
-        "myth": "If I do not buy a home, the money is stuck.",
-        "reality": "Non-qualifying withdrawals are taxable, but the balance can generally be transferred to an RRSP or RRIF on a tax-deferred basis."
+        "myth": "If I end up renting long-term, my FHSA money gets taxed or trapped.",
+        "reality": "You can transfer the full balance directly into your RRSP or RRIF tax-deferred without consuming existing RRSP room."
       }
     ],
     "tradeoffs": [
-      "The tax-free benefit depends on the money going toward a qualifying first home.",
-      "It competes with RRSP, TFSA and debt repayment for the same dollars.",
-      "A deduction is worth more at a higher marginal tax rate and less at a lower one.",
-      "Home-purchase conditions (such as a written agreement to buy or build, and occupancy timelines) are specific. Check CRA's requirements before withdrawing.",
-      "Invested balances can fall, and a home purchase may be on a fixed timeline."
+      "The 100% tax-free withdrawal requires meeting CRA qualifying first-home and occupancy rules (Form RC725, written agreement before Oct 1 next year, move-in within 1 year).",
+      "Shares household cash flow with RRSP, TFSA, and high-interest debt payoff.",
+      "Tax deductions save more per dollar in higher marginal brackets (though you can defer claiming the deduction to a higher-income year).",
+      "Over-contributions carry a strict 1% monthly penalty with no $2,000 buffer.",
+      "Short 1-to-3-year buying timelines require principal-preserving assets inside the FHSA rather than volatile equities."
     ],
     "questions": [
-      "How soon do I realistically expect to buy, and how firm is that date?",
-      "What would I do with the account if my plans changed?",
-      "How does the deduction compare with using a TFSA, or with paying down debt?",
-      "Do I meet CRA's definition of a first-time home buyer?"
+      "Have I opened a no-fee FHSA yet this calendar year, even with a small deposit, to start the clock?",
+      "If my closing is within 12 to 36 months, is my FHSA invested conservatively enough to avoid a market drop right before closing?",
+      "Should I deduct this year's contribution now or carry the deduction forward on Schedule 15 to a higher-income year?",
+      "Am I coordinating both FHSA ($40,000 cap) and 90-day seasoned RRSP HBP ($60,000 cap) smoothly before my closing date?"
     ],
     "sources": [
       {
@@ -837,18 +838,23 @@ const rawArticles: Article[] = [
       {
         "label": "Canada Revenue Agency: Form RC725 & Qualifying Withdrawals",
         "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account/withdrawals-transfers-out-your-fhsas.html",
-        "note": "Withdrawal eligibility conditions, 30-day ownership test, and RRSP/RRIF direct transfers."
+        "note": "Withdrawal eligibility conditions, 30-day post-closing test, and RRSP/RRIF direct transfers."
+      },
+      {
+        "label": "Canada Revenue Agency: First-Time Home Buyers' GST Rebate",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-home-construction/new-housing-rebate.html",
+        "note": "Federal GST rebate rules for qualifying newly built homes up to $1M (phasing out to $1.5M)."
       }
     ],
     "related": [
       "fhsa-vs-hbp-first-time-home-buyer-stacking",
-      "tfsa-vs-rrsp",
-      "savings-or-debt-first"
+      "accidental-fhsa-over-contributions-non-resident-freezes",
+      "tfsa-vs-rrsp"
     ],
     "contactTopic": "accounts",
-    "invitationAbout": "the FHSA",
+    "invitationAbout": "the FHSA and first-home down payment planning",
     "url": "/education/fhsa-explained",
-    "readingMinutes": 5
+    "readingMinutes": 6
   },
   {
     "slug": "consumer-proposals-explained",

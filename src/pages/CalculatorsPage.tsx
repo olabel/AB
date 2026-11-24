@@ -199,8 +199,8 @@ export const CalculatorsPage: React.FC = () => {
         }
         description={
           isFr
-            ? "Calculez votre potentiel de croissance à l'abri de l'impôt, la réserve financière pour nouveaux arrivants et la protection du revenu familial."
-            : "Calculate your tax-sheltered growth potential, newcomer financial runway, and household income protection gap in real time."
+            ? "Comparez CELI, REER et CELIAPP, calculez votre coussin d'arrivée, simulez votre hypothèque et évaluez la DPE en temps réel."
+            : "Compare TFSA vs. RRSP vs. FHSA growth, newcomer financial runway, mortgage renewals, and CCPC passive income in real time."
         }
         canonicalUrl={isFr ? "/fr/calculators" : "/calculators"}
       />

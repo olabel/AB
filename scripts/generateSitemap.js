@@ -14,11 +14,11 @@ const __dirname = path.dirname(__filename);
 const sitemapPath = path.resolve(__dirname, "../public/sitemap.xml");
 
 const CORE_ROUTE_LASTMOD = {
-  "/": "2026-11-06",
-  "/what-changed": "2026-11-06",
+  "/": "2026-11-24",
+  "/what-changed": "2026-11-24",
   "/how-i-help": "2026-11-05",
-  "/education": "2026-11-20",
-  "/costly-blindspots": "2026-11-20",
+  "/education": "2026-11-24",
+  "/costly-blindspots": "2026-11-24",
   "/insights": "2026-11-05",
   "/for/healthcare": "2026-11-05",
   "/for/business-owners": "2026-11-05",

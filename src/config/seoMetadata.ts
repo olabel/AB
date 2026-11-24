@@ -383,6 +383,18 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
       "Client-side touch and stylus PDF signature capture tool with optional advisor attestation and SHA-256 output checksum.",
     noIndex: true,
   },
+  {
+    path: "/client-signature",
+    basePath: "/client-signature",
+    lang: "en-CA",
+    title: "Client Hand-Signature & PDF Assembly Tool | Ahmed Bello",
+    description:
+      "Paperless client hand-signature workspace for touch and stylus PDF execution, optional advisor attestation, and client-side SHA-256 verification.",
+    heading: "Client Hand-Signature & Document Assembly Tool",
+    summary:
+      "Client-side touch and stylus PDF signature capture tool with optional advisor attestation and SHA-256 output checksum.",
+    noIndex: true,
+  },
 
   // =========================================================================
   // FRENCH CORE ROUTES
@@ -684,6 +696,18 @@ export const CORE_ROUTES_SEO: RouteSeoEntry[] = [
       "Capture tactile et stylet de signature client sur PDF avec attestation facultative et somme de contrôle SHA-256 côté navigateur.",
     noIndex: true,
   },
+  {
+    path: "/fr/client-signature",
+    basePath: "/client-signature",
+    lang: "fr-CA",
+    title: "Outil de signature manuscrite client | Ahmed Bello",
+    description:
+      "Outil client sans papier pour signature tactile ou au stylet sur PDF avec empreinte SHA-256 et attestation facultative du conseiller.",
+    heading: "Outil de signature manuscrite et d'assemblage PDF",
+    summary:
+      "Capture tactile et stylet de signature client sur PDF avec attestation facultative et somme de contrôle SHA-256 côté navigateur.",
+    noIndex: true,
+  },
 ];
 
 /**
@@ -704,10 +728,10 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
       "La volatilité se remarque vite, mais manquer la cible financière détermine le résultat. Comment équilibrer les deux risques au Canada.",
   },
   "fhsa-explained": {
-    seoTitle: "CELIAPP Canada : plafonds, impôt et RAP",
-    title: "Le CELIAPP expliqué : déductions, plafonds et retraits",
+    seoTitle: "CELIAPP 2026 : plafonds, règles et RAP",
+    title: "Le CELIAPP expliqué : plafonds, règles 2026 et retrait sans impôt",
     description:
-      "Guide CELIAPP au Canada : plafond de 8 000 $/an (40 000 $ à vie), report de droits, déduction d'impôt et cumul de 100 000 $ avec le RAP REER.",
+      "Guide CELIAPP 2026 : 8 000 $/an (40 000 $ à vie), horloge d'ouverture, cumul 60 000 $ du RAP et remboursement TPS jusqu'à 50 000 $.",
   },
   "consumer-proposals-explained": {
     seoTitle: "Proposition de consommateur au Canada",

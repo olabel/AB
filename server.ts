@@ -96,18 +96,24 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Content-Security-Policy", cspDirectives);
   res.setHeader("X-Content-Type-Options", "nosniff");
   // Omit X-Frame-Options to allow embedding within the AI Studio preview iframe
-  res.setHeader("Referrer-Policy", "no-referrer");
+  const isIntakeHost = req.hostname?.toLowerCase() === "intake.ahmedbello.com";
+  const isPrivateRoute =
+    req.path === "/sign" ||
+    req.path === "/fr/sign" ||
+    req.path === "/client-signature" ||
+    req.path === "/fr/client-signature" ||
+    req.path === "/confirm-subscription" ||
+    req.path === "/fr/confirm-subscription";
+
+  res.setHeader(
+    "Referrer-Policy",
+    isIntakeHost || isPrivateRoute ? "no-referrer" : "strict-origin-when-cross-origin"
+  );
   res.setHeader(
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=(), payment=()"
   );
-  if (
-    req.hostname?.toLowerCase() === "intake.ahmedbello.com" ||
-    req.path === "/sign" ||
-    req.path === "/fr/sign" ||
-    req.path === "/client-signature" ||
-    req.path === "/fr/client-signature"
-  ) {
+  if (isIntakeHost || isPrivateRoute) {
     res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
   }
 
@@ -149,20 +155,21 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // --------------------------------------------------------------------------
 // 4. Live Launch Robots.txt & Dynamic High-Value Sitemap.xml
 // --------------------------------------------------------------------------
-app.get("/robots.txt", (_req: Request, res: Response) => {
+app.get("/robots.txt", (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Cache-Control", "public, max-age=86400");
   res.type("text/plain; charset=utf-8");
+
+  if (req.hostname?.toLowerCase() === "intake.ahmedbello.com" || DRAFT_MODE) {
+    return res.send("User-agent: *\nDisallow: /\n");
+  }
 
   const diskPath = path.resolve(process.cwd(), "public", "robots.txt");
   if (fs.existsSync(diskPath)) {
     return res.sendFile(diskPath);
   }
 
-  if (DRAFT_MODE) {
-    res.send("User-agent: *\nDisallow: /\n");
-  } else {
-    res.send(
+  res.send(
 `User-agent: *
 Allow: /
 
@@ -201,8 +208,7 @@ Allow: /
 
 Sitemap: ${siteConfig.siteUrl}/sitemap.xml
 `
-    );
-  }
+  );
 });
 
 app.get("/sitemap.xml", (_req: Request, res: Response) => {
