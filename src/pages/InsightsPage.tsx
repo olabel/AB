@@ -223,9 +223,11 @@ export const InsightsPage: React.FC = () => {
                       {isFr ? ARTICLE_FR_SEO[ccpcEssay.slug]?.description || ccpcEssay.description : ccpcEssay.description}
                     </p>
 
-                    <p className="pt-3 border-t border-[#d6cebd] text-xs text-[#46423a]">
-                      <strong className="text-[#1c1b18]">{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{ccpcEssay.problem}&rdquo;
-                    </p>
+                    {!isFr && (
+                      <p className="pt-3 border-t border-[#d6cebd] text-xs text-[#46423a]">
+                        <strong className="text-[#1c1b18]">The Problem:</strong> &ldquo;{ccpcEssay.problem}&rdquo;
+                      </p>
+                    )}
                   </div>
 
                   <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between gap-2">
@@ -273,9 +275,11 @@ export const InsightsPage: React.FC = () => {
                       {isFr ? ARTICLE_FR_SEO[mortgageEssay.slug]?.description || mortgageEssay.description : mortgageEssay.description}
                     </p>
 
-                    <p className="pt-3 border-t border-[#d6cebd] text-xs text-[#46423a]">
-                      <strong className="text-[#1c1b18]">{isFr ? "Le problème :" : "The Problem:"}</strong> &ldquo;{mortgageEssay.problem}&rdquo;
-                    </p>
+                    {!isFr && (
+                      <p className="pt-3 border-t border-[#d6cebd] text-xs text-[#46423a]">
+                        <strong className="text-[#1c1b18]">The Problem:</strong> &ldquo;{mortgageEssay.problem}&rdquo;
+                      </p>
+                    )}
                   </div>
 
                   <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between gap-2">
@@ -378,9 +382,11 @@ export const InsightsPage: React.FC = () => {
                       {isFr ? ARTICLE_FR_SEO[essay.slug]?.description || essay.description : essay.description}
                     </p>
 
-                    <p className="pt-3 border-t border-[#ece6da] text-xs text-[#46423a]">
-                      <strong className="text-[#1c1b18]">{isFr ? "La question :" : "The Question:"}</strong> {essay.question}
-                    </p>
+                    {!isFr && (
+                      <p className="pt-3 border-t border-[#ece6da] text-xs text-[#46423a]">
+                        <strong className="text-[#1c1b18]">The Question:</strong> {essay.question}
+                      </p>
+                    )}
                   </div>
 
                   <div className="pt-4 border-t border-[#ece6da] flex items-center justify-between">

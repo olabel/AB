@@ -70,17 +70,20 @@ export function recordLeadSubmission(lead: Omit<StoredLead, "recordedAt">): bool
     let existing: StoredLead[] = [];
     if (fs.existsSync(TMP_LEADS_FILE)) {
       try {
-        existing = JSON.parse(fs.readFileSync(TMP_LEADS_FILE, "utf-8"));
+        const parsed = JSON.parse(fs.readFileSync(TMP_LEADS_FILE, "utf-8"));
+        if (Array.isArray(parsed)) existing = parsed;
       } catch {
         existing = [];
       }
     }
+    const { ip: _omitIp, ...safeLead } = lead;
     const record: StoredLead = {
-      ...lead,
+      ...safeLead,
       recordedAt: new Date().toISOString(),
     };
     existing.push(record);
-    fs.writeFileSync(TMP_LEADS_FILE, JSON.stringify(existing, null, 2), "utf-8");
+    const bounded = existing.slice(-50);
+    fs.writeFileSync(TMP_LEADS_FILE, JSON.stringify(bounded, null, 2), { encoding: "utf-8", mode: 0o600 });
     return true;
   } catch (err) {
     console.warn("Could not save lead to backup leads file:", err);
@@ -170,7 +173,7 @@ function savePersistedLimits(data: PersistedRateLimits) {
     fs.writeFileSync(
       TMP_LIMITS_FILE,
       JSON.stringify({ ips: cleanIps, emails: cleanEmails }),
-      "utf-8"
+      { encoding: "utf-8", mode: 0o600 }
     );
   } catch {
     // Non-blocking
@@ -279,11 +282,16 @@ export function generateSubscriptionToken(email: string): string {
  * Fails closed if SESSION_SECRET / TOKEN_SECRET is not configured.
  */
 export function verifySubscriptionToken(token: string): { valid: boolean; email?: string; error?: string } {
-  if (!token || typeof token !== "string" || !token.includes(".")) {
+  if (!token || typeof token !== "string") {
     return { valid: false, error: "invalid_format" };
   }
-  const [b64Payload, signature] = token.split(".");
-  if (!b64Payload || !signature) {
+  const dotIdx = token.indexOf(".");
+  if (dotIdx <= 0 || dotIdx !== token.lastIndexOf(".")) {
+    return { valid: false, error: "invalid_format" };
+  }
+  const b64Payload = token.slice(0, dotIdx);
+  const signature = token.slice(dotIdx + 1);
+  if (!b64Payload || !/^[0-9a-f]{64}$/i.test(signature)) {
     return { valid: false, error: "invalid_format" };
   }
   const secret = (process.env.SESSION_SECRET || process.env.TOKEN_SECRET || "").trim();
@@ -293,11 +301,6 @@ export function verifySubscriptionToken(token: string): { valid: boolean; email?
   }
   try {
     const payload = Buffer.from(b64Payload, "base64url").toString("utf-8");
-    const [email, expiresStr] = payload.split(":");
-    const expiresAt = Number(expiresStr);
-    if (!email || isNaN(expiresAt)) {
-      return { valid: false, error: "malformed_token" };
-    }
     const expectedSignature = crypto.createHmac("sha256", secret).update(payload).digest("hex");
 
     const sigBuffer = Buffer.from(signature, "hex");
@@ -305,6 +308,17 @@ export function verifySubscriptionToken(token: string): { valid: boolean; email?
     if (sigBuffer.length !== expBuffer.length || !crypto.timingSafeEqual(sigBuffer, expBuffer)) {
       return { valid: false, error: "invalid_signature" };
     }
+
+    const sepIdx = payload.lastIndexOf(":");
+    if (sepIdx <= 0) {
+      return { valid: false, error: "malformed_token" };
+    }
+    const email = payload.slice(0, sepIdx);
+    const expiresAt = Number(payload.slice(sepIdx + 1));
+    if (!email || !Number.isFinite(expiresAt)) {
+      return { valid: false, error: "malformed_token" };
+    }
+
     if (Date.now() > expiresAt) {
       return { valid: false, error: "token_expired" };
     }
@@ -344,7 +358,7 @@ export async function recordConfirmedSubscriber(params: {
   const consentText = params.consentWording || CASL_CONSENT_WORDING;
 
   // 1. SQLite database persistence
-  recordSubscriberToDatabase({
+  const sqliteSuccess = recordSubscriberToDatabase({
     email: normalized,
     confirmedAt,
     consentWording: consentText,
@@ -353,7 +367,15 @@ export async function recordConfirmedSubscriber(params: {
     source: params.source || "double_opt_in",
   });
 
-  // 2. Dual persistence to Firebase Firestore
+  // 2. Dual persistence to Firebase Firestore when configured
+  const hasFirebaseAdminCreds = Boolean(
+    (
+      process.env.FIREBASE_SERVICE_ACCOUNT_KEY ||
+      process.env.FIREBASE_ADMIN_CREDENTIALS ||
+      process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON ||
+      ""
+    ).trim()
+  );
   const firestoreSuccess = await saveSubscriberToFirestoreServer({
     email: normalized,
     confirmedAt,
@@ -363,29 +385,29 @@ export async function recordConfirmedSubscriber(params: {
     source: params.source || "double_opt_in",
   });
 
-  // 3. Local JSON backup
+  // 3. Local JSON backup with restricted permissions
+  let tmpSuccess = false;
   try {
-    let subscribers: Record<string, { confirmedAt: string; ip: string; consentWording: string }> = {};
+    let subscribers: Record<string, { confirmedAt: string; consentWording: string }> = {};
     if (fs.existsSync(TMP_SUBSCRIBERS_FILE)) {
       subscribers = JSON.parse(fs.readFileSync(TMP_SUBSCRIBERS_FILE, "utf-8"));
     }
     subscribers[normalized] = {
       confirmedAt,
-      ip: params.ip,
       consentWording: consentText,
     };
-    fs.writeFileSync(TMP_SUBSCRIBERS_FILE, JSON.stringify(subscribers, null, 2), "utf-8");
+    fs.writeFileSync(TMP_SUBSCRIBERS_FILE, JSON.stringify(subscribers, null, 2), { encoding: "utf-8", mode: 0o600 });
+    tmpSuccess = true;
   } catch {
     // Non-blocking
   }
 
-  // Must return false when Firestore write fails
-  if (!firestoreSuccess) {
+  if (hasFirebaseAdminCreds && !firestoreSuccess) {
     console.error(`[FIRESTORE WRITE FAILED] Could not record confirmed subscriber ${normalized}`);
     return false;
   }
 
-  return true;
+  return sqliteSuccess || firestoreSuccess || tmpSuccess;
 }
 
 export interface ContactSubmissionPayload {
@@ -683,8 +705,17 @@ export async function processContactSubmission(
     };
   }
 
-  // 4. Minimum fill time check (allow fast browser autofill, drop sub-800ms scripts)
-  if (formLoadedAt && !isNaN(formLoadedAt)) {
+  // 4. Minimum fill time check (allow fast browser autofill, drop sub-800ms or future-dated scripts)
+  if (body.formLoadedAt !== undefined && (!Number.isFinite(formLoadedAt) || formLoadedAt > Date.now() + 5000)) {
+    return {
+      status: 400,
+      body: {
+        error: "automated_submission",
+        message: "Submission timing validation failed. Please refresh and submit again.",
+      },
+    };
+  }
+  if (formLoadedAt && Number.isFinite(formLoadedAt)) {
     const elapsed = Date.now() - formLoadedAt;
     if (elapsed < 800) {
       return {
@@ -821,7 +852,7 @@ export async function processContactSubmission(
   }
 
   // Dual Persistence: Also persist directly to Firebase Firestore
-  const referenceNo = dbRecord?.referenceNo || Math.random().toString(36).substring(2, 8).toUpperCase();
+  const referenceNo = dbRecord?.referenceNo || `REF-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
   const firestoreSaved = await saveLeadToFirestoreServer({
     referenceNo,
     topic,

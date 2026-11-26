@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext.tsx";
 import { Header } from "./components/Header.tsx";
@@ -17,27 +17,41 @@ import {
   termsDataFr,
 } from "./content/legal.ts";
 
-// Direct imports ensure the matching page's code is executed before first paint,
-// eliminating layout jump (CLS < 0.1) and preventing pre-rendered content from flashing a spinner.
+// Keep HomePage and NotFoundPage eager for instant first paint; lazy-split all secondary & tool routes
 import { HomePage } from "./pages/HomePage.tsx";
-import { HowIHelpPage } from "./pages/HowIHelpPage.tsx";
-import { EducationLibraryPage } from "./pages/EducationLibraryPage.tsx";
-import { ArticlePage } from "./pages/ArticlePage.tsx";
-import { InsightsPage } from "./pages/InsightsPage.tsx";
-import { WhatChangedPage } from "./pages/WhatChangedPage.tsx";
-import { AboutPage } from "./pages/AboutPage.tsx";
-import { CareersPage } from "./pages/CareersPage.tsx";
-import { AudienceHubPage } from "./pages/AudienceHubPage.tsx";
-import { IslamicInvestingPage } from "./pages/IslamicInvestingPage.tsx";
-import { AtlanticCanadaPage } from "./pages/AtlanticCanadaPage.tsx";
-import { ContactPage } from "./pages/ContactPage.tsx";
-import { ConfirmSubscriptionPage } from "./pages/ConfirmSubscriptionPage.tsx";
-import { LegalPage } from "./pages/LegalPage.tsx";
-import { CalculatorsPage } from "./pages/CalculatorsPage.tsx";
-import { AmtCalculatorPage } from "./pages/AmtCalculatorPage.tsx";
-import { CostlyBlindspotsPage } from "./pages/CostlyBlindspotsPage.tsx";
-import { DocumentSigningPage } from "./pages/DocumentSigningPage.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
+
+const HowIHelpPage = lazy(() => import("./pages/HowIHelpPage.tsx").then((m) => ({ default: m.HowIHelpPage })));
+const EducationLibraryPage = lazy(() =>
+  import("./pages/EducationLibraryPage.tsx").then((m) => ({ default: m.EducationLibraryPage }))
+);
+const ArticlePage = lazy(() => import("./pages/ArticlePage.tsx").then((m) => ({ default: m.ArticlePage })));
+const InsightsPage = lazy(() => import("./pages/InsightsPage.tsx").then((m) => ({ default: m.InsightsPage })));
+const WhatChangedPage = lazy(() => import("./pages/WhatChangedPage.tsx").then((m) => ({ default: m.WhatChangedPage })));
+const AboutPage = lazy(() => import("./pages/AboutPage.tsx").then((m) => ({ default: m.AboutPage })));
+const CareersPage = lazy(() => import("./pages/CareersPage.tsx").then((m) => ({ default: m.CareersPage })));
+const AudienceHubPage = lazy(() => import("./pages/AudienceHubPage.tsx").then((m) => ({ default: m.AudienceHubPage })));
+const IslamicInvestingPage = lazy(() =>
+  import("./pages/IslamicInvestingPage.tsx").then((m) => ({ default: m.IslamicInvestingPage }))
+);
+const AtlanticCanadaPage = lazy(() =>
+  import("./pages/AtlanticCanadaPage.tsx").then((m) => ({ default: m.AtlanticCanadaPage }))
+);
+const ContactPage = lazy(() => import("./pages/ContactPage.tsx").then((m) => ({ default: m.ContactPage })));
+const ConfirmSubscriptionPage = lazy(() =>
+  import("./pages/ConfirmSubscriptionPage.tsx").then((m) => ({ default: m.ConfirmSubscriptionPage }))
+);
+const LegalPage = lazy(() => import("./pages/LegalPage.tsx").then((m) => ({ default: m.LegalPage })));
+const CalculatorsPage = lazy(() => import("./pages/CalculatorsPage.tsx").then((m) => ({ default: m.CalculatorsPage })));
+const AmtCalculatorPage = lazy(() =>
+  import("./pages/AmtCalculatorPage.tsx").then((m) => ({ default: m.AmtCalculatorPage }))
+);
+const CostlyBlindspotsPage = lazy(() =>
+  import("./pages/CostlyBlindspotsPage.tsx").then((m) => ({ default: m.CostlyBlindspotsPage }))
+);
+const DocumentSigningPage = lazy(() =>
+  import("./pages/DocumentSigningPage.tsx").then((m) => ({ default: m.DocumentSigningPage }))
+);
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -253,8 +267,18 @@ function AppShell() {
     </Routes>
   );
 
+  const routeFallback = (
+    <div
+      className="min-h-[60vh] bg-[#f7f3eb] flex items-center justify-center px-6"
+      aria-busy="true"
+      aria-live="polite"
+    >
+      <div className="w-6 h-6 border-2 border-[#d6cebd] border-t-[#2e4a3b] rounded-full animate-spin" />
+    </div>
+  );
+
   if (isSigningWorkspace) {
-    return routesTree;
+    return <Suspense fallback={routeFallback}>{routesTree}</Suspense>;
   }
 
   return (
@@ -264,7 +288,7 @@ function AppShell() {
         <DraftBanner />
         <FloatingNewsWidget />
         <main id="main-content" className="flex-1 focus:outline-none pb-16 sm:pb-0" tabIndex={-1}>
-          {routesTree}
+          <Suspense fallback={routeFallback}>{routesTree}</Suspense>
         </main>
         <Footer />
         <MobileBookingBar />

@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import { articles, howIHelpTopics } from "../src/content/data.ts";
 import { howIHelpTopicsFr } from "../src/content/howIHelpFr.ts";
 import { BLINDSPOTS_DATA } from "../src/content/blindspotsData.ts";
-import { STATIC_NEWS } from "../src/content/newsData.ts";
+import { RULE_CHANGES } from "../src/content/whatChangedData.ts";
 import {
   disclosuresData,
   privacyData,
@@ -24,6 +24,8 @@ import {
   getBasePath,
   getLanguageUrls,
   getOgImageForPath,
+  hasTranslatedFrenchAlternate,
+  isFrenchArticleTranslated,
 } from "../src/config/seoMetadata.ts";
 import { buildRouteJsonLd } from "../src/config/schema.ts";
 
@@ -304,16 +306,62 @@ function renderCoreBody(r, isFr) {
   if (basePath === "/what-changed") {
     return `
       <section>
-        <h2>${isFr ? "Mises à jour réglementaires et économiques récentes" : "Verified Regulatory & CRA Rule Updates"}</h2>
-        ${STATIC_NEWS.map(
+        <h2>${isFr ? "Mises à jour réglementaires et économiques 2026" : "Verified Regulatory & CRA Rule Updates (2026)"}</h2>
+        ${RULE_CHANGES.map(
           (u) => `
-        <article>
-          <h3>${escapeHtml(u.title)}</h3>
-          <p>${escapeHtml(u.excerpt)}</p>
-          ${u.keyTakeaway ? `<p><strong>${isFr ? "Impact :" : "Practical Impact:"}</strong> ${escapeHtml(u.keyTakeaway)}</p>` : ""}
-          <p><a href="${escapeAttr(u.link)}">${escapeHtml(u.source)}</a></p>
+        <article id="${escapeAttr(u.id)}">
+          <h3>${escapeHtml(isFr ? u.titleFr : u.titleEn)}</h3>
+          <p>${escapeHtml(isFr ? u.summaryFr : u.summaryEn)}</p>
+          <p><strong>${isFr ? "Impact :" : "Practical Impact:"}</strong> ${escapeHtml(isFr ? u.ahmedAnalysisFr : u.ahmedAnalysisEn)}</p>
+          <p><a href="${escapeAttr(u.officialSource.url)}">${escapeHtml(u.officialSource.label)}</a></p>
         </article>`
         ).join("")}
+      </section>
+    `;
+  }
+
+  if (basePath === "/about") {
+    return `
+      <section>
+        <h2>${isFr ? "Parcours et indépendance professionnelle" : "Independent Financial Education Across Canada"}</h2>
+        <p>${
+          isFr
+            ? "Ahmed Bello aide les familles, propriétaires d'entreprises (SPCC), professionnels de la santé et nouveaux arrivants à travers le Canada — depuis Dieppe (Nouveau-Brunswick) — à structurer leurs comptes enregistrés (CELI, REER, CELIAPP, REEE, REEI), leur gestion de dette et leur protection du revenu."
+            : "Based in Dieppe, New Brunswick, Ahmed Bello helps Canadian households, CCPC business owners, healthcare professionals, and newcomers build tax-efficient registered account strategies (TFSA, RRSP, FHSA, RESP, RDSP) and practical family income protection."
+        }</p>
+        <ul>
+          <li><a href="${prefix}/how-i-help">${isFr ? "Méthodologie et 7 questions clés" : "How I Help: 7 Core Decisions"}</a></li>
+          <li><a href="${prefix}/education">${isFr ? "Bibliothèque de guides canadiens" : "Canadian Education Library"}</a></li>
+          <li><a href="${prefix}/disclosures">${isFr ? "Divulgations et cadre réglementaire" : "Regulatory Disclosures & Scope"}</a></li>
+        </ul>
+      </section>
+    `;
+  }
+
+  if (basePath === "/contact") {
+    return `
+      <section>
+        <h2>${isFr ? "Coordonnées directes de la pratique" : "Direct Practice Contact Channels"}</h2>
+        <ul>
+          <li><strong>${isFr ? "Courriel :" : "Email:"}</strong> <a href="mailto:${escapeAttr(siteConfig.publicEmail)}">${escapeHtml(siteConfig.publicEmail)}</a></li>
+          <li><strong>${isFr ? "Téléphone direct :" : "Direct Telephone:"}</strong> ${escapeHtml(siteConfig.publicPhone)}</li>
+          <li><strong>${isFr ? "Secteur :" : "Location:"}</strong> Dieppe, New Brunswick, Canada</li>
+          <li><a href="${escapeAttr(siteConfig.schedulingUrl)}">${escapeHtml(getCtaLabel(isFr))}</a></li>
+        </ul>
+      </section>
+    `;
+  }
+
+  if (basePath === "/careers") {
+    return `
+      <section>
+        <h2>${isFr ? "Préparation PQAP / LLQP et mentorat de pratique" : "Provincial LLQP Licensing & Independent Practice Mentorship"}</h2>
+        <p>${
+          isFr
+            ? "Accompagnement structuré pour les candidats qui souhaitent préparer l'examen provincial du PQAP (LLQP), co-analyser des dossiers réels (CELI, REER, CELIAPP, assurance) et bâtir une pratique financière indépendante au Canada."
+            : "Structured mentorship for aspiring Canadian financial professionals preparing for provincial LLQP licensing, case co-planning across registered accounts and income protection, and independent client practice management."
+        }</p>
+        <p><a href="${prefix}/contact">${isFr ? "Poser une question sur le parcours" : "Send a Career or Mentorship Enquiry"}</a></p>
       </section>
     `;
   }
@@ -453,6 +501,7 @@ for (const art of articles) {
     noIndex: false,
   });
 
+  const isFrTranslated = isFrenchArticleTranslated(art.slug);
   dynamicArticleRoutes.push({
     path: `/fr${enUrl}`,
     basePath: enUrl,
@@ -464,7 +513,8 @@ for (const art of articles) {
     summary: frSeo?.description || art.description,
     faqs: art.faqs,
     article: art,
-    noIndex: false,
+    noIndex: !isFrTranslated,
+    robotsDirective: isFrTranslated ? undefined : "noindex, follow",
   });
 }
 
@@ -475,8 +525,11 @@ function renderRouteHtml(r) {
   const basePath = r.basePath || getBasePath(r.path);
   const altPath = isFrench ? basePath : basePath === "/" ? "/fr" : `/fr${basePath}`;
   const { enUrl, frUrl, canonicalUrl } = getLanguageUrls(r.path);
+  const hasFrAlt = hasTranslatedFrenchAlternate(r.path);
   const ogImageUrl = getOgImageForPath(r.path, SITE_URL);
-  const robotsValue = r.noIndex
+  const robotsValue = r.robotsDirective
+    ? r.robotsDirective
+    : r.noIndex
     ? "noindex, nofollow, noarchive"
     : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 
@@ -501,8 +554,16 @@ function renderRouteHtml(r) {
     ? "Ressource éducative pour les résidents canadiens."
     : "Educational practice resource for Canadian residents.";
 
+  const frBannerHtml =
+    r.article && isFrench && !isFrenchArticleTranslated(r.article.slug)
+      ? `<div style="margin-bottom:1.25rem;padding:0.9rem 1rem;background:#fcfaf5;border:1px solid #d6cebd;font-size:0.92rem;color:#46423a;">
+          <strong>Note linguistique :</strong> le corps technique détaillé de ce guide est actuellement publié en anglais.
+          <a href="${escapeAttr(r.article.url)}" style="color:#2e4a3b;text-decoration:underline;font-weight:600;">Lire la version anglaise originale &rarr;</a>
+        </div>`
+      : "";
+
   const mainBodyHtml = r.article
-    ? renderArticleBody(r.article, isFrench)
+    ? `${frBannerHtml}${renderArticleBody(r.article, isFrench)}`
     : `<p>${escapeHtml(r.summary !== r.description ? r.summary : r.description)}</p>${renderCoreBody(r, isFrench)}`;
 
   const semanticBody = `
@@ -598,9 +659,13 @@ function renderRouteHtml(r) {
     /<meta\s+name="robots"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta name="robots" content="${robotsValue}" />`
   );
+  const canonicalTags = hasFrAlt
+    ? `<link rel="canonical" href="${canonicalUrl}" />\n    <link rel="alternate" hreflang="en-CA" href="${enUrl}" />\n    <link rel="alternate" hreflang="fr-CA" href="${frUrl}" />\n    <link rel="alternate" hreflang="x-default" href="${enUrl}" />`
+    : `<link rel="canonical" href="${canonicalUrl}" />\n    <link rel="alternate" hreflang="en-CA" href="${enUrl}" />\n    <link rel="alternate" hreflang="x-default" href="${enUrl}" />`;
+
   html = html.replace(
     /<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/?>/i,
-    `<link rel="canonical" href="${canonicalUrl}" />\n    <link rel="alternate" hreflang="en-CA" href="${enUrl}" />\n    <link rel="alternate" hreflang="fr-CA" href="${frUrl}" />\n    <link rel="alternate" hreflang="x-default" href="${enUrl}" />`
+    canonicalTags
   );
   html = html.replace(
     /<meta\s+property="og:title"\s+content="[\s\S]*?"\s*\/?>/i,
@@ -622,10 +687,14 @@ function renderRouteHtml(r) {
     /<meta\s+property="og:locale"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta property="og:locale" content="${isFrench ? "fr_CA" : "en_CA"}" />`
   );
-  html = html.replace(
-    /<meta\s+property="og:locale:alternate"\s+content="[\s\S]*?"\s*\/?>/i,
-    `<meta property="og:locale:alternate" content="${isFrench ? "en_CA" : "fr_CA"}" />`
-  );
+  if (isFrench || hasFrAlt) {
+    html = html.replace(
+      /<meta\s+property="og:locale:alternate"\s+content="[\s\S]*?"\s*\/?>/i,
+      `<meta property="og:locale:alternate" content="${isFrench ? "en_CA" : "fr_CA"}" />`
+    );
+  } else {
+    html = html.replace(/<meta\s+property="og:locale:alternate"\s+content="[\s\S]*?"\s*\/?>\n?\s*/i, "");
+  }
   html = html.replace(
     /<meta\s+property="og:image"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta property="og:image" content="${ogImageUrl}" />`
@@ -633,6 +702,10 @@ function renderRouteHtml(r) {
   html = html.replace(
     /<meta\s+property="og:image:secure_url"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta property="og:image:secure_url" content="${ogImageUrl}" />`
+  );
+  html = html.replace(
+    /<meta\s+property="og:image:alt"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta property="og:image:alt" content="${escapeAttr(r.title)}" />`
   );
   html = html.replace(
     /<meta\s+name="twitter:title"\s+content="[\s\S]*?"\s*\/?>/i,
@@ -645,6 +718,10 @@ function renderRouteHtml(r) {
   html = html.replace(
     /<meta\s+name="twitter:image"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta name="twitter:image" content="${ogImageUrl}" />`
+  );
+  html = html.replace(
+    /<meta\s+name="twitter:image:alt"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta name="twitter:image:alt" content="${escapeAttr(r.title)}" />`
   );
 
   // Strip base index.html JSON-LD block before injecting clean single @graph JSON-LD + article dates

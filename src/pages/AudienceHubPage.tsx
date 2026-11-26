@@ -20,6 +20,17 @@ import {
   Calculator,
 } from "lucide-react";
 
+const CATEGORY_LABELS_FR: Record<string, string> = {
+  "registered-accounts": "Comptes enregistrés canadiens",
+  investing: "Principes d'investissement",
+  protection: "Protection financière",
+  "debt-credit": "Dette et crédit",
+  family: "Finances familiales",
+  retirement: "Retraite",
+  newcomers: "Nouveaux arrivants au Canada",
+  "decision-making": "Prise de décision financière",
+};
+
 interface AudienceConfig {
   id: string;
   slug: string;
@@ -604,7 +615,7 @@ export const AudienceHubPage: React.FC = () => {
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-xs text-[#625d52]">
                       <span className="font-semibold text-[#2e4a3b] uppercase tracking-wider text-[0.7rem]">
-                        {cat?.label || art.category}
+                        {(isFr && cat ? CATEGORY_LABELS_FR[cat.id] : cat?.label) || art.category}
                       </span>
                       <span>&bull;</span>
                       <span>
@@ -622,9 +633,11 @@ export const AudienceHubPage: React.FC = () => {
                       {isFr ? ARTICLE_FR_SEO[art.slug]?.description || art.description : art.description}
                     </p>
 
-                    <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
-                      <strong>{isFr ? "La question :" : "The Question:"}</strong> {art.question}
-                    </div>
+                    {!isFr && (
+                      <div className="p-3 bg-[#f7f3eb] border border-[#d6cebd] rounded-[2px] text-xs text-[#46423a]">
+                        <strong>The Question:</strong> {art.question}
+                      </div>
+                    )}
                   </div>
 
                   <div className="pt-5 border-t border-[#ece6da] mt-5 flex items-center justify-between">

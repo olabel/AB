@@ -945,6 +945,21 @@ export const ARTICLE_FR_SEO: Record<string, ArticleFrSeoEntry> = {
   },
 };
 
+export const TRANSLATED_FR_ARTICLE_SLUGS = new Set<string>([]);
+
+export function isFrenchArticleTranslated(slug: string): boolean {
+  return TRANSLATED_FR_ARTICLE_SLUGS.has(slug);
+}
+
+export function hasTranslatedFrenchAlternate(pathname: string): boolean {
+  const norm = normalizeRoutePath(pathname.split("?")[0].split("#")[0] || "/");
+  const match = norm.match(/^\/(?:fr\/)?(?:education|insights)\/([^/]+)$/);
+  if (match) {
+    return isFrenchArticleTranslated(match[1]);
+  }
+  return true;
+}
+
 export function getCoreRouteSeo(pathname: string): RouteSeoEntry | undefined {
   const norm = normalizeRoutePath(pathname);
   return CORE_ROUTES_SEO.find((r) => r.path === norm);

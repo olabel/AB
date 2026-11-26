@@ -1,12 +1,17 @@
 
 import { getLatestFinancialNews } from "./src/services/newsService.ts";
-import { handleContactSubmission, handleConfirmSubscription } from "./src/server/apiHandlers.ts";
+import {
+  handleContactSubmission,
+  handleConfirmSubscription,
+  isOriginAuthorized,
+} from "./src/server/apiHandlers.ts";
 import express, { Request, Response, NextFunction } from "express";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import { articles } from "./src/content/data.ts";
 import { BLINDSPOTS_DATA } from "./src/content/blindspotsData.ts";
+import { RULE_CHANGES } from "./src/content/whatChangedData.ts";
 import { DRAFT_MODE, siteConfig } from "./src/config/site.ts";
 import {
   ARTICLE_FR_SEO,
@@ -14,6 +19,8 @@ import {
   getCoreRouteSeo,
   getLanguageUrls,
   getOgImageForPath,
+  hasTranslatedFrenchAlternate,
+  isFrenchArticleTranslated,
 } from "./src/config/seoMetadata.ts";
 import { buildRouteJsonLd } from "./src/config/schema.ts";
 
@@ -21,6 +28,7 @@ dotenv.config();
 
 function getSemanticFallbackHtml(pathname: string): string {
   const p = pathname.toLowerCase().split("?")[0].replace(/\/+$/, "") || "/";
+  const isFr = p === "/fr" || p.startsWith("/fr/");
   const core = getCoreRouteSeo(p);
   if (p === "/about" || p === "/fr/about") {
     return `
@@ -50,7 +58,16 @@ function getSemanticFallbackHtml(pathname: string): string {
     return `
       <main style="max-width:800px;margin:2rem auto;padding:1rem;font-family:serif;">
         <h1>${escapeHtml(core?.heading || "2026 Canadian Money Rules & Official Updates")}</h1>
-        <p>${escapeHtml(core?.summary || "Monthly Canadian financial briefing by Ahmed Bello: Bank of Canada policy rates, OSFI Guideline B-20 uninsured mortgage straight-switch rules, CRA registered limits, and federal tax amendments.")}</p>
+        <p>${escapeHtml(core?.summary || "Monthly Canadian financial briefing by Ahmed Bello: Bank of Canada policy rates, OSFI Guideline B-20 uninsured mortgage straight-switch rules, CRA registered limits, and Federal Budget 2026 updates.")}</p>
+        ${RULE_CHANGES.map(
+          (item) => `
+          <article>
+            <h2>${escapeHtml(isFr ? item.titleFr : item.titleEn)}</h2>
+            <p>${escapeHtml(isFr ? item.summaryFr : item.summaryEn)}</p>
+            <p><strong>${isFr ? "Impact :" : "Practical Impact:"}</strong> ${escapeHtml(isFr ? item.ahmedAnalysisFr : item.ahmedAnalysisEn)}</p>
+            <p><a href="${escapeAttr(item.officialSource.url)}">${escapeHtml(item.officialSource.label)}</a></p>
+          </article>`
+        ).join("")}
       </main>
     `;
   }
@@ -67,8 +84,28 @@ function getSemanticFallbackHtml(pathname: string): string {
 }
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === "production";
+
+function resolveArgValue(flag: string): string | undefined {
+  const eqArg = process.argv.find((arg) => arg.startsWith(`${flag}=`));
+  if (eqArg) return eqArg.slice(flag.length + 1);
+  const idx = process.argv.indexOf(flag);
+  if (idx !== -1 && process.argv[idx + 1]) return process.argv[idx + 1];
+  return undefined;
+}
+
+const cliPortRaw = resolveArgValue("--port");
+const cliPort = cliPortRaw ? Number(cliPortRaw) : undefined;
+const envPort = process.env.PORT ? Number(process.env.PORT) : undefined;
+const PORT =
+  cliPort && Number.isFinite(cliPort)
+    ? cliPort
+    : !isProduction && (!envPort || envPort === 8080)
+    ? 3000
+    : envPort && Number.isFinite(envPort)
+    ? envPort
+    : 3000;
+const HOST = resolveArgValue("--host") || "0.0.0.0";
 
 // Enable reverse-proxy trust for accurate IP resolution in Cloud Run / hosting environments
 app.set("trust proxy", 1);
@@ -80,22 +117,6 @@ app.disable("x-powered-by");
 // 1. Enterprise Security Headers Middleware
 // --------------------------------------------------------------------------
 app.use((req: Request, res: Response, next: NextFunction) => {
-  // Content Security Policy - permissive frame-ancestors for AI Studio preview iframe
-  const cspDirectives = [
-    "default-src 'self' https: data: blob:",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src 'self' https://fonts.gstatic.com data:",
-    "img-src 'self' data: blob: https:",
-    "connect-src 'self' https: ws: wss:",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "object-src 'none'",
-  ].join("; ");
-
-  res.setHeader("Content-Security-Policy", cspDirectives);
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  // Omit X-Frame-Options to allow embedding within the AI Studio preview iframe
   const isIntakeHost = req.hostname?.toLowerCase() === "intake.ahmedbello.com";
   const isPrivateRoute =
     req.path === "/sign" ||
@@ -105,6 +126,56 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     req.path === "/confirm-subscription" ||
     req.path === "/fr/confirm-subscription";
 
+  let cspDirectives: string;
+  if (isProduction) {
+    if (isIntakeHost || isPrivateRoute) {
+      cspDirectives = [
+        "default-src 'self'",
+        "script-src 'self'",
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data: blob:",
+        "font-src 'self' data:",
+        "connect-src 'self'",
+        "worker-src 'self' blob:",
+        "object-src 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+        "frame-ancestors 'none'",
+      ].join("; ");
+    } else {
+      cspDirectives = [
+        "default-src 'self'",
+        "script-src 'self' https://challenges.cloudflare.com",
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data: blob:",
+        "font-src 'self' data:",
+        "connect-src 'self' https://challenges.cloudflare.com",
+        "frame-src https://challenges.cloudflare.com",
+        "worker-src 'self' blob:",
+        "object-src 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+        "frame-ancestors 'none'",
+      ].join("; ");
+    }
+    res.setHeader("X-Frame-Options", "DENY");
+  } else {
+    // Development / AI Studio preview iframe requires Vite HMR + parent framing
+    cspDirectives = [
+      "default-src 'self' https: data: blob:",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "img-src 'self' data: blob: https:",
+      "connect-src 'self' https: ws: wss:",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "object-src 'none'",
+    ].join("; ");
+  }
+
+  res.setHeader("Content-Security-Policy", cspDirectives);
+  res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader(
     "Referrer-Policy",
     isIntakeHost || isPrivateRoute ? "no-referrer" : "strict-origin-when-cross-origin"
@@ -238,11 +309,14 @@ app.get("/BingSiteAuth.xml", (_req: Request, res: Response) => {
 // 5. Hardened Contact API Endpoint: POST /api/contact & OPTIONS preflight
 // --------------------------------------------------------------------------
 app.options(["/api/contact", "/api/subscribe"], (req: Request, res: Response) => {
-  const origin = (req.headers["origin"] as string) || "*";
-  res.setHeader("Access-Control-Allow-Origin", origin);
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
-  res.setHeader("Access-Control-Max-Age", "86400");
+  const origin = req.headers["origin"] as string | undefined;
+  res.setHeader("Vary", "Origin");
+  if (origin && isOriginAuthorized(origin, req.get("host"))) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+    res.setHeader("Access-Control-Max-Age", "86400");
+  }
   return res.sendStatus(204);
 });
 
@@ -280,7 +354,13 @@ app.get("/api/news", async (_req: Request, res: Response) => {
 // --------------------------------------------------------------------------
 // 5c. Cryptographically Verified CASL Double Opt-in Confirmation Endpoint
 // --------------------------------------------------------------------------
-app.all("/api/confirm-subscription", handleConfirmSubscription);
+app.get("/api/confirm-subscription", handleConfirmSubscription);
+app.post("/api/confirm-subscription", handleConfirmSubscription);
+app.options("/api/confirm-subscription", handleConfirmSubscription);
+app.all("/api/confirm-subscription", (_req: Request, res: Response) => {
+  res.setHeader("Allow", "GET, POST, OPTIONS");
+  return res.status(405).json({ success: false, error: "method_not_allowed" });
+});
 
 // Prevent Express HTML fallback from ever being served for /_vercel/* analytics paths
 app.get("/_vercel/*", (_req: Request, res: Response) => {
@@ -380,6 +460,8 @@ interface RouteMeta {
   ogImage: string;
   lang: "en-CA" | "fr-CA";
   noIndex: boolean;
+  robotsDirective?: string;
+  hasFrenchAlternate: boolean;
   isNotFound?: boolean;
   articlePublishedTime?: string;
   articleModifiedTime?: string;
@@ -407,6 +489,8 @@ function getRouteMetadata(pathname: string): RouteMeta {
       const articlePath = isFrench ? `/fr${article.url}` : article.url;
       const { enUrl, frUrl, canonicalUrl } = getLanguageUrls(articlePath);
       const ogImage = getOgImageForPath(articlePath, siteConfig.siteUrl);
+      const frTranslated = isFrenchArticleTranslated(slug);
+      const noIndex = isFrench && !frTranslated;
 
       return {
         title,
@@ -417,15 +501,18 @@ function getRouteMetadata(pathname: string): RouteMeta {
         frUrl,
         ogImage,
         lang,
-        noIndex: false,
+        noIndex,
+        robotsDirective: noIndex ? "noindex, follow" : undefined,
+        hasFrenchAlternate: hasTranslatedFrenchAlternate(articlePath),
         articlePublishedTime: article.datePublished || "2025-01-15T08:00:00-05:00",
-        articleModifiedTime: article.dateModified || "2026-11-05T09:00:00-05:00",
+        articleModifiedTime: article.dateModified || "2026-11-25T09:00:00-05:00",
         jsonLd: buildRouteJsonLd({
           pathname: articlePath,
           title,
           description,
           heading: headline,
           isFr: isFrench,
+          noIndex,
           article,
         }),
       };
@@ -471,6 +558,7 @@ function getRouteMetadata(pathname: string): RouteMeta {
       ogImage,
       lang: coreSeo.lang,
       noIndex: Boolean(coreSeo.noIndex),
+      hasFrenchAlternate: hasTranslatedFrenchAlternate(cleanPath),
       jsonLd: buildRouteJsonLd({
         pathname: cleanPath,
         title: formatStrictTitle(coreSeo.title),
@@ -497,6 +585,7 @@ function getRouteMetadata(pathname: string): RouteMeta {
     ogImage: `${siteConfig.siteUrl}/brand/og-home.png`,
     lang,
     noIndex: true,
+    hasFrenchAlternate: false,
     isNotFound: true,
     jsonLd: buildRouteJsonLd({
       pathname: cleanPath,
@@ -511,10 +600,17 @@ function getRouteMetadata(pathname: string): RouteMeta {
 // --------------------------------------------------------------------------
 function injectHeadMetadata(html: string, pathname: string): string {
   const meta = getRouteMetadata(pathname);
-  const robotsValue =
-    DRAFT_MODE || meta.noIndex
-      ? "noindex, nofollow"
-      : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+  const robotsValue = DRAFT_MODE
+    ? "noindex, nofollow"
+    : meta.robotsDirective
+    ? meta.robotsDirective
+    : meta.noIndex
+    ? "noindex, nofollow, noarchive"
+    : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+
+  const canonicalAndHreflang = meta.hasFrenchAlternate
+    ? `<link rel="canonical" href="${escapeAttr(meta.url)}" />\n    <link rel="alternate" hreflang="en-CA" href="${escapeAttr(meta.enUrl)}" />\n    <link rel="alternate" hreflang="fr-CA" href="${escapeAttr(meta.frUrl)}" />\n    <link rel="alternate" hreflang="x-default" href="${escapeAttr(meta.enUrl)}" />`
+    : `<link rel="canonical" href="${escapeAttr(meta.url)}" />\n    <link rel="alternate" hreflang="en-CA" href="${escapeAttr(meta.enUrl)}" />\n    <link rel="alternate" hreflang="x-default" href="${escapeAttr(meta.enUrl)}" />`;
 
   let transformed = html;
   transformed = transformed.replace(/<html\s+lang="[^"]*"/i, `<html lang="${meta.lang}"`);
@@ -529,7 +625,7 @@ function injectHeadMetadata(html: string, pathname: string): string {
   );
   transformed = transformed.replace(
     /<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/?>/i,
-    `<link rel="canonical" href="${escapeAttr(meta.url)}" />\n    <link rel="alternate" hreflang="en-CA" href="${escapeAttr(meta.enUrl)}" />\n    <link rel="alternate" hreflang="fr-CA" href="${escapeAttr(meta.frUrl)}" />\n    <link rel="alternate" hreflang="x-default" href="${escapeAttr(meta.enUrl)}" />`
+    canonicalAndHreflang
   );
   transformed = transformed.replace(
     /<meta\s+property="og:title"\s+content="[\s\S]*?"\s*\/?>/i,
@@ -551,10 +647,14 @@ function injectHeadMetadata(html: string, pathname: string): string {
     /<meta\s+property="og:locale"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta property="og:locale" content="${meta.lang === "fr-CA" ? "fr_CA" : "en_CA"}" />`
   );
-  transformed = transformed.replace(
-    /<meta\s+property="og:locale:alternate"\s+content="[\s\S]*?"\s*\/?>/i,
-    `<meta property="og:locale:alternate" content="${meta.lang === "fr-CA" ? "en_CA" : "fr_CA"}" />`
-  );
+  if (meta.lang === "fr-CA" || meta.hasFrenchAlternate) {
+    transformed = transformed.replace(
+      /<meta\s+property="og:locale:alternate"\s+content="[\s\S]*?"\s*\/?>/i,
+      `<meta property="og:locale:alternate" content="${meta.lang === "fr-CA" ? "en_CA" : "fr_CA"}" />`
+    );
+  } else {
+    transformed = transformed.replace(/<meta\s+property="og:locale:alternate"\s+content="[\s\S]*?"\s*\/?>\n?\s*/i, "");
+  }
   transformed = transformed.replace(
     /<meta\s+property="og:image"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta property="og:image" content="${escapeAttr(meta.ogImage)}" />`
@@ -562,6 +662,10 @@ function injectHeadMetadata(html: string, pathname: string): string {
   transformed = transformed.replace(
     /<meta\s+property="og:image:secure_url"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta property="og:image:secure_url" content="${escapeAttr(meta.ogImage)}" />`
+  );
+  transformed = transformed.replace(
+    /<meta\s+property="og:image:alt"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta property="og:image:alt" content="${escapeAttr(meta.title)}" />`
   );
   transformed = transformed.replace(
     /<meta\s+name="twitter:title"\s+content="[\s\S]*?"\s*\/?>/i,
@@ -574,6 +678,10 @@ function injectHeadMetadata(html: string, pathname: string): string {
   transformed = transformed.replace(
     /<meta\s+name="twitter:image"\s+content="[\s\S]*?"\s*\/?>/i,
     `<meta name="twitter:image" content="${escapeAttr(meta.ogImage)}" />`
+  );
+  transformed = transformed.replace(
+    /<meta\s+name="twitter:image:alt"\s+content="[\s\S]*?"\s*\/?>/i,
+    `<meta name="twitter:image:alt" content="${escapeAttr(meta.title)}" />`
   );
 
   // Remove base template JSON-LD so each route serves a single unified @graph script
@@ -603,17 +711,34 @@ function injectHeadMetadata(html: string, pathname: string): string {
 // --------------------------------------------------------------------------
 async function setupServer() {
   if (!isProduction) {
-    const { createServer: createViteServer } = await import("vite");
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "custom",
+    let viteInstance: any = null;
+    const viteReady = (async () => {
+      const { createServer: createViteServer } = await import("vite");
+      viteInstance = await createViteServer({
+        server: { middlewareMode: true },
+        appType: "custom",
+      });
+      return viteInstance;
+    })();
+
+    viteReady.catch((err) => {
+      console.error("[Vite Dev Server Init Error]:", err);
     });
 
-    app.use(vite.middlewares);
-
-    app.use("*", async (req: Request, res: Response, next) => {
-      const url = req.originalUrl;
+    app.use(async (req: Request, res: Response, next: NextFunction) => {
       try {
+        const vite = viteInstance || (await viteReady);
+        return vite.middlewares(req, res, next);
+      } catch (e) {
+        next(e);
+      }
+    });
+
+    app.use("*", async (req: Request, res: Response, next: NextFunction) => {
+      const url = req.originalUrl;
+      let vite: any = null;
+      try {
+        vite = viteInstance || (await viteReady);
         let template = fs.readFileSync(path.resolve(process.cwd(), "index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
         const meta = getRouteMetadata(url);
@@ -621,7 +746,7 @@ async function setupServer() {
         const statusCode = meta.isNotFound ? 404 : 200;
         res.status(statusCode).set({ "Content-Type": "text/html" }).end(html);
       } catch (e: any) {
-        vite.ssrFixStacktrace(e);
+        if (vite) vite.ssrFixStacktrace(e);
         next(e);
       }
     });
@@ -642,14 +767,14 @@ async function setupServer() {
         } else {
           res.status(404).send("Application build not found.");
         }
-      } catch (e: any) {
-        res.status(500).send("Server rendering error: " + e?.message);
+      } catch {
+        res.status(500).send("Unable to load page.");
       }
     });
   }
 
-  app.listen(Number(PORT), "0.0.0.0", () => {
-    console.log(`Ahmed Bello production server running on port ${PORT}`);
+  app.listen(PORT, HOST, () => {
+    console.log(`Ahmed Bello server running on http://${HOST}:${PORT}`);
   });
 }
 

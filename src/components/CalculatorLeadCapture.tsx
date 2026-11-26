@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Calendar, CheckCircle2, ArrowRight, ShieldCheck, AlertCircle, RefreshCw, Phone } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
@@ -30,12 +30,13 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
   analyticsTopic,
 }) => {
   const { isFr } = useLanguage();
+  const uid = useId();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [optInBriefings, setOptInBriefings] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const [honeypot, setHoneypot] = useState("");
-  const [formLoadedAt] = useState<number>(Date.now());
+  const [formLoadedAt] = useState<number>(() => Date.now());
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [referenceNo, setReferenceNo] = useState<string | null>(null);
@@ -87,7 +88,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
       const data = await response.json().catch(() => ({}));
 
-      if ((!response.ok && data?.error !== "delivery_failed") || data?.success === false) {
+      if (!response.ok || data?.success === false) {
         throw new Error(data?.message || (isFr ? "Impossible d'enregistrer le plan." : "Unable to record plan."));
       }
 
@@ -109,6 +110,7 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
   const handleReset = () => {
     setSubmitted(false);
     setErrorMsg(null);
+    setHoneypot("");
   };
 
   return (
@@ -225,13 +227,13 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label
-                htmlFor={`calc-name-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                htmlFor={`calc-name-${uid}`}
                 className="block text-[0.72rem] font-semibold text-[#46423a] mb-1"
               >
                 {isFr ? "Prénom (optionnel)" : "First Name (optional)"}
               </label>
               <input
-                id={`calc-name-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                id={`calc-name-${uid}`}
                 type="text"
                 name="firstName"
                 value={firstName}
@@ -243,13 +245,13 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
             <div>
               <label
-                htmlFor={`calc-email-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                htmlFor={`calc-email-${uid}`}
                 className="block text-[0.72rem] font-semibold text-[#1c1b18] mb-1"
               >
                 {isFr ? "Adresse courriel" : "Email Address"} <span className="text-[#8a3324]">*</span>
               </label>
               <input
-                id={`calc-email-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+                id={`calc-email-${uid}`}
                 type="email"
                 required
                 name="email"
@@ -263,9 +265,9 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
 
           {/* Invisible Honeypot anti-spam trap */}
           <div className="hidden" aria-hidden="true">
-            <label htmlFor={`calc-hp-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}>Leave blank</label>
+            <label htmlFor={`calc-hp-${uid}`}>Leave blank</label>
             <input
-              id={`calc-hp-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+              id={`calc-hp-${uid}`}
               type="text"
               name="honeypot"
               tabIndex={-1}
@@ -281,14 +283,14 @@ export const CalculatorLeadCapture: React.FC<CalculatorLeadCaptureProps> = ({
           {/* Optional educational briefing opt-in (never blocks requested breakdown delivery) */}
           <div className="flex items-start gap-2.5 pt-1">
             <input
-              id={`calc-optin-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+              id={`calc-optin-${uid}`}
               type="checkbox"
               checked={optInBriefings}
               onChange={(e) => setOptInBriefings(e.target.checked)}
               className="mt-0.5 accent-[#2e4a3b] w-4 h-4 cursor-pointer"
             />
             <label
-              htmlFor={`calc-optin-${calculatorName.replace(/\s+/g, "-").toLowerCase()}`}
+              htmlFor={`calc-optin-${uid}`}
               className="text-[0.75rem] text-[#46423a] leading-relaxed cursor-pointer select-none"
             >
               {isFr ? (

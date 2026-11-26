@@ -1,5 +1,67 @@
 import https from "https";
+import dns from "dns/promises";
+import net from "net";
 import { URL } from "url";
+
+const ALLOWED_RSS_HOSTS = new Set([
+  "www.cbc.ca",
+  "news.google.com",
+  "www.federalreserve.gov",
+  "rss.nytimes.com",
+  "www.bankofcanada.ca",
+]);
+
+const MAX_RSS_BYTES = 512 * 1024; // 512 KB cap
+
+export function isDisallowedIp(ip: string): boolean {
+  const normalized = ip.toLowerCase();
+  if (normalized === "::1" || normalized === "::") return true;
+  if (normalized.startsWith("fe80:") || normalized.startsWith("fc") || normalized.startsWith("fd")) return true;
+  const v4Match = normalized.match(/(\d{1,3}\.){3}\d{1,3}$/);
+  const v4 = v4Match ? v4Match[0] : normalized;
+  if (!net.isIPv4(v4)) return net.isIPv6(normalized) ? false : true;
+  const parts = v4.split(".").map(Number);
+  if (parts[0] === 0 || parts[0] === 10 || parts[0] === 127) return true;
+  if (parts[0] === 169 && parts[1] === 254) return true;
+  if (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) return true;
+  if (parts[0] === 192 && parts[1] === 168) return true;
+  if (parts[0] === 100 && parts[1] >= 64 && parts[1] <= 127) return true;
+  return false;
+}
+
+export async function assertSafeFeedUrl(urlStr: string): Promise<URL> {
+  const parsed = new URL(urlStr);
+  if (parsed.protocol !== "https:") {
+    throw new Error(`Disallowed protocol: ${parsed.protocol}`);
+  }
+  const hostname = parsed.hostname.toLowerCase();
+  if (!ALLOWED_RSS_HOSTS.has(hostname)) {
+    throw new Error(`Disallowed RSS host: ${hostname}`);
+  }
+  if (net.isIP(hostname) && isDisallowedIp(hostname)) {
+    throw new Error(`Disallowed IP literal: ${hostname}`);
+  }
+  const resolved = await dns.lookup(hostname, { all: true });
+  if (!resolved.length || resolved.some((entry) => isDisallowedIp(entry.address))) {
+    throw new Error(`Host resolved to disallowed IP range: ${hostname}`);
+  }
+  return parsed;
+}
+
+export function sanitizeExternalHttpsUrl(raw: string | undefined, fallback?: string): string | undefined {
+  if (!raw) return fallback;
+  const trimmed = raw.trim();
+  if (trimmed.startsWith("/images/news/")) return trimmed;
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol === "https:") {
+      return parsed.toString();
+    }
+  } catch {
+    // ignore malformed URL
+  }
+  return fallback;
+}
 
 export interface NewsItem {
   id: string;
@@ -34,27 +96,32 @@ function decodeHtmlEntities(str: string): string {
     .trim();
 }
 
-function fetchHttps(urlStr: string, timeoutMs = 6000, maxRedirects = 4): Promise<string> {
+export function fetchHttps(urlStr: string, timeoutMs = 6000, maxRedirects = 3): Promise<string> {
   return new Promise((resolve, reject) => {
-    function get(currentUrl: string, redirectsLeft: number) {
+    async function get(currentUrl: string, redirectsLeft: number) {
       if (redirectsLeft < 0) {
         return reject(new Error(`Too many redirects fetching ${urlStr}`));
       }
       try {
+        await assertSafeFeedUrl(currentUrl);
         const req = https.get(
           currentUrl,
           {
             headers: {
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-              Accept: "application/rss+xml, application/xml, text/xml, */*",
+              "User-Agent": "AhmedBelloPracticeReader/1.0 (+https://www.ahmedbello.com)",
+              Accept: "application/rss+xml, application/xml, text/xml",
             },
           },
           (res) => {
             if (res.statusCode && [301, 302, 303, 307, 308].includes(res.statusCode) && res.headers.location) {
-              const nextUrl = new URL(res.headers.location, currentUrl).toString();
-              res.resume();
-              return get(nextUrl, redirectsLeft - 1);
+              try {
+                const nextUrl = new URL(res.headers.location, currentUrl).toString();
+                res.resume();
+                return void get(nextUrl, redirectsLeft - 1);
+              } catch (redirectErr) {
+                res.resume();
+                return reject(redirectErr);
+              }
             }
 
             if (res.statusCode && (res.statusCode < 200 || res.statusCode >= 300)) {
@@ -62,9 +129,18 @@ function fetchHttps(urlStr: string, timeoutMs = 6000, maxRedirects = 4): Promise
               return reject(new Error(`HTTP ${res.statusCode} fetching ${currentUrl}`));
             }
 
-            let data = "";
-            res.on("data", (chunk) => (data += chunk));
-            res.on("end", () => resolve(data));
+            const chunks: Buffer[] = [];
+            let totalBytes = 0;
+            res.on("data", (chunk: Buffer | string) => {
+              const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+              totalBytes += buf.length;
+              if (totalBytes > MAX_RSS_BYTES) {
+                req.destroy(new Error(`RSS feed exceeded ${MAX_RSS_BYTES} byte limit`));
+                return;
+              }
+              chunks.push(buf);
+            });
+            res.on("end", () => resolve(Buffer.concat(chunks).toString("utf-8")));
           }
         );
         req.on("error", reject);
@@ -76,7 +152,7 @@ function fetchHttps(urlStr: string, timeoutMs = 6000, maxRedirects = 4): Promise
         reject(e);
       }
     }
-    get(urlStr, maxRedirects);
+    void get(urlStr, maxRedirects);
   });
 }
 
@@ -100,10 +176,11 @@ function parseRss(xml: string, defaultSource: string, defaultCountry: "CA" | "US
       block.match(/<img[^>]+src=['"]([^'"]+)['"]/i) ||
       (descMatch ? descMatch[1].match(/src=['"]([^'"]+)['"]/i) : null);
 
-    let extractedImgUrl = imgMatch && imgMatch[1] && imgMatch[1].startsWith("http") ? imgMatch[1] : undefined;
+    const extractedImgUrl = sanitizeExternalHttpsUrl(imgMatch?.[1]);
 
     let title = (titleMatch ? titleMatch[1] : "").replace(/<[^>]+>/g, "").trim();
-    let link = (linkMatch ? linkMatch[1] : "").trim();
+    const rawLink = (linkMatch ? linkMatch[1] : "").trim();
+    const link = sanitizeExternalHttpsUrl(rawLink, "https://www.bankofcanada.ca") || "https://www.bankofcanada.ca";
     let pubDate = (dateMatch ? dateMatch[1] : "").trim();
     let source = (sourceMatch ? sourceMatch[1] : defaultSource).trim();
     let excerpt = (descMatch ? descMatch[1] : "").replace(/<[^>]+>/g, "").trim();

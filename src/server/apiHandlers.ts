@@ -2,38 +2,43 @@
 // and Vercel serverless functions (/api/*) to eliminate duplicated logic and drift.
 
 import { Request, Response } from "express";
-import {
-  processContactSubmission,
-  recordConfirmedSubscriber,
-  verifySubscriptionToken,
-} from "../services/contactEmailService.ts";
+import { checkIpRateLimit, processContactSubmission, recordConfirmedSubscriber, verifySubscriptionToken } from "../services/contactEmailService.ts";
 import { siteConfig } from "../config/site.ts";
 
 /**
  * Strict Origin / Referer Validation:
- * Only exact production domains and direct host header matches are authorized.
- * Wildcard subdomains (*.vercel.app, *.run.app, *.web.app) are strictly rejected.
+ * Only exact production domains and trusted environment preview hosts are authorized.
+ * Arbitrary incoming Host header matching is disallowed so spoofed Host + Origin headers cannot bypass.
  */
-export function isOriginAuthorized(originOrReferer?: string, reqHost?: string): boolean {
+export function isOriginAuthorized(originOrReferer?: string, _reqHost?: string): boolean {
   if (!originOrReferer) return false;
   try {
     const parsed = new URL(originOrReferer);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+      return false;
+    }
     const host = parsed.hostname.toLowerCase();
 
-    // Exact authorized production domains
+    // Exact authorized production domains (must use https in production)
     if (
       host === "ahmedbello.com" ||
       host === "www.ahmedbello.com" ||
       host === "intake.ahmedbello.com"
     ) {
+      return parsed.protocol === "https:";
+    }
+
+    // Trusted deploy-injected preview URLs (exact equality only)
+    const trustedEnvHosts = [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL]
+      .filter((v): v is string => Boolean(v && v.trim()))
+      .map((v) => v.trim().toLowerCase().split(":")[0]);
+    if (trustedEnvHosts.includes(host) && parsed.protocol === "https:") {
       return true;
     }
-    if (host === "localhost" || host === "127.0.0.1") return true;
 
-    // Direct match against incoming host header (for specific preview or custom host)
-    if (reqHost) {
-      const cleanReqHost = reqHost.split(":")[0].toLowerCase();
-      if (host === cleanReqHost) return true;
+    // Local development hosts allowed only outside production
+    if (process.env.NODE_ENV !== "production" && (host === "localhost" || host === "127.0.0.1")) {
+      return true;
     }
 
     return false;
@@ -93,29 +98,26 @@ export async function verifyTurnstileToken(
     cleanHost === "ahmedbello.com" ||
     cleanHost === "www.ahmedbello.com" ||
     cleanHost === "intake.ahmedbello.com";
+  const isProdRuntime = process.env.NODE_ENV === "production" || isProdDomain;
 
   if (!secretKey) {
     console.warn(
-      "[TURNSTILE CONFIG NOTICE]: TURNSTILE_SECRET_KEY is not configured; falling back to origin, honeypot, fill-time, and IP rate-limit protections."
+      "[TURNSTILE CONFIG NOTICE]: TURNSTILE_SECRET_KEY is not configured; relying on origin, honeypot, fill-time, and IP rate-limit protections."
     );
     return true;
   }
 
-  if (!siteKey && token === "verified_live_client") {
-    console.warn(
-      "[TURNSTILE CONFIG MISMATCH]: TURNSTILE_SECRET_KEY is set on the server, but VITE_TURNSTILE_SITE_KEY was missing during client build. Falling back so legitimate submissions are not blocked."
-    );
+  // Never accept sentinel bypass tokens in production when a secret key is active
+  if (isProdRuntime) {
+    if (!token || token === "verified_live_client") {
+      return false;
+    }
+  } else if (token === "verified_live_client" && !siteKey) {
+    // Non-production local/preview fallback when client site key isn't injected
     return true;
   }
 
-  if (!isProdDomain && token === "verified_live_client") {
-    console.warn(
-      `[TURNSTILE PREVIEW NOTICE]: Submission from non-production host (${cleanHost || "unknown"}); skipping domain-locked Turnstile challenge.`
-    );
-    return true;
-  }
-
-  if (!token) return false;
+  if (!token || token === "verified_live_client") return false;
 
   try {
     const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
@@ -127,8 +129,17 @@ export async function verifyTurnstileToken(
         remoteip: clientIp,
       }),
     });
+    if (!res.ok) return false;
     const outcome = (await res.json()) as any;
-    return Boolean(outcome?.success);
+    if (!outcome?.success) return false;
+
+    if (outcome?.hostname && isProdDomain) {
+      const verifiedHost = String(outcome.hostname).toLowerCase();
+      if (verifiedHost !== "ahmedbello.com" && verifiedHost !== "www.ahmedbello.com") {
+        return false;
+      }
+    }
+    return true;
   } catch (err) {
     console.error("[TURNSTILE VERIFY EXCEPTION]:", err);
     return false;
@@ -268,19 +279,36 @@ export async function handleConfirmSubscription(req: any, res: any) {
   if (res.setHeader) {
     if (origin && isOriginAuthorized(origin, reqHost)) {
       res.setHeader("Access-Control-Allow-Origin", origin);
-    } else {
-      res.setHeader("Access-Control-Allow-Origin", "https://www.ahmedbello.com");
+      res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     }
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   }
 
   if (req.method === "OPTIONS") {
     return res.status(204).end();
   }
 
+  if (req.method !== "GET" && req.method !== "POST") {
+    if (res.setHeader) res.setHeader("Allow", "GET, POST, OPTIONS");
+    return res.status(405).json({
+      success: false,
+      error: "method_not_allowed",
+      message: "Method not allowed.",
+    });
+  }
+
+  const clientIp = resolveClientIp(req);
+  if (!checkIpRateLimit(clientIp)) {
+    return res.status(429).json({
+      success: false,
+      error: "rate_limit_exceeded",
+      message: "Too many confirmation attempts. Please try again later.",
+    });
+  }
+
   // Extract token: reject naked unverified ?email= calls
-  const token = (req.query?.token as string) || req.body?.token;
+  const rawToken = (req.query?.token as string) || req.body?.token;
+  const token = typeof rawToken === "string" ? rawToken.trim() : "";
 
   if (!token) {
     return res.status(400).json({
@@ -300,8 +328,8 @@ export async function handleConfirmSubscription(req: any, res: any) {
     });
   }
 
-  const clientIp = resolveClientIp(req);
-  const userAgent = (req.headers?.["user-agent"] as string) || "Unknown User-Agent";
+  const rawUa = typeof req.headers?.["user-agent"] === "string" ? req.headers["user-agent"] : "Unknown User-Agent";
+  const userAgent = rawUa.replace(/[\r\n\0<>]/g, " ").trim().slice(0, 300) || "Unknown User-Agent";
 
   const recorded = await recordConfirmedSubscriber({
     email: verification.email,

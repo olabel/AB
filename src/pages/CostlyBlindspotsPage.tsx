@@ -35,7 +35,6 @@ export const CostlyBlindspotsPage: React.FC = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [showAllBlindspots, setShowAllBlindspots] = useState<boolean>(false);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(() => {
     const hashId = typeof window !== "undefined" ? window.location.hash.replace("#", "") : "";
     const initial: Record<string, boolean> = {};
@@ -68,7 +67,6 @@ export const CostlyBlindspotsPage: React.FC = () => {
   const jumpToBlindspot = (id: string) => {
     setSelectedCategory("all");
     setSearchQuery("");
-    setShowAllBlindspots(true);
     setExpandedItems((prev) => ({
       ...prev,
       [id]: true,
@@ -607,13 +605,6 @@ export const CostlyBlindspotsPage: React.FC = () => {
               const categoryLabel = isFr ? item.categoryFr : item.categoryEn;
               const isCopied = copiedId === item.id;
               const isLinkCopied = copiedLinkId === item.id;
-              const isHashMatch = location.hash.replace("#", "") === item.id;
-              const isVisuallyFolded =
-                !showAllBlindspots &&
-                !searchQuery.trim() &&
-                selectedCategory === "all" &&
-                idx >= 8 &&
-                !isHashMatch;
 
               return (
                 <React.Fragment key={item.id}>
@@ -621,7 +612,7 @@ export const CostlyBlindspotsPage: React.FC = () => {
                     id={item.id}
                     className={`card-editorial overflow-hidden scroll-mt-36 transition-shadow hover:shadow-sm ${
                       isFlagged ? "border-[#2e4a3b]" : ""
-                    } ${isVisuallyFolded ? "hidden" : ""}`}
+                    }`}
                   >
                     {/* Card Header & Toggle */}
                     <div className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 hover:bg-[#f7f3eb]/50 transition-colors">
@@ -845,30 +836,13 @@ export const CostlyBlindspotsPage: React.FC = () => {
             })
           )}
 
-          {!searchQuery.trim() && selectedCategory === "all" && filteredItems.length > 8 && (
-            <div className="text-center pt-2">
-              <button
-                type="button"
-                onClick={() => setShowAllBlindspots((prev) => !prev)}
-                className="btn btn-ghost text-sm px-6 py-2.5 inline-flex items-center gap-2 cursor-pointer"
-              >
-                <span>
-                  {showAllBlindspots
-                    ? isFr
-                      ? "Réduire la liste"
-                      : "Show fewer blindspots"
-                    : isFr
-                    ? `Afficher tous les ${filteredItems.length} pièges financiers`
-                    : `Show all ${filteredItems.length} blindspots`}
-                </span>
-                {showAllBlindspots ? (
-                  <ChevronUp className="w-4 h-4" aria-hidden="true" />
-                ) : (
-                  <ChevronDown className="w-4 h-4" aria-hidden="true" />
-                )}
-              </button>
-            </div>
-          )}
+          <div className="sr-only" aria-live="polite">
+            {copiedLinkId
+              ? isFr
+                ? "Lien direct copié dans le presse-papiers."
+                : "Deep link copied to clipboard."
+              : ""}
+          </div>
 
           {/* Personalized Blindspots Checklist Email Capture (Visible by Default) */}
           <div id="blindspots-checklist-capture" className="scroll-mt-32 pt-2">

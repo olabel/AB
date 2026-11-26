@@ -8,6 +8,7 @@ import {
   getCoreRouteSeo,
   getLanguageUrls,
   getOgImageForPath,
+  hasTranslatedFrenchAlternate,
 } from "../config/seoMetadata.ts";
 import { buildRouteJsonLd } from "../config/schema.ts";
 
@@ -22,6 +23,7 @@ export interface SEOProps {
   articlePublishedTime?: string;
   articleModifiedTime?: string;
   noIndex?: boolean;
+  robotsContent?: string;
 }
 
 /**
@@ -43,6 +45,7 @@ export const SEO: React.FC<SEOProps> = ({
   articlePublishedTime,
   articleModifiedTime,
   noIndex,
+  robotsContent,
 }) => {
   const location = useLocation();
   const { language } = useLanguage();
@@ -133,19 +136,28 @@ export const SEO: React.FC<SEOProps> = ({
     const isIntakeHost =
       typeof window !== "undefined" &&
       window.location.hostname.toLowerCase() === "intake.ahmedbello.com";
+    const hasFrAlt = hasTranslatedFrenchAlternate(path);
 
     setMetaTag("name", "description", finalDescription);
     setMetaTag(
       "name",
       "robots",
-      finalNoIndex || isIntakeHost
+      isIntakeHost
         ? "noindex, nofollow, noarchive"
+        : finalNoIndex
+        ? robotsContent || "noindex, nofollow, noarchive"
         : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
     );
 
     setLinkTag("canonical", currentCanonical);
     setLinkTag("alternate", enUrl, { hreflang: "en-CA" });
-    setLinkTag("alternate", frUrl, { hreflang: "fr-CA" });
+    if (hasFrAlt) {
+      setLinkTag("alternate", frUrl, { hreflang: "fr-CA" });
+    } else {
+      document
+        .querySelectorAll('link[rel="alternate"][hreflang="fr-CA"]')
+        .forEach((el) => el.remove());
+    }
     setLinkTag("alternate", enUrl, { hreflang: "x-default" });
 
     setMetaTag("property", "og:title", finalTitle);
@@ -154,14 +166,22 @@ export const SEO: React.FC<SEOProps> = ({
     setMetaTag("property", "og:type", finalOgType);
     setMetaTag("property", "og:site_name", "Ahmed Bello");
     setMetaTag("property", "og:locale", isFr ? "fr_CA" : "en_CA");
-    setMetaTag("property", "og:locale:alternate", isFr ? "en_CA" : "fr_CA");
+    if (hasFrAlt) {
+      setMetaTag("property", "og:locale:alternate", isFr ? "en_CA" : "fr_CA");
+    } else if (isFr) {
+      setMetaTag("property", "og:locale:alternate", "en_CA");
+    } else {
+      removeMetaTag("property", "og:locale:alternate");
+    }
     setMetaTag("property", "og:image", resolvedImage);
     setMetaTag("property", "og:image:secure_url", resolvedImage);
+    setMetaTag("property", "og:image:alt", finalTitle);
 
     setMetaTag("name", "twitter:card", "summary_large_image");
     setMetaTag("name", "twitter:title", finalTitle);
     setMetaTag("name", "twitter:description", finalDescription);
     setMetaTag("name", "twitter:image", resolvedImage);
+    setMetaTag("name", "twitter:image:alt", finalTitle);
 
     if (articlePublishedTime) {
       setMetaTag("property", "article:published_time", articlePublishedTime);
@@ -201,6 +221,7 @@ export const SEO: React.FC<SEOProps> = ({
     jsonLdString,
     isFr,
     finalNoIndex,
+    robotsContent,
     articlePublishedTime,
     articleModifiedTime,
   ]);

@@ -7,6 +7,7 @@ import {
   getAllIndexableCoreRoutes,
   getBasePath,
   getLanguageUrls,
+  isFrenchArticleTranslated,
 } from "../src/config/seoMetadata.ts";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -14,11 +15,11 @@ const __dirname = path.dirname(__filename);
 const sitemapPath = path.resolve(__dirname, "../public/sitemap.xml");
 
 const CORE_ROUTE_LASTMOD = {
-  "/": "2026-11-24",
-  "/what-changed": "2026-11-24",
+  "/": "2026-11-25",
+  "/what-changed": "2026-11-25",
   "/how-i-help": "2026-11-05",
   "/education": "2026-11-24",
-  "/costly-blindspots": "2026-11-24",
+  "/costly-blindspots": "2026-11-25",
   "/insights": "2026-11-05",
   "/for/healthcare": "2026-11-05",
   "/for/business-owners": "2026-11-24",
@@ -62,7 +63,8 @@ for (const r of coreRoutes) {
 `;
 }
 
-// Add all active Articles & Strategic Insights in EN and FR using genuine article dateModified
+// Add active Articles & Strategic Insights (include FR URL + hreflang only when body is translated)
+let articleUrlCount = 0;
 for (const a of articles) {
   const enPath = a.url;
   const frPath = `/fr${a.url}`;
@@ -70,6 +72,7 @@ for (const a of articles) {
   const frUrl = `${SITE_URL}${frPath}`;
   const prio = a.kind === "guide" ? "0.85" : "0.80";
   const lastmod = (a.dateModified || "2026-11-05").split("T")[0];
+  const hasFrTranslation = isFrenchArticleTranslated(a.slug);
 
   xml += `  <url>
     <loc>${enUrl}</loc>
@@ -77,11 +80,13 @@ for (const a of articles) {
     <changefreq>monthly</changefreq>
     <priority>${prio}</priority>
     <xhtml:link rel="alternate" hreflang="en-CA" href="${enUrl}"/>
-    <xhtml:link rel="alternate" hreflang="fr-CA" href="${frUrl}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="${enUrl}"/>
+${hasFrTranslation ? `    <xhtml:link rel="alternate" hreflang="fr-CA" href="${frUrl}"/>\n` : ""}    <xhtml:link rel="alternate" hreflang="x-default" href="${enUrl}"/>
   </url>
 `;
-  xml += `  <url>
+  articleUrlCount++;
+
+  if (hasFrTranslation) {
+    xml += `  <url>
     <loc>${frUrl}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
@@ -91,11 +96,13 @@ for (const a of articles) {
     <xhtml:link rel="alternate" hreflang="x-default" href="${enUrl}"/>
   </url>
 `;
+    articleUrlCount++;
+  }
 }
 
 xml += `</urlset>\n`;
 
 fs.writeFileSync(sitemapPath, xml, "utf-8");
 console.log(
-  `[Sitemap Generated] Wrote ${coreRoutes.length + articles.length * 2} URLs with genuine lastmod timestamps to ${sitemapPath}`
+  `[Sitemap Generated] Wrote ${coreRoutes.length + articleUrlCount} clean URLs with genuine lastmod timestamps to ${sitemapPath}`
 );

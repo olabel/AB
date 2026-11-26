@@ -26,8 +26,19 @@ import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { trackBookingClick, trackCtaClick } from "../lib/track.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
-import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
+import { ARTICLE_FR_SEO, isFrenchArticleTranslated } from "../config/seoMetadata.ts";
 import { buildRouteJsonLd } from "../config/schema.ts";
+
+const CATEGORY_LABELS_FR: Record<string, string> = {
+  "registered-accounts": "Comptes enregistrés canadiens",
+  investing: "Principes d'investissement",
+  protection: "Protection financière",
+  "debt-credit": "Dette et crédit",
+  family: "Finances familiales",
+  retirement: "Retraite",
+  newcomers: "Nouveaux arrivants au Canada",
+  "decision-making": "Prise de décision financière",
+};
 
 const TOPIC_LABELS: Record<string, { en: string; fr: string }> = {
   accounts: { en: "Canadian Registered Accounts (TFSA / RRSP / FHSA)", fr: "Comptes enregistrés canadiens (CELI / REER / CELIAPP)" },
@@ -77,7 +88,10 @@ export const ArticlePage: React.FC = () => {
   }
 
   const category = categories.find((c) => c.id === article.category);
+  const localizedCategoryLabel =
+    (isFr && category ? CATEGORY_LABELS_FR[category.id] : category?.label) || article.category;
   const kindLabel = article.kind === "guide" ? "Guide" : isFr ? "Analyse" : "Insight";
+  const isUntranslatedFrArticle = isFr && !isFrenchArticleTranslated(article.slug);
   const frSeo = isFr ? ARTICLE_FR_SEO[article.slug] : undefined;
   const localizedSeoTitle = frSeo?.seoTitle || article.seoTitle || article.title;
   const localizedTitle = frSeo?.title || article.title;
@@ -189,6 +203,8 @@ export const ArticlePage: React.FC = () => {
         description={localizedDescription}
         canonicalUrl={`${prefix}${article.url}`}
         ogType="article"
+        noIndex={isUntranslatedFrArticle}
+        robotsContent={isUntranslatedFrArticle ? "noindex, follow" : undefined}
         articlePublishedTime={article.datePublished || "2025-01-15T08:00:00-05:00"}
         articleModifiedTime={article.dateModified || "2026-11-05T09:00:00-05:00"}
         jsonLd={articleJsonLd}
@@ -202,7 +218,7 @@ export const ArticlePage: React.FC = () => {
               to={`${prefix}/education?category=${article.category}`}
               className="hover:underline text-[#2e4a3b]"
             >
-              {category?.label || article.category}
+              {localizedCategoryLabel}
             </Link>
             <span aria-hidden="true">&middot;</span>
             <span className="text-[#625d52]">{kindLabel}</span>
@@ -211,6 +227,20 @@ export const ArticlePage: React.FC = () => {
           <h1 className="h1 text-[#1c1b18] mb-5 font-normal">
             {localizedTitle}
           </h1>
+
+          {isUntranslatedFrArticle && (
+            <div className="mb-6 p-4 bg-[#fcfaf5] border border-[#d6c298] rounded-[2px] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#46423a]">
+              <p className="leading-relaxed">
+                <strong className="text-[#1c1b18]">Note linguistique :</strong> le corps technique détaillé de ce guide est actuellement publié en anglais sous ce titre et résumé en français.
+              </p>
+              <Link
+                to={article.url}
+                className="text-xs font-semibold text-[#2e4a3b] underline shrink-0"
+              >
+                Lire la version originale en anglais →
+              </Link>
+            </div>
+          )}
 
           {/* Author & Editorial Review Block */}
           <div className="flex flex-wrap items-center gap-3.5 pb-5 mb-5 border-b border-[#d6cebd] text-xs text-[#46423a]">
@@ -1118,14 +1148,16 @@ export const ArticlePage: React.FC = () => {
                       >
                         <div>
                           <span className="text-[0.7rem] uppercase tracking-wider font-semibold text-[#2e4a3b] block mb-2">
-                            {relCat?.label || rel.category}
+                            {(isFr && relCat ? CATEGORY_LABELS_FR[relCat.id] : relCat?.label) || rel.category}
                           </span>
                           <h3 className="font-serif text-lg font-medium text-[#1c1b18] group-hover:text-[#2e4a3b] transition-colors leading-snug mb-2">
                             {isFr ? ARTICLE_FR_SEO[rel.slug]?.title || rel.title : rel.title}
                           </h3>
-                          <p className="text-xs text-[#625d52] line-clamp-3 mb-4">
-                            {rel.question}
-                          </p>
+                          {!isFr && (
+                            <p className="text-xs text-[#625d52] line-clamp-3 mb-4">
+                              {rel.question}
+                            </p>
+                          )}
                         </div>
                         <span className="text-xs font-semibold text-[#2e4a3b] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                           {isFr ? "Lire le guide" : "Read guide"} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

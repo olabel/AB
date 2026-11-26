@@ -28,6 +28,12 @@ export default defineConfig(() => {
             if (id.includes('node_modules/lucide-react')) {
               return 'vendor-icons';
             }
+            if (id.includes('node_modules/pdf-lib')) {
+              return 'vendor-pdf-lib';
+            }
+            if (id.includes('node_modules/pdfjs-dist')) {
+              return 'vendor-pdfjs';
+            }
           },
         },
       },

@@ -10,12 +10,22 @@ import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
 import { buildRouteJsonLd } from "../config/schema.ts";
 import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
 
+const CATEGORY_LABELS_FR: Record<string, string> = {
+  "registered-accounts": "Comptes enregistrés canadiens",
+  investing: "Principes d'investissement",
+  protection: "Protection financière",
+  "debt-credit": "Dette et crédit",
+  family: "Finances familiales",
+  retirement: "Retraite",
+  newcomers: "Nouveaux arrivants au Canada",
+  "decision-making": "Prise de décision financière",
+};
+
 export const EducationLibraryPage: React.FC = () => {
   const { language } = useLanguage();
   const prefix = language === "fr" ? "/fr" : "";
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  const [showAllArticles, setShowAllArticles] = useState(false);
   const [isRunwayOpen, setIsRunwayOpen] = useState(false);
 
   const query = searchParams.get("q") || "";
@@ -416,7 +426,7 @@ export const EducationLibraryPage: React.FC = () => {
                         : "bg-[#f7f3eb] text-[#1c1b18] border-[#d6cebd] hover:border-[#8d8677]"
                     }`}
                   >
-                    {cat.label} ({count})
+                    {(isFr ? CATEGORY_LABELS_FR[cat.id] : cat.label) || cat.label} ({count})
                   </button>
                 );
               })}
@@ -470,27 +480,22 @@ export const EducationLibraryPage: React.FC = () => {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {filteredArticles.map((art, idx) => {
+                {filteredArticles.map((art) => {
                   const cat = categories.find((c) => c.id === art.category);
                   const frSeo = isFr ? ARTICLE_FR_SEO[art.slug] : undefined;
                   const displayTitle = frSeo?.title || art.title;
                   const displayDescription = frSeo?.description || art.description;
-                  const isVisuallyFolded =
-                    !showAllArticles &&
-                    !query.trim() &&
-                    selectedCategory === "all" &&
-                    idx >= 6;
+                  const categoryLabel =
+                    (isFr && cat ? CATEGORY_LABELS_FR[cat.id] : cat?.label) || art.category;
                   return (
                     <article
                       key={art.slug}
-                      className={`card-editorial p-6 sm:p-7 flex flex-col justify-between hover:border-[#2e4a3b] transition-colors group ${
-                        isVisuallyFolded ? "hidden" : ""
-                      }`}
+                      className="card-editorial p-6 sm:p-7 flex flex-col justify-between hover:border-[#2e4a3b] transition-colors group"
                     >
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 text-xs text-[#625d52]">
                           <span className="font-semibold text-[#2e4a3b] uppercase tracking-wider text-[0.7rem]">
-                            {cat?.label || art.category}
+                            {categoryLabel}
                           </span>
                           <span>/</span>
                           <span>
@@ -506,12 +511,12 @@ export const EducationLibraryPage: React.FC = () => {
                           {displayDescription}
                         </p>
 
-                        <p className="text-xs text-[#625d52] pt-2 border-t border-[#ece6da]">
-                          <strong className="text-[#1c1b18]">
-                            {language === "fr" ? "La question :" : "The question:"}
-                          </strong>{" "}
-                          {art.question}
-                        </p>
+                        {!isFr && (
+                          <p className="text-xs text-[#625d52] pt-2 border-t border-[#ece6da]">
+                            <strong className="text-[#1c1b18]">The question:</strong>{" "}
+                            {art.question}
+                          </p>
+                        )}
                       </div>
 
                       <div className="pt-5 border-t border-[#ece6da] mt-5 flex items-center justify-between">
@@ -530,31 +535,6 @@ export const EducationLibraryPage: React.FC = () => {
                   );
                 })}
               </div>
-
-              {!query.trim() && selectedCategory === "all" && filteredArticles.length > 6 && (
-                <div className="text-center pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowAllArticles((prev) => !prev)}
-                    className="btn btn-ghost text-sm px-6 py-2.5 inline-flex items-center gap-2 cursor-pointer"
-                  >
-                    <span>
-                      {showAllArticles
-                        ? language === "fr"
-                          ? "Réduire la liste des guides"
-                          : "Show fewer guides"
-                        : language === "fr"
-                        ? `Afficher les ${filteredArticles.length} guides`
-                        : `Show all ${filteredArticles.length} guides`}
-                    </span>
-                    {showAllArticles ? (
-                      <ChevronUp className="w-4 h-4" aria-hidden="true" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" aria-hidden="true" />
-                    )}
-                  </button>
-                </div>
-              )}
             </>
           )}
         </div>

@@ -2,6 +2,7 @@ import { initializeApp, getApps, cert, applicationDefault } from "firebase-admin
 import { getFirestore, Firestore } from "firebase-admin/firestore";
 import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 
 let adminDb: Firestore | null = null;
 
@@ -98,7 +99,7 @@ export async function saveSubscriberViaAdmin(subscriber: {
     const db = getAdminFirestore();
     if (!db) return false;
 
-    const docId = `sub_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    const docId = `sub_${Date.now()}_${crypto.randomUUID()}`;
     await db.collection("subscribers").doc(docId).set({
       email: subscriber.email.trim().toLowerCase().slice(0, 120),
       confirmedAt: subscriber.confirmedAt,
@@ -138,7 +139,7 @@ export async function saveLeadViaAdmin(lead: {
     const db = getAdminFirestore();
     if (!db) return false;
 
-    const docId = `lead_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    const docId = `lead_${Date.now()}_${crypto.randomUUID()}`;
     await db.collection("leads").doc(docId).set({
       referenceNo: String(lead.referenceNo || "").slice(0, 30),
       topic: String(lead.topic || "general").slice(0, 50),
