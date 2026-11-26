@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowLeft, ArrowRight, CheckCircle2, Circle, SkipForward } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Circle, SkipForward } from "lucide-react";
 import type {
   CapturedSignature,
   DocumentSetupState,
@@ -33,6 +33,7 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
   isFr = false,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [skipNotice, setSkipNotice] = useState<string | null>(null);
 
   const safeIndex = Math.min(activeIndex, Math.max(0, slots.length - 1));
   const currentSlot = slots[safeIndex];
@@ -80,12 +81,14 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
   };
 
   const handleConfirm = (captured: CapturedSignature) => {
+    setSkipNotice(null);
     onConfirmSlotSignature(currentSlot.id, captured);
     advanceToNextUnsigned(currentSlot.id);
   };
 
   const handleSkipOptional = () => {
     if (!currentSlot?.optional) return;
+    setSkipNotice(null);
     const nextRequired = slots.findIndex(
       (s) => s.id !== currentSlot.id && !s.optional && !capturedBySlot[s.id]
     );
@@ -100,9 +103,21 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
       setActiveIndex(nextOtherOptional);
       return;
     }
+    const priorOptional = slots.findIndex(
+      (s, idx) => idx < safeIndex && s.id !== currentSlot.id && !capturedBySlot[s.id]
+    );
     if (canProceed) {
       onFinishSigning();
+      return;
     }
+    if (priorOptional !== -1) {
+      setActiveIndex(priorOptional);
+    }
+    setSkipNotice(
+      isFr
+        ? "Au moins une signature ou initiale manuscrite doit être confirmée avant d'assembler le document."
+        : "At least one hand-drawn signature or initial must be confirmed before assembling the final PDF."
+    );
   };
 
   if (!currentSlot) return null;
@@ -152,7 +167,10 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
             <button
               key={slot.id}
               type="button"
-              onClick={() => setActiveIndex(idx)}
+              onClick={() => {
+                setSkipNotice(null);
+                setActiveIndex(idx);
+              }}
               className={`min-h-[44px] inline-flex items-center gap-2 px-3.5 py-2 text-xs sm:text-sm font-medium rounded-md border transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 isCurrent
                   ? "bg-[#0f2942] text-white border-[#0f2942]"
@@ -243,6 +261,16 @@ export const Step2ClientSigning: React.FC<Step2ClientSigningProps> = ({
             onClear={() => onClearSlotSignature(currentSlot.id)}
             isFr={isFr}
           />
+
+          {skipNotice && (
+            <div
+              role="alert"
+              className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-300 rounded-md text-xs text-amber-900"
+            >
+              <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" aria-hidden="true" />
+              <span>{skipNotice}</span>
+            </div>
+          )}
 
           <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200">
             <button

@@ -490,29 +490,28 @@ function getRouteMetadata(pathname: string): RouteMeta {
       const { enUrl, frUrl, canonicalUrl } = getLanguageUrls(articlePath);
       const ogImage = getOgImageForPath(articlePath, siteConfig.siteUrl);
       const frTranslated = isFrenchArticleTranslated(slug);
-      const noIndex = isFrench && !frTranslated;
+      const isUntranslatedFr = isFrench && !frTranslated;
 
       return {
         title,
         description,
         ogType: "article",
-        url: canonicalUrl,
+        url: isUntranslatedFr ? enUrl : canonicalUrl,
         enUrl,
         frUrl,
         ogImage,
         lang,
-        noIndex,
-        robotsDirective: noIndex ? "noindex, follow" : undefined,
+        noIndex: false,
         hasFrenchAlternate: hasTranslatedFrenchAlternate(articlePath),
         articlePublishedTime: article.datePublished || "2025-01-15T08:00:00-05:00",
-        articleModifiedTime: article.dateModified || "2026-11-25T09:00:00-05:00",
+        articleModifiedTime: article.dateModified || "2026-11-05T09:00:00-05:00",
         jsonLd: buildRouteJsonLd({
-          pathname: articlePath,
+          pathname: isUntranslatedFr ? article.url : articlePath,
           title,
           description,
           heading: headline,
           isFr: isFrench,
-          noIndex,
+          noIndex: false,
           article,
         }),
       };

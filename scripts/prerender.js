@@ -345,7 +345,7 @@ function renderCoreBody(r, isFr) {
         <ul>
           <li><strong>${isFr ? "Courriel :" : "Email:"}</strong> <a href="mailto:${escapeAttr(siteConfig.publicEmail)}">${escapeHtml(siteConfig.publicEmail)}</a></li>
           <li><strong>${isFr ? "Téléphone direct :" : "Direct Telephone:"}</strong> ${escapeHtml(siteConfig.publicPhone)}</li>
-          <li><strong>${isFr ? "Secteur :" : "Location:"}</strong> Dieppe, New Brunswick, Canada</li>
+          <li><strong>${isFr ? "Secteur :" : "Location:"}</strong> ${isFr ? "Dieppe, Nouveau-Brunswick, Canada" : "Dieppe, New Brunswick, Canada"}</li>
           <li><a href="${escapeAttr(siteConfig.schedulingUrl)}">${escapeHtml(getCtaLabel(isFr))}</a></li>
         </ul>
       </section>
@@ -513,8 +513,8 @@ for (const art of articles) {
     summary: frSeo?.description || art.description,
     faqs: art.faqs,
     article: art,
-    noIndex: !isFrTranslated,
-    robotsDirective: isFrTranslated ? undefined : "noindex, follow",
+    noIndex: false,
+    canonicalOverride: isFrTranslated ? undefined : `${SITE_URL}${enUrl}`,
   });
 }
 
@@ -525,6 +525,7 @@ function renderRouteHtml(r) {
   const basePath = r.basePath || getBasePath(r.path);
   const altPath = isFrench ? basePath : basePath === "/" ? "/fr" : `/fr${basePath}`;
   const { enUrl, frUrl, canonicalUrl } = getLanguageUrls(r.path);
+  const effectiveCanonicalUrl = r.canonicalOverride || canonicalUrl;
   const hasFrAlt = hasTranslatedFrenchAlternate(r.path);
   const ogImageUrl = getOgImageForPath(r.path, SITE_URL);
   const robotsValue = r.robotsDirective
@@ -660,8 +661,8 @@ function renderRouteHtml(r) {
     `<meta name="robots" content="${robotsValue}" />`
   );
   const canonicalTags = hasFrAlt
-    ? `<link rel="canonical" href="${canonicalUrl}" />\n    <link rel="alternate" hreflang="en-CA" href="${enUrl}" />\n    <link rel="alternate" hreflang="fr-CA" href="${frUrl}" />\n    <link rel="alternate" hreflang="x-default" href="${enUrl}" />`
-    : `<link rel="canonical" href="${canonicalUrl}" />\n    <link rel="alternate" hreflang="en-CA" href="${enUrl}" />\n    <link rel="alternate" hreflang="x-default" href="${enUrl}" />`;
+    ? `<link rel="canonical" href="${effectiveCanonicalUrl}" />\n    <link rel="alternate" hreflang="en-CA" href="${enUrl}" />\n    <link rel="alternate" hreflang="fr-CA" href="${frUrl}" />\n    <link rel="alternate" hreflang="x-default" href="${enUrl}" />`
+    : `<link rel="canonical" href="${effectiveCanonicalUrl}" />\n    <link rel="alternate" hreflang="en-CA" href="${enUrl}" />\n    <link rel="alternate" hreflang="x-default" href="${enUrl}" />`;
 
   html = html.replace(
     /<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/?>/i,
@@ -681,7 +682,7 @@ function renderRouteHtml(r) {
   );
   html = html.replace(
     /<meta\s+property="og:url"\s+content="[\s\S]*?"\s*\/?>/i,
-    `<meta property="og:url" content="${canonicalUrl}" />`
+    `<meta property="og:url" content="${effectiveCanonicalUrl}" />`
   );
   html = html.replace(
     /<meta\s+property="og:locale"\s+content="[\s\S]*?"\s*\/?>/i,

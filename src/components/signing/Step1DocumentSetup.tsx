@@ -172,12 +172,30 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
 
   const handleCopyClientLink = async () => {
     const cleanUrl = `${window.location.origin}${window.location.pathname}?mode=client`;
-    try {
-      await navigator.clipboard.writeText(cleanUrl);
+    const markCopied = () => {
       setLinkCopied(true);
       setTimeout(() => setLinkCopied(false), 2500);
-    } catch {
-      // Clipboard blocked in sandbox
+    };
+    const fallbackCopy = () => {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = cleanUrl;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        markCopied();
+      } catch {
+        // Clipboard unavailable in current context
+      }
+    };
+    if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(cleanUrl).then(markCopied).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
     }
   };
 
@@ -549,10 +567,11 @@ export const Step1DocumentSetup: React.FC<Step1DocumentSetupProps> = ({
                           <input
                             type="number"
                             min={1}
-                            max={Math.max(1, setup.pageCount || 10)}
+                            max={setup.pageCount > 0 ? setup.pageCount : 99}
                             value={slot.pageNumber}
                             onChange={(e) => {
-                              const p = Math.max(1, Number(e.target.value) || 1);
+                              const maxPage = setup.pageCount > 0 ? setup.pageCount : 99;
+                              const p = Math.min(maxPage, Math.max(1, Number(e.target.value) || 1));
                               onUpdateSlot(slot.id, { pageNumber: p });
                               setPreviewPage(p);
                             }}

@@ -28,6 +28,7 @@ import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
 import { ARTICLE_FR_SEO, isFrenchArticleTranslated } from "../config/seoMetadata.ts";
 import { buildRouteJsonLd } from "../config/schema.ts";
+import { NotFoundPage } from "./NotFoundPage.tsx";
 
 const CATEGORY_LABELS_FR: Record<string, string> = {
   "registered-accounts": "Comptes enregistrés canadiens",
@@ -53,8 +54,6 @@ const TOPIC_LABELS: Record<string, { en: string; fr: string }> = {
   debt: { en: "Debt Strategy & Balance Sheet Restructuring", fr: "Stratégie d'endettement & restructuration de passif" },
   mortgage: { en: "Mortgage Qualification & Amortization Strategy", fr: "Qualification hypothécaire & stratégie d'amortissement" },
 };
-
-import { NotFoundPage } from "./NotFoundPage.tsx";
 
 export const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -178,14 +177,14 @@ export const ArticlePage: React.FC = () => {
   const articleJsonLd = useMemo(
     () =>
       buildRouteJsonLd({
-        pathname: `${prefix}${article.url}`,
+        pathname: isUntranslatedFrArticle ? article.url : `${prefix}${article.url}`,
         title: localizedSeoTitle,
         description: localizedDescription,
         heading: localizedTitle,
         isFr,
         article,
       }),
-    [prefix, article, localizedSeoTitle, localizedDescription, localizedTitle, isFr]
+    [prefix, article, isUntranslatedFrArticle, localizedSeoTitle, localizedDescription, localizedTitle, isFr]
   );
 
   return (
@@ -201,10 +200,8 @@ export const ArticlePage: React.FC = () => {
       <SEO
         title={localizedSeoTitle}
         description={localizedDescription}
-        canonicalUrl={`${prefix}${article.url}`}
+        canonicalUrl={isUntranslatedFrArticle ? article.url : `${prefix}${article.url}`}
         ogType="article"
-        noIndex={isUntranslatedFrArticle}
-        robotsContent={isUntranslatedFrArticle ? "noindex, follow" : undefined}
         articlePublishedTime={article.datePublished || "2025-01-15T08:00:00-05:00"}
         articleModifiedTime={article.dateModified || "2026-11-05T09:00:00-05:00"}
         jsonLd={articleJsonLd}

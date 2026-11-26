@@ -1557,7 +1557,7 @@ const rawArticles: Article[] = [
     "seoTitle": "Mortgage renewal shock: TFSA vs RRSP raid",
     "description": "Facing higher mortgage renewal payments? See the balance-sheet math before raiding your TFSA or RRSP and losing tax shelter.",
     "question": "As my Canadian mortgage rate spikes at renewal, should I withdraw from my TFSA or RRSP to pay down my mortgage principal?",
-    "category": "debt-and-cashflow",
+    "category": "debt-credit",
     "problem": "The psychological anxiety of higher monthly mortgage payments tempts Canadian households to treat brick-and-mortar debt reduction as an absolute good, ignoring permanent tax-shelter destruction, structural illiquidity, and asymmetric balance-sheet risk.",
     "overview": [
       "Over $350 billion in Canadian residential mortgages originated during the historic sub-2.5% rate window are confronting renewal at rates 250 to 350 basis points higher. For an average Canadian household carrying a $500,000 balance, this translates to an immediate payment shock of $600 to $1,200 per month. The intuitive, emotionally seductive reaction advocated across mainstream internet forums is simple: \"Raid your investments, pay down the debt, and secure a guaranteed return equal to your mortgage rate.\"",

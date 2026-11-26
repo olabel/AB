@@ -9,6 +9,7 @@ import { CalculatorLeadCapture } from "../components/CalculatorLeadCapture.tsx";
 import { siteConfig, getCtaLabel, getSecondaryCtaLabel } from "../config/site.ts";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { trackBookingClick } from "../lib/track.ts";
+import { RULE_CHANGES } from "../content/whatChangedData.ts";
 import {
   Calendar,
   ArrowRight,
@@ -436,7 +437,11 @@ export const HomePage: React.FC = () => {
               {isFr ? "Veille réglementaire • Novembre 2026" : "2026 Money Rules • November Update"}
             </span>
             <Link to={`${prefix}/what-changed`} className="arrow-link text-xs">
-              <span>{isFr ? "Lire les 7 mises à jour →" : "Read all 7 updates →"}</span>
+              <span>
+                {isFr
+                  ? `Lire les ${RULE_CHANGES.length} mises à jour →`
+                  : `Read all ${RULE_CHANGES.length} updates →`}
+              </span>
             </Link>
           </div>
 

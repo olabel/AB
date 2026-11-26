@@ -46,20 +46,26 @@ export const InsightsPage: React.FC = () => {
       return (
         essay.slug.includes("ccpc") ||
         essay.slug.includes("passive-income") ||
-        essay.slug.includes("amt")
+        essay.slug.includes("corporate-") ||
+        essay.slug.includes("amt") ||
+        essay.slug.includes("capital-gains")
       );
     }
     if (selectedTheme === "mortgages-liquidity") {
       return (
         essay.slug.includes("mortgage") ||
-        essay.slug.includes("savings-or-debt")
+        essay.slug.includes("savings-or-debt") ||
+        essay.slug.includes("irs-foreign-trust")
       );
     }
     if (selectedTheme === "decision-frameworks") {
       return (
         essay.slug.includes("questions-before") ||
         essay.slug.includes("savings-or-debt") ||
-        essay.slug.includes("cpp-timing")
+        essay.slug.includes("cpp-timing") ||
+        essay.slug.includes("amt") ||
+        essay.slug.includes("capital-gains") ||
+        essay.slug.includes("irs-foreign-trust")
       );
     }
     return true;
@@ -311,7 +317,9 @@ export const InsightsPage: React.FC = () => {
               : "“Conventional personal finance evaluates debts and investments in isolation. Comprehensive planning evaluates the total balance sheet, recognizing that liquid capital and registered tax shelters carry irreplaceable economic option value that simplistic interest arithmetic ignores.”"}
           </blockquote>
           <p className="text-xs uppercase tracking-wider text-[#d6c298] font-semibold">
-            - Ahmed Bello, Licensed Financial Solutions Professional
+            {isFr
+              ? "- Ahmed Bello, Professionnel en solutions financières agréé"
+              : "- Ahmed Bello, Licensed Financial Solutions Professional"}
           </p>
         </div>
       </section>
@@ -346,7 +354,7 @@ export const InsightsPage: React.FC = () => {
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-xs text-[#625d52]">
                       <span className="font-semibold text-[#2e4a3b] uppercase tracking-wider text-[0.7rem]">
-                        {essay.category === "debt-and-cashflow"
+                        {essay.category === "debt-credit" || essay.category === "debt-and-cashflow"
                           ? isFr
                             ? "Trésorerie des ménages"
                             : "Household Treasury"
@@ -354,14 +362,22 @@ export const InsightsPage: React.FC = () => {
                           ? isFr
                             ? "Sociétés & Patrimoine"
                             : "Corporate & Wealth"
-                          : essay.category === "education"
+                          : essay.category === "decision-making"
                           ? isFr
-                            ? "Normes de conseil"
-                            : "Advisory Standards"
+                            ? "Critères décisionnels"
+                            : "Decision Frameworks"
                           : essay.category === "retirement"
                           ? isFr
                             ? "Retraite & Rentes"
                             : "Retirement & Pensions"
+                          : essay.category === "newcomers"
+                          ? isFr
+                            ? "Transfrontalier & Nouveaux arrivants"
+                            : "Cross-Border & Newcomers"
+                          : essay.category === "family"
+                          ? isFr
+                            ? "Succession & Famille"
+                            : "Estate & Family"
                           : isFr
                           ? "Priorités financières"
                           : "Financial Priorities"}

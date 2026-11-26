@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, CheckCircle2, ArrowRight, ShieldCheck } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.tsx";
@@ -20,6 +20,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
   className = "",
 }) => {
   const { isFr } = useLanguage();
+  const consentId = useId();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
@@ -91,7 +92,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
 
       const data = await response.json().catch(() => ({}));
 
-      if (!response.ok) {
+      if (!response.ok || data?.success === false) {
         throw new Error(
           data.message ||
             (isFr
@@ -216,14 +217,14 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
           {/* CASL & Privacy Consent */}
           <div className="flex items-start gap-2 pt-1 text-left">
             <input
-              id={`consent-${source}`}
+              id={consentId}
               type="checkbox"
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
               className="mt-0.5 accent-[#2e4a3b]"
             />
             <label
-              htmlFor={`consent-${source}`}
+              htmlFor={consentId}
               className="text-[0.72rem] text-[#625d52] leading-tight cursor-pointer"
             >
               {isFr ? (

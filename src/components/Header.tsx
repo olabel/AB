@@ -52,6 +52,10 @@ export const Header: React.FC = () => {
     },
   ];
 
+  const isIntakeHost =
+    typeof window !== "undefined" &&
+    window.location.hostname.toLowerCase() === "intake.ahmedbello.com";
+
   const toolsLinks = [
     {
       label: isFr ? "Tous les simulateurs" : "All Planning Calculators",
@@ -61,10 +65,14 @@ export const Header: React.FC = () => {
       label: isFr ? "Calculateur d'IMR fédéral" : "Federal AMT Calculator",
       href: `${prefix}/calculators/amt`,
     },
-    {
-      label: isFr ? "Signature client (PDF)" : "Client Hand-Signature Tool",
-      href: `${prefix}/sign`,
-    },
+    ...(isIntakeHost
+      ? [
+          {
+            label: isFr ? "Signature client (PDF)" : "Client Hand-Signature Tool",
+            href: `${prefix}/sign`,
+          },
+        ]
+      : []),
   ];
 
   const isLearnActive =

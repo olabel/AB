@@ -33,12 +33,30 @@ export const Step4FinalOutput: React.FC<Step4FinalOutputProps> = ({
   const [previewPage, setPreviewPage] = useState(1);
 
   const handleCopyChecksum = async () => {
-    try {
-      await navigator.clipboard.writeText(result.sha256Hex);
+    const markCopied = () => {
       setCopiedHash(true);
       setTimeout(() => setCopiedHash(false), 2500);
-    } catch {
-      // Clipboard unavailable in sandbox
+    };
+    const fallbackCopy = () => {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = result.sha256Hex;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        markCopied();
+      } catch {
+        // Clipboard unavailable in current context
+      }
+    };
+    if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(result.sha256Hex).then(markCopied).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
     }
   };
 

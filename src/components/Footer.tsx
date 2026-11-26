@@ -50,7 +50,7 @@ export const Footer: React.FC = () => {
             <div className="text-xs text-[#ece6da]/80 space-y-2 pt-2 border-t border-[#2e4a3b]/60">
               <div className="flex items-center gap-2 text-[#ece6da]">
                 <MapPin className="w-3.5 h-3.5 text-[#d6c298] shrink-0" aria-hidden="true" />
-                <span>Dieppe, New Brunswick, Canada</span>
+                <span>{isFr ? "Dieppe, Nouveau-Brunswick, Canada" : "Dieppe, New Brunswick, Canada"}</span>
               </div>
               <div className="flex items-center gap-2 text-[#ece6da]">
                 <Mail className="w-3.5 h-3.5 text-[#d6c298] shrink-0" aria-hidden="true" />

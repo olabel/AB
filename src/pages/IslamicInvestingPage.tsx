@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext.tsx";
 import { SEO } from "../components/SEO.tsx";
@@ -46,6 +46,7 @@ const CANADIAN_PROVINCES = [
 
 export const IslamicInvestingPage: React.FC = () => {
   const { isFr } = useLanguage();
+  const fieldPrefix = useId();
 
   // Balanced Multi-Scenario Simulator State
   const [initialCapital, setInitialCapital] = useState<number>(25000);
@@ -865,10 +866,11 @@ Notes: ${formData.notes || "None"}`;
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                    <label htmlFor={`${fieldPrefix}-fullName`} className="block text-xs font-medium text-[#ece6da] mb-1">
                       {isFr ? "Nom complet *" : "Full Name *"}
                     </label>
                     <input
+                      id={`${fieldPrefix}-fullName`}
                       type="text"
                       name="fullName"
                       required
@@ -880,10 +882,11 @@ Notes: ${formData.notes || "None"}`;
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                    <label htmlFor={`${fieldPrefix}-email`} className="block text-xs font-medium text-[#ece6da] mb-1">
                       {isFr ? "Courriel *" : "Email Address *"}
                     </label>
                     <input
+                      id={`${fieldPrefix}-email`}
                       type="email"
                       name="email"
                       required
@@ -897,10 +900,11 @@ Notes: ${formData.notes || "None"}`;
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                    <label htmlFor={`${fieldPrefix}-phone`} className="block text-xs font-medium text-[#ece6da] mb-1">
                       {isFr ? "Téléphone *" : "Phone Number *"}
                     </label>
                     <input
+                      id={`${fieldPrefix}-phone`}
                       type="tel"
                       name="phone"
                       required
@@ -912,10 +916,11 @@ Notes: ${formData.notes || "None"}`;
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                    <label htmlFor={`${fieldPrefix}-province`} className="block text-xs font-medium text-[#ece6da] mb-1">
                       {isFr ? "Province au Canada *" : "Province in Canada *"}
                     </label>
                     <select
+                      id={`${fieldPrefix}-province`}
                       name="province"
                       required
                       value={formData.province}
@@ -931,10 +936,11 @@ Notes: ${formData.notes || "None"}`;
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                    <label htmlFor={`${fieldPrefix}-city`} className="block text-xs font-medium text-[#ece6da] mb-1">
                       {isFr ? "Ville (Optionnel)" : "City (Optional)"}
                     </label>
                     <input
+                      id={`${fieldPrefix}-city`}
                       type="text"
                       name="city"
                       value={formData.city}
@@ -947,10 +953,11 @@ Notes: ${formData.notes || "None"}`;
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                    <label htmlFor={`${fieldPrefix}-accountType`} className="block text-xs font-medium text-[#ece6da] mb-1">
                       {isFr ? "Type de Compte Visé *" : "Target Account Structure *"}
                     </label>
                     <select
+                      id={`${fieldPrefix}-accountType`}
                       name="accountType"
                       value={formData.accountType}
                       onChange={handleFormChange}
@@ -967,10 +974,11 @@ Notes: ${formData.notes || "None"}`;
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                    <label htmlFor={`${fieldPrefix}-estimatedAmount`} className="block text-xs font-medium text-[#ece6da] mb-1">
                       {isFr ? "Montant Estimé à Allouer *" : "Estimated Amount to Deploy *"}
                     </label>
                     <select
+                      id={`${fieldPrefix}-estimatedAmount`}
                       name="estimatedAmount"
                       value={formData.estimatedAmount}
                       onChange={handleFormChange}
@@ -987,12 +995,13 @@ Notes: ${formData.notes || "None"}`;
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                  <label htmlFor={`${fieldPrefix}-currentBank`} className="block text-xs font-medium text-[#ece6da] mb-1">
                     {isFr
                       ? "Institution actuelle des fonds (Optionnel)"
                       : "Current Financial Institution (Optional)"}
                   </label>
                   <input
+                    id={`${fieldPrefix}-currentBank`}
                     type="text"
                     name="currentBank"
                     value={formData.currentBank}
@@ -1003,10 +1012,11 @@ Notes: ${formData.notes || "None"}`;
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-[#ece6da] mb-1">
+                  <label htmlFor={`${fieldPrefix}-notes`} className="block text-xs font-medium text-[#ece6da] mb-1">
                     {isFr ? "Vos priorités ou questions particulières (Optionnel)" : "Your Specific Priorities or Questions (Optional)"}
                   </label>
                   <textarea
+                    id={`${fieldPrefix}-notes`}
                     name="notes"
                     rows={3}
                     value={formData.notes}

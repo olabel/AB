@@ -29,14 +29,14 @@ function getTodayIsoDate(): string {
   return `${y}-${m}-${d}`;
 }
 
-function createInitialSetup(): DocumentSetupState {
+function createInitialSetup(signingMode: DocumentSetupState["signingMode"] = "in-person"): DocumentSetupState {
   return {
     carrierPreset: "Equitable Life of Canada",
     customCarrierName: "",
     formCode: "",
     contractNumber: "",
     clientNames: "",
-    signingMode: "in-person",
+    signingMode,
     includeAdvisorAttestation: false,
     pdfSource: "none",
     pdfFileName: "",
@@ -86,8 +86,11 @@ export const DocumentSigningPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const isClientLinkMode = new URLSearchParams(location.search).get("mode") === "client";
   const [step, setStep] = useState<WorkflowStep>("setup");
-  const [setup, setSetup] = useState<DocumentSetupState>(createInitialSetup);
+  const [setup, setSetup] = useState<DocumentSetupState>(() =>
+    createInitialSetup(isClientLinkMode ? "client-link" : "in-person")
+  );
   const [slots, setSlots] = useState<SignatureSlotConfig[]>(createDefaultSlots);
   const [basePdfBytes, setBasePdfBytes] = useState<Uint8Array | null>(null);
   const [capturedBySlot, setCapturedBySlot] = useState<Record<string, CapturedSignature>>({});

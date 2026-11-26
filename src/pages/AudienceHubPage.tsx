@@ -7,6 +7,7 @@ import { NewcomerPlanningCalculator } from "../components/NewcomerPlanningCalcul
 import { SEO } from "../components/SEO.tsx";
 import { ARTICLE_FR_SEO } from "../config/seoMetadata.ts";
 import { trackCtaClick, trackBookingClick } from "../lib/track.ts";
+import { NotFoundPage } from "./NotFoundPage.tsx";
 import {
   Stethoscope,
   Briefcase,
@@ -100,8 +101,8 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     id: "business-owners",
     slug: "business-owners",
     aliases: ["entrepreneurs", "incorporated"],
-    titleEn: "CCPC Tax Efficiency & $50k SBD Passive Income Strategy | Ahmed Bello",
-    titleFr: "Efficience Fiscale des SPCC & Plafond DPE de 50 000 $ | Ahmed Bello",
+    titleEn: "CCPC Tax Efficiency & $50k SBD Passive Income Strategy",
+    titleFr: "Efficience fiscale des SPCC et plafond DPE de 50 000 $",
     metaTitleEn: "CCPC Tax Efficiency & SBD Strategy | Ahmed Bello",
     metaTitleFr: "Efficience Fiscale SPCC & DPE | Ahmed Bello",
     eyebrowEn: "Audience Hub: Business Owners & CCPCs",
@@ -223,8 +224,6 @@ const AUDIENCES: Record<string, AudienceConfig> = {
     ],
   },
 };
-
-import { NotFoundPage } from "./NotFoundPage.tsx";
 
 export const AudienceHubPage: React.FC = () => {
   const { audience } = useParams<{ audience: string }>();
@@ -671,16 +670,27 @@ export const AudienceHubPage: React.FC = () => {
               : "Start a clear conversation with Ahmed Bello to review your Canadian tax, protection, and registered accounts options."}
           </p>
           <div className="pt-2 flex flex-col items-center justify-center gap-3">
-            <a
-              href={siteConfig.schedulingUrl || "/contact"}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackBookingClick("audience_hub_bottom")}
-              className="btn btn-primary px-8 py-3.5 text-base inline-flex items-center gap-2 shadow-xs"
-            >
-              <Calendar className="w-4 h-4 text-[#d6c298]" />
-              <span>{getCtaLabel(isFr)}</span>
-            </a>
+            {siteConfig.schedulingUrl ? (
+              <a
+                href={siteConfig.schedulingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackBookingClick("audience_hub_bottom")}
+                className="btn btn-primary px-8 py-3.5 text-base inline-flex items-center gap-2 shadow-xs"
+              >
+                <Calendar className="w-4 h-4 text-[#d6c298]" />
+                <span>{getCtaLabel(isFr)}</span>
+              </a>
+            ) : (
+              <Link
+                to={isFr ? "/fr/contact" : "/contact"}
+                onClick={() => trackBookingClick("audience_hub_bottom")}
+                className="btn btn-primary px-8 py-3.5 text-base inline-flex items-center gap-2 shadow-xs"
+              >
+                <Calendar className="w-4 h-4 text-[#d6c298]" />
+                <span>{getCtaLabel(isFr)}</span>
+              </Link>
+            )}
             <p className="text-xs text-[#625d52]">
               {isFr ? "Vous préférez écrire d'abord ? " : "Prefer to write first? "}
               <Link to={isFr ? "/fr/contact" : "/contact"} className="arrow-link text-xs">

@@ -6,6 +6,7 @@ import {
   getCoreRouteSeo,
   getLanguageUrls,
   getOgImageForPath,
+  isFrenchArticleTranslated,
   normalizeRoutePath,
 } from "./seoMetadata.ts";
 
@@ -203,14 +204,16 @@ export function buildRouteJsonLd({
     const frSeo = ARTICLE_FR_SEO[article.slug];
     const resolvedHeadline = heading || (isFr ? frSeo?.title || article.title : article.title);
     const resolvedDesc = description || (isFr ? frSeo?.description || article.description : article.description);
-    const prefix = isFr ? "/fr" : "";
+    const frTranslated = isFrenchArticleTranslated(article.slug);
+    const effectiveIsFr = isFr && frTranslated;
+    const prefix = effectiveIsFr ? "/fr" : "";
     const articleCanonical = `${SITE_URL}${prefix}${article.url}`;
     const parentSectionName =
       article.kind === "guide"
-        ? isFr
+        ? effectiveIsFr
           ? "Éducation financière"
           : "Education Library"
-        : isFr
+        : effectiveIsFr
         ? "Analyses stratégiques"
         : "Strategic Insights";
     const parentSectionUrl = `${SITE_URL}${prefix}/${article.kind === "guide" ? "education" : "insights"}`;
@@ -218,7 +221,7 @@ export function buildRouteJsonLd({
     graph.push({
       "@type": "Article",
       "@id": `${articleCanonical}#article`,
-      inLanguage: langTag,
+      inLanguage: effectiveIsFr ? "fr-CA" : "en-CA",
       headline: resolvedHeadline,
       description: resolvedDesc,
       image: ogImage,
@@ -261,8 +264,8 @@ export function buildRouteJsonLd({
         {
           "@type": "ListItem",
           position: 1,
-          name: isFr ? "Accueil" : "Home",
-          item: isFr ? `${SITE_URL}/fr` : `${SITE_URL}/`,
+          name: effectiveIsFr ? "Accueil" : "Home",
+          item: effectiveIsFr ? `${SITE_URL}/fr` : `${SITE_URL}/`,
         },
         {
           "@type": "ListItem",

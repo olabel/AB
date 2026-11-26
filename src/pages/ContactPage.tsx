@@ -72,6 +72,7 @@ export const ContactPage: React.FC = () => {
   const [turnstileToken, setTurnstileToken] = useState("");
 
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [referenceNo, setReferenceNo] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -180,7 +181,7 @@ export const ContactPage: React.FC = () => {
 
       const data = await response.json().catch(() => ({}));
 
-      if (!response.ok) {
+      if (!response.ok || data?.success === false) {
         setErrorMessage(
           data.message ||
             (isFr
@@ -191,6 +192,7 @@ export const ContactPage: React.FC = () => {
         return;
       }
 
+      setReferenceNo(data.referenceNo || generatedRef);
       setStatus("success");
       trackLeadSubmit(topic);
     } catch {
@@ -430,11 +432,18 @@ export const ContactPage: React.FC = () => {
 
                 <div className="p-4 bg-[#2e4a3b]/10 border border-[#2e4a3b]/25 rounded-[2px] flex items-start gap-3">
                   <MailCheck className="w-5 h-5 text-[#2e4a3b] shrink-0 mt-0.5" />
-                  <p className="text-xs sm:text-sm text-[#1c1b18] leading-relaxed">
-                    {isFr
-                      ? `${firstName.trim() ? `Merci, ${firstName.trim()}. ` : ""}Votre demande a été reçue en toute sécurité. Ahmed Bello examine personnellement les questions entrantes et vous répondra avec des explications factuelles d'ici 1 à 2 jours ouvrables.`
-                      : `${firstName.trim() ? `Thank you, ${firstName.trim()}. ` : ""}Your enquiry has been received securely. Ahmed Bello personally reviews incoming questions and will follow up with objective educational insights within 1–2 business days.`}
-                  </p>
+                  <div className="space-y-1.5">
+                    <p className="text-xs sm:text-sm text-[#1c1b18] leading-relaxed">
+                      {isFr
+                        ? `${firstName.trim() ? `Merci, ${firstName.trim()}. ` : ""}Votre demande a été reçue en toute sécurité. Ahmed Bello examine personnellement les questions entrantes et vous répondra avec des explications factuelles d'ici 1 à 2 jours ouvrables.`
+                        : `${firstName.trim() ? `Thank you, ${firstName.trim()}. ` : ""}Your enquiry has been received securely. Ahmed Bello personally reviews incoming questions and will follow up with objective educational insights within 1–2 business days.`}
+                    </p>
+                    {referenceNo && (
+                      <p className="text-xs font-mono text-[#2e4a3b] font-semibold">
+                        {isFr ? `Référence : ${referenceNo}` : `Reference: ${referenceNo}`}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="space-y-3">
@@ -475,6 +484,7 @@ export const ContactPage: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setStatus("idle");
+                      setReferenceNo(null);
                       setMessage("");
                     }}
                     className="text-[#625d52] hover:text-[#1c1b18] underline ml-auto cursor-pointer"
